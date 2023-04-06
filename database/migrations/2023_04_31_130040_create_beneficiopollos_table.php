@@ -68,13 +68,22 @@ class CreateBeneficiopollosTable extends Migration
                     
            
 
-            $table->decimal('canalfria', 18, 2)->nullable();           
-
             $table->bigInteger('menudenciaskg')->nullable();
 
             $table->decimal('menudenciascosto', 18, 0)->nullable();
             
-            $table->decimal('visceras', 18, 2)->nullable();
+            $table->decimal('canalcaliente', 18, 2)->nullable();
+
+            $table->decimal('canalfria', 18, 2)->nullable();
+            
+            $table->decimal('canalplanta', 18, 2)->nullable();
+            
+            $table->bigInteger('pieleskg')->nullable();
+            
+            $table->decimal('pielescosto', 18, 0)->nullable();
+            
+            $table->decimal('visceras', 18, 2)->nullable();                 
+                  
 
             
             # Totales
@@ -87,6 +96,8 @@ class CreateBeneficiopollosTable extends Migration
             
              
 
+            $table->decimal('tmenudencias', 18, 0)->nullable();
+
             $table->decimal('tsacrificio', 18, 0)->nullable(); 
 
             $table->decimal('tfomento', 18, 0)->nullable();
@@ -97,7 +108,7 @@ class CreateBeneficiopollosTable extends Migration
 
             $table->decimal('ttransporte', 18, 0)->nullable();
 
-            $table->decimal('tmenudencias', 18, 0)->nullable();
+            $table->decimal('tpieles', 18, 0)->nullable();
 
             $table->decimal('tvisceras', 18, 0)->nullable();
 
@@ -110,7 +121,8 @@ class CreateBeneficiopollosTable extends Migration
             $table->decimal('costo', 18, 0)->nullable();
 
             $table->decimal('totalcostos', 18, 0)->nullable();
-
+            
+         
 
             # Rendimiento   
             

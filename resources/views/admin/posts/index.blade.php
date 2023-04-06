@@ -1,22 +1,25 @@
+@extends('layouts.master-beneficiocerdo')
+@extends('layouts.theme.app')
 
 
-@extends('adminlte::page')
-
-@section('title', 'Dashboard Administración')
-
-
-@section('content_header')
 <h1>
     Posts
     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-create-post">
         Crear
     </button>
 </h1>
-@stop
-
 
 
 @section('content')
+
+
+<h1>
+    Posts
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-create-post">
+        Crear
+    </button>
+</h1>
+
 
 
 <div class="container-fluid">
@@ -47,7 +50,7 @@
                             <td>
                                 <img src="{{asset($post->featured)}}" alt="{{ $post->title }}" class="img-fluid img-thumbnail" width="100px">
                             </td>
-                            <td class="text-center">
+                            <td>
                                 <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#modal-update-post-{{$post->id}}">
                                     Editar
                                 </button>
@@ -97,11 +100,11 @@
                 <div class="modal-body">
                     <div class="form-group">
                         <label for="title">Post</label>
-                        <input type="text" name="title" class="form-control" id="post" required="">
+                        <input type="text" name="title" class="form-control" id="post">
                     </div>
                     <div class="form-group">
                         <label for="category-id">Categoría</label>
-                        <select name="category_id" id="category-id" class="form-control" required="">
+                        <select name="category_id" id="category-id" class="form-control">
                             <option value="">-- Elegir categoría --</option>
                             @foreach ($categories as $category)
                                 <option value="{{$category->id}}"> {{$category->name}}</option>
@@ -110,11 +113,11 @@
                     </div>
                     <div class="form-group">
                         <label for="content">Contenido</label>
-                        <textarea name="content" class="form-control" id="content" cols="30" rows="10" required=""></textarea>
+                        <textarea name="content" class="form-control" id="content" cols="30" rows="10"></textarea>
                     </div>
                     <div class="form-group">
                         <label for="author">Autor</label>
-                        <input type="text" name="author" class="form-control" id="author" required="">
+                        <input type="text" name="author" class="form-control" id="author">
                     </div>
                     <div class="form-group">
                         <label for="featured">Imagen principal</label>

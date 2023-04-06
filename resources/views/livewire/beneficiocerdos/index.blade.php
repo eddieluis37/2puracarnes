@@ -1,53 +1,63 @@
-<!doctype html>
-<html lang="en">
-    <head>
-        <meta charset="utf-8" />
-        <title>Hello World</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        
-         @include('layouts.theme.styles')
+
+@extends('layouts.2master')
+@extends('layouts.theme.app')
+
+<br>
+<br>
+<br>
+<div class="row sales layout-top-spacing">
 
 
-    </head>
-    <body>
-        @include('layouts.theme.scripts')
-
-<div class="min-h-screen p-16 bg-gray-100">
-    
-<!-- https://github.com/KevinBatdorf/alpine-magic-helpers -->
-<!-- https://cdn.jsdelivr.net/gh/kevinbatdorf/alpine-magic-helpers@latest/dist/interval.js -->
-    
-<div
-    x-data="{
-        timer: 500,
-        count: 0,
-        addOne: function() {
-            this.count++
-        }
-    }"
-    x-init="$interval(addOne, timer)"
-    x-text="count.toString()">
+<div class="container">
+    <a class="btn btn-primary float-right mt-3 mb-4" href="javascript:void(0)" id="createNewBook"> New Book</a>
+    <br><br>
+    <table style="background: #0000000f; border: 1px solid #000;" class="table table-hover table-bordered data-table">
+        <thead>
+            <tr>
+                <th width="10%">No</th>
+                <th width="40%">Title</th>
+                <th width="30%">Author</th>
+                <th width="20%">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
 </div>
-    
-    
-    
-    
-    
-    
+   
+<div class="modal fade" id="ajaxModel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="modelHeading"></h4>
+            </div>
+            <div class="modal-body">
+                <form id="bookForm" name="bookForm" class="form-horizontal">
+                   <input type="hidden" name="book_id" id="book_id">
+                    <div class="form-group">
+                        <label for="name" class="col-sm-2 control-label">Title</label>
+                        <div class="col-sm-12">
+                            <input type="text" class="form-control" id="title" name="title" placeholder="Enter Title" value="" maxlength="50" required="">
+                        </div>
+                    </div>
+     
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Details</label>
+                        <div class="col-sm-12">
+                            <textarea id="author" name="author" required="" placeholder="Enter Author" class="form-control"></textarea>
+                        </div>
+                    </div>
+      
+                    <div class="col-sm-offset-2 col-sm-10">
+                     <button type="submit" class="btn btn-primary" id="saveBtn" value="create">Save changes
+                     </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
 </div>
 
 
-<!-- Dev tools -->
-<div
-    id="alpine-devtools"
-    x-data="devtools()"
-    x-show="alpines.length"
-    x-init="start()">
-</div>
-
-
-    
-
-   @livewireScripts
-    </body>
-</html>
