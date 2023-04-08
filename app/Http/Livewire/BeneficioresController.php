@@ -72,19 +72,19 @@ class BeneficioresController extends Component
 				->paginate($this->pagination);
 		else
 
-			$Beneficiores = Beneficiore::join('thirds as t', 't.id', 'Beneficiores.thirds_id')
-									   ->join('sacrificios as s', 's.id', 'Beneficiores.plantasacrificio_id')
+			$beneficiores = Beneficiore::join('thirds as t', 't.id', 'beneficiores.thirds_id')
+									   ->join('sacrificios as s', 's.id', 'beneficiores.plantasacrificio_id')
 									 
-				->select('Beneficiores.*', 't.name as third',
-						 'Beneficiores.*', 's.name as sacrificio',
+				->select('beneficiores.*', 't.name as third',
+						 'beneficiores.*', 's.name as sacrificio',
 																		)
 
-				->orderBy('Beneficiores.id', 'desc')
+				->orderBy('beneficiores.id', 'desc')
 				->paginate($this->pagination);
 
 
 
-	    return view('livewire.Beneficiores.component', ['data' => $Beneficiores,
+	    return view('livewire.beneficiores.component', ['data' => $beneficiores,
 				'thirds' => Third::orderBy('name', 'asc')->get(),
 				'sacrificios' => Sacrificio::orderBy('name', 'asc')->get(),				
 				
