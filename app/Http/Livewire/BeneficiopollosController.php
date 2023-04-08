@@ -74,19 +74,19 @@ class BeneficiopollosController extends Component
 				->paginate($this->pagination);
 		else
 
-			$Beneficiopollos = Beneficiopollo::join('thirds as t', 't.id', 'Beneficiopollos.thirds_id')
-									   ->join('sacrificiopollos as s', 's.id', 'Beneficiopollos.plantasacrificio_id')
+			$beneficiopollos = Beneficiopollo::join('thirds as t', 't.id', 'beneficiopollos.thirds_id')
+									   ->join('sacrificiopollos as s', 's.id', 'beneficiopollos.plantasacrificio_id')
 									 
-				->select('Beneficiopollos.*', 't.name as third',
-						 'Beneficiopollos.*', 's.name as sacrificio',
+				->select('beneficiopollos.*', 't.name as third',
+						 'beneficiopollos.*', 's.name as sacrificio',
 																		)
 
-				->orderBy('Beneficiopollos.id', 'desc')
+				->orderBy('beneficiopollos.id', 'desc')
 				->paginate($this->pagination);
 
 
 
-	    return view('livewire.Beneficiopollos.component', ['data' => $Beneficiopollos,
+	    return view('livewire.beneficiopollos.component', ['data' => $beneficiopollos,
 				'thirds' => Third::orderBy('name', 'asc')->get(),
 				'sacrificios' => Sacrificiopollo::orderBy('name', 'asc')->get(),				
 				
