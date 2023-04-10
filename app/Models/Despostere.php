@@ -22,6 +22,7 @@ class Despostere extends Model
         'total',
         'porcventa',
         'porcutilidad',
+        'peso_acomulado',
         'status'        
     ];
 
