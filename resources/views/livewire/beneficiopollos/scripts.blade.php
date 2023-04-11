@@ -59,15 +59,15 @@
         plantasacrificio_id: plantasacrificio_id,
       },
      
-      success: function (data) {
+      success: function (data1) {
 
-      //  alert("registro prueba");
+        alert("registro prueba");
 
-        $("#sacrificio").val(data.sacrificio);
-        $("#fomento").val(data.fomento);
-        $("#deguello").val(data.deguello);
-        $("#bascula").val(data.bascula);
-        $("#transporte").val(data.transporte);
+        $("#sacrificio").val(data1.sacrificio);
+        $("#fomento").val(data1.fomento);
+        $("#deguello").val(data1.deguello);
+        $("#bascula").val(data1.bascula);
+        $("#transporte").val(data1.transporte);
         calculatotales();
 
       }
