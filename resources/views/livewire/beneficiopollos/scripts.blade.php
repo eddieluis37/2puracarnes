@@ -61,7 +61,7 @@
      
       success: function (data1) {
 
-        alert("registro prueba");
+       // alert("registro prueba");
 
         $("#sacrificio").val(data1.sacrificio);
         $("#fomento").val(data1.fomento);
