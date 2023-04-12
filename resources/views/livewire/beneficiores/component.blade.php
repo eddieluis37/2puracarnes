@@ -40,6 +40,11 @@
 
 
 								<td class="text-center">
+									<a href="desposteres/{{$beneficiore->id}}"
+									 class="btn btn-dark" title="Delete">
+										<i class="fas fa-search"></i>
+									</a>
+
 									<a href="javascript:void(0)" 
 									wire:click="Edit({{$beneficiore->id}})"
 									class="btn btn-dark mtmobile" title="Edit">

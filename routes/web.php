@@ -24,6 +24,7 @@ use App\Http\Livewire\RolesController;
 use App\Http\Livewire\Select2;
 use App\Http\Livewire\ThirdsController;
 use App\Http\Livewire\UsersController;
+use App\Http\Livewire\Desposte\Desposteres\DesposteresController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -104,9 +105,14 @@ Route::group(['middleware'=> [('auth')]], function () {
     Route::get('precio_agreements', PrecioAgreementsController::class);
     Route::get('beneficiores', BeneficioresController::class);
     Route::get('beneficiopollos', BeneficiopollosController::class);
+    Route::get('desposteres/{id}', DesposteresController::class);
     Route::resource('desposter', DesposterController::class);
 
    
+    /*desposteres* */
+    Route::post('desposteresAdd', [DesposteresController::class, 'store']);
+    Route::get('getdesposter/{id}', [DesposteresController::class, 'getdesposter']);
+    Route::get('downdesposter/{id}', [DesposteresController::class, 'destroy']);
 
     //reportes PDF
     Route::get('report/pdf/{user}/{type}/{f1}/{f2}', [ExportController::class, 'reportPDF']);
