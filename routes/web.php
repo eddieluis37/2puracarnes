@@ -112,7 +112,7 @@ Route::group(['middleware'=> [('auth')]], function () {
     /*desposteres* */
     Route::post('desposteresAdd', [DesposteresController::class, 'store']);
     Route::get('getdesposter/{id}', [DesposteresController::class, 'getdesposter']);
-    Route::get('downdesposter/{id}', [DesposteresController::class, 'destroy']);
+    Route::get('downdesposter/{id}/{beneficioId}', [DesposteresController::class, 'destroy']);
 
     //reportes PDF
     Route::get('report/pdf/{user}/{type}/{f1}/{f2}', [ExportController::class, 'reportPDF']);
