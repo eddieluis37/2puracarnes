@@ -31,7 +31,7 @@
 
 .accordion-content {
   padding: 10px;
-  display: none;
+  /*display: none;*/
 }
 
 </style>
@@ -227,7 +227,7 @@
 												</button>
 												
 												<button type="button"
-												onclick="Confirm('{{$item->id}}')" 
+												onclick="Confirm('{{$item->id}}','{{$item->beneficiores_id}}')" 
 												class="btn btn-dark" title="Delete">
 													<i class="fas fa-trash"></i>
 												</button>						
@@ -240,11 +240,11 @@
 									<tfoot>
 										<tr>
 											<td>Totales</td>
-											<td>{{$TotalDesposte}}</td>
+											<td>{{round($TotalDesposte)}}</td>
 											<td>--</td>
 											<td>{{$pesoTotalGlobal}}</td>
 											<td>{{$TotalVenta}}</td>
-											<td>{{$porcVentaTotal}}</td>
+											<td>{{round($porcVentaTotal)}}</td>
 											<td>--</td>
 											<td></td>
 										</tr>
@@ -528,8 +528,9 @@
 	}
     }
 
-    const Confirm = (id) =>
+    const Confirm = (id,beneficioId) =>
     {   
+		console.log(beneficioId)
         swal({
             title: 'CONFIRMAR',
             text: '¿CONFIRMAS ELIMINAR EL REGISTRO?',
@@ -542,7 +543,7 @@
         }).then(function(result) {
             if(result.value){
 		(async () => {
-	    		let response = await fetch(`/downdesposter/${id}`); 
+	    		let response = await fetch(`/downdesposter/${id}/${beneficioId}`); 
 	    		let resp = await response.json();
             		console.log(resp);
 			if (resp.status === 201) {

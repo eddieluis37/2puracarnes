@@ -42,10 +42,10 @@ class DesposteresController extends Component
 
         $prod = Product::all();
         /*********************** */
-        $TotalDesposte = (float)Despostere::Where('beneficiores_id',$this->beneficio_id)->sum('porcdesposte');
-        $TotalVenta = (float)Despostere::Where('beneficiores_id',$this->beneficio_id)->sum('totalventa');
-        $porcVentaTotal = (float)Despostere::Where('beneficiores_id',$this->beneficio_id)->sum('porcventa');
-        $pesoTotalGlobal = (float)Despostere::Where('beneficiores_id',$this->beneficio_id)->sum('peso');
+        $TotalDesposte = (float)Despostere::Where([['beneficiores_id',$this->beneficio_id],['status','VALID']])->sum('porcdesposte');
+        $TotalVenta = (float)Despostere::Where([['beneficiores_id',$this->beneficio_id],['status','VALID']])->sum('totalventa');
+        $porcVentaTotal = (float)Despostere::Where([['beneficiores_id',$this->beneficio_id],['status','VALID']])->sum('porcventa');
+        $pesoTotalGlobal = (float)Despostere::Where([['beneficiores_id',$this->beneficio_id],['status','VALID']])->sum('peso');
         //return view('livewire.desposte.desposteres.component');
         return view('livewire.desposte.desposteres.component',compact(
             'desposters','beneficior','prod','TotalDesposte','TotalVenta','porcVentaTotal','pesoTotalGlobal','proveedor'
@@ -148,15 +148,15 @@ class DesposteresController extends Component
 
             $getTotalcosto = Beneficiore::Where('id',$request->beneficioId)->get();
 
-            $beneficior = Despostere::Where('beneficiores_id',$request->beneficioId)->get();
+            $beneficior = Despostere::Where([['beneficiores_id',$request->beneficioId],['status','VALID']])->get();
             $porcentajeVenta = 0;
             $porcentajeDesposte = 0;
             foreach ($beneficior as $key) {
-                $sumakilosTotal = (float)Despostere::Where('beneficiores_id',$request->beneficioId)->sum('peso');
+                $sumakilosTotal = (float)Despostere::Where([['beneficiores_id',$request->beneficioId],['status','VALID']])->sum('peso');
                 $porc = (float)number_format($key->peso / $sumakilosTotal,4);
                 $porcentajeDesposte = (float)number_format($porc * 100,2);
 
-                $sumaTotal = (float)Despostere::Where('beneficiores_id',$request->beneficioId)->sum('totalventa');
+                $sumaTotal = (float)Despostere::Where([['beneficiores_id',$request->beneficioId],['status','VALID']])->sum('totalventa');
                 $porcve = (float)number_format($key->totalventa / $sumaTotal,4);
                 $porcentajeVenta = (float)number_format($porcve * 100,2);
 
@@ -194,15 +194,52 @@ class DesposteresController extends Component
         ]);
     }
 
-    public function destroy($id)
+    public function destroy($id,$beneficioId)
     {
-        $despost = Despostere::firstWhere('id', $id);
-        $despost->status = 'CANCELED';
-        $despost->save();
-        return response()->json([
-            "status" => 201,
-            "message" => "El registro se dio de baja con exito"
-        ]);
+        try {
+            
+            DB::beginTransaction();
+            $despost = Despostere::firstWhere('id', $id);
+            $despost->status = 'CANCELED';
+            $despost->save();
+            /************************************ */
+            $getTotalcosto = Beneficiore::Where('id',$beneficioId)->get();
+
+            $beneficior = Despostere::Where([['beneficiores_id',$beneficioId],['status','VALID']])->get();
+            $porcentajeVenta = 0;
+            $porcentajeDesposte = 0;
+            foreach ($beneficior as $key) {
+                $sumakilosTotal = (float)Despostere::Where([['beneficiores_id',$beneficioId],['status','VALID']])->sum('peso');
+                $porc = (float)number_format($key->peso / $sumakilosTotal,4);
+                $porcentajeDesposte = (float)number_format($porc * 100,2);
+
+                $sumaTotal = (float)Despostere::Where([['beneficiores_id',$beneficioId],['status','VALID']])->sum('totalventa');
+                $porcve = (float)number_format($key->totalventa / $sumaTotal,4);
+                $porcentajeVenta = (float)number_format($porcve * 100,2);
+
+                $porcentajecostoTotal = (float)number_format($porcentajeVenta / 100, 4);
+                $costoTotal = $porcentajecostoTotal * $getTotalcosto[0]->totalcostos;
+
+                $updatedespost = Despostere::firstWhere('id', $key->id);
+                $updatedespost->porcdesposte = $porcentajeDesposte;
+                $updatedespost->porcventa = $porcentajeVenta;
+                $updatedespost->costo = $costoTotal;
+                $updatedespost->save();
+            }								
+            /******************************************* */
+            DB::commit();
+            return response()->json([
+                "status" => 201,
+                "message" => "El registro se dio de baja con exito",
+            ]);
+
+        } catch (\Throwable $th) {
+            DB::rollback();
+            return response()->json([
+                "status" => 500,
+                "message" => (array) $th
+            ]);
+        }
 
     }
 }
