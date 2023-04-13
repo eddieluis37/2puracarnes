@@ -389,8 +389,18 @@
 
 	                                <div class="form-group col-md-4">
 	                                    <label for="costokilo">Sacrificio</label>
-	                                    <input type="number" name="tsacrificio" id="tsacrificio" class="form-control" aria-describedby="helpId" readonly step="0.01">
+	                                    <input type="number" name="tsacrificio" id="tsacrificio" class="form-control campo" aria-describedby="helpId" readonly step="0.01">
 	                                </div>
+									<!-- 		
+									<div class="col-md-4">
+										<div class="task-header">
+											<div class="form-group">
+												<label>Sacrificio</label>
+												<div class="form-control campo">{{number_format( $sacrificios[1]->sacrificio )}} </div>
+											</div>
+										</div>
+									</div>															
+ 									-->
 	                                <div class="form-group col-md-4">
 	                                    <label for="tfomento">Fomento</label>
 	                                    <input type="number" name="tfomento" id="tfomento" class="form-control" aria-describedby="helpId" readonly step="0.01">
