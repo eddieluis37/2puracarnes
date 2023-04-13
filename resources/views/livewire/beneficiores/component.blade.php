@@ -8,7 +8,7 @@
 				</h4>
 				<ul class="tabs tab-pills">
 					<li>
-						<a href="javascript:void(0)" class="tabmenu bg-dark" data-toggle="modal" data-target="#modal-create-beneficiore">Agregar</a>
+						<a href="javascript:void(0)" class="tabmenu bg-dark" data-toggle="modal" data-target="#modal-create-beneficiore" title="Nuevo Beneficio">Agregar</a>
 					</li>
 				</ul>
 			</div>
@@ -41,20 +41,20 @@
 
 								<td class="text-center">
 									<a href="desposteres/{{$beneficiore->id}}"
-									 class="btn btn-dark" title="Delete">
+									 class="btn btn-dark" title="Despostar">
 										<i class="fas fa-search"></i>
 									</a>
 
 									<a href="javascript:void(0)" 
 									wire:click="Edit({{$beneficiore->id}})"
-									class="btn btn-dark mtmobile" title="Edit">
+									class="btn btn-dark mtmobile" title="Editar Beneficio">
 										<i class="fas fa-edit"></i>
 									</a>
 
 									
 									<a href="javascript:void(0)"
 									onclick="Confirm('{{$beneficiore->id}}')" 
-									 class="btn btn-dark" title="Delete">
+									 class="btn btn-dark" title="Borrar Beneficio">
 										<i class="fas fa-trash"></i>
 									</a>						
 							
