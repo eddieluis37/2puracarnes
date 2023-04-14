@@ -26,11 +26,11 @@ class BeneficioreSeeder extends Seeder
             'lote' => 'LT201',
             'status' => true,       
            
-            'sacrificio' => 131000,
-            'fomento' => 250000,
-            'deguello' => 270000,
-            'bascula'  => 124000,
-            'transporte' => 90000,
+            'sacrificio' => 0,
+            'fomento' => 0,
+            'deguello' => 0,
+            'bascula'  => 0,
+            'transporte' => 0,
            
            
             'pesopie1'  => 121,
