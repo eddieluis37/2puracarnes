@@ -220,11 +220,11 @@
 											<td> {{ $item->porcventa}}</td>
 											<td> {{ $item->costo}}</td>
 											<td class="text-center">
-												<button type="button" onclick="Edit({{$item->id}})" class="btn btn-dark mtmobile" title="Edit">
+												<button type="button" onclick="Edit({{$item->id}})" class="btn btn-dark mtmobile" title="Editar">
 													<i class="fas fa-edit"></i>
 												</button>
 
-												<button type="button" onclick="Confirm('{{$item->id}}','{{$item->beneficiores_id}}')" class="btn btn-dark" title="Delete">
+												<button type="button" onclick="Confirm('{{$item->id}}','{{$item->beneficiores_id}}')" class="btn btn-dark" title="Cancelar">
 													<i class="fas fa-trash"></i>
 												</button>
 											</td>
