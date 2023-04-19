@@ -15,6 +15,8 @@ class CreateProductsTable extends Migration
     {
         Schema::create('products', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('category_id');           
+            $table->unsignedBigInteger('meatcut_id');           
             $table->string('name',255);
             $table->string('code', 20)->unique()->nullable();
             $table->string('barcode',25)->nullable();
@@ -24,9 +26,9 @@ class CreateProductsTable extends Migration
             $table->integer('stock');
             $table->integer('alerts');
             $table->string('image',100)->nullable();
-
-            $table->unsignedBigInteger('category_id');           
+            $table->boolean('status')->parent_select()->default(true);
             $table->foreign('category_id')->references('id')->on('categories');
+            $table->foreign('meatcut_id')->references('id')->on('meatcuts');
 
             $table->timestamps();
         });
