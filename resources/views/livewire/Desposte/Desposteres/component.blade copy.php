@@ -31,7 +31,7 @@
 
 .accordion-content {
   padding: 10px;
-  /*display: none;*/
+  display: none;
 }
 
 </style>
@@ -52,7 +52,8 @@
 							<div class="row">
 								<div class="col-md-6">
 									<div class="ml-3">
-									<h3>{{number_format($pesoTotalGlobal,2)}}</h3>
+
+									<h3>{{number_format($pesoTotal,2)}}</h3>
 									<p>Peso total</p>
 									</div>
 								</div>
@@ -68,7 +69,8 @@
 							<div class="row">
 								<div class="col-md-6">
 									<div class="ml-3">
-									<h3>{{$TotalDesposte}}</h3>
+
+									<h3>{{ number_format($beneficior[0]->pesopie / $sumaTotal, 2)}}</h3>
 									<p>% Desposte</p>
 									</div>
 								</div>
@@ -97,7 +99,7 @@
 	                                            		<div class="task-header">
 	                                                		<div class="form-group">
 	                                                   		<label>Proveedor</label>                                                                                            
-										<input type="text" name="proveedor" id="proveedor" class="form-control" readonly  value="{{$proveedor[0]->name}}">
+										<input type="text" name="proveedor" id="proveedor" class="form-control" readonly  value="{{$beneficior[0]->third->name}}">
 	                                                		</div>                                                  
 	                                            		</div>
 							</div>
@@ -121,142 +123,131 @@
 					</div>
 				</div>
 				<!---->
-				<div class="accordion mt-3">
+				<div class="accordion">
 					<div class="accordion-item">
 						<div class="accordion-header">
-						<h5>Formulario</h5>
+						<h3>Formulario</h3>
 						<span class="accordion-icon"></span>
 						</div>
 						<div class="accordion-content">
-							<div class="">
-								<div class="">
-									<div class="">
-										<form id="form-desposteres">
-											<input type="number" value="{{$beneficio_id}}" name="beneficioId" hidden >
-											<input type="number" id="despostereId" name="despostereId" hidden>
-										<div class="row mb-3">
-											<label for="producto" class="col-sm-2 col-form-label text-right">Producto</label>
-											<div class="col-sm-10">
-											<select class="form-control select2" name="producto"  wire:model="selected" required>
-												<option value="">Buscar producto...</option>
-												@foreach($prod as $option)
-												<option value="{{ $option['id'] }}" data="{{$option}}" >{{ $option['name'] }}</option>
-												@endforeach
-											</select>
-											</div>
-											<!--label for="inputEmail3" class="col-sm-2 col-form-label text-right">Producto</label>
-											<div class="col-sm-10">
-											<div class="input-group">
-											<input type="text" class="form-control" id="autoSizingInputGroup" wire:model="searchProduct" placeholder="Buscar producto">
-											<div class="input-group-text bg-primary">Escoger Dato</div>
-											</div>
-											</div>-->
-										</div>
-										
-										<div class="row mb-3">
-											<label for="pventa" class="col-sm-2 col-form-label text-right">Precio_venta</label>
-											<div class="col-sm-10">
-											<input type="number" class="form-control" id="pventa" name="pventa" required>
-											</div>
-										</div>
-										<div class="row mb-3">
-											<label for="pkilo" class="col-sm-2 col-form-label text-right">Peso_kilo</label>
-											<div class="col-sm-10">
-											<input type="number" class="form-control" id="pkilo" name="pkilo" onkeydown="fnInputEnter(event)" placeholder="Enter para calcular el total de venta" required>
-											</div>
-										</div>
-										<div class="row mb-3">
-											<label for="totalventa" class="col-sm-2 col-form-label text-right">Total_venta</label>
-											<div class="col-sm-10">
-											<input type="number" class="form-control" id="totalventa" name="totalventa" required>
-											</div>
-										</div>
-										<!--div class="row mb-3">
-											<label for="porcventa" class="col-sm-2 col-form-label text-right">Porcventa</label>
-											<div class="col-sm-10">
-											<input type="number" class="form-control" id="porcventa" name="porcventa" required>
-											</div>
-										</div>-->
-										<div class="col-12 text-right">
-											<button type="button" id="btnAdd" class="btn btn-primary">
-												Aceptar
-											</button>
-										</div>							
-										</form>
-									</div>
-								</div>
-							</div>	
+						<p>Content for Accordion Item 1 goes here.</p>
 						</div>
 						</div>
 						<div class="accordion-item">
 						<div class="accordion-header">
-						<h5>Lista de contenido</h5>
+						<h3>Accordion Item 2</h3>
 						<span class="accordion-icon"></span>
 						</div>
 						<div class="accordion-content">
-							<div class="table-responsive mt-3">
-								<table id="tableDespostere" class="table table-striped">
-									<thead class="text-white" style="background: #3B3F5C">
-										<tr>
-											<th class="table-th text-white">Producto</th>
-											<th class="table-th text-white">% Desposte</th>
-											<th class="table-th text-white">Precio venta</th>
-											<th class="table-th text-white text-center">Peso kilo</th>
-											<th class="table-th text-white text-center">Total venta</th>
-											<th class="table-th text-white text-center">Porcventa</th>
-											<th class="table-th text-white text-center">Costo total</th>
-											<th class="table-th text-white text-center">Acciones</th>
-										</tr>
-									</thead>
-									<tbody>
-										<?php $tpeso = 0; $tdesposte = 0; ?>
-										@foreach($desposters as $item)
-										<tr>
-											<td> {{ $item->products->name }}</td>
-											<td> {{ $item->porcdesposte }}</td>
-											<td> {{ $item->precio}}</td>
-											<td> {{ $item->peso }}</td>
-											<td> {{ $item->totalventa}}</td>
-											<td> {{ $item->porcventa}}</td>
-											<td> {{ $item->costo}}</td>
-											<td class="text-center">
-												<button type="button"
-												onclick="Edit({{$item->id}})"
-												class="btn btn-dark mtmobile" title="Edit">
-													<i class="fas fa-edit"></i>
-												</button>
-												
-												<button type="button"
-												onclick="Confirm('{{$item->id}}','{{$item->beneficiores_id}}')" 
-												class="btn btn-dark" title="Delete">
-													<i class="fas fa-trash"></i>
-												</button>						
-											</td>
-										</tr>
-										<?php $tpeso = $tpeso + $item->peso ;
-										$tdesposte = $tdesposte + $item->total; ?>
-										@endforeach
-									</tbody>
-									<tfoot>
-										<tr>
-											<td>Totales</td>
-											<td>{{round($TotalDesposte)}}</td>
-											<td>--</td>
-											<td>{{$pesoTotalGlobal}}</td>
-											<td>{{$TotalVenta}}</td>
-											<td>{{round($porcVentaTotal)}}</td>
-											<td>--</td>
-											<td></td>
-										</tr>
-								</tfoot>
-								</table>
-							</div>	
+						<p>Content for Accordion Item 2 goes here.</p>
 						</div>
 					</div>
 				</div>
 				<!---->
-				
-								
+				<div class="card mt-3">
+					<h5 class="card-header">Formulario</h5>
+					<div class="card-body">
+						<div class="container">
+							<form id="form-desposteres">
+								<input type="number" value="{{$beneficio_id}}" name="beneficioId" hidden >
+								<input type="number" id="despostereId" name="despostereId" hidden>
+							<div class="row mb-3">
+								<label for="producto" class="col-sm-2 col-form-label text-right">Producto</label>
+								<div class="col-sm-10">
+								<select class="form-control select2" name="producto"  wire:model="selected" required>
+									<option value="">Buscar producto...</option>
+									@foreach($prod as $option)
+									<option value="{{ $option['id'] }}" data="{{$option}}" >{{ $option['name'] }}</option>
+									@endforeach
+								</select>
+								</div>
+								<!--label for="inputEmail3" class="col-sm-2 col-form-label text-right">Producto</label>
+								<div class="col-sm-10">
+								<div class="input-group">
+								<input type="text" class="form-control" id="autoSizingInputGroup" wire:model="searchProduct" placeholder="Buscar producto">
+								<div class="input-group-text bg-primary">Escoger Dato</div>
+								</div>
+								</div>-->
+							</div>
+							
+							<div class="row mb-3">
+								<label for="pventa" class="col-sm-2 col-form-label text-right">Precio_venta</label>
+								<div class="col-sm-10">
+								<input type="number" class="form-control" id="pventa" name="pventa" required>
+								</div>
+							</div>
+							<div class="row mb-3">
+								<label for="pkilo" class="col-sm-2 col-form-label text-right">Peso_kilo</label>
+								<div class="col-sm-10">
+								<input type="number" class="form-control" id="pkilo" name="pkilo" onkeydown="fnInputEnter(event)" required>
+								</div>
+							</div>
+							<div class="row mb-3">
+								<label for="totalventa" class="col-sm-2 col-form-label text-right">Total_venta</label>
+								<div class="col-sm-10">
+								<input type="number" class="form-control" id="totalventa" name="totalventa" required>
+								</div>
+							</div>
+							<div class="row mb-3">
+								<label for="porcventa" class="col-sm-2 col-form-label text-right">Porcventa</label>
+								<div class="col-sm-10">
+								<input type="number" class="form-control" id="porcventa" name="porcventa" required>
+								</div>
+							</div>
+							<div class="col-12 text-right">
+								<button type="button" id="btnAdd" class="btn btn-primary">Agregar</button>
+							</div>							
+							</form>
+						</div>
+					</div>
+				</div>
+				<div class="card mt-2 border-0">
+					<div class="">
+						<input type="hidden" name="id" id="id" class="form-control" readonly  value="{{$beneficior[0]->id}}" >  
+						<button type="submit" class="btn btn-primary mr-2">Recalcular</button>
+					</div>
+				</div>
+				<div class="table-responsive mt-3">
+					<table id="tableDespostere" class="table table-striped">
+						<thead class="text-white" style="background: #3B3F5C">
+							<tr>
+								<th class="table-th text-white">Producto</th>
+								<th class="table-th text-white">Precio venta</th>
+								<th class="table-th text-white text-center">Peso kilo</th>
+								<th class="table-th text-white text-center">Total venta</th>
+								<th class="table-th text-white text-center">Porcventa</th>
+								<th class="table-th text-white text-center">Acciones</th>
+							</tr>
+						</thead>
+						<tbody>
+							<?php $tpeso = 0; $tdesposte = 0; ?>
+							@foreach($desposters as $item)
+							<tr>
+								<td> {{ $item->products->name }}</td>
+								<td> {{ $item->precio}}</td>
+								<td> {{ $item->peso }}</td>
+								<td> {{ $item->totalventa}}</td>
+								<td> {{ $item->porcventa}}</td>
+								<td class="text-center">
+									<button type="button"
+									onclick="Edit({{$item->id}})"
+									class="btn btn-dark mtmobile" title="Edit">
+										<i class="fas fa-edit"></i>
+									</button>
+									
+									<button type="button"
+									onclick="Confirm('{{$item->id}}')" 
+									 class="btn btn-dark" title="Delete">
+										<i class="fas fa-trash"></i>
+									</button>						
+								</td>
+							</tr>
+							<?php $tpeso = $tpeso + $item->peso ;
+                                      			$tdesposte = $tdesposte + $item->total; ?>
+							@endforeach
+						</tbody>
+					</table>
+				</div>				
 				<?php 
 					$pi = $beneficior[0]->canalplanta; 
 					$cant = $beneficior[0]->cantidad;
@@ -426,7 +417,7 @@
 
     document.addEventListener('livewire:load', function () {
     $('#tableDespostere').DataTable( {
-        //"order": [[ 0, "desc" ]]
+        "order": [[ 0, "desc" ]]
     } );
         /*$('.select2').select2({
             placeholder: 'Select an option',
@@ -436,7 +427,6 @@
         });*/
 	$('.select2').select2({
             placeholder: 'Busca un producto',
-	            width: '100%',
         }).on('change', function (e) {
             //var data = $('.select2').select2("val");
 	    //console.log(data);
@@ -465,25 +455,17 @@
 
     btnAddForm.addEventListener('click', async (e) => {
 	e.preventDefault();
-	btnAddForm.disabled = true;
-	btnAddForm.innerHTML = "";
-	btnAddForm.innerHTML += `
-	<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-  	<span class="visually-hidden">Guardando...</span>
-	`;
 	const formData = new FormData(formdesposteres); // Get the form data
 	const response = await fetch("/desposteresAdd", { // Send the form data using fetch()
 		headers: {
-            'X-CSRF-TOKEN': token
-      	},
+                  'X-CSRF-TOKEN': token
+        	},
 		method: "POST",
 		body: formData
 	});
 	const result = await response.json(); // Parse the response as JSON
+	// Do something with the response data
 	console.log(result);
-	btnAddForm.disabled = false;
-	btnAddForm.innerHTML = "";
-	btnAddForm.innerHTML += `Aceptar`;
 	formdesposteres.reset();
 	//$('.select2').prop('selectedIndex', 0);
         //$('.select2').select2({});
@@ -496,15 +478,6 @@
 		setTimeout(() => {
 			location.reload();
 		}, 1000);
-	}
-	if (result.status === 500) {
-		console.log(result.errores)
-		swal({
-		title: "Error",
-		text: "Hay campos del formulario vacios",
-		type: "error",
-		});
-		
 	}
 
     });
@@ -528,9 +501,8 @@
 	}
     }
 
-    const Confirm = (id,beneficioId) =>
+    const Confirm = (id) =>
     {   
-		console.log(beneficioId)
         swal({
             title: 'CONFIRMAR',
             text: '¿CONFIRMAS ELIMINAR EL REGISTRO?',
@@ -543,7 +515,7 @@
         }).then(function(result) {
             if(result.value){
 		(async () => {
-	    		let response = await fetch(`/downdesposter/${id}/${beneficioId}`); 
+	    		let response = await fetch(`/downdesposter/${id}`); 
 	    		let resp = await response.json();
             		console.log(resp);
 			if (resp.status === 201) {

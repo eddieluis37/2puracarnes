@@ -14,7 +14,9 @@ class ProductSeeder extends Seeder
      */
     public function run()
     {
-        Product::create([
+        /*Product::create([
+            'meatcut_id'=> 1,
+            'category_id' => 4,
             'name' => 'ESPECIAL STICK',
             'code' => 'PC0040',
             'cost' => 21000,
@@ -23,10 +25,11 @@ class ProductSeeder extends Seeder
             'barcode' => '77070065557',
             'stock' => 1000,
             'alerts' => 10,
-            'category_id' => 4,
             'image' => '.png'
         ]);
         Product::create([
+            'meatcut_id'=> 1,
+            'category_id' => 5,
             'name' => 'PULGAREJO',
             'code' => 'PC0313',
             'cost' => 21000,
@@ -35,10 +38,11 @@ class ProductSeeder extends Seeder
             'barcode' => '71010065987',
             'stock' => 1000,
             'alerts' => 10,
-            'category_id' => 5,
             'image' => '.png'
         ]);
         Product::create([
+            'meatcut_id'=> 1,
+            'category_id' => 6,
             'name' => 'CHORIZO SANTAROSANO 800 GR X 10',
             'code' => 'PC401',
             'cost' => 21000,
@@ -47,10 +51,11 @@ class ProductSeeder extends Seeder
             'barcode' => '75010065987',
             'stock' => 1000,
             'alerts' => 10,
-            'category_id' => 6,
             'image' => '.png'
-        ]);
+        ]);*/
         Product::create([
+            'meatcut_id'=> 1,
+        	'category_id' => 1,
         	'name' => 'LOMO FINO',
             'code' => 'PC001',
         	'cost' => 21000,
@@ -59,10 +64,11 @@ class ProductSeeder extends Seeder
         	'barcode' => '75010065987',
         	'stock' => 1000,
         	'alerts' => 10,
-        	'category_id' => 1,
         	'image' => '.png'
         ]);
          Product::create([
+            'meatcut_id'=> 1,
+        	'category_id' => 1,
         	'name' => 'PUNTA DE ANCA',
             'code' => 'PC002',
         	'cost' => 21000,
@@ -71,10 +77,11 @@ class ProductSeeder extends Seeder
         	'barcode' => '7609872014',
         	'stock' => 1000,
         	'alerts' => 10,
-        	'category_id' => 1,
         	'image' => 'CADERAS.png'
         ]);
           Product::create([
+            'meatcut_id'=> 1,
+        	'category_id' => 1,
         	'name' => 'CHATA',
             'code' => 'PC003',
         	'cost' => 19000,
@@ -83,10 +90,11 @@ class ProductSeeder extends Seeder
         	'barcode' => '7709876541',
         	'stock' => 1000,
         	'alerts' => 10,
-        	'category_id' => 1,
         	'image' => 'PIERNA.png'
         ]);
            Product::create([
+            'meatcut_id'=> 1,
+        	'category_id' => 1,
         	'name' => 'CHURRASCO',
             'code' => 'PC004',
         	'cost' => 22000,
@@ -94,10 +102,11 @@ class ProductSeeder extends Seeder
         	'barcode' => '790654812',
         	'stock' => 1000,
         	'alerts' => 10,
-        	'category_id' => 1,
         	'image' => 'CHATAS.png'
         ]);
             Product::create([
+            'meatcut_id'=> 1,
+            'category_id' => 1,
             'name' => 'ASAR ESPECIAL',
             'code' => 'PC005',
             'cost' => 32000,
@@ -105,10 +114,11 @@ class ProductSeeder extends Seeder
             'barcode' => '790654813',
             'stock' => 1000,
             'alerts' => 10,
-            'category_id' => 1,
             'image' => 'CHATAS.png'
         ]);
             Product::create([
+            'meatcut_id'=> 1,
+            'category_id' => 1,
             'name' => 'CENTRO DE PIERNA',
             'code' => 'PC006',
             'cost' => 12000,
@@ -116,10 +126,11 @@ class ProductSeeder extends Seeder
             'barcode' => '790654814',
             'stock' => 1000,
             'alerts' => 10,
-            'category_id' => 1,
             'image' => 'CHATAS.png'
         ]);
              Product::create([
+            'meatcut_id'=> 1,
+            'category_id' => 1,
             'name' => 'BOLA DE PIERNA',
             'code' => 'PC007',
             'cost' => 14000,
@@ -127,10 +138,11 @@ class ProductSeeder extends Seeder
             'barcode' => '790654815',
             'stock' => 1000,
             'alerts' => 10,
-            'category_id' => 1,
             'image' => 'CHATAS.png'
         ]);
-              Product::create([
+            Product::create([
+            'meatcut_id'=> 1,
+            'category_id' => 1,
             'name' => 'CADERA',
             'code' => 'PC008',
             'cost' => 14000,
@@ -138,10 +150,11 @@ class ProductSeeder extends Seeder
             'barcode' => '790654816',
             'stock' => 1000,
             'alerts' => 10,
-            'category_id' => 1,
             'image' => 'CHATAS.png'
         ]);
-              Product::create([
+            Product::create([
+            'meatcut_id'=> 1,
+            'category_id' => 1,
             'name' => 'BOTA CON MUCHACHO',
             'code' => 'PC009',
             'cost' => 13000,
@@ -149,7 +162,6 @@ class ProductSeeder extends Seeder
             'barcode' => '790654817',
             'stock' => 1000,
             'alerts' => 10,
-            'category_id' => 1,
             'image' => '.png'
         ]);
 
