@@ -17,6 +17,7 @@ class DatabaseSeeder extends Seeder
         $this->call(DenominationSeeder::class);
         $this->call(CategorySeeder::class);
         $this->call(MeatcutSeeder::class);
+        $this->call(UnitofmeasureSeeder::class);
         $this->call(ProductSeeder::class);
         $this->call(UserSeeder::class);
         $this->call(Type_identificationSeeder::class);

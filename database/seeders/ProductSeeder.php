@@ -56,6 +56,7 @@ class ProductSeeder extends Seeder
         Product::create([
             'meatcut_id'=> 1,
         	'category_id' => 1,
+            'unitofmeasure_id' => 1,
         	'name' => 'LOMO FINO',
             'code' => 'PC001',
         	'cost' => 21000,
@@ -69,6 +70,7 @@ class ProductSeeder extends Seeder
          Product::create([
             'meatcut_id'=> 1,
         	'category_id' => 1,
+            'unitofmeasure_id' => 1,
         	'name' => 'PUNTA DE ANCA',
             'code' => 'PC002',
         	'cost' => 21000,
@@ -82,6 +84,7 @@ class ProductSeeder extends Seeder
           Product::create([
             'meatcut_id'=> 1,
         	'category_id' => 1,
+            'unitofmeasure_id' => 1,
         	'name' => 'CHATA',
             'code' => 'PC003',
         	'cost' => 19000,
@@ -95,6 +98,7 @@ class ProductSeeder extends Seeder
            Product::create([
             'meatcut_id'=> 1,
         	'category_id' => 1,
+            'unitofmeasure_id' => 1,
         	'name' => 'CHURRASCO',
             'code' => 'PC004',
         	'cost' => 22000,
@@ -107,6 +111,7 @@ class ProductSeeder extends Seeder
             Product::create([
             'meatcut_id'=> 1,
             'category_id' => 1,
+            'unitofmeasure_id' => 1,
             'name' => 'ASAR ESPECIAL',
             'code' => 'PC005',
             'cost' => 32000,
@@ -119,6 +124,7 @@ class ProductSeeder extends Seeder
             Product::create([
             'meatcut_id'=> 1,
             'category_id' => 1,
+            'unitofmeasure_id' => 1,
             'name' => 'CENTRO DE PIERNA',
             'code' => 'PC006',
             'cost' => 12000,
@@ -131,6 +137,7 @@ class ProductSeeder extends Seeder
              Product::create([
             'meatcut_id'=> 1,
             'category_id' => 1,
+            'unitofmeasure_id' => 1,
             'name' => 'BOLA DE PIERNA',
             'code' => 'PC007',
             'cost' => 14000,
@@ -143,6 +150,7 @@ class ProductSeeder extends Seeder
             Product::create([
             'meatcut_id'=> 1,
             'category_id' => 1,
+            'unitofmeasure_id' => 1,
             'name' => 'CADERA',
             'code' => 'PC008',
             'cost' => 14000,
@@ -155,6 +163,7 @@ class ProductSeeder extends Seeder
             Product::create([
             'meatcut_id'=> 1,
             'category_id' => 1,
+            'unitofmeasure_id' => 1,
             'name' => 'BOTA CON MUCHACHO',
             'code' => 'PC009',
             'cost' => 13000,
