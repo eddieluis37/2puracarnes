@@ -209,6 +209,162 @@ class MeatcutSeeder extends Seeder
         	'description' => '',
         	'status' => true
         ]);
+
+		Meatcut::create([
+        	'category_id' => 1,
+        	'name' => 'POR SI SE REQUIERE 1',
+        	'description' => '',
+        	'status' => true
+        ]);
+
+        Meatcut::create([
+        	'category_id' => 1,
+        	'name' => 'POR SI SE REQUIERE 2',
+        	'description' => '',
+        	'status' => true
+        ]);
+
+		// CERDO
+
+		Meatcut::create([
+        	'category_id' => 2,
+        	'name' => 'ESPINAZO DE CERDO',
+        	'description' => '31',
+        	'status' => true
+        ]);
+
+		Meatcut::create([
+        	'category_id' => 2,
+        	'name' => 'COSTILOMO COMPLETO',
+        	'description' => '32',
+        	'status' => true
+        ]);
+
+		Meatcut::create([
+        	'category_id' => 2,
+        	'name' => 'CABEZA DE CERDO',
+        	'description' => '33',
+        	'status' => true
+        ]);
+
+		Meatcut::create([
+        	'category_id' => 2,
+        	'name' => 'BARRIGA',
+        	'description' => '34',
+        	'status' => true
+        ]);
+
+		Meatcut::create([
+        	'category_id' => 2,
+        	'name' => 'PAPADA',
+        	'description' => '35',
+        	'status' => true
+        ]);
+
+		Meatcut::create([
+        	'category_id' => 2,
+        	'name' => 'PEZUÑA',
+        	'description' => '36',
+        	'status' => true
+        ]);
+
+		Meatcut::create([
+        	'category_id' => 2,
+        	'name' => 'DORSAL',
+        	'description' => '37',
+        	'status' => true
+        ]);
+
+		Meatcut::create([
+        	'category_id' => 2,
+        	'name' => 'EMPELLA',
+        	'description' => '38',
+        	'status' => true
+        ]);
+
+		Meatcut::create([
+        	'category_id' => 2,
+        	'name' => 'PERNIL',
+        	'description' => '39',
+        	'status' => true
+        ]);
+
+		Meatcut::create([
+        	'category_id' => 2,
+        	'name' => 'BRAZO',
+        	'description' => '40',
+        	'status' => true
+        ]);
+
+		Meatcut::create([
+        	'category_id' => 2,
+        	'name' => 'HUESO POROSO',
+        	'description' => '41',
+        	'status' => true
+        ]);
+
+		Meatcut::create([
+        	'category_id' => 2,
+        	'name' => 'BONDIOLA',
+        	'description' => '42',
+        	'status' => true
+        ]);
+
+		Meatcut::create([
+        	'category_id' => 2,
+        	'name' => 'PANCETA',
+        	'description' => '43',
+        	'status' => true
+        ]);
+
+		Meatcut::create([
+        	'category_id' => 2,
+        	'name' => 'CODO',
+        	'description' => '44',
+        	'status' => true
+        ]);
+
+		Meatcut::create([
+        	'category_id' => 2,
+        	'name' => 'LOMO DE CERDO',
+        	'description' => '45',
+        	'status' => true
+        ]);
+
+		Meatcut::create([
+        	'category_id' => 2,
+        	'name' => 'MOTA DE CERDO',
+        	'description' => '46',
+        	'status' => true
+        ]);
+
+		Meatcut::create([
+        	'category_id' => 2,
+        	'name' => 'POR SI SE REQUIERE 1 CERDO',
+        	'description' => '47',
+        	'status' => true
+        ]);
+
+		Meatcut::create([
+        	'category_id' => 2,
+        	'name' => 'POR SI SE REQUIERE 2 CERDO',
+        	'description' => '48',
+        	'status' => true
+        ]);
+
+		Meatcut::create([
+        	'category_id' => 2,
+        	'name' => 'POR SI SE REQUIERE 3 CERDO',
+        	'description' => '49',
+        	'status' => true
+        ]);
+
+		Meatcut::create([
+        	'category_id' => 2,
+        	'name' => 'POR SI SE REQUIERE 4 CERDO',
+        	'description' => '50',
+        	'status' => true
+        ]);
     }
     
 }
