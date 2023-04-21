@@ -133,6 +133,64 @@ class ProductSeeder extends Seeder
         $product = new Product(["code" => "PC204", "barcode" => "123456847", "name" => "UBRE", "stock" => "30", "category_id" => "1", "meatcut_id" => "28", "unitofmeasure_id" => "1", "cost" => "39000", "price" => "41000", "iva" => "0", "alerts" => "10", "image" => "noimage.png"]);
         $product->save();
 
+        // CERDO
+
+        $product = new Product(["code" => "PC205", "barcode" => "123456848", "name" => "ESPINAZO DE CERDO", "stock" => "10", "category_id" => "2", "meatcut_id" => "31", "unitofmeasure_id" => "1", "cost" => "10000", "price" => "12000", "iva" => "0", "alerts" => "10", "image" => "noimage.png"]);
+        $product->save();
+        $product = new Product(["code" => "PC206", "barcode" => "123456849", "name" => "SOLOMITO DE CERDO", "stock" => "10", "category_id" => "2", "meatcut_id" => "32", "unitofmeasure_id" => "1", "cost" => "10500", "price" => "12500", "iva" => "0", "alerts" => "10", "image" => "noimage.png"]);
+        $product->save();
+        $product = new Product(["code" => "PC207", "barcode" => "123456850", "name" => "CHULETA DE LOMO", "stock" => "10", "category_id" => "2", "meatcut_id" => "32", "unitofmeasure_id" => "1", "cost" => "11000", "price" => "13000", "iva" => "0", "alerts" => "10", "image" => "noimage.png"]);
+        $product->save();
+        $product = new Product(["code" => "PC208", "barcode" => "123456851", "name" => "COSTILLA DE CERDO", "stock" => "10", "category_id" => "2", "meatcut_id" => "32", "unitofmeasure_id" => "1", "cost" => "11500", "price" => "13500", "iva" => "0", "alerts" => "10", "image" => "noimage.png"]);
+        $product->save();
+        $product = new Product(["code" => "PC209", "barcode" => "123456852", "name" => "COSTILLA SPARRY", "stock" => "10", "category_id" => "2", "meatcut_id" => "32", "unitofmeasure_id" => "1", "cost" => "12000", "price" => "14000", "iva" => "0", "alerts" => "10", "image" => "noimage.png"]);
+        $product->save();
+        $product = new Product(["code" => "PC210", "barcode" => "123456853", "name" => "COSTILLA BABY BACK DE CERDO", "stock" => "10", "category_id" => "2", "meatcut_id" => "32", "unitofmeasure_id" => "1", "cost" => "12500", "price" => "14500", "iva" => "0", "alerts" => "10", "image" => "noimage.png"]);
+        $product->save();
+        $product = new Product(["code" => "PC211", "barcode" => "123456854", "name" => "COSTILOMO COMPLETO", "stock" => "10", "category_id" => "2", "meatcut_id" => "32", "unitofmeasure_id" => "1", "cost" => "13000", "price" => "15000", "iva" => "0", "alerts" => "10", "image" => "noimage.png"]);
+        $product->save();
+        $product = new Product(["code" => "PC212", "barcode" => "123456855", "name" => "CABEZA DE CERDO", "stock" => "10", "category_id" => "2", "meatcut_id" => "33", "unitofmeasure_id" => "1", "cost" => "13500", "price" => "15500", "iva" => "0", "alerts" => "10", "image" => "noimage.png"]);
+        $product->save();
+        $product = new Product(["code" => "PC213", "barcode" => "123456856", "name" => "TOCINO BARRIGA", "stock" => "10", "category_id" => "2", "meatcut_id" => "34", "unitofmeasure_id" => "1", "cost" => "14000", "price" => "16000", "iva" => "0", "alerts" => "10", "image" => "noimage.png"]);
+        $product->save();
+        $product = new Product(["code" => "PC214", "barcode" => "123456857", "name" => "TOCINO PAPADA", "stock" => "10", "category_id" => "2", "meatcut_id" => "35", "unitofmeasure_id" => "1", "cost" => "14500", "price" => "16500", "iva" => "0", "alerts" => "10", "image" => "noimage.png"]);
+        $product->save();
+        $product = new Product(["code" => "PC215", "barcode" => "123456858", "name" => "PEZUÑA DE CERDO", "stock" => "10", "category_id" => "2", "meatcut_id" => "36", "unitofmeasure_id" => "1", "cost" => "15000", "price" => "17000", "iva" => "0", "alerts" => "10", "image" => "noimage.png"]);
+        $product->save();
+        $product = new Product(["code" => "PC216", "barcode" => "123456859", "name" => "TOCINO CORRIENTE", "stock" => "10", "category_id" => "2", "meatcut_id" => "37", "unitofmeasure_id" => "1", "cost" => "15500", "price" => "17500", "iva" => "0", "alerts" => "10", "image" => "noimage.png"]);
+        $product->save();
+        $product = new Product(["code" => "PC217", "barcode" => "123456860", "name" => "EMPELLA - DESPALME", "stock" => "10", "category_id" => "2", "meatcut_id" => "38", "unitofmeasure_id" => "1", "cost" => "16000", "price" => "18000", "iva" => "0", "alerts" => "10", "image" => "noimage.png"]);
+        $product->save();
+        $product = new Product(["code" => "PC218", "barcode" => "123456861", "name" => "SIRLOIN DE CERDO ", "stock" => "10", "category_id" => "2", "meatcut_id" => "39", "unitofmeasure_id" => "1", "cost" => "16500", "price" => "18500", "iva" => "0", "alerts" => "10", "image" => "noimage.png"]);
+        $product->save();
+        $product = new Product(["code" => "PC219", "barcode" => "123456862", "name" => "PULPA DE PIERNA CERDO", "stock" => "10", "category_id" => "2", "meatcut_id" => "39", "unitofmeasure_id" => "1", "cost" => "17000", "price" => "19000", "iva" => "0", "alerts" => "10", "image" => "noimage.png"]);
+        $product->save();
+        $product = new Product(["code" => "PC220", "barcode" => "123456863", "name" => "CHULETA DE PIERNA", "stock" => "10", "category_id" => "2", "meatcut_id" => "39", "unitofmeasure_id" => "1", "cost" => "17500", "price" => "19500", "iva" => "0", "alerts" => "10", "image" => "noimage.png"]);
+        $product->save();
+        $product = new Product(["code" => "PC221", "barcode" => "123456864", "name" => "PULPA DE BRAZO CERDO", "stock" => "10", "category_id" => "2", "meatcut_id" => "40", "unitofmeasure_id" => "1", "cost" => "18000", "price" => "20000", "iva" => "0", "alerts" => "10", "image" => "noimage.png"]);
+        $product->save();
+        $product = new Product(["code" => "PC222", "barcode" => "123456865", "name" => "CHULETA DE BRAZO", "stock" => "10", "category_id" => "2", "meatcut_id" => "40", "unitofmeasure_id" => "1", "cost" => "18500", "price" => "20500", "iva" => "0", "alerts" => "10", "image" => "noimage.png"]);
+        $product->save();
+        $product = new Product(["code" => "PC223", "barcode" => "123456866", "name" => "MILANESA DE CERDO", "stock" => "10", "category_id" => "2", "meatcut_id" => "40", "unitofmeasure_id" => "1", "cost" => "19000", "price" => "21000", "iva" => "0", "alerts" => "10", "image" => "noimage.png"]);
+        $product->save();
+        $product = new Product(["code" => "PC224", "barcode" => "123456867", "name" => "GOULASH DE CERDO", "stock" => "10", "category_id" => "2", "meatcut_id" => "40", "unitofmeasure_id" => "1", "cost" => "19500", "price" => "21500", "iva" => "0", "alerts" => "10", "image" => "noimage.png"]);
+        $product->save();
+        $product = new Product(["code" => "PC225", "barcode" => "123456868", "name" => "HUESO POROSO DE CERDO", "stock" => "10", "category_id" => "2", "meatcut_id" => "41", "unitofmeasure_id" => "1", "cost" => "20000", "price" => "22000", "iva" => "0", "alerts" => "10", "image" => "noimage.png"]);
+        $product->save();
+        $product = new Product(["code" => "PC226", "barcode" => "123456869", "name" => "BONDIOLA", "stock" => "10", "category_id" => "2", "meatcut_id" => "42", "unitofmeasure_id" => "1", "cost" => "20500", "price" => "22500", "iva" => "0", "alerts" => "10", "image" => "noimage.png"]);
+        $product->save();
+        $product = new Product(["code" => "PC227", "barcode" => "123456870", "name" => "PANCETA", "stock" => "10", "category_id" => "2", "meatcut_id" => "43", "unitofmeasure_id" => "1", "cost" => "21000", "price" => "23000", "iva" => "0", "alerts" => "10", "image" => "noimage.png"]);
+        $product->save();
+        $product = new Product(["code" => "PC228", "barcode" => "123456871", "name" => "MATAMBRE", "stock" => "10", "category_id" => "2", "meatcut_id" => "43", "unitofmeasure_id" => "1", "cost" => "21500", "price" => "23500", "iva" => "0", "alerts" => "10", "image" => "noimage.png"]);
+        $product->save();
+        $product = new Product(["code" => "PC229", "barcode" => "123456872", "name" => "OSSOBUCO + CODO", "stock" => "10", "category_id" => "2", "meatcut_id" => "44", "unitofmeasure_id" => "1", "cost" => "22000", "price" => "24000", "iva" => "0", "alerts" => "10", "image" => "noimage.png"]);
+        $product->save();
+        $product = new Product(["code" => "PC230", "barcode" => "123456873", "name" => "LOMO DE CERDO", "stock" => "10", "category_id" => "2", "meatcut_id" => "45", "unitofmeasure_id" => "1", "cost" => "22500", "price" => "24500", "iva" => "0", "alerts" => "10", "image" => "noimage.png"]);
+        $product->save();
+        $product = new Product(["code" => "PC231", "barcode" => "123456874", "name" => "MOTA DE CERDO", "stock" => "10", "category_id" => "2", "meatcut_id" => "46", "unitofmeasure_id" => "1", "cost" => "23000", "price" => "25000", "iva" => "0", "alerts" => "10", "image" => "noimage.png"]);
+        $product->save();
+
+
 
         /*Product::create([
             'meatcut_id'=> 1,
