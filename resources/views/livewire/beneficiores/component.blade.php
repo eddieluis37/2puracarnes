@@ -43,8 +43,7 @@
 									<a href="desposteres/{{$beneficiore->id}}"
 									 class="btn btn-dark" title="Despostar">
 										<i class="fas fa-search"></i>
-									</a>
-
+									</a>						
 									<a href="javascript:void(0)" 
 									wire:click="Edit({{$beneficiore->id}})"
 									class="btn btn-dark mtmobile" title="Editar Beneficio">
