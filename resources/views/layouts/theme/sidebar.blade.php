@@ -421,7 +421,7 @@
                             <a role="menu" class="collapsed" data-toggle="collapse" data-target="#starter-kit2" aria-expanded="false"><div><span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-circle"><circle cx="12" cy="12" r="10"></circle></svg></span> Aves</div> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg></a>
                             <ul id="starter-kit2" class="collapse" data-parent="#compact_submenuSidebar">
                                 <li>
-                                    <a href="beneficiopollos"> Beneficio Aves </a>
+                                    <a href={{url('beneficiopollos')}}> Beneficio Aves </a>
                                 </li>
                                 <li>
                                     <a href=""> Compensado Aves </a>
@@ -434,10 +434,10 @@
                             <a role="menu" class="collapsed" data-toggle="collapse" data-target="#starter-kit" aria-expanded="false"><div><span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-circle"><circle cx="12" cy="12" r="10"></circle></svg></span> Cerdo</div> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg></a>
                             <ul id="starter-kit" class="collapse" data-parent="#compact_submenuSidebar">
                                 <li>
-                                    <a href="beneficiocerdos"> Beneficio Cerdo </a>
+                                    <a href={{url('beneficiocerdos')}}> Beneficio Cerdo </a>
                                 </li>
                                 <li>
-                                    <a href="beneficiocerdos"> Desposte Cerdo </a>
+                                    <a href={{url('beneficiocerdos')}}> Desposte Cerdo </a>
                                 </li>
                                 <li>
                                     <a href=""> Compensado Cerdo </a>
@@ -449,7 +449,7 @@
                             <a role="menu" class="collapsed" data-toggle="collapse" data-target="#auth" aria-expanded="false"><div> <span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-circle"><circle cx="12" cy="12" r="10"></circle></svg></span> Res</div> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg></a>
                             <ul id="auth" class="collapse" data-parent="#compact_submenuSidebar">
                                 <li>
-                                    <a href="beneficiores"> Beneficio Res </a>
+                                    <a href={{url('beneficiores')}}> Beneficio Res </a>
                                 </li>
                                 <li>
                                     <a href="desposter"> Desposte Res </a>

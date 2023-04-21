@@ -8,7 +8,7 @@
 				</h4>
 				<ul class="tabs tab-pills">
 					<li>
-						<a href="javascript:void(0)" class="tabmenu bg-dark" data-toggle="modal" data-target="#modal-create-beneficiore">Agregar</a>
+						<a href="javascript:void(0)" class="tabmenu bg-dark" data-toggle="modal" data-target="#modal-create-beneficiore" title="Nuevo Beneficio">Agregar</a>
 					</li>
 				</ul>
 			</div>
@@ -41,19 +41,19 @@
 
 								<td class="text-center">
 									<a href="desposteres/{{$beneficiore->id}}"
-									 class="btn btn-dark" title="Delete">
+									 class="btn btn-dark" title="Despostar">
 										<i class="fas fa-search"></i>
 									</a>						
 									<a href="javascript:void(0)" 
 									wire:click="Edit({{$beneficiore->id}})"
-									class="btn btn-dark mtmobile" title="Edit">
+									class="btn btn-dark mtmobile" title="Editar Beneficio">
 										<i class="fas fa-edit"></i>
 									</a>
 
 									
 									<a href="javascript:void(0)"
 									onclick="Confirm('{{$beneficiore->id}}')" 
-									 class="btn btn-dark" title="Delete">
+									 class="btn btn-dark" title="Borrar Beneficio">
 										<i class="fas fa-trash"></i>
 									</a>						
 							
@@ -388,8 +388,18 @@
 
 	                                <div class="form-group col-md-4">
 	                                    <label for="costokilo">Sacrificio</label>
-	                                    <input type="number" name="tsacrificio" id="tsacrificio" class="form-control" aria-describedby="helpId" readonly step="0.01">
+	                                    <input type="number" name="tsacrificio" id="tsacrificio" class="form-control campo" aria-describedby="helpId" readonly step="0.01">
 	                                </div>
+									<!-- 		
+									<div class="col-md-4">
+										<div class="task-header">
+											<div class="form-group">
+												<label>Sacrificio</label>
+												<div class="form-control campo">{{number_format( $sacrificios[1]->sacrificio )}} </div>
+											</div>
+										</div>
+									</div>															
+ 									-->
 	                                <div class="form-group col-md-4">
 	                                    <label for="tfomento">Fomento</label>
 	                                    <input type="number" name="tfomento" id="tfomento" class="form-control" aria-describedby="helpId" readonly step="0.01">
