@@ -365,6 +365,78 @@ class MeatcutSeeder extends Seeder
         	'description' => '50',
         	'status' => true
         ]);
+
+		// AVES - POLLO
+
+		Meatcut::create([
+        	'category_id' => 3,
+        	'name' => 'PECHUGA',
+        	'description' => '51',
+        	'status' => true
+        ]);
+
+		Meatcut::create([
+        	'category_id' => 3,
+        	'name' => 'PIERNA PERNIL',
+        	'description' => '52',
+        	'status' => true
+        ]);
+
+		Meatcut::create([
+        	'category_id' => 3,
+        	'name' => 'ALAS',
+        	'description' => '53',
+        	'status' => true
+        ]);
+
+		Meatcut::create([
+        	'category_id' => 3,
+        	'name' => 'GRASA',
+        	'description' => '54',
+        	'status' => true
+        ]);
+
+		Meatcut::create([
+        	'category_id' => 3,
+        	'name' => 'POLLO ENTERO',
+        	'description' => '55',
+        	'status' => true
+        ]);
+
+		Meatcut::create([
+        	'category_id' => 3,
+        	'name' => 'VISCERAS',
+        	'description' => '56',
+        	'status' => true
+        ]);
+
+		Meatcut::create([
+        	'category_id' => 3,
+        	'name' => 'POR SI SE REQUIERE 1 POLLO',
+        	'description' => '57',
+        	'status' => true
+        ]);
+
+		Meatcut::create([
+        	'category_id' => 3,
+        	'name' => 'POR SI SE REQUIERE 2 POLLO',
+        	'description' => '58',
+        	'status' => true
+        ]);
+		
+		Meatcut::create([
+        	'category_id' => 3,
+        	'name' => 'POR SI SE REQUIERE 3 POLLO',
+        	'description' => '59',
+        	'status' => true
+        ]);
+
+		Meatcut::create([
+        	'category_id' => 3,
+        	'name' => 'POR SI SE REQUIERE 4 POLLO',
+        	'description' => '60',
+        	'status' => true
+        ]);
     }
     
 }
