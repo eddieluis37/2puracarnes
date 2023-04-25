@@ -17,40 +17,36 @@ class BeneficioreSeeder extends Seeder
         Beneficiore::create([
             'thirds_id' => 2,
             'plantasacrificio_id' => 1,
-            'cantidad' => 3,
+            'cantidad' => 20,
             'fecha_beneficio' => now(),
             'factura' => 'PVM789',
             'clientpieles_id' => 3,
             'clientvisceras_id' => 3,
 
-            'lote' => 'LT201',
-            'status' => true,       
-           
-            'sacrificio' => 0,
-            'fomento' => 0,
-            'deguello' => 0,
-            'bascula'  => 0,
-            'transporte' => 0,
-           
-           
-            'pesopie1'  => 121,
-            'pesopie2'  => 122,
-            'pesopie3'  => 123,
+            'lote' => 'PC029',
+            'status' => true,
+
+            'sacrificio' => 131000,
+            'fomento' => 29000,
+            'deguello' => 30000,
+            'bascula'  => 12400,
+            'transporte' => 11300,
+
+            'pesopie1'  => 7989,
+            'pesopie2'  => 0,
+            'pesopie3'  => 0,
 
             'costoanimal1'  => 1100000,
             'costoanimal2'  => 1200000,
-            'costoanimal3'  => 1300000,         
-            
+            'costoanimal3'  => 1300000,                     
          
             'canalcaliente'  => 124000,  
             'canalfria'  => 124000,  
             'canalplanta'  => 124000,
             'pieleskg' => 24,
             'pielescosto'  => 578698,
-            'visceras'  => 35687        
-
-        ]); 
-
+            'visceras'  => 35687      
+        ]);
         
         Beneficiore::create([
             'thirds_id' => 1,
@@ -68,8 +64,7 @@ class BeneficioreSeeder extends Seeder
             'fomento' => 250000,
             'deguello' => 270000,
             'bascula'  => 124000,
-            'transporte' => 90000,
-           
+            'transporte' => 90000,           
            
             'pesopie1'  => 121,
             'pesopie2'  => 122,
@@ -77,17 +72,14 @@ class BeneficioreSeeder extends Seeder
 
             'costoanimal1'  => 1100000,
             'costoanimal2'  => 1200000,
-            'costoanimal3'  => 1300000,         
-            
+            'costoanimal3'  => 1300000,                     
          
             'canalcaliente'  => 124000,  
             'canalfria'  => 124000,  
             'canalplanta'  => 124000,
             'pieleskg' => 24,
             'pielescosto'  => 578698,
-            'visceras'  => 35687  
-
-        
+            'visceras'  => 35687        
 
         ]); 
 
