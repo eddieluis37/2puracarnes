@@ -27,6 +27,10 @@ use App\Http\Livewire\UsersController;
 use App\Http\Livewire\Desposte\Desposteres\DesposteresController;
 use Illuminate\Support\Facades\Route;
 
+/*************** SIN LIVWWIRE **********************/
+use App\Http\Controllers\res\DesposteresrogercodeController;
+/************************************************* */
+
 
 
 Route::group(['middleware' => ['auth', 'admin']], function () {
@@ -105,7 +109,7 @@ Route::group(['middleware'=> [('auth')]], function () {
     Route::get('precio_agreements', PrecioAgreementsController::class);
     Route::get('beneficiores', BeneficioresController::class);
     Route::get('beneficiopollos', BeneficiopollosController::class);
-    Route::get('desposteres/{id}', DesposteresController::class);
+    //Route::get('desposteres/{id}', DesposteresController::class);
     Route::resource('desposter', DesposterController::class);
 
    
@@ -171,3 +175,8 @@ Route::get('conte2', function () {
 
 //rutas utils
 Route::get('select2', Select2::class);
+
+
+/***************** RUTAS SIN LIVEWIRE ********************************** */
+Route::get('desposteres', [DesposteresrogercodeController::class, 'index'])->name('desposteres.index');
+Route::get('desposteres/{id}', [DesposteresrogercodeController::class, 'create']);
