@@ -28,7 +28,7 @@ use App\Http\Livewire\Desposte\Desposteres\DesposteresController;
 use Illuminate\Support\Facades\Route;
 
 /*************** SIN LIVWWIRE **********************/
-use App\Http\Controllers\res\DesposteresrogercodeController;
+use App\Http\Controllers\res\desposteresrogercodeController;
 /************************************************* */
 
 
@@ -178,5 +178,6 @@ Route::get('select2', Select2::class);
 
 
 /***************** RUTAS SIN LIVEWIRE ********************************** */
-Route::get('desposteres', [DesposteresrogercodeController::class, 'index'])->name('desposteres.index');
-Route::get('desposteres/{id}', [DesposteresrogercodeController::class, 'create']);
+Route::get('desposteres', [desposteresrogercodeController::class, 'index'])->name('desposteres.index');
+Route::get('desposteres/{id}', [desposteresrogercodeController::class, 'create']);
+Route::post('/desposteresUpdate', [desposteresrogercodeController::class, 'update']);
