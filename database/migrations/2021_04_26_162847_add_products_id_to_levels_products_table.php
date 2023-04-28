@@ -13,9 +13,11 @@ class AddProductsIdToLevelsProductsTable extends Migration
      */
     public function up()
     {
-        Schema::table('levels_products', function (Blueprint $table) {
-            $table->foreignId('product_id')->constrained();
-            $table->string('note')->after('level')->nullable();
+        Schema::table('levels_products', function (Blueprint $table) {              
+           $table->unsignedBigInteger('product_id')->after('id');
+           $table->foreign('product_id')->references('id')->on('products');
+           $table->text('description')->after('level')->nullable();
+            
         });
     }
 
@@ -27,7 +29,7 @@ class AddProductsIdToLevelsProductsTable extends Migration
     public function down()
     {
         Schema::table('levels_products', function (Blueprint $table) {
-            $table->dropColumn('note');
+            $table->dropColumn('description');
         });
     }
 }
