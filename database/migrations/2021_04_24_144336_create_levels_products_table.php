@@ -15,7 +15,9 @@ class CreateLevelsProductsTable extends Migration
     {
         Schema::create('levels_products', function (Blueprint $table) {
             $table->id();        
-            $table->integer('level')->default(2); //  1="parent," 2="soon"
+            $table->string('name', 100); //  1="parent," 2="soon"
+            $table->string('description',255)->nullable();
+            $table->boolean('status')->parent_select()->default(true);
             $table->timestamps();
         });
     }
