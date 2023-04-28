@@ -61,5 +61,7 @@
     @include('layouts.theme.scripts')
     <!-- BEGIN PAGE LEVEL PLUGINS/CUSTOM SCRIPTS -->
 
+    <!--SCRIPTS FOR EACH COMPONENT-->
+    @yield('script')
 </body>
 </html>
