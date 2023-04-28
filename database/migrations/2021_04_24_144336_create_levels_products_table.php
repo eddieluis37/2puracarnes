@@ -14,7 +14,8 @@ class CreateLevelsProductsTable extends Migration
     public function up()
     {
         Schema::create('levels_products', function (Blueprint $table) {
-            $table->id();
+            $table->id();        
+            $table->integer('level')->default(2); //  1="parent," 2="soon"
             $table->timestamps();
         });
     }

@@ -15,6 +15,7 @@ class CreateProductsTable extends Migration
     {
         Schema::create('products', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('levels_products_id');           
             $table->unsignedBigInteger('category_id');           
             $table->unsignedBigInteger('meatcut_id');           
             $table->unsignedBigInteger('unitofmeasure_id');           
@@ -28,6 +29,7 @@ class CreateProductsTable extends Migration
             $table->integer('alerts');
             $table->string('image',100)->nullable();
             $table->boolean('status')->parent_select()->default(true);
+            $table->foreign('levels_products_id')->references('id')->on('levels_products')->onDelete("cascade");
             $table->foreign('category_id')->references('id')->on('categories')->onDelete("cascade");
             $table->foreign('meatcut_id')->references('id')->on('meatcuts')->onDelete("cascade");
             $table->foreign('unitofmeasure_id')->references('id')->on('unitsofmeasures')->onDelete("cascade");
