@@ -1,5 +1,6 @@
 @extends('layouts.theme.app')
 @section('content')
+<meta name="csrf-token" content="{{ csrf_token() }}">
 <div class="row sales layout-top-spacing">
 	<div class="col-sm-12">
 		<div class="widget widget-chart-one">
@@ -52,6 +53,7 @@
 									<div class="form-group">
 										<label>ID Beneficio</label>
                                         <p>{{$beneficior[0]->id}} </p>
+										<input type="hidden" id="beneficioId" value="{{$beneficior[0]->id}}">
 									</div>
 								</div>
 							</div>
@@ -100,16 +102,17 @@
 											<th class="table-th text-white text-center">Acciones</th>
 										</tr>
 									</thead>
-									<tbody>
-										@foreach($prod as $item)
+									<tbody id="tbody">
+										@foreach($desposters as $item)
 										<tr>
-											<td> {{ $item->name }}</td>
-											<td> 00.00 </td>
-											<td> {{ $item->price}}</td>
-											<td> <input type="text" class="form-control-sm" placeholder="Ingresar" size="10" ></td>
-											<td> 00.00</td>
-											<td> 00.00</td>
-											<td> 00.00</td>
+											<td> {{ $item->products->name }}</td>
+											<td> {{ $item->porcdesposte }}</td>
+											<td> {{ $item->precio}}</td>
+											<td> <input type="number" class="form-control-sm" id="{{$item->id}}" value="{{$item->peso}}" placeholder="Ingresar" size="10"></td>
+											<!--td> <input type="number" class="form-control-sm" placeholder="Ingresar" size="10" onkeypress="saveRowdesposte(event);"></td>-->
+											<td> {{ $item->totalventa}}</td>
+											<td> {{ $item->porcventa}}</td>
+											<td> {{ $item->costo}}</td>
 											<td class="text-center">
 												<button type="button" onclick="Confirm('{{$item->id}}','{{$item->beneficiores_id}}')" class="btn btn-dark btn-sm" title="Cancelar">
 													<i class="fas fa-trash"></i>
@@ -118,7 +121,18 @@
 										</tr>
 										@endforeach
 									</tbody>
-									<tfoot>
+									<tfoot id="tfoot" >
+										<tr>
+											<td>Totales</td>
+											<td>{{round($TotalDesposte)}}</td>
+											<td>--</td>
+											<td>{{$pesoTotalGlobal}}</td>
+											<td>{{$TotalVenta}}</td>
+											<td>{{round($porcVentaTotal)}}</td>
+											<td>--</td>
+											<td></td>
+										</tr>
+
 									</tfoot>
 								</table>
 							</div>
@@ -129,4 +143,7 @@
 
     </div>
 </div>
+@endsection
+@section('script')
+<script src="{{asset('rogercode/js/res/desposteres/rogercode-desposteres.index.js')}}" type="module"></script>
 @endsection
