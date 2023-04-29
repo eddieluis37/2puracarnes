@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Levels_products;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -18,6 +19,7 @@ class DatabaseSeeder extends Seeder
         $this->call(CategorySeeder::class);
         $this->call(MeatcutSeeder::class);
         $this->call(UnitofmeasureSeeder::class);
+        $this->call(Levels_productSeeder::class);
         $this->call(ProductSeeder::class);
         $this->call(UserSeeder::class);
         $this->call(Type_identificationSeeder::class);
@@ -33,6 +35,7 @@ class DatabaseSeeder extends Seeder
         $this->call(SacrificiospolloSeeder::class);
         $this->call(BeneficiocerdoSeeder::class);          
         $this->call(DespostereSeeder::class);
+        
 
     }
 }
