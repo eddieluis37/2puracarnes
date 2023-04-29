@@ -16,28 +16,28 @@ class SacrificioSeeder extends Seeder
     {
          Sacrificio::create([
             'name' => 'FRIGORIFICO GUADALUPE SAS',
-            'dni' => 98145892,
+            'dni' => 98145892-2,
             'address' => 'CALLE 124B #17A-37SUR BOGOTA',
             'phone' => 3132623896,
             'email' => 'Frigorificoguada@gmail.com',
-            'transporte' => 11300,
             'sacrificio' => 131000,
-            'fomento' => 29000,
+            'fomento' => 29000,           
             'deguello' => 30000,
             'bascula' => 12400,
+            'transporte' => 11300
         ]);
 
          Sacrificio::create([
-            'name' => 'FRIGORIFICO GUADALUPE PLANTA DE CERDO',
-            'dni' => 78145893,
+            'name' => 'FRIGORIFICO GUADALUPE SAS # 1',
+            'dni' => 98145892-1,
             'address' => 'CALLE 124B #17A-37SUR BOGOTA',
             'phone' => 3132623896,
             'email' => 'Frigorificoguada@gmail.com',
-            'transporte' => 3500,
-            'sacrificio' => 50333,
-            'fomento' => 10667,
-            'deguello' => 0,
-            'bascula' => 12400,
+            'sacrificio' => 131000,
+            'fomento' => 0,           
+            'deguello' => 30000,
+            'bascula' => 0,
+            'transporte' => 11300
         ]);
 
           
