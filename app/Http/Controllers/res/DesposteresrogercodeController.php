@@ -37,7 +37,7 @@ class DesposteresrogercodeController extends Controller
 
         $beneficior = DB::table('beneficiores as b')
             ->join('thirds as t', 'b.thirds_id', '=', 't.id')
-            ->select('t.name','b.id','b.lote','b.factura')
+            ->select('t.name','b.id','b.lote','b.factura','b.canalplanta','b.cantidad','b.costokilo')
             ->where('b.id',$id)
             ->get();
         /******************/
@@ -163,7 +163,7 @@ class DesposteresrogercodeController extends Controller
             //$despost->status = 'VALID';
             $despost->save();
             /*************************** */
-            $getTotalcosto = Beneficiore::Where('id',$request->beneficioId)->get();
+            $getBeneficiores = Beneficiore::Where('id',$request->beneficioId)->get();
 
             $beneficior = Despostere::Where([['beneficiores_id',$request->beneficioId],['status','VALID']])->get();
             $porcentajeVenta = 0;
@@ -178,7 +178,7 @@ class DesposteresrogercodeController extends Controller
                 $porcentajeVenta = (float)number_format($porcve * 100,2);
 
                 $porcentajecostoTotal = (float)number_format($porcentajeVenta / 100, 4);
-                $costoTotal = $porcentajecostoTotal * $getTotalcosto[0]->totalcostos;
+                $costoTotal = $porcentajecostoTotal * $getBeneficiores[0]->totalcostos;
 
                 $updatedespost = Despostere::firstWhere('id', $key->id);
                 $updatedespost->porcdesposte = $porcentajeDesposte;
@@ -210,6 +210,7 @@ class DesposteresrogercodeController extends Controller
                 "benefit" => $request->beneficioId,
                 "desposte" => $desposte,
                 "arrayTotales" => $arrayTotales,
+                "beneficiores" => $getBeneficiores,
             ]);
 
         } catch (\Throwable $th) {
