@@ -103,6 +103,8 @@
 										</tr>
 									</thead>
 									<tbody id="tbody">
+										<?php $tpeso = 0;
+										$tdesposte = 0; ?>
 										@foreach($desposters as $item)
 										<tr>
 											<td> {{ $item->products->name }}</td>
@@ -119,6 +121,8 @@
 												</button>
 											</td>
 										</tr>
+										<?php $tpeso = $tpeso + $item->peso;
+										$tdesposte = $tdesposte + $item->totalventa; ?>
 										@endforeach
 									</tbody>
 									<tfoot id="tfoot" >
@@ -139,6 +143,161 @@
                     </div>
                 </div>
             </div>
+			<?php
+			$pi = $beneficior[0]->canalplanta;
+			$cant = $beneficior[0]->cantidad;
+			$ck = $beneficior[0]->costokilo;
+			$tck = $pi * $ck;
+			?>
+			<div class="widget-content mt-3">
+				<div class="card">
+					<div class="card-body">
+						<div class="row mt-3">
+							<div class="col-md-6">
+								<div class="">
+									<div class="">
+										<h5><b> Merma</b> </h5>
+										<div class="row g-3 mt-1">
+											<div class="col-md-4">
+												<div class="task-header">
+													<div class="form-group">
+														<label>Peso inicial</label>
+														<div class="form-control campo" id="pesoInicial">{{ number_format( $pi,2 )}} </div>
+													</div>
+												</div>
+											</div>
+											<div class="col-md-4">
+												<div class="task-header">
+													<div class="form-group">
+														<label>Peso por Animal</label>
+														<div class="form-control campo" id="pesoAnimal">{{ number_format( $pi / $cant,2 )}} </div>
+													</div>
+												</div>
+											</div>
+											<div class="col-md-4">
+												<div class="task-header">
+													<div class="form-group">
+														<label>Peso total Desp</label>
+														<div class="form-control campo" id="pesoTotalDesposte">{{ number_format( $tpeso,2)}} </div>
+													</div>
+												</div>
+											</div>
+											<div class="col-md-4">
+												<div class="task-header">
+													<div class="form-group">
+														<label>Merma</label>
+														<div class="form-control campo" id="merma">{{ number_format( $tpeso - $pi,2)}} </div>
+													</div>
+												</div>
+											</div>
+											<div class="col-md-4">
+												<div class="task-header">
+													<div class="form-group" id="porcentajeMerma">
+														<label>% Merma</label>
+														<?php if ($tpeso == 0) { ?>
+															<div class="form-control campo">
+																<?php echo number_format($tpeso, 2); ?>
+															</div>
+														<?php } ?>
+														<?php if ($tpeso != 0) { ?>
+															<div class="form-control campo">
+																<?php echo number_format((($tpeso  - $pi) / $tpeso) * 100, 2); ?>
+															</div>
+														<?php } ?>
+													</div>
+												</div>
+											</div>
+											<div class="col-md-4">
+												<div class="task-header">
+													<div class="form-group">
+														<label>Cant animales</label>
+														<div class="form-control campo" id="cantAnimal">{{ number_format($cant,0)}} </div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="">
+									<div class="">
+										<h5><b> Utilidad</b> </h5>
+										<div class="row g-3 mt-1">
+											<div class="col-md-4">
+												<div class="task-header">
+													<div class="form-group">
+														<label>Costo kilo</label>
+														<div class="form-control campo" id="costoKilo">{{ number_format( $ck,2) }} </div>
+													</div>
+												</div>
+											</div>
+											<div class="col-md-4">
+												<div class="task-header">
+													<div class="form-group">
+														<label>Valor desposte</label>
+														<div class="form-control campo" id="valorDesposte">{{ number_format( $tdesposte,2) }} </div>
+													</div>
+												</div>
+											</div>
+											<div class="col-md-4">
+												<div class="task-header">
+													<div class="form-group">
+														<label>Total costo kilo</label>
+														<div class="form-control campo" id="totalCostoKilo">{{ number_format( $tck ,2) }} </div>
+													</div>
+												</div>
+											</div>
+											<div class="col-md-4">
+												<div class="task-header">
+													<div class="form-group">
+														<label>Utilidad</label>
+														<div class="form-control campo" id="utilidad">{{ number_format( $tdesposte - $tck ,2) }} </div>
+													</div>
+												</div>
+											</div>
+											<div class="col-md-4">
+												<div class="task-header">
+													<div class="form-group" id="porcentajeUtilidad">
+														<label>% Utilidad</label>
+														<?php if ($tdesposte == 0) { ?>
+															<div class="form-control campo">
+																<?php echo number_format($tdesposte, 2); ?>
+															</div>
+														<?php } ?>
+														<?php if ($tdesposte != 0) { ?>
+															<div class="form-control campo">
+																<?php echo number_format((($tdesposte - $tck) / $tdesposte) * 100, 2); ?>
+															</div>
+														<?php } ?>
+													</div>
+												</div>
+											</div>
+											<div class="col-md-4">
+												<div class="task-header">
+													<div class="form-group" id="utilidadAnimal">
+														<label>Utilidad por anima</label>
+														<?php if ($tdesposte == 0) { ?>
+															<div class="form-control campo">
+																<?php echo number_format($tdesposte, 2); ?>
+															</div>
+														<?php } ?>
+														<?php if ($tdesposte != 0) { ?>
+															<div class="form-control campo">
+																<?php echo number_format(($tdesposte - $tck) / $cant, 2); ?>
+															</div>
+														<?php } ?>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
         </div>
 
     </div>

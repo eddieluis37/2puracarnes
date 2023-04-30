@@ -5,6 +5,26 @@ const token = document.querySelector('meta[name="csrf-token"]').getAttribute('co
 const beneficioId = document.querySelector("#beneficioId");
 const tableTbody = document.querySelector("#tbody");
 const tableTfoot = document.querySelector("#tfoot");
+const mermaPesoTotal = document.querySelector("#pesoTotalDesposte");
+const mermaPesoInicial = document.querySelector("#pesoInicial");
+const mermaPesoAnimal = document.querySelector("#pesoAnimal");
+const mermaMerma = document.querySelector("#merma");
+const mermaPorcentaje = document.querySelector("#porcentajeMerma");
+const mermacantAnimal = document.querySelector("#cantAnimal");
+const utilidadCostoKilo = document.querySelector("#costoKilo");
+const utilidadValorDesposte = document.querySelector("#valorDesposte");
+const utilidadTotalCostoKilo = document.querySelector("#totalCostoKilo");
+const utilidadUtilidad = document.querySelector("#utilidad");
+const utilidadPorcentajeUtilidad = document.querySelector("#porcentajeUtilidad");
+const utilidadAnimal = document.querySelector("#utilidadAnimal");
+
+
+
+
+
+
+
+
 
 
 table.addEventListener("keydown", function(event) {
@@ -37,7 +57,10 @@ const showDataTable = (data) => {
   let dataRow = data.desposte;
   //console.log(dataRow);
   let dataTotals = data.arrayTotales;
-  //console.log(dataTotals);
+  console.log(dataTotals);
+  let dataBeneficiores = data.beneficiores;
+  console.log(dataBeneficiores);
+
   tableTbody.innerHTML = "";
   dataRow.forEach(element => {
     //console.log(element);
@@ -72,5 +95,79 @@ const showDataTable = (data) => {
 			<td></td>
 		</tr>
   `;
+  /******************MERMA****************************** */
+  let Peso_total_Desp = dataTotals.pesoTotalGlobal;
+  mermaPesoTotal.innerHTML = "";
+  mermaPesoTotal.innerHTML += `${Peso_total_Desp}`;
 
+  let canalPlanta = Number(dataBeneficiores[0].canalplanta);
+  //console.log(canalPlanta);
+  let cantidad = Number(dataBeneficiores[0].cantidad);
+  let costokilo = Number(dataBeneficiores[0].costokilo);
+  //console.log(cantidad);
+  let resultcanalPlantaCostoKilo = canalPlanta * costokilo;  
+  //console.log(resultcanalPlantaCostoKilo);
+  //console.log(dd);
+  mermaPesoInicial.innerHTML = `${canalPlanta}`;
+
+  let Peso_por_Animal = canalPlanta / cantidad;
+  mermaPesoAnimal.innerHTML = `${Peso_por_Animal}`;
+
+  let merma = Peso_total_Desp - canalPlanta;
+  mermaMerma.innerHTML = `${merma}`;
+
+  let porcMerma;
+  if (Peso_total_Desp == 0) {
+    porcMerma = Peso_total_Desp;
+  }
+  if (Peso_total_Desp != 0) {
+    porcMerma = ((Peso_total_Desp - canalPlanta) / Peso_total_Desp) * 100;
+  }
+
+  console.log("porc :" + porcMerma);
+  mermaPorcentaje.innerHTML = "";
+  mermaPorcentaje.innerHTML += `
+  	<label>% Merma</label>
+    <div class="form-control campo">
+    ${porcMerma}
+		</div>
+  `;
+
+  mermacantAnimal.innerHTML =  `${cantidad}`;
+  
+  /******************UTILIDAD****************************** */
+  utilidadCostoKilo.innerHTML = `${costokilo}`;
+  utilidadValorDesposte.innerHTML = `${dataTotals.TotalVenta}`;
+  utilidadTotalCostoKilo.innerHTML = `${resultcanalPlantaCostoKilo}`;
+  let utilid = dataTotals.TotalVenta - resultcanalPlantaCostoKilo;
+  utilidadUtilidad.innerHTML = `${utilid}`;
+  let porcUtilidad;
+  if (dataTotals.TotalVenta == 0) {
+    porcUtilidad = dataTotals.TotalVenta;
+  }
+  if (dataTotals.TotalVenta != 0) {
+    porcUtilidad = ((dataTotals.TotalVenta - resultcanalPlantaCostoKilo) / dataTotals.TotalVenta) * 100;
+  }
+  utilidadPorcentajeUtilidad.innerHTML = "";
+  utilidadPorcentajeUtilidad.innerHTML += `
+    <label>% Utilidad</label>
+    <div class="form-control campo">
+    ${porcUtilidad}
+		</div>
+  `;
+
+  let utilidadAnim;
+  if (dataTotals.TotalVenta == 0) {
+    utilidadAnim = dataTotals.TotalVenta;
+  }
+  if (dataTotals.TotalVenta != 0) {
+    utilidadAnim = ((dataTotals.TotalVenta - resultcanalPlantaCostoKilo) / cantidad);
+  }
+  utilidadAnimal.innerHTML = ``;
+  utilidadAnimal.innerHTML = `
+    <label>Utilidad por anima</label>
+    <div class="form-control campo">
+    ${utilidadAnim}
+		</div>
+  `;
 };
