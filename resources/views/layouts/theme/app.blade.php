@@ -12,8 +12,9 @@
     @include('layouts.theme.styles')
     <!-- END PAGE LEVEL PLUGINS/CUSTOM STYLES -->
 
-     <link rel="stylesheet" href="{{ asset('css/apexcharts.css') }}" />
+    <link rel="stylesheet" href="{{ asset('css/apexcharts.css') }}" />
     <script src="{{ asset('js/apexcharts.js') }}"></script>
+    <script src="{{asset('rogercode/js/rogercode-main.js')}}"></script>
     
 
 </head>
