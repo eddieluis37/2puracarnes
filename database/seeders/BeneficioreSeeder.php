@@ -15,9 +15,9 @@ class BeneficioreSeeder extends Seeder
     public function run()
     {
         Beneficiore::create([
-            'thirds_id' => 2,
+            'thirds_id' => 674,
             'plantasacrificio_id' => 1,
-            'cantidad' => 20,
+            'cantidad' => 30,
             'fecha_beneficio' => now(),
             'factura' => 'PVM789',
             'clientpieles_id' => 3,
@@ -120,15 +120,15 @@ class BeneficioreSeeder extends Seeder
         ]); 
 
         Beneficiore::create([
-            'thirds_id' => 464,
+            'thirds_id' => 674,
             'plantasacrificio_id' => 1,
-            'cantidad' => 16,
+            'cantidad' => 30,
             'fecha_beneficio' => now(),
             'factura' => 'FEV001',
             'clientpieles_id' => 236,
             'clientvisceras_id' => 798,
 
-            'lote' => 'PC022',
+            'lote' => 'PC030',
             'status' => true,       
            
             'sacrificio' => 131000,
@@ -138,7 +138,7 @@ class BeneficioreSeeder extends Seeder
             'transporte' => 90000,
            
            
-            'pesopie1'  => 7421,
+            'pesopie1'  => 0,
             'pesopie2'  => 0,
             'pesopie3'  => 0,
 
