@@ -86,7 +86,10 @@ class DesposteresrogercodeController extends Controller
         $porcVentaTotal = (float)Despostere::Where([['beneficiores_id',$id],['status','VALID']])->sum('porcventa');
         $pesoTotalGlobal = (float)Despostere::Where([['beneficiores_id',$id],['status','VALID']])->sum('peso');
         $costoTotalGlobal = (float)Despostere::Where([['beneficiores_id',$id],['status','VALID']])->sum('costo');
-        $costoKiloTotal = number_format($costoTotalGlobal / $pesoTotalGlobal, 2, ',', '.');
+        $costoKiloTotal = 0;
+        if($pesoTotalGlobal != 0){
+            $costoKiloTotal = number_format($costoTotalGlobal / $pesoTotalGlobal, 2, ',', '.');
+        }
         //dd(count($desposters));
         //$beneficior = Beneficiore::Where('id',$id)->get();
         return view('categorias.res.index', compact('beneficior','desposters','TotalDesposte','TotalVenta','porcVentaTotal','pesoTotalGlobal','costoTotalGlobal','costoKiloTotal'));
