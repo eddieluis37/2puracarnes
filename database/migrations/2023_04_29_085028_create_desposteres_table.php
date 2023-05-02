@@ -36,6 +36,7 @@ class CreateDesposteresTable extends Migration
             $table->decimal('peso', 18, 2)->nullable();
             $table->decimal('porcdesposte', 18, 2)->nullable();
             $table->decimal('costo', 18, 2)->nullable();                     
+            $table->decimal('costo_kilo', 18, 2)->nullable();                     
             $table->decimal('precio', 18, 2)->nullable();
             $table->decimal('totalventa', 18,2)->nullable();
             $table->decimal('total', 18, 2)->nullable();

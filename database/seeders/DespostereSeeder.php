@@ -20,6 +20,7 @@ class DespostereSeeder extends Seeder
             'products_id' => 1,
             'porcdesposte' => 33,
             'costo' => 12,
+            'costo_kilo' => 6,
             'total' => 17,
             'precio' => '9875',          
             'total' => 17,

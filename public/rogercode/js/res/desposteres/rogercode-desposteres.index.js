@@ -45,7 +45,7 @@ table.addEventListener("keydown", function(event) {
       dataform.append("peso_kilo", Number(trimValue));
       dataform.append("beneficioId", Number(beneficioId.value));
       sendData("/desposteresUpdate",dataform,token).then((result) => {
-        console.log(result);
+        //console.log(result);
         showDataTable(result);
       });
     }
@@ -57,9 +57,9 @@ const showDataTable = (data) => {
   let dataRow = data.desposte;
   //console.log(dataRow);
   let dataTotals = data.arrayTotales;
-  console.log(dataTotals);
+  //console.log(dataTotals);
   let dataBeneficiores = data.beneficiores;
-  console.log(dataBeneficiores);
+  //console.log(dataBeneficiores);
 
   tableTbody.innerHTML = "";
   dataRow.forEach(element => {
@@ -68,14 +68,14 @@ const showDataTable = (data) => {
 			<tr>
 				<td>${element.name} </td>
 				<td>${element.porcdesposte} </td>
-				<td>${element.precio}</td>
+				<td>${formatCantidad(element.precio)}</td>
 				<td> <input type="number" class="form-control-sm" id="${element.id}" value="${element.peso}" placeholder="Ingresar" size="10"></td>
-				<td>${element.totalventa}</td>
+				<td>${formatCantidad(element.totalventa)}</td>
 				<td>${element.porcventa} </td>
-				<td>${element.costo} </td>
+				<td>${formatCantidad(element.costo)} </td>
+				<td>${formatCantidad(element.costo_kilo)} </td>
 				<td class="text-center">
-					<button type="button" class="btn btn-dark btn-sm" title="Cancelar">
-						<i class="fas fa-trash"></i>
+					<button type="button" name="btnDownReg" data-id="${element.id}" class="btn btn-dark btn-sm fas fa-trash" title="Cancelar">
 					</button>
 				</td>
 			</tr>
@@ -89,16 +89,17 @@ const showDataTable = (data) => {
 			<td>${dataTotals.TotalDesposte}</td>
 			<td>--</td>
 			<td>${dataTotals.pesoTotalGlobal}</td>
-			<td>${dataTotals.TotalVenta}</td>
+			<td>${formatCantidad(dataTotals.TotalVenta)}</td>
 			<td>${dataTotals.porcVentaTotal}</td>
-			<td>--</td>
+			<td>${formatCantidad(dataTotals.costoTotalGlobal)}</td>
+			<td>${dataTotals.costoKiloTotal}</td>
 			<td></td>
 		</tr>
   `;
   /******************MERMA****************************** */
   let Peso_total_Desp = dataTotals.pesoTotalGlobal;
   mermaPesoTotal.innerHTML = "";
-  mermaPesoTotal.innerHTML += `${Peso_total_Desp}`;
+  mermaPesoTotal.innerHTML += `${formatCantidad(Peso_total_Desp)}`;
 
   let canalPlanta = Number(dataBeneficiores[0].canalplanta);
   //console.log(canalPlanta);
@@ -108,13 +109,13 @@ const showDataTable = (data) => {
   let resultcanalPlantaCostoKilo = canalPlanta * costokilo;  
   //console.log(resultcanalPlantaCostoKilo);
   //console.log(dd);
-  mermaPesoInicial.innerHTML = `${canalPlanta}`;
+  mermaPesoInicial.innerHTML = `${formatCantidad(canalPlanta)}`;
 
   let Peso_por_Animal = canalPlanta / cantidad;
-  mermaPesoAnimal.innerHTML = `${Peso_por_Animal}`;
+  mermaPesoAnimal.innerHTML = `${formatCantidad(Peso_por_Animal)}`;
 
   let merma = Peso_total_Desp - canalPlanta;
-  mermaMerma.innerHTML = `${merma}`;
+  mermaMerma.innerHTML = `${formatCantidad(merma)}`;
 
   let porcMerma;
   if (Peso_total_Desp == 0) {
@@ -124,23 +125,23 @@ const showDataTable = (data) => {
     porcMerma = ((Peso_total_Desp - canalPlanta) / Peso_total_Desp) * 100;
   }
 
-  console.log("porc :" + porcMerma);
+  //console.log("porc :" + porcMerma);
   mermaPorcentaje.innerHTML = "";
   mermaPorcentaje.innerHTML += `
   	<label>% Merma</label>
     <div class="form-control campo">
-    ${porcMerma}
+    ${formatCantidad(porcMerma)}
 		</div>
   `;
 
-  mermacantAnimal.innerHTML =  `${cantidad}`;
+  mermacantAnimal.innerHTML =  `${formatCantidad(cantidad)}`;
   
   /******************UTILIDAD****************************** */
-  utilidadCostoKilo.innerHTML = `${costokilo}`;
-  utilidadValorDesposte.innerHTML = `${dataTotals.TotalVenta}`;
-  utilidadTotalCostoKilo.innerHTML = `${resultcanalPlantaCostoKilo}`;
+  utilidadCostoKilo.innerHTML = `${formatCantidad(costokilo)}`;
+  utilidadValorDesposte.innerHTML = `${formatCantidad(dataTotals.TotalVenta)}`;
+  utilidadTotalCostoKilo.innerHTML = `${formatCantidad(resultcanalPlantaCostoKilo)}`;
   let utilid = dataTotals.TotalVenta - resultcanalPlantaCostoKilo;
-  utilidadUtilidad.innerHTML = `${utilid}`;
+  utilidadUtilidad.innerHTML = `${formatCantidad(utilid)}`;
   let porcUtilidad;
   if (dataTotals.TotalVenta == 0) {
     porcUtilidad = dataTotals.TotalVenta;
@@ -152,7 +153,7 @@ const showDataTable = (data) => {
   utilidadPorcentajeUtilidad.innerHTML += `
     <label>% Utilidad</label>
     <div class="form-control campo">
-    ${porcUtilidad}
+    ${formatCantidad(porcUtilidad)}
 		</div>
   `;
 
@@ -167,7 +168,50 @@ const showDataTable = (data) => {
   utilidadAnimal.innerHTML = `
     <label>Utilidad por anima</label>
     <div class="form-control campo">
-    ${utilidadAnim}
+    ${formatCantidad(utilidadAnim)}
 		</div>
   `;
 };
+
+document.querySelector("#tableDespostere tbody").addEventListener("click", (e) => {
+    //console.log('Row clicked');
+    //console.log(e.target);
+    let element = e.target;
+    if (element.name === 'btnDownReg') {
+      //console.log(element);
+		  swal({
+			  title: 'CONFIRMAR',
+			  text: '¿CONFIRMAS ELIMINAR EL REGISTRO?',
+			  type: 'warning',
+			  showCancelButton: true,
+			  cancelButtonText: 'Cerrar',
+			  cancelButtonColor: '#fff',
+			  confirmButtonColor: '#3B3F5C',
+			  confirmButtonText: 'Aceptar'
+		  }).then(function(result) {
+			  if (result.value) {
+          let id = element.getAttribute('data-id');
+          //console.log(id);
+          let url = "/getpaymentmoney/";
+          let btnId = element.getAttribute("id");
+
+          const dataform = new FormData();
+          dataform.append("id", Number(id));
+          dataform.append("beneficioId", Number(beneficioId.value));
+          sendData("/downdesposter",dataform,token).then((result) => {
+            //console.log(result);
+            showDataTable(result);
+          });
+
+			  }
+
+		  })
+
+        /*getdata(url,Number(id)).then((response) => {
+            if (response.status === 1) {
+              console.log(response);
+            }
+        });*/
+
+    }
+});

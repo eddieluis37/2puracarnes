@@ -181,3 +181,4 @@ Route::get('select2', Select2::class);
 Route::get('desposteres', [desposteresrogercodeController::class, 'index'])->name('desposteres.index');
 Route::get('desposteres/{id}', [desposteresrogercodeController::class, 'create']);
 Route::post('/desposteresUpdate', [desposteresrogercodeController::class, 'update']);
+Route::post('/downdesposter', [desposteresrogercodeController::class, 'destroy']);

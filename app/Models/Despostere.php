@@ -18,6 +18,7 @@ class Despostere extends Model
         'peso',
         'porcdesposte',
         'costo',
+        'costo_kilo',
         'precio',
         'total',
         'porcventa',

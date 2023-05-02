@@ -99,6 +99,7 @@
 											<th class="table-th text-white text-center">Total venta</th>
 											<th class="table-th text-white text-center">Porcventa</th>
 											<th class="table-th text-white text-center">Costo total</th>
+											<th class="table-th text-white text-center">Costo kilo</th>
 											<th class="table-th text-white text-center">Acciones</th>
 										</tr>
 									</thead>
@@ -109,15 +110,15 @@
 										<tr>
 											<td> {{ $item->products->name }}</td>
 											<td> {{ $item->porcdesposte }}</td>
-											<td> {{ $item->precio}}</td>
+											<td> {{ number_format($item->precio, 2, ',', '.')}}</td>
 											<td> <input type="number" class="form-control-sm" id="{{$item->id}}" value="{{$item->peso}}" placeholder="Ingresar" size="10"></td>
 											<!--td> <input type="number" class="form-control-sm" placeholder="Ingresar" size="10" onkeypress="saveRowdesposte(event);"></td>-->
-											<td> {{ $item->totalventa}}</td>
+											<td> {{ number_format($item->totalventa, 2, ',', '.')}}</td>
 											<td> {{ $item->porcventa}}</td>
-											<td> {{ $item->costo}}</td>
+											<td> {{ number_format($item->costo, 2, ',', '.')}}</td>
+											<td> {{ number_format($item->costo_kilo, 2, ',', '.')}}</td>
 											<td class="text-center">
-												<button type="button" onclick="Confirm('{{$item->id}}','{{$item->beneficiores_id}}')" class="btn btn-dark btn-sm" title="Cancelar">
-													<i class="fas fa-trash"></i>
+												<button type="button" name="btnDownReg" data-id="{{$item->id}}" class="btn btn-dark btn-sm fas fa-trash" title="Cancelar">
 												</button>
 											</td>
 										</tr>
@@ -131,9 +132,10 @@
 											<td>{{round($TotalDesposte)}}</td>
 											<td>--</td>
 											<td>{{$pesoTotalGlobal}}</td>
-											<td>{{$TotalVenta}}</td>
+											<td> {{ number_format($TotalVenta, 2, ',', '.')}}</td>
 											<td>{{round($porcVentaTotal)}}</td>
-											<td>--</td>
+											<td> {{ number_format($costoTotalGlobal, 2, ',', '.')}}</td>
+											<td>{{$costoKiloTotal}}</td>
 											<td></td>
 										</tr>
 
@@ -162,7 +164,7 @@
 												<div class="task-header">
 													<div class="form-group">
 														<label>Peso inicial</label>
-														<div class="form-control campo" id="pesoInicial">{{ number_format( $pi,2 )}} </div>
+														<div class="form-control campo" id="pesoInicial">{{ number_format( $pi, 2, ',', '.' )}} </div>
 													</div>
 												</div>
 											</div>
@@ -170,7 +172,7 @@
 												<div class="task-header">
 													<div class="form-group">
 														<label>Peso por Animal</label>
-														<div class="form-control campo" id="pesoAnimal">{{ number_format( $pi / $cant,2 )}} </div>
+														<div class="form-control campo" id="pesoAnimal">{{ number_format( $pi / $cant, 2, ',', '.' )}} </div>
 													</div>
 												</div>
 											</div>
@@ -178,7 +180,7 @@
 												<div class="task-header">
 													<div class="form-group">
 														<label>Peso total Desp</label>
-														<div class="form-control campo" id="pesoTotalDesposte">{{ number_format( $tpeso,2)}} </div>
+														<div class="form-control campo" id="pesoTotalDesposte">{{ number_format( $tpeso,2, ',', '.')}} </div>
 													</div>
 												</div>
 											</div>
@@ -186,7 +188,7 @@
 												<div class="task-header">
 													<div class="form-group">
 														<label>Merma</label>
-														<div class="form-control campo" id="merma">{{ number_format( $tpeso - $pi,2)}} </div>
+														<div class="form-control campo" id="merma">{{ number_format( $tpeso - $pi, 2, ',', '.')}} </div>
 													</div>
 												</div>
 											</div>
@@ -211,7 +213,7 @@
 												<div class="task-header">
 													<div class="form-group">
 														<label>Cant animales</label>
-														<div class="form-control campo" id="cantAnimal">{{ number_format($cant,0)}} </div>
+														<div class="form-control campo" id="cantAnimal">{{ number_format($cant, 0, ',', '.')}} </div>
 													</div>
 												</div>
 											</div>
@@ -228,7 +230,7 @@
 												<div class="task-header">
 													<div class="form-group">
 														<label>Costo kilo</label>
-														<div class="form-control campo" id="costoKilo">{{ number_format( $ck,2) }} </div>
+														<div class="form-control campo" id="costoKilo">{{ number_format( $ck, 2, ',', '.') }} </div>
 													</div>
 												</div>
 											</div>
@@ -236,7 +238,7 @@
 												<div class="task-header">
 													<div class="form-group">
 														<label>Valor desposte</label>
-														<div class="form-control campo" id="valorDesposte">{{ number_format( $tdesposte,2) }} </div>
+														<div class="form-control campo" id="valorDesposte">{{ number_format( $tdesposte, 2, ',', '.') }} </div>
 													</div>
 												</div>
 											</div>
@@ -244,7 +246,7 @@
 												<div class="task-header">
 													<div class="form-group">
 														<label>Total costo kilo</label>
-														<div class="form-control campo" id="totalCostoKilo">{{ number_format( $tck ,2) }} </div>
+														<div class="form-control campo" id="totalCostoKilo">{{ number_format( $tck, 2, ',', '.') }} </div>
 													</div>
 												</div>
 											</div>
@@ -252,7 +254,7 @@
 												<div class="task-header">
 													<div class="form-group">
 														<label>Utilidad</label>
-														<div class="form-control campo" id="utilidad">{{ number_format( $tdesposte - $tck ,2) }} </div>
+														<div class="form-control campo" id="utilidad">{{ number_format( $tdesposte - $tck ,2, ',', '.') }} </div>
 													</div>
 												</div>
 											</div>
@@ -279,12 +281,12 @@
 														<label>Utilidad por anima</label>
 														<?php if ($tdesposte == 0) { ?>
 															<div class="form-control campo">
-																<?php echo number_format($tdesposte, 2); ?>
+																<?php echo number_format($tdesposte, 2, ',', '.'); ?>
 															</div>
 														<?php } ?>
 														<?php if ($tdesposte != 0) { ?>
 															<div class="form-control campo">
-																<?php echo number_format(($tdesposte - $tck) / $cant, 2); ?>
+																<?php echo number_format(($tdesposte - $tck) / $cant, 2, ',', '.'); ?>
 															</div>
 														<?php } ?>
 													</div>
