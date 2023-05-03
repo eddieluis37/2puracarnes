@@ -64,7 +64,7 @@ class DesposteresrogercodeController extends Controller
                 $despost->porcdesposte = 0;
                 $despost->costo = 0;
                 $despost->costo_kilo = 0;
-                $despost->precio = $key->price;
+                $despost->precio = $key->price_fama;
                 $despost->totalventa = 0;
                 $despost->total = 0;
                 $despost->porcventa = 0;
