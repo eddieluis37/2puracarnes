@@ -10,3 +10,16 @@ const formatCantidad = (number) => {
     }).format(number)
     return formatMoney;
 }
+
+
+const formatCantidadSinCero = (number) => {
+    let formatMoney = new Intl.NumberFormat('es-CL', { 
+        //style: 'currency',
+        //currency: 'CLP', 
+        //currencyDisplay: 'none',
+        minimumFractionDigits: 0, 
+        maximumFractionDigits: 0,
+        useGrouping: true 
+    }).format(number)
+    return formatMoney;
+}

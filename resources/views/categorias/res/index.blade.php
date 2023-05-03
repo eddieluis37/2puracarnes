@@ -109,13 +109,13 @@
 										@foreach($desposters as $item)
 										<tr>
 											<td> {{ $item->products->name }}</td>
-											<td> {{ $item->porcdesposte }}</td>
-											<td> {{ number_format($item->precio, 2, ',', '.')}}</td>
+											<td> {{ $item->porcdesposte }} %</td>
+											<td>$ {{ number_format($item->precio, 0, ',', '.')}}</td>
 											<td> <input type="number" class="form-control-sm" id="{{$item->id}}" value="{{$item->peso}}" placeholder="Ingresar" size="10"></td>
 											<!--td> <input type="number" class="form-control-sm" placeholder="Ingresar" size="10" onkeypress="saveRowdesposte(event);"></td>-->
-											<td> {{ number_format($item->totalventa, 2, ',', '.')}}</td>
-											<td> {{ $item->porcventa}}</td>
-											<td> {{ number_format($item->costo, 2, ',', '.')}}</td>
+											<td>$ {{ number_format($item->totalventa, 0, ',', '.')}}</td>
+											<td> {{ $item->porcventa}} %</td>
+											<td>$ {{ number_format($item->costo, 0, ',', '.')}}</td>
 											<td> {{ number_format($item->costo_kilo, 2, ',', '.')}}</td>
 											<td class="text-center">
 												<button type="button" name="btnDownReg" data-id="{{$item->id}}" class="btn btn-dark btn-sm fas fa-trash" title="Cancelar">
@@ -129,12 +129,12 @@
 									<tfoot id="tfoot" >
 										<tr>
 											<td>Totales</td>
-											<td>{{round($TotalDesposte)}}</td>
-											<td>--</td>
-											<td>{{$pesoTotalGlobal}}</td>
-											<td> {{ number_format($TotalVenta, 2, ',', '.')}}</td>
-											<td>{{round($porcVentaTotal)}}</td>
-											<td> {{ number_format($costoTotalGlobal, 2, ',', '.')}}</td>
+											<td>{{round($TotalDesposte)}} %</td>
+											<td>$    --</td>
+											<td>{{number_format($pesoTotalGlobal, 2, ',', '.')}}</td>
+											<td>$ {{ number_format($TotalVenta, 0, ',', '.')}}</td>
+											<td>{{round($porcVentaTotal)}} %</td>
+											<td>$ {{ number_format($costoTotalGlobal, 0, ',', '.')}}</td>
 											<td>{{$costoKiloTotal}}</td>
 											<td></td>
 										</tr>
@@ -238,7 +238,7 @@
 												<div class="task-header">
 													<div class="form-group">
 														<label>Valor desposte</label>
-														<div class="form-control campo" id="valorDesposte">{{ number_format( $tdesposte, 2, ',', '.') }} </div>
+														<div class="form-control campo" id="valorDesposte">{{ number_format( $tdesposte, 0, ',', '.') }} </div>
 													</div>
 												</div>
 											</div>
@@ -254,7 +254,7 @@
 												<div class="task-header">
 													<div class="form-group">
 														<label>Utilidad</label>
-														<div class="form-control campo" id="utilidad">{{ number_format( $tdesposte - $tck ,2, ',', '.') }} </div>
+														<div class="form-control campo" id="utilidad">{{ number_format( $tdesposte - $tck ,0, ',', '.') }} </div>
 													</div>
 												</div>
 											</div>

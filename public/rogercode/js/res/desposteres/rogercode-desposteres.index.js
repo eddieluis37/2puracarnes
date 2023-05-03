@@ -67,12 +67,12 @@ const showDataTable = (data) => {
     tableTbody.innerHTML += `
 			<tr>
 				<td>${element.name} </td>
-				<td>${element.porcdesposte} </td>
-				<td>${formatCantidad(element.precio)}</td>
+				<td>${element.porcdesposte} %</td>
+				<td>$ ${formatCantidadSinCero(element.precio)}</td>
 				<td> <input type="number" class="form-control-sm" id="${element.id}" value="${element.peso}" placeholder="Ingresar" size="10"></td>
-				<td>${formatCantidad(element.totalventa)}</td>
-				<td>${element.porcventa} </td>
-				<td>${formatCantidad(element.costo)} </td>
+				<td>$ ${formatCantidadSinCero(element.totalventa)}</td>
+				<td>${element.porcventa} %</td>
+				<td>$ ${formatCantidadSinCero(element.costo)} </td>
 				<td>${formatCantidad(element.costo_kilo)} </td>
 				<td class="text-center">
 					<button type="button" name="btnDownReg" data-id="${element.id}" class="btn btn-dark btn-sm fas fa-trash" title="Cancelar">
@@ -86,12 +86,12 @@ const showDataTable = (data) => {
   tableTfoot.innerHTML += `
 		<tr>
 			<td>Totales</td>
-			<td>${dataTotals.TotalDesposte}</td>
-			<td>--</td>
-			<td>${dataTotals.pesoTotalGlobal}</td>
-			<td>${formatCantidad(dataTotals.TotalVenta)}</td>
-			<td>${dataTotals.porcVentaTotal}</td>
-			<td>${formatCantidad(dataTotals.costoTotalGlobal)}</td>
+			<td>${dataTotals.TotalDesposte} %</td>
+			<td>$ --</td>
+			<td>${formatCantidad(dataTotals.pesoTotalGlobal)}</td>
+			<td>$ ${formatCantidadSinCero(dataTotals.TotalVenta)}</td>
+			<td>${dataTotals.porcVentaTotal} %</td>
+			<td>$ ${formatCantidadSinCero(dataTotals.costoTotalGlobal)}</td>
 			<td>${dataTotals.costoKiloTotal}</td>
 			<td></td>
 		</tr>
@@ -138,10 +138,10 @@ const showDataTable = (data) => {
   
   /******************UTILIDAD****************************** */
   utilidadCostoKilo.innerHTML = `${formatCantidad(costokilo)}`;
-  utilidadValorDesposte.innerHTML = `${formatCantidad(dataTotals.TotalVenta)}`;
+  utilidadValorDesposte.innerHTML = `${formatCantidadSinCero(dataTotals.TotalVenta)}`;
   utilidadTotalCostoKilo.innerHTML = `${formatCantidad(resultcanalPlantaCostoKilo)}`;
   let utilid = dataTotals.TotalVenta - resultcanalPlantaCostoKilo;
-  utilidadUtilidad.innerHTML = `${formatCantidad(utilid)}`;
+  utilidadUtilidad.innerHTML = `${formatCantidadSinCero(utilid)}`;
   let porcUtilidad;
   if (dataTotals.TotalVenta == 0) {
     porcUtilidad = dataTotals.TotalVenta;
