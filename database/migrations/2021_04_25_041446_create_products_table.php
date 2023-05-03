@@ -16,14 +16,17 @@ class CreateProductsTable extends Migration
         Schema::create('products', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('category_id');           
-            $table->unsignedBigInteger('level_product_id');           
-            $table->unsignedBigInteger('meatcut_id');           
-            $table->unsignedBigInteger('unitofmeasure_id');           
+            $table->unsignedBigInteger('level_product_id')->default(2);           
+            $table->unsignedBigInteger('meatcut_id')->default(61);           
+            $table->unsignedBigInteger('unitofmeasure_id')->default(1);           
             $table->string('name',255);
             $table->string('code', 20)->unique()->nullable();
             $table->string('barcode',25)->nullable();
             $table->decimal('cost',10,2)->default(0);
-            $table->decimal('price',10,2)->default(0);
+            $table->decimal('price_fama',10,2)->default(0); // precio en la linea de las famas
+            $table->decimal('price_insti',10,2)->default(0); // precio en la linea de las institucional
+            $table->decimal('price_horeca',10,2)->default(0); // precio en la linea de las Horeca
+            $table->decimal('price_hogar',10,2)->default(0); // precio en la linea de las Hogar
             $table->decimal('iva',10)->default(0);
             $table->integer('stock');
             $table->integer('alerts');
