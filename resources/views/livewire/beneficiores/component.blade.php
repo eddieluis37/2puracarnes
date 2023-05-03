@@ -11,6 +11,7 @@
 					</li>
 				</ul>
 			</div>
+
 			@include('common.searchbox')
 			<div class="widget-content">
 				<div class="table-responsive">
@@ -84,16 +85,12 @@
 
 <script>
 	$(document).ready(function() {
-		$('#beneficiores').DataTable({
-			"order": [
-				[0, "desc"]
-			]
-		});
+
 	});
 </script>
 
 <script>
-	document.addEventListener('DOMContentLoaded', function() {
+	/*document.addEventListener('DOMContentLoaded', function() {
 		window.livewire.on('beneficiore-added', Msg => {
 			$('#theModal').modal('hide')
 			noty(Msg)
@@ -114,7 +111,7 @@
 		window.livewire.on('user-withsales', Msg => {
 			noty(Msg)
 		})
-	});
+	});*/
 
 	function Confirm(id) {
 		swal({
@@ -133,4 +130,23 @@
 			}
 		})
 	}
+
+	document.addEventListener('livewire:load', function() {
+		$('#beneficiores').DataTable({
+			"order": [
+				[0, "desc"]
+			]
+		});
+
+		$('.selectProvider').select2({
+			placeholder: 'Busca un producto',
+			width: '100%',
+			allowClear: true,
+			tags: true,
+			dropdownParent: $('#modal-create-beneficiore')
+
+		});
+
+	});
 </script>
+<!--script src="{{asset('rogercode/js/res/beneficiores/rogercode-beneficiores-index.js')}}"></script-->

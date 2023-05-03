@@ -13,8 +13,6 @@
     <!-- END PAGE LEVEL PLUGINS/CUSTOM STYLES -->
 
     <link rel="stylesheet" href="{{ asset('css/apexcharts.css') }}" />
-    <script src="{{ asset('js/apexcharts.js') }}"></script>
-    <script src="{{asset('rogercode/js/rogercode-main.js')}}"></script>
     
 
 </head>
@@ -60,6 +58,8 @@
 
     <!-- BEGIN GLOBAL MANDATORY SCRIPTS -->
     @include('layouts.theme.scripts')
+    <script src="{{ asset('js/apexcharts.js') }}"></script>
+    <script src="{{asset('rogercode/js/rogercode-main.js')}}"></script>
     <!-- BEGIN PAGE LEVEL PLUGINS/CUSTOM SCRIPTS -->
 
     <!--SCRIPTS FOR EACH COMPONENT-->

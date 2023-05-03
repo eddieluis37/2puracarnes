@@ -3,15 +3,15 @@
 	<div class="modal-body">
 		<div class="row">
 			<div class="col-sm-12">
-				<div class="connect-sorting-content">
-					<div class="card simple-title-task ui-sortable-handle">
-						<div class="card-body">
+				<div class="">
+					<div class="">
+						<div class="">
 							<div class="btn-toolbar justify-content-between">
 								<div class="col-sm-12 col-md-4">
 									<div class="task-header">
 										<div class="form-group">
 											<label>Proveedor</label>
-											<select class="form-control" name="thirds_id" id="thirds_id" required="">
+											<select class="form-control selectProvider" name="thirds_id" id="thirds_id" required="">
 												<option value="">Seleccione el proveedor</option>
 												@foreach ($thirds as $p)
 												<option value="{{$p->id}}">{{$p->name}}</option>
