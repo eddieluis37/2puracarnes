@@ -1,3 +1,10 @@
+<style>
+
+
+
+
+
+</style>
 <div class="row sales layout-top-spacing">
 	<div class="col-sm-12">
 		<div class="widget widget-chart-one">
@@ -90,7 +97,7 @@
 </script>
 
 <script>
-	/*document.addEventListener('DOMContentLoaded', function() {
+	document.addEventListener('DOMContentLoaded', function() {
 		window.livewire.on('beneficiore-added', Msg => {
 			$('#theModal').modal('hide')
 			noty(Msg)
@@ -111,7 +118,37 @@
 		window.livewire.on('user-withsales', Msg => {
 			noty(Msg)
 		})
-	});*/
+		/************************************************* */
+		$('#beneficiores').DataTable({
+			"order": [
+				[0, "desc"]
+			]
+		});
+
+		$('.selectProvider').select2({
+			placeholder: 'Busca un proveedor',
+			width: '100%',
+			theme: "bootstrap-5",
+			allowClear: true,
+			dropdownParent: $('#modal-create-beneficiore')
+			//https://select2.org/troubleshooting/common-problems
+		});
+		$('.selectPieles').select2({
+			placeholder: 'Busca un cliente',
+			width: '100%',
+			theme: "bootstrap-5",
+			allowClear: true,
+			dropdownParent: $('#modal-create-beneficiore')
+		});
+		$('.selectVisceras').select2({
+			placeholder: 'Busca un cliente',
+			width: '100%',
+			theme: "bootstrap-5",
+			allowClear: true,
+			dropdownParent: $('#modal-create-beneficiore')
+		});
+
+	});
 
 	function Confirm(id) {
 		swal({
@@ -131,22 +168,5 @@
 		})
 	}
 
-	document.addEventListener('livewire:load', function() {
-		$('#beneficiores').DataTable({
-			"order": [
-				[0, "desc"]
-			]
-		});
-
-		$('.selectProvider').select2({
-			placeholder: 'Busca un producto',
-			width: '100%',
-			allowClear: true,
-			tags: true,
-			dropdownParent: $('#modal-create-beneficiore')
-
-		});
-
-	});
 </script>
 <!--script src="{{asset('rogercode/js/res/beneficiores/rogercode-beneficiores-index.js')}}"></script-->

@@ -111,7 +111,7 @@
 											<td> {{ $item->products->name }}</td>
 											<td> {{ $item->porcdesposte }} %</td>
 											<td>$ {{ number_format($item->precio, 0, ',', '.')}}</td>
-											<td> <input type="number" class="form-control-sm" id="{{$item->id}}" value="{{$item->peso}}" placeholder="Ingresar" size="10"></td>
+											<td> <input type="text" class="form-control-sm" id="{{$item->id}}" value="{{$item->peso}}" placeholder="Ingresar" size="10"></td>
 											<!--td> <input type="number" class="form-control-sm" placeholder="Ingresar" size="10" onkeypress="saveRowdesposte(event);"></td>-->
 											<td>$ {{ number_format($item->totalventa, 0, ',', '.')}}</td>
 											<td> {{ $item->porcventa}} %</td>

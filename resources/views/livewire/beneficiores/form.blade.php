@@ -3,11 +3,11 @@
 	<div class="modal-body">
 		<div class="row">
 			<div class="col-sm-12">
-				<div class="">
-					<div class="">
-						<div class="">
+				<div class="connect-sorting-content">
+					<div class="card simple-title-task ui-sortable-handle">
+						<div class="card-body">
 							<div class="btn-toolbar justify-content-between">
-								<div class="col-sm-12 col-md-4">
+								<div class="col-sm-12 col-md-6">
 									<div class="task-header">
 										<div class="form-group">
 											<label>Proveedor</label>
@@ -21,12 +21,12 @@
 										</div>
 									</div>
 								</div>
-								<div class="col-sm-12 col-md-4">
+								<div class="col-sm-12 col-md-6">
 									<div class="task-header">
 										<div class="form-group">
 											<label>Planta Sacrificio</label>
 											<div>
-												<select class="form-control" name="plantasacrificio_id" id="plantasacrificio_id" required="">
+												<select class="form-control form-control-sm" name="plantasacrificio_id" id="plantasacrificio_id" required="">
 													<option value="">Seleccione planta</option>
 													@foreach ($sacrificios as $s)
 													<option value="{{$s->id}}">{{$s->name}}</option>
@@ -37,12 +37,40 @@
 										</div>
 									</div>
 								</div>
-								<div class="col-sm-12 col-md-4">
+								<div class="col-sm-12 col-md-3">
 									<div class="task-header">
 										<div class="form-group">
-											<label>Cantidad</label>
-											<input type="number" name="cantidad" id="cantidad" class="form-control" "aria-describedby=" helpId" required="" min="1" max="30" step="1" value="1">
-											@error('cantidad') <span class="text-danger er">{{ $message}}</span>@enderror
+											<label>Cantidad Macho</label>
+											<!--input type="number" name="cantidad" id="cantidad" class="form-control" "aria-describedby=" helpId" required="" min="1" max="30" step="1" value="1">-->
+											<input type="number" name="cantidadMacho" id="cantidadMacho" class="form-control" "aria-describedby=" helpId" required="" min="1" max="30" step="1" value="1">
+											@error('cantidadMacho') <span class="text-danger er">{{ $message}}</span>@enderror
+										</div>
+									</div>
+								</div>
+								<div class="col-sm-12 col-md-3">
+									<div class="task-header">
+										<div class="form-group">
+											<label>Valor Unitario Macho</label>
+											<input type="number" name="valorUnitarioMacho" id="valorUnitarioMacho" class="form-control" "aria-describedby=" helpId" required="" min="1" step="1">
+											@error('valorUnitarioMacho') <span class="text-danger er">{{ $message}}</span>@enderror
+										</div>
+									</div>
+								</div>
+								<div class="col-sm-12 col-md-3">
+									<div class="task-header">
+										<div class="form-group">
+											<label>Cantidad Hembra</label>
+											<input type="number" name="cantidadEmbra" id="cantidadEmbra" class="form-control" "aria-describedby=" helpId" required="" min="1" max="30" step="1" value="1">
+											@error('cantidadEmbra') <span class="text-danger er">{{ $message}}</span>@enderror
+										</div>
+									</div>
+								</div>
+								<div class="col-sm-12 col-md-3">
+									<div class="task-header">
+										<div class="form-group">
+											<label>Valor Unitario Hembra</label>
+											<input type="number" name="valorUnitarioHembra" id="valorUnitarioHembra" class="form-control" "aria-describedby=" helpId" required="" min="1"  step="1" >
+											@error('valorUnitarioHembra') <span class="text-danger er">{{ $message}}</span>@enderror
 										</div>
 									</div>
 								</div>
@@ -68,7 +96,7 @@
 									<div class="task-header">
 										<div class="form-group">
 											<label>Cliente Pielees</label>
-											<select class="form-control" name="clientpieles_id" id="clientpieles_id" required="">
+											<select class="form-control selectPieles" name="clientpieles_id" id="clientpieles_id" required="">
 												<option value="">Seleccione el proveedor</option>
 												@foreach ($thirds as $p)
 												<option value="{{$p->id}}">{{$p->name}}</option>
@@ -82,7 +110,7 @@
 									<div class="task-header">
 										<div class="form-group">
 											<label>Cliente visceras</label>
-											<select class="form-control" name="clientvisceras_id" id="clientvisceras_id" required="">
+											<select class="form-control selectVisceras" name="clientvisceras_id" id="clientvisceras_id" required="">
 												<option value="">Seleccione el proveedor</option>
 												@foreach ($thirds as $p)
 												<option value="{{$p->id}}">{{$p->name}}</option>

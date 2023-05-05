@@ -126,7 +126,14 @@ class BeneficioresController extends Component
 
 		$newBeneficiore->thirds_id = $request->thirds_id;
 		$newBeneficiore->plantasacrificio_id  = $request->plantasacrificio_id;
-		$newBeneficiore->cantidad = $request->cantidad;
+		
+		$newBeneficiore->cantidadmacho = $request->cantidadMacho;
+		$newBeneficiore->valorunitariomacho = $request->valorUnitarioMacho;
+		$newBeneficiore->cantidadhembra = $request->cantidadEmbra;
+		$newBeneficiore->valorunitariohembra = $request->valorUnitarioHembra;
+
+		$newBeneficiore->cantidad = $request->cantidadMacho + $request->valorunitariohembra;
+
 		$newBeneficiore->fecha_beneficio = $request->fecha_beneficio;
 		$newBeneficiore->factura = $request->factura;
 		$newBeneficiore->clientpieles_id = $request->clientpieles_id;
@@ -171,8 +178,6 @@ class BeneficioresController extends Component
 		$newBeneficiore->rendcaliente = $request->rendcaliente;
 		$newBeneficiore->rendplanta = $request->rendplanta;
 		$newBeneficiore->rendfrio = $request->rendfrio;
-
-
 
 		$newBeneficiore->save();
 

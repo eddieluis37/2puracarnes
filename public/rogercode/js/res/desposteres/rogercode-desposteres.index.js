@@ -69,7 +69,7 @@ const showDataTable = (data) => {
 				<td>${element.name} </td>
 				<td>${element.porcdesposte} %</td>
 				<td>$ ${formatCantidadSinCero(element.precio)}</td>
-				<td> <input type="number" class="form-control-sm" id="${element.id}" value="${element.peso}" placeholder="Ingresar" size="10"></td>
+				<td> <input type="text" class="form-control-sm" id="${element.id}" value="${element.peso}" placeholder="Ingresar" size="10"></td>
 				<td>$ ${formatCantidadSinCero(element.totalventa)}</td>
 				<td>${element.porcventa} %</td>
 				<td>$ ${formatCantidadSinCero(element.costo)} </td>

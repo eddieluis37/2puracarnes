@@ -6,7 +6,9 @@
 <script>
 
   var plantasacrificio_id = $('#plantasacrificio_id');
-  var cantidad = $('#cantidad');
+  //var cantidad = $('#cantidad');
+  let cantidadMacho = $("#cantidadMacho");
+  let cantidadHembra = $("#cantidadEmbra");
   var canalfria = $('#canalfria');
   var costoanimal1 = $('#costoanimal1');
   var costoanimal2 = $('#costoanimal2');
@@ -27,7 +29,9 @@
     $(obtener_registroid(plantasacrificio_id.val()));
   });
 
-  cantidad.change(function () { calculatotales(); });
+  //cantidad.change(function () { calculatotales(); });
+  cantidadMacho.change(function () { calculatotales(); });
+  cantidadHembra.change(function () { calculatotales(); });
   costoanimal1.change(function () { calculatotales(); });
   costoanimal2.change(function () { calculatotales(); });
   costoanimal3.change(function () { calculatotales(); });
@@ -60,7 +64,7 @@
       },
      
       success: function (data) {
-
+        console.log(data);
       //  alert("registro prueba");
 
         $("#sacrificio").val(data.sacrificio);
@@ -74,8 +78,12 @@
     });
   };
   function calculatotales() {
-
-    var cantidad = $('#cantidad').val();
+    let cantidadMacho = $("#cantidadMacho").val();
+    let cantidadHemdra = $("#cantidadEmbra").val();
+    let totalCantidad = Number(cantidadMacho) + Number(cantidadHemdra);
+    console.log(totalCantidad);
+    //var cantidad = $('#cantidad').val();
+    var cantidad = totalCantidad;
     var pesopie1 = $('#pesopie1').val();
     var pesopie2 = $('#pesopie2').val();
     var pesopie3 = $('#pesopie3').val();
@@ -85,6 +93,7 @@
 
     //CANAL FRIA 
     var canalfria = $('#canalfria').val(); $('#tcanalfria').val(cantidad * canalfria); var tcanalf = cantidad * canalfria;
+    console.log(cantidad)
     //COSTO ANIMAL 1 / 2 / 3
     var costopie1 = $('#costoanimal1').val(); $('#costopie1').val(pesopie1 * costopie1); var tpie1 = pesopie1 * costopie1;
     var costopie2 = $('#costoanimal2').val(); $('#costopie2').val(pesopie2 * costopie2); var tpie2 = pesopie2 * costopie2;

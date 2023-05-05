@@ -22,24 +22,27 @@ class CreateBeneficioresTable extends Migration
             $table->unsignedBigInteger('plantasacrificio_id')->nullable();
             $table->foreign('plantasacrificio_id')->references('id')->on('sacrificios');
             
-            $table->bigInteger('cantidad')->nullable(); 
-            
-            $table->date('fecha_beneficio');
-
-            $table->string('factura');
-
             $table->unsignedBigInteger('clientpieles_id')->nullable();
             $table->foreign('clientpieles_id')->references('id')->on('thirds');
 
             $table->unsignedBigInteger('clientvisceras_id')->nullable();
             $table->foreign('clientvisceras_id')->references('id')->on('thirds');
+
+            $table->bigInteger('cantidadmacho')->nullable(); 
+            $table->bigInteger('valorunitariomacho')->nullable(); 
+            $table->bigInteger('cantidadhembra')->nullable(); 
+            $table->bigInteger('valorunitariohembra')->nullable(); 
+            $table->bigInteger('cantidad')->nullable(); 
+            
+            $table->date('fecha_beneficio');
+            $table->date('fecha_cierre')->nullable();
+
+            $table->string('factura');
+
                       
             $table->string('lote');
             
-            $table->boolean('status')->parent_select()->default(true)->nullable();            
          
-
-      
             $table->decimal('sacrificio', 18, 0)->nullable();
 
             $table->decimal('fomento', 18, 0)->nullable();
@@ -132,6 +135,10 @@ class CreateBeneficioresTable extends Migration
             $table->decimal('rendplanta', 18, 2)->nullable(); 
 
             $table->decimal('rendfrio', 18, 2)->nullable();       
+
+            # status
+            $table->boolean('status')->parent_select()->default(true)->nullable();            
+            $table->string('status_beneficio')->parent_select()->default('en proceso')->nullable();            
 
             $table->timestamps();
         });
