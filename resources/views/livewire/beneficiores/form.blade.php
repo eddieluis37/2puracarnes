@@ -37,7 +37,7 @@
 										</div>
 									</div>
 								</div>
-								<div class="col-sm-12 col-md-3">
+								<div class="col-sm-12 col-md-2">
 									<div class="task-header">
 										<div class="form-group">
 											<label>Cantidad Macho</label>
@@ -47,30 +47,48 @@
 										</div>
 									</div>
 								</div>
-								<div class="col-sm-12 col-md-3">
+								<div class="col-sm-12 col-md-2">
 									<div class="task-header">
 										<div class="form-group">
-											<label>Valor Unitario Macho</label>
-											<input type="number" name="valorUnitarioMacho" id="valorUnitarioMacho" class="form-control" "aria-describedby=" helpId" required="" min="1" step="1">
+											<label>Valor Unitario</label>
+											<input type="text" name="valorUnitarioMacho" id="valorUnitarioMacho" class="form-control" "aria-describedby=" helpId" placeholder="000.000" required="" min="1" step="1">
 											@error('valorUnitarioMacho') <span class="text-danger er">{{ $message}}</span>@enderror
 										</div>
 									</div>
 								</div>
-								<div class="col-sm-12 col-md-3">
+								<div class="col-sm-12 col-md-2">
 									<div class="task-header">
 										<div class="form-group">
-											<label>Cantidad Hembra</label>
-											<input type="number" name="cantidadEmbra" id="cantidadEmbra" class="form-control" "aria-describedby=" helpId" required="" min="1" max="30" step="1" value="1">
-											@error('cantidadEmbra') <span class="text-danger er">{{ $message}}</span>@enderror
+											<label>Valor Total</label>
+											<input type="text" name="valorTotalMacho" id="valorTotalMacho" class="form-control" "aria-describedby=" helpId" required="" min="1"  step="1" readonly>
+											@error('valorTotalMacho') <span class="text-danger er">{{ $message}}</span>@enderror
 										</div>
 									</div>
 								</div>
-								<div class="col-sm-12 col-md-3">
+								<div class="col-sm-12 col-md-2">
 									<div class="task-header">
 										<div class="form-group">
-											<label>Valor Unitario Hembra</label>
-											<input type="number" name="valorUnitarioHembra" id="valorUnitarioHembra" class="form-control" "aria-describedby=" helpId" required="" min="1"  step="1" >
+											<label>Cantidad Hembra</label>
+											<input type="number" name="cantidadHembra" id="cantidadHembra" class="form-control" "aria-describedby=" helpId" required="" min="1" max="30" step="1" value="1">
+											@error('cantidadHembra') <span class="text-danger er">{{ $message}}</span>@enderror
+										</div>
+									</div>
+								</div>
+								<div class="col-sm-12 col-md-2">
+									<div class="task-header">
+										<div class="form-group">
+											<label>Valor Unitario</label>
+											<input type="text" name="valorUnitarioHembra" id="valorUnitarioHembra" class="form-control" "aria-describedby=" helpId" placeholder="000.000" required="" min="1"  step="1"  >
 											@error('valorUnitarioHembra') <span class="text-danger er">{{ $message}}</span>@enderror
+										</div>
+									</div>
+								</div>
+								<div class="col-sm-12 col-md-2">
+									<div class="task-header">
+										<div class="form-group">
+											<label>Valor Total</label>
+											<input type="text" name="valorTotalHembra" id="valorTotalHembra" class="form-control" "aria-describedby=" helpId" required="" min="1"  step="1" readonly>
+											@error('valorTotalHembra') <span class="text-danger er">{{ $message}}</span>@enderror
 										</div>
 									</div>
 								</div>
@@ -180,11 +198,11 @@
 												<div class="form-row">
 													<div class="form-group col-sm">
 														<label for="sell_price1">Peso pie 1</label>
-														<input type="number" name="pesopie1" id="pesopie1" class="form-control" aria-describedby="helpId" step="0.01" required="">
+														<input type="text" name="pesopie1" id="pesopie1" class="form-control" aria-describedby="helpId" placeholder="000.000" step="0.01" required="">
 													</div>
 													<div class="form-group col-sm">
 														<label for="sell_price">Costo Animal 1</label>
-														<input type="number" name="costoanimal1" id="costoanimal1" class="form-control" aria-describedby="helpId" step="0.01" required>
+														<input type="text" name="costoanimal1" id="costoanimal1" class="form-control" aria-describedby="helpId" placeholder="000.000" step="0.01" required>
 													</div>
 												</div>
 											</div>
@@ -203,12 +221,12 @@
 												<div class="form-row">
 													<div class="form-group col-sm">
 														<label for="sell_price">Peso pie 2</label>
-														<input type="number" name="pesopie2" id="pesopie2" class="form-control" aria-describedby="helpId" step="0.01">
+														<input type="text" name="pesopie2" id="pesopie2" class="form-control" placeholder="000.000" aria-describedby="helpId" step="0.01">
 													</div>
 
 													<div class="form-group col-sm">
 														<label for="sell_price">Costo Animal 2</label>
-														<input type="number" name="costoanimal2" id="costoanimal2" class="form-control" aria-describedby="helpId" step="0.01">
+														<input type="text" name="costoanimal2" id="costoanimal2" class="form-control" placeholder="000.000" aria-describedby="helpId" step="0.01">
 													</div>
 												</div>
 											</div>
@@ -227,11 +245,11 @@
 												<div class="form-row">
 													<div class="form-group col-sm">
 														<label for="sell_price">Peso pie 3</label>
-														<input type="number" name="pesopie3" id="pesopie3" class="form-control" aria-describedby="helpId" step="0.01">
+														<input type="text" name="pesopie3" id="pesopie3" class="form-control" placeholder="000.000" aria-describedby="helpId" step="0.01">
 													</div>
 													<div class="form-group col-sm">
 														<label for="sell_price">Costo Animal 3</label>
-														<input type="number" name="costoanimal3" id="costoanimal3" class="form-control" aria-describedby="helpId" step="0.01">
+														<input type="text" name="costoanimal3" id="costoanimal3" class="form-control" placeholder="000.000" aria-describedby="helpId" step="0.01">
 													</div>
 												</div>
 											</div>
@@ -252,27 +270,27 @@
 										<div class="form-row mt-3">
 											<div class="form-group col-md-2">
 												<label for="canalcaliente">Canal caliente</label>
-												<input type="number" name="canalcaliente" id="canalcaliente" class="form-control" aria-describedby="helpId" step="0.01">
+												<input type="text" name="canalcaliente" id="canalcaliente" class="form-control" placeholder="000.000" aria-describedby="helpId" step="0.01">
 											</div>
 											<div class="form-group col-md-2">
 												<label for="canalfria">Canal fria</label>
-												<input type="number" name="canalfria" id="canalfria" class="form-control" aria-describedby="helpId" step="0.01">
+												<input type="text" name="canalfria" id="canalfria" class="form-control" placeholder="000.000" aria-describedby="helpId" step="0.01">
 											</div>
 											<div class="form-group col-md-2">
 												<label for="sell_price">Canal planta</label>
-												<input type="number" name="canalplanta" id="canalplanta" class="form-control" aria-describedby="helpId" step="0.01">
+												<input type="text" name="canalplanta" id="canalplanta" class="form-control" placeholder="000.000" aria-describedby="helpId" step="0.01">
 											</div>
 											<div class="form-group col-md-2">
 												<label for="pieleskg">Pieles Kg</label>
-												<input type="number" name="pieleskg" id="pieleskg" class="form-control" aria-describedby="helpId" step="0.01">
+												<input type="text" name="pieleskg" id="pieleskg" class="form-control" placeholder="000.000" aria-describedby="helpId" step="0.01">
 											</div>
 											<div class="form-group col-md-2">
 												<label for="pielescosto">Piel Costo</label>
-												<input type="number" name="pielescosto" id="pielescosto" class="form-control" aria-describedby="helpId" step="0.01">
+												<input type="text" name="pielescosto" id="pielescosto" class="form-control" placeholder="000.000" aria-describedby="helpId" step="0.01">
 											</div>
 											<div class="form-group col-md-2">
 												<label for="visceras">Visceras Costo</label>
-												<input type="number" name="visceras" id="visceras" class="form-control" aria-describedby="helpId" step="0.01">
+												<input type="text" name="visceras" id="visceras" class="form-control" placeholder="000.000" aria-describedby="helpId" step="0.01">
 											</div>
 										</div>
 									</div>
@@ -289,63 +307,63 @@
 										<div class="form-row">
 											<div class="form-group col-md-4">
 												<label for="costopie1">Costo Animal 1</label>
-												<input type="number" name="costopie1" id="costopie1" class="form-control" aria-describedby="helpId" readonly step="0.01">
+												<input type="text" name="costopie1" id="costopie1" class="form-control" aria-describedby="helpId" readonly step="0.01">
 											</div>
 											<div class="form-group col-md-4">
 												<label for="costopie2">Costo Animal 2</label>
-												<input type="number" name="costopie2" id="costopie2" class="form-control" aria-describedby="helpId" readonly step="0.01">
+												<input type="text" name="costopie2" id="costopie2" class="form-control" aria-describedby="helpId" readonly step="0.01">
 											</div>
 											<div class="form-group col-md-4">
 												<label for="costopie3">Costo Animal 3</label>
-												<input type="number" name="costopie3" id="costopie3" class="form-control" aria-describedby="helpId" readonly step="0.01">
+												<input type="text" name="costopie3" id="costopie3" class="form-control" aria-describedby="helpId" readonly step="0.01">
 											</div>
 											<div class="form-group col-md-4">
 												<label for="costokilo">Sacrificio</label>
-												<input type="number" name="tsacrificio" id="tsacrificio" class="form-control campo" aria-describedby="helpId" readonly step="0.01">
+												<input type="text" name="tsacrificio" id="tsacrificio" class="form-control campo" aria-describedby="helpId" readonly step="0.01">
 											</div>
 											<div class="form-group col-md-4">
 												<label for="tfomento">Fomento</label>
-												<input type="number" name="tfomento" id="tfomento" class="form-control" aria-describedby="helpId" readonly step="0.01">
+												<input type="text" name="tfomento" id="tfomento" class="form-control" aria-describedby="helpId" readonly step="0.01">
 											</div>
 											<div class="form-group col-md-4">
 												<label for="tdeguello">Deguello</label>
-												<input type="number" name="tdeguello" id="tdeguello" class="form-control" aria-describedby="helpId" readonly step="0.01">
+												<input type="text" name="tdeguello" id="tdeguello" class="form-control" aria-describedby="helpId" readonly step="0.01">
 											</div>
 											<div class="form-group col-md-4">
 												<label for="tbascula">Báscula</label>
-												<input type="number" name="tbascula" id="tbascula" class="form-control" aria-describedby="helpId" readonly step="0.01">
+												<input type="text" name="tbascula" id="tbascula" class="form-control" aria-describedby="helpId" readonly step="0.01">
 											</div>
 											<div class="form-group col-md-4">
 												<label for="ttransporte">Transporte</label>
-												<input type="number" name="ttransporte" id="ttransporte" class="form-control" aria-describedby="helpId" readonly step="0.01">
+												<input type="text" name="ttransporte" id="ttransporte" class="form-control" aria-describedby="helpId" readonly step="0.01">
 											</div>
 											<div class="form-group col-md-4">
 												<label for="tpieles">Pieles</label>
-												<input type="number" name="tpieles" id="tpieles" class="form-control" aria-describedby="helpId" readonly step="0.01">
+												<input type="text" name="tpieles" id="tpieles" class="form-control" aria-describedby="helpId" readonly step="0.01">
 											</div>
 											<div class="form-group col-md-4">
 												<label for="tvisceras">Visceras</label>
-												<input type="number" name="tvisceras" id="tvisceras" class="form-control" aria-describedby="helpId" readonly step="0.01">
+												<input type="text" name="tvisceras" id="tvisceras" class="form-control" aria-describedby="helpId" readonly step="0.01">
 											</div>
 											<div class="form-group col-md-4">
 												<label for="tcanalfria">Canal fría</label>
-												<input type="number" name="tcanalfria" id="tcanalfria" class="form-control" aria-describedby="helpId" readonly step="0.01">
+												<input type="text" name="tcanalfria" id="tcanalfria" class="form-control" aria-describedby="helpId" readonly step="0.01">
 											</div>
 											<div class="form-group col-md-4">
 												<label for="valorfactura">Valor Factura</label>
-												<input type="number" name="valorfactura" id="valorfactura" class="form-control" aria-describedby="helpId" readonly step="0.01">
+												<input type="text" name="valorfactura" id="valorfactura" class="form-control" aria-describedby="helpId" readonly step="0.01">
 											</div>
 											<div class="form-group col-md-4">
 												<label for="costokilo">Costo Kilo</label>
-												<input type="number" name="costokilo" id="costokilo" class="form-control" aria-describedby="helpId" readonly step="0.01">
+												<input type="text" name="costokilo" id="costokilo" class="form-control" aria-describedby="helpId" readonly step="0.01">
 											</div>
 											<div class="form-group col-md-4">
 												<label for="costo">Costo</label>
-												<input type="number" name="costo" id="costo" class="form-control" aria-describedby="helpId" readonly step="0.01">
+												<input type="text" name="costo" id="costo" class="form-control" aria-describedby="helpId" readonly step="0.01">
 											</div>
 											<div class="form-group col-md-4">
 												<label for="totalcostos">Total Costos</label>
-												<input type="number" name="totalcostos" id="totalcostos" class="form-control" aria-describedby="helpId" readonly step="0.01">
+												<input type="text" name="totalcostos" id="totalcostos" class="form-control" aria-describedby="helpId" readonly step="0.01">
 											</div>
 											<!-- 		
 													<div class="col-md-4">
@@ -368,31 +386,31 @@
 										<div class="form-row">
 											<div class="form-group col-md-4">
 												<label for="pesopie">Peso Pie</label>
-												<input type="number" name="pesopie" id="pesopie" class="form-control" aria-describedby="helpId" readonly step="0.01">
+												<input type="text" name="pesopie" id="pesopie" class="form-control" aria-describedby="helpId" readonly step="0.01">
 											</div>
 											<div class="form-group col-md-4">
 												<label for="rtcanalcaliente">Canal Caliente</label>
-												<input type="number" name="rtcanalcaliente" id="rtcanalcaliente" class="form-control" aria-describedby="helpId" readonly step="0.01">
+												<input type="text" name="rtcanalcaliente" id="rtcanalcaliente" class="form-control" aria-describedby="helpId" readonly step="0.01">
 											</div>
 											<div class="form-group col-md-4">
 												<label for="rtcanalplanta">Canal Planta</label>
-												<input type="number" name="rtcanalplanta" id="rtcanalplanta" class="form-control" aria-describedby="helpId" readonly step="0.01">
+												<input type="text" name="rtcanalplanta" id="rtcanalplanta" class="form-control" aria-describedby="helpId" readonly step="0.01">
 											</div>
 											<div class="form-group col-md-4">
 												<label for="rtcanalfria">Canal Fría</label>
-												<input type="number" name="rtcanalfria" id="rtcanalfria" class="form-control" aria-describedby="helpId" readonly step="0.01">
+												<input type="text" name="rtcanalfria" id="rtcanalfria" class="form-control" aria-describedby="helpId" readonly step="0.01">
 											</div>
 											<div class="form-group col-md-4">
 												<label for="rendcaliente">Rend.Caliente</label>
-												<input type="number" name="rendcaliente" id="rendcaliente" class="form-control" aria-describedby="helpId" readonly step="0.01">
+												<input type="text" name="rendcaliente" id="rendcaliente" class="form-control" aria-describedby="helpId" readonly step="0.01">
 											</div>
 											<div class="form-group col-md-4">
 												<label for="rendplanta">Rend.Planta</label>
-												<input type="number" name="rendplanta" id="rendplanta" class="form-control" aria-describedby="helpId" readonly step="0.01">
+												<input type="text" name="rendplanta" id="rendplanta" class="form-control" aria-describedby="helpId" readonly step="0.01">
 											</div>
 											<div class="form-group col-md-4">
 												<label for="rendfrio">Rend.Frio</label>
-												<input type="number" name="rendfrio" id="rendfrio" class="form-control" aria-describedby="helpId" readonly step="0.01">
+												<input type="text" name="rendfrio" id="rendfrio" class="form-control" aria-describedby="helpId" readonly step="0.01">
 											</div>
 										</div>
 									</div>

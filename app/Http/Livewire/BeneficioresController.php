@@ -10,7 +10,7 @@ use DB;
 use Illuminate\Http\Request;
 use Livewire\Component;
 use Livewire\WithPagination;
-
+use NumberFormatter;
 
 
 class BeneficioresController extends Component
@@ -120,64 +120,70 @@ class BeneficioresController extends Component
 		}
 	}
 
+	public function MoneyToNumber(string $moneyValue): float {
+		$formatter = new NumberFormatter('es-CL', NumberFormatter::DECIMAL);
+		$number = $formatter->parse($moneyValue);
+		return (float) $number;
+	}
 	public function store(Request $request)
 	{
+		//dd($request->valorUnitarioMacho);
+		//dd($this->MoneyToNumber($request->valorUnitarioMacho));
 		$newBeneficiore = new Beneficiore();
 
 		$newBeneficiore->thirds_id = $request->thirds_id;
 		$newBeneficiore->plantasacrificio_id  = $request->plantasacrificio_id;
-		
-		$newBeneficiore->cantidadmacho = $request->cantidadMacho;
-		$newBeneficiore->valorunitariomacho = $request->valorUnitarioMacho;
-		$newBeneficiore->cantidadhembra = $request->cantidadEmbra;
-		$newBeneficiore->valorunitariohembra = $request->valorUnitarioHembra;
-
+		$newBeneficiore->cantidadmacho = $this->MoneyToNumber($request->cantidadMacho);
+		$newBeneficiore->valorunitariomacho = $this->MoneyToNumber($request->valorUnitarioMacho);
+		$newBeneficiore->valortotalmacho = $this->MoneyToNumber($request->valorTotalMacho);
+		$newBeneficiore->cantidadhembra = $this->MoneyToNumber($request->cantidadHembra);
+		$newBeneficiore->valorunitariohembra = $this->MoneyToNumber($request->valorUnitarioHembra);
+		$newBeneficiore->valortotalhembra = $this->MoneyToNumber($request->valorTotalHembra);
 		$newBeneficiore->cantidad = $request->cantidadMacho + $request->valorunitariohembra;
-
 		$newBeneficiore->fecha_beneficio = $request->fecha_beneficio;
 		$newBeneficiore->factura = $request->factura;
 		$newBeneficiore->clientpieles_id = $request->clientpieles_id;
 		$newBeneficiore->clientvisceras_id = $request->clientvisceras_id;
 		$newBeneficiore->lote = $request->lote;
 		$newBeneficiore->sacrificio = $request->sacrificio;
-		$newBeneficiore->fomento = $request->fomento;
-		$newBeneficiore->deguello = $request->deguello;
-		$newBeneficiore->bascula = $request->bascula;
-		$newBeneficiore->transporte = $request->transporte;
-		$newBeneficiore->pesopie1 = $request->pesopie1;
-		$newBeneficiore->pesopie2 = $request->pesopie2;
-		$newBeneficiore->pesopie3 = $request->pesopie3;
-		$newBeneficiore->costoanimal1 = $request->costoanimal1;
-		$newBeneficiore->costoanimal2 = $request->costoanimal2;
-		$newBeneficiore->costoanimal3 = $request->costoanimal3;
-		$newBeneficiore->canalcaliente = $request->canalcaliente;
-		$newBeneficiore->canalfria = $request->canalfria;
-		$newBeneficiore->canalplanta = $request->canalplanta;
-		$newBeneficiore->pieleskg = $request->pieleskg;
-		$newBeneficiore->pielescosto = $request->pielescosto;
-		$newBeneficiore->visceras = $request->visceras;
-		$newBeneficiore->costopie1 = $request->costopie1;
-		$newBeneficiore->costopie2 = $request->costopie2;
-		$newBeneficiore->costopie3 = $request->costopie3;
-		$newBeneficiore->tsacrificio = $request->tsacrificio;
-		$newBeneficiore->tfomento = $request->tfomento;
-		$newBeneficiore->tdeguello = $request->tdeguello;
-		$newBeneficiore->tbascula = $request->tbascula;
-		$newBeneficiore->ttransporte = $request->ttransporte;
-		$newBeneficiore->tpieles = $request->tpieles;
-		$newBeneficiore->tvisceras = $request->tvisceras;
-		$newBeneficiore->tcanalfria = $request->tcanalfria;
-		$newBeneficiore->valorfactura = $request->valorfactura;
-		$newBeneficiore->costokilo = $request->costokilo;
-		$newBeneficiore->costo = $request->costo;
-		$newBeneficiore->totalcostos = $request->totalcostos;
-		$newBeneficiore->pesopie = $request->pesopie;
-		$newBeneficiore->rtcanalcaliente = $request->rtcanalcaliente;
-		$newBeneficiore->rtcanalplanta = $request->rtcanalplanta;
-		$newBeneficiore->rtcanalfria = $request->rtcanalfria;
-		$newBeneficiore->rendcaliente = $request->rendcaliente;
-		$newBeneficiore->rendplanta = $request->rendplanta;
-		$newBeneficiore->rendfrio = $request->rendfrio;
+		$newBeneficiore->fomento = $this->MoneyToNumber($request->fomento);
+		$newBeneficiore->deguello = $this->MoneyToNumber($request->deguello);
+		$newBeneficiore->bascula = $this->MoneyToNumber($request->bascula);
+		$newBeneficiore->transporte = $this->MoneyToNumber($request->transporte);
+		$newBeneficiore->pesopie1 = $this->MoneyToNumber($request->pesopie1);
+		$newBeneficiore->pesopie2 = $this->MoneyToNumber($request->pesopie2);
+		$newBeneficiore->pesopie3 = $this->MoneyToNumber($request->pesopie3);
+		$newBeneficiore->costoanimal1 = $this->MoneyToNumber($request->costoanimal1);
+		$newBeneficiore->costoanimal2 = $this->MoneyToNumber($request->costoanimal2);
+		$newBeneficiore->costoanimal3 = $this->MoneyToNumber($request->costoanimal3);
+		$newBeneficiore->canalcaliente = $this->MoneyToNumber($request->canalcaliente);
+		$newBeneficiore->canalfria = $this->MoneyToNumber($request->canalfria);
+		$newBeneficiore->canalplanta = $this->MoneyToNumber($request->canalplanta);
+		$newBeneficiore->pieleskg = $this->MoneyToNumber($request->pieleskg);
+		$newBeneficiore->pielescosto = $this->MoneyToNumber($request->pielescosto);
+		$newBeneficiore->visceras = $this->MoneyToNumber($request->visceras);
+		$newBeneficiore->costopie1 = $this->MoneyToNumber($request->costopie1);
+		$newBeneficiore->costopie2 = $this->MoneyToNumber($request->costopie2);
+		$newBeneficiore->costopie3 = $this->MoneyToNumber($request->costopie3);
+		$newBeneficiore->tsacrificio = $this->MoneyToNumber($request->tsacrificio);
+		$newBeneficiore->tfomento = $this->MoneyToNumber($request->tfomento);
+		$newBeneficiore->tdeguello = $this->MoneyToNumber($request->tdeguello);
+		$newBeneficiore->tbascula = $this->MoneyToNumber($request->tbascula);
+		$newBeneficiore->ttransporte = $this->MoneyToNumber($request->ttransporte);
+		$newBeneficiore->tpieles =$this->MoneyToNumber($request->tpieles);
+		$newBeneficiore->tvisceras = $this->MoneyToNumber($request->tvisceras);
+		$newBeneficiore->tcanalfria = $this->MoneyToNumber($request->tcanalfria);
+		$newBeneficiore->valorfactura = $this->MoneyToNumber($request->valorfactura);
+		$newBeneficiore->costokilo = $this->MoneyToNumber($request->costokilo);
+		$newBeneficiore->costo = $this->MoneyToNumber($request->costo);
+		$newBeneficiore->totalcostos = $this->MoneyToNumber($request->totalcostos);
+		$newBeneficiore->pesopie = $this->MoneyToNumber($request->pesopie);
+		$newBeneficiore->rtcanalcaliente = $this->MoneyToNumber($request->rtcanalcaliente);
+		$newBeneficiore->rtcanalplanta = $this->MoneyToNumber($request->rtcanalplanta);
+		$newBeneficiore->rtcanalfria = $this->MoneyToNumber($request->rtcanalfria);
+		$newBeneficiore->rendcaliente = $this->MoneyToNumber($request->rendcaliente);
+		$newBeneficiore->rendplanta = $this->MoneyToNumber($request->rendplanta);
+		$newBeneficiore->rendfrio = $this->MoneyToNumber($request->rendfrio);
 
 		$newBeneficiore->save();
 

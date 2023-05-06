@@ -8,7 +8,10 @@
   var plantasacrificio_id = $('#plantasacrificio_id');
   //var cantidad = $('#cantidad');
   let cantidadMacho = $("#cantidadMacho");
-  let cantidadHembra = $("#cantidadEmbra");
+  let cantidadHembra = $("#cantidadHembra");
+  let valorMacho = $("#valorUnitarioMacho");
+  let valorHembra = $("#valorUnitarioHembra");
+
   var canalfria = $('#canalfria');
   var costoanimal1 = $('#costoanimal1');
   var costoanimal2 = $('#costoanimal2');
@@ -47,6 +50,11 @@
 
   canalcaliente.change(function () { calculatotales(); });
   canalplanta.change(function () { calculatotales(); });
+  /**********************************************************/
+  valorMacho.change(function () { CalculateTotalMacho(); });
+  valorHembra.change(function () { CalculateTotalHembra(); });
+  
+  /**********************************************************/
 
   function obtener_registroid(plantasacrificio_id) {
     // alert("id "+plantasacrificio_id);
@@ -54,24 +62,20 @@
       url: "{{ route('get_plantasacrificio_by_id') }}",
       dataType: 'json',
       type: 'GET',
-  
       headers: {
             'X-CSRF-TOKEN': '{{ csrf_token() }}'
          },
-
       data: {
         plantasacrificio_id: plantasacrificio_id,
       },
-     
       success: function (data) {
         console.log(data);
       //  alert("registro prueba");
-
-        $("#sacrificio").val(data.sacrificio);
-        $("#fomento").val(data.fomento);
-        $("#deguello").val(data.deguello);
-        $("#bascula").val(data.bascula);
-        $("#transporte").val(data.transporte);
+        $("#sacrificio").val(formatCantidadSinCero(data.sacrificio));
+        $("#fomento").val(formatCantidadSinCero(data.fomento));
+        $("#deguello").val(formatCantidadSinCero(data.deguello));
+        $("#bascula").val(formatCantidadSinCero(data.bascula));
+        $("#transporte").val(formatCantidadSinCero(data.transporte));
         calculatotales();
 
       }
@@ -79,56 +83,95 @@
   };
   function calculatotales() {
     let cantidadMacho = $("#cantidadMacho").val();
-    let cantidadHemdra = $("#cantidadEmbra").val();
+    let cantidadHemdra = $("#cantidadHembra").val();
     let totalCantidad = Number(cantidadMacho) + Number(cantidadHemdra);
     console.log(totalCantidad);
     //var cantidad = $('#cantidad').val();
     var cantidad = totalCantidad;
-    var pesopie1 = $('#pesopie1').val();
-    var pesopie2 = $('#pesopie2').val();
-    var pesopie3 = $('#pesopie3').val();
-    var pieleskg = $('#pieleskg').val();
-    var canalcaliente = $('#canalcaliente').val();
-    var canalplanta = $('#canalplanta').val();
+    var pesopie1 = formatMoneyNumber($('#pesopie1').val());
+    console.log("peso 1 " + pesopie1);
+    var pesopie2 = formatMoneyNumber($('#pesopie2').val());
+    var pesopie3 = formatMoneyNumber($('#pesopie3').val());
+    var pieleskg = formatMoneyNumber($('#pieleskg').val());
+    var canalcaliente = formatMoneyNumber($('#canalcaliente').val());
+    var canalplanta = formatMoneyNumber($('#canalplanta').val());
 
     //CANAL FRIA 
-    var canalfria = $('#canalfria').val(); $('#tcanalfria').val(cantidad * canalfria); var tcanalf = cantidad * canalfria;
+    var canalfria = formatMoneyNumber($('#canalfria').val()); 
+    console.log("canal fria " + canalfria)
+    $('#tcanalfria').val(formatCantidadSinCero(cantidad * canalfria)); 
+    var tcanalf = cantidad * canalfria;
     console.log(cantidad)
     //COSTO ANIMAL 1 / 2 / 3
-    var costopie1 = $('#costoanimal1').val(); $('#costopie1').val(pesopie1 * costopie1); var tpie1 = pesopie1 * costopie1;
-    var costopie2 = $('#costoanimal2').val(); $('#costopie2').val(pesopie2 * costopie2); var tpie2 = pesopie2 * costopie2;
-    var costopie3 = $('#costoanimal3').val(); $('#costopie3').val(pesopie3 * costopie3); var tpie3 = pesopie3 * costopie3;
+    var costopie1 = formatMoneyNumber($('#costoanimal1').val()); $('#costopie1').val(formatCantidadSinCero(pesopie1 * costopie1)); var tpie1 = Number(pesopie1 * costopie1);
+    var costopie2 = formatMoneyNumber($('#costoanimal2').val()); $('#costopie2').val(formatCantidadSinCero(pesopie2 * costopie2)); var tpie2 = Number(pesopie2 * costopie2);
+    var costopie3 = formatMoneyNumber($('#costoanimal3').val()); $('#costopie3').val(formatCantidadSinCero(pesopie3 * costopie3)); var tpie3 = Number(pesopie3 * costopie3);
 
     //SACRIFICIO / FOMENTO / DEGUELLO / BASCULA / TRANSPORTE
-    var sacrificio = $('#sacrificio').val(); $('#tsacrificio').val(cantidad * sacrificio); var tsacrif = cantidad * sacrificio;
-    var fomento = $('#fomento').val(); $('#tfomento').val(cantidad * fomento * -1); var tfomen = cantidad * fomento * -1;
-    var deguello = $('#deguello').val(); $('#tdeguello').val(cantidad * deguello); var tdgue = cantidad * deguello;
-    var bascula = $('#bascula').val(); $('#tbascula').val(cantidad * bascula * -1); var tbascu = cantidad * bascula * -1;
-    var transporte = $('#transporte').val(); $('#ttransporte').val(cantidad * transporte); var ttrans = cantidad * transporte;
+    var sacrificio = formatMoneyNumber($('#sacrificio').val()); $('#tsacrificio').val(formatCantidadSinCero(cantidad * sacrificio)); var tsacrif = Number(cantidad * sacrificio);
+    var fomento = formatMoneyNumber($('#fomento').val()); $('#tfomento').val(formatCantidadSinCero(cantidad * fomento * -1)); var tfomen = Number(cantidad * fomento * -1);
+    var deguello = formatMoneyNumber($('#deguello').val()); $('#tdeguello').val(formatCantidadSinCero(cantidad * deguello)); var tdgue = Number(cantidad * deguello);
+    var bascula = formatMoneyNumber($('#bascula').val()); $('#tbascula').val(formatCantidadSinCero(cantidad * bascula * -1)); var tbascu = Number(cantidad * bascula * -1);
+    var transporte = formatMoneyNumber($('#transporte').val()); $('#ttransporte').val(formatCantidadSinCero(cantidad * transporte)); var ttrans = Number(cantidad * transporte);
 
     //TOTAL PIELES Y VISCERAS
-    var pielescosto = $('#pielescosto').val(); $('#tpieles').val(pieleskg * pielescosto * -1); var tpielc = pieleskg * pielescosto * -1;
-    var visceras = $('#visceras').val(); $('#tvisceras').val(cantidad * visceras * -1); var tvisce = cantidad * visceras * -1;
+    var pielescosto = formatMoneyNumber($('#pielescosto').val()); $('#tpieles').val(formatCantidadSinCero(pieleskg * pielescosto * -1)); var tpielc = Number(pieleskg * pielescosto * -1);
+    var visceras = formatMoneyNumber($('#visceras').val()); $('#tvisceras').val(formatCantidadSinCero(cantidad * visceras * -1)); var tvisce = Number(cantidad * visceras * -1);
 
     //TOTALES 
     var totalc = tpie1 + tpie2 + tpie3 + tsacrif + tfomen + tdgue + tbascu + ttrans + tpielc + tvisce;
-    $('#totalcostos').val(totalc);
-    $('#valorfactura').val(tpie1 + tpie2 + tpie3 + tfomen + tbascu);
-    $('#costokilo').val(Math.round(totalc / canalplanta));
-    $('#costo').val(Math.round(totalc / canalplanta) * 12.5);
+    console.log("total c " + totalc)
+    $('#totalcostos').val(formatCantidadSinCero(totalc));
+    $('#valorfactura').val(formatCantidadSinCero(tpie1 + tpie2 + tpie3 + tfomen + tbascu));
+    if (canalplanta != "") {
+      $('#costokilo').val(formatCantidadSinCero(Math.round(totalc / canalplanta)));
+      $('#costo').val(formatCantidadSinCero(Math.round(totalc / canalplanta) * 12.5));
+    }else{
+      $('#costokilo').val(0);
+      $('#costo').val(0);
+    }
 
     //RENDIMIENTO
     var pesopierend = pesopie1 * 1 + pesopie2 * 1 + pesopie3 * 1;
-    $('#pesopie').val(pesopierend);
+    console.log("peso pies : " + pesopierend);
+    $('#pesopie').val(formatCantidadSinCero(pesopierend));
 
-    $('#rtcanalcaliente').val(canalcaliente, 2);
-    $('#rtcanalplanta').val(canalplanta);
-    $('#rtcanalfria').val(canalfria);
+    $('#rtcanalcaliente').val(formatCantidadSinCero(canalcaliente, 2));
+    $('#rtcanalplanta').val(formatCantidadSinCero(canalplanta));
+    $('#rtcanalfria').val(formatCantidadSinCero(canalfria));
+    
+    if (canalcaliente != "" && pesopierend != 0) {
+      $('#rendcaliente').val(formatCantidadSinCero(((canalcaliente / pesopierend) * 100).toFixed(2)));
+    }else{
+      $('#rendcaliente').val(0);
+    }  
+    if (canalplanta != "" && pesopierend != 0) {
+      $('#rendplanta').val(formatCantidadSinCero(((canalplanta / pesopierend) * 100).toFixed(2)));
+    }else{
+      $('#rendplanta').val(0);
+    }
 
-    $('#rendcaliente').val(((canalcaliente / pesopierend) * 100).toFixed(2));
-    $('#rendplanta').val(((canalplanta / pesopierend) * 100).toFixed(2));
-    $('#rendfrio').val(((canalfria / pesopierend) * 100).toFixed(2));
+    if (canalfria != "" && pesopierend != 0) {
+      $('#rendfrio').val(formatCantidadSinCero(((canalfria / pesopierend) * 100).toFixed(2)));
+    }else{
+      $('#rendfrio').val(0);
+    }
 
   }
+
+  const CalculateTotalMacho = () => {
+    let cantidadMacho = Number($("#cantidadMacho").val());
+    let valorUnitarioMacho = formatMoneyNumber($("#valorUnitarioMacho").val());
+    let valorTotal = $("#valorTotalMacho").val(formatCantidadSinCero(cantidadMacho * valorUnitarioMacho));
+  }
+  const CalculateTotalHembra = () => {
+    console.log("test")
+    let cantidadHembra = Number($("#cantidadHembra").val());
+    console.log(cantidadHembra)
+    let valorUnitarioHembra = formatMoneyNumber($("#valorUnitarioHembra").val());
+    console.log(valorUnitarioHembra)
+    let valorTotal = $("#valorTotalHembra").val(formatCantidadSinCero(cantidadHembra * valorUnitarioHembra));
+  }
+
 
 </script>

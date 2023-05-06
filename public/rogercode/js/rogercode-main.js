@@ -23,3 +23,14 @@ const formatCantidadSinCero = (number) => {
     }).format(number)
     return formatMoney;
 }
+
+const formatMoneyNumber = (string) => {
+    console.log(string);
+    if(string !== ""){
+        const numberFormatValue = parseFloat(string.replace(/[^\d,-]/g, '').replace(',', '.'));
+        console.log(numberFormatValue);
+        return Number(numberFormatValue);
+    }
+
+    return Number(0);
+}

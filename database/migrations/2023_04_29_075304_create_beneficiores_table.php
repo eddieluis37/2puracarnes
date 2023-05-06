@@ -30,8 +30,10 @@ class CreateBeneficioresTable extends Migration
 
             $table->bigInteger('cantidadmacho')->nullable(); 
             $table->bigInteger('valorunitariomacho')->nullable(); 
+            $table->bigInteger('valortotalmacho')->nullable(); 
             $table->bigInteger('cantidadhembra')->nullable(); 
             $table->bigInteger('valorunitariohembra')->nullable(); 
+            $table->bigInteger('valortotalhembra')->nullable(); 
             $table->bigInteger('cantidad')->nullable(); 
             
             $table->date('fecha_beneficio');
