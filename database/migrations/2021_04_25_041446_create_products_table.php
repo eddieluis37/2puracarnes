@@ -28,7 +28,8 @@ class CreateProductsTable extends Migration
             $table->decimal('price_horeca',10,2)->default(0); // precio en la linea de las Horeca
             $table->decimal('price_hogar',10,2)->default(0); // precio en la linea de las Hogar
             $table->decimal('iva',10)->default(0);
-            $table->integer('stock');
+            $table->decimal('stock', 18, 2)->nullable();
+            $table->decimal('fisico', 18, 2)->nullable();            
             $table->integer('alerts');
             $table->string('image',100)->nullable();
             $table->boolean('status')->parent_select()->default(true);
