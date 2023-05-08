@@ -10,7 +10,7 @@
 		<div class="widget widget-chart-one">
 			<div class="widget-heading">
 				<h4 class="card-title">
-					<b>{{$componentName}} | {{$pageTitle}} {{$monday}} </b>
+					<b>{{$componentName}} | {{$pageTitle}} {{$monday}} {{$dateNow}}</b>
 				</h4>
 				<ul class="tabs tab-pills">
 					<li>
@@ -52,7 +52,39 @@
 									<h6 class="text-center">{{$beneficiore->factura}}</h6>
 								</td>
 								<td class="text-center">
-									<a href="desposteres/{{$beneficiore->id}}" class="btn btn-dark" title="Despostar">
+									<!--p>{{$beneficiore->fecha_cierre}}</p-->
+									@if (Carbon\Carbon::parse($dateNow)->gt(Carbon\Carbon::parse($beneficiore->fecha_cierre)))
+										<!--p>dateNow is greater than fecha_cierre</p>--> 
+										<button onclick="edit('{{$beneficiore->id}}')" class="btn btn-dark mtmobile" title="Editar Beneficio" {{ $monday ? 'disabled' : '' }}>
+											<i class="fas fa-edit"></i>
+										</button>
+										<button onclick="Confirm('{{$beneficiore->id}}')" class="btn btn-dark" title="Borrar Beneficio"  {{ $monday ? 'disabled' : '' }}>
+											<i class="fas fa-trash"></i>
+										</button>
+									@elseif (Carbon\Carbon::parse($dateNow)->lt(Carbon\Carbon::parse($beneficiore->fecha_cierre)))
+										<!--p>dateNow is less than fecha_cierre</p>--> 
+										<button onclick="edit('{{$beneficiore->id}}')" class="btn btn-dark mtmobile" title="Editar Beneficio" {{ $monday ? 'disabled' : '' }}>
+											<i class="fas fa-edit"></i>
+										</button>
+										<button onclick="edit('{{$beneficiore->id}}')" class="btn btn-dark mtmobile" title="Editar Beneficio" {{ $monday ? 'disabled' : '' }}>
+											<i class="fas fa-edit"></i>
+										</button>
+										<button onclick="Confirm('{{$beneficiore->id}}')" class="btn btn-dark" title="Borrar Beneficio"  {{ $monday ? 'disabled' : '' }}>
+											<i class="fas fa-trash"></i>
+										</button>
+									@else
+										<!--dateNow is equal to fecha_cierre-->
+										<a href="desposteres/{{$beneficiore->id}}" class="btn btn-dark" title="Despostar">
+											<i class="fas fa-search"></i>
+										</a>
+										<button onclick="edit('{{$beneficiore->id}}')" class="btn btn-dark mtmobile" title="Editar Beneficio" {{ $monday ? 'disabled' : '' }}>
+											<i class="fas fa-edit"></i>
+										</button>
+										<button onclick="Confirm('{{$beneficiore->id}}')" class="btn btn-dark" title="Borrar Beneficio"  {{ $monday ? 'disabled' : '' }}>
+											<i class="fas fa-trash"></i>
+										</button>
+									@endif
+									<!--a href="desposteres/{{$beneficiore->id}}" class="btn btn-dark" title="Despostar">
 										<i class="fas fa-search"></i>
 									</a>
 									<button onclick="edit('{{$beneficiore->id}}')" class="btn btn-dark mtmobile" title="Editar Beneficio" {{ $monday ? 'disabled' : '' }}>
@@ -60,7 +92,7 @@
 									</button>
 									<button onclick="Confirm('{{$beneficiore->id}}')" class="btn btn-dark" title="Borrar Beneficio"  {{ $monday ? 'disabled' : '' }}>
 										<i class="fas fa-trash"></i>
-									</button>
+									</button>-->
 								</td>
 							</tr>
 							@endforeach

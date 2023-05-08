@@ -221,14 +221,24 @@
     let valorUnitarioMacho = formatMoneyNumber($("#valorUnitarioMacho").val());
     let valorTotal = $("#valorTotalMacho").val(formatCantidadSinCero(cantidadMacho * valorUnitarioMacho));
     $("#valorUnitarioMacho").val(formatCantidadSinCero(valorUnitarioMacho));
-    
+    setCantidadVicerasCosto();
   }
   const CalculateTotalHembra = () => {
     let cantidadHembra = Number($("#cantidadHembra").val());
     let valorUnitarioHembra = formatMoneyNumber($("#valorUnitarioHembra").val());
     let valorTotal = $("#valorTotalHembra").val(formatCantidadSinCero(cantidadHembra * valorUnitarioHembra));
     $("#valorUnitarioHembra").val(formatCantidadSinCero(valorUnitarioHembra));
+    setCantidadVicerasCosto();
   }
 
+  const setCantidadVicerasCosto = () => {
+    let cantTotalMacho = formatMoneyNumber($("#valorTotalMacho").val());
+    console.log(cantTotalMacho)
+    let cantTotalHembra = formatMoneyNumber($("#valorTotalHembra").val());
+    console.log(cantTotalHembra)
+    let sum = cantTotalMacho + cantTotalHembra;
+    console.log("sum : " + formatCantidadSinCero(sum));
+    $("#visceras").val(formatCantidadSinCero(sum));
+  }
 
 </script>

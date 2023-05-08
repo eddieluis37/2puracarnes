@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use Livewire\Component;
 use Livewire\WithPagination;
 use NumberFormatter;
+use DateTime;
 
 
 class BeneficioresController extends Component
@@ -21,6 +22,8 @@ class BeneficioresController extends Component
     
     public $data1, $search, $selected_id, $pageTitle, $componentName, $thirdsid, $plantasacrificioid, $plantasacrificio_id, $cantidad, $fecha_beneficio, $factura, $clientpielesid, $clientviscerasid, $finca, $lote, $status, $sacrificio, $fomento, $deguello, $bascula, $tranporte, $pesopie1, $pesopie2, $pesopie3, $costoanimal1, $costoanimal2, $costoanimal3, $canalcaliente, $canalfria, $canalplanta, $pieleskg, $pielescosto, $visceras, $costopie1, $costopie2, $costopie3, $tsacrificio, $tfomento, $tdeguello, $tbascula, $ttransporte, $tpieles, $tvisceras, $tcanalfria, $valorfactura, $costokilo, $costo, $totalcostos, $pesopie, $rtcanalcaliente, $rtcanalplanta, $rtcanalfria, $rendcaliente, $rendplanta, $rendfrio;
     public $monday;
+    public $test;
+    public $dateNow;
     public User $user;
 
     
@@ -47,11 +50,21 @@ class BeneficioresController extends Component
 		//Saturday //test
 		if (date('l', strtotime('today')) === 'Monday') {
 			//$this->monday = 'Today is Monday!';
-			$this->monday = true;
+			$this->monday = false;
 		} else {
 			//$this->monday =	'Today is not Monday.';
 			$this->monday =	false;
 		}
+
+		$date = new DateTime();
+		$currentDate = $date->format('Y-m-d');
+		$this->dateNow = $currentDate;
+
+		//$start_date = '2023-05-08'; // Replace with your start date
+		//$current_date = new DateTime($start_date);
+		//$current_date->modify('next monday'); // Move to the next Monday
+		//$this->test = $current_date->format('Y-m-d'); // Output the date in Y-m-d format
+		//$test = 
 	}
 
 
@@ -141,6 +154,10 @@ class BeneficioresController extends Component
 		//dd($this->MoneyToNumber($request->valorUnitarioMacho));
 		$getReg = Beneficiore::firstWhere('id', $request->idbeneficio);
 		if($getReg == null) {
+			$start_date = $request->fecha_beneficio; // Replace with your start date
+			$current_date = new DateTime($start_date);
+			$current_date->modify('next monday'); // Move to the next Monday
+			$dateNextMonday = $current_date->format('Y-m-d'); // Output the date in Y-m-d format
 			$newBeneficiore = new Beneficiore();
 			$newBeneficiore->thirds_id = $request->thirds_id;
 			$newBeneficiore->plantasacrificio_id  = $request->plantasacrificio_id;
@@ -152,6 +169,7 @@ class BeneficioresController extends Component
 			$newBeneficiore->valortotalhembra = $this->MoneyToNumber($request->valorTotalHembra);
 			$newBeneficiore->cantidad = $request->cantidadMacho + $request->valorunitariohembra;
 			$newBeneficiore->fecha_beneficio = $request->fecha_beneficio;
+			$newBeneficiore->fecha_cierre = $dateNextMonday;
 			$newBeneficiore->factura = $request->factura;
 			$newBeneficiore->clientpieles_id = $request->clientpieles_id;
 			$newBeneficiore->clientvisceras_id = $request->clientvisceras_id;
@@ -197,7 +215,7 @@ class BeneficioresController extends Component
 			$newBeneficiore->rendplanta = $this->MoneyToNumber($request->rendplanta);
 			$newBeneficiore->rendfrio = $this->MoneyToNumber($request->rendfrio);
 
-			//$newBeneficiore->save();
+			$newBeneficiore->save();
 
 		}else {
 
@@ -211,7 +229,7 @@ class BeneficioresController extends Component
 			$updateBeneficiore->valorunitariohembra = $this->MoneyToNumber($request->valorUnitarioHembra);
 			$updateBeneficiore->valortotalhembra = $this->MoneyToNumber($request->valorTotalHembra);
 			$updateBeneficiore->cantidad = $request->cantidadMacho + $request->valorunitariohembra;
-			$updateBeneficiore->fecha_beneficio = $request->fecha_beneficio;
+			//$updateBeneficiore->fecha_beneficio = $request->fecha_beneficio;
 			$updateBeneficiore->factura = $request->factura;
 			$updateBeneficiore->clientpieles_id = $request->clientpieles_id;
 			$updateBeneficiore->clientvisceras_id = $request->clientvisceras_id;
@@ -257,7 +275,7 @@ class BeneficioresController extends Component
 			$updateBeneficiore->rendplanta = $this->MoneyToNumber($request->rendplanta);
 			$updateBeneficiore->rendfrio = $this->MoneyToNumber($request->rendfrio);
 
-			//$updateBeneficiore->save();
+			$updateBeneficiore->save();
 
 		}
 
