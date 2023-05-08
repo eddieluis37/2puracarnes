@@ -11,6 +11,24 @@ const formatCantidad = (number) => {
     return formatMoney;
 }
 
+const formatkg = (peso) => {
+    //let formatnumber = formatCantidad(peso);
+    //let formatnumber = formatMoneyNumber(peso);
+    //console.log(formatnumber);
+    let data = formatMoneyNumber(peso);
+    console.log(data);
+    //const weight = 1234.56; // in kilograms
+    const formattedWeight = Number(data).toLocaleString('es-CO', {
+        //style: 'unit',
+        unit: 'kilogram',
+        unitDisplay: 'narrow',
+    });
+
+    console.log(formattedWeight); // "1.234,56 kg"
+    return formattedWeight;
+}
+
+
 
 const formatCantidadSinCero = (number) => {
     let formatMoney = new Intl.NumberFormat('es-CL', { 

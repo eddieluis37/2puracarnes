@@ -7,6 +7,9 @@
 					<div class="card simple-title-task ui-sortable-handle">
 						<div class="card-body">
 							<div class="btn-toolbar justify-content-between">
+								<div>
+									<input type="hidden" value="0" name="idbeneficio" id="idbeneficio" >
+								</div>
 								<div class="col-sm-12 col-md-6">
 									<div class="task-header">
 										<div class="form-group">
@@ -420,7 +423,7 @@
 					</div>
 				</div>
 				<div class="modal-footer">
-					<button type="button" class="btn btn-outline-light" data-dismiss="modal">Close</button>
+					<button type="button" class="btn btn-outline-light" data-dismiss="modal">Cerrar</button>
 					<button type="submit" class="btn btn-primary">Guardar</button>
 				</div>
 			</div>

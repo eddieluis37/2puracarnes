@@ -127,8 +127,10 @@ Route::group(['middleware'=> [('auth')]], function () {
     Route::get('report/excel/{user}/{type}/{f1}/{f2}', [ExportController::class, 'reporteExcel']);
     Route::get('report/excel/{user}/{type}', [ExportController::class, 'reporteExcel']);
 
-
+    /************ Beneficiores **************/
     Route::get('get_plantasacrificio_by_id', [BeneficioresController::class, 'get_plantasacrificio_by_id'])->name('get_plantasacrificio_by_id');
+    Route::post('store', [BeneficioresController::class, 'store'])->name('store');
+    Route::get('/edit/{id}', [BeneficioresController::class, 'edit'])->name('edit');
 
     Route::get('get_plantasacrificiopollo_by_id', [BeneficiopollosController::class, 'get_plantasacrificiopollo_by_id'])->name('get_plantasacrificiopollo_by_id');
 
@@ -137,7 +139,6 @@ Route::group(['middleware'=> [('auth')]], function () {
 
     Route::post('storem', [DesposterController::class, 'storem'])->name('storem');
 
-    Route::post('store', [BeneficioresController::class, 'store'])->name('store');
 
 
     //Route::post('citywithstatecountry', [CityController::class, 'citywithstatecountry'])->name('citywithstatecountry');

@@ -35,21 +35,78 @@
   //cantidad.change(function () { calculatotales(); });
   cantidadMacho.change(function () { calculatotales(); });
   cantidadHembra.change(function () { calculatotales(); });
-  costoanimal1.change(function () { calculatotales(); });
-  costoanimal2.change(function () { calculatotales(); });
-  costoanimal3.change(function () { calculatotales(); });
-  canalfria.change(function () { calculatotales(); });
+  costoanimal1.change(function () {
+    let costo1 = formatMoneyNumber($('#costoanimal1').val());
+    $('#costoanimal1').val(formatCantidadSinCero(costo1));
+    calculatotales(); 
+  });
+  costoanimal2.change(function () {
+    let costo2 = formatMoneyNumber($('#costoanimal2').val());
+    $('#costoanimal2').val(formatCantidadSinCero(costo2));
+    calculatotales(); 
+  });
+  costoanimal3.change(function () { 
+    let costo3 = formatMoneyNumber($('#costoanimal3').val());
+    $('#costoanimal3').val(formatCantidadSinCero(costo3));
+    calculatotales(); 
+  });
 
-  pieleskg.change(function () { calculatotales(); });
-  pielescosto.change(function () { calculatotales(); });
-  visceras.change(function () { calculatotales(); });
+  canalfria.change(function () {
+    let canalf = formatkg($('#canalfria').val());
+    $('#canalfria').val(canalf);
+    console.log("peso :" + canalf)
+    calculatotales(); 
+  });
 
-  pesopie1.change(function () { calculatotales(); });
-  pesopie2.change(function () { calculatotales(); });
-  pesopie3.change(function () { calculatotales(); });
+  pieleskg.change(function () { 
+    let piel = formatMoneyNumber($('#pieleskg').val());
+    $('#pieleskg').val(formatCantidadSinCero(piel));
+    calculatotales(); 
+  });
+  pielescosto.change(function () { 
+    let pielc = formatMoneyNumber($('#pielescosto').val());
+    $('#pielescosto').val(formatCantidadSinCero(pielc));
+    calculatotales(); 
+  });
+  visceras.change(function () { 
+    let visc = formatkg($('#visceras').val());
+    $('#visceras').val(visc);
+    console.log("peso :" + visc)
+    calculatotales(); 
+  });
 
-  canalcaliente.change(function () { calculatotales(); });
-  canalplanta.change(function () { calculatotales(); });
+  pesopie1.change(function () {
+    let pesokg1 = formatkg($('#pesopie1').val());
+    $('#pesopie1').val(pesokg1);
+    console.log("peso :" + pesokg1)
+    calculatotales(); 
+  });
+  pesopie2.change(function () { 
+    let pesokg2 = formatkg($('#pesopie2').val());
+    $('#pesopie2').val(pesokg2);
+    console.log("peso :" + pesokg2)
+    calculatotales(); 
+  });
+  pesopie3.change(function () { 
+    let pesokg3 = formatkg($('#pesopie3').val());
+    $('#pesopie3').val(pesokg3);
+    console.log("peso :" + pesokg3)
+    calculatotales(); 
+  });
+
+  canalcaliente.change(function () { 
+    let canal = formatkg($('#canalcaliente').val());
+    $('#canalcaliente').val(canal);
+    console.log("peso :" + canal)
+    calculatotales(); 
+  });
+
+  canalplanta.change(function () { 
+    let canalp = formatkg($('#canalplanta').val());
+    $('#canalplanta').val(canalp);
+    console.log("peso :" + canalp)
+    calculatotales(); 
+  });
   /**********************************************************/
   valorMacho.change(function () { CalculateTotalMacho(); });
   valorHembra.change(function () { CalculateTotalHembra(); });
@@ -89,7 +146,7 @@
     //var cantidad = $('#cantidad').val();
     var cantidad = totalCantidad;
     var pesopie1 = formatMoneyNumber($('#pesopie1').val());
-    console.log("peso 1 " + pesopie1);
+    //console.log("peso 1 " + pesopie1);
     var pesopie2 = formatMoneyNumber($('#pesopie2').val());
     var pesopie3 = formatMoneyNumber($('#pesopie3').val());
     var pieleskg = formatMoneyNumber($('#pieleskg').val());
@@ -163,14 +220,14 @@
     let cantidadMacho = Number($("#cantidadMacho").val());
     let valorUnitarioMacho = formatMoneyNumber($("#valorUnitarioMacho").val());
     let valorTotal = $("#valorTotalMacho").val(formatCantidadSinCero(cantidadMacho * valorUnitarioMacho));
+    $("#valorUnitarioMacho").val(formatCantidadSinCero(valorUnitarioMacho));
+    
   }
   const CalculateTotalHembra = () => {
-    console.log("test")
     let cantidadHembra = Number($("#cantidadHembra").val());
-    console.log(cantidadHembra)
     let valorUnitarioHembra = formatMoneyNumber($("#valorUnitarioHembra").val());
-    console.log(valorUnitarioHembra)
     let valorTotal = $("#valorTotalHembra").val(formatCantidadSinCero(cantidadHembra * valorUnitarioHembra));
+    $("#valorUnitarioHembra").val(formatCantidadSinCero(valorUnitarioHembra));
   }
 
 

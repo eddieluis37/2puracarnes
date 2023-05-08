@@ -10,7 +10,7 @@
 		<div class="widget widget-chart-one">
 			<div class="widget-heading">
 				<h4 class="card-title">
-					<b>{{$componentName}} | {{$pageTitle}}</b>
+					<b>{{$componentName}} | {{$pageTitle}} {{$monday}} </b>
 				</h4>
 				<ul class="tabs tab-pills">
 					<li>
@@ -55,12 +55,12 @@
 									<a href="desposteres/{{$beneficiore->id}}" class="btn btn-dark" title="Despostar">
 										<i class="fas fa-search"></i>
 									</a>
-									<a href="javascript:void(0)" wire:click="Edit({{$beneficiore->id}})" class="btn btn-dark mtmobile" title="Editar Beneficio">
+									<button onclick="edit('{{$beneficiore->id}}')" class="btn btn-dark mtmobile" title="Editar Beneficio" {{ $monday ? 'disabled' : '' }}>
 										<i class="fas fa-edit"></i>
-									</a>
-									<a href="javascript:void(0)" onclick="Confirm('{{$beneficiore->id}}')" class="btn btn-dark" title="Borrar Beneficio">
+									</button>
+									<button onclick="Confirm('{{$beneficiore->id}}')" class="btn btn-dark" title="Borrar Beneficio"  {{ $monday ? 'disabled' : '' }}>
 										<i class="fas fa-trash"></i>
-									</a>
+									</button>
 								</td>
 							</tr>
 							@endforeach
@@ -72,7 +72,7 @@
 		</div>
 	</div>
 	<!-- modal -->
-	<div class="modal fade" id="modal-create-beneficiore">
+	<div class="modal fade" id="modal-create-beneficiore" aria-hidden="true" data-keyboard="false" data-backdrop="static" >
 		<div class="modal-dialog modal-xl" role="document">
 			<div class="modal-content bg-default">
 				<div class="modal-header">
@@ -169,4 +169,4 @@
 	}
 
 </script>
-<!--script src="{{asset('rogercode/js/res/beneficiores/rogercode-beneficiores-index.js')}}"></script-->
+<script src="{{asset('rogercode/js/res/beneficiores/rogercode-beneficiores-index.js')}}"></script>
