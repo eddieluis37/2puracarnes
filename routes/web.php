@@ -110,9 +110,11 @@ Route::group(['middleware'=> [('auth')]], function () {
     Route::get('beneficiores', BeneficioresController::class);
     Route::get('beneficiopollos', BeneficiopollosController::class);
     //Route::get('desposteres/{id}', DesposteresController::class);
+
+    /**beneficiores*/
     Route::resource('desposter', DesposterController::class);
 
-   
+    Route::get('downbeneficiores/{id}', [BeneficioresController::class, 'destroy']);
     /*desposteres* */
     Route::post('desposteresAdd', [DesposteresController::class, 'store']);
     Route::get('getdesposter/{id}', [DesposteresController::class, 'getdesposter']);

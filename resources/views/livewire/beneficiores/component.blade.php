@@ -63,9 +63,9 @@
 										</button>
 									@elseif (Carbon\Carbon::parse($dateNow)->lt(Carbon\Carbon::parse($beneficiore->fecha_cierre)))
 										<!--p>dateNow is less than fecha_cierre</p>--> 
-										<button onclick="edit('{{$beneficiore->id}}')" class="btn btn-dark mtmobile" title="Editar Beneficio" {{ $monday ? 'disabled' : '' }}>
-											<i class="fas fa-edit"></i>
-										</button>
+										<a href="desposteres/{{$beneficiore->id}}" class="btn btn-dark" title="Despostar">
+											<i class="fas fa-search"></i>
+										</a>
 										<button onclick="edit('{{$beneficiore->id}}')" class="btn btn-dark mtmobile" title="Editar Beneficio" {{ $monday ? 'disabled' : '' }}>
 											<i class="fas fa-edit"></i>
 										</button>
@@ -194,8 +194,21 @@
 			confirmButtonText: 'Aceptar'
 		}).then(function(result) {
 			if (result.value) {
-				window.livewire.emit('deleteRow', id)
-				swal.close()
+				console.log(id)
+				/*(async () => {
+					let response = await fetch(`/downbeneficiores/${id}`);
+					let resp = await response.json();
+					if (resp.status === 201) {
+						swal({
+							title: "Exito",
+							text: resp.message,
+							type: "success",
+						});
+						setTimeout(() => {
+							location.reload();
+						}, 1000);
+					}
+				})();*/
 			}
 		})
 	}

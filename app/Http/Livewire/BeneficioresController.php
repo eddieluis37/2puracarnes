@@ -294,6 +294,17 @@ class BeneficioresController extends Component
 		]);
 	}
 
+
+    public function destroy($id)
+    {
+        //$user = Beneficiore::findOrFail($id);
+        //$user->delete();
+
+		return response()->json([
+			"success" => true,
+		]);
+    }
+
 	public function resetUI()
 	{
 		$this->name = '';	
