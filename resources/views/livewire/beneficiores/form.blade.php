@@ -1,4 +1,5 @@
-<form action="{{ route('store') }}" method="POST" enctype="multipart/form-data">
+ <fieldset id="contentDisable">
+<form action="{{ route('store') }}" id="formBeneficiores" method="POST" enctype="multipart/form-data">
 	{{ csrf_field() }}
 	<div class="modal-body">
 		<div class="row">
@@ -430,3 +431,4 @@
 		</div>
 	</div>
 </form>
+</fieldset>

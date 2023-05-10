@@ -95,25 +95,18 @@ class BeneficioresController extends Component
 		else
 
 			$beneficiores = Beneficiore::join('thirds as t', 't.id', 'beneficiores.thirds_id')
-									   ->join('sacrificios as s', 's.id', 'beneficiores.plantasacrificio_id')
-									 
-				->select('beneficiores.*', 't.name as third',
-						 'beneficiores.*', 's.name as sacrificio',
-																		)
+			->join('sacrificios as s', 's.id', 'beneficiores.plantasacrificio_id')
+			->select('beneficiores.*', 't.name as third', 'beneficiores.*', 's.name as sacrificio')
+			->where('beneficiores.status', '=', true)
+			->orderBy('beneficiores.id', 'desc')
+			->paginate($this->pagination);
 
-				->orderBy('beneficiores.id', 'desc')
-				->paginate($this->pagination);
-
-
-
-	    return view('livewire.beneficiores.component', ['data' => $beneficiores,
+			return view('livewire.beneficiores.component', ['data' => $beneficiores,
 				'thirds' => Third::orderBy('name', 'asc')->get(),
 				'sacrificios' => Sacrificio::orderBy('name', 'asc')->get(),				
-				
-
 			])
-				->extends('layouts.theme.app')
-				->section('content');
+			->extends('layouts.theme.app')
+			->section('content');
 
 
 	}
@@ -167,7 +160,7 @@ class BeneficioresController extends Component
 			$newBeneficiore->cantidadhembra = $this->MoneyToNumber($request->cantidadHembra);
 			$newBeneficiore->valorunitariohembra = $this->MoneyToNumber($request->valorUnitarioHembra);
 			$newBeneficiore->valortotalhembra = $this->MoneyToNumber($request->valorTotalHembra);
-			$newBeneficiore->cantidad = $request->cantidadMacho + $request->valorunitariohembra;
+			$newBeneficiore->cantidad = $request->cantidadMacho + $request->cantidadHembra;
 			$newBeneficiore->fecha_beneficio = $request->fecha_beneficio;
 			$newBeneficiore->fecha_cierre = $dateNextMonday;
 			$newBeneficiore->factura = $request->factura;
@@ -228,7 +221,7 @@ class BeneficioresController extends Component
 			$updateBeneficiore->cantidadhembra = $this->MoneyToNumber($request->cantidadHembra);
 			$updateBeneficiore->valorunitariohembra = $this->MoneyToNumber($request->valorUnitarioHembra);
 			$updateBeneficiore->valortotalhembra = $this->MoneyToNumber($request->valorTotalHembra);
-			$updateBeneficiore->cantidad = $request->cantidadMacho + $request->valorunitariohembra;
+			$updateBeneficiore->cantidad = $request->cantidadMacho + $request->cantidadHembra;
 			//$updateBeneficiore->fecha_beneficio = $request->fecha_beneficio;
 			$updateBeneficiore->factura = $request->factura;
 			$updateBeneficiore->clientpieles_id = $request->clientpieles_id;
@@ -287,7 +280,7 @@ class BeneficioresController extends Component
 
 	public function edit($id){
 
-            $benefi = Beneficiore::where('id', $id)->first();
+        $benefi = Beneficiore::where('id', $id)->first();
 		return response()->json([
 			"id" => $id,
 			"beneficiores" => $benefi,
@@ -296,13 +289,21 @@ class BeneficioresController extends Component
 
 
     public function destroy($id)
-    {
-        //$user = Beneficiore::findOrFail($id);
-        //$user->delete();
-
-		return response()->json([
-			"success" => true,
-		]);
+    {	
+		try {
+			$updateBeneficiore = Beneficiore::firstWhere('id', $id);
+			$updateBeneficiore->status = false;
+			$updateBeneficiore->save();
+        	return response()->json([
+            	"status" => 201,
+            	"message" => "El registro se dio de baja con exito",
+        	]);
+		} catch (\Throwable $th) {
+            return response()->json([
+                "status" => 500,
+                "message" => (array) $th
+            ]);
+		}
     }
 
 	public function resetUI()

@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\Beneficiore;
 use Illuminate\Database\Seeder;
+use DateTime;
 
 class BeneficioreSeeder extends Seeder
 {
@@ -14,6 +15,10 @@ class BeneficioreSeeder extends Seeder
      */
     public function run()
     {
+        $now = now();
+		$current_date = new DateTime($now);
+		$current_date->modify('next monday'); // Move to the next Monday
+		$dateNextMonday = $current_date->format('Y-m-d'); // Output the date in Y-m-d format
         Beneficiore::create([
             'thirds_id' => 674,
             'plantasacrificio_id' => 1,
@@ -24,7 +29,8 @@ class BeneficioreSeeder extends Seeder
             'valorunitariohembra' => 350000,
             'valortotalhembra' => 5950000,
             'cantidad' => 30,
-            'fecha_beneficio' => now(),
+            'fecha_beneficio' => $now,
+            'fecha_cierre' => $dateNextMonday,
             'factura' => 'PVM789',
             'clientpieles_id' => 3,
             'clientvisceras_id' => 3,
@@ -64,7 +70,8 @@ class BeneficioreSeeder extends Seeder
             'valorunitariohembra' => 350000,
             'valortotalhembra' => 5950000,
             'cantidad' => 30,
-            'fecha_beneficio' => now(),
+            'fecha_beneficio' => $now,
+            'fecha_cierre' => $dateNextMonday,
             'factura' => 'PVM789',
             'clientpieles_id' => 3,
             'clientvisceras_id' => 3,
@@ -105,7 +112,8 @@ class BeneficioreSeeder extends Seeder
             'valorunitariohembra' => 350000,
             'valortotalhembra' => 5950000,
             'cantidad' => 30,
-            'fecha_beneficio' => now(),
+            'fecha_beneficio' => $now,
+            'fecha_cierre' => $dateNextMonday,
             'factura' => 'FEV0991',
             'clientpieles_id' => 3,
             'clientvisceras_id' => 3,
@@ -147,7 +155,8 @@ class BeneficioreSeeder extends Seeder
             'valorunitariohembra' => 350000,
             'valortotalhembra' => 5950000,
             'cantidad' => 30,
-            'fecha_beneficio' => now(),
+            'fecha_beneficio' => $now,
+            'fecha_cierre' => $dateNextMonday,
             'factura' => 'FEV001',
             'clientpieles_id' => 236,
             'clientvisceras_id' => 798,
