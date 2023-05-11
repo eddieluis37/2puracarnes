@@ -9,6 +9,8 @@ use App\Models\Beneficiore;
 use App\Models\Despostere;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use DateTime;
+use Carbon\Carbon;
 
 class DesposteresrogercodeController extends Controller
 {
@@ -37,19 +39,16 @@ class DesposteresrogercodeController extends Controller
 
         $beneficior = DB::table('beneficiores as b')
             ->join('thirds as t', 'b.thirds_id', '=', 't.id')
-            ->select('t.name','b.id','b.lote','b.factura','b.canalplanta','b.cantidad','b.costokilo')
+            ->select('t.name','b.id','b.lote','b.factura','b.canalplanta','b.cantidad','b.costokilo','b.fecha_cierre')
             ->where('b.id',$id)
             ->get();
         /******************/
-        
         $this->consulta = Despostere::
         Where([
         ['beneficiores_id',$id],
         ['status','VALID'], 
         ])->get();
-        
         //dd(count($this->consulta));
-
         if (count($this->consulta) === 0) {
             $prod = Product::Where([
                 ['category_id',1],
@@ -79,6 +78,23 @@ class DesposteresrogercodeController extends Controller
             ['status','VALID'], 
             ])->get();
         }
+        /****************************************** */
+        $status = '';
+        $fechaBeneficioCierre = Carbon::parse($beneficior[0]->fecha_cierre);
+		$date = new DateTime();
+		$currentDate = Carbon::parse($date->format('Y-m-d'));
+
+        if ($currentDate->gt($fechaBeneficioCierre)) {
+            //'Date 1 is greater than Date 2';
+            $status = 'false';
+        } elseif ($currentDate->lt($fechaBeneficioCierre)) {
+            //'Date 1 is less than Date 2';
+            $status = 'true';
+        } else {
+            //'Date 1 and Date 2 are equal';
+            $status = 'false';
+        }
+        /****************************************** */
 
         $desposters = $this->consulta;
         $TotalDesposte = (float)Despostere::Where([['beneficiores_id',$id],['status','VALID']])->sum('porcdesposte');
@@ -92,7 +108,17 @@ class DesposteresrogercodeController extends Controller
         }
         //dd(count($desposters));
         //$beneficior = Beneficiore::Where('id',$id)->get();
-        return view('categorias.res.index', compact('beneficior','desposters','TotalDesposte','TotalVenta','porcVentaTotal','pesoTotalGlobal','costoTotalGlobal','costoKiloTotal'));
+        return view('categorias.res.index', compact(
+            'beneficior',
+            'desposters',
+            'TotalDesposte',
+            'TotalVenta',
+            'porcVentaTotal',
+            'pesoTotalGlobal',
+            'costoTotalGlobal',
+            'costoKiloTotal',
+            'status'
+        ));
     }
 
     /**

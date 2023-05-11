@@ -73,7 +73,7 @@
 									<div class="task-header">
 										<div class="form-group">
 											<label>Cantidad Hembra</label>
-											<input type="number" name="cantidadHembra" id="cantidadHembra" class="form-control" "aria-describedby=" helpId" required="" min="1" max="30" step="1" value="1">
+											<input type="number" name="cantidadHembra" id="cantidadHembra" class="form-control" "aria-describedby=" helpId" required="" min="0" max="30" step="0" value="1">
 											@error('cantidadHembra') <span class="text-danger er">{{ $message}}</span>@enderror
 										</div>
 									</div>
@@ -82,7 +82,7 @@
 									<div class="task-header">
 										<div class="form-group">
 											<label>Valor Unitario</label>
-											<input type="text" name="valorUnitarioHembra" id="valorUnitarioHembra" class="form-control" "aria-describedby=" helpId" placeholder="000.000" required="" min="1"  step="1"  >
+											<input type="text" name="valorUnitarioHembra" id="valorUnitarioHembra" class="form-control" "aria-describedby=" helpId" placeholder="000.000" required="" min="0"  step="0"  >
 											@error('valorUnitarioHembra') <span class="text-danger er">{{ $message}}</span>@enderror
 										</div>
 									</div>
@@ -91,7 +91,7 @@
 									<div class="task-header">
 										<div class="form-group">
 											<label>Valor Total</label>
-											<input type="text" name="valorTotalHembra" id="valorTotalHembra" class="form-control" "aria-describedby=" helpId" required="" min="1"  step="1" readonly>
+											<input type="text" name="valorTotalHembra" id="valorTotalHembra" class="form-control" "aria-describedby=" helpId" required="" min="0"  step="0" readonly>
 											@error('valorTotalHembra') <span class="text-danger er">{{ $message}}</span>@enderror
 										</div>
 									</div>
@@ -155,7 +155,7 @@
 									<div class="task-header">
 										<div class="form-group">
 											<label>Lote</label>
-											<input type="text" class="form-control" name="lote" id="lote" placeholder="ej: PCD789" required="">
+											<input type="text" class="form-control" name="lote" id="lote" placeholder="ej: PCD789" required="" readonly>
 											@error('lote') <span class="text-danger er">{{ $message}}</span>@enderror
 										</div>
 									</div>

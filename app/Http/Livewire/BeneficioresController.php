@@ -12,7 +12,7 @@ use Livewire\Component;
 use Livewire\WithPagination;
 use NumberFormatter;
 use DateTime;
-
+use Carbon\Carbon;
 
 class BeneficioresController extends Component
 {
@@ -55,10 +55,10 @@ class BeneficioresController extends Component
 			//$this->monday =	'Today is not Monday.';
 			$this->monday =	false;
 		}
-
 		$date = new DateTime();
 		$currentDate = $date->format('Y-m-d');
 		$this->dateNow = $currentDate;
+		
 
 		//$start_date = '2023-05-08'; // Replace with your start date
 		//$current_date = new DateTime($start_date);
@@ -143,8 +143,22 @@ class BeneficioresController extends Component
 
 	public function store(Request $request)
 	{
-		//dd($request->valorUnitarioMacho);
-		//dd($this->MoneyToNumber($request->valorUnitarioMacho));
+
+		$dateNow = Carbon::now();
+		// Get the year, month, and day
+		$year = $dateNow->year;
+		$month = $dateNow->month;
+		$day = $dateNow->day;
+		$newLote = "";
+        $reg = Beneficiore::select()->first();
+        if ($reg === null) {
+            $newLote = "RES".$year.$month.$day."1";
+        }else {
+            $regUltimo = Beneficiore::select()->latest()->first()->toArray();
+            $consecutivo = $regUltimo['id']+1;
+            $newLote = "RES".$year.$month.$day.$consecutivo;
+        }
+		/******************************************************** */
 		$getReg = Beneficiore::firstWhere('id', $request->idbeneficio);
 		if($getReg == null) {
 			$start_date = $request->fecha_beneficio; // Replace with your start date
@@ -166,7 +180,7 @@ class BeneficioresController extends Component
 			$newBeneficiore->factura = $request->factura;
 			$newBeneficiore->clientpieles_id = $request->clientpieles_id;
 			$newBeneficiore->clientvisceras_id = $request->clientvisceras_id;
-			$newBeneficiore->lote = $request->lote;
+			$newBeneficiore->lote = $newLote;//$request->lote;
 			//$newBeneficiore->finca = $request->finca; //falta agregar
 			$newBeneficiore->sacrificio = $request->sacrificio;
 			$newBeneficiore->fomento = $this->MoneyToNumber($request->fomento);
@@ -226,7 +240,7 @@ class BeneficioresController extends Component
 			$updateBeneficiore->factura = $request->factura;
 			$updateBeneficiore->clientpieles_id = $request->clientpieles_id;
 			$updateBeneficiore->clientvisceras_id = $request->clientvisceras_id;
-			$updateBeneficiore->lote = $request->lote;
+			//$updateBeneficiore->lote = $request->lote;
 			//$updateBeneficiore->finca = $request->finca; //falta agregar
 			$updateBeneficiore->sacrificio = $request->sacrificio;
 			$updateBeneficiore->fomento = $this->MoneyToNumber($request->fomento);

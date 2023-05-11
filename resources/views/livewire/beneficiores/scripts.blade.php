@@ -34,7 +34,15 @@
 
   //cantidad.change(function () { calculatotales(); });
   cantidadMacho.change(function () { calculatotales(); });
-  cantidadHembra.change(function () { calculatotales(); });
+  cantidadHembra.change(function () {
+    let cantHembra = cantidadHembra.val();
+    if (Number(cantHembra) === 0) {
+      valorHembra.val(0);
+      $('#valorTotalHembra').val(0);
+    }
+    calculatotales(); 
+  });
+
   costoanimal1.change(function () {
     let costo1 = formatMoneyNumber($('#costoanimal1').val());
     $('#costoanimal1').val(formatCantidadSinCero(costo1));

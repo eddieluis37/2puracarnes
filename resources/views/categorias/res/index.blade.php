@@ -7,7 +7,7 @@
 			<div class="row">
 				<div class="col-sm-3">
 					<h4 class="">
-						<b> Desposte / RES</b>
+						<b> Desposte / RES {{$status}}</b>
 					</h4>
 				</div>
 				<!--div class="col-sm-3">
@@ -111,15 +111,26 @@
 											<td> {{ $item->products->name }}</td>
 											<td> {{ $item->porcdesposte }} %</td>
 											<td>$ {{ number_format($item->precio, 0, ',', '.')}}</td>
-											<td> <input type="text" class="form-control-sm" id="{{$item->id}}" value="{{$item->peso}}" placeholder="Ingresar" size="10"></td>
-											<!--td> <input type="number" class="form-control-sm" placeholder="Ingresar" size="10" onkeypress="saveRowdesposte(event);"></td>-->
+											<td>
+												@if($status == 'true')
+												<input type="text" class="form-control-sm" id="{{$item->id}}" value="{{$item->peso}}" placeholder="Ingresar" size="10">
+												@else
+													<p>{{$item->peso}}</p>
+												@endif
+											</td>
+
 											<td>$ {{ number_format($item->totalventa, 0, ',', '.')}}</td>
 											<td> {{ $item->porcventa}} %</td>
 											<td>$ {{ number_format($item->costo, 0, ',', '.')}}</td>
 											<td> {{ number_format($item->costo_kilo, 2, ',', '.')}}</td>
 											<td class="text-center">
+												@if($status == 'true')
 												<button type="button" name="btnDownReg" data-id="{{$item->id}}" class="btn btn-dark btn-sm fas fa-trash" title="Cancelar">
 												</button>
+												@else
+												<button type="button" class="btn btn-dark btn-sm fas fa-trash" title="Cancelar" disabled>
+												</button>
+												@endif
 											</td>
 										</tr>
 										<?php $tpeso = $tpeso + $item->peso;
