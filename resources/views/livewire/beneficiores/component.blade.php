@@ -178,4 +178,6 @@
 
 
 </script>
+@section('script')
 <script src="{{asset('rogercode/js/res/beneficiores/rogercode-beneficiores-index.js')}}"></script>
+@endsection
