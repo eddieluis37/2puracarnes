@@ -29,6 +29,7 @@ use Illuminate\Support\Facades\Route;
 
 /*************** SIN LIVWWIRE **********************/
 use App\Http\Controllers\res\desposteresrogercodeController;
+use App\Http\Controllers\inventory\inventoryrogercodeController;
 /************************************************* */
 
 
@@ -185,3 +186,5 @@ Route::get('desposteres', [desposteresrogercodeController::class, 'index'])->nam
 Route::get('desposteres/{id}', [desposteresrogercodeController::class, 'create']);
 Route::post('/desposteresUpdate', [desposteresrogercodeController::class, 'update']);
 Route::post('/downdesposter', [desposteresrogercodeController::class, 'destroy']);
+/*****************************INVENTORY****************************************** */
+Route::get('inventory/consolidado', [inventoryrogercodeController::class, 'index'])->name('desposteres.index');
