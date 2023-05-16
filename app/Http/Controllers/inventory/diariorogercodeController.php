@@ -5,7 +5,7 @@ namespace App\Http\Controllers\inventory;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-class inventoryrogercodeController extends Controller
+class diariorogercodeController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,9 +14,7 @@ class inventoryrogercodeController extends Controller
      */
     public function index()
     {
-        $startDate = '2023-05-01';
-        $endDate = '2023-05-08';
-        return view('inventory.consolidado', compact('startDate', 'endDate'));
+        return view('inventory.diario');
     }
 
     /**
