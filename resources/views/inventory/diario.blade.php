@@ -57,6 +57,8 @@
               <th class="table-th text-white">UNID DE MEDIDA</th>
               <th class="table-th text-white">COMPRAS LOTES</th>
               <th class="table-th text-white">COMPENSADO</th>
+              <th class="table-th text-white">VENTAS</th>
+              <th class="table-th text-white">STOCK IDEAL</th>
               <th class="table-th text-white">TRASLADO DE INGRESO</th>
               <th class="table-th text-white">TRASLADO DE SALIDA</th>
               <th class="table-th text-white">DECOMISO</th>
@@ -71,6 +73,8 @@
               <td>460.00</td>
               <td>0.00</td>
               <td>0.00</td>
+              <td>0.00</td>
+              <td>0.00</td>
               <td>323.89</td>
               <td>26.95</td>
             </tr>
@@ -82,6 +86,7 @@
               <td>0.00</td>
               <td>0.00</td>
               <td>323.89</td>
+              <td>323.89</td>
               <td>26.95</td>
             </tr>
             <tr>
@@ -89,6 +94,8 @@
               <td>Kilos</td>
               <td>0.00</td>
               <td>460.00</td>
+              <td>0.00</td>
+              <td>0.00</td>
               <td>0.00</td>
               <td>0.00</td>
               <td>323.89</td>
