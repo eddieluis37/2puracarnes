@@ -200,7 +200,7 @@
               <td colspan="2" class=""></td>
               <td colspan="4" class="">Ingresos</td>
               <td colspan="2" class="">Salidas</td>
-              <td colspan="5" class="">Inventario</td>
+              <td colspan="4" class="">Inventario</td>
             </tr>
             <tr>
               <td colspan="2" >Totales</td>
@@ -213,7 +213,6 @@
               <td class="">109.68</td>
               <td class="">151.88</td>
               <td class="">41.97</td>
-              <td class="">0.00</td>
               <td class="">0.00</td>
             </tr>
             <tr>
@@ -228,8 +227,7 @@
               <th class="table-th text-white">STOCK IDEAL</th>
               <th class="table-th text-white">CONTEO FISICO</th>
               <th class="table-th text-white">DIFERENCIA EN KILOS</th>
-              <th class="table-th text-white">DECOMISO</th>
-              <th class="table-th text-white">DE BAJA</th>
+              <th class="table-th text-white">% MERMA</th>
             </tr>
           </thead>
           <tbody>
@@ -238,7 +236,6 @@
               <td>Kilos</td>
               <td>0.00</td>
               <td>460.00</td>
-              <td>0.00</td>
               <td>0.00</td>
               <td>323.89</td>
               <td>26.95</td>
@@ -253,7 +250,6 @@
               <td>Kilos</td>
               <td>0.00</td>
               <td>460.00</td>
-              <td>0.00</td>
               <td>0.00</td>
               <td>323.89</td>
               <td>26.95</td>
@@ -274,7 +270,6 @@
               <td>26.95</td>
               <td>109.68</td>
               <td>151.88</td>
-              <td>41.97</td>
               <td>0.00</td>
               <td>0.00</td>
             </tr>
@@ -288,7 +283,6 @@
               <td>0.00</td>
               <td>0.00</td>
               <td>323.89</td>
-              <td>26.95</td>
               <td>109.68</td>
               <td>151.88</td>
               <td>41.97</td>
