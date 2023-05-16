@@ -31,6 +31,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\res\desposteresrogercodeController;
 use App\Http\Controllers\inventory\inventoryrogercodeController;
 use App\Http\Controllers\inventory\diariorogercodeController;
+use App\Http\Controllers\inventory\mensualrogercodeController;
 /************************************************* */
 
 
@@ -190,3 +191,4 @@ Route::post('/downdesposter', [desposteresrogercodeController::class, 'destroy']
 /*****************************INVENTORY****************************************** */
 Route::get('inventory/consolidado', [inventoryrogercodeController::class, 'index'])->name('inventory.consolidado');
 Route::get('inventory/diario', [diariorogercodeController::class, 'index'])->name('inventory.diario');
+Route::get('inventory/mensual', [mensualrogercodeController::class, 'index'])->name('inventory.mensual');

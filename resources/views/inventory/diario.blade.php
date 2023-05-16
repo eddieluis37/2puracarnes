@@ -90,6 +90,7 @@
               <td>323.89</td>
               <td>323.89</td>
               <td>26.95</td>
+              <td>26.95</td>
             </tr>
             <tr>
               <td>Cadera completa</td>
@@ -112,12 +113,16 @@
               <td>0.00</td>
               <td>323.89</td>
               <td>26.95</td>
+              <td>26.95</td>
+              <td>26.95</td>
             </tr>
             <tr>
               <td>Hueso poroso</td>
               <td>Kilos</td>
               <td>0.00</td>
               <td>460.00</td>
+              <td>0.00</td>
+              <td>0.00</td>
               <td>0.00</td>
               <td>0.00</td>
               <td>323.89</td>
@@ -132,6 +137,8 @@
               <td>460.00</td>
               <td>0.00</td>
               <td>0.00</td>
+              <td>323.89</td>
+              <td>323.89</td>
               <td>323.89</td>
               <td>26.95</td>
             </tr>
