@@ -39,7 +39,9 @@
         </div>
         <div class="col-md-4">
           <label for="date1" class="form-label">Responsable</label>
-          <input type="text" class="form-control" placeholder="EDGARDO CASTELLON" aria-label="Last name">
+					<select class="form-control form-control-sm " name="" id="" required="">
+						<option value="">Seleccione el responsable</option>
+					</select>
         </div>
         <div class="col-md-4">
           <div style="margin-top:28px;" clas="">
