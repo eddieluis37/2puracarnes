@@ -49,8 +49,6 @@
           </div>
         </div>
       </div>
-    
-    
       <div class="table-responsive mt-3">
         <table class="table table-sm table-inventario">
           <thead class="text-white" style="background: #3B3F5C">
@@ -63,8 +61,7 @@
               <th class="table-th text-white">STOCK IDEAL</th>
               <th class="table-th text-white">TRASLADO DE INGRESO</th>
               <th class="table-th text-white">TRASLADO DE SALIDA</th>
-              <th class="table-th text-white">DECOMISO</th>
-              <th class="table-th text-white">DE BAJA</th>
+              <th class="table-th text-white">% MERMA</th>
             </tr>
           </thead>
           <tbody>
@@ -73,7 +70,6 @@
               <td>Kilos</td>
               <td>0.00</td>
               <td>460.00</td>
-              <td>0.00</td>
               <td>0.00</td>
               <td>0.00</td>
               <td>0.00</td>
@@ -88,7 +84,6 @@
               <td>0.00</td>
               <td>0.00</td>
               <td>323.89</td>
-              <td>323.89</td>
               <td>26.95</td>
               <td>26.95</td>
             </tr>
@@ -97,7 +92,6 @@
               <td>Kilos</td>
               <td>0.00</td>
               <td>460.00</td>
-              <td>0.00</td>
               <td>0.00</td>
               <td>0.00</td>
               <td>0.00</td>
@@ -114,14 +108,12 @@
               <td>323.89</td>
               <td>26.95</td>
               <td>26.95</td>
-              <td>26.95</td>
             </tr>
             <tr>
               <td>Hueso poroso</td>
               <td>Kilos</td>
               <td>0.00</td>
               <td>460.00</td>
-              <td>0.00</td>
               <td>0.00</td>
               <td>0.00</td>
               <td>0.00</td>
@@ -134,7 +126,6 @@
               <th>Totales</th>
               <td></td>
               <td>0.00</td>
-              <td>460.00</td>
               <td>0.00</td>
               <td>0.00</td>
               <td>323.89</td>
