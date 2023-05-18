@@ -32,6 +32,9 @@ use App\Http\Controllers\res\desposteresrogercodeController;
 use App\Http\Controllers\inventory\inventoryrogercodeController;
 use App\Http\Controllers\inventory\diariorogercodeController;
 use App\Http\Controllers\inventory\mensualrogercodeController;
+use App\Http\Controllers\compensado\resrogercodeController;
+use App\Http\Controllers\compensado\compensadorogercodeController;
+
 /************************************************* */
 
 
@@ -192,3 +195,5 @@ Route::post('/downdesposter', [desposteresrogercodeController::class, 'destroy']
 Route::get('inventory/consolidado', [inventoryrogercodeController::class, 'index'])->name('inventory.consolidado');
 Route::get('inventory/diario', [diariorogercodeController::class, 'index'])->name('inventory.diario');
 Route::get('inventory/mensual', [mensualrogercodeController::class, 'index'])->name('inventory.mensual');
+
+Route::get('compensado', [compensadorogercodeController::class,'index'])->name('compensado.index');
