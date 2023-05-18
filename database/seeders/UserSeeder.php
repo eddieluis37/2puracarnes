@@ -26,12 +26,12 @@ class UserSeeder extends Seeder
             'password' => bcrypt('7201880130')
         ]);
         User::create([
-            'name' => 'Yaniela Gutierrez',
+            'name' => 'Amaury',
             'phone' => '301873219',
-            'email' => 'nacional@puracarnes.com',
+            'email' => 'compras@puracarnes.com',
             'profile' => 'Cajero',
             'status' => 'Active',
-            'password' => bcrypt('7201880130')
+            'password' => bcrypt('Compr@s2023+')
         ]);
          User::create([
             'name' => 'Jair Rada Rada',
