@@ -32,9 +32,9 @@
           <input type="month" class="form-control form-control-sm" value="{{date('Y-m')}}" id="bdaymonth" name="bdaymonth">
         </div>
         <div class="col-md-4">
-          <label for="" class="form-label">Punto</label>
+          <label for="" class="form-label">Centro de costo</label>
 					<select class="form-control form-control-sm" name="" id="" required="">
-						<option value="">Seleccione el punto</option>
+						<option value="">Seleccione el centro de costo</option>
 					</select>
         </div>
         <div class="col-md-4">

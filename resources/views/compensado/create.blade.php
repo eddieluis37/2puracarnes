@@ -1,5 +1,10 @@
 @extends('layouts.theme.app')
 @section('content')
+<style>
+.input {
+  height: 38px;
+}
+</style>
 <meta name="csrf-token" content="{{ csrf_token() }}">
 <div class="row sales layout-top-spacing">
 	<div class="col-sm-12">
@@ -19,36 +24,50 @@
 							<div class="col-md-3">
 								<div class="task-header">
 									<div class="form-group">
+                                        <label for="" class="form-label">Fecha de compra</label>
+										<p>5/18/2021</p>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-3">
+								<div class="task-header">
+									<div class="form-group">
                                         <label for="" class="form-label">Categoria</label>
-					                    <select class="form-control form-control-sm " name="" id="" required="">
+										<p>Res</p>
+					                    <!--select class="form-control form-control-sm input " name="categoria" id="categoria" required="">
 						                    <option value="">Seleccione la categoria</option>
 											@foreach($category as $option)
 											<option value="{{ $option['id'] }}" data="{{$option}}">{{ $option['name'] }}</option>
 											@endforeach
-					                    </select>
+					                    </select>-->
 									</div>
 								</div>
 							</div>
-							<div class="col-md-5">
+							<div class="col-md-3">
 								<div class="task-header">
 									<div class="form-group">
                                         <label for="" class="form-label">Proveedor</label>
-					                    <select class="form-control form-control-sm " name="" id="" required="">
+										<p>Rogercode</p>
+					                    <!--select class="form-control form-control-sm select2Provider " name="provider" id="provider" required="">
 						                    <option value="">Seleccione el proveedor</option>
 											@foreach($providers as $option)
 											<option value="{{ $option['id'] }}" data="{{$option}}">{{ $option['name'] }}</option>
 											@endforeach
-					                    </select>
+					                    </select>-->
 									</div>
 								</div>
 							</div>
-							<div class="col-md-4">
+							<div class="col-md-3">
 								<div class="task-header">
 									<div class="form-group">
                                         <label for="" class="form-label">Centro de costo</label>
-					                    <select class="form-control form-control-sm " name="" id="" required="">
+										<p>Guadalupe</p>
+					                    <!--select class="form-control form-control-sm input" name="" id="" required="">
 						                    <option value="">Seleccione el centro de costo</option>
-					                    </select>
+											@foreach($centros as $option)
+											<option value="{{ $option['id'] }}" data="{{$option}}">{{ $option['name'] }}</option>
+											@endforeach
+					                    </select>-->
 									</div>
 								</div>
 							</div>
@@ -65,8 +84,7 @@
 								<div class="task-header">
 									<div class="form-group">
                                         <label for="" class="form-label">Buscar producto</label>
-					                    <select class="form-control form-control-sm " name="" id="" required="">
-						                    <option value="">Seleccione el producto</option>
+					                    <select class="form-control form-control-sm select2Prod" name="producto" id="producto" required="">
 					                    </select>
 									</div>
 								</div>
@@ -75,7 +93,7 @@
 								<div class="task-header">
 									<div class="form-group">
                                         <label for="" class="form-label">Precio de compra</label>
-                                        <input type="text" class="form-control" placeholder="EJ: 20.500">
+                                        <input type="text" class="form-control input" placeholder="EJ: 20.500">
 									</div>
 								</div>
 							</div>
@@ -83,7 +101,7 @@
 								<div class="task-header">
 									<div class="form-group">
                                         <label for="" class="form-label">Peso KG</label>
-                                        <input type="text" class="form-control" placeholder="EJ: 10.00">
+                                        <input type="text" class="form-control input" placeholder="EJ: 10.00">
 									</div>
 								</div>
 							</div>
@@ -91,7 +109,7 @@
 								<div class="task-header">
 									<div class="form-group">
                                         <label for="" class="form-label">Sub Total</label>
-                                        <input type="text" class="form-control" placeholder="EJ: 10.00">
+                                        <input type="text" class="form-control input" placeholder="EJ: 10.00">
 									</div>
 								</div>
 							</div>
@@ -113,15 +131,51 @@
 											<th class="table-th text-white">Item</th>
 											<th class="table-th text-white">Fecha compra</th>
 											<th class="table-th text-white">Codigo</th>
-											<th class="table-th text-white text-center">Productos</th>
-											<th class="table-th text-white text-center">Precio compra</th>
-											<th class="table-th text-white text-center">Peso KG</th>
-											<th class="table-th text-white text-center">Sub Total</th>
-											<th class="table-th text-white text-center">IVA $</th>
+											<th class="table-th text-white">Productos</th>
+											<th class="table-th text-white">Precio compra</th>
+											<th class="table-th text-white">Peso KG</th>
+											<th class="table-th text-white">Sub Total</th>
+											<th class="table-th text-white">IVA $</th>
 											<th class="table-th text-white text-center">Acciones</th>
 										</tr>
 									</thead>
 									<tbody id="tbody">
+										<tr>
+											<td>2</td>
+											<td>5/18/2023</td>
+											<td>pc001</td>
+											<td>pacha</td>
+											<td>18.87</td>
+											<td>30.00 kg</td>
+											<td>100</td>
+											<td>16 %</td>
+											<td class="text-center">
+												<a href="#" class="btn btn-dark" title="Despostar" >
+													<i class="fas fa-edit"></i>
+												</a>
+												<button class="btn btn-dark" title="Borrar Beneficio" >
+													<i class="fas fa-trash"></i>
+												</button>
+											</td>
+										</tr>
+										<tr>
+											<td>2</td>
+											<td>5/18/2023</td>
+											<td>pc001</td>
+											<td>pacha</td>
+											<td>18.87</td>
+											<td>30.00 kg</td>
+											<td>100</td>
+											<td>16 %</td>
+											<td class="text-center">
+												<a href="#" class="btn btn-dark" title="Despostar" >
+													<i class="fas fa-edit"></i>
+												</a>
+												<button class="btn btn-dark" title="Borrar Beneficio" >
+													<i class="fas fa-trash"></i>
+												</button>
+											</td>
+										</tr>
 									</tbody>
 									<tfoot id="tfoot" >
 
@@ -144,5 +198,5 @@
 </div>
 @endsection
 @section('script')
-<script src="" type="module"></script>
+<script src="{{asset('rogercode/js/inventory/rogercode-create.js')}}" type="module"></script>
 @endsection

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateCompensadoresDetailsTable extends Migration
+class CreateTableCompensadoresDetails extends Migration
 {
     /**
      * Run the migrations.
@@ -18,19 +18,13 @@ class CreateCompensadoresDetailsTable extends Migration
 
             $table->unsignedBigInteger('compensadores_id')->nullable();
             $table->foreign('compensadores_id')->references('id')->on('compensadores');
-
             $table->unsignedBigInteger('products_id')->nullable();
             $table->foreign('products_id')->references('id')->on('products');
-
-            $table->double('precio_compra', 18, 2)->nullable();
-
-            $table->bigInteger('qty')->nullable();
-
+            $table->decimal('pcompra', 18, 0)->nullable();
+            $table->decimal('peso', 18, 2)->nullable();
             $table->double('iva', 18, 2)->nullable();
-
-            $table->double('subtotal', 18, 2)->nullable();
-
-
+            $table->decimal('subtotal', 18, 2)->nullable();
+            $table->boolean('status')->parent_select()->default(true)->nullable();            
             $table->timestamps();
         });
     }

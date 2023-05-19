@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Models\Category;
 use App\Models\Third;
+use App\Models\centros\Centrocosto;
 
 class compensadorogercodeController extends Controller
 {
@@ -19,7 +20,9 @@ class compensadorogercodeController extends Controller
     {
         $category = Category::WhereIn('id',[1,2,3])->get();
         $providers = Third::Where('status',1)->get();
-        return view('compensado.create', compact('category','providers'));
+        $centros = Centrocosto::Where('status',1)->get();
+
+        return view('compensado.res.index', compact('category','providers','centros'));
     }
 
     /**
@@ -27,11 +30,24 @@ class compensadorogercodeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($id)
     {
-        //
+        $category = Category::WhereIn('id',[1,2,3])->get();
+        $providers = Third::Where('status',1)->get();
+        $centros = Centrocosto::Where('status',1)->get();
+
+        return view('compensado.create', compact('category','providers','centros'));
     }
 
+    public function getproducts(Request $request)
+    {
+        $prod = Product::Where([
+            ['category_id',$request->categoriaId],
+            ['status',1]
+        ])->get();
+        return response()->json(['products' => $prod]);
+    }
+    
     /**
      * Store a newly created resource in storage.
      *
@@ -40,7 +56,12 @@ class compensadorogercodeController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        return response()->json([
+            'products' => 'success',
+            'provider' => $request->provider, 
+            'categoria' => $request->categoria, 
+            'centrocosto' => $request->centrocosto, 
+        ]);
     }
 
     /**

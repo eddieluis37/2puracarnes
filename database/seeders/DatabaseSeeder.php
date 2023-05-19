@@ -35,6 +35,7 @@ class DatabaseSeeder extends Seeder
         $this->call(SacrificiospolloSeeder::class);
         $this->call(BeneficiocerdoSeeder::class);          
         $this->call(DespostereSeeder::class);
+        $this->call(CentrocostoSeeder::class);
         
 
     }

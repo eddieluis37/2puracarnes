@@ -197,3 +197,6 @@ Route::get('inventory/diario', [diariorogercodeController::class, 'index'])->nam
 Route::get('inventory/mensual', [mensualrogercodeController::class, 'index'])->name('inventory.mensual');
 
 Route::get('compensado', [compensadorogercodeController::class,'index'])->name('compensado.index');
+Route::get('compensado/create/{id}', [compensadorogercodeController::class,'create'])->name('compensado.create');
+Route::post('getproductos', [compensadorogercodeController::class,'getproducts'])->name('compensado.getproductos');
+Route::post('compensadosave', [compensadorogercodeController::class,'store'])->name('compensado.save');
