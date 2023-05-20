@@ -8,6 +8,12 @@ use App\Models\Product;
 use App\Models\Category;
 use App\Models\Third;
 use App\Models\centros\Centrocosto;
+use App\Models\compensado\Compensadores;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
+use Yajra\Datatables\Datatables;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\Validator;
 
 class compensadorogercodeController extends Controller
 {
@@ -56,12 +62,46 @@ class compensadorogercodeController extends Controller
      */
     public function store(Request $request)
     {
-        return response()->json([
-            'products' => 'success',
-            'provider' => $request->provider, 
-            'categoria' => $request->categoria, 
-            'centrocosto' => $request->centrocosto, 
-        ]);
+        try {
+
+            $rules = [
+                'categoria' => 'required',
+                'provider' => 'required',
+                'centrocosto' => 'required',
+                'factura' => 'required',
+            ];
+            $messages = [
+                'categoria.required' => 'La categoria es requerida',
+                'provider.required' => 'El proveedor es requerido',
+                'centrocosto.required' => 'El centro de costo es requerido',
+                'factura.required' => 'La factura es requerida',
+            ];
+
+            $validator = Validator::make($request->all(), $rules, $messages);
+            if ($validator->fails()) {  
+                return response()->json([
+                    'status' => 0,
+                    'errors' => $validator->errors()
+                ], 422);
+            }
+
+            $id_user= Auth::user()->id;
+
+            $comp = new Compensadores();
+            $comp->users_id = $id_user;
+            $comp->categoria_id = $request->categoria;
+            $comp->thirds_id = $request->provider;
+            $comp->centrocosto_id = $request->centrocosto;
+            $comp->factura = $request->factura;
+            $comp->save();
+
+            return response()->json([
+                'status' => 1,
+            ]);
+
+        } catch (\Throwable $th) {
+            //throw $th;
+        }
     }
 
     /**
@@ -70,9 +110,44 @@ class compensadorogercodeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show()
     {
-        //
+            $data = DB::table('compensadores as comp')
+            ->join('categories as cat', 'comp.categoria_id', '=', 'cat.id')
+            ->join('thirds as tird', 'comp.thirds_id', '=', 'tird.id')
+            ->join('centro_costo as centro', 'comp.centrocosto_id', '=', 'centro.id')
+            ->select('comp.*', 'cat.name as namecategoria', 'tird.name as namethird','centro.name as namecentrocosto')
+            ->get();
+            //$data = Compensadores::orderBy('id','desc');
+            return Datatables::of($data)->addIndexColumn()
+                /*->addColumn('status', function($data){
+                    if ($data->estado == 1) {
+                        $status = '<span class="badge bg-success">Activo</span>';
+                    }else{
+                        $status= '<span class="badge bg-danger">Inactivo</span>';
+                    }
+                    return $status;
+                })*/
+                ->addColumn('date', function($data){
+                    $date = Carbon::parse($data->created_at);
+                     $onlyDate = $date->toDateString();
+                    return $onlyDate;
+                })
+                ->addColumn('action', function($data){
+                    $btn = '
+                    <div class="text-content">
+					<a href="compensado/create/1" class="btn btn-dark" title="Despostar" >
+						<i class="fas fa-directions"></i>
+					</a>
+					<button class="btn btn-dark" title="Borrar Beneficio" >
+						<i class="fas fa-trash"></i>
+					</button>
+                    </div>
+                    ';
+                    return $btn;
+                })
+                ->rawColumns(['date','action'])
+                ->make(true);
     }
 
     /**

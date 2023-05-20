@@ -28,8 +28,7 @@ class CreateTableCompensadores extends Migration
             $table->unsignedBigInteger('centrocosto_id')->nullable();
             $table->foreign('centrocosto_id')->references('id')->on('centro_costo');
 
-            $table->unsignedBigInteger('products_id')->nullable();
-            $table->foreign('products_id')->references('id')->on('products');
+            $table->string('factura');
 
             $table->boolean('status')->parent_select()->default(true)->nullable();            
             $table->timestamps();

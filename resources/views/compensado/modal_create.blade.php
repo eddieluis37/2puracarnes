@@ -1,7 +1,7 @@
 <div class="card">
 	<div class="card-body">
 		<div class="row g-3">
-			<div class="col-md-3">
+			<div class="col-md-6">
 				<div class="task-header">
 					<div class="form-group">
                         <label for="" class="form-label">Categoria</label>
@@ -11,10 +11,11 @@
 							<option value="{{ $option['id'] }}" data="{{$option}}">{{ $option['name'] }}</option>
 							@endforeach
 					    </select>
+						<span class="text-danger error-message sds"></span>
 					</div>
 				</div>
 			</div>
-			<div class="col-md-5">
+			<div class="col-md-6">
 				<div class="task-header">
 					<div class="form-group">
                         <label for="" class="form-label">Proveedor</label>
@@ -24,10 +25,11 @@
 							<option value="{{ $option['id'] }}" data="{{$option}}">{{ $option['name'] }}</option>
 							@endforeach
 					    </select>
+						<span class="text-danger error-message"></span>
 					</div>
 				</div>
 			</div>
-			<div class="col-md-4">
+			<div class="col-md-6">
 				<div class="task-header">
 					<div class="form-group">
                         <label for="" class="form-label">Centro de costo</label>
@@ -37,6 +39,16 @@
 							<option value="{{ $option['id'] }}" data="{{$option}}">{{ $option['name'] }}</option>
 							@endforeach
 					    </select>
+						<span class="text-danger error-message"></span>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-6">
+				<div class="task-header">
+					<div class="form-group">
+                        <label for="" class="form-label">Factura</label>
+						<input type="text" class="form-control" id="factura" name="factura" required="true">
+						<span class="text-danger error-message"></span>
 					</div>
 				</div>
 			</div>

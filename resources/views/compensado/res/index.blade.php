@@ -17,48 +17,18 @@
 
 			<div class="widget-content">
 				<div class="table-responsive">
-					<table id="beneficiores" class="table table-striped mt-1">
+					<table id="tableCompensado" class="table table-striped mt-1">
 						<thead class="text-white" style="background: #3B3F5C">
 							<tr>
-								<th class="table-th text-white">Item</th>
-								<th class="table-th text-white">Fecha</th>
 								<th class="table-th text-white">Categoria</th>
 								<th class="table-th text-white">Proveedor</th>
 								<th class="table-th text-white ">Centro de costo</th>
+								<th class="table-th text-white">Factura</th>
+								<th class="table-th text-white">Fecha</th>
 								<th class="table-th text-white text-center">Acciones</th>
 							</tr>
 						</thead>
 						<tbody>
-							<tr>
-								<td>2</td>
-								<td>5/18/2023</td>
-								<td>Res</td>
-								<td>rogercode</td>
-								<td>centro de costo</td>
-								<td class="text-center">
-										<a href="compensado/create/1" class="btn btn-dark" title="Despostar" >
-											<i class="fas fa-search"></i>
-										</a>
-										<button class="btn btn-dark" title="Borrar Beneficio" >
-											<i class="fas fa-trash"></i>
-										</button>
-								</td>
-							</tr>
-							<tr>
-								<td>1</td>
-								<td>5/18/2023</td>
-								<td>Res</td>
-								<td>rogercode</td>
-								<td>centro de costo</td>
-								<td class="text-center">
-										<a href="compensado/create/1" class="btn btn-dark" title="Despostar" >
-											<i class="fas fa-search"></i>
-										</a>
-										<button class="btn btn-dark" title="Borrar Beneficio" >
-											<i class="fas fa-trash"></i>
-										</button>
-								</td>
-							</tr>
 						</tbody>
 					</table>
 				</div>
@@ -69,19 +39,20 @@
 	<div class="modal fade" id="modal-create-beneficiore" aria-hidden="true" data-keyboard="false" data-backdrop="static" >
 		<div class="modal-dialog modal-xl" role="document">
 			<div class="modal-content bg-default">
-				<div class="modal-header">
-					<h4 class="modal-title">Crear Compensado</h4>
-					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-						<span aria-hidden="true">&times;</span></button>
-				</div>
-				 <div class="modal-body">
-					<form action="" id="form-compensado-res">
-						@include('compensado.modal_create')
-					</form>
-				</div>
-				<div class="modal-footer">
-					<button type="button" id="btnAddCompensadoRes" class="btn btn-primary">Aceptar</button>
-				</div>
+				<form action="" id="form-compensado-res">
+					<div class="modal-header">
+						<h4 class="modal-title">Crear Compensado</h4>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span></button>
+					</div>
+				 	<div class="modal-body">
+							@include('compensado.modal_create')
+					</div>
+					<div class="modal-footer">
+						<button type="button" id="btnModalClose" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+						<button type="submit" id="btnAddCompensadoRes" class="btn btn-primary">Aceptar</button>
+					</div>
+				</form>
 			</div>
 			<!-- /.modal-content -->
 		</div>
