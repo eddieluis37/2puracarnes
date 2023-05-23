@@ -9,6 +9,7 @@ use App\Models\Category;
 use App\Models\Third;
 use App\Models\centros\Centrocosto;
 use App\Models\compensado\Compensadores;
+use App\Models\compensado\Compensadores_detail;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Yajra\Datatables\Datatables;
@@ -38,11 +39,39 @@ class compensadorogercodeController extends Controller
      */
     public function create($id)
     {
-        $category = Category::WhereIn('id',[1,2,3])->get();
-        $providers = Third::Where('status',1)->get();
-        $centros = Centrocosto::Where('status',1)->get();
+        //$category = Category::WhereIn('id',[1,2,3])->get();
+        //$providers = Third::Where('status',1)->get();
+        //$centros = Centrocosto::Where('status',1)->get();
+        $datacompensado = DB::table('compensadores as comp')
+        ->join('categories as cat', 'comp.categoria_id', '=', 'cat.id')
+        ->join('thirds as tird', 'comp.thirds_id', '=', 'tird.id')
+        ->join('centro_costo as centro', 'comp.centrocosto_id', '=', 'centro.id')
+        ->select('comp.*', 'cat.name as namecategoria', 'tird.name as namethird','centro.name as namecentrocosto')
+        ->where('comp.id', $id)
+        ->get();
 
-        return view('compensado.create', compact('category','providers','centros'));
+        $prod = Product::Where([
+            ['category_id',$datacompensado[0]->categoria_id],
+            ['status',1]
+        ])->get();
+
+        $detail = $this->getcompensadoresdetail($id);
+
+        return view('compensado.create', compact('datacompensado','prod','id','detail'));
+    }
+
+    public function getcompensadoresdetail($compensadoId)
+    {
+
+        $detail = DB::table('compensadores_details as de')
+        ->join('products as pro', 'de.products_id', '=', 'pro.id')
+        ->select('de.*', 'pro.name as nameprod','pro.code')
+        ->where([
+            ['de.compensadores_id',$compensadoId],
+            ['de.status',1]
+        ])->get();
+
+        return $detail;
     }
 
     public function getproducts(Request $request)
@@ -54,6 +83,56 @@ class compensadorogercodeController extends Controller
         return response()->json(['products' => $prod]);
     }
     
+
+    public function savedetail(Request $request)
+    {
+        try {
+            $rules = [
+                'compensadoId' => 'required',
+                'producto' => 'required',
+                'pcompra' => 'required',
+                'pesokg' => 'required',
+            ];
+            $messages = [
+                'compensadoId.required' => 'El compensado es requerido',
+                'producto.required' => 'El producto es requerido',
+                'pcompra.required' => 'El precio de compra es requerido',
+                'pesokg.required' => 'El peso es requerido',
+            ];
+
+            $validator = Validator::make($request->all(), $rules, $messages);
+            if ($validator->fails()) {  
+                return response()->json([
+                    'status' => 0,
+                    'errors' => $validator->errors()
+                ], 422);
+            }
+
+            $subtotal = $request->pcompra * $request->pesokg;
+
+            $detail = new Compensadores_detail();
+            $detail->compensadores_id = $request->compensadoId;
+            $detail->products_id = $request->producto;
+            $detail->pcompra = $request->pcompra;
+            $detail->peso = $request->pesokg;
+            $detail->iva = 0;
+            $detail->subtotal = $subtotal;
+            $detail->save();
+
+            $arraydetail = $this->getcompensadoresdetail($request->compensadoId);
+
+            return response()->json([
+                'status' => 1,
+                'message' => "Agregado correctamente",
+                'array' => $arraydetail
+            ]);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'status' => 0,
+                'message' => (array) $th
+            ]);
+        }
+    }
     /**
      * Store a newly created resource in storage.
      *
@@ -136,7 +215,7 @@ class compensadorogercodeController extends Controller
                 ->addColumn('action', function($data){
                     $btn = '
                     <div class="text-content">
-					<a href="compensado/create/1" class="btn btn-dark" title="Despostar" >
+					<a href="compensado/create/'.$data->id.'" class="btn btn-dark" title="Despostar" >
 						<i class="fas fa-directions"></i>
 					</a>
 					<button class="btn btn-dark" title="Borrar Beneficio" >
@@ -156,9 +235,14 @@ class compensadorogercodeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Request $request)
     {
-        //
+        
+        $reg = Compensadores_detail::where('id', $request->id)->first();
+        return response()->json([
+            'status' => 1,
+            'reg' => $reg
+        ]);
     }
 
     /**
@@ -179,8 +263,24 @@ class compensadorogercodeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
-        //
+        try {
+            $compe = Compensadores_detail::where('id', $request->id)->first();
+            $compe->status = 0;
+            $compe->save();
+
+            $arraydetail = $this->getcompensadoresdetail($request->compensadoId);
+
+            return response()->json([
+                'status' => 1,
+                'array' => $arraydetail
+            ]);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'status' => 0,
+                'array' => (array) $th
+            ]);
+        }
     }
 }

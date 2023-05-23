@@ -201,3 +201,6 @@ Route::get('compensado/create/{id}', [compensadorogercodeController::class,'crea
 Route::get('showlistcompensado', [compensadorogercodeController::class,'show'])->name('compensado.showlist');
 Route::post('getproductos', [compensadorogercodeController::class,'getproducts'])->name('compensado.getproductos');
 Route::post('compensadosave', [compensadorogercodeController::class,'store'])->name('compensado.save');
+Route::post('compensadosavedetail', [compensadorogercodeController::class,'savedetail'])->name('compensado.savedetail');
+Route::post('compensadodown', [compensadorogercodeController::class,'destroy'])->name('compensado.down');
+Route::post('compensadogetById', [compensadorogercodeController::class,'edit'])->name('compensado.ById');

@@ -25,35 +25,23 @@
 								<div class="task-header">
 									<div class="form-group">
                                         <label for="" class="form-label">Fecha de compra</label>
-										<p>5/18/2021</p>
+										<p>{{$datacompensado[0]->created_at}}</p>
 									</div>
 								</div>
 							</div>
-							<div class="col-md-3">
+							<div class="col-md-2">
 								<div class="task-header">
 									<div class="form-group">
                                         <label for="" class="form-label">Categoria</label>
-										<p>Res</p>
-					                    <!--select class="form-control form-control-sm input " name="categoria" id="categoria" required="">
-						                    <option value="">Seleccione la categoria</option>
-											@foreach($category as $option)
-											<option value="{{ $option['id'] }}" data="{{$option}}">{{ $option['name'] }}</option>
-											@endforeach
-					                    </select>-->
+										<p>{{$datacompensado[0]->namecategoria}}</p>
 									</div>
 								</div>
 							</div>
-							<div class="col-md-3">
+							<div class="col-md-4">
 								<div class="task-header">
 									<div class="form-group">
                                         <label for="" class="form-label">Proveedor</label>
-										<p>Rogercode</p>
-					                    <!--select class="form-control form-control-sm select2Provider " name="provider" id="provider" required="">
-						                    <option value="">Seleccione el proveedor</option>
-											@foreach($providers as $option)
-											<option value="{{ $option['id'] }}" data="{{$option}}">{{ $option['name'] }}</option>
-											@endforeach
-					                    </select>-->
+										<p>{{$datacompensado[0]->namethird}}</p>
 									</div>
 								</div>
 							</div>
@@ -61,13 +49,7 @@
 								<div class="task-header">
 									<div class="form-group">
                                         <label for="" class="form-label">Centro de costo</label>
-										<p>Guadalupe</p>
-					                    <!--select class="form-control form-control-sm input" name="" id="" required="">
-						                    <option value="">Seleccione el centro de costo</option>
-											@foreach($centros as $option)
-											<option value="{{ $option['id'] }}" data="{{$option}}">{{ $option['name'] }}</option>
-											@endforeach
-					                    </select>-->
+										<p>{{$datacompensado[0]->namecentrocosto}}</p>
 									</div>
 								</div>
 							</div>
@@ -79,12 +61,19 @@
 			<div class="widget-content mt-3">
 				<div class="card">
 					<div class="card-body">
+						<form id="form-detail">
+						<input type="hidden" id="compensadoId" name="compensadoId" value="{{$id}}">
+						<input type="text" id="regdetailId" name="regdetailId" value="0">
 						<div class="row g-3">
 							<div class="col-md-4">
 								<div class="task-header">
 									<div class="form-group">
                                         <label for="" class="form-label">Buscar producto</label>
 					                    <select class="form-control form-control-sm select2Prod" name="producto" id="producto" required="">
+											<option value="">Seleccione el proveedor</option>
+											@foreach ($prod as $p)
+											<option value="{{$p->id}}">{{$p->name}}</option>
+											@endforeach
 					                    </select>
 									</div>
 								</div>
@@ -93,7 +82,7 @@
 								<div class="task-header">
 									<div class="form-group">
                                         <label for="" class="form-label">Precio de compra</label>
-                                        <input type="text" class="form-control input" placeholder="EJ: 20.500">
+                                        <input type="text" id="pcompra" name="pcompra" class="form-control input" placeholder="EJ: 20.500">
 									</div>
 								</div>
 							</div>
@@ -101,22 +90,27 @@
 								<div class="task-header">
 									<div class="form-group">
                                         <label for="" class="form-label">Peso KG</label>
-                                        <input type="text" class="form-control input" placeholder="EJ: 10.00">
+                                        <input type="text" id="pesokg" name="pesokg" class="form-control input" placeholder="EJ: 10.00">
 									</div>
 								</div>
 							</div>
-							<div class="col-md-2">
+							<!--div class="col-md-2">
 								<div class="task-header">
 									<div class="form-group">
                                         <label for="" class="form-label">Sub Total</label>
                                         <input type="text" class="form-control input" placeholder="EJ: 10.00">
 									</div>
 								</div>
-							</div>
-							<div class="col-md-2">
-                                <button class="btn btn-primary">Aceptar</button>
+							</div>-->
+							<div class="col-md-2 text-center">
+								<div class="" style="margin-top:30px;">
+								<div class="d-grid gap-2">
+									<button id="btnAdd" class="btn btn-primary">Aceptar</button>
+								</div>
+								</div>
 							</div>
 						</div>
+						</form>
 					</div>
 				</div>
             </div>
@@ -139,43 +133,26 @@
 											<th class="table-th text-white text-center">Acciones</th>
 										</tr>
 									</thead>
-									<tbody id="tbody">
+									<tbody id="tbodyDetail">
+										@foreach($detail as $proddetail)
 										<tr>
-											<td>2</td>
-											<td>5/18/2023</td>
-											<td>pc001</td>
-											<td>pacha</td>
-											<td>18.87</td>
-											<td>30.00 kg</td>
-											<td>100</td>
-											<td>16 %</td>
+											<td>{{$proddetail->id}}</td>
+											<td>{{$proddetail->created_at}}</td>
+											<td>{{$proddetail->code}}</td>
+											<td>{{$proddetail->nameprod}}</td>
+											<td>$ {{ number_format($proddetail->pcompra, 0, ',', '.')}}</td>
+											<td>{{ number_format($proddetail->peso, 2, ',', '.')}} KG</td>
+
+											<td>$ {{ number_format($proddetail->subtotal, 0, ',', '.')}}</td>
+											<td>{{$proddetail->iva}}</td>
 											<td class="text-center">
-												<a href="#" class="btn btn-dark" title="Despostar" >
-													<i class="fas fa-edit"></i>
-												</a>
-												<button class="btn btn-dark" title="Borrar Beneficio" >
-													<i class="fas fa-trash"></i>
+												<button class="btn btn-dark fas fa-edit" name="btnEdit" data-id="{{$proddetail->id}}" title="Editar" >
+												</button>
+												<button class="btn btn-dark fas fa-trash" name="btnDown" data-id="{{$proddetail->id}}" title="Borrar" >
 												</button>
 											</td>
 										</tr>
-										<tr>
-											<td>2</td>
-											<td>5/18/2023</td>
-											<td>pc001</td>
-											<td>pacha</td>
-											<td>18.87</td>
-											<td>30.00 kg</td>
-											<td>100</td>
-											<td>16 %</td>
-											<td class="text-center">
-												<a href="#" class="btn btn-dark" title="Despostar" >
-													<i class="fas fa-edit"></i>
-												</a>
-												<button class="btn btn-dark" title="Borrar Beneficio" >
-													<i class="fas fa-trash"></i>
-												</button>
-											</td>
-										</tr>
+										@endforeach
 									</tbody>
 									<tfoot id="tfoot" >
 
