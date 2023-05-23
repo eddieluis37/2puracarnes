@@ -8,6 +8,7 @@ const compensado_id = document.querySelector("#compensadoId");
 const pesokg = document.querySelector("#pesokg");
 const pcompra = document.querySelector("#pcompra");
 const regDetail = document.querySelector("#regdetailId");
+const tableFoot = document.querySelector("#tabletfoot");
 
 
 $('.select2Prod').select2({
@@ -111,6 +112,22 @@ const showData = (data) => {
 	    `;
         //cantArt = cantArt + Number(element.cantidad);
 	});
+    let arrayTotales = data.arrayTotales; 
+    console.log(arrayTotales);
+    tableFoot.innerHTML = '';
+    tableFoot.innerHTML += `
+	    <tr>
+		    <th>Totales</th>
+		    <td></td>
+		    <td></td>
+		    <td></td>
+		    <td></td>
+		    <th>${formatCantidad(arrayTotales.pesoTotalGlobal)} KG</td>
+		    <th>$ ${formatCantidadSinCero(arrayTotales.totalGlobal)} </th>
+		    <td></td>
+		    <td></td>
+	    </tr>
+    `;
 }
 //const selectCategoria = document.querySelector("#categoria");
 //const selectProducto = document.getElementById("producto");

@@ -63,7 +63,7 @@
 					<div class="card-body">
 						<form id="form-detail">
 						<input type="hidden" id="compensadoId" name="compensadoId" value="{{$id}}">
-						<input type="text" id="regdetailId" name="regdetailId" value="0">
+						<input type="hidden" id="regdetailId" name="regdetailId" value="0">
 						<div class="row g-3">
 							<div class="col-md-4">
 								<div class="task-header">
@@ -154,8 +154,18 @@
 										</tr>
 										@endforeach
 									</tbody>
-									<tfoot id="tfoot" >
-
+									<tfoot id="tabletfoot" >
+										<tr>
+											<th>Totales</th>
+											<td></td>
+											<td></td>
+											<td></td>
+											<td></td>
+											<th>{{number_format($arrayTotales['pesoTotalGlobal'], 2, ',', '.')}} KG</td>
+											<th>$ {{number_format($arrayTotales['totalGlobal'], 0, ',', '.')}} </th>
+											<td></td>
+											<td></td>
+										</tr>
 									</tfoot>
 								</table>
 							</div>

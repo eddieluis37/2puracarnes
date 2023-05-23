@@ -57,7 +57,9 @@ class compensadorogercodeController extends Controller
 
         $detail = $this->getcompensadoresdetail($id);
 
-        return view('compensado.create', compact('datacompensado','prod','id','detail'));
+        $arrayTotales = $this->sumTotales($id);
+        //dd($arrayTotales);
+        return view('compensado.create', compact('datacompensado','prod','id','detail','arrayTotales'));
     }
 
     public function getcompensadoresdetail($compensadoId)
@@ -108,23 +110,37 @@ class compensadorogercodeController extends Controller
                 ], 422);
             }
 
-            $subtotal = $request->pcompra * $request->pesokg;
+            $getReg = Compensadores_detail::firstWhere('id', $request->regdetailId);
 
-            $detail = new Compensadores_detail();
-            $detail->compensadores_id = $request->compensadoId;
-            $detail->products_id = $request->producto;
-            $detail->pcompra = $request->pcompra;
-            $detail->peso = $request->pesokg;
-            $detail->iva = 0;
-            $detail->subtotal = $subtotal;
-            $detail->save();
+            if($getReg == null) {
+                $subtotal = $request->pcompra * $request->pesokg;
+                $detail = new Compensadores_detail();
+                $detail->compensadores_id = $request->compensadoId;
+                $detail->products_id = $request->producto;
+                $detail->pcompra = $request->pcompra;
+                $detail->peso = $request->pesokg;
+                $detail->iva = 0;
+                $detail->subtotal = $subtotal;
+                $detail->save();
+            }else {
+                $updateReg = Compensadores_detail::firstWhere('id', $request->regdetailId);
+                $subtotal = $request->pcompra * $request->pesokg;
+                $updateReg->products_id = $request->producto;
+                $updateReg->pcompra = $request->pcompra;
+                $updateReg->peso = $request->pesokg;
+                $updateReg->subtotal = $subtotal;
+                $updateReg->save();
+            }
 
             $arraydetail = $this->getcompensadoresdetail($request->compensadoId);
+
+            $arrayTotales = $this->sumTotales($request->compensadoId);
 
             return response()->json([
                 'status' => 1,
                 'message' => "Agregado correctamente",
-                'array' => $arraydetail
+                'array' => $arraydetail,
+                'arrayTotales' => $arrayTotales
             ]);
         } catch (\Throwable $th) {
             return response()->json([
@@ -132,6 +148,29 @@ class compensadorogercodeController extends Controller
                 'message' => (array) $th
             ]);
         }
+    }
+
+
+    public function sumTotales($id)
+    {
+
+        //$TotalDesposte = (float)Compensadores_detail::Where([['compensadores_id',$id],['status',1]])->sum('porcdesposte');
+        //$TotalVenta = (float)Compensadores_detail::Where([['compensadores_id',$id],['status',1]])->sum('totalventa');
+        //$porcVentaTotal = (float)Compensadores_detail::Where([['compensadores_id',$id],['status',1]])->sum('porcventa');
+        $pesoTotalGlobal = (float)Compensadores_detail::Where([['compensadores_id',$id],['status',1]])->sum('peso');
+        $totalGlobal = (float)Compensadores_detail::Where([['compensadores_id',$id],['status',1]])->sum('subtotal');
+        //$costoKiloTotal = number_format($costoTotalGlobal / $pesoTotalGlobal, 2, ',', '.');
+
+        $array = [
+            //'TotalDesposte' => $TotalDesposte,
+            //'TotalVenta' => $TotalVenta,
+            //'porcVentaTotal' => $porcVentaTotal,
+            'pesoTotalGlobal' => $pesoTotalGlobal,
+            'totalGlobal' => $totalGlobal,
+            //'costoKiloTotal' => $costoKiloTotal,
+        ];
+
+        return $array;
     }
     /**
      * Store a newly created resource in storage.
@@ -272,9 +311,11 @@ class compensadorogercodeController extends Controller
 
             $arraydetail = $this->getcompensadoresdetail($request->compensadoId);
 
+            $arrayTotales = $this->sumTotales($request->compensadoId);
             return response()->json([
                 'status' => 1,
-                'array' => $arraydetail
+                'array' => $arraydetail,
+                'arrayTotales' => $arrayTotales
             ]);
         } catch (\Throwable $th) {
             return response()->json([
