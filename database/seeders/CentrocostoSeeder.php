@@ -17,16 +17,16 @@ class CentrocostoSeeder extends Seeder
     public function run()
     {
         Centrocosto::create([
-        'name' => 'Guadalupe',
+        'name' => 'GUADALUPE',
         ]);
         Centrocosto::create([
-        'name' => 'Minuto',
+        'name' => 'MINUTO DE DIOS',
         ]);
         Centrocosto::create([
-        'name' => 'Nacional',
+        'name' => 'NACIONAL',
         ]);
         Centrocosto::create([
-        'name' => 'San Jose',
+        'name' => 'SAN JOSE',
         ]);
     }
 }
