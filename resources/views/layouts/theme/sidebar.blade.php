@@ -1,4 +1,4 @@
-   <div class="sidebar-wrapper sidebar-theme">            
+<div class="sidebar-wrapper sidebar-theme">            
             <nav id="compactSidebar">
 
                 <ul class="menu-categories">
@@ -424,23 +424,23 @@
                                     <a href={{url('beneficiopollos')}}> Beneficio Aves </a>
                                 </li>
                                 <li>
-                                    <a href=""> Compensado Aves </a>
+                                    <a href="#"> </a>
                                 </li>                            
                             </ul>
                         </li>
 
 
                         <li class="sub-submenu">
-                            <a role="menu" class="collapsed" data-toggle="collapse" data-target="#starter-kit" aria-expanded="false"><div><span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-circle"><circle cx="12" cy="12" r="10"></circle></svg></span> Cerdo</div> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg></a>
+                            <a role="menu" class="collapsed" data-toggle="collapse" data-target="#starter-kit" aria-expanded="false"><div><span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-circle"><circle cx="12" cy="12" r="10"></circle></svg></span>En Desarrollo</div> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg></a>
                             <ul id="starter-kit" class="collapse" data-parent="#compact_submenuSidebar">
                                 <li>
-                                    <a href={{url('beneficiocerdos')}}> Beneficio Cerdo </a>
+                                    <a href={{url('#')}}> En desarrollo Cerdo </a>
                                 </li>
                                 <li>
-                                    <a href={{url('beneficiocerdos')}}> Desposte Cerdo </a>
+                                    <a href={{url('#')}}> En desarrollo Cerdo </a>
                                 </li>
                                 <li>
-                                    <a href=""> Compensado Cerdo </a>
+                                    <a href=""> En desarrollo Cerdo </a>
                                 </li>                            
                             </ul>
                         </li>
@@ -449,20 +449,20 @@
                             <a role="menu" class="collapsed" data-toggle="collapse" data-target="#auth" aria-expanded="false"><div> <span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-circle"><circle cx="12" cy="12" r="10"></circle></svg></span> Res</div> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg></a>
                             <ul id="auth" class="collapse" data-parent="#compact_submenuSidebar">
                                 <li>
-                                    <a href={{url('beneficiores')}}> Beneficio Res </a>
+                                    <a href={{url('beneficiores')}}> Lote Res</a>
                                 </li>
                                 <li>
-                                    <a href="desposter"> Desposte Res </a>
+                                    <a href="desposter"> </a>
                                 </li>
                                 <li>
-                                    <a href=""> Compensado Res </a>
+                                    <a href=""> </a>
                                 </li>                                
                             </ul>
                         </li>                       
                         
                         
                         <li>
-                            <a href="{{ url('compensado') }}"><span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-circle"><circle cx="12" cy="12" r="10"></circle></svg></span> Compensado </a>
+                        <a href="{{ url('compensado') }}"><span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-circle"><circle cx="12" cy="12" r="10"></circle></svg></span> Compensado </a>
                         </li>
 
                           <li>
