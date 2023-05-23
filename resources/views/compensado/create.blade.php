@@ -122,7 +122,7 @@
 								<table id="tableDespostere" class="table table-sm table-striped table-bordered">
 									<thead class="text-white" style="background: #3B3F5C">
 										<tr>
-											<th class="table-th text-white">Item</th>
+											<!--th class="table-th text-white">Item</th>-->
 											<th class="table-th text-white">Fecha compra</th>
 											<th class="table-th text-white">Codigo</th>
 											<th class="table-th text-white">Productos</th>
@@ -136,8 +136,8 @@
 									<tbody id="tbodyDetail">
 										@foreach($detail as $proddetail)
 										<tr>
-											<td>{{$proddetail->id}}</td>
-											<td>{{$proddetail->created_at}}</td>
+											<!--td>{{$proddetail->id}}</td-->
+											<td>{{ date('d-m-Y', strtotime($proddetail->created_at))}}</td>
 											<td>{{$proddetail->code}}</td>
 											<td>{{$proddetail->nameprod}}</td>
 											<td>$ {{ number_format($proddetail->pcompra, 0, ',', '.')}}</td>
@@ -157,7 +157,6 @@
 									<tfoot id="tabletfoot" >
 										<tr>
 											<th>Totales</th>
-											<td></td>
 											<td></td>
 											<td></td>
 											<td></td>

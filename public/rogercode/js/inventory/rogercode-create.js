@@ -94,7 +94,6 @@ const showData = (data) => {
 	dataAll.forEach((element,indice) => {
 	    showRegTbody.innerHTML += `
     	    <tr>
-      	    <td>${element.id}</td>
       	    <td>${element.created_at}</td>
       	    <td>${element.code}</td>
       	    <td>${element.nameprod}</td>
@@ -118,7 +117,6 @@ const showData = (data) => {
     tableFoot.innerHTML += `
 	    <tr>
 		    <th>Totales</th>
-		    <td></td>
 		    <td></td>
 		    <td></td>
 		    <td></td>
