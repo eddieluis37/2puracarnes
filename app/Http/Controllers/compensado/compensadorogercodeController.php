@@ -203,6 +203,12 @@ class compensadorogercodeController extends Controller
                 ], 422);
             }
 
+            $currentDateTime = Carbon::now();
+            $currentDateFormat = Carbon::parse($currentDateTime->format('Y-m-d'));
+            $current_date = Carbon::parse($currentDateTime->format('Y-m-d'));
+			$current_date->modify('next monday'); // Move to the next Monday
+			$dateNextMonday = $current_date->format('Y-m-d'); // Output the date in Y-m-d format
+
             $id_user= Auth::user()->id;
 
             $comp = new Compensadores();
@@ -210,6 +216,8 @@ class compensadorogercodeController extends Controller
             $comp->categoria_id = $request->categoria;
             $comp->thirds_id = $request->provider;
             $comp->centrocosto_id = $request->centrocosto;
+            $comp->fecha_compensado = $currentDateFormat;
+            $comp->fecha_cierre = $dateNextMonday;
             $comp->factura = $request->factura;
             $comp->save();
 
@@ -218,7 +226,10 @@ class compensadorogercodeController extends Controller
             ]);
 
         } catch (\Throwable $th) {
-            //throw $th;
+            return response()->json([
+                'status' => 0,
+                'array' => (array) $th
+            ]);
         }
     }
 
@@ -252,16 +263,50 @@ class compensadorogercodeController extends Controller
                     return $onlyDate;
                 })
                 ->addColumn('action', function($data){
-                    $btn = '
-                    <div class="text-content">
-					<a href="compensado/create/'.$data->id.'" class="btn btn-dark" title="Despostar" >
-						<i class="fas fa-directions"></i>
-					</a>
-					<button class="btn btn-dark" title="Borrar Beneficio" >
-						<i class="fas fa-trash"></i>
-					</button>
-                    </div>
-                    ';
+                    $currentDateTime = Carbon::now();
+                    if (Carbon::parse($currentDateTime->format('Y-m-d'))->gt(Carbon::parse($data->fecha_cierre))) {
+                        $btn = '
+                        <div class="text-center">
+					    <a href="compensado/create/'.$data->id.'" class="btn btn-dark" title="Despostar" >
+						    <i class="fas fa-directions"></i>
+					    </a>
+					    <button class="btn btn-dark" title="Borrar Beneficio" >
+						    <i class="fas fa-eye"></i>
+					    </button>
+					    <button class="btn btn-dark" title="Borrar Beneficio" disabled>
+						    <i class="fas fa-trash"></i>
+					    </button>
+                        </div>
+                        ';
+                    }elseif (Carbon::parse($currentDateTime->format('Y-m-d'))->lt(Carbon::parse($data->fecha_cierre))) {
+                        $btn = '
+                        <div class="text-center">
+					    <a href="compensado/create/'.$data->id.'" class="btn btn-dark" title="Despostar" >
+						    <i class="fas fa-directions"></i>
+					    </a>
+					    <button class="btn btn-dark" title="Borrar Beneficio" onclick="editCompensado('.$data->id.');">
+						    <i class="fas fa-edit"></i>
+					    </button>
+					    <button class="btn btn-dark" title="Borrar Beneficio" >
+						    <i class="fas fa-trash"></i>
+					    </button>
+                        </div>
+                        ';
+                    }else{
+                        $btn = '
+                        <div class="text-center">
+					    <a href="compensado/create/'.$data->id.'" class="btn btn-dark" title="Despostar" >
+						    <i class="fas fa-directions"></i>
+					    </a>
+					    <button class="btn btn-dark" title="Borrar Beneficio" >
+						    <i class="fas fa-eye"></i>
+					    </button>
+					    <button class="btn btn-dark" title="Borrar Beneficio" disabled>
+						    <i class="fas fa-trash"></i>
+					    </button>
+                        </div>
+                        ';
+                    }
                     return $btn;
                 })
                 ->rawColumns(['date','action'])
@@ -284,6 +329,14 @@ class compensadorogercodeController extends Controller
         ]);
     }
 
+    public function editCompensado(Request $request)
+    {
+        $reg = Compensadores::where('id', $request->id)->first();
+        return response()->json([
+            'status' => 1,
+            'reg' => $reg
+        ]);
+    }
     /**
      * Update the specified resource in storage.
      *

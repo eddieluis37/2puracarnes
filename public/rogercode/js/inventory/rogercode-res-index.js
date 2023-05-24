@@ -47,12 +47,18 @@ $(document).ready(function () {
             },
         });
     });
+    $('.select2Provider').select2({
+	    placeholder: 'Busca un proveedor',
+	    width: '100%',
+	    theme: "bootstrap-5",
+	    allowClear: true,
+    });
 });           
 
 btnAddCompensadoRes.addEventListener("click", async (e) => {
     e.preventDefault();
     const dataform = new FormData(formCompensadoRes);
-    send(dataform).then((resp) => {
+    send(dataform,'/compensadosave').then((resp) => {
         console.log(resp);
         if (resp.status == 1) {
             formCompensadoRes.reset();   
@@ -74,8 +80,8 @@ btnAddCompensadoRes.addEventListener("click", async (e) => {
     });
 })
 
-const send = async (dataform) => {
-    let response = await fetch('/compensadosave', {
+const send = async (dataform,ruta) => {
+    let response = await fetch(ruta, {
     headers: {
         'X-CSRF-TOKEN': token
     },
@@ -95,9 +101,13 @@ const showModalcreate = () => {
 
 }
 
-$('.select2Provider').select2({
-	placeholder: 'Busca un proveedor',
-	width: '100%',
-	theme: "bootstrap-5",
-	allowClear: true,
-});
+const editCompensado = (id) => {
+    console.log(id);
+    const dataform = new FormData();
+    dataform.append('id', id);
+    send(dataform,'/compensadoById').then((resp) => {
+        console.log(resp);
+        const modal = new bootstrap.Modal(document.getElementById('modal-create-compensado'));
+        modal.show();
+    });
+}

@@ -204,3 +204,4 @@ Route::post('compensadosave', [compensadorogercodeController::class,'store'])->n
 Route::post('compensadosavedetail', [compensadorogercodeController::class,'savedetail'])->name('compensado.savedetail');
 Route::post('compensadodown', [compensadorogercodeController::class,'destroy'])->name('compensado.down');
 Route::post('compensadogetById', [compensadorogercodeController::class,'edit'])->name('compensado.ById');
+Route::post('compensadoById', [compensadorogercodeController::class,'editCompensado'])->name('compensado.editCompensado');
