@@ -73,6 +73,7 @@ btnAdd.addEventListener('click', (e) => {
     sendData("/compensadosavedetail",dataform,token).then((result) => {
         console.log(result);
         if (result.status === 1) {
+            $('#producto').val('').trigger('change');
             formDetail.reset();
             showData(result)
         }

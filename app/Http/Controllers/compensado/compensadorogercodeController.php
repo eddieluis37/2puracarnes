@@ -183,12 +183,14 @@ class compensadorogercodeController extends Controller
         try {
 
             $rules = [
+                'compensadoId' => 'required',
                 'categoria' => 'required',
                 'provider' => 'required',
                 'centrocosto' => 'required',
                 'factura' => 'required',
             ];
             $messages = [
+                'compensadoId.required' => 'El compensadoId es requerido',
                 'categoria.required' => 'La categoria es requerida',
                 'provider.required' => 'El proveedor es requerido',
                 'centrocosto.required' => 'El centro de costo es requerido',
@@ -203,26 +205,38 @@ class compensadorogercodeController extends Controller
                 ], 422);
             }
 
-            $currentDateTime = Carbon::now();
-            $currentDateFormat = Carbon::parse($currentDateTime->format('Y-m-d'));
-            $current_date = Carbon::parse($currentDateTime->format('Y-m-d'));
-			$current_date->modify('next monday'); // Move to the next Monday
-			$dateNextMonday = $current_date->format('Y-m-d'); // Output the date in Y-m-d format
+            $getReg = Compensadores::firstWhere('id', $request->compensadoId);
 
-            $id_user= Auth::user()->id;
+            if($getReg == null) {
+                $currentDateTime = Carbon::now();
+                $currentDateFormat = Carbon::parse($currentDateTime->format('Y-m-d'));
+                $current_date = Carbon::parse($currentDateTime->format('Y-m-d'));
+			    $current_date->modify('next monday'); // Move to the next Monday
+			    $dateNextMonday = $current_date->format('Y-m-d'); // Output the date in Y-m-d format
 
-            $comp = new Compensadores();
-            $comp->users_id = $id_user;
-            $comp->categoria_id = $request->categoria;
-            $comp->thirds_id = $request->provider;
-            $comp->centrocosto_id = $request->centrocosto;
-            $comp->fecha_compensado = $currentDateFormat;
-            $comp->fecha_cierre = $dateNextMonday;
-            $comp->factura = $request->factura;
-            $comp->save();
+                $id_user= Auth::user()->id;
+
+                $comp = new Compensadores();
+                $comp->users_id = $id_user;
+                $comp->categoria_id = $request->categoria;
+                $comp->thirds_id = $request->provider;
+                $comp->centrocosto_id = $request->centrocosto;
+                $comp->fecha_compensado = $currentDateFormat;
+                $comp->fecha_cierre = $dateNextMonday;
+                $comp->factura = $request->factura;
+                $comp->save();
+            }else{
+                $getReg = Compensadores::firstWhere('id', $request->compensadoId);
+                $getReg->categoria_id = $request->categoria;
+                $getReg->thirds_id = $request->provider;
+                $getReg->centrocosto_id = $request->centrocosto;
+                $getReg->factura = $request->factura;
+                $getReg->save();
+            }
 
             return response()->json([
                 'status' => 1,
+                'message' => 'Solicitud satisfactoria',
             ]);
 
         } catch (\Throwable $th) {
@@ -246,6 +260,7 @@ class compensadorogercodeController extends Controller
             ->join('thirds as tird', 'comp.thirds_id', '=', 'tird.id')
             ->join('centro_costo as centro', 'comp.centrocosto_id', '=', 'centro.id')
             ->select('comp.*', 'cat.name as namecategoria', 'tird.name as namethird','centro.name as namecentrocosto')
+            ->where('comp.status', 1)
             ->get();
             //$data = Compensadores::orderBy('id','desc');
             return Datatables::of($data)->addIndexColumn()
@@ -270,7 +285,7 @@ class compensadorogercodeController extends Controller
 					    <a href="compensado/create/'.$data->id.'" class="btn btn-dark" title="Despostar" >
 						    <i class="fas fa-directions"></i>
 					    </a>
-					    <button class="btn btn-dark" title="Borrar Beneficio" >
+					    <button class="btn btn-dark" title="Borrar Beneficio" onclick="showDataForm('.$data->id.')">
 						    <i class="fas fa-eye"></i>
 					    </button>
 					    <button class="btn btn-dark" title="Borrar Beneficio" disabled>
@@ -287,7 +302,7 @@ class compensadorogercodeController extends Controller
 					    <button class="btn btn-dark" title="Borrar Beneficio" onclick="editCompensado('.$data->id.');">
 						    <i class="fas fa-edit"></i>
 					    </button>
-					    <button class="btn btn-dark" title="Borrar Beneficio" >
+					    <button class="btn btn-dark" title="Borrar Beneficio" onclick="downCompensado('.$data->id.');">
 						    <i class="fas fa-trash"></i>
 					    </button>
                         </div>
@@ -337,6 +352,7 @@ class compensadorogercodeController extends Controller
             'reg' => $reg
         ]);
     }
+
     /**
      * Update the specified resource in storage.
      *
@@ -369,6 +385,25 @@ class compensadorogercodeController extends Controller
                 'status' => 1,
                 'array' => $arraydetail,
                 'arrayTotales' => $arrayTotales
+            ]);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'status' => 0,
+                'array' => (array) $th
+            ]);
+        }
+    }
+
+    public function destroyCompensado(Request $request)
+    {
+        try {
+            $compe = Compensadores::where('id', $request->id)->first();
+            $compe->status = 0;
+            $compe->save();
+
+            return response()->json([
+                'status' => 1,
+                'message' => 'Se realizo con exito'
             ]);
         } catch (\Throwable $th) {
             return response()->json([

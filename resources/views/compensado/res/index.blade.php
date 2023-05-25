@@ -10,7 +10,7 @@
 				</h4>
 				<ul class="tabs tab-pills">
 					<li>
-						<a href="javascript:void(0)" onclick="showModalcreate()" class="tabmenu bg-dark" data-toggle="modal" data-target="#modal-create-beneficiore" title="Nuevo Beneficio">Agregar</a>
+						<a href="javascript:void(0)" onclick="showModalcreate()" class="tabmenu bg-dark" data-toggle="modal" data-target="#modal-create-compensado" title="Nuevo Beneficio">Agregar</a>
 					</li>
 				</ul>
 			</div>
@@ -39,20 +39,22 @@
 	<div class="modal fade" id="modal-create-compensado" aria-hidden="true" data-keyboard="false" data-backdrop="static" >
 		<div class="modal-dialog modal-xl" role="document">
 			<div class="modal-content bg-default">
-				<form action="" id="form-compensado-res">
-					<div class="modal-header">
-						<h4 class="modal-title">Crear Compensado</h4>
-						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-							<span aria-hidden="true">&times;</span></button>
-					</div>
-				 	<div class="modal-body">
-							@include('compensado.modal_create')
-					</div>
-					<div class="modal-footer">
-						<button type="button" id="btnModalClose" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-						<button type="submit" id="btnAddCompensadoRes" class="btn btn-primary">Aceptar</button>
-					</div>
-				</form>
+				<fieldset id="contentDisable">
+					<form action="" id="form-compensado-res">
+						<div class="modal-header">
+							<h4 class="modal-title">Crear Compensado</h4>
+							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+								<span aria-hidden="true">&times;</span></button>
+						</div>
+				 		<div class="modal-body">
+								@include('compensado.modal_create')
+						</div>
+						<div class="modal-footer">
+							<button type="button" id="btnModalClose" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+							<button type="submit" id="btnAddCompensadoRes" class="btn btn-primary">Aceptar</button>
+						</div>
+					</form>
+				</fieldset>
 			</div>
 			<!-- /.modal-content -->
 		</div>

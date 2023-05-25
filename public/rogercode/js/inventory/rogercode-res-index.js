@@ -4,6 +4,13 @@ const formCompensadoRes = document.querySelector("#form-compensado-res");
 const token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
 const btnClose = document.querySelector("#btnModalClose");
 
+const selectCategory = document.querySelector("#categoria");
+const selectProvider = document.querySelector("#provider");
+const selectCentrocosto = document.querySelector("#centrocosto");
+const inputFactura = document.querySelector("#factura");
+const compensado_id = document.querySelector("#compensadoId");
+const contentform = document.querySelector("#contentDisable");
+
 
 $(document).ready(function () {
     $(function() {
@@ -98,7 +105,25 @@ const refresh_table = () => {
     table.fnDraw(false);
 }
 const showModalcreate = () => {
+    if(contentform.hasAttribute('disabled')){
+        contentform.removeAttribute('disabled');
+        $('#provider').prop('disabled', false);
+    }
+    $('#provider').val('').trigger('change');
+    formCompensadoRes.reset();
+}
 
+const showDataForm = (id) => {
+    console.log(id);
+    const dataform = new FormData();
+    dataform.append('id', id);
+    send(dataform,'/compensadoById').then((resp) => {
+        console.log(resp);
+        console.log(resp.reg);
+        showData(resp);
+        $('#provider').prop('disabled', true);
+        contentform.setAttribute('disabled','disabled');
+    });
 }
 
 const editCompensado = (id) => {
@@ -107,7 +132,46 @@ const editCompensado = (id) => {
     dataform.append('id', id);
     send(dataform,'/compensadoById').then((resp) => {
         console.log(resp);
-        const modal = new bootstrap.Modal(document.getElementById('modal-create-compensado'));
-        modal.show();
+        console.log(resp.reg);
+        showData(resp);
+        if(contentform.hasAttribute('disabled')){
+            contentform.removeAttribute('disabled');
+            $('#provider').prop('disabled', false);
+        }
     });
+}
+
+const showData = (resp) => {
+    let register = resp.reg;
+    compensado_id.value = register.id;
+    selectCategory.value = register.categoria_id;
+    $('#provider').val(register.thirds_id).trigger('change');
+    selectCentrocosto.value = register.centrocosto_id;
+    inputFactura.value = register.factura;
+    const modal = new bootstrap.Modal(document.getElementById('modal-create-compensado'));
+    modal.show();
+}
+
+const downCompensado = (id) => { 
+    swal({
+		title: 'CONFIRMAR',
+		text: '¿CONFIRMAS ELIMINAR EL REGISTRO?',
+		type: 'warning',
+		showCancelButton: true,
+		cancelButtonText: 'Cerrar',
+		cancelButtonColor: '#fff',
+		confirmButtonColor: '#3B3F5C',
+		confirmButtonText: 'Aceptar'
+    }).then(function(result) {
+        if (result.value) {
+            console.log(id);
+            const dataform = new FormData();
+            dataform.append('id', id);
+            send(dataform,'/downmaincompensado').then((resp) => {
+                console.log(resp);
+                refresh_table();
+            });
+        }
+
+    })
 }
