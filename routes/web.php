@@ -29,6 +29,7 @@ use Illuminate\Support\Facades\Route;
 
 /*************** SIN LIVWWIRE **********************/
 use App\Http\Controllers\res\desposteresrogercodeController;
+use App\Http\Controllers\res\beneficioresrogercodeController;
 use App\Http\Controllers\inventory\inventoryrogercodeController;
 use App\Http\Controllers\inventory\diariorogercodeController;
 use App\Http\Controllers\inventory\mensualrogercodeController;
@@ -113,7 +114,7 @@ Route::group(['middleware'=> [('auth')]], function () {
     Route::get('dash', Dash::class)->name('dash');
     Route::get('thirds', ThirdsController::class);
     Route::get('precio_agreements', PrecioAgreementsController::class);
-    Route::get('beneficiores', BeneficioresController::class);
+    //Route::get('beneficiores', BeneficioresController::class);
     Route::get('beneficiopollos', BeneficiopollosController::class);
     //Route::get('desposteres/{id}', DesposteresController::class);
 
@@ -206,3 +207,7 @@ Route::post('compensadodown', [compensadorogercodeController::class,'destroy'])-
 Route::post('compensadogetById', [compensadorogercodeController::class,'edit'])->name('compensado.ById');
 Route::post('compensadoById', [compensadorogercodeController::class,'editCompensado'])->name('compensado.editCompensado');
 Route::post('/downmaincompensado', [compensadorogercodeController::class, 'destroyCompensado'])->name('compensado.downCompensado');
+
+Route::get('beneficiores', [beneficioresrogercodeController::class,'index'])->name('beneficiores.index');
+Route::get('showbeneficiores', [beneficioresrogercodeController::class,'show'])->name('beneficiores.showlist');
+
