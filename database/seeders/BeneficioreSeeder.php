@@ -36,6 +36,7 @@ class BeneficioreSeeder extends Seeder
             'clientvisceras_id' => 3,
 
             'lote' => 'PC029',
+            'finca' => 'finca 1',
             'status' => true,
 
             'sacrificio' => 131000,
@@ -77,6 +78,7 @@ class BeneficioreSeeder extends Seeder
             'clientvisceras_id' => 3,
 
             'lote' => 'LT201',
+            'finca' => 'finca 2',
             'status' => true,       
            
             'sacrificio' => 131000,
@@ -119,6 +121,7 @@ class BeneficioreSeeder extends Seeder
             'clientvisceras_id' => 3,
 
             'lote' => 'LT201',
+            'finca' => 'finca 3',
             'status' => true,       
            
             'sacrificio' => 131000,
@@ -162,6 +165,7 @@ class BeneficioreSeeder extends Seeder
             'clientvisceras_id' => 798,
 
             'lote' => 'PC030',
+            'finca' => 'PC030',
             'status' => true,       
            
             'sacrificio' => 131000,

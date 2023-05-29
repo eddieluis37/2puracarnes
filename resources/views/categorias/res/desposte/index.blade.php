@@ -7,7 +7,7 @@
 			<div class="row">
 				<div class="col-sm-3">
 					<h4 class="">
-						<b> Desposte / RES {{$status}}</b>
+						<b> Desposte / RES</b>
 					</h4>
 				</div>
 				<!--div class="col-sm-3">

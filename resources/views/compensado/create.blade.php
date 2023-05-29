@@ -163,7 +163,9 @@
 											<th>{{number_format($arrayTotales['pesoTotalGlobal'], 2, ',', '.')}} KG</td>
 											<th>$ {{number_format($arrayTotales['totalGlobal'], 0, ',', '.')}} </th>
 											<td></td>
-											<td></td>
+											<td class="text-center">
+												<button class="btn btn-success">Cargar al inventario</button>
+											</td>
 										</tr>
 									</tfoot>
 								</table>
@@ -184,5 +186,5 @@
 </div>
 @endsection
 @section('script')
-<script src="{{asset('rogercode/js/inventory/rogercode-create.js')}}" type="module"></script>
+<script src="{{asset('rogercode/js/compensado/rogercode-create.js')}}" type="module"></script>
 @endsection

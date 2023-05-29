@@ -124,7 +124,9 @@ const showData = (data) => {
 		    <th>${formatCantidad(arrayTotales.pesoTotalGlobal)} KG</td>
 		    <th>$ ${formatCantidadSinCero(arrayTotales.totalGlobal)} </th>
 		    <td></td>
-		    <td></td>
+		    <td class="text-center">
+                <button class="btn btn-success">Cargar al inventario</button>
+            </td>
 	    </tr>
     `;
 }

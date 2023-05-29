@@ -451,12 +451,12 @@
                                 <li>
                                     <a href="{{ url('beneficiores') }}"> Beneficio Res </a>
                                 </li>
-                                <li>
+                                <!--li>
                                     <a href="desposter"> Desposte Res </a>
                                 </li>
                                 <li>
                                     <a href=""> Compensado Res </a>
-                                </li>                                
+                                </li-->
                             </ul>
                         </li>                       
                         

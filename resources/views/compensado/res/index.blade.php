@@ -64,5 +64,5 @@
 </div>
 @endsection
 @section('script')
-<script src="{{asset('rogercode/js/inventory/rogercode-res-index.js')}}"></script>
+<script src="{{asset('rogercode/js/compensado/rogercode-res-index.js')}}"></script>
 @endsection

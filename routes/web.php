@@ -8,7 +8,7 @@ use App\Http\Controllers\ExportController;
 use App\Http\Controllers\TodosController;
 use App\Http\Livewire\AsignarController;
 use App\Http\Livewire\BeneficiopollosController;
-use App\Http\Livewire\BeneficioresController;
+//use App\Http\Livewire\BeneficioresController;
 use App\Http\Livewire\CashoutController;
 use App\Http\Livewire\CategoriesController;
 use App\Http\Livewire\CoinsController;
@@ -121,7 +121,6 @@ Route::group(['middleware'=> [('auth')]], function () {
     /**beneficiores*/
     Route::resource('desposter', DesposterController::class);
 
-    Route::get('downbeneficiores/{id}', [BeneficioresController::class, 'destroy']);
     /*desposteres* */
     Route::post('desposteresAdd', [DesposteresController::class, 'store']);
     Route::get('getdesposter/{id}', [DesposteresController::class, 'getdesposter']);
@@ -137,9 +136,9 @@ Route::group(['middleware'=> [('auth')]], function () {
     Route::get('report/excel/{user}/{type}', [ExportController::class, 'reporteExcel']);
 
     /************ Beneficiores **************/
-    Route::get('get_plantasacrificio_by_id', [BeneficioresController::class, 'get_plantasacrificio_by_id'])->name('get_plantasacrificio_by_id');
-    Route::post('store', [BeneficioresController::class, 'store'])->name('store');
-    Route::get('/edit/{id}', [BeneficioresController::class, 'edit'])->name('edit');
+    //Route::get('get_plantasacrificio_by_id', [BeneficioresController::class, 'get_plantasacrificio_by_id'])->name('get_plantasacrificio_by_id');
+    //Route::post('store', [BeneficioresController::class, 'store'])->name('store');
+    //Route::get('/edit/{id}', [BeneficioresController::class, 'edit'])->name('edit');
 
     Route::get('get_plantasacrificiopollo_by_id', [BeneficiopollosController::class, 'get_plantasacrificiopollo_by_id'])->name('get_plantasacrificiopollo_by_id');
 
@@ -210,4 +209,7 @@ Route::post('/downmaincompensado', [compensadorogercodeController::class, 'destr
 
 Route::get('beneficiores', [beneficioresrogercodeController::class,'index'])->name('beneficiores.index');
 Route::get('showbeneficiores', [beneficioresrogercodeController::class,'show'])->name('beneficiores.showlist');
-
+Route::get('get_plantasacrificio_by_id', [beneficioresrogercodeController::class, 'get_plantasacrificio_by_id'])->name('get_plantasacrificio_by_id');
+Route::post('savebeneficiores', [beneficioresrogercodeController::class, 'store'])->name('beneficiores.save');
+Route::get('/edit/{id}', [beneficioresrogercodeController::class, 'edit'])->name('beneficiores.edit');
+Route::get('downbeneficiores/{id}', [beneficioresrogercodeController::class, 'destroy'])->name('beneficiores.destroy');

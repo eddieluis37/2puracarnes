@@ -25,7 +25,7 @@ class DesposteresrogercodeController extends Controller
         
         $prod = Product::Where('category_id',1)->get();
 
-        return view('categorias.res.index', compact('prod'));
+        return view('categorias.res.desposte.index', compact('prod'));
     }
 
     /**
@@ -108,7 +108,7 @@ class DesposteresrogercodeController extends Controller
         }
         //dd(count($desposters));
         //$beneficior = Beneficiore::Where('id',$id)->get();
-        return view('categorias.res.index', compact(
+        return view('categorias.res.desposte.index', compact(
             'beneficior',
             'desposters',
             'TotalDesposte',
