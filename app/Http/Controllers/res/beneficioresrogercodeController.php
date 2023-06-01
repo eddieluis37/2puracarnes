@@ -140,8 +140,12 @@ class beneficioresrogercodeController extends Controller
 			    $newBeneficiore->rendfrio = $this->MoneyToNumber($request->rendfrio);
 
 			    $newBeneficiore->save();
-			    // Redirect to the route
-			    //return redirect()->route('user.show', ['id' => 1]);
+
+            	return response()->json([
+                	"status" => 1,
+                	"message" => "Guardado correctamente",
+					"registroId" => $newBeneficiore->id
+            	]);
 		    }else {
 
 			    $updateBeneficiore = Beneficiore::firstWhere('id', $request->idbeneficio);
@@ -202,12 +206,12 @@ class beneficioresrogercodeController extends Controller
 
 			    $updateBeneficiore->save();
 
+            	return response()->json([
+                	"status" => 1,
+                	"message" => "Guardado correctamente",
+					"registroId" => 0
+            	]);
 		    }
-            return response()->json([
-                "status" => 1,
-                "message" => "Guardado correctamente"
-
-            ]);
         } catch (\Throwable $th) {
             return response()->json([
                 "status" => 0,
@@ -227,7 +231,8 @@ class beneficioresrogercodeController extends Controller
             $data = DB::table('beneficiores as be')
             ->join('thirds as tird', 'be.thirds_id', '=', 'tird.id')
             ->select('be.*', 'tird.name as namethird')
-	    ->where('be.status', '=', true)
+			->where('be.status', '=', true)
+			->orderBy('be.id', 'desc')
             ->get();
             //$data = Compensadores::orderBy('id','desc');
             return Datatables::of($data)->addIndexColumn()

@@ -20,6 +20,7 @@
 					<table id="tableBeneficiores" class="table table-striped mt-1">
 						<thead class="text-white" style="background: #3B3F5C">
 							<tr>
+								<th class="table-th text-white">#</th>
 								<th class="table-th text-white">Proveedor</th>
 								<th class="table-th text-white">Fecha</th>
 								<th class="table-th text-white">Factura</th>

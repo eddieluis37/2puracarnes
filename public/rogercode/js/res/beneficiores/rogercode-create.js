@@ -18,6 +18,9 @@ formBeneficio.addEventListener('submit', (e) => {
             formBeneficio.reset();
             refresh_table();     
             successToastMessage(result.message); 
+            if (result.registroId != 0) {
+                window.location.href = `desposteres/${result.registroId}`;
+            }
         }
         if (result.status === 0) {
             errorMessage("Ocurrio un error inesperado");

@@ -109,10 +109,12 @@
     console.log("peso :" + canalp)
     calculatotales(); 
   });
+
   /**********************************************************/
   valorMacho.change(function () { CalculateTotalMacho(); });
+  cantidadMacho.change(function () { CalculateTotalMacho(); });
   valorHembra.change(function () { CalculateTotalHembra(); });
-  
+  cantidadHembra.change(function () { CalculateTotalHembra(); });
   /**********************************************************/
 
   function obtener_registroid(plantasacrificio_id) {
@@ -175,7 +177,8 @@
 
     //TOTAL PIELES Y VISCERAS
     var pielescosto = formatMoneyNumber($('#pielescosto').val()); $('#tpieles').val(formatCantidadSinCero(pieleskg * pielescosto * -1)); var tpielc = Number(pieleskg * pielescosto * -1);
-    var visceras = formatMoneyNumber($('#visceras').val()); $('#tvisceras').val(formatCantidadSinCero(cantidad * visceras * -1)); var tvisce = Number(cantidad * visceras * -1);
+    //var visceras = formatMoneyNumber($('#visceras').val()); $('#tvisceras').val(formatCantidadSinCero(cantidad * visceras * -1)); var tvisce = Number(cantidad * visceras * -1);
+    var visceras = formatMoneyNumber($('#visceras').val()); $('#tvisceras').val(formatCantidadSinCero(visceras)); var tvisce = Number(visceras);
 
     //TOTALES 
     var totalc = tpie1 + tpie2 + tpie3 + tsacrif + tfomen + tdgue + tbascu + ttrans + tpielc + tvisce;
@@ -200,12 +203,14 @@
     $('#rtcanalfria').val(formatCantidadSinCero(canalfria));
     
     if (canalcaliente != "" && pesopierend != 0) {
-      $('#rendcaliente').val(formatCantidadSinCero(((canalcaliente / pesopierend) * 100).toFixed(2)));
+      //$('#rendcaliente').val(formatCantidadSinCero(((canalcaliente / pesopierend) * 100).toFixed(2)));
+      $('#rendcaliente').val(formatCantidad(((canalcaliente / pesopierend) * 100).toFixed(2)));
     }else{
       $('#rendcaliente').val(0);
     }  
     if (canalplanta != "" && pesopierend != 0) {
-      $('#rendplanta').val(formatCantidadSinCero(((canalplanta / pesopierend) * 100).toFixed(2)));
+      //$('#rendplanta').val(formatCantidadSinCero(((canalplanta / pesopierend) * 100).toFixed(2)));
+      $('#rendplanta').val(formatCantidad(((canalplanta / pesopierend) * 100).toFixed(2)));
     }else{
       $('#rendplanta').val(0);
     }
@@ -241,4 +246,5 @@
     let sum = cantTotalMacho + cantTotalHembra;
     console.log("sum : " + formatCantidadSinCero(sum));
     $("#visceras").val(formatCantidadSinCero(sum));
+    $("#tvisceras").val(formatCantidadSinCero(sum));
   }

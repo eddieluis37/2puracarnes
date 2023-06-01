@@ -13,13 +13,14 @@ $(document).ready(function () {
                 type: "GET",
             },
             columns: [
+                { data: "id", name: "id" },
                 { data: "namethird", name: "namethird" },
                 { data: "date", name: "date" },
                 { data: "factura", name: "factura" },
                 { data: "lote", name: "lote" },
                 { data: "action", name: "action" },
             ],
-            //order: [[0, 'ASC']],
+            order: [[0, 'DESC']],
             language: {
                 processing: "Procesando...",
                 lengthMenu: "Mostrar _MENU_ registros",
@@ -245,6 +246,7 @@ const showModalcreate = () => {
     const mySelectVisceras = $("#clientvisceras_id");
     mySelectVisceras.val("").trigger("change");
     formBeneficio.reset();
+    idBeneficio.value = 0;
 };
 
 function Confirm(id) {
