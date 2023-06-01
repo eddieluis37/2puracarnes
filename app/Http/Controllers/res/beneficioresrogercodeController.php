@@ -77,9 +77,9 @@ class beneficioresrogercodeController extends Controller
 			    //$current_date = new DateTime($start_date);
 			    //$current_date->modify('next monday'); // Move to the next Monday
 			    //$dateNextMonday = $current_date->format('Y-m-d'); // Output the date in Y-m-d format
-                	    $currentDateTime = Carbon::now();
-                	    $currentDateFormat = Carbon::parse($currentDateTime->format('Y-m-d'));
-                	    $current_date = Carbon::parse($currentDateTime->format('Y-m-d'));
+                $currentDateTime = Carbon::now();
+                $currentDateFormat = Carbon::parse($currentDateTime->format('Y-m-d'));
+                $current_date = Carbon::parse($currentDateTime->format('Y-m-d'));
 			    $current_date->modify('next monday'); // Move to the next Monday
 			    $dateNextMonday = $current_date->format('Y-m-d'); // Output the date in Y-m-d format
 			    $newBeneficiore = new Beneficiore();
@@ -99,7 +99,7 @@ class beneficioresrogercodeController extends Controller
 			    $newBeneficiore->clientvisceras_id = $request->clientvisceras_id;
 			    $newBeneficiore->lote = $newLote;//$request->lote;
 			    $newBeneficiore->finca = $request->finca;
-			    $newBeneficiore->sacrificio = $request->sacrificio;
+			    $newBeneficiore->sacrificio = $this->MoneyToNumber($request->sacrificio);
 			    $newBeneficiore->fomento = $this->MoneyToNumber($request->fomento);
 			    $newBeneficiore->deguello = $this->MoneyToNumber($request->deguello);
 			    $newBeneficiore->bascula = $this->MoneyToNumber($request->bascula);
@@ -160,7 +160,7 @@ class beneficioresrogercodeController extends Controller
 			    $updateBeneficiore->clientvisceras_id = $request->clientvisceras_id;
 			    //$updateBeneficiore->lote = $request->lote;
 			    $updateBeneficiore->finca = $request->finca;
-			    $updateBeneficiore->sacrificio = $request->sacrificio;
+			    $updateBeneficiore->sacrificio = $this->MoneyToNumber($request->sacrificio);
 			    $updateBeneficiore->fomento = $this->MoneyToNumber($request->fomento);
 			    $updateBeneficiore->deguello = $this->MoneyToNumber($request->deguello);
 			    $updateBeneficiore->bascula = $this->MoneyToNumber($request->bascula);
