@@ -30,6 +30,9 @@ class CreateTableCompensadores extends Migration
 
             $table->string('factura');
 
+            $table->date('fecha_compensado');
+            $table->date('fecha_cierre')->nullable();
+
             $table->boolean('status')->parent_select()->default(true)->nullable();            
             $table->timestamps();
         });

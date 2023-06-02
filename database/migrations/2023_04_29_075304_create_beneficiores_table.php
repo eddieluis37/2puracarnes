@@ -41,9 +41,8 @@ class CreateBeneficioresTable extends Migration
 
             $table->string('factura');
 
-                      
             $table->string('lote');
-            
+            $table->string('finca');
          
             $table->decimal('sacrificio', 18, 0)->nullable();
 

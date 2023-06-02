@@ -1,5 +1,8 @@
 <div class="card">
 	<div class="card-body">
+		<div>
+			<input type="hidden" value="0" name="compensadoId" id="compensadoId" >
+		</div>
 		<div class="row g-3">
 			<div class="col-md-6">
 				<div class="task-header">
@@ -11,7 +14,7 @@
 							<option value="{{ $option['id'] }}" data="{{$option}}">{{ $option['name'] }}</option>
 							@endforeach
 					    </select>
-						<span class="text-danger error-message sds"></span>
+						<span class="text-danger error-message"></span>
 					</div>
 				</div>
 			</div>

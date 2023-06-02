@@ -73,6 +73,7 @@ btnAdd.addEventListener('click', (e) => {
     sendData("/compensadosavedetail",dataform,token).then((result) => {
         console.log(result);
         if (result.status === 1) {
+            $('#producto').val('').trigger('change');
             formDetail.reset();
             showData(result)
         }
@@ -123,7 +124,9 @@ const showData = (data) => {
 		    <th>${formatCantidad(arrayTotales.pesoTotalGlobal)} KG</td>
 		    <th>$ ${formatCantidadSinCero(arrayTotales.totalGlobal)} </th>
 		    <td></td>
-		    <td></td>
+		    <td class="text-center">
+                <button class="btn btn-success">Cargar al inventario</button>
+            </td>
 	    </tr>
     `;
 }

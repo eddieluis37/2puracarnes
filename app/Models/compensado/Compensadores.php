@@ -10,5 +10,5 @@ class Compensadores extends Model
     use HasFactory;
 
     protected $table = 'compensadores';
-	protected $fillable = ['users_id','categoria_id','thirds_id', 'centrocosto_id','factura','status'];
+	protected $fillable = ['users_id','categoria_id','thirds_id', 'centrocosto_id','factura','fecha_compensado','fecha_cierre','status'];
 }

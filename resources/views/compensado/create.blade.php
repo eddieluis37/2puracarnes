@@ -70,7 +70,7 @@
 									<div class="form-group">
                                         <label for="" class="form-label">Buscar producto</label>
 					                    <select class="form-control form-control-sm select2Prod" name="producto" id="producto" required="">
-											<option value="">Seleccione el proveedor</option>
+											<option value="">Seleccione el producto</option>
 											@foreach ($prod as $p)
 											<option value="{{$p->id}}">{{$p->name}}</option>
 											@endforeach
@@ -163,7 +163,9 @@
 											<th>{{number_format($arrayTotales['pesoTotalGlobal'], 2, ',', '.')}} KG</td>
 											<th>$ {{number_format($arrayTotales['totalGlobal'], 0, ',', '.')}} </th>
 											<td></td>
-											<td></td>
+											<td class="text-center">
+												<button class="btn btn-success">Cargar al inventario</button>
+											</td>
 										</tr>
 									</tfoot>
 								</table>
@@ -184,5 +186,5 @@
 </div>
 @endsection
 @section('script')
-<script src="{{asset('rogercode/js/inventory/rogercode-create.js')}}" type="module"></script>
+<script src="{{asset('rogercode/js/compensado/rogercode-create.js')}}" type="module"></script>
 @endsection

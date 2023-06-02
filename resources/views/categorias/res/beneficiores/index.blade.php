@@ -6,25 +6,25 @@
 		<div class="widget widget-chart-one">
 			<div class="widget-heading">
 				<h4 class="card-title">
-					<b>Compensado | Listado </b>
+					<b>Beneficio Res | Listado </b>
 				</h4>
 				<ul class="tabs tab-pills">
 					<li>
-						<a href="javascript:void(0)" onclick="showModalcreate()" class="tabmenu bg-dark" data-toggle="modal" data-target="#modal-create-compensado" title="Nuevo Beneficio">Agregar</a>
+						<a href="javascript:void(0)" onclick="showModalcreate()" class="tabmenu bg-dark" data-toggle="modal" data-target="#modal-create-beneficiore" title="Nuevo Beneficio">Agregar</a>
 					</li>
 				</ul>
 			</div>
 
 			<div class="widget-content">
 				<div class="table-responsive">
-					<table id="tableCompensado" class="table table-striped mt-1">
+					<table id="tableBeneficiores" class="table table-striped mt-1">
 						<thead class="text-white" style="background: #3B3F5C">
 							<tr>
-								<th class="table-th text-white">Categoria</th>
+								<th class="table-th text-white">#</th>
 								<th class="table-th text-white">Proveedor</th>
-								<th class="table-th text-white ">Centro de costo</th>
-								<th class="table-th text-white">Factura</th>
 								<th class="table-th text-white">Fecha</th>
+								<th class="table-th text-white">Factura</th>
+								<th class="table-th text-white">Lote</th>
 								<th class="table-th text-white text-center">Acciones</th>
 							</tr>
 						</thead>
@@ -36,22 +36,22 @@
 		</div>
 	</div>
 	<!-- modal -->
-	<div class="modal fade" id="modal-create-compensado" aria-hidden="true" data-keyboard="false" data-backdrop="static" >
+	<div class="modal fade" id="modal-create-beneficiore" aria-hidden="true" data-keyboard="false" data-backdrop="static" >
 		<div class="modal-dialog modal-xl" role="document">
 			<div class="modal-content bg-default">
 				<fieldset id="contentDisable">
-					<form action="" id="form-compensado-res">
+					<form action="" id="form-beneficiores-res">
 						<div class="modal-header">
-							<h4 class="modal-title">Crear Compensado</h4>
+							<h4 class="modal-title">Crear Beneficio Res</h4>
 							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 								<span aria-hidden="true">&times;</span></button>
 						</div>
 				 		<div class="modal-body">
-								@include('compensado.modal_create')
+							@include('categorias.res.beneficiores.modal_create')
 						</div>
 						<div class="modal-footer">
 							<button type="button" id="btnModalClose" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-							<button type="submit" id="btnAddCompensadoRes" class="btn btn-primary">Aceptar</button>
+							<button type="submit" id="" class="btn btn-primary">Aceptar</button>
 						</div>
 					</form>
 				</fieldset>
@@ -64,5 +64,7 @@
 </div>
 @endsection
 @section('script')
-<script src="{{asset('rogercode/js/compensado/rogercode-res-index.js')}}"></script>
+<script src="{{asset('rogercode/js/res/beneficiores/rogercode-beneficiores-index.js')}}"></script>
+<script src="{{asset('rogercode/js/res/beneficiores/rogercode-formulas.js')}}"></script>
+<script src="{{asset('rogercode/js/res/beneficiores/rogercode-create.js')}}" type="module"></script>
 @endsection
