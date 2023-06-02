@@ -449,14 +449,14 @@
                             <a role="menu" class="collapsed" data-toggle="collapse" data-target="#auth" aria-expanded="false"><div> <span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-circle"><circle cx="12" cy="12" r="10"></circle></svg></span> Res</div> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg></a>
                             <ul id="auth" class="collapse" data-parent="#compact_submenuSidebar">
                                 <li>
-                                    <a href={{url('beneficiores')}}> Beneficio Res </a>
+                                    <a href={{url('beneficiores')}}> Lote Res </a>
                                 </li>
-                                <li>
+                               <!--  <li>
                                     <a href="desposter"> Desposte Res </a>
                                 </li>
                                 <li>
                                     <a href=""> Compensado Res </a>
-                                </li>                                
+                                </li>   -->                              
                             </ul>
                         </li>                       
                         
@@ -465,9 +465,9 @@
                         <a href="{{ url('compensado') }}"><span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-circle"><circle cx="12" cy="12" r="10"></circle></svg></span> Compensado </a>
                         </li>
 
-                          <li>
+                   <!-- <li>
                             <a href=""><span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-circle"><circle cx="12" cy="12" r="10"></circle></svg></span>  </a>
-                        </li>
+                        </li> -->
 
                     </ul>
                 </div>
