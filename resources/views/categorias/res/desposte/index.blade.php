@@ -156,6 +156,9 @@
                     </div>
                 </div>
             </div>
+			<div class="modal-footer">
+              <button type="button" class="btn btn-success" data-dismiss="modal">Cargar al inventario</button>
+      		</div>		
 			<?php
 			$pi = $beneficior[0]->canalplanta;
 			$cant = $beneficior[0]->cantidad;
