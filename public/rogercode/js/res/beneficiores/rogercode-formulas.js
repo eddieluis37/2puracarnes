@@ -178,7 +178,7 @@
     //TOTAL PIELES Y VISCERAS
     var pielescosto = formatMoneyNumber($('#pielescosto').val()); $('#tpieles').val(formatCantidadSinCero(pieleskg * pielescosto * -1)); var tpielc = Number(pieleskg * pielescosto * -1);
     //var visceras = formatMoneyNumber($('#visceras').val()); $('#tvisceras').val(formatCantidadSinCero(cantidad * visceras * -1)); var tvisce = Number(cantidad * visceras * -1);
-    var visceras = formatMoneyNumber($('#visceras').val()); $('#tvisceras').val(formatCantidadSinCero(visceras)); var tvisce = Number(visceras);
+    var visceras = formatMoneyNumber($('#visceras').val()); $('#tvisceras').val(formatCantidadSinCero(visceras * -1)); var tvisce = Number(visceras * -1);
 
     //TOTALES 
     var totalc = tpie1 + tpie2 + tpie3 + tsacrif + tfomen + tdgue + tbascu + ttrans + tpielc + tvisce;
@@ -246,5 +246,5 @@
     let sum = cantTotalMacho + cantTotalHembra;
     console.log("sum : " + formatCantidadSinCero(sum));
     $("#visceras").val(formatCantidadSinCero(sum));
-    $("#tvisceras").val(formatCantidadSinCero(sum));
+    $("#tvisceras").val(formatCantidadSinCero(sum * -1));
   }

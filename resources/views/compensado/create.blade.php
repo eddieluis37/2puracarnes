@@ -79,19 +79,17 @@
 								</div>
 							</div>
 							<div class="col-md-3">
-								<div class="task-header">
-									<div class="form-group">
-                                        <label for="" class="form-label">Precio de compra</label>
-                                        <input type="text" id="pcompra" name="pcompra" class="form-control input" placeholder="EJ: 20.500">
-									</div>
+								<label for="" class="form-label">Precio de compra</label>
+								<div class="input-group flex-nowrap">
+									<span class="input-group-text" id="addon-wrapping">$</span>
+									<input type="text" id="pcompra" name="pcompra" class="form-control input" placeholder="EJ: 20.500">
 								</div>
 							</div>
 							<div class="col-md-3">
-								<div class="task-header">
-									<div class="form-group">
-                                        <label for="" class="form-label">Peso KG</label>
-                                        <input type="text" id="pesokg" name="pesokg" class="form-control input" placeholder="EJ: 10.00">
-									</div>
+								<label for="" class="form-label">Peso KG</label>
+								<div class="input-group flex-nowrap">
+									<input type="text" id="pesokg" name="pesokg" class="form-control input" placeholder="EJ: 10.00">
+									<span class="input-group-text" id="addon-wrapping">KG</span>
 								</div>
 							</div>
 							<!--div class="col-md-2">

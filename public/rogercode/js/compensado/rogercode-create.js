@@ -130,6 +130,19 @@ const showData = (data) => {
 	    </tr>
     `;
 }
+
+pcompra.addEventListener("change", function() {
+  const enteredValue = formatMoneyNumber(pcompra.value);
+  console.log("Entered value: " + enteredValue);
+  pcompra.value = formatCantidadSinCero(enteredValue);
+});
+
+pesokg.addEventListener("change", function() {
+  const enteredValue = formatkg(pesokg.value);
+  console.log("Entered value: " + enteredValue);
+  pesokg.value = enteredValue;
+});
+
 //const selectCategoria = document.querySelector("#categoria");
 //const selectProducto = document.getElementById("producto");
 /*selectCategoria.addEventListener("change", function() {

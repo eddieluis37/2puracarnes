@@ -197,7 +197,7 @@ const showForm = (data) => {
     inputcanalplanta.value = formatCantidad(resp.canalplanta);
     inputpieleskg.value = formatCantidadSinCero(resp.pieleskg);
     inputpielescosto.value = formatCantidadSinCero(resp.pielescosto);
-    inputvisceras.value = formatCantidad(resp.visceras);
+    inputvisceras.value = formatCantidadSinCero(resp.visceras);
 
     inputcostopie1.value = formatCantidadSinCero(resp.costopie1);
     inputcostopie2.value = formatCantidadSinCero(resp.costopie2);
