@@ -81,7 +81,8 @@ class DesposteresrogercodeController extends Controller
         /****************************************** */
         $status = '';
         $fechaBeneficioCierre = Carbon::parse($beneficior[0]->fecha_cierre);
-		$date = new DateTime();
+		//$date = new DateTime();
+        $date = Carbon::now();
 		$currentDate = Carbon::parse($date->format('Y-m-d'));
 
         if ($currentDate->gt($fechaBeneficioCierre)) {

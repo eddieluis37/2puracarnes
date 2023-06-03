@@ -47,7 +47,7 @@ class compensadorogercodeController extends Controller
         ->join('categories as cat', 'comp.categoria_id', '=', 'cat.id')
         ->join('thirds as tird', 'comp.thirds_id', '=', 'tird.id')
         ->join('centro_costo as centro', 'comp.centrocosto_id', '=', 'centro.id')
-        ->select('comp.*', 'cat.name as namecategoria', 'tird.name as namethird','centro.name as namecentrocosto')
+        ->select('comp.*', 'cat.name as namecategoria', 'tird.name as namethird','centro.name as namecentrocosto',)
         ->where('comp.id', $id)
         ->get();
 
@@ -56,11 +56,28 @@ class compensadorogercodeController extends Controller
             ['status',1]
         ])->get();
 
+        /**************************************** */
+        $status = '';
+        $fechaCompensadoCierre = Carbon::parse($datacompensado[0]->fecha_cierre);
+        $date = Carbon::now();
+		$currentDate = Carbon::parse($date->format('Y-m-d'));
+        if ($currentDate->gt($fechaCompensadoCierre)) {
+            //'Date 1 is greater than Date 2';
+            $status = 'false';
+        } elseif ($currentDate->lt($fechaCompensadoCierre)) {
+            //'Date 1 is less than Date 2';
+            $status = 'true';
+        } else {
+            //'Date 1 and Date 2 are equal';
+            $status = 'false';
+        }
+        /**************************************** */
+
         $detail = $this->getcompensadoresdetail($id);
 
         $arrayTotales = $this->sumTotales($id);
         //dd($arrayTotales);
-        return view('compensado.create', compact('datacompensado','prod','id','detail','arrayTotales'));
+        return view('compensado.create', compact('datacompensado','prod','id','detail','arrayTotales','status'));
     }
 
     public function getcompensadoresdetail($compensadoId)
@@ -234,7 +251,7 @@ class compensadorogercodeController extends Controller
                 $comp->save();
                 return response()->json([
                     'status' => 1,
-                    'message' => 'Solicitud satisfactoria',
+                    'message' => 'Guardado correctamente',
 					"registroId" => $comp->id
                 ]);
             }else{
@@ -247,7 +264,7 @@ class compensadorogercodeController extends Controller
 
                 return response()->json([
                     'status' => 1,
-                    'message' => 'Solicitud satisfactoria',
+                    'message' => 'Guardado correctamente',
 					"registroId" => 0
                 ]);
             }

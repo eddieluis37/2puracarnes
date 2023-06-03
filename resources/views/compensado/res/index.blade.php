@@ -20,6 +20,7 @@
 					<table id="tableCompensado" class="table table-striped mt-1">
 						<thead class="text-white" style="background: #3B3F5C">
 							<tr>
+								<th class="table-th text-white">#</th>
 								<th class="table-th text-white">Categoria</th>
 								<th class="table-th text-white">Proveedor</th>
 								<th class="table-th text-white ">Centro de costo</th>
@@ -65,4 +66,5 @@
 @endsection
 @section('script')
 <script src="{{asset('rogercode/js/compensado/rogercode-res-index.js')}}"></script>
+<script src="{{asset('rogercode/js/compensado/rogercode-create-update.js')}}" type="module"></script>
 @endsection

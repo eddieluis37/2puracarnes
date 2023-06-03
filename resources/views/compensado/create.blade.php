@@ -135,19 +135,25 @@
 										@foreach($detail as $proddetail)
 										<tr>
 											<!--td>{{$proddetail->id}}</td-->
-											<td>{{ date('d-m-Y', strtotime($proddetail->created_at))}}</td>
+											<td>{{ date('m-d-Y', strtotime($proddetail->created_at))}}</td>
 											<td>{{$proddetail->code}}</td>
 											<td>{{$proddetail->nameprod}}</td>
 											<td>$ {{ number_format($proddetail->pcompra, 0, ',', '.')}}</td>
 											<td>{{ number_format($proddetail->peso, 2, ',', '.')}} KG</td>
-
 											<td>$ {{ number_format($proddetail->subtotal, 0, ',', '.')}}</td>
 											<td>{{$proddetail->iva}}</td>
 											<td class="text-center">
+												@if($status == 'true')
 												<button class="btn btn-dark fas fa-edit" name="btnEdit" data-id="{{$proddetail->id}}" title="Editar" >
 												</button>
 												<button class="btn btn-dark fas fa-trash" name="btnDown" data-id="{{$proddetail->id}}" title="Borrar" >
 												</button>
+												@else
+												<button class="btn btn-dark fas fa-edit" name="btnEdit" title="Editar" disabled>
+												</button>
+												<button class="btn btn-dark fas fa-trash" name="btnDown" title="Borrar" disabled>
+												</button>
+												@endif
 											</td>
 										</tr>
 										@endforeach

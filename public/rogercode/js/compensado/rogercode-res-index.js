@@ -26,6 +26,7 @@ $(document).ready(function () {
                 type: 'GET',
             },
             columns: [
+                { data:'id', name: 'id'},
                 { data:'namecategoria', name: 'namecategoria'},
                 { data: 'namethird', name: 'namethird'},
                 { data: 'namecentrocosto', name: 'namecentrocosto' },
@@ -33,7 +34,7 @@ $(document).ready(function () {
                 { data: 'date', name: 'date' },
                 {data: 'action', name:'action'}
             ],
-            //order: [[0, 'ASC']],
+            order: [[0, 'DESC']],
             language:{
 		        "processing": "Procesando...",
     		    "lengthMenu": "Mostrar _MENU_ registros",
@@ -62,33 +63,6 @@ $(document).ready(function () {
     });
 });           
 
-btnAddCompensadoRes.addEventListener("click", async (e) => {
-    e.preventDefault();
-    const dataform = new FormData(formCompensadoRes);
-    send(dataform,'/compensadosave').then((resp) => {
-        console.log(resp);
-        if (resp.status == 1) {
-            formCompensadoRes.reset();   
-            btnClose.click();
-            refresh_table();
-
-            if (resp.registroId != 0) {//for new register
-                window.location.href = `compensado/create/${resp.registroId}`;
-            }
-        }
-        if (resp.status == 0) {
-            let errors = resp.errors;
-            console.log(errors);
-            $.each(errors, function(field, messages) {
-                console.log(field, messages)
-                let $input = $('[name="' + field + '"]');
-                let $errorContainer = $input.closest('.form-group').find('.error-message');
-                $errorContainer.html(messages[0]);
-                $errorContainer.show();
-            });        
-        }
-    });
-})
 
 const send = async (dataform,ruta) => {
     let response = await fetch(ruta, {
@@ -114,6 +88,7 @@ const showModalcreate = () => {
     }
     $('#provider').val('').trigger('change');
     formCompensadoRes.reset();
+    compensado_id.value = 0;
 }
 
 const showDataForm = (id) => {

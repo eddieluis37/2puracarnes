@@ -95,7 +95,7 @@ const showData = (data) => {
 	dataAll.forEach((element,indice) => {
 	    showRegTbody.innerHTML += `
     	    <tr>
-      	    <td>${element.created_at}</td>
+      	    <td>${formatDate(element.created_at)}</td>
       	    <td>${element.code}</td>
       	    <td>${element.nameprod}</td>
       	    <td>$ ${formatCantidadSinCero(element.pcompra)}</td>
