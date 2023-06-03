@@ -71,7 +71,10 @@ btnAddCompensadoRes.addEventListener("click", async (e) => {
             formCompensadoRes.reset();   
             btnClose.click();
             refresh_table();
-            //document.querySelector(".sds").innerHTML= "";
+
+            if (resp.registroId != 0) {//for new register
+                window.location.href = `compensado/create/${resp.registroId}`;
+            }
         }
         if (resp.status == 0) {
             let errors = resp.errors;

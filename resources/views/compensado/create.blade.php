@@ -88,7 +88,7 @@
 							<div class="col-md-3">
 								<label for="" class="form-label">Peso KG</label>
 								<div class="input-group flex-nowrap">
-									<input type="text" id="pesokg" name="pesokg" class="form-control input" placeholder="EJ: 10.00">
+									<input type="text" id="pesokg" name="pesokg" class="form-control input" placeholder="EJ: 10,00">
 									<span class="input-group-text" id="addon-wrapping">KG</span>
 								</div>
 							</div>

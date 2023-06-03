@@ -60,8 +60,8 @@ tbodyTable.addEventListener("click", (e) => {
             let editReg = result.reg;
             console.log(editReg);
             regDetail.value = editReg.id;
-            pcompra.value = editReg.pcompra;
-            pesokg.value = editReg.peso;
+            pcompra.value = formatCantidadSinCero(editReg.pcompra);
+            pesokg.value = formatCantidad(editReg.peso);
             $('.select2Prod').val(editReg.products_id).trigger('change');
         })
     }
