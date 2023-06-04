@@ -39,7 +39,7 @@ class UserSeeder extends Seeder
             'email' => 'vendedor1@puracarnes.com',
             'profile' => 'Vendedor',
             'status' => 'Active',
-            'password' => bcrypt('7201880130')
+            'password' => bcrypt('3016032085')
         ]);
 
         // crear role Administrador
