@@ -181,13 +181,21 @@
     var visceras = formatMoneyNumber($('#visceras').val()); $('#tvisceras').val(formatCantidadSinCero(visceras * -1)); var tvisce = Number(visceras * -1);
 
     //TOTALES 
-    var totalc = tpie1 + tpie2 + tpie3 + tsacrif + tfomen + tdgue + tbascu + ttrans + tpielc + tvisce;
+    //var totalc = tpie1 + tpie2 + tpie3 + tsacrif + tfomen + tdgue + tbascu + ttrans + tpielc + tvisce;
+    var totalc = tpie1 + tpie2 + tpie3;// + tsacrif + tfomen + tdgue + tbascu + ttrans;// - (tpielc + tvisce);
     console.log("total c " + totalc)
-    $('#totalcostos').val(formatCantidadSinCero(totalc));
+    var totalgastos = tsacrif + tfomen + tdgue + tbascu + ttrans;
+    console.log("Total gastos" + totalgastos)
+    var totalingresos = (pieleskg * pielescosto) + visceras;
+    console.log("Total ingresos" + totalingresos)
+    let totalCantidadCostos = (totalc + totalgastos) - totalingresos;
+    $('#totalcostos').val(formatCantidadSinCero(totalCantidadCostos));
+    //$('#totalcostos').val(formatCantidadSinCero(totalc));
     $('#valorfactura').val(formatCantidadSinCero(tpie1 + tpie2 + tpie3 + tfomen + tbascu));
-    if (canalplanta != "") {
-      $('#costokilo').val(formatCantidadSinCero(Math.round(totalc / canalplanta)));
-      $('#costo').val(formatCantidadSinCero(Math.round(totalc / canalplanta) * 12.5));
+    if (canalcaliente != "") {
+      //$('#costokilo').val(formatCantidadSinCero(Math.round(totalc / canalplanta)));//valiating
+      $('#costokilo').val(formatCantidadSinCero(Math.round(totalCantidadCostos / canalcaliente)));//valiating
+      $('#costo').val(formatCantidadSinCero(Math.round(totalCantidadCostos / canalcaliente) * 12.5));//validating
     }else{
       $('#costokilo').val(0);
       $('#costo').val(0);
