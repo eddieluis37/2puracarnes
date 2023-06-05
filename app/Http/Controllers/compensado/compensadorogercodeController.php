@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Auth;
 use Yajra\Datatables\Datatables;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Validator;
+use App\Http\Controllers\metodosgenerales\metodosrogercodeController;
 
 class compensadorogercodeController extends Controller
 {
@@ -46,7 +47,7 @@ class compensadorogercodeController extends Controller
         ->join('categories as cat', 'comp.categoria_id', '=', 'cat.id')
         ->join('thirds as tird', 'comp.thirds_id', '=', 'tird.id')
         ->join('centro_costo as centro', 'comp.centrocosto_id', '=', 'centro.id')
-        ->select('comp.*', 'cat.name as namecategoria', 'tird.name as namethird','centro.name as namecentrocosto')
+        ->select('comp.*', 'cat.name as namecategoria', 'tird.name as namethird','centro.name as namecentrocosto',)
         ->where('comp.id', $id)
         ->get();
 
@@ -55,11 +56,28 @@ class compensadorogercodeController extends Controller
             ['status',1]
         ])->get();
 
+        /**************************************** */
+        $status = '';
+        $fechaCompensadoCierre = Carbon::parse($datacompensado[0]->fecha_cierre);
+        $date = Carbon::now();
+		$currentDate = Carbon::parse($date->format('Y-m-d'));
+        if ($currentDate->gt($fechaCompensadoCierre)) {
+            //'Date 1 is greater than Date 2';
+            $status = 'false';
+        } elseif ($currentDate->lt($fechaCompensadoCierre)) {
+            //'Date 1 is less than Date 2';
+            $status = 'true';
+        } else {
+            //'Date 1 and Date 2 are equal';
+            $status = 'false';
+        }
+        /**************************************** */
+
         $detail = $this->getcompensadoresdetail($id);
 
         $arrayTotales = $this->sumTotales($id);
         //dd($arrayTotales);
-        return view('compensado.create', compact('datacompensado','prod','id','detail','arrayTotales'));
+        return view('compensado.create', compact('datacompensado','prod','id','detail','arrayTotales','status'));
     }
 
     public function getcompensadoresdetail($compensadoId)
@@ -110,24 +128,30 @@ class compensadorogercodeController extends Controller
                 ], 422);
             }
 
+            $formatCantidad = new metodosrogercodeController();
+            //$yourController->yourFunction($request);
+            $formatPcompra = $formatCantidad->MoneyToNumber($request->pcompra);
+            $formatPesoKg = $formatCantidad->MoneyToNumber($request->pesokg);
+            $subtotal = $formatPcompra * $formatPesoKg;
+
             $getReg = Compensadores_detail::firstWhere('id', $request->regdetailId);
 
             if($getReg == null) {
-                $subtotal = $request->pcompra * $request->pesokg;
+                //$subtotal = $request->pcompra * $request->pesokg;
                 $detail = new Compensadores_detail();
                 $detail->compensadores_id = $request->compensadoId;
                 $detail->products_id = $request->producto;
-                $detail->pcompra = $request->pcompra;
-                $detail->peso = $request->pesokg;
+                $detail->pcompra = $formatPcompra;
+                $detail->peso = $formatPesoKg;
                 $detail->iva = 0;
                 $detail->subtotal = $subtotal;
                 $detail->save();
             }else {
                 $updateReg = Compensadores_detail::firstWhere('id', $request->regdetailId);
-                $subtotal = $request->pcompra * $request->pesokg;
+                //$subtotal = $request->pcompra * $request->pesokg;
                 $updateReg->products_id = $request->producto;
-                $updateReg->pcompra = $request->pcompra;
-                $updateReg->peso = $request->pesokg;
+                $updateReg->pcompra = $formatPcompra;
+                $updateReg->peso = $formatPesoKg;
                 $updateReg->subtotal = $subtotal;
                 $updateReg->save();
             }
@@ -225,6 +249,11 @@ class compensadorogercodeController extends Controller
                 $comp->fecha_cierre = $dateNextMonday;
                 $comp->factura = $request->factura;
                 $comp->save();
+                return response()->json([
+                    'status' => 1,
+                    'message' => 'Guardado correctamente',
+					"registroId" => $comp->id
+                ]);
             }else{
                 $getReg = Compensadores::firstWhere('id', $request->compensadoId);
                 $getReg->categoria_id = $request->categoria;
@@ -232,12 +261,14 @@ class compensadorogercodeController extends Controller
                 $getReg->centrocosto_id = $request->centrocosto;
                 $getReg->factura = $request->factura;
                 $getReg->save();
+
+                return response()->json([
+                    'status' => 1,
+                    'message' => 'Guardado correctamente',
+					"registroId" => 0
+                ]);
             }
 
-            return response()->json([
-                'status' => 1,
-                'message' => 'Solicitud satisfactoria',
-            ]);
 
         } catch (\Throwable $th) {
             return response()->json([

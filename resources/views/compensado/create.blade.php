@@ -79,19 +79,17 @@
 								</div>
 							</div>
 							<div class="col-md-3">
-								<div class="task-header">
-									<div class="form-group">
-                                        <label for="" class="form-label">Precio de compra</label>
-                                        <input type="text" id="pcompra" name="pcompra" class="form-control input" placeholder="EJ: 20.500">
-									</div>
+								<label for="" class="form-label">Precio de compra</label>
+								<div class="input-group flex-nowrap">
+									<span class="input-group-text" id="addon-wrapping">$</span>
+									<input type="text" id="pcompra" name="pcompra" class="form-control input" placeholder="EJ: 20.500">
 								</div>
 							</div>
 							<div class="col-md-3">
-								<div class="task-header">
-									<div class="form-group">
-                                        <label for="" class="form-label">Peso KG</label>
-                                        <input type="text" id="pesokg" name="pesokg" class="form-control input" placeholder="EJ: 10.00">
-									</div>
+								<label for="" class="form-label">Peso KG</label>
+								<div class="input-group flex-nowrap">
+									<input type="text" id="pesokg" name="pesokg" class="form-control input" placeholder="EJ: 10,00">
+									<span class="input-group-text" id="addon-wrapping">KG</span>
 								</div>
 							</div>
 							<!--div class="col-md-2">
@@ -137,19 +135,25 @@
 										@foreach($detail as $proddetail)
 										<tr>
 											<!--td>{{$proddetail->id}}</td-->
-											<td>{{ date('d-m-Y', strtotime($proddetail->created_at))}}</td>
+											<td>{{ date('m-d-Y', strtotime($proddetail->created_at))}}</td>
 											<td>{{$proddetail->code}}</td>
 											<td>{{$proddetail->nameprod}}</td>
 											<td>$ {{ number_format($proddetail->pcompra, 0, ',', '.')}}</td>
 											<td>{{ number_format($proddetail->peso, 2, ',', '.')}} KG</td>
-
 											<td>$ {{ number_format($proddetail->subtotal, 0, ',', '.')}}</td>
 											<td>{{$proddetail->iva}}</td>
 											<td class="text-center">
+												@if($status == 'true')
 												<button class="btn btn-dark fas fa-edit" name="btnEdit" data-id="{{$proddetail->id}}" title="Editar" >
 												</button>
 												<button class="btn btn-dark fas fa-trash" name="btnDown" data-id="{{$proddetail->id}}" title="Borrar" >
 												</button>
+												@else
+												<button class="btn btn-dark fas fa-edit" name="btnEdit" title="Editar" disabled>
+												</button>
+												<button class="btn btn-dark fas fa-trash" name="btnDown" title="Borrar" disabled>
+												</button>
+												@endif
 											</td>
 										</tr>
 										@endforeach

@@ -1,6 +1,6 @@
 console.log("Starting")
-const btnAddCompensadoRes = document.querySelector("#btnAddCompensadoRes");
-const formCompensadoRes = document.querySelector("#form-compensado-res");
+const btnAddAlistamiento = document.querySelector("#btnAddalistamiento");
+const formAlistamiento = document.querySelector("#form-alistamiento");
 const token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
 const btnClose = document.querySelector("#btnModalClose");
 
@@ -14,23 +14,20 @@ const contentform = document.querySelector("#contentDisable");
 
 $(document).ready(function () {
     $(function() {
-        $('#tableCompensado').DataTable({
+        $('#tableAlistamiento').DataTable({
             "paging": true,
             "pageLength": 5,
-            /*"lengthChange": false,*/
             "autoWidth": false,
             processing: true,
             serverSide: true,
             ajax: {
-                url:'/showlistcompensado',
+                url:'/showalistamiento',
                 type: 'GET',
             },
             columns: [
                 { data:'id', name: 'id'},
                 { data:'namecategoria', name: 'namecategoria'},
-                { data: 'namethird', name: 'namethird'},
                 { data: 'namecentrocosto', name: 'namecentrocosto' },
-                { data:'factura', name: 'factura'},
                 { data: 'date', name: 'date' },
                 {data: 'action', name:'action'}
             ],
@@ -63,7 +60,7 @@ $(document).ready(function () {
     });
 });           
 
-
+/*
 const send = async (dataform,ruta) => {
     let response = await fetch(ruta, {
     headers: {
@@ -152,4 +149,4 @@ const downCompensado = (id) => {
         }
 
     })
-}
+}*/

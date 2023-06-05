@@ -93,7 +93,9 @@ const showDataTable = (data) => {
 			<td>${dataTotals.porcVentaTotal} %</td>
 			<td>$ ${formatCantidadSinCero(dataTotals.costoTotalGlobal)}</td>
 			<td>${dataTotals.costoKiloTotal}</td>
-			<td></td>
+			<td class="text-center">
+				<button class="btn btn-success btn-sm">Cargar al inventario</button>
+			</td>
 		</tr>
   `;
   /******************MERMA****************************** */

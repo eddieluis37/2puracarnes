@@ -60,8 +60,8 @@ tbodyTable.addEventListener("click", (e) => {
             let editReg = result.reg;
             console.log(editReg);
             regDetail.value = editReg.id;
-            pcompra.value = editReg.pcompra;
-            pesokg.value = editReg.peso;
+            pcompra.value = formatCantidadSinCero(editReg.pcompra);
+            pesokg.value = formatCantidad(editReg.peso);
             $('.select2Prod').val(editReg.products_id).trigger('change');
         })
     }
@@ -95,7 +95,7 @@ const showData = (data) => {
 	dataAll.forEach((element,indice) => {
 	    showRegTbody.innerHTML += `
     	    <tr>
-      	    <td>${element.created_at}</td>
+      	    <td>${formatDate(element.created_at)}</td>
       	    <td>${element.code}</td>
       	    <td>${element.nameprod}</td>
       	    <td>$ ${formatCantidadSinCero(element.pcompra)}</td>
@@ -130,6 +130,19 @@ const showData = (data) => {
 	    </tr>
     `;
 }
+
+pcompra.addEventListener("change", function() {
+  const enteredValue = formatMoneyNumber(pcompra.value);
+  console.log("Entered value: " + enteredValue);
+  pcompra.value = formatCantidadSinCero(enteredValue);
+});
+
+pesokg.addEventListener("change", function() {
+  const enteredValue = formatkg(pesokg.value);
+  console.log("Entered value: " + enteredValue);
+  pesokg.value = enteredValue;
+});
+
 //const selectCategoria = document.querySelector("#categoria");
 //const selectProducto = document.getElementById("producto");
 /*selectCategoria.addEventListener("change", function() {

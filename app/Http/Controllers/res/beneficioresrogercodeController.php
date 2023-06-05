@@ -77,9 +77,9 @@ class beneficioresrogercodeController extends Controller
 			    //$current_date = new DateTime($start_date);
 			    //$current_date->modify('next monday'); // Move to the next Monday
 			    //$dateNextMonday = $current_date->format('Y-m-d'); // Output the date in Y-m-d format
-                $currentDateTime = Carbon::now();
-                $currentDateFormat = Carbon::parse($currentDateTime->format('Y-m-d'));
-                $current_date = Carbon::parse($currentDateTime->format('Y-m-d'));
+                	    $currentDateTime = Carbon::now();
+                	    $currentDateFormat = Carbon::parse($currentDateTime->format('Y-m-d'));
+                	    $current_date = Carbon::parse($currentDateTime->format('Y-m-d'));
 			    $current_date->modify('next monday'); // Move to the next Monday
 			    $dateNextMonday = $current_date->format('Y-m-d'); // Output the date in Y-m-d format
 			    $newBeneficiore = new Beneficiore();

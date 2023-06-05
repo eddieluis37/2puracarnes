@@ -35,6 +35,7 @@ use App\Http\Controllers\inventory\diariorogercodeController;
 use App\Http\Controllers\inventory\mensualrogercodeController;
 use App\Http\Controllers\compensado\resrogercodeController;
 use App\Http\Controllers\compensado\compensadorogercodeController;
+use App\Http\Controllers\alistamiento\alistamientorogercodeController;
 
 /************************************************* */
 
@@ -206,10 +207,15 @@ Route::post('compensadodown', [compensadorogercodeController::class,'destroy'])-
 Route::post('compensadogetById', [compensadorogercodeController::class,'edit'])->name('compensado.ById');
 Route::post('compensadoById', [compensadorogercodeController::class,'editCompensado'])->name('compensado.editCompensado');
 Route::post('/downmaincompensado', [compensadorogercodeController::class, 'destroyCompensado'])->name('compensado.downCompensado');
-
+/**BENEFICIO RES */
 Route::get('beneficiores', [beneficioresrogercodeController::class,'index'])->name('beneficiores.index');
 Route::get('showbeneficiores', [beneficioresrogercodeController::class,'show'])->name('beneficiores.showlist');
 Route::get('get_plantasacrificio_by_id', [beneficioresrogercodeController::class, 'get_plantasacrificio_by_id'])->name('get_plantasacrificio_by_id');
 Route::post('savebeneficiores', [beneficioresrogercodeController::class, 'store'])->name('beneficiores.save');
 Route::get('/edit/{id}', [beneficioresrogercodeController::class, 'edit'])->name('beneficiores.edit');
 Route::get('downbeneficiores/{id}', [beneficioresrogercodeController::class, 'destroy'])->name('beneficiores.destroy');
+
+/**ALISTAMIENTO*/
+Route::get('alistamiento', [alistamientorogercodeController::class,'index'])->name('alistamiento.index');
+Route::post('alistamientosave', [alistamientorogercodeController::class,'store'])->name('alistamiento.save');
+Route::get('showalistamiento', [alistamientorogercodeController::class,'show'])->name('alistamiento.showlist');
