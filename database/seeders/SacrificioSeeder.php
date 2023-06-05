@@ -42,7 +42,7 @@ class SacrificioSeeder extends Seeder
 
         Sacrificio::create([
             'name' => 'MIERCOLES EN FRIGORIFICO GUADALUPE SAS',
-            'dni' => 98145892-1,
+            'dni' => 98145892-3,
             'address' => 'CALLE 124B #17A-37SUR BOGOTA',
             'phone' => 3132623896,
             'email' => 'Frigorificoguada@gmail.com',
