@@ -12,6 +12,8 @@ use Illuminate\Support\Facades\Auth;
 use Yajra\Datatables\Datatables;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Validator;
+use App\Models\Product;
+use App\Models\Products\Meatcut;
 
 class alistamientorogercodeController extends Controller
 {
@@ -33,9 +35,22 @@ class alistamientorogercodeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($id)
     {
-        //
+        //dd($id);
+        $dataAlistamiento = DB::table('alistamiento as ali')
+        ->join('categories as cat', 'ali.categoria_id', '=', 'cat.id')
+        ->join('centro_costo as centro', 'ali.centrocosto_id', '=', 'centro.id')
+        ->select('ali.*', 'cat.name as namecategoria','centro.name as namecentrocosto')
+        ->where('ali.id', $id)
+        ->get();
+
+        $cortes = Meatcut::Where([
+            ['category_id',$dataAlistamiento[0]->categoria_id],
+            ['status',1]
+        ])->get();
+
+        return view('alistamiento.create', compact('dataAlistamiento','cortes'));
     }
 
     /**
@@ -141,7 +156,7 @@ class alistamientorogercodeController extends Controller
                 if (Carbon::parse($currentDateTime->format('Y-m-d'))->gt(Carbon::parse($data->fecha_cierre))) {
                     $btn = '
                     <div class="text-center">
-					<a href="compensado/create/'.$data->id.'" class="btn btn-dark" title="Despostar" >
+					<a href="alistamiento/create/'.$data->id.'" class="btn btn-dark" title="Despostar" >
 						<i class="fas fa-directions"></i>
 					</a>
 					<button class="btn btn-dark" title="Borrar Beneficio" onclick="showDataForm('.$data->id.')">
@@ -155,7 +170,7 @@ class alistamientorogercodeController extends Controller
                 }elseif (Carbon::parse($currentDateTime->format('Y-m-d'))->lt(Carbon::parse($data->fecha_cierre))) {
                     $btn = '
                     <div class="text-center">
-					<a href="compensado/create/'.$data->id.'" class="btn btn-dark" title="Despostar" >
+					<a href="alistamiento/create/'.$data->id.'" class="btn btn-dark" title="Despostar" >
 						<i class="fas fa-directions"></i>
 					</a>
 					<button class="btn btn-dark" title="Borrar Beneficio" onclick="editCompensado('.$data->id.');">
@@ -169,7 +184,7 @@ class alistamientorogercodeController extends Controller
                 }else{
                     $btn = '
                     <div class="text-center">
-					<a href="compensado/create/'.$data->id.'" class="btn btn-dark" title="Despostar" >
+					<a href="alistamiento/create/'.$data->id.'" class="btn btn-dark" title="Despostar" >
 						<i class="fas fa-directions"></i>
 					</a>
 					<button class="btn btn-dark" title="Borrar Beneficio" >
@@ -185,6 +200,15 @@ class alistamientorogercodeController extends Controller
             })
             ->rawColumns(['date','action'])
             ->make(true);
+    }
+
+    public function getproducts(Request $request)
+    {
+        $prod = Product::Where([
+            ['meatcut_id',$request->categoriaId],
+            ['status',1]
+        ])->get();
+        return response()->json(['products' => $prod]);
     }
 
     /**

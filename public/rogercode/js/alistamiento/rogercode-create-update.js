@@ -6,17 +6,18 @@ btnAddAlistamiento.addEventListener("click", async (e) => {
     const dataform = new FormData(formAlistamiento);
     sendData('/alistamientosave',dataform,token).then((resp) => {
         console.log(resp);
-        /*if (resp.status == 1) {
-            formCompensadoRes.reset();   
+        if (resp.status == 1) {
+            formAlistamiento.reset();   
             btnClose.click();
             successToastMessage(resp.message); 
-            if (resp.registroId != 0) {//for new register
+            refresh_table();
+            /*if (resp.registroId != 0) {//for new register
                 window.location.href = `compensado/create/${resp.registroId}`;
             }else{
                 refresh_table();
-            }
+            }*/
         }
-        if (resp.status == 0) {
+        /*if (resp.status == 0) {
             let errors = resp.errors;
             console.log(errors);
             $.each(errors, function(field, messages) {

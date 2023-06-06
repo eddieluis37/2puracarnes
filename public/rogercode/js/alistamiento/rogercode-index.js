@@ -60,6 +60,21 @@ $(document).ready(function () {
     });
 });           
 
+const refresh_table = () => {
+    let table = $('#tableAlistamiento').dataTable(); 
+    table.fnDraw(false);
+}
+
+const showModalcreate = () => {
+    //if(contentform.hasAttribute('disabled')){
+        //contentform.removeAttribute('disabled');
+        //$('#provider').prop('disabled', false);
+    //}
+    //$('#provider').val('').trigger('change');
+    //formCompensadoRes.reset();
+    //compensado_id.value = 0;
+}
+
 /*
 const send = async (dataform,ruta) => {
     let response = await fetch(ruta, {
@@ -77,15 +92,6 @@ const send = async (dataform,ruta) => {
 const refresh_table = () => {
     let table = $('#tableCompensado').dataTable(); 
     table.fnDraw(false);
-}
-const showModalcreate = () => {
-    if(contentform.hasAttribute('disabled')){
-        contentform.removeAttribute('disabled');
-        $('#provider').prop('disabled', false);
-    }
-    $('#provider').val('').trigger('change');
-    formCompensadoRes.reset();
-    compensado_id.value = 0;
 }
 
 const showDataForm = (id) => {

@@ -219,3 +219,5 @@ Route::get('downbeneficiores/{id}', [beneficioresrogercodeController::class, 'de
 Route::get('alistamiento', [alistamientorogercodeController::class,'index'])->name('alistamiento.index');
 Route::post('alistamientosave', [alistamientorogercodeController::class,'store'])->name('alistamiento.save');
 Route::get('showalistamiento', [alistamientorogercodeController::class,'show'])->name('alistamiento.showlist');
+Route::get('alistamiento/create/{id}', [alistamientorogercodeController::class,'create'])->name('alistamiento.create');
+Route::post('getproductos', [alistamientorogercodeController::class,'getproducts'])->name('alistamiento.getproductos');
