@@ -103,7 +103,7 @@
 							<div class="col-md-2 text-center">
 								<div class="" style="margin-top:30px;">
 								<div class="d-grid gap-2">
-									<button id="btnAdd" class="btn btn-primary">Aceptar</button>
+									<button id="btnAdd" class="btn btn-primary">Añadir</button>
 								</div>
 								</div>
 							</div>
