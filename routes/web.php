@@ -30,6 +30,8 @@ use Illuminate\Support\Facades\Route;
 /*************** SIN LIVWWIRE **********************/
 use App\Http\Controllers\res\desposteresrogercodeController;
 use App\Http\Controllers\res\beneficioresrogercodeController;
+use App\Http\Controllers\cerdo\despostecerdoController;
+use App\Http\Controllers\cerdo\beneficiocerdoController;
 use App\Http\Controllers\inventory\inventoryrogercodeController;
 use App\Http\Controllers\inventory\diariorogercodeController;
 use App\Http\Controllers\inventory\mensualrogercodeController;
@@ -65,10 +67,6 @@ Route::get('/', function () {
     return view('auth.login');
 });
 
-Route::get('beneficiocerdos', function () {
-    return view('livewire.beneficiocerdos.index');
-});
-
 Route::get('prueba', function () {
     return view('livewire.beneficiores.prueba');
 });
@@ -86,15 +84,8 @@ Route::get('/libros', function () {
     return view('book');
 });
 
-Route::get('/beneficiocerdo', function () {
-    // return view('welcome');
-    return view('beneficiocerdo');
-});
-
 Route::resource('books', BooksController::class);
 Route::resource('beneficiocerdos', BeneficiocerdosController::class);
-
-
 
 Route::group(['middleware'=> [('auth')]], function () {
 
@@ -214,6 +205,10 @@ Route::get('get_plantasacrificio_by_id', [beneficioresrogercodeController::class
 Route::post('savebeneficiores', [beneficioresrogercodeController::class, 'store'])->name('beneficiores.save');
 Route::get('/edit/{id}', [beneficioresrogercodeController::class, 'edit'])->name('beneficiores.edit');
 Route::get('downbeneficiores/{id}', [beneficioresrogercodeController::class, 'destroy'])->name('beneficiores.destroy');
+
+/**BENEFICIO CERDO */
+Route::get('beneficiocerdo', [beneficiocerdoController::class,'index'])->name('beneficiocerdo.index');
+
 
 /**ALISTAMIENTO*/
 Route::get('alistamiento', [alistamientorogercodeController::class,'index'])->name('alistamiento.index');
