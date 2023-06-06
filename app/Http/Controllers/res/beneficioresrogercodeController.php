@@ -249,7 +249,7 @@ class beneficioresrogercodeController extends Controller
 					    <a href="desposteres/'.$data->id.'" class="btn btn-dark" title="Despostar" >
 						    <i class="fas fa-directions"></i>
 					    </a>
-					    <button class="btn btn-dark" title="Borrar Beneficio" onclick="showDataForm('.$data->id.')">
+					    <button class="btn btn-dark" title="Editar Beneficio" onclick="showDataForm('.$data->id.')">
 						    <i class="fas fa-eye"></i>
 					    </button>
 					    <button class="btn btn-dark" title="Borrar Beneficio" disabled>
@@ -263,7 +263,7 @@ class beneficioresrogercodeController extends Controller
 					    <a href="desposteres/'.$data->id.'" class="btn btn-dark" title="Despostar" >
 						    <i class="fas fa-directions"></i>
 					    </a>
-					    <button class="btn btn-dark" title="Borrar Beneficio" onclick="edit('.$data->id.');">
+					    <button class="btn btn-dark" title="Editar Beneficio" onclick="edit('.$data->id.');">
 						    <i class="fas fa-edit"></i>
 					    </button>
 					    <button class="btn btn-dark" title="Borrar Beneficio" onclick="Confirm('.$data->id.');">
@@ -277,7 +277,7 @@ class beneficioresrogercodeController extends Controller
 					    <a href="desposteres/'.$data->id.'" class="btn btn-dark" title="Despostar" >
 						    <i class="fas fa-directions"></i>
 					    </a>
-					    <button class="btn btn-dark" title="Borrar Beneficio" onclick="showDataForm('.$data->id.')">
+					    <button class="btn btn-dark" title="Editar Beneficio" onclick="showDataForm('.$data->id.')">
 						    <i class="fas fa-eye"></i>
 					    </button>
 					    <button class="btn btn-dark" title="Borrar Beneficio" disabled>
