@@ -54,7 +54,7 @@
 				<div class="card">
 					<div class="card-body">
 						<form id="form-detail">
-						<input type="hidden" id="compensadoId" name="compensadoId" value="">
+						<input type="hidden" id="alistamientoId" name="alistamientoId" value="">
 						<input type="hidden" id="regdetailId" name="regdetailId" value="0">
 						<div class="row g-3">
 							<div class="col-md-4">
@@ -78,14 +78,14 @@
 							<div class="col-md-3">
 								<label for="" class="form-label">KG requeridos</label>
 								<div class="input-group flex-nowrap">
-									<input type="text" id="pesokg" name="pesokg" class="form-control input" placeholder="EJ: 10,00">
+									<input type="text" id="kgrequeridos" name="kgrequeridos" class="form-control input" placeholder="EJ: 10,00">
 									<span class="input-group-text" id="addon-wrapping">KG</span>
 								</div>
 							</div>
 							<div class="col-md-2 text-center">
 								<div class="" style="margin-top:30px;">
 								<div class="d-grid gap-2">
-									<button id="btnAdd" class="btn btn-primary">Aceptar</button>
+									<button id="btnAddAlistamiento" class="btn btn-primary">Aceptar</button>
 								</div>
 								</div>
 							</div>
@@ -102,19 +102,19 @@
 							<div class="col-md-4">
 								<div class="form-group">
 								<label for="" class="form-label">Stock actual</label>
-								<input type="text" id="pesokg" name="pesokg" class="form-control" placeholder="10,00 kg">
+								<input type="text" id="pesokg" name="pesokg" class="form-control-sm form-control" placeholder="10,00 kg">
 								</div>
 							</div>
 							<div class="col-md-4">
 								<div class="form-group">
 								<label for="" class="form-label">Ultimo conteo fisico</label>
-								<input type="text" id="pesokg" name="pesokg" class="form-control" placeholder="20,00 kg">
+								<input type="text" id="pesokg" name="pesokg" class="form-control-sm form-control" placeholder="20,00 kg">
 								</div>
 							</div>
 							<div class="col-md-4">
 								<div class="form-group">
 								<label for="" class="form-label">Nuevo stock</label>
-								<input type="text" id="pesokg" name="pesokg" class="form-control" placeholder="30,00 kg">
+								<input type="text" id="pesokg" name="pesokg" class="form-control-sm form-control" placeholder="30,00 kg">
 								</div>
 							</div>
 						</div>

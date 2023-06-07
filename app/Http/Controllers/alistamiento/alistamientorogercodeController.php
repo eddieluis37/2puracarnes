@@ -38,7 +38,7 @@ class alistamientorogercodeController extends Controller
     public function create($id)
     {
         //dd($id);
-        $dataAlistamiento = DB::table('alistamiento as ali')
+        $dataAlistamiento = DB::table('enlistments as ali')
         ->join('categories as cat', 'ali.categoria_id', '=', 'cat.id')
         ->join('centro_costo as centro', 'ali.centrocosto_id', '=', 'centro.id')
         ->select('ali.*', 'cat.name as namecategoria','centro.name as namecentrocosto')
@@ -137,7 +137,7 @@ class alistamientorogercodeController extends Controller
      */
     public function show()
     {
-        $data = DB::table('alistamiento as ali')
+        $data = DB::table('enlistments as ali')
         ->join('categories as cat', 'ali.categoria_id', '=', 'cat.id')
         //->join('thirds as tird', 'comp.thirds_id', '=', 'tird.id')
         ->join('centro_costo as centro', 'ali.centrocosto_id', '=', 'centro.id')
@@ -206,9 +206,24 @@ class alistamientorogercodeController extends Controller
     {
         $prod = Product::Where([
             ['meatcut_id',$request->categoriaId],
-            ['status',1]
+            ['status',1],
+            ['level_product_id',2]
         ])->get();
         return response()->json(['products' => $prod]);
+    }
+
+    public function savedetail(Request $request)
+    {
+        try {
+            return response()->json([
+                'status' => 1,
+                'message' => "Agregado correctamente",
+                //'array' => $arraydetail,
+                //'arrayTotales' => $arrayTotales
+            ]);
+        } catch (\Throwable $th) {
+            //throw $th;
+        }
     }
 
     /**
