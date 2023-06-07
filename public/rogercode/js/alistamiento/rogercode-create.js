@@ -1,8 +1,7 @@
 import {sendData} from '../exportModule/core/rogercode-core.js';
 const token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
-/*const formDetail = document.querySelector('#form-detail');
-const btnAdd = document.querySelector('#btnAdd');
-const showRegTbody = document.querySelector("#tbodyDetail");
+const formDetail = document.querySelector('#form-detail');
+/*const showRegTbody = document.querySelector("#tbodyDetail");
 let tbodyTable = document.querySelector("#tableDespostere tbody")
 const compensado_id = document.querySelector("#compensadoId");
 const pesokg = document.querySelector("#pesokg");
@@ -11,6 +10,7 @@ const regDetail = document.querySelector("#regdetailId");
 const tableFoot = document.querySelector("#tabletfoot");*/
 const selectProducto = document.getElementById("producto");
 const selectCategoria = document.querySelector("#productoCorte");
+const btnAddAlist = document.querySelector('#btnAddAlistamiento');
 
 $('.select2Prod').select2({
 	placeholder: 'Busca un producto',
@@ -43,6 +43,27 @@ $('.select2ProdHijos').select2({
         });
     });
 });
+
+btnAddAlist.addEventListener('click', (e) => {
+    e.preventDefault();  
+    alert("Add Producto");
+    const dataform = new FormData(formDetail);
+    sendData("/alistamientosavedetail",dataform,token).then((result) => {
+        console.log(result);
+        //if (result.status === 1) {
+            //$('#producto').val('').trigger('change');
+            //formDetail.reset();
+            //showData(result)
+        //}
+        //if (result.status === 0) {
+            //Swal(
+            //'Error!',
+            //'Tiene campos vacios!',
+            //'error'
+            //)
+        //}
+    });
+})
 
 /*selectCategoria.addEventListener("change", function() {
     const selectedValue = this.value;
@@ -115,25 +136,6 @@ $('.select2ProdHijos').select2({
     }
 });
 
-btnAdd.addEventListener('click', (e) => {
-    e.preventDefault();  
-    const dataform = new FormData(formDetail);
-    sendData("/compensadosavedetail",dataform,token).then((result) => {
-        console.log(result);
-        if (result.status === 1) {
-            $('#producto').val('').trigger('change');
-            formDetail.reset();
-            showData(result)
-        }
-        if (result.status === 0) {
-            Swal(
-            'Error!',
-            'Tiene campos vacios!',
-            'error'
-            )
-        }
-    });
-})
 
 const showData = (data) => {
     let dataAll = data.array;

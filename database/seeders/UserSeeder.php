@@ -36,10 +36,11 @@ class UserSeeder extends Seeder
          User::create([
             'name' => 'Jair Rada Rada',
             'phone' => '3008755514',
-            'email' => 'vendedor1@puracarnes.com',
+            //'email' => 'vendedor1@puracarnes.com',
+            'email' => 'realbenditouno@gmail.com',
             'profile' => 'Vendedor',
             'status' => 'Active',
-            'password' => bcrypt('7201880130')
+            'password' => bcrypt('realbenditouno12345')
         ]);
 
         // crear role Administrador

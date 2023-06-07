@@ -221,3 +221,4 @@ Route::post('alistamientosave', [alistamientorogercodeController::class,'store']
 Route::get('showalistamiento', [alistamientorogercodeController::class,'show'])->name('alistamiento.showlist');
 Route::get('alistamiento/create/{id}', [alistamientorogercodeController::class,'create'])->name('alistamiento.create');
 Route::post('getproductos', [alistamientorogercodeController::class,'getproducts'])->name('alistamiento.getproductos');
+Route::post('alistamientosavedetail', [alistamientorogercodeController::class,'savedetail'])->name('alistamiento.savedetail');
