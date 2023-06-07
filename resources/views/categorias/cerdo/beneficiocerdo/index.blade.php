@@ -17,7 +17,7 @@
 
 			<div class="widget-content">
 				<div class="table-responsive">
-					<table id="tableBeneficiores" class="table table-striped mt-1">
+					<table id="tableBeneficiocerdo" class="table table-striped mt-1">
 						<thead class="text-white" style="background: #3B3F5C">
 							<tr>
 								<th class="table-th text-white">#</th>
@@ -40,7 +40,7 @@
 		<div class="modal-dialog modal-xl" role="document">
 			<div class="modal-content bg-default">
 				<fieldset id="contentDisable">
-					<form action="" id="form-beneficiores-res">
+					<form action="" id="form-beneficiocerdo-cerdo">
 						<div class="modal-header">
 							<h4 class="modal-title">Crear Beneficio Cerdo</h4>
 							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -64,7 +64,7 @@
 </div>
 @endsection
 @section('script')
-<script src="{{asset('code/js/cerdo/beneficiocerdo/code-beneficiores-index.js')}}"></script>
+<script src="{{asset('code/js/cerdo/beneficiocerdo/code-beneficiocerdo-index.js')}}"></script>
 <script src="{{asset('code/js/cerdo/beneficiocerdo/code-formulas.js')}}"></script>
 <script src="{{asset('code/js/cerdo/beneficiocerdo/code-create.js')}}" type="module"></script>
 @endsection

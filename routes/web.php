@@ -208,7 +208,7 @@ Route::get('downbeneficiores/{id}', [beneficioresrogercodeController::class, 'de
 
 /**BENEFICIO CERDO */
 Route::get('beneficiocerdo', [beneficiocerdoController::class,'index'])->name('beneficiocerdo.index');
-
+Route::get('showbeneficiocerdo', [beneficiocerdoController::class,'show'])->name('beneficiocerdo.showlist');
 
 /**ALISTAMIENTO*/
 Route::get('alistamiento', [alistamientorogercodeController::class,'index'])->name('alistamiento.index');

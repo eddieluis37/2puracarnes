@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\cerdo;
 
 use App\Http\Controllers\Controller;
+use App\Models\Beneficiocerdo;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
@@ -61,7 +62,7 @@ class beneficiocerdoController extends Controller
 		    $month = $dateNow->month;
 		    $day = $dateNow->day;
 		    $newLote = "";
-            $reg = Beneficiore::select()->first();
+            $reg = Benefiicore::select()->first();
             if ($reg === null) {
                 $newLote = "RES".$year.$month.$day."1";
             }else {
@@ -228,7 +229,7 @@ class beneficiocerdoController extends Controller
      */
     public function show()
     {
-            $data = DB::table('beneficiores as be')
+            $data = DB::table('beneficiocerdos as be')
             ->join('thirds as tird', 'be.thirds_id', '=', 'tird.id')
             ->select('be.*', 'tird.name as namethird')
 			->where('be.status', '=', true)

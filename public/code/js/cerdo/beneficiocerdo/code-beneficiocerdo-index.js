@@ -1,7 +1,7 @@
-console.log("benedicore Starting");
+console.log("beneficiocerdo Starting");
 $(document).ready(function () {
     $(function () {
-        $("#tableBeneficiores").DataTable({
+        $("#tableBeneficiocerdo").DataTable({
             paging: true,
             pageLength: 5,
             /*"lengthChange": false,*/
@@ -9,7 +9,7 @@ $(document).ready(function () {
             processing: true,
             serverSide: true,
             ajax: {
-                url: "/showbeneficiores",
+                url: "/showbeneficiocerdo",
                 type: "GET",
             },
             columns: [
@@ -69,11 +69,11 @@ $(document).ready(function () {
 const token = document
     .querySelector('meta[name="csrf-token"]')
     .getAttribute("content");
-const formBeneficio = document.querySelector("#form-beneficiores-res");
+const formBeneficio = document.querySelector("#form-beneficiocerdo-cerdo");
 const btnModalClose = document.querySelector("#btnModalClose");
 
 const idBeneficio = document.querySelector("#idbeneficio");
-const formBeneficiores = document.querySelector("#formBeneficiores");
+const formBeneficiocerdo = document.querySelector("#formBeneficiocerdo");
 const contentform = document.querySelector("#contentDisable");
 
 inputvalortotalhembra = document.querySelector("#valorTotalHembra");
@@ -137,7 +137,7 @@ inputrendplanta = document.querySelector("#rendplanta");
 inputrendfrio = document.querySelector("#rendfrio");
 
 const refresh_table = () => {
-    let table = $("#tableBeneficiores").dataTable();
+    let table = $("#tableBeneficiocerdo").dataTable();
     table.fnDraw(false);
 };
 
@@ -156,7 +156,7 @@ const edit = async (id) => {
 };
 
 const showForm = (data) => {
-    let resp = data.beneficiores;
+    let resp = data.beneficiocerdo;
     console.log(resp);
     idBeneficio.value = resp.id;
     $("#thirds_id").val(resp.thirds_id).trigger("change");
