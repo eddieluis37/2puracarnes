@@ -1,7 +1,7 @@
 console.log("beneficiocerdo Starting");
 $(document).ready(function () {
     $(function () {
-        $("#tableBeneficiocerdo").DataTable({
+        $("#tableBeneficiocerdos").DataTable({
             paging: true,
             pageLength: 5,
             /*"lengthChange": false,*/
@@ -47,7 +47,7 @@ $(document).ready(function () {
         width: "100%",
         theme: "bootstrap-5",
         allowClear: true,
-        dropdownParent: $("#modal-create-beneficiore"),
+        dropdownParent: $("#modal-create-beneficiocerdo"),
         //https://select2.org/troubleshooting/common-problems
     });
     $(".selectPieles").select2({
@@ -55,25 +55,25 @@ $(document).ready(function () {
         width: "100%",
         theme: "bootstrap-5",
         allowClear: true,
-        dropdownParent: $("#modal-create-beneficiore"),
+        dropdownParent: $("#modal-create-beneficiocerdo"),
     });
     $(".selectVisceras").select2({
         placeholder: "Buscar un Cliente Viscera",
         width: "100%",
         theme: "bootstrap-5",
         allowClear: true,
-        dropdownParent: $("#modal-create-beneficiore"),
+        dropdownParent: $("#modal-create-beneficiocerdo"),
     });
 });
 /*****************************************************************************************/
 const token = document
     .querySelector('meta[name="csrf-token"]')
     .getAttribute("content");
-const formBeneficio = document.querySelector("#form-beneficiocerdo-cerdo");
+const formBeneficio = document.querySelector("#form-beneficiocerdos-cerdos");
 const btnModalClose = document.querySelector("#btnModalClose");
 
 const idBeneficio = document.querySelector("#idbeneficio");
-const formBeneficiocerdo = document.querySelector("#formBeneficiocerdo");
+const formBeneficiocerdos = document.querySelector("#formBeneficiocerdos");
 const contentform = document.querySelector("#contentDisable");
 
 inputvalortotalhembra = document.querySelector("#valorTotalHembra");
@@ -137,7 +137,7 @@ inputrendplanta = document.querySelector("#rendplanta");
 inputrendfrio = document.querySelector("#rendfrio");
 
 const refresh_table = () => {
-    let table = $("#tableBeneficiocerdo").dataTable();
+    let table = $("#tableBeneficiocerdos").dataTable();
     table.fnDraw(false);
 };
 
@@ -156,7 +156,7 @@ const edit = async (id) => {
 };
 
 const showForm = (data) => {
-    let resp = data.beneficiocerdo;
+    let resp = data.beneficiocerdos;
     console.log(resp);
     idBeneficio.value = resp.id;
     $("#thirds_id").val(resp.thirds_id).trigger("change");
@@ -226,7 +226,7 @@ const showForm = (data) => {
     inputrendfrio.value = formatCantidad(resp.rendfrio);
 
     const modal = new bootstrap.Modal(
-        document.getElementById("modal-create-beneficiore")
+        document.getElementById("modal-create-beneficiocerdo")
     );
     modal.show();
 };

@@ -5,7 +5,7 @@ import {successToastMessage, errorMessage} from '../../exportModule/message/roge
 formBeneficio.addEventListener('submit', (e) => {
 	e.preventDefault();
     const dataform = new FormData(formBeneficio);
-    sendData("/savebeneficiores",dataform,token).then((result) => {
+    sendData("/savebeneficiocerdo",dataform,token).then((result) => {
         console.log(result);
         if (result.status === 1) {
             const mySelectProvider = $("#thirds_id");
@@ -19,7 +19,7 @@ formBeneficio.addEventListener('submit', (e) => {
             refresh_table();     
             successToastMessage(result.message); 
             if (result.registroId != 0) {
-                window.location.href = `desposteres/${result.registroId}`;
+                window.location.href = `despostecerdo/${result.registroId}`;
             }
         }
         if (result.status === 0) {

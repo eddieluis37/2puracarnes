@@ -210,6 +210,8 @@ Route::get('downbeneficiores/{id}', [beneficioresrogercodeController::class, 'de
 Route::get('beneficiocerdo', [beneficiocerdoController::class,'index'])->name('beneficiocerdo.index');
 Route::get('showbeneficiocerdo', [beneficiocerdoController::class,'show'])->name('beneficiocerdo.showlist');
 
+Route::post('savebeneficiocerdo', [beneficiocerdoController::class, 'store'])->name('beneficiocerdo.save');
+
 /**ALISTAMIENTO*/
 Route::get('alistamiento', [alistamientorogercodeController::class,'index'])->name('alistamiento.index');
 Route::post('alistamientosave', [alistamientorogercodeController::class,'store'])->name('alistamiento.save');

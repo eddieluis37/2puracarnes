@@ -28,6 +28,12 @@ class CreateBeneficiocerdosTable extends Migration
             $table->unsignedBigInteger('clientvisceras_id')->nullable();
             $table->foreign('clientvisceras_id')->references('id')->on('thirds');                   
             
+            $table->bigInteger('cantidadmacho')->nullable(); 
+            $table->bigInteger('valorunitariomacho')->nullable(); 
+            $table->bigInteger('valortotalmacho')->nullable(); 
+            $table->bigInteger('cantidadhembra')->nullable(); 
+            $table->bigInteger('valorunitariohembra')->nullable(); 
+            $table->bigInteger('valortotalhembra')->nullable();
             $table->bigInteger('cantidad')->nullable(); 
             
             $table->date('fecha_beneficio');

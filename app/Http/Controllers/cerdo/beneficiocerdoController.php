@@ -62,17 +62,17 @@ class beneficiocerdoController extends Controller
 		    $month = $dateNow->month;
 		    $day = $dateNow->day;
 		    $newLote = "";
-            $reg = Benefiicore::select()->first();
+            $reg = Beneficiocerdo::select()->first();
             if ($reg === null) {
                 $newLote = "RES".$year.$month.$day."1";
             }else {
-                $regUltimo = Beneficiore::select()->latest()->first()->toArray();
+                $regUltimo = Beneficiocerdo::select()->latest()->first()->toArray();
                 $consecutivo = $regUltimo['id']+1;
                 $newLote = "RES".$year.$month.$day.$consecutivo;
             }
 
 		    /******************************************************** */
-		    $getReg = Beneficiore::firstWhere('id', $request->idbeneficio);
+		    $getReg = Beneficiocerdo::firstWhere('id', $request->idbeneficio);
 		    if($getReg == null) {
 			    //$start_date = $request->fecha_beneficio; // Replace with your start date
 			    //$current_date = new DateTime($start_date);
@@ -83,129 +83,129 @@ class beneficiocerdoController extends Controller
                 	    $current_date = Carbon::parse($currentDateTime->format('Y-m-d'));
 			    $current_date->modify('next monday'); // Move to the next Monday
 			    $dateNextMonday = $current_date->format('Y-m-d'); // Output the date in Y-m-d format
-			    $newBeneficiore = new Beneficiore();
-			    $newBeneficiore->thirds_id = $request->thirds_id;
-			    $newBeneficiore->plantasacrificio_id  = $request->plantasacrificio_id;
-			    $newBeneficiore->cantidadmacho = $this->MoneyToNumber($request->cantidadMacho);
-			    $newBeneficiore->valorunitariomacho = $this->MoneyToNumber($request->valorUnitarioMacho);
-			    $newBeneficiore->valortotalmacho = $this->MoneyToNumber($request->valorTotalMacho);
-			    $newBeneficiore->cantidadhembra = $this->MoneyToNumber($request->cantidadHembra);
-			    $newBeneficiore->valorunitariohembra = $this->MoneyToNumber($request->valorUnitarioHembra);
-			    $newBeneficiore->valortotalhembra = $this->MoneyToNumber($request->valorTotalHembra);
-			    $newBeneficiore->cantidad = $request->cantidadMacho + $request->cantidadHembra;
-			    $newBeneficiore->fecha_beneficio = $currentDateFormat;
-			    $newBeneficiore->fecha_cierre = $dateNextMonday;
-			    $newBeneficiore->factura = $request->factura;
-			    $newBeneficiore->clientpieles_id = $request->clientpieles_id;
-			    $newBeneficiore->clientvisceras_id = $request->clientvisceras_id;
-			    $newBeneficiore->lote = $newLote;//$request->lote;
-			    $newBeneficiore->finca = $request->finca;
-			    $newBeneficiore->sacrificio = $this->MoneyToNumber($request->sacrificio);
-			    $newBeneficiore->fomento = $this->MoneyToNumber($request->fomento);
-			    $newBeneficiore->deguello = $this->MoneyToNumber($request->deguello);
-			    $newBeneficiore->bascula = $this->MoneyToNumber($request->bascula);
-			    $newBeneficiore->transporte = $this->MoneyToNumber($request->transporte);
-			    $newBeneficiore->pesopie1 = $this->MoneyToNumber($request->pesopie1);
-			    $newBeneficiore->pesopie2 = $this->MoneyToNumber($request->pesopie2);
-			    $newBeneficiore->pesopie3 = $this->MoneyToNumber($request->pesopie3);
-			    $newBeneficiore->costoanimal1 = $this->MoneyToNumber($request->costoanimal1);
-			    $newBeneficiore->costoanimal2 = $this->MoneyToNumber($request->costoanimal2);
-			    $newBeneficiore->costoanimal3 = $this->MoneyToNumber($request->costoanimal3);
-			    $newBeneficiore->canalcaliente = $this->MoneyToNumber($request->canalcaliente);
-			    $newBeneficiore->canalfria = $this->MoneyToNumber($request->canalfria);
-			    $newBeneficiore->canalplanta = $this->MoneyToNumber($request->canalplanta);
-			    $newBeneficiore->pieleskg = $this->MoneyToNumber($request->pieleskg);
-			    $newBeneficiore->pielescosto = $this->MoneyToNumber($request->pielescosto);
-			    $newBeneficiore->visceras = $this->MoneyToNumber($request->visceras);
-			    $newBeneficiore->costopie1 = $this->MoneyToNumber($request->costopie1);
-			    $newBeneficiore->costopie2 = $this->MoneyToNumber($request->costopie2);
-			    $newBeneficiore->costopie3 = $this->MoneyToNumber($request->costopie3);
-			    $newBeneficiore->tsacrificio = $this->MoneyToNumber($request->tsacrificio);
-			    $newBeneficiore->tfomento = $this->MoneyToNumber($request->tfomento);
-			    $newBeneficiore->tdeguello = $this->MoneyToNumber($request->tdeguello);
-			    $newBeneficiore->tbascula = $this->MoneyToNumber($request->tbascula);
-			    $newBeneficiore->ttransporte = $this->MoneyToNumber($request->ttransporte);
-			    $newBeneficiore->tpieles =$this->MoneyToNumber($request->tpieles);
-			    $newBeneficiore->tvisceras = $this->MoneyToNumber($request->tvisceras);
-			    $newBeneficiore->tcanalfria = $this->MoneyToNumber($request->tcanalfria);
-			    $newBeneficiore->valorfactura = $this->MoneyToNumber($request->valorfactura);
-			    $newBeneficiore->costokilo = $this->MoneyToNumber($request->costokilo);
-			    $newBeneficiore->costo = $this->MoneyToNumber($request->costo);
-			    $newBeneficiore->totalcostos = $this->MoneyToNumber($request->totalcostos);
-			    $newBeneficiore->pesopie = $this->MoneyToNumber($request->pesopie);
-			    $newBeneficiore->rtcanalcaliente = $this->MoneyToNumber($request->rtcanalcaliente);
-			    $newBeneficiore->rtcanalplanta = $this->MoneyToNumber($request->rtcanalplanta);
-			    $newBeneficiore->rtcanalfria = $this->MoneyToNumber($request->rtcanalfria);
-			    $newBeneficiore->rendcaliente = $this->MoneyToNumber($request->rendcaliente);
-			    $newBeneficiore->rendplanta = $this->MoneyToNumber($request->rendplanta);
-			    $newBeneficiore->rendfrio = $this->MoneyToNumber($request->rendfrio);
+			    $newBeneficiocerdo = new Beneficiocerdo();
+			    $newBeneficiocerdo->thirds_id = $request->thirds_id;
+			    $newBeneficiocerdo->plantasacrificio_id  = $request->plantasacrificio_id;
+			    $newBeneficiocerdo->cantidadmacho = $this->MoneyToNumber($request->cantidadMacho);
+			    $newBeneficiocerdo->valorunitariomacho = $this->MoneyToNumber($request->valorUnitarioMacho);
+			    $newBeneficiocerdo->valortotalmacho = $this->MoneyToNumber($request->valorTotalMacho);
+			    $newBeneficiocerdo->cantidadhembra = $this->MoneyToNumber($request->cantidadHembra);
+			    $newBeneficiocerdo->valorunitariohembra = $this->MoneyToNumber($request->valorUnitarioHembra);
+			    $newBeneficiocerdo->valortotalhembra = $this->MoneyToNumber($request->valorTotalHembra);
+			    $newBeneficiocerdo->cantidad = $request->cantidadMacho + $request->cantidadHembra;
+			    $newBeneficiocerdo->fecha_beneficio = $currentDateFormat;
+			    $newBeneficiocerdo->fecha_cierre = $dateNextMonday;
+			    $newBeneficiocerdo->factura = $request->factura;
+			    $newBeneficiocerdo->clientpieles_id = $request->clientpieles_id;
+			    $newBeneficiocerdo->clientvisceras_id = $request->clientvisceras_id;
+			    $newBeneficiocerdo->lote = $newLote;//$request->lote;
+			    $newBeneficiocerdo->finca = $request->finca;
+			    $newBeneficiocerdo->sacrificio = $this->MoneyToNumber($request->sacrificio);
+			    $newBeneficiocerdo->fomento = $this->MoneyToNumber($request->fomento);
+			    $newBeneficiocerdo->deguello = $this->MoneyToNumber($request->deguello);
+			    $newBeneficiocerdo->bascula = $this->MoneyToNumber($request->bascula);
+			    $newBeneficiocerdo->transporte = $this->MoneyToNumber($request->transporte);
+			    $newBeneficiocerdo->pesopie1 = $this->MoneyToNumber($request->pesopie1);
+			    $newBeneficiocerdo->pesopie2 = $this->MoneyToNumber($request->pesopie2);
+			    $newBeneficiocerdo->pesopie3 = $this->MoneyToNumber($request->pesopie3);
+			    $newBeneficiocerdo->costoanimal1 = $this->MoneyToNumber($request->costoanimal1);
+			    $newBeneficiocerdo->costoanimal2 = $this->MoneyToNumber($request->costoanimal2);
+			    $newBeneficiocerdo->costoanimal3 = $this->MoneyToNumber($request->costoanimal3);
+			    $newBeneficiocerdo->canalcaliente = $this->MoneyToNumber($request->canalcaliente);
+			    $newBeneficiocerdo->canalfria = $this->MoneyToNumber($request->canalfria);
+			    $newBeneficiocerdo->canalplanta = $this->MoneyToNumber($request->canalplanta);
+			    $newBeneficiocerdo->pieleskg = $this->MoneyToNumber($request->pieleskg);
+			    $newBeneficiocerdo->pielescosto = $this->MoneyToNumber($request->pielescosto);
+			    $newBeneficiocerdo->visceras = $this->MoneyToNumber($request->visceras);
+			    $newBeneficiocerdo->costopie1 = $this->MoneyToNumber($request->costopie1);
+			    $newBeneficiocerdo->costopie2 = $this->MoneyToNumber($request->costopie2);
+			    $newBeneficiocerdo->costopie3 = $this->MoneyToNumber($request->costopie3);
+			    $newBeneficiocerdo->tsacrificio = $this->MoneyToNumber($request->tsacrificio);
+			    $newBeneficiocerdo->tfomento = $this->MoneyToNumber($request->tfomento);
+			    $newBeneficiocerdo->tdeguello = $this->MoneyToNumber($request->tdeguello);
+			    $newBeneficiocerdo->tbascula = $this->MoneyToNumber($request->tbascula);
+			    $newBeneficiocerdo->ttransporte = $this->MoneyToNumber($request->ttransporte);
+			    $newBeneficiocerdo->tpieles =$this->MoneyToNumber($request->tpieles);
+			    $newBeneficiocerdo->tvisceras = $this->MoneyToNumber($request->tvisceras);
+			    $newBeneficiocerdo->tcanalfria = $this->MoneyToNumber($request->tcanalfria);
+			    $newBeneficiocerdo->valorfactura = $this->MoneyToNumber($request->valorfactura);
+			    $newBeneficiocerdo->costokilo = $this->MoneyToNumber($request->costokilo);
+			    $newBeneficiocerdo->costo = $this->MoneyToNumber($request->costo);
+			    $newBeneficiocerdo->totalcostos = $this->MoneyToNumber($request->totalcostos);
+			    $newBeneficiocerdo->pesopie = $this->MoneyToNumber($request->pesopie);
+			    $newBeneficiocerdo->rtcanalcaliente = $this->MoneyToNumber($request->rtcanalcaliente);
+			    $newBeneficiocerdo->rtcanalplanta = $this->MoneyToNumber($request->rtcanalplanta);
+			    $newBeneficiocerdo->rtcanalfria = $this->MoneyToNumber($request->rtcanalfria);
+			    $newBeneficiocerdo->rendcaliente = $this->MoneyToNumber($request->rendcaliente);
+			    $newBeneficiocerdo->rendplanta = $this->MoneyToNumber($request->rendplanta);
+			    $newBeneficiocerdo->rendfrio = $this->MoneyToNumber($request->rendfrio);
 
-			    $newBeneficiore->save();
+			    $newBeneficiocerdo->save();
 
             	return response()->json([
                 	"status" => 1,
                 	"message" => "Guardado correctamente",
-					"registroId" => $newBeneficiore->id
+					"registroId" => $newBeneficiocerdo->id
             	]);
 		    }else {
 
-			    $updateBeneficiore = Beneficiore::firstWhere('id', $request->idbeneficio);
-			    $updateBeneficiore->thirds_id = $request->thirds_id;
-			    $updateBeneficiore->plantasacrificio_id  = $request->plantasacrificio_id;
-			    $updateBeneficiore->cantidadmacho = $this->MoneyToNumber($request->cantidadMacho);
-			    $updateBeneficiore->valorunitariomacho = $this->MoneyToNumber($request->valorUnitarioMacho);
-			    $updateBeneficiore->valortotalmacho = $this->MoneyToNumber($request->valorTotalMacho);
-			    $updateBeneficiore->cantidadhembra = $this->MoneyToNumber($request->cantidadHembra);
-			    $updateBeneficiore->valorunitariohembra = $this->MoneyToNumber($request->valorUnitarioHembra);
-			    $updateBeneficiore->valortotalhembra = $this->MoneyToNumber($request->valorTotalHembra);
-			    $updateBeneficiore->cantidad = $request->cantidadMacho + $request->cantidadHembra;
-			    //$updateBeneficiore->fecha_beneficio = $request->fecha_beneficio;
-			    $updateBeneficiore->factura = $request->factura;
-			    $updateBeneficiore->clientpieles_id = $request->clientpieles_id;
-			    $updateBeneficiore->clientvisceras_id = $request->clientvisceras_id;
-			    //$updateBeneficiore->lote = $request->lote;
-			    $updateBeneficiore->finca = $request->finca;
-			    $updateBeneficiore->sacrificio = $this->MoneyToNumber($request->sacrificio);
-			    $updateBeneficiore->fomento = $this->MoneyToNumber($request->fomento);
-			    $updateBeneficiore->deguello = $this->MoneyToNumber($request->deguello);
-			    $updateBeneficiore->bascula = $this->MoneyToNumber($request->bascula);
-			    $updateBeneficiore->transporte = $this->MoneyToNumber($request->transporte);
-			    $updateBeneficiore->pesopie1 = $this->MoneyToNumber($request->pesopie1);
-			    $updateBeneficiore->pesopie2 = $this->MoneyToNumber($request->pesopie2);
-			    $updateBeneficiore->pesopie3 = $this->MoneyToNumber($request->pesopie3);
-			    $updateBeneficiore->costoanimal1 = $this->MoneyToNumber($request->costoanimal1);
-			    $updateBeneficiore->costoanimal2 = $this->MoneyToNumber($request->costoanimal2);
-			    $updateBeneficiore->costoanimal3 = $this->MoneyToNumber($request->costoanimal3);
-			    $updateBeneficiore->canalcaliente = $this->MoneyToNumber($request->canalcaliente);
-			    $updateBeneficiore->canalfria = $this->MoneyToNumber($request->canalfria);
-			    $updateBeneficiore->canalplanta = $this->MoneyToNumber($request->canalplanta);
-			    $updateBeneficiore->pieleskg = $this->MoneyToNumber($request->pieleskg);
-			    $updateBeneficiore->pielescosto = $this->MoneyToNumber($request->pielescosto);
-			    $updateBeneficiore->visceras = $this->MoneyToNumber($request->visceras);
-			    $updateBeneficiore->costopie1 = $this->MoneyToNumber($request->costopie1);
-			    $updateBeneficiore->costopie2 = $this->MoneyToNumber($request->costopie2);
-			    $updateBeneficiore->costopie3 = $this->MoneyToNumber($request->costopie3);
-			    $updateBeneficiore->tsacrificio = $this->MoneyToNumber($request->tsacrificio);
-			    $updateBeneficiore->tfomento = $this->MoneyToNumber($request->tfomento);
-			    $updateBeneficiore->tdeguello = $this->MoneyToNumber($request->tdeguello);
-			    $updateBeneficiore->tbascula = $this->MoneyToNumber($request->tbascula);
-			    $updateBeneficiore->ttransporte = $this->MoneyToNumber($request->ttransporte);
-			    $updateBeneficiore->tpieles =$this->MoneyToNumber($request->tpieles);
-			    $updateBeneficiore->tvisceras = $this->MoneyToNumber($request->tvisceras);
-			    $updateBeneficiore->tcanalfria = $this->MoneyToNumber($request->tcanalfria);
-			    $updateBeneficiore->valorfactura = $this->MoneyToNumber($request->valorfactura);
-			    $updateBeneficiore->costokilo = $this->MoneyToNumber($request->costokilo);
-			    $updateBeneficiore->costo = $this->MoneyToNumber($request->costo);
-			    $updateBeneficiore->totalcostos = $this->MoneyToNumber($request->totalcostos);
-			    $updateBeneficiore->pesopie = $this->MoneyToNumber($request->pesopie);
-			    $updateBeneficiore->rtcanalcaliente = $this->MoneyToNumber($request->rtcanalcaliente);
-			    $updateBeneficiore->rtcanalplanta = $this->MoneyToNumber($request->rtcanalplanta);
-			    $updateBeneficiore->rtcanalfria = $this->MoneyToNumber($request->rtcanalfria);
-			    $updateBeneficiore->rendcaliente = $this->MoneyToNumber($request->rendcaliente);
-			    $updateBeneficiore->rendplanta = $this->MoneyToNumber($request->rendplanta);
-			    $updateBeneficiore->rendfrio = $this->MoneyToNumber($request->rendfrio);
+			    $updateBeneficiocerdo = Beneficiocerdo::firstWhere('id', $request->idbeneficio);
+			    $updateBeneficiocerdo->thirds_id = $request->thirds_id;
+			    $updateBeneficiocerdo->plantasacrificio_id  = $request->plantasacrificio_id;
+			    $updateBeneficiocerdo->cantidadmacho = $this->MoneyToNumber($request->cantidadMacho);
+			    $updateBeneficiocerdo->valorunitariomacho = $this->MoneyToNumber($request->valorUnitarioMacho);
+			    $updateBeneficiocerdo->valortotalmacho = $this->MoneyToNumber($request->valorTotalMacho);
+			    $updateBeneficiocerdo->cantidadhembra = $this->MoneyToNumber($request->cantidadHembra);
+			    $updateBeneficiocerdo->valorunitariohembra = $this->MoneyToNumber($request->valorUnitarioHembra);
+			    $updateBeneficiocerdo->valortotalhembra = $this->MoneyToNumber($request->valorTotalHembra);
+			    $updateBeneficiocerdo->cantidad = $request->cantidadMacho + $request->cantidadHembra;
+			    //$updateBeneficiocerdo->fecha_beneficio = $request->fecha_beneficio;
+			    $updateBeneficiocerdo->factura = $request->factura;
+			    $updateBeneficiocerdo->clientpieles_id = $request->clientpieles_id;
+			    $updateBeneficiocerdo->clientvisceras_id = $request->clientvisceras_id;
+			    //$updateBeneficiocerdo->lote = $request->lote;
+			    $updateBeneficiocerdo->finca = $request->finca;
+			    $updateBeneficiocerdo->sacrificio = $this->MoneyToNumber($request->sacrificio);
+			    $updateBeneficiocerdo->fomento = $this->MoneyToNumber($request->fomento);
+			    $updateBeneficiocerdo->deguello = $this->MoneyToNumber($request->deguello);
+			    $updateBeneficiocerdo->bascula = $this->MoneyToNumber($request->bascula);
+			    $updateBeneficiocerdo->transporte = $this->MoneyToNumber($request->transporte);
+			    $updateBeneficiocerdo->pesopie1 = $this->MoneyToNumber($request->pesopie1);
+			    $updateBeneficiocerdo->pesopie2 = $this->MoneyToNumber($request->pesopie2);
+			    $updateBeneficiocerdo->pesopie3 = $this->MoneyToNumber($request->pesopie3);
+			    $updateBeneficiocerdo->costoanimal1 = $this->MoneyToNumber($request->costoanimal1);
+			    $updateBeneficiocerdo->costoanimal2 = $this->MoneyToNumber($request->costoanimal2);
+			    $updateBeneficiocerdo->costoanimal3 = $this->MoneyToNumber($request->costoanimal3);
+			    $updateBeneficiocerdo->canalcaliente = $this->MoneyToNumber($request->canalcaliente);
+			    $updateBeneficiocerdo->canalfria = $this->MoneyToNumber($request->canalfria);
+			    $updateBeneficiocerdo->canalplanta = $this->MoneyToNumber($request->canalplanta);
+			    $updateBeneficiocerdo->pieleskg = $this->MoneyToNumber($request->pieleskg);
+			    $updateBeneficiocerdo->pielescosto = $this->MoneyToNumber($request->pielescosto);
+			    $updateBeneficiocerdo->visceras = $this->MoneyToNumber($request->visceras);
+			    $updateBeneficiocerdo->costopie1 = $this->MoneyToNumber($request->costopie1);
+			    $updateBeneficiocerdo->costopie2 = $this->MoneyToNumber($request->costopie2);
+			    $updateBeneficiocerdo->costopie3 = $this->MoneyToNumber($request->costopie3);
+			    $updateBeneficiocerdo->tsacrificio = $this->MoneyToNumber($request->tsacrificio);
+			    $updateBeneficiocerdo->tfomento = $this->MoneyToNumber($request->tfomento);
+			    $updateBeneficiocerdo->tdeguello = $this->MoneyToNumber($request->tdeguello);
+			    $updateBeneficiocerdo->tbascula = $this->MoneyToNumber($request->tbascula);
+			    $updateBeneficiocerdo->ttransporte = $this->MoneyToNumber($request->ttransporte);
+			    $updateBeneficiocerdo->tpieles =$this->MoneyToNumber($request->tpieles);
+			    $updateBeneficiocerdo->tvisceras = $this->MoneyToNumber($request->tvisceras);
+			    $updateBeneficiocerdo->tcanalfria = $this->MoneyToNumber($request->tcanalfria);
+			    $updateBeneficiocerdo->valorfactura = $this->MoneyToNumber($request->valorfactura);
+			    $updateBeneficiocerdo->costokilo = $this->MoneyToNumber($request->costokilo);
+			    $updateBeneficiocerdo->costo = $this->MoneyToNumber($request->costo);
+			    $updateBeneficiocerdo->totalcostos = $this->MoneyToNumber($request->totalcostos);
+			    $updateBeneficiocerdo->pesopie = $this->MoneyToNumber($request->pesopie);
+			    $updateBeneficiocerdo->rtcanalcaliente = $this->MoneyToNumber($request->rtcanalcaliente);
+			    $updateBeneficiocerdo->rtcanalplanta = $this->MoneyToNumber($request->rtcanalplanta);
+			    $updateBeneficiocerdo->rtcanalfria = $this->MoneyToNumber($request->rtcanalfria);
+			    $updateBeneficiocerdo->rendcaliente = $this->MoneyToNumber($request->rendcaliente);
+			    $updateBeneficiocerdo->rendplanta = $this->MoneyToNumber($request->rendplanta);
+			    $updateBeneficiocerdo->rendfrio = $this->MoneyToNumber($request->rendfrio);
 
-			    $updateBeneficiore->save();
+			    $updateBeneficiocerdo->save();
 
             	return response()->json([
                 	"status" => 1,
@@ -345,9 +345,9 @@ class beneficiocerdoController extends Controller
     public function destroy($id)
     {
 		try {
-			$updateBeneficiore = Beneficiore::firstWhere('id', $id);
-			$updateBeneficiore->status = false;
-			$updateBeneficiore->save();
+			$updateBeneficiocerdo = Beneficiore::firstWhere('id', $id);
+			$updateBeneficiocerdo->status = false;
+			$updateBeneficiocerdo->save();
         	return response()->json([
             	"status" => 201,
             	"message" => "El registro se dio de baja con exito",
