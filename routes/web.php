@@ -222,3 +222,7 @@ Route::get('showalistamiento', [alistamientorogercodeController::class,'show'])-
 Route::get('alistamiento/create/{id}', [alistamientorogercodeController::class,'create'])->name('alistamiento.create');
 Route::post('getproductos', [alistamientorogercodeController::class,'getproducts'])->name('alistamiento.getproductos');
 Route::post('alistamientosavedetail', [alistamientorogercodeController::class,'savedetail'])->name('alistamiento.savedetail');
+Route::post('/alistamientoUpdate', [alistamientorogercodeController::class, 'updatedetail'])->name('alistamiento.update');
+Route::post('alistamientodown', [alistamientorogercodeController::class,'destroy'])->name('alistamiento.down');
+Route::post('alistamientoById', [alistamientorogercodeController::class,'editAlistamiento'])->name('alistamiento.edit');
+Route::post('getproductospadre', [alistamientorogercodeController::class,'getProductsCategoryPadre'])->name('alistamiento.getproductos');
