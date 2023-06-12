@@ -52,8 +52,8 @@
 								<div class="task-header">
 									<div class="form-group">
 										<label>ID Beneficio</label>
-                                        <p>{{$beneficior[0]->id}} </p>
-										<input type="hidden" id="beneficioId" value="{{$beneficior[0]->id}}">
+                                        <p>{{$beneficioc[0]->id}} </p>
+										<input type="hidden" id="beneficioId" value="{{$beneficioc[0]->id}}">
 									</div>
 								</div>
 							</div>
@@ -61,7 +61,7 @@
 								<div class="task-header">
 									<div class="form-group">
 										<label>Proveedor</label>
-                                        <p>{{$beneficior[0]->name}} </p>
+                                        <p>{{$beneficioc[0]->name}} </p>
 									</div>
 								</div>
 							</div>
@@ -69,7 +69,7 @@
 								<div class="task-header">
 									<div class="form-group">
 										<label>Lote</label>
-                                        <p>{{$beneficior[0]->lote}}</p>
+                                        <p>{{$beneficioc[0]->lote}}</p>
 									</div>
 								</div>
 							</div>
@@ -77,7 +77,7 @@
 								<div class="task-header">
 									<div class="form-group">
 										<label>Factura</label>
-                                        <p>{{$beneficior[0]->factura}} </p>
+                                        <p>{{$beneficioc[0]->factura}} </p>
 									</div>
 								</div>
 							</div>
@@ -89,7 +89,7 @@
                 <div class="card">
                     <div class="card-body">
 							<div class="table-responsive mt-3">
-								<table id="tableDespostere" class="table table-sm table-striped table-bordered">
+								<table id="tableDespostece" class="table table-sm table-striped table-bordered">
 									<thead class="text-white" style="background: #3B3F5C">
 										<tr>
 											<th class="table-th text-white">Producto</th>
@@ -106,7 +106,7 @@
 									<tbody id="tbody">
 										<?php $tpeso = 0;
 										$tdesposte = 0; ?>
-										@foreach($desposters as $item)
+										@foreach($despostecs as $item)
 										<tr>
 											<td> {{ $item->products->name }}</td>
 											<td> {{ $item->porcdesposte }} %</td>
@@ -159,9 +159,9 @@
                 </div>
             </div>					
 			<?php
-			$pi = $beneficior[0]->canalplanta;
-			$cant = $beneficior[0]->cantidad;
-			$ck = $beneficior[0]->costokilo;
+			$pi = $beneficioc[0]->canalplanta;
+			$cant = $beneficioc[0]->cantidad;
+			$ck = $beneficioc[0]->costokilo;
 			$tck = $pi * $ck;
 			?>
 			<div class="widget-content mt-3">
@@ -319,5 +319,5 @@
 </div>
 @endsection
 @section('script')
-<script src="{{asset('rogercode/js/res/desposteres/rogercode-desposteres.index.js')}}" type="module"></script>
+<script src="{{asset('code/js/cerdo/despostecerdo/code-despostecerdo.index.js')}}" type="module"></script>
 @endsection

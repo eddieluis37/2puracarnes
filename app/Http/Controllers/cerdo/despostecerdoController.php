@@ -1,18 +1,21 @@
 <?php
 
-namespace App\Http\Controllers\res;
+namespace App\Http\Controllers\cerdo;
 
 use App\Http\Controllers\Controller;
+
 use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Models\Beneficiore;
 use App\Models\Despostere;
+use App\Models\Beneficiocerdo;
+use App\Models\Despostecerdo;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use DateTime;
 use Carbon\Carbon;
 
-class DesposteresrogercodeController extends Controller
+class DespostecerdoController extends Controller
 {
     public $consulta;
     /**
@@ -23,9 +26,9 @@ class DesposteresrogercodeController extends Controller
     public function index()
     {
         
-        $prod = Product::Where('category_id',1)->get();
+        $prod = Product::Where('category_id',2)->get();
 
-        return view('categorias.res.desposte.index', compact('prod'));
+        return view('categorias.cerdo.desposte.index', compact('prod'));
     }
 
     /**
@@ -37,27 +40,27 @@ class DesposteresrogercodeController extends Controller
     {
         $id_user= Auth::user()->id;
 
-        $beneficior = DB::table('beneficiores as b')
+        $beneficioc = DB::table('beneficiocerdos as b')
             ->join('thirds as t', 'b.thirds_id', '=', 't.id')
             ->select('t.name','b.id','b.lote','b.factura','b.canalplanta','b.cantidad','b.costokilo','b.fecha_cierre')
             ->where('b.id',$id)
             ->get();
         /******************/
-        $this->consulta = Despostere::
+        $this->consulta = Despostecerdo::
         Where([
-        ['beneficiores_id',$id],
+        ['beneficiocerdos_id',$id],
         ['status','VALID'], 
         ])->get();
         //dd(count($this->consulta));
         if (count($this->consulta) === 0) {
             $prod = Product::Where([
-                ['category_id',1],
+                ['category_id',2],
                 ['level_product_id',1],
             ])->get();
             foreach($prod as $key){
-                $despost = new Despostere(); //Se crea una instancia del modelo
+                $despost = new Despostecerdo(); //Se crea una instancia del modelo
                 $despost->users_id = $id_user; //Se establecen los valores para cada columna de la tabla
-                $despost->beneficiores_id = $id;
+                $despost->beneficiocerdos_id = $id;
                 $despost->products_id = $key->id;
                 $despost->peso = 0;
                 $despost->porcdesposte = 0;
@@ -72,15 +75,15 @@ class DesposteresrogercodeController extends Controller
                 $despost->save();
             }
 
-            $this->consulta = Despostere::
+            $this->consulta = Despostecerdo::
             Where([
-            ['beneficiores_id',$id],
+            ['beneficiocerdos_id',$id],
             ['status','VALID'], 
             ])->get();
         }
         /****************************************** */
         $status = '';
-        $fechaBeneficioCierre = Carbon::parse($beneficior[0]->fecha_cierre);
+        $fechaBeneficioCierre = Carbon::parse($beneficioc[0]->fecha_cierre);
 		//$date = new DateTime();
         $date = Carbon::now();
 		$currentDate = Carbon::parse($date->format('Y-m-d'));
@@ -97,21 +100,21 @@ class DesposteresrogercodeController extends Controller
         }
         /****************************************** */
 
-        $desposters = $this->consulta;
-        $TotalDesposte = (float)Despostere::Where([['beneficiores_id',$id],['status','VALID']])->sum('porcdesposte');
-        $TotalVenta = (float)Despostere::Where([['beneficiores_id',$id],['status','VALID']])->sum('totalventa');
-        $porcVentaTotal = (float)Despostere::Where([['beneficiores_id',$id],['status','VALID']])->sum('porcventa');
-        $pesoTotalGlobal = (float)Despostere::Where([['beneficiores_id',$id],['status','VALID']])->sum('peso');
-        $costoTotalGlobal = (float)Despostere::Where([['beneficiores_id',$id],['status','VALID']])->sum('costo');
+        $despostecs = $this->consulta;
+        $TotalDesposte = (float)Despostecerdo::Where([['beneficiocerdos_id',$id],['status','VALID']])->sum('porcdesposte');
+        $TotalVenta = (float)Despostecerdo::Where([['beneficiocerdos_id',$id],['status','VALID']])->sum('totalventa');
+        $porcVentaTotal = (float)Despostecerdo::Where([['beneficiocerdos_id',$id],['status','VALID']])->sum('porcventa');
+        $pesoTotalGlobal = (float)Despostecerdo::Where([['beneficiocerdos_id',$id],['status','VALID']])->sum('peso');
+        $costoTotalGlobal = (float)Despostecerdo::Where([['beneficiocerdos_id',$id],['status','VALID']])->sum('costo');
         $costoKiloTotal = 0;
         if($pesoTotalGlobal != 0){
             $costoKiloTotal = number_format($costoTotalGlobal / $pesoTotalGlobal, 2, ',', '.');
         }
         //dd(count($desposters));
-        //$beneficior = Beneficiore::Where('id',$id)->get();
-        return view('categorias.res.desposte.index', compact(
-            'beneficior',
-            'desposters',
+        //$beneficior = Beneficiocerdo::Where('id',$id)->get();
+        return view('categorias.cerdo.desposte.index', compact(
+            'beneficioc',
+            'despostecs',
             'TotalDesposte',
             'TotalVenta',
             'porcVentaTotal',
@@ -147,11 +150,11 @@ class DesposteresrogercodeController extends Controller
     public function sumTotales($id)
     {
 
-        $TotalDesposte = (float)Despostere::Where([['beneficiores_id',$id],['status','VALID']])->sum('porcdesposte');
-        $TotalVenta = (float)Despostere::Where([['beneficiores_id',$id],['status','VALID']])->sum('totalventa');
-        $porcVentaTotal = (float)Despostere::Where([['beneficiores_id',$id],['status','VALID']])->sum('porcventa');
-        $pesoTotalGlobal = (float)Despostere::Where([['beneficiores_id',$id],['status','VALID']])->sum('peso');
-        $costoTotalGlobal = (float)Despostere::Where([['beneficiores_id',$id],['status','VALID']])->sum('costo');
+        $TotalDesposte = (float)Despostecerdo::Where([['beneficiocerdos_id',$id],['status','VALID']])->sum('porcdesposte');
+        $TotalVenta = (float)Despostecerdo::Where([['beneficiocerdos_id',$id],['status','VALID']])->sum('totalventa');
+        $porcVentaTotal = (float)Despostecerdo::Where([['beneficiocerdos_id',$id],['status','VALID']])->sum('porcventa');
+        $pesoTotalGlobal = (float)Despostecerdo::Where([['beneficiocerdos_id',$id],['status','VALID']])->sum('peso');
+        $costoTotalGlobal = (float)Despostecerdo::Where([['beneficiocerdos_id',$id],['status','VALID']])->sum('costo');
         $costoKiloTotal = number_format($costoTotalGlobal / $pesoTotalGlobal, 2, ',', '.');
 
         $array = [
@@ -187,7 +190,7 @@ class DesposteresrogercodeController extends Controller
     public function update(Request $request)
     {
         try {
-            $despost = Despostere::where('id', $request->id)->first();
+            $despost = Despostecerdo::where('id', $request->id)->first();
             $total_venta = $despost->precio * $request->peso_kilo;
             //$despost->users_id = $id_user; 
             //$despost->beneficiores_id = $request->beneficioId;
@@ -203,29 +206,29 @@ class DesposteresrogercodeController extends Controller
             //$despost->status = 'VALID';
             $despost->save();
             /*************************** */
-            $getBeneficiores = Beneficiore::Where('id',$request->beneficioId)->get();
+            $getBeneficiocerdo = Beneficiocerdo::Where('id',$request->beneficioId)->get();
 
-            $beneficior = Despostere::Where([['beneficiores_id',$request->beneficioId],['status','VALID']])->get();
+            $beneficioc = Despostecerdo::Where([['beneficiocerdos_id',$request->beneficioId],['status','VALID']])->get();
             $porcentajeVenta = 0;
             $porcentajeDesposte = 0;
-            foreach ($beneficior as $key) {
-                $sumakilosTotal = (float)Despostere::Where([['beneficiores_id',$request->beneficioId],['status','VALID']])->sum('peso');
+            foreach ($beneficioc as $key) {
+                $sumakilosTotal = (float)Despostecerdo::Where([['beneficiocerdos_id',$request->beneficioId],['status','VALID']])->sum('peso');
                 $porc = (float)number_format($key->peso / $sumakilosTotal,4);
                 $porcentajeDesposte = (float)number_format($porc * 100,2);
 
-                $sumaTotal = (float)Despostere::Where([['beneficiores_id',$request->beneficioId],['status','VALID']])->sum('totalventa');
+                $sumaTotal = (float)Despostecerdo::Where([['beneficiocerdos_id',$request->beneficioId],['status','VALID']])->sum('totalventa');
                 $porcve = (float)number_format($key->totalventa / $sumaTotal,4);
                 $porcentajeVenta = (float)number_format($porcve * 100,2);
 
                 $porcentajecostoTotal = (float)number_format($porcentajeVenta / 100, 4);
-                $costoTotal = $porcentajecostoTotal * $getBeneficiores[0]->totalcostos;
+                $costoTotal = $porcentajecostoTotal * $getBeneficiocerdo[0]->totalcostos;
 
                 $costoKilo = 0;
                 if ($key->peso != 0) {
                     $costoKilo = $costoTotal / $key->peso;
                 }
 
-                $updatedespost = Despostere::firstWhere('id', $key->id);
+                $updatedespost = Despostecerdo::firstWhere('id', $key->id);
                 $updatedespost->porcdesposte = $porcentajeDesposte;
                 $updatedespost->porcventa = $porcentajeVenta;
                 $updatedespost->costo = $costoTotal;
@@ -233,16 +236,16 @@ class DesposteresrogercodeController extends Controller
                 $updatedespost->save();
             }								
             /*************************** */
-            /*$desposte = Despostere::
+            /*$desposte = Despostecerdo::
             Where([
-            ['beneficiores_id',$request->beneficioId],
+            ['beneficiocerdos_id',$request->beneficioId],
             ['status','VALID'], 
             ])->get();*/
-            $desposte = DB::table('desposteres as d')
+            $desposte = DB::table('despostecerdos as d')
             ->join('products as p', 'd.products_id', '=', 'p.id')
             ->select('p.name','d.id','d.porcdesposte','d.precio','d.peso','d.totalventa','d.porcventa','d.costo','d.costo_kilo')
             ->where([
-            ['d.beneficiores_id',$request->beneficioId],
+            ['d.beneficiocerdos_id',$request->beneficioId],
             ['d.status','VALID'], 
             ])->get();
             /*************************************** */
@@ -256,7 +259,7 @@ class DesposteresrogercodeController extends Controller
                 "benefit" => $request->beneficioId,
                 "desposte" => $desposte,
                 "arrayTotales" => $arrayTotales,
-                "beneficiores" => $getBeneficiores,
+                "beneficiocerdos" => $getBeneficiocerdo,
             ]);
 
         } catch (\Throwable $th) {
@@ -277,39 +280,39 @@ class DesposteresrogercodeController extends Controller
     {
         try {
 
-            $despost = Despostere::where('id', $request->id)->first();
+            $despost = Despostecerdo::where('id', $request->id)->first();
             $despost->status = 'CANCELED';
             $despost->save();
             /*************************** */
-            $getBeneficiores = Beneficiore::Where('id',$request->beneficioId)->get();
+            $getBeneficiocerdo = Beneficiocerdo::Where('id',$request->beneficioId)->get();
 
-            $beneficior = Despostere::Where([['beneficiores_id',$request->beneficioId],['status','VALID']])->get();
+            $beneficioc = Despostecerdo::Where([['beneficiocerdos_id',$request->beneficioId],['status','VALID']])->get();
             $porcentajeVenta = 0;
             $porcentajeDesposte = 0;
-            foreach ($beneficior as $key) {
-                $sumakilosTotal = (float)Despostere::Where([['beneficiores_id',$request->beneficioId],['status','VALID']])->sum('peso');
+            foreach ($beneficioc as $key) {
+                $sumakilosTotal = (float)Despostecerdo::Where([['beneficiocerdos_id',$request->beneficioId],['status','VALID']])->sum('peso');
                 $porc = (float)number_format($key->peso / $sumakilosTotal,4);
                 $porcentajeDesposte = (float)number_format($porc * 100,2);
 
-                $sumaTotal = (float)Despostere::Where([['beneficiores_id',$request->beneficioId],['status','VALID']])->sum('totalventa');
+                $sumaTotal = (float)Despostecerdo::Where([['beneficiocerdos_id',$request->beneficioId],['status','VALID']])->sum('totalventa');
                 $porcve = (float)number_format($key->totalventa / $sumaTotal,4);
                 $porcentajeVenta = (float)number_format($porcve * 100,2);
 
                 $porcentajecostoTotal = (float)number_format($porcentajeVenta / 100, 4);
-                $costoTotal = $porcentajecostoTotal * $getBeneficiores[0]->totalcostos;
+                $costoTotal = $porcentajecostoTotal * $getBeneficiocerdo[0]->totalcostos;
 
-                $updatedespost = Despostere::firstWhere('id', $key->id);
+                $updatedespost = Despostecerdo::firstWhere('id', $key->id);
                 $updatedespost->porcdesposte = $porcentajeDesposte;
                 $updatedespost->porcventa = $porcentajeVenta;
                 $updatedespost->costo = $costoTotal;
                 $updatedespost->save();
             }								
             /*************************** */
-            $desposte = DB::table('desposteres as d')
+            $desposte = DB::table('despostecerdos as d')
             ->join('products as p', 'd.products_id', '=', 'p.id')
             ->select('p.name','d.id','d.porcdesposte','d.precio','d.peso','d.totalventa','d.porcventa','d.costo')
             ->where([
-            ['d.beneficiores_id',$request->beneficioId],
+            ['d.beneficiocerdos_id',$request->beneficioId],
             ['d.status','VALID'], 
             ])->get();
             /*************************************** */
@@ -321,7 +324,7 @@ class DesposteresrogercodeController extends Controller
                 "benefit" => $request->beneficioId,
                 "desposte" => $desposte,
                 "arrayTotales" => $arrayTotales,
-                "beneficiores" => $getBeneficiores,
+                "beneficiocerdos" => $getBeneficiocerdo,
             ]);
 
         } catch (\Throwable $th) {

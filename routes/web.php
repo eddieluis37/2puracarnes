@@ -179,10 +179,17 @@ Route::get('select2', Select2::class);
 
 
 /***************** RUTAS SIN LIVEWIRE ********************************** */
+/**DESPOSTE RES */
 Route::get('desposteres', [desposteresrogercodeController::class, 'index'])->name('desposteres.index');
 Route::get('desposteres/{id}', [desposteresrogercodeController::class, 'create']);
 Route::post('/desposteresUpdate', [desposteresrogercodeController::class, 'update']);
 Route::post('/downdesposter', [desposteresrogercodeController::class, 'destroy']);
+
+/**DESPOSTE CERDO */
+Route::get('despostecerdo', [despostecerdoController::class, 'index'])->name('despostecerdo.index');
+Route::get('despostecerdo/{id}', [despostecerdoController::class, 'create']);
+Route::post('/despostecerdoUpdate', [despostecerdoController::class, 'update']);
+Route::post('/downdespostec', [despostecerdoController::class, 'destroy']);
 /*****************************INVENTORY****************************************** */
 Route::get('inventory/consolidado', [inventoryrogercodeController::class, 'index'])->name('inventory.consolidado');
 Route::get('inventory/diario', [diariorogercodeController::class, 'index'])->name('inventory.diario');

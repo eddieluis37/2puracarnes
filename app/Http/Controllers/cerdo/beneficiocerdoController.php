@@ -247,7 +247,7 @@ class beneficiocerdoController extends Controller
                     if (Carbon::parse($currentDateTime->format('Y-m-d'))->gt(Carbon::parse($data->fecha_cierre))) {
                         $btn = '
                         <div class="text-center">
-					    <a href="desposteres/'.$data->id.'" class="btn btn-dark" title="Despostar" >
+					    <a href="despostecerdo/'.$data->id.'" class="btn btn-dark" title="Despostar cerdo" >
 						    <i class="fas fa-directions"></i>
 					    </a>
 					    <button class="btn btn-dark" title="Editar Beneficio" onclick="showDataForm('.$data->id.')">
@@ -261,7 +261,7 @@ class beneficiocerdoController extends Controller
                     }elseif (Carbon::parse($currentDateTime->format('Y-m-d'))->lt(Carbon::parse($data->fecha_cierre))) {
                         $btn = '
                         <div class="text-center">
-					    <a href="desposteres/'.$data->id.'" class="btn btn-dark" title="Despostar" >
+					    <a href="despostecerdo/'.$data->id.'" class="btn btn-dark" title="Despostar cerdo" >
 						    <i class="fas fa-directions"></i>
 					    </a>
 					    <button class="btn btn-dark" title="Editar Beneficio" onclick="edit('.$data->id.');">
@@ -275,7 +275,7 @@ class beneficiocerdoController extends Controller
                     }else{
                         $btn = '
                         <div class="text-center">
-					    <a href="desposteres/'.$data->id.'" class="btn btn-dark" title="Despostar" >
+					    <a href="despostecerdo/'.$data->id.'" class="btn btn-dark" title="Despostar" >
 						    <i class="fas fa-directions"></i>
 					    </a>
 					    <button class="btn btn-dark" title="Editar Beneficio" onclick="showDataForm('.$data->id.')">

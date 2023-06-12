@@ -16,28 +16,26 @@ class CreateDespostecerdosTable extends Migration
         Schema::create('despostecerdos', function (Blueprint $table) {
             $table->id();
 
-            $table->unsignedBigInteger('user_id')->nullable();
-            $table->foreign('user_id')->references('id')->on('users');
-
-         /*    $table->unsignedBigInteger('beneficiors_desposters_id')->nullable();
-            $table->foreign('beneficiors_desposters_id')->references('id')->on('beneficiors_desposters'); */
+            $table->unsignedBigInteger('users_id')->nullable();
+            $table->foreign('users_id')->references('id')->on('users');       
             
             $table->unsignedBigInteger('beneficiocerdos_id')->nullable();
             $table->foreign('beneficiocerdos_id')->references('id')->on('beneficiocerdos');
-
-        /* $table->unsignedBigInteger('fichatecnicas_id')->nullable();
-            $table->foreign('fichatecnicas_id')->references('id')->on('fichatecnicas');*/
-
+        
             $table->unsignedBigInteger('products_id')->nullable();
             $table->foreign('products_id')->references('id')->on('products');
 
-            $table->decimal('porcdesposte', $precision = 18, $scale = 2);           
-            $table->decimal('peso', $precision = 18, $scale = 2);
-            $table->decimal('total', $precision = 18, $scale = 2);
-            $table->decimal('sell_price', $precision = 18, $scale = 2);
-            $table->decimal('totalventa', $precision = 18, $scale = 2);
-            $table->decimal('porcventa', $precision = 18, $scale = 2);
-            $table->decimal('costototal', $precision = 18, $scale = 2);
+            $table->decimal('peso', 18, 2)->nullable();
+            $table->decimal('porcdesposte', 18, 2)->nullable();
+            $table->decimal('costo', 18, 2)->nullable();                     
+            $table->decimal('costo_kilo', 18, 2)->nullable();                     
+            $table->decimal('precio', 18, 2)->nullable();
+            $table->decimal('totalventa', 18,2)->nullable();
+            $table->decimal('total', 18, 2)->nullable();
+            $table->decimal('porcventa', 18, 2)->nullable();
+            $table->string('porcutilidad', 18, 2)->nullable();
+            $table->decimal('peso_acomulado', 18, 2)->nullable();
+            $table->enum('status',['VALID','CANCELED'])->default('VALID');          
 
             $table->timestamps();
         });

@@ -1,6 +1,6 @@
 import  {sendData} from '../../exportModule/core/rogercode-core.js';
 
-const table = document.querySelector("#tableDespostere");
+const table = document.querySelector("#tableDespostece");
 const token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
 const beneficioId = document.querySelector("#beneficioId");
 const tableTbody = document.querySelector("#tbody");
@@ -175,7 +175,7 @@ const showDataTable = (data) => {
   `;
 };
 
-document.querySelector("#tableDespostere tbody").addEventListener("click", (e) => {
+document.querySelector("#tableDespostece tbody").addEventListener("click", (e) => {
     //console.log('Row clicked');
     //console.log(e.target);
     let element = e.target;
