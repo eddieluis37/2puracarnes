@@ -176,10 +176,10 @@ class alistamientorogercodeController extends Controller
                 if (Carbon::parse($currentDateTime->format('Y-m-d'))->gt(Carbon::parse($data->fecha_cierre))) {
                     $btn = '
                     <div class="text-center">
-					<a href="alistamiento/create/'.$data->id.'" class="btn btn-dark" title="Despostar" >
+					<a href="alistamiento/create/'.$data->id.'" class="btn btn-dark" title="Alistar" >
 						<i class="fas fa-directions"></i>
 					</a>
-					<button class="btn btn-dark" title="Borrar Beneficio" disabled>
+					<button class="btn btn-dark" title="" disabled>
 						<i class="fas fa-trash"></i>
 					</button>
                     </div>
@@ -187,13 +187,13 @@ class alistamientorogercodeController extends Controller
                 }elseif (Carbon::parse($currentDateTime->format('Y-m-d'))->lt(Carbon::parse($data->fecha_cierre))) {
                     $btn = '
                     <div class="text-center">
-					<a href="alistamiento/create/'.$data->id.'" class="btn btn-dark" title="Despostar" >
+					<a href="alistamiento/create/'.$data->id.'" class="btn btn-dark" title="Alistar" >
 						<i class="fas fa-directions"></i>
 					</a>
-					<button class="btn btn-dark" title="Borrar Beneficio" onclick="showDataForm('.$data->id.')">
+					<button class="btn btn-dark" title="" onclick="showDataForm('.$data->id.')">
 						<i class="fas fa-eye"></i>
 					</button>
-					<button class="btn btn-dark" title="Borrar Beneficio" onclick="downCompensado('.$data->id.');">
+					<button class="btn btn-dark" title="" onclick="downCompensado('.$data->id.');">
 						<i class="fas fa-trash"></i>
 					</button>
                     </div>
@@ -201,13 +201,13 @@ class alistamientorogercodeController extends Controller
                 }else{
                     $btn = '
                     <div class="text-center">
-					<a href="alistamiento/create/'.$data->id.'" class="btn btn-dark" title="Despostar" >
+					<a href="alistamiento/create/'.$data->id.'" class="btn btn-dark" title="Alistar" >
 						<i class="fas fa-directions"></i>
 					</a>
-					<button class="btn btn-dark" title="Borrar Beneficio" onclick="showDataForm('.$data->id.')">
+					<button class="btn btn-dark" title="" onclick="showDataForm('.$data->id.')">
 						<i class="fas fa-eye"></i>
 					</button>
-					<button class="btn btn-dark" title="Borrar Beneficio" disabled>
+					<button class="btn btn-dark" title="" disabled>
 						<i class="fas fa-trash"></i>
 					</button>
                     </div>
