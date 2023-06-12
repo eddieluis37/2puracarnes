@@ -32,6 +32,16 @@
 					</div>
 				</div>
 			</div>
+			<div class="col-md-6">
+				<div class="task-header">
+					<div class="form-group">
+                        <label for="" class="form-label">Seleccionar corte padre</label>
+					    <select class="form-control form-control-sm input select2corte" name="selectCortePadre" id="selectCortePadre" required>
+					    </select>
+						<span class="text-danger error-message"></span>
+					</div>
+				</div>
+			</div>
 		</div>
 	</div>
 </div>

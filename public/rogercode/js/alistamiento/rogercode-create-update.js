@@ -6,14 +6,15 @@ btnAddAlistamiento.addEventListener("click", async (e) => {
     const dataform = new FormData(formAlistamiento);
     sendData('/alistamientosave',dataform,token).then((resp) => {
         console.log(resp);
-        /*if (resp.status == 1) {
-            formCompensadoRes.reset();   
+        if (resp.status == 1) {
+            formAlistamiento.reset();   
             btnClose.click();
             successToastMessage(resp.message); 
+            refresh_table();
             if (resp.registroId != 0) {//for new register
-                window.location.href = `compensado/create/${resp.registroId}`;
+                window.location.href = `alistamiento/create/${resp.registroId}`;
             }else{
-                refresh_table();
+                //refresh_table();
             }
         }
         if (resp.status == 0) {
@@ -26,6 +27,6 @@ btnAddAlistamiento.addEventListener("click", async (e) => {
                 $errorContainer.html(messages[0]);
                 $errorContainer.show();
             });        
-        }*/
+        }
     });
 })

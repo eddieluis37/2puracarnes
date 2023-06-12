@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateAlistamientoTable extends Migration
+class CreateEnlistmentsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateAlistamientoTable extends Migration
      */
     public function up()
     {
-        Schema::create('alistamiento', function (Blueprint $table) {
+        Schema::create('enlistments', function (Blueprint $table) {
             $table->id();
 
             $table->unsignedBigInteger('users_id')->nullable();
@@ -25,6 +25,9 @@ class CreateAlistamientoTable extends Migration
             $table->unsignedBigInteger('centrocosto_id')->nullable();
             $table->foreign('centrocosto_id')->references('id')->on('centro_costo');
 
+            $table->unsignedBigInteger('meatcut_id')->nullable();           
+            $table->foreign('meatcut_id')->references('id')->on('meatcuts')->onDelete("cascade");
+            
             $table->date('fecha_alistamiento');
             $table->date('fecha_cierre')->nullable();
 
@@ -40,6 +43,6 @@ class CreateAlistamientoTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('alistamiento');
+        Schema::dropIfExists('enlistments');
     }
 }
