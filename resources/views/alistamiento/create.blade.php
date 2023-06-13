@@ -101,21 +101,24 @@
 					<div class="card-body">
 						<div class="row">
 							<div class="col-md-4">
-								<div class="form-group">
 								<label for="" class="form-label">Stock actual</label>
+								<div class="input-group flex-nowrap">
 								<input type="text" id="stockCortePadre" name="stockCortePadre" value="{{$cortes[0]->stock}}" class="form-control-sm form-control" placeholder="10,00 kg">
+									<span class="input-group-text" id="addon-wrapping">KG</span>
 								</div>
 							</div>
 							<div class="col-md-4">
-								<div class="form-group">
 								<label for="" class="form-label">Ultimo conteo fisico</label>
+								<div class="input-group flex-nowrap">
 								<input type="text" id="pesokg" name="pesokg" class="form-control-sm form-control" placeholder="20,00 kg">
+									<span class="input-group-text" id="addon-wrapping">KG</span>
 								</div>
 							</div>
 							<div class="col-md-4">
-								<div class="form-group">
 								<label for="" class="form-label">Nuevo stock</label>
-								<input type="text" id="newStockPadre" name="newStockPadre" class="form-control-sm form-control" placeholder="30,00 kg">
+								<div class="input-group flex-nowrap">
+								<input type="text" id="newStockPadre" name="newStockPadre" value="{{$newStock}}" class="form-control-sm form-control" placeholder="30,00 kg">
+									<span class="input-group-text" id="addon-wrapping">KG</span>
 								</div>
 							</div>
 						</div>
@@ -146,12 +149,12 @@
 											<td>{{$proddetail->id}}</td>
 											<td>{{$proddetail->code}}</td>
 											<td>{{$proddetail->nameprod}}</td>
-											<td>{{$proddetail->stock}}</td>
+											<td>{{ number_format($proddetail->stock, 2, ',', '.')}} KG</td>
 											<td>00</td>
 											<td>
 												<input type="text" class="form-control-sm" data-id="{{$proddetail->products_id}}" id="{{$proddetail->id}}" value="{{$proddetail->kgrequeridos}}" placeholder="Ingresar" size="10">
 											</td>
-											<td>{{$proddetail->newstock}}</td>
+											<td>{{ number_format($proddetail->newstock, 2, ',', '.')}} KG</td>
 											<td class="text-center">
 												<button type="button" name="btnDownReg" data-id="{{$proddetail->id}}" class="btn btn-dark btn-sm fas fa-trash" title="Cancelar" >
 												</button>
@@ -166,8 +169,8 @@
 											<th>Totales</th>
 											<th></th>
 											<th></th>
-											<th>$ {{number_format($arrayTotales['kgTotalRequeridos'], 2, ',', '.')}} </th>
-											<th>$ {{number_format($arrayTotales['newTotalStock'], 2, ',', '.')}} </th>
+											<th> {{number_format($arrayTotales['kgTotalRequeridos'], 2, ',', '.')}} KG</th>
+											<th> {{number_format($arrayTotales['newTotalStock'], 2, ',', '.')}} KG</th>
 											<th class="text-center">
 												<button class="btn btn-success btn-sm">Cargar al inventario</button>
 											</th>

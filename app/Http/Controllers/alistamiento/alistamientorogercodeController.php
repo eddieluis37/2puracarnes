@@ -15,6 +15,7 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\Validator;
 use App\Models\Product;
 use App\Models\Products\Meatcut;
+use App\Http\Controllers\metodosgenerales\metodosrogercodeController;
 
 class alistamientorogercodeController extends Controller
 {
@@ -66,7 +67,9 @@ class alistamientorogercodeController extends Controller
 
         $arrayTotales = $this->sumTotales($id);
 
-        return view('alistamiento.create', compact('dataAlistamiento','cortes','enlistments','arrayTotales'));
+        $newStock = $arrayTotales['kgTotalRequeridos'] - $cortes[0]->stock;
+
+        return view('alistamiento.create', compact('dataAlistamiento','cortes','enlistments','arrayTotales','newStock'));
     }
 
     /**
@@ -193,7 +196,7 @@ class alistamientorogercodeController extends Controller
 					<button class="btn btn-dark" title="Borrar Beneficio" onclick="showDataForm('.$data->id.')">
 						<i class="fas fa-eye"></i>
 					</button>
-					<button class="btn btn-dark" title="Borrar Beneficio" onclick="downCompensado('.$data->id.');">
+					<button class="btn btn-dark" title="Borrar Beneficio" onclick="downAlistamiento('.$data->id.');">
 						<i class="fas fa-trash"></i>
 					</button>
                     </div>
@@ -250,12 +253,14 @@ class alistamientorogercodeController extends Controller
                 ], 422);
             }
 
+            $formatCantidad = new metodosrogercodeController();
             $prod = Product::firstWhere('id', $request->producto);
-            $newStock = $prod->stock + $request->kgrequeridos;
+            $formatkgrequeridos = $formatCantidad->MoneyToNumber($request->kgrequeridos);
+            $newStock = $prod->stock + $formatkgrequeridos;
             $details = new enlistment_details();
             $details->enlistments_id = $request->alistamientoId;
             $details->products_id = $request->producto;
-            $details->kgrequeridos = $request->kgrequeridos;
+            $details->kgrequeridos = $formatkgrequeridos;
             $details->newstock = $newStock;
             $details->save();
 
@@ -391,6 +396,25 @@ class alistamientorogercodeController extends Controller
                 'status' => 1,
                 'array' => $arraydetail,
                 'arrayTotales' => $arrayTotales
+            ]);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'status' => 0,
+                'array' => (array) $th
+            ]);
+        }
+    }
+
+    public function destroyAlistamiento(Request $request)
+    {
+        try {
+            $alist = Alistamiento::where('id', $request->id)->first();
+            $alist->status = 0;
+            $alist->save();
+
+            return response()->json([
+                'status' => 1,
+                'message' => 'Se realizo con exito'
             ]);
         } catch (\Throwable $th) {
             return response()->json([

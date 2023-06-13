@@ -226,3 +226,4 @@ Route::post('/alistamientoUpdate', [alistamientorogercodeController::class, 'upd
 Route::post('alistamientodown', [alistamientorogercodeController::class,'destroy'])->name('alistamiento.down');
 Route::post('alistamientoById', [alistamientorogercodeController::class,'editAlistamiento'])->name('alistamiento.edit');
 Route::post('getproductospadre', [alistamientorogercodeController::class,'getProductsCategoryPadre'])->name('alistamiento.getproductos');
+Route::post('/downmmainalistamiento', [alistamientorogercodeController::class, 'destroyAlistamiento'])->name('alistamiento.downAlistamiento');

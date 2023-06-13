@@ -52,30 +52,42 @@ $(document).ready(function () {
             },
         });
     });
-$('.select2corte').select2({
-	placeholder: 'Busca un producto',
-	width: '100%',
-	theme: "bootstrap-5",
-	allowClear: true,
-});
+    $('.select2corte').select2({
+	    placeholder: 'Busca un producto',
+	    width: '100%',
+	    theme: "bootstrap-5",
+	    allowClear: true,
+    });
 });           
 
-const refresh_table = () => {
-    let table = $('#tableAlistamiento').dataTable(); 
-    table.fnDraw(false);
-}
 
 const showModalcreate = () => {
-    //if(contentform.hasAttribute('disabled')){
-        //contentform.removeAttribute('disabled');
-        //$('#provider').prop('disabled', false);
-    //}
-    //$('#provider').val('').trigger('change');
-    //formCompensadoRes.reset();
-    //compensado_id.value = 0;
+    if(contentform.hasAttribute('disabled')){
+        contentform.removeAttribute('disabled');
+        $('.select2corte').prop('disabled', false);
+    }
+    $('.select2corte').val('').trigger('change');
+    selectCortePadre.innerHTML = "";
+    formAlistamiento.reset();
+    alistamiento_id.value = 0;
 }
 
-const editAlistamiento = (id) => {
+//const editAlistamiento = (id) => {
+    //console.log(id);
+    //const dataform = new FormData();
+    //dataform.append('id', id);
+    //send(dataform,'/alistamientoById').then((resp) => {
+        //console.log(resp);
+        //console.log(resp.reg);
+        //showData(resp);
+        //if(contentform.hasAttribute('disabled')){
+            //contentform.removeAttribute('disabled');
+            //$('#provider').prop('disabled', false);
+        //}
+    //});
+//}
+
+const showDataForm = (id) => {
     console.log(id);
     const dataform = new FormData();
     dataform.append('id', id);
@@ -83,18 +95,21 @@ const editAlistamiento = (id) => {
         console.log(resp);
         console.log(resp.reg);
         showData(resp);
-        //if(contentform.hasAttribute('disabled')){
-            //contentform.removeAttribute('disabled');
-            //$('#provider').prop('disabled', false);
-        //}
+        setTimeout(() => {
+            $('.select2corte').val(resp.reg.meatcut_id).trigger('change');
+        }, 1000);
+        $('.select2corte').prop('disabled', true);
+        contentform.setAttribute('disabled','disabled');
     });
 }
 
 const showData = (resp) => {
     let register = resp.reg;
-    alistamiento_id.value = register.id;
+    //alistamiento_id.value = register.id;
     selectCategory.value = register.categoria_id;
     selectCentrocosto.value = register.centrocosto_id;
+    getCortes(register.categoria_id);
+    
     const modal = new bootstrap.Modal(document.getElementById('modal-create-alistamiento'));
     modal.show();
 }
@@ -112,14 +127,16 @@ const send = async (dataform,ruta) => {
     return data;
 }
 
-//const selectCategoria = document.querySelector("#categoria");
-//const selectProducto = document.getElementById("producto");
 selectCategory.addEventListener("change", function() {
     const selectedValue = this.value;
     console.log("Selected value:", selectedValue);
+    getCortes(selectedValue);
+    
+});
 
+getCortes = (categoryId) => {
     const dataform = new FormData();
-    dataform.append("categoriaId", Number(selectedValue));
+    dataform.append("categoriaId", Number(categoryId));
     send(dataform,'/getproductospadre').then((result) => {
         console.log(result);
         let prod = result.products;
@@ -136,29 +153,9 @@ selectCategory.addEventListener("change", function() {
         });
     });
 
-});
-
-/*const refresh_table = () => {
-    let table = $('#tableCompensado').dataTable(); 
-    table.fnDraw(false);
 }
 
-const showDataForm = (id) => {
-    console.log(id);
-    const dataform = new FormData();
-    dataform.append('id', id);
-    send(dataform,'/compensadoById').then((resp) => {
-        console.log(resp);
-        console.log(resp.reg);
-        showData(resp);
-        $('#provider').prop('disabled', true);
-        contentform.setAttribute('disabled','disabled');
-    });
-}
-
-
-
-const downCompensado = (id) => { 
+const downAlistamiento = (id) => { 
     swal({
 		title: 'CONFIRMAR',
 		text: '¿CONFIRMAS ELIMINAR EL REGISTRO?',
@@ -173,11 +170,16 @@ const downCompensado = (id) => {
             console.log(id);
             const dataform = new FormData();
             dataform.append('id', id);
-            send(dataform,'/downmaincompensado').then((resp) => {
+            send(dataform,'/downmmainalistamiento').then((resp) => {
                 console.log(resp);
                 refresh_table();
             });
         }
-
     })
-}*/
+}
+
+
+const refresh_table = () => {
+    let table = $('#tableAlistamiento').dataTable(); 
+    table.fnDraw(false);
+}
