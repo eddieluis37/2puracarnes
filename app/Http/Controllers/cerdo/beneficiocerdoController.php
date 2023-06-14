@@ -64,7 +64,7 @@ class beneficiocerdoController extends Controller
 		    $newLote = "";
             $reg = Beneficiocerdo::select()->first();
             if ($reg === null) {
-                $newLote = "RES".$year.$month.$day."1";
+                $newLote = "CE".$year.$month.$day."1";
             }else {
                 $regUltimo = Beneficiocerdo::select()->latest()->first()->toArray();
                 $consecutivo = $regUltimo['id']+1;
@@ -317,10 +317,10 @@ class beneficiocerdoController extends Controller
     public function edit($id)
     {
         
-        $benefi = Beneficiore::where('id', $id)->first();
+        $benefi = Beneficiocerdo::where('id', $id)->first();
 		return response()->json([
 			"id" => $id,
-			"beneficiores" => $benefi,
+			"beneficiocerdos" => $benefi,
 		]);
     }
 
@@ -345,7 +345,7 @@ class beneficiocerdoController extends Controller
     public function destroy($id)
     {
 		try {
-			$updateBeneficiocerdo = Beneficiore::firstWhere('id', $id);
+			$updateBeneficiocerdo = Beneficiocerdo::firstWhere('id', $id);
 			$updateBeneficiocerdo->status = false;
 			$updateBeneficiocerdo->save();
         	return response()->json([
