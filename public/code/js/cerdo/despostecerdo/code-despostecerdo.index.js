@@ -44,7 +44,7 @@ table.addEventListener("keydown", function(event) {
       dataform.append("id", Number(event.target.id));
       dataform.append("peso_kilo", Number(trimValue));
       dataform.append("beneficioId", Number(beneficioId.value));
-      sendData("/desposteresUpdate",dataform,token).then((result) => {
+      sendData("/despostecerdoUpdate",dataform,token).then((result) => {
         //console.log(result);
         showDataTable(result);
       });
@@ -58,8 +58,8 @@ const showDataTable = (data) => {
   //console.log(dataRow);
   let dataTotals = data.arrayTotales;
   //console.log(dataTotals);
-  let dataBeneficiores = data.beneficiores;
-  //console.log(dataBeneficiores);
+  let dataBeneficiocerdos = data.beneficiocerdos;
+  //console.log(dataBeneficiocerdos);
 
   tableTbody.innerHTML = "";
   dataRow.forEach(element => {
@@ -103,10 +103,10 @@ const showDataTable = (data) => {
   mermaPesoTotal.innerHTML = "";
   mermaPesoTotal.innerHTML += `${formatCantidad(Peso_total_Desp)}`;
 
-  let canalPlanta = Number(dataBeneficiores[0].canalplanta);
+  let canalPlanta = Number(dataBeneficiocerdos[0].canalplanta);
   //console.log(canalPlanta);
-  let cantidad = Number(dataBeneficiores[0].cantidad);
-  let costokilo = Number(dataBeneficiores[0].costokilo);
+  let cantidad = Number(dataBeneficiocerdos[0].cantidad);
+  let costokilo = Number(dataBeneficiocerdos[0].costokilo);
   //console.log(cantidad);
   let resultcanalPlantaCostoKilo = canalPlanta * costokilo;  
   //console.log(resultcanalPlantaCostoKilo);
