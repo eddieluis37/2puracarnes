@@ -85,7 +85,7 @@ Route::get('/libros', function () {
 });
 
 Route::resource('books', BooksController::class);
-Route::resource('beneficiocerdos', BeneficiocerdosController::class);
+//Route::resource('beneficiocerdos', BeneficiocerdosController::class);
 
 Route::group(['middleware'=> [('auth')]], function () {
 
@@ -218,6 +218,8 @@ Route::get('beneficiocerdo', [beneficiocerdoController::class,'index'])->name('b
 Route::get('showbeneficiocerdo', [beneficiocerdoController::class,'show'])->name('beneficiocerdo.showlist');
 
 Route::post('savebeneficiocerdo', [beneficiocerdoController::class, 'store'])->name('beneficiocerdo.save');
+Route::get('/edit/{id}', [beneficiocerdoController::class, 'edit'])->name('beneficiocerdo.edit');
+Route::get('downbeneficiocerdo/{id}', [beneficiocerdoController::class, 'destroy'])->name('beneficiocerdo.destroy');
 
 /**ALISTAMIENTO*/
 Route::get('alistamiento', [alistamientorogercodeController::class,'index'])->name('alistamiento.index');
