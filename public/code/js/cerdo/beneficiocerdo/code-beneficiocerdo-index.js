@@ -263,7 +263,7 @@ function Confirm(id) {
         if (result.value) {
             console.log(id);
             const waitOneSecond = async () => {
-                let response = await fetch(`/downbeneficiores/${id}`);
+                let response = await fetch(`/downbeneficiocerdo/${id}`);
                 let resp = await response.json();
                 console.log(resp);
                 return resp;
