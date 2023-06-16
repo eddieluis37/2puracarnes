@@ -29,6 +29,17 @@
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-left"><polyline points="15 18 9 12 15 6"></polyline></svg>
                     </li>
 
+                    <li class="">
+                        <a href="{{url('alistamiento')}}" class="menu-toggle" data-active="false">
+                            <div class="base-menu">
+                                <div class="base-icons">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-pie-chart"><path d="M21.21 15.89A10 10 0 1 1 8 2.83"></path><path d="M22 12A10 10 0 0 0 12 2v10z"></path></svg>
+                                </div>
+                                <span>Alistamiento</span>
+                            </div>
+                        </a>
+                    </li>
+
                     @can('Product_View')
                     <li class="">
                         <a href="{{ url('products') }}" class="menu-toggle" data-active="false">
@@ -417,7 +428,7 @@
 
                       
 
-                         <li class="sub-submenu">
+                        <!--  <li class="sub-submenu">
                             <a role="menu" class="collapsed" data-toggle="collapse" data-target="#starter-kit2" aria-expanded="false"><div><span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-circle"><circle cx="12" cy="12" r="10"></circle></svg></span> Aves</div> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg></a>
                             <ul id="starter-kit2" class="collapse" data-parent="#compact_submenuSidebar">
                                 <li>
@@ -428,49 +439,38 @@
                                 </li>                            
                             </ul>
                         </li>
-
-
-                        <li class="sub-submenu">
-                            <a role="menu" class="collapsed" data-toggle="collapse" data-target="#starter-kit" aria-expanded="false"><div><span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-circle"><circle cx="12" cy="12" r="10"></circle></svg></span>En Desarrollo</div> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg></a>
-                            <ul id="starter-kit" class="collapse" data-parent="#compact_submenuSidebar">
-                                <li>
-                                    <a href={{url('#')}}> En desarrollo Cerdo </a>
-                                </li>
-                                <li>
-                                    <a href={{url('#')}}> En desarrollo Cerdo </a>
-                                </li>
-                                <li>
-                                    <a href=""> En desarrollo Cerdo </a>
-                                </li>                            
-                            </ul>
-                        </li>
-
-                        <li class="sub-submenu">
+ -->
+                       <!--  <li class="sub-submenu">
                             <a role="menu" class="collapsed" data-toggle="collapse" data-target="#auth" aria-expanded="false"><div> <span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-circle"><circle cx="12" cy="12" r="10"></circle></svg></span> Res</div> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg></a>
                             <ul id="auth" class="collapse" data-parent="#compact_submenuSidebar">
-                                <li>
+                               <!--  <li>
                                     <a href={{url('beneficiores')}}> Lote Res </a>
-                                </li>
+                                </li> -->
                                <!--  <li>
                                     <a href="desposter"> Desposte Res </a>
                                 </li>
                                 <li>
                                     <a href=""> Compensado Res </a>
-                                </li>   -->                              
+                                </li>                                
                             </ul>
-                        </li>                       
+                        </li>         -->               
+                        
+
+                        <li>
+                        <a href="{{ url('beneficiores') }}"><span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-circle"><circle cx="12" cy="12" r="10"></circle></svg></span> Lote Res </a>
+                        </li>
                         
                         <li>
                         <a href="{{ url('beneficiocerdo') }}"><span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-circle"><circle cx="12" cy="12" r="10"></circle></svg></span> Lote Cerdo </a>
                         </li>
-                        
+
+                        <li>
+                        <a href="{{ url('beneficiopollos') }}"><span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-circle"><circle cx="12" cy="12" r="10"></circle></svg></span> Lote Pollos </a>
+                        </li>
+                                         
                         <li>
                         <a href="{{ url('compensado') }}"><span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-circle"><circle cx="12" cy="12" r="10"></circle></svg></span> Compensado </a>
-                        </li>
-
-                          <li>
-                            <a href="{{ url('alistamiento') }}"><span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-circle"><circle cx="12" cy="12" r="10"></circle></svg></span> Alistamiento</a>
-                        </li>
+                        </li>                        
 
                     </ul>
                 </div>
