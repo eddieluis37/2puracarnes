@@ -22,24 +22,22 @@ class CreateBeneficiopollosTable extends Migration
             $table->unsignedBigInteger('plantasacrificio_id')->nullable();
             $table->foreign('plantasacrificio_id')->references('id')->on('sacrificiopollos');
             
-            $table->bigInteger('cantidad')->nullable(); 
-            
-            $table->date('fecha_beneficio');
-
-            $table->string('factura');
-
             $table->unsignedBigInteger('clientpieles_id')->nullable();
             $table->foreign('clientpieles_id')->references('id')->on('thirds');
 
             $table->unsignedBigInteger('clientvisceras_id')->nullable();
             $table->foreign('clientvisceras_id')->references('id')->on('thirds');
+
+            $table->bigInteger('cantidad')->nullable(); 
+            
+            $table->date('fecha_beneficio');
+            $table->date('fecha_cierre')->nullable();
+
+            $table->string('factura');
                       
             $table->string('lote');
             
-            $table->boolean('status')->parent_select()->default(true)->nullable();            
          
-
-      
             $table->decimal('sacrificio', 18, 0)->nullable();
 
             $table->decimal('fomento', 18, 0)->nullable();
@@ -65,8 +63,6 @@ class CreateBeneficiopollosTable extends Migration
             $table->decimal('costoanimal2', 18, 0)->nullable();
             
             $table->decimal('costoanimal3', 18, 0)->nullable();    
-                    
-           
 
             $table->bigInteger('menudenciaskg')->nullable();
 
@@ -84,8 +80,6 @@ class CreateBeneficiopollosTable extends Migration
             
             $table->decimal('visceras', 18, 2)->nullable();                 
                   
-
-            
             # Totales
 
             $table->decimal('costopie1', 18, 0)->nullable();
@@ -94,8 +88,6 @@ class CreateBeneficiopollosTable extends Migration
 
             $table->decimal('costopie3', 18, 0)->nullable();
             
-             
-
             $table->decimal('tmenudencias', 18, 0)->nullable();
 
             $table->decimal('tsacrificio', 18, 0)->nullable(); 
@@ -122,10 +114,7 @@ class CreateBeneficiopollosTable extends Migration
 
             $table->decimal('totalcostos', 18, 0)->nullable();
             
-         
-
             # Rendimiento   
-            
             
             $table->decimal('pesopie', 18, 2)->nullable(); 
 
@@ -141,6 +130,7 @@ class CreateBeneficiopollosTable extends Migration
 
             $table->decimal('rendfrio', 18, 2)->nullable();       
 
+            $table->boolean('status')->parent_select()->default(true)->nullable();            
             $table->timestamps();
         });
     }
