@@ -12,6 +12,7 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\Validator;
 use App\Models\Third;
 use App\Models\Sacrificio;
+use App\Models\Sacrificiocerdo;
 use App\Models\Beneficiore;
 use NumberFormatter;
 use DateTime;
@@ -27,6 +28,7 @@ class beneficiocerdoController extends Controller
     {
         $thirds = Third::orderBy('name', 'asc')->get();
         $sacrificios = Sacrificio::orderBy('name', 'asc')->get();
+		//dd($sacrificios);
         return view('categorias.cerdo.beneficiocerdo.index', compact('thirds','sacrificios'));
     }
 
@@ -293,9 +295,9 @@ class beneficiocerdoController extends Controller
                 ->make(true);
     }
 
-    public function get_plantasacrificio_by_id(Request $request)
+    public function get_plantasacrificiocerdo_by_id(Request $request)
 	{
-		$data1 = Sacrificio::where('id', $request->plantasacrificio_id)->firstOrFail();
+		$data1 = Sacrificiocerdo::where('id', $request->plantasacrificio_id)->firstOrFail();
 
 		return response()->json(
 			[

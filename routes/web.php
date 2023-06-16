@@ -216,7 +216,7 @@ Route::get('downbeneficiores/{id}', [beneficioresrogercodeController::class, 'de
 /**BENEFICIO CERDO */
 Route::get('beneficiocerdo', [beneficiocerdoController::class,'index'])->name('beneficiocerdo.index');
 Route::get('showbeneficiocerdo', [beneficiocerdoController::class,'show'])->name('beneficiocerdo.showlist');
-
+Route::get('get_plantasacrificiocerdo_by_id', [beneficiocerdoController::class, 'get_plantasacrificiocerdo_by_id'])->name('get_plantasacrificiocerdo_by_id');
 Route::post('savebeneficiocerdo', [beneficiocerdoController::class, 'store'])->name('beneficiocerdo.save');
 Route::get('/edit/{id}', [beneficiocerdoController::class, 'edit'])->name('beneficiocerdo.edit');
 Route::get('downbeneficiocerdo/{id}', [beneficiocerdoController::class, 'destroy'])->name('beneficiocerdo.destroy');

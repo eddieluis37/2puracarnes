@@ -14,7 +14,7 @@ class Beneficiocerdo extends Model
     
     
     public function plantasacrificio(){
-        return $this->belongsTo(Sacrificio::class);
+        return $this->belongsTo(Sacrificiocerdo::class);
     }
 
        public function third(){
