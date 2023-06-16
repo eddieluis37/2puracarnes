@@ -231,4 +231,5 @@ Route::post('alistamientosavedetail', [alistamientorogercodeController::class,'s
 Route::post('/alistamientoUpdate', [alistamientorogercodeController::class, 'updatedetail'])->name('alistamiento.update');
 Route::post('alistamientodown', [alistamientorogercodeController::class,'destroy'])->name('alistamiento.down');
 Route::post('alistamientoById', [alistamientorogercodeController::class,'editAlistamiento'])->name('alistamiento.edit');
-Route::post('getproductospadre', [alistamientorogercodeController::class,'getProductsCategoryPadre'])->name('alistamiento.getproductos');
+Route::post('getproductospadre', [alistamientorogercodeController::class,'getProductsCategoryPadre'])->name('alistamiento.getproductospadre');
+Route::post('/downmmainalistamiento', [alistamientorogercodeController::class, 'destroyAlistamiento'])->name('alistamiento.downAlistamiento');

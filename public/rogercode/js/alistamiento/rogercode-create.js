@@ -13,6 +13,7 @@ const selectProducto = document.getElementById("producto");
 const selectCategoria = document.querySelector("#productoCorte");
 const btnAddAlist = document.querySelector('#btnAddAlistamiento');
 const alistamientoId = document.querySelector("#alistamientoId");
+const kgrequeridos = document.querySelector("#kgrequeridos");
 
 $('.select2Prod').select2({
 	placeholder: 'Busca un producto',
@@ -91,12 +92,12 @@ const showData = (data) => {
       	    <td>${element.id}</td>
       	    <td>${element.code}</td>
       	    <td>${element.nameprod}</td>
-      	    <td>${element.stock}</td>
+      	    <td>${formatCantidad(element.stock)} KG</td>
       	    <td>00</td>
       	    <td>
             <input type="text" class="form-control-sm" data-id="${element.products_id}" id="${element.id}" value="${element.kgrequeridos}" placeholder="Ingresar" size="10">
             </td>
-      	    <td>${element.newstock}</td>
+      	    <td>${formatCantidad(element.newstock)} KG</td>
 			<td class="text-center">
 				<button class="btn btn-dark fas fa-trash" name="btnDownReg" data-id="${element.id}" title="Borrar" >
 				</button>
@@ -126,6 +127,11 @@ const showData = (data) => {
     newStockPadre.value = newTotalStockPadre;
 }
 
+kgrequeridos.addEventListener("change", function() {
+  const enteredValue = formatkg(kgrequeridos.value);
+  console.log("Entered value: " + enteredValue);
+  kgrequeridos.value = enteredValue;
+});
 
 tableAlistamiento.addEventListener("keydown", function(event) {
   if (event.keyCode === 13) {
