@@ -110,7 +110,7 @@
 							<div class="col-md-4">
 								<label for="" class="form-label">Ultimo conteo fisico</label>
 								<div class="input-group flex-nowrap">
-								<input type="text" id="pesokg" name="pesokg" class="form-control-sm form-control" placeholder="20,00 kg">
+								<input type="text" id="pesokg" name="pesokg" class="form-control-sm form-control" placeholder="180.40 kg">
 									<span class="input-group-text" id="addon-wrapping">KG</span>
 								</div>
 							</div>
