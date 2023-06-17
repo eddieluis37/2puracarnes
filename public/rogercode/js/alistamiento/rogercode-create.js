@@ -93,7 +93,7 @@ const showData = (data) => {
       	    <td>${element.code}</td>
       	    <td>${element.nameprod}</td>
       	    <td>${formatCantidad(element.stock)} KG</td>
-      	    <td>00</td>
+      	    <td>${formatCantidad(element.fisico)} KG</td>
       	    <td>
             <input type="text" class="form-control-sm" data-id="${element.products_id}" id="${element.id}" value="${element.kgrequeridos}" placeholder="Ingresar" size="10">
             </td>

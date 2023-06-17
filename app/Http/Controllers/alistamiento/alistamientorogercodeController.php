@@ -54,7 +54,7 @@ class alistamientorogercodeController extends Controller
          
         $cortes = DB::table('meatcuts as me')
         ->join('products as pro', 'me.id', '=', 'pro.meatcut_id')
-        ->select('me.*', 'pro.stock')
+        ->select('me.*', 'pro.stock','pro.fisico')
         ->where([
             ['pro.level_product_id',1],
             ['me.id',$dataAlistamiento[0]->meatcut_id],
@@ -283,7 +283,7 @@ class alistamientorogercodeController extends Controller
 
         $detail = DB::table('enlistment_details as en')
         ->join('products as pro', 'en.products_id', '=', 'pro.id')
-        ->select('en.*', 'pro.name as nameprod','pro.code','pro.stock')
+        ->select('en.*', 'pro.name as nameprod','pro.code','pro.stock','pro.fisico')
         ->where([
             ['en.enlistments_id',$alistamientoId],
             ['en.status',1]

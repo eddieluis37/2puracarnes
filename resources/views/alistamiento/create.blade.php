@@ -110,7 +110,7 @@
 							<div class="col-md-4">
 								<label for="" class="form-label">Ultimo conteo fisico</label>
 								<div class="input-group flex-nowrap">
-								<input type="text" id="pesokg" name="pesokg" class="form-control-sm form-control" placeholder="180.40 kg">
+								<input type="text" id="pesokg" name="pesokg" value="{{$cortes[0]->fisico}}" class="form-control-sm form-control" placeholder="180.40 kg">
 									<span class="input-group-text" id="addon-wrapping">KG</span>
 								</div>
 							</div>
@@ -150,7 +150,7 @@
 											<td>{{$proddetail->code}}</td>
 											<td>{{$proddetail->nameprod}}</td>
 											<td>{{ number_format($proddetail->stock, 2, ',', '.')}} KG</td>
-											<td>00</td>
+											<td>{{ number_format($proddetail->fisico, 2, ',', '.')}} KG</td>
 											<td>
 												<input type="text" class="form-control-sm" data-id="{{$proddetail->products_id}}" id="{{$proddetail->id}}" value="{{$proddetail->kgrequeridos}}" placeholder="Ingresar" size="10">
 											</td>
