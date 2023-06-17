@@ -38,6 +38,8 @@ use App\Http\Controllers\inventory\mensualrogercodeController;
 use App\Http\Controllers\compensado\resrogercodeController;
 use App\Http\Controllers\compensado\compensadorogercodeController;
 use App\Http\Controllers\alistamiento\alistamientorogercodeController;
+use App\Http\Controllers\aves\beneficioavesrogercodeController;
+use App\Http\Controllers\aves\desposteavesrogercodeController;
 
 /************************************************* */
 
@@ -132,7 +134,7 @@ Route::group(['middleware'=> [('auth')]], function () {
     //Route::post('store', [BeneficioresController::class, 'store'])->name('store');
     //Route::get('/edit/{id}', [BeneficioresController::class, 'edit'])->name('edit');
 
-    Route::get('get_plantasacrificiopollo_by_id', [BeneficiopollosController::class, 'get_plantasacrificiopollo_by_id'])->name('get_plantasacrificiopollo_by_id');
+    //Route::get('get_plantasacrificiopollo_by_id', [BeneficiopollosController::class, 'get_plantasacrificiopollo_by_id'])->name('get_plantasacrificiopollo_by_id');
 
 
     Route::post('storepollo', [BeneficiopollosController::class, 'storepollo'])->name('storepollo');
@@ -233,3 +235,15 @@ Route::post('alistamientodown', [alistamientorogercodeController::class,'destroy
 Route::post('alistamientoById', [alistamientorogercodeController::class,'editAlistamiento'])->name('alistamiento.edit');
 Route::post('getproductospadre', [alistamientorogercodeController::class,'getProductsCategoryPadre'])->name('alistamiento.getproductospadre');
 Route::post('/downmmainalistamiento', [alistamientorogercodeController::class, 'destroyAlistamiento'])->name('alistamiento.downAlistamiento');
+Route::post('/downmmainalistamiento', [alistamientorogercodeController::class, 'destroyAlistamiento'])->name('alistamiento.downAlistamiento');
+
+/***** BENEFICIO AVES******** */
+Route::get('beneficioaves', [beneficioavesrogercodeController::class,'index'])->name('beneficioaves.index');
+Route::get('get_plantasacrificiopollo_by_id', [beneficioavesrogercodeController::class, 'get_plantasacrificiopollo_by_id'])->name('get_plantasacrificiopollo_by_id');
+Route::post('savebeneficioaves', [beneficioavesrogercodeController::class, 'store'])->name('beneficioaves.save');
+Route::get('showbeneficioaves', [beneficioavesrogercodeController::class,'show'])->name('beneficioaves.showlist');
+Route::get('/beneficioavesedit/{id}', [beneficioavesrogercodeController::class, 'edit'])->name('beneficioaves.edit');
+
+Route::get('desposteaves/{id}', [desposteavesrogercodeController::class, 'create'])->name('desposteaves.create');
+Route::post('/desposteavesUpdate', [desposteavesrogercodeController::class, 'update'])->name('desposteaves.update');
+Route::post('/downdesposteave', [desposteavesrogercodeController::class, 'destroy'])->name('desposteaves.destroy');
