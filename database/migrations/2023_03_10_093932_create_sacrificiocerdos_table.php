@@ -22,11 +22,11 @@ class CreateSacrificiocerdosTable extends Migration
             $table->bigInteger('phone')->nullable();
             $table->string('email',90)->nullable();
 
-            $table->decimal('transporte', 18, 2)->nullable();          
-            $table->decimal('sacrificio', 18, 2)->nullable();
-            $table->decimal('fomento', 18, 2)->nullable(); 
-            $table->decimal('deguello', 18, 2)->nullable();                       
-            $table->decimal('bascula', 18, 2)->nullable();
+            $table->decimal('transporte', 18, 0)->nullable();          
+            $table->decimal('sacrificio', 18, 0)->nullable();
+            $table->decimal('fomento', 18, 0)->nullable(); 
+            $table->decimal('deguello', 18, 0)->nullable();                       
+            $table->decimal('bascula', 18, 0)->nullable();
 
             $table->timestamps();
         });

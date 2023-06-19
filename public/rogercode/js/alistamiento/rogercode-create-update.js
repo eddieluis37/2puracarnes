@@ -11,13 +11,13 @@ btnAddAlistamiento.addEventListener("click", async (e) => {
             btnClose.click();
             successToastMessage(resp.message); 
             refresh_table();
-            /*if (resp.registroId != 0) {//for new register
-                window.location.href = `compensado/create/${resp.registroId}`;
+            if (resp.registroId != 0) {//for new register
+                window.location.href = `alistamiento/create/${resp.registroId}`;
             }else{
-                refresh_table();
-            }*/
+                //refresh_table();
+            }
         }
-        /*if (resp.status == 0) {
+        if (resp.status == 0) {
             let errors = resp.errors;
             console.log(errors);
             $.each(errors, function(field, messages) {
@@ -27,6 +27,6 @@ btnAddAlistamiento.addEventListener("click", async (e) => {
                 $errorContainer.html(messages[0]);
                 $errorContainer.show();
             });        
-        }*/
+        }
     });
 })

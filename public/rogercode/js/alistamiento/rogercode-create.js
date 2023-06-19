@@ -1,16 +1,19 @@
 import {sendData} from '../exportModule/core/rogercode-core.js';
+import { successToastMessage, errorMessage } from '../exportModule/message/rogercode-message.js';
 const token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
 const formDetail = document.querySelector('#form-detail');
-/*const showRegTbody = document.querySelector("#tbodyDetail");
-let tbodyTable = document.querySelector("#tableDespostere tbody")
-const compensado_id = document.querySelector("#compensadoId");
-const pesokg = document.querySelector("#pesokg");
-const pcompra = document.querySelector("#pcompra");
-const regDetail = document.querySelector("#regdetailId");
-const tableFoot = document.querySelector("#tabletfoot");*/
+const showRegTbody = document.querySelector("#tbodyDetail");
+const tableAlistamiento = document.querySelector("#tableAlistamiento");
+const tbodyTable = document.querySelector("#tableAlistamiento tbody")
+const stockPadre = document.querySelector("#stockCortePadre");
+const newStockPadre = document.querySelector("#newStockPadre");
+const meatcutId = document.querySelector("#meatcutId");
+const tableFoot = document.querySelector("#tabletfoot");
 const selectProducto = document.getElementById("producto");
 const selectCategoria = document.querySelector("#productoCorte");
 const btnAddAlist = document.querySelector('#btnAddAlistamiento');
+const alistamientoId = document.querySelector("#alistamientoId");
+const kgrequeridos = document.querySelector("#kgrequeridos");
 
 $('.select2Prod').select2({
 	placeholder: 'Busca un producto',
@@ -24,9 +27,28 @@ $('.select2ProdHijos').select2({
 	theme: "bootstrap-5",
 	allowClear: true,
 });
- $('.select2Prod').on('change', function() {
+const dataform = new FormData();
+dataform.append("categoriaId", Number(meatcutId.value));
+sendData("/getproductos",dataform,token).then((result) => {
+    console.log(result);
+    let prod = result.products;
+    console.log(prod);
+    selectProducto.innerHTML = "";
+    selectProducto.innerHTML += `<option value="">Seleccione el producto</option>`;
+    prod.forEach(option => {
+    const optionElement = document.createElement("option");
+    optionElement.value = option.id;
+    optionElement.text = option.name;
+    selectProducto.appendChild(optionElement);
+    });
+});
+/*$('.select2Prod').on('change', function() {
     const selectedValue = $(this).val();
     console.log("Selected value: " + selectedValue);
+    const selectedOption = $(this).find('option:selected');
+    const attributeStock = selectedOption.attr('data-stock');
+    console.log("Attribute value: " + attributeStock);
+    stockPadre.value = attributeStock;
     const dataform = new FormData();
     dataform.append("categoriaId", Number(selectedValue));
     sendData("/getproductos",dataform,token).then((result) => {
@@ -42,29 +64,137 @@ $('.select2ProdHijos').select2({
         selectProducto.appendChild(optionElement);
         });
     });
-});
+});*/
 
 btnAddAlist.addEventListener('click', (e) => {
     e.preventDefault();  
-    alert("Add Producto");
     const dataform = new FormData(formDetail);
     sendData("/alistamientosavedetail",dataform,token).then((result) => {
         console.log(result);
-        //if (result.status === 1) {
-            //$('#producto').val('').trigger('change');
-            //formDetail.reset();
-            //showData(result)
-        //}
-        //if (result.status === 0) {
-            //Swal(
-            //'Error!',
-            //'Tiene campos vacios!',
-            //'error'
-            //)
-        //}
+        if (result.status === 1) {
+            $('#producto').val('').trigger('change');
+            formDetail.reset();
+            showData(result)
+        }
+        if (result.status === 0) {
+            errorMessage("Tienes campos vacios");
+        }
     });
 })
 
+const showData = (data) => {
+    let dataAll = data.array;
+    console.log(dataAll);
+	showRegTbody.innerHTML = "";
+	dataAll.forEach((element,indice) => {
+	    showRegTbody.innerHTML += `
+    	    <tr>
+      	    <td>${element.id}</td>
+      	    <td>${element.code}</td>
+      	    <td>${element.nameprod}</td>
+      	    <td>${formatCantidad(element.stock)} KG</td>
+      	    <td>${formatCantidad(element.fisico)} KG</td>
+      	    <td>
+            <input type="text" class="form-control-sm" data-id="${element.products_id}" id="${element.id}" value="${element.kgrequeridos}" placeholder="Ingresar" size="10">
+            </td>
+      	    <td>${formatCantidad(element.newstock)} KG</td>
+			<td class="text-center">
+				<button class="btn btn-dark fas fa-trash" name="btnDownReg" data-id="${element.id}" title="Borrar" >
+				</button>
+			</td>
+    	    </tr>
+	    `;
+	});
+
+    let arrayTotales = data.arrayTotales; 
+    console.log(arrayTotales);
+    tableFoot.innerHTML = '';
+    tableFoot.innerHTML += `
+	    <tr>
+		    <td></td>
+		    <td></td>
+		    <th>Totales</th>
+		    <td></td>
+		    <td></td>
+		    <th>${formatCantidad(arrayTotales.kgTotalRequeridos)} KG</td>
+		    <th>${formatCantidad(arrayTotales.newTotalStock)} KG</th>
+		    <td class="text-center">
+                <button class="btn btn-success btn-sm">Cargar al inventario</button>
+            </td>
+	    </tr>
+    `;
+    let newTotalStockPadre = arrayTotales.kgTotalRequeridos - stockPadre.value;
+    newStockPadre.value = newTotalStockPadre;
+}
+
+kgrequeridos.addEventListener("change", function() {
+  const enteredValue = formatkg(kgrequeridos.value);
+  console.log("Entered value: " + enteredValue);
+  kgrequeridos.value = enteredValue;
+});
+
+tableAlistamiento.addEventListener("keydown", function(event) {
+  if (event.keyCode === 13) {
+    const target = event.target;
+    console.log(target);
+    if (target.tagName === "INPUT" && target.closest("tr")) {
+      console.log("Enter key pressed on an input inside a table row");
+      console.log(event.target.value);
+      console.log(event.target.id);
+      
+      const inputValue = event.target.value;
+      if (inputValue == "") {
+        return false;
+      }
+
+      let productoId = target.getAttribute('data-id');
+      console.log("prod test id: " + alistamientoId.value);
+
+      const trimValue = inputValue.trim();
+      const dataform = new FormData();
+      dataform.append("id", Number(event.target.id));
+      dataform.append("newkgrequeridos", Number(trimValue));
+      dataform.append("alistamientoId", Number(alistamientoId.value));
+      dataform.append("productoId", Number(productoId));
+      sendData("/alistamientoUpdate",dataform,token).then((result) => {
+        console.log(result);
+        showData(result);
+      });
+    }
+  }
+});
+
+tbodyTable.addEventListener("click", (e) => {
+    e.preventDefault(); 
+    let element = e.target;
+    if (element.name === 'btnDownReg') {
+        console.log(element);
+        console.log(element);
+		swal({
+			title: 'CONFIRMAR',
+			text: '¿CONFIRMAS ELIMINAR EL REGISTRO?',
+			type: 'warning',
+			showCancelButton: true,
+			cancelButtonText: 'Cerrar',
+			cancelButtonColor: '#fff',
+			confirmButtonColor: '#3B3F5C',
+			confirmButtonText: 'Aceptar'
+		}).then(function(result) {
+			if (result.value) {
+                let id = element.getAttribute('data-id');
+                console.log(id);
+                const dataform = new FormData();
+                dataform.append("id", Number(id));
+                dataform.append("alistamientoId", Number(alistamientoId.value));
+                sendData("/alistamientodown",dataform,token).then((result) => {
+                    console.log(result);
+                    showData(result)
+                })
+			}
+
+		})
+    }
+});
 /*selectCategoria.addEventListener("change", function() {
     const selectedValue = this.value;
     console.log("Selected value:", selectedValue);*/
@@ -137,47 +267,6 @@ btnAddAlist.addEventListener('click', (e) => {
 });
 
 
-const showData = (data) => {
-    let dataAll = data.array;
-    console.log(dataAll);
-	showRegTbody.innerHTML = "";
-	dataAll.forEach((element,indice) => {
-	    showRegTbody.innerHTML += `
-    	    <tr>
-      	    <td>${formatDate(element.created_at)}</td>
-      	    <td>${element.code}</td>
-      	    <td>${element.nameprod}</td>
-      	    <td>$ ${formatCantidadSinCero(element.pcompra)}</td>
-      	    <td>${formatCantidad(element.peso)} KG</td>
-      	    <td>$ ${formatCantidadSinCero(element.subtotal)}</td>
-      	    <td>${element.iva}</td>
-			<td class="text-center">
-				<button class="btn btn-dark fas fa-edit" data-id="${element.id}" name="btnEdit" title="Editar" >
-				</button>
-				<button class="btn btn-dark fas fa-trash" name="btnDown" data-id="${element.id}" title="Borrar" >
-				</button>
-			</td>
-    	    </tr>
-	    `;
-	});
-    let arrayTotales = data.arrayTotales; 
-    console.log(arrayTotales);
-    tableFoot.innerHTML = '';
-    tableFoot.innerHTML += `
-	    <tr>
-		    <th>Totales</th>
-		    <td></td>
-		    <td></td>
-		    <td></td>
-		    <th>${formatCantidad(arrayTotales.pesoTotalGlobal)} KG</td>
-		    <th>$ ${formatCantidadSinCero(arrayTotales.totalGlobal)} </th>
-		    <td></td>
-		    <td class="text-center">
-                <button class="btn btn-success">Cargar al inventario</button>
-            </td>
-	    </tr>
-    `;
-}
 
 pcompra.addEventListener("change", function() {
   const enteredValue = formatMoneyNumber(pcompra.value);

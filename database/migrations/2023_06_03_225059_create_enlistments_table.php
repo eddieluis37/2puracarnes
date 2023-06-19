@@ -25,6 +25,9 @@ class CreateEnlistmentsTable extends Migration
             $table->unsignedBigInteger('centrocosto_id')->nullable();
             $table->foreign('centrocosto_id')->references('id')->on('centro_costo');
 
+            $table->unsignedBigInteger('meatcut_id')->nullable();           
+            $table->foreign('meatcut_id')->references('id')->on('meatcuts')->onDelete("cascade");
+            
             $table->date('fecha_alistamiento');
             $table->date('fecha_cierre')->nullable();
 

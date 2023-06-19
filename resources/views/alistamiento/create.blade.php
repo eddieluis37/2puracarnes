@@ -54,19 +54,20 @@
 				<div class="card">
 					<div class="card-body">
 						<form id="form-detail">
-						<input type="hidden" id="alistamientoId" name="alistamientoId" value="">
-						<input type="hidden" id="regdetailId" name="regdetailId" value="0">
+						<input type="hidden" id="alistamientoId" name="alistamientoId" value="{{$dataAlistamiento[0]->id}}">
 						<div class="row g-3">
 							<div class="col-md-4">
 								<div class="task-header">
 									<div class="form-group">
                                         <label for="" class="form-label">Buscar corte padre</label>
-					                    <select class="form-control form-control-sm select2Prod" name="productoCorte" id="productoCorte" required="">
+										<input type="hidden" id="meatcutId" name="meatcutId" value="{{$dataAlistamiento[0]->meatcut_id}}">
+										<input type="text" id="productoCorte" name="productoCorte"value="{{$cortes[0]->name}}" class="form-control input" readonly >
+					                    <!--select class="form-control form-control-sm select2Prod" name="productoCorte" id="productoCorte" required="">
 											<option value="">Seleccione el producto</option>
 											@foreach ($cortes as $p)
-											<option value="{{$p->id}}">{{$p->name}}</option>
+											<option data-stock="{{$p->stock}}" value="{{$p->id}}">{{$p->name}}</option>
 											@endforeach
-					                    </select>
+					                    </select>-->
 									</div>
 								</div>
 							</div>
@@ -100,21 +101,24 @@
 					<div class="card-body">
 						<div class="row">
 							<div class="col-md-4">
-								<div class="form-group">
 								<label for="" class="form-label">Stock actual</label>
-								<input type="text" id="pesokg" name="pesokg" class="form-control-sm form-control" placeholder="10,00 kg">
+								<div class="input-group flex-nowrap">
+								<input type="text" id="stockCortePadre" name="stockCortePadre" value="{{$cortes[0]->stock}}" class="form-control-sm form-control" placeholder="10,00 kg">
+									<span class="input-group-text" id="addon-wrapping">KG</span>
 								</div>
 							</div>
 							<div class="col-md-4">
-								<div class="form-group">
 								<label for="" class="form-label">Ultimo conteo fisico</label>
-								<input type="text" id="pesokg" name="pesokg" class="form-control-sm form-control" placeholder="20,00 kg">
+								<div class="input-group flex-nowrap">
+								<input type="text" id="pesokg" name="pesokg" value="{{$cortes[0]->fisico}}" class="form-control-sm form-control" placeholder="180.40 kg">
+									<span class="input-group-text" id="addon-wrapping">KG</span>
 								</div>
 							</div>
 							<div class="col-md-4">
-								<div class="form-group">
 								<label for="" class="form-label">Nuevo stock</label>
-								<input type="text" id="pesokg" name="pesokg" class="form-control-sm form-control" placeholder="30,00 kg">
+								<div class="input-group flex-nowrap">
+								<input type="text" id="newStockPadre" name="newStockPadre" value="{{$newStock}}" class="form-control-sm form-control" placeholder="30,00 kg">
+									<span class="input-group-text" id="addon-wrapping">KG</span>
 								</div>
 							</div>
 						</div>
@@ -125,7 +129,7 @@
                 <div class="card">
                     <div class="card-body">
 							<div class="table-responsive mt-3">
-								<table id="tableDespostere" class="table table-sm table-striped table-bordered">
+								<table id="tableAlistamiento" class="table table-sm table-striped table-bordered">
 									<thead class="text-white" style="background: #3B3F5C">
 										<tr>
 											<!--th class="table-th text-white">Item</th>-->
@@ -140,61 +144,33 @@
 										</tr>
 									</thead>
 									<tbody id="tbodyDetail">
+										@foreach($enlistments as $proddetail)
 										<tr>
-											<td>1</td>
-											<td>h000</td>
-											<td>centro de pierna</td>
-											<td>10.00</td>
-											<td>8.00</td>
+											<td>{{$proddetail->id}}</td>
+											<td>{{$proddetail->code}}</td>
+											<td>{{$proddetail->nameprod}}</td>
+											<td>{{ number_format($proddetail->stock, 2, ',', '.')}} KG</td>
+											<td>{{ number_format($proddetail->fisico, 2, ',', '.')}} KG</td>
 											<td>
-												<input type="text" class="form-control-sm" id="" value="50.00" placeholder="Ingresar" size="10">
+												<input type="text" class="form-control-sm" data-id="{{$proddetail->products_id}}" id="{{$proddetail->id}}" value="{{$proddetail->kgrequeridos}}" placeholder="Ingresar" size="10">
 											</td>
-											<td>50.00</td>
+											<td>{{ number_format($proddetail->newstock, 2, ',', '.')}} KG</td>
 											<td class="text-center">
-												<button type="button" class="btn btn-dark btn-sm fas fa-trash" title="Cancelar" >
+												<button type="button" name="btnDownReg" data-id="{{$proddetail->id}}" class="btn btn-dark btn-sm fas fa-trash" title="Cancelar" >
 												</button>
 											</td>
 										</tr>
-										<tr>
-											<td>2</td>
-											<td>h000</td>
-											<td>Bota con muchacho</td>
-											<td>10.00</td>
-											<td>8.00</td>
-											<td>
-												<input type="text" class="form-control-sm" id="" value="50.00" placeholder="Ingresar" size="10">
-											</td>
-											<td>50.00</td>
-											<td class="text-center">
-												<button type="button" class="btn btn-dark btn-sm fas fa-trash" title="Cancelar" >
-												</button>
-											</td>
-										</tr>
-										<tr>
-											<td>3</td>
-											<td>h000</td>
-											<td>Bota</td>
-											<td>10.00</td>
-											<td>8.00</td>
-											<td>
-												<input type="text" class="form-control-sm" id="" value="50.00" placeholder="Ingresar" size="10">
-											</td>
-											<td>50.00</td>
-											<td class="text-center">
-												<button type="button" class="btn btn-dark btn-sm fas fa-trash" title="Cancelar" >
-												</button>
-											</td>
-										</tr>
+										@endforeach
 									</tbody>
 									<tfoot id="tabletfoot" >
 										<tr>
 											<th></th>
 											<th></th>
 											<th>Totales</th>
-											<th>15.00 kg</th>
-											<th>15.00 kg</th>
-											<th>15.00 kg</th>
-											<th>15.00 kg</th>
+											<th></th>
+											<th></th>
+											<th> {{number_format($arrayTotales['kgTotalRequeridos'], 2, ',', '.')}} KG</th>
+											<th> {{number_format($arrayTotales['newTotalStock'], 2, ',', '.')}} KG</th>
 											<th class="text-center">
 												<button class="btn btn-success btn-sm">Cargar al inventario</button>
 											</th>

@@ -22,6 +22,9 @@ class CreateEnlistmentDetailsTable extends Migration
             $table->foreign('products_id')->references('id')->on('products');
 
             $table->decimal('kgrequeridos', 18, 2)->nullable();
+            $table->decimal('newstock', 18, 2)->nullable();
+
+            $table->boolean('status')->parent_select()->default(true)->nullable();            
             $table->timestamps();
         });
     }
