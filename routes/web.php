@@ -207,13 +207,6 @@ Route::post('compensadodown', [compensadorogercodeController::class,'destroy'])-
 Route::post('compensadogetById', [compensadorogercodeController::class,'edit'])->name('compensado.ById');
 Route::post('compensadoById', [compensadorogercodeController::class,'editCompensado'])->name('compensado.editCompensado');
 Route::post('/downmaincompensado', [compensadorogercodeController::class, 'destroyCompensado'])->name('compensado.downCompensado');
-/**BENEFICIO RES */
-Route::get('beneficiores', [beneficioresrogercodeController::class,'index'])->name('beneficiores.index');
-Route::get('showbeneficiores', [beneficioresrogercodeController::class,'show'])->name('beneficiores.showlist');
-Route::get('get_plantasacrificio_by_id', [beneficioresrogercodeController::class, 'get_plantasacrificio_by_id'])->name('get_plantasacrificio_by_id');
-Route::post('savebeneficiores', [beneficioresrogercodeController::class, 'store'])->name('beneficiores.save');
-Route::get('/edit/{id}', [beneficioresrogercodeController::class, 'edit'])->name('beneficiores.edit');
-Route::get('downbeneficiores/{id}', [beneficioresrogercodeController::class, 'destroy'])->name('beneficiores.destroy');
 
 /**BENEFICIO CERDO */
 Route::get('beneficiocerdo', [beneficiocerdoController::class,'index'])->name('beneficiocerdo.index');
@@ -222,6 +215,14 @@ Route::get('get_plantasacrificiocerdo_by_id', [beneficiocerdoController::class, 
 Route::post('savebeneficiocerdo', [beneficiocerdoController::class, 'store'])->name('beneficiocerdo.save');
 Route::get('/edit/{id}', [beneficiocerdoController::class, 'edit'])->name('beneficiocerdo.edit');
 Route::get('downbeneficiocerdo/{id}', [beneficiocerdoController::class, 'destroy'])->name('beneficiocerdo.destroy');
+
+/**BENEFICIO RES */
+Route::get('beneficiores', [beneficioresrogercodeController::class,'index'])->name('beneficiores.index');
+Route::get('showbeneficiores', [beneficioresrogercodeController::class,'show'])->name('beneficiores.showlist');
+Route::get('get_plantasacrificio_by_id', [beneficioresrogercodeController::class, 'get_plantasacrificio_by_id'])->name('get_plantasacrificio_by_id');
+Route::post('savebeneficiores', [beneficioresrogercodeController::class, 'store'])->name('beneficiores.save');
+Route::get('/edit/{id}', [beneficioresrogercodeController::class, 'edit'])->name('beneficiores.edit');
+Route::get('downbeneficiores/{id}', [beneficioresrogercodeController::class, 'destroy'])->name('beneficiores.destroy');
 
 /**ALISTAMIENTO*/
 Route::get('alistamiento', [alistamientorogercodeController::class,'index'])->name('alistamiento.index');
