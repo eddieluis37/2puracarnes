@@ -1,8 +1,8 @@
 console.log("Starting")
-const btnAddAlistamiento = document.querySelector("#btnAddalistamiento");
-const formAlistamiento = document.querySelector("#form-alistamiento");
-const token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
-const btnClose = document.querySelector("#btnModalClose");
+const btnAddAlistamiento = document.querySelector("#btnAddalistamiento"); // selecciona un elemento HTML con el ID "btnAddalistamiento" y lo asigna a la variable btnAddAlistamiento. 
+const formAlistamiento = document.querySelector("#form-alistamiento"); // selecciona un elemento HTML con el ID "form-alistamiento" y lo asigna a la variable formAlistamiento. 
+const token = document.querySelector('meta[name="csrf-token"]').getAttribute('content'); // selecciona una etiqueta meta HTML con el nombre "csrf-token" y recupera el valor de su atributo de contenido, que se asigna a la variable token. 
+const btnClose = document.querySelector("#btnModalClose"); // selecciona un elemento HTML con el ID "btnModalClose" y lo asigna a la variable btnClose.
 
 const selectCategory = document.querySelector("#categoria");
 const selectCentrocosto = document.querySelector("#centrocosto");
