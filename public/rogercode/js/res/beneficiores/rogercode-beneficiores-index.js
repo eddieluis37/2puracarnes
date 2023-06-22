@@ -1,15 +1,16 @@
 console.log("benedicore Starting");
+// 1.Comienza con una función "document ready", que asegura que el código dentro de ella se ejecute solo después de que el documento haya terminado de cargarse. 
 $(document).ready(function () { 
-    $("#tableBeneficiores").DataTable({ 
+    $("#tableBeneficiores").DataTable({ //2. Se llama a la función DataTable en la tabla con el ID "tableBeneficiores". Esto inicializa el plugin DataTable en la tabla y establece varias opciones como paginación, longitud de página y ordenamiento. 
         paging: true, 
         pageLength: 5, 
         autoWidth: false, 
-        processing: true, 
+        processing: true, //3. Las opciones "processing" y "serverSide" se establecen en true. Esto significa que los datos se procesarán en el servidor, en lugar de en el lado del cliente.  
         serverSide: true, 
-        ajax: { 
+        ajax: { //4. La opción "ajax" se establece en un objeto con una propiedad "url" establecida en "/showbeneficiores". Esto significa que el DataTable recuperará datos de esta URL. 
             url: "/showbeneficiores", 
         }, 
-        columns: [ 
+        columns: [ //5. La opción "columns" se establece en una matriz de objetos, cada uno con una propiedad "data" y una propiedad "name". La propiedad "data" especifica qué propiedad del objeto de datos debe usarse para esa columna, y la propiedad "name" especifica el nombre de la columna. 
             { data: "id", name: "id" }, 
             { data: "namethird", name: "namethird" }, 
             { data: "date", name: "date" }, 
@@ -17,8 +18,10 @@ $(document).ready(function () {
             { data: "lote", name: "lote" }, 
             { data: "action", name: "action" }, 
         ], 
-        order: [[0, 'DESC']], 
-        language: { 
+        order: [[0, 'DESC']], //6. La opción "order" se establece en una matriz con un elemento, que es una matriz con dos elementos. El primer elemento especifica el índice de columna por el que ordenar (en este caso, la columna 0, que es la columna "id"), y el segundo elemento especifica la dirección de ordenamiento (en este caso, descendente). 
+       
+        // 7. La opción "language" se establece en un objeto con varias propiedades que especifican el texto a mostrar para varias partes de DataTable, como el mensaje de procesamiento, el menú de longitud y la caja de búsqueda.
+        language: {
             processing: "Procesando...", 
             lengthMenu: "Mostrar _MENU_ registros", 
             zeroRecords: "No se encontraron resultados", 
@@ -34,13 +37,15 @@ $(document).ready(function () {
                 previous: "Anterior", 
             }, 
         }, 
-    }); 
+    });
+    //9. Se define el objeto select2Options con varias opciones, como la anchura, el tema y el elemento padre desplegable.
      var select2Options = { 
         width: "100%", 
         theme: "bootstrap-5", 
         allowClear: true, 
         dropdownParent: $("#modal-create-beneficiore"), 
-    }; 
+    };
+    //8. Luego, el código configura tres menús desplegables select2 utilizando los selectores $(".selectProvider"), $(".selectPieles") y $(".selectVisceras"). 
      $(".selectProvider").select2($.extend({}, select2Options, { 
         placeholder: "Busca un proveedor", 
     })); 
@@ -51,6 +56,7 @@ $(document).ready(function () {
         placeholder: "Buscar un Cliente Viscera", 
     })); 
 });
+//10. Los elementos $(".selectProvider"), $(".selectPieles") y $(".selectVisceras") se inicializan como menús desplegables select2 utilizando el objeto select2Options, con opciones adicionales como el texto de marcador de posición.
 
 /*****************************************************************************************/
 const token = document
@@ -123,10 +129,36 @@ inputrendcaliente = document.querySelector("#rendcaliente");
 inputrendplanta = document.querySelector("#rendplanta");
 inputrendfrio = document.querySelector("#rendfrio");
 
+/*  La funcion "refresh_table" actualiza la tabla con ID "tableBeneficiores" utilizando el plugin jQuery DataTables.
+ 
+ Explicación paso a paso:
+
+1. La función se define utilizando la sintaxis de función de flecha y se asigna a una variable constante llamada "refresh_table". 
+2. El selector jQuery "$ (" #tableBeneficiores ")" selecciona el elemento HTML con el ID "tableBeneficiores". 
+3. Se llama al método "dataTable ()" en el elemento seleccionado para inicializar el plugin DataTables en la tabla. 
+4. El objeto DataTables inicializado se almacena en una variable llamada "table". 
+5. Se llama al método "fnDraw (false)" en el objeto "table" para volver a dibujar la tabla sin actualizar la página. El parámetro "false" indica que la tabla no debe volver a la primera página.
+ */
+
 const refresh_table = () => {
     let table = $("#tableBeneficiores").dataTable();
     table.fnDraw(false);
 };
+
+/* Se define la función asincrónica "edit" que toma un parámetro "id". Registra el parámetro "id" en la consola, luego hace una solicitud fetch al servidor para obtener los datos para editar un elemento específico con el "id" proporcionado. Una vez que se recibe la respuesta, analiza los datos como JSON y los registra en la consola. Si un elemento específico llamado "contentform" tiene el atributo "disabled", la función elimina el atributo y habilita otros tres elementos con IDs específicos. Finalmente, la función llama a otra función llamada "showForm" y pasa los datos recuperados como argumento. 
+
+Explicación paso a paso: 
+<1. El código define una función asincrónica llamada "edit" que toma un parámetro "id". 
+2. La función registra el parámetro "id" en la consola. 
+3. La función hace una solicitud fetch al servidor para obtener los datos para editar un elemento específico con el "id" proporcionado. La URL para la solicitud se construye utilizando una plantilla literal que incluye el parámetro "id". 
+4. La función espera a que se reciba la respuesta utilizando la palabra clave "await". 
+5. Una vez que se recibe la respuesta, la función analiza los datos como JSON utilizando el método "json ()" en el objeto de respuesta. 
+6. Los datos analizados se almacenan en una variable llamada "data". 
+7. La función registra la variable "data" en la consola. 
+8. Si un elemento específico llamado "contentform" tiene el atributo "disabled", la función elimina el atributo utilizando el método "removeAttribute ()". 
+9. La función habilita otros tres elementos con IDs específicos utilizando la sintaxis "$ ()" de jQuery y el método "prop ()". 
+10. Finalmente, la función llama a otra función llamada "showForm" y pasa los datos recuperados como argumento.
+ */
 
 const edit = async (id) => {
     console.log(id);
