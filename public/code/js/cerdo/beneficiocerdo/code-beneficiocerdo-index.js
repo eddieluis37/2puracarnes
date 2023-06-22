@@ -143,7 +143,7 @@ const refresh_table = () => {
 
 const edit = async (id) => {
     console.log(id);
-    const response = await fetch(`/edit/${id}`);
+    const response = await fetch(`/beneficiocerdoedit/${id}`);
     const data = await response.json();
     console.log(data);
     if(contentform.hasAttribute('disabled')){
