@@ -1,30 +1,29 @@
-
-  var plantasacrificio_id = $('#plantasacrificio_id');
-  //var cantidad = $('#cantidad');
+  //let cantidad = $('#cantidad');
+  let plantasacrificio_id = $("#plantasacrificio_id");
   let cantidadMacho = $("#cantidadMacho");
   let cantidadHembra = $("#cantidadHembra");
   let valorMacho = $("#valorUnitarioMacho");
   let valorHembra = $("#valorUnitarioHembra");
 
-  var canalfria = $('#canalfria');
-  var costoanimal1 = $('#costoanimal1');
-  var costoanimal2 = $('#costoanimal2');
-  var costoanimal3 = $('#costoanimal3');
-  var pesopie1 = $('#pesopie1');
-  var pesopie2 = $('#pesopie2');
-  var pesopie3 = $('#pesopie3');
+  let canalfria = $("#canalfria");
+  let costoanimal1 = $("#costoanimal1");
+  let costoanimal2 = $("#costoanimal2");
+  let costoanimal3 = $("#costoanimal3");
+  let pesopie1 = $("#pesopie1");
+  let pesopie2 = $("#pesopie2");
+  let pesopie3 = $("#pesopie3");
 
-  var pieleskg = $('#pieleskg');
-  var pielescosto = $('#pielescosto');
-  var visceras = $('#visceras');
+  let pieleskg = $("#pieleskg");
+  let pielescosto = $("#pielescosto");
+  let visceras = $("#visceras");
 
-  var canalcaliente = $('#canalcaliente');
-  var canalplanta = $('#canalplanta');
+  let canalcaliente = $("#canalcaliente");
+  let canalplanta = $("#canalplanta");
 
-  plantasacrificio_id.change(function () {
-    var plantasacrificio_id = $('#plantasacrificio_id');
-    $(obtener_registroid(plantasacrificio_id.val()));
-  });
+    plantasacrificio_id.change(function () {
+      var plantasacrificio_id = $('#plantasacrificio_id');
+      $(obtener_registroid(plantasacrificio_id.val()));
+    });
 
   //cantidad.change(function () { calculatotales(); });
   cantidadMacho.change(function () { calculatotales(); });
