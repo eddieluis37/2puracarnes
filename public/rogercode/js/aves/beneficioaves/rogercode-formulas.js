@@ -51,6 +51,7 @@
         plantasacrificio_id: plantasacrificio_id,
       },
       success: function (data1) {
+        console.log(data1);
         $("#sacrificio").val(data1.sacrificio);
         $("#fomento").val(data1.fomento);
         $("#deguello").val(data1.deguello);
@@ -79,10 +80,10 @@
 
     //SACRIFICIO / FOMENTO / DEGUELLO / BASCULA / TRANSPORTE
     var sacrificio = $('#sacrificio').val(); $('#tsacrificio').val(cantidad * sacrificio); var tsacrif = cantidad * sacrificio;
-    var fomento = $('#fomento').val(); $('#tfomento').val(cantidad * fomento * -1); var tfomen = cantidad * fomento * -1;
-    var deguello = $('#deguello').val(); $('#tdeguello').val(cantidad * deguello); var tdgue = cantidad * deguello;
-    var bascula = $('#bascula').val(); $('#tbascula').val(cantidad * bascula * -1); var tbascu = cantidad * bascula * -1;
-    var transporte = $('#transporte').val(); $('#ttransporte').val(cantidad * transporte); var ttrans = cantidad * transporte;
+    //var fomento = $('#fomento').val(); $('#tfomento').val(cantidad * fomento * -1); var tfomen = cantidad * fomento * -1;
+    //var deguello = $('#deguello').val(); $('#tdeguello').val(cantidad * deguello); var tdgue = cantidad * deguello;
+    //var bascula = $('#bascula').val(); $('#tbascula').val(cantidad * bascula * -1); var tbascu = cantidad * bascula * -1;
+    //var transporte = $('#transporte').val(); $('#ttransporte').val(cantidad * transporte); var ttrans = cantidad * transporte;
 
     //TOTAL PIELES Y VISCERAS
     var pielescosto = $('#pielescosto').val(); $('#tpieles').val(pieleskg * pielescosto * -1); var tpielc = pieleskg * pielescosto * -1;
@@ -90,11 +91,14 @@
     var visceras = $('#visceras').val(); $('#tvisceras').val(cantidad * visceras * -1); var tvisce = cantidad * visceras * -1;
 
     //TOTALES 
-    var totalc = tpie1 + tpie2 + tpie3 + tsacrif + tfomen + tdgue + tbascu + ttrans + tpielc + tvisce;
+    var totalc = tpie1 + tpie2 + tpie3 + tsacrif + tpielc + tvisce;
+    console.log(totalc);
     $('#totalcostos').val(totalc);
-    $('#valorfactura').val(tpie1 + tpie2 + tpie3 + tfomen + tbascu);
-    $('#costokilo').val(Math.round(totalc / canalplanta));
-    $('#costo').val(Math.round(totalc / canalplanta) * 12.5);
+    $('#valorfactura').val(tpie1 + tpie2 + tpie3);
+    $('#costokilo').val(Math.round(totalc / canalfria));
+    $('#costo').val(Math.round(totalc / canalfria) * 12.5);
+    //$('#costokilo').val(Math.round(totalc / canalplanta));
+    //$('#costo').val(Math.round(totalc / canalplanta) * 12.5);
 
     //RENDIMIENTO
     var pesopierend = pesopie1 * 1 + pesopie2 * 1 + pesopie3 * 1;

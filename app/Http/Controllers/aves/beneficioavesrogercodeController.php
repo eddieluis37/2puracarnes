@@ -117,8 +117,8 @@ class beneficioavesrogercodeController extends Controller
 		        $newBeneficiopollo->costo = 0;//$request->costo;
 		        $newBeneficiopollo->totalcostos = 0;//$request->totalcostos;
 		        $newBeneficiopollo->pesopie = $request->pesopie;
-		        $newBeneficiopollo->rtcanalcaliente = $request->rtcanalcaliente;
-		        $newBeneficiopollo->rtcanalplanta = $request->rtcanalplanta;
+		        $newBeneficiopollo->rtcanalcaliente = 0;//$request->rtcanalcaliente;
+		        $newBeneficiopollo->rtcanalplanta = 0;//$request->rtcanalplanta;
 		        $newBeneficiopollo->rtcanalfria = $request->rtcanalfria;
 		        $newBeneficiopollo->rendcaliente = $request->rendcaliente;
 		        $newBeneficiopollo->rendplanta = $request->rendplanta;
