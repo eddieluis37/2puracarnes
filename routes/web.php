@@ -220,7 +220,7 @@ Route::get('beneficiocerdo', [beneficiocerdoController::class,'index'])->name('b
 Route::get('showbeneficiocerdo', [beneficiocerdoController::class,'show'])->name('beneficiocerdo.showlist');
 Route::get('get_plantasacrificiocerdo_by_id', [beneficiocerdoController::class, 'get_plantasacrificiocerdo_by_id'])->name('get_plantasacrificiocerdo_by_id');
 Route::post('savebeneficiocerdo', [beneficiocerdoController::class, 'store'])->name('beneficiocerdo.save');
-Route::get('/edit/{id}', [beneficiocerdoController::class, 'edit'])->name('beneficiocerdo.edit');
+Route::get('/beneficiocerdoedit/{id}', [beneficiocerdoController::class, 'edit'])->name('beneficiocerdo.edit');
 Route::get('downbeneficiocerdo/{id}', [beneficiocerdoController::class, 'destroy'])->name('beneficiocerdo.destroy');
 
 /**ALISTAMIENTO*/
