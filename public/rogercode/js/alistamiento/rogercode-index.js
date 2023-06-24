@@ -28,6 +28,7 @@ $(document).ready(function () {
                 { data:'namecategoria', name: 'namecategoria'},
                 { data: 'namecentrocosto', name: 'namecentrocosto' },
                 { data: 'namecut', name: 'namecut' },
+                { data: 'inventory', name: 'inventory' },
                 { data: 'date', name: 'date' },
                 {data: 'action', name:'action'}
             ],

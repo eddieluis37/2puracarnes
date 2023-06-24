@@ -16,6 +16,8 @@ use Illuminate\Support\Facades\Validator;
 use App\Models\Product;
 use App\Models\Products\Meatcut;
 use App\Http\Controllers\metodosgenerales\metodosrogercodeController;
+use App\Models\shopping\shopping_enlistment;
+use App\Models\shopping\shopping_enlistment_details;
 
 class alistamientorogercodeController extends Controller
 {
@@ -54,7 +56,7 @@ class alistamientorogercodeController extends Controller
          
         $cortes = DB::table('meatcuts as me')
         ->join('products as pro', 'me.id', '=', 'pro.meatcut_id')
-        ->select('me.*', 'pro.stock','pro.fisico')
+        ->select('me.*', 'pro.stock','pro.fisico','pro.id as productopadreId')
         ->where([
             ['pro.level_product_id',1],
             ['me.id',$dataAlistamiento[0]->meatcut_id],
@@ -63,13 +65,43 @@ class alistamientorogercodeController extends Controller
         ])
         ->get();
 
+        /**************************************** */
+        $status = '';
+        $fechaAlistamientoCierre = Carbon::parse($dataAlistamiento[0]->fecha_cierre);
+        $date = Carbon::now();
+		$currentDate = Carbon::parse($date->format('Y-m-d'));
+        if ($currentDate->gt($fechaAlistamientoCierre)) {
+            //'Date 1 is greater than Date 2';
+            $status = 'false';
+        } elseif ($currentDate->lt($fechaAlistamientoCierre)) {
+            //'Date 1 is less than Date 2';
+            $status = 'true';
+        } else {
+            //'Date 1 and Date 2 are equal';
+            $status = 'false';
+        }
+        /**************************************** */
+        $statusInventory = "";
+        if ($dataAlistamiento[0]->inventario == "added") {
+            $statusInventory = "true";
+        }else{
+            $statusInventory = "false";
+        }
+        /**************************************** */
+        //dd($tt = [$status, $statusInventory]);
+
+        $display = "";
+        if($status == "false" || $statusInventory == "true"){
+            $display = "display:none;";
+        }
+
         $enlistments = $this->getalistamientodetail($id);
 
         $arrayTotales = $this->sumTotales($id);
 
         $newStock = $arrayTotales['kgTotalRequeridos'] - $cortes[0]->stock;
 
-        return view('alistamiento.create', compact('dataAlistamiento','cortes','enlistments','arrayTotales','newStock'));
+        return view('alistamiento.create', compact('dataAlistamiento','cortes','enlistments','arrayTotales','newStock','status','statusInventory', 'display'));
     }
 
     /**
@@ -174,6 +206,14 @@ class alistamientorogercodeController extends Controller
                     $onlyDate = $date->toDateString();
                 return $onlyDate;
             })
+            ->addColumn('inventory', function($data){
+                if ($data->inventario == 'pending') {
+                    $statusInventory = '<span class="badge bg-warning">Pendiente</span>';
+                }else{
+                    $statusInventory= '<span class="badge bg-success">Agregado</span>';
+                }
+                return $statusInventory;
+            })
             ->addColumn('action', function($data){
                 $currentDateTime = Carbon::now();
                 if (Carbon::parse($currentDateTime->format('Y-m-d'))->gt(Carbon::parse($data->fecha_cierre))) {
@@ -182,12 +222,19 @@ class alistamientorogercodeController extends Controller
 					<a href="alistamiento/create/'.$data->id.'" class="btn btn-dark" title="Alistar" >
 						<i class="fas fa-directions"></i>
 					</a>
+					<button class="btn btn-dark" title="" onclick="showDataForm('.$data->id.')">
+						<i class="fas fa-eye"></i>
+					</button>
 					<button class="btn btn-dark" title="" disabled>
 						<i class="fas fa-trash"></i>
 					</button>
                     </div>
                     ';
                 }elseif (Carbon::parse($currentDateTime->format('Y-m-d'))->lt(Carbon::parse($data->fecha_cierre))) {
+                    $status = '';
+                    if ($data->inventario == 'added') {
+                        $status = 'disabled';
+                    }
                     $btn = '
                     <div class="text-center">
 					<a href="alistamiento/create/'.$data->id.'" class="btn btn-dark" title="Alistar" >
@@ -196,7 +243,7 @@ class alistamientorogercodeController extends Controller
 					<button class="btn btn-dark" title="" onclick="showDataForm('.$data->id.')">
 						<i class="fas fa-eye"></i>
 					</button>
-					<button class="btn btn-dark" title="Borrar Beneficio" onclick="downAlistamiento('.$data->id.');">
+					<button class="btn btn-dark" title="Borrar Beneficio" onclick="downAlistamiento('.$data->id.');" '.$status.'>
 						<i class="fas fa-trash"></i>
 					</button>
                     </div>
@@ -218,7 +265,7 @@ class alistamientorogercodeController extends Controller
                 }
                 return $btn;
             })
-            ->rawColumns(['date','action'])
+            ->rawColumns(['date','inventory','action'])
             ->make(true);
     }
 
@@ -422,5 +469,62 @@ class alistamientorogercodeController extends Controller
                 'array' => (array) $th
             ]);
         }
+    }
+
+    public function add_shopping(Request $request)
+    {
+        try {
+            $id_user= Auth::user()->id;
+            $currentDateTime = Carbon::now();
+
+            DB::beginTransaction();
+            $shopp = new shopping_enlistment();
+            $shopp->users_id = $id_user;
+            $shopp->enlistments_id = $request->alistamientoId;
+            $shopp->productopadre_id = $request->productoPadre;
+            $shopp->stock_actual = $request->stockPadre;
+            $shopp->ultimo_conteo_fisico = $request->pesokg;
+            $shopp->nuevo_stock = $request->newStockPadre;
+            $shopp->fecha_shopping = $currentDateTime;
+            $shopp->save();
+
+            $regProd = $this->getalistamientodetail($request->alistamientoId);
+            $count = count($regProd);
+            if ($count == 0) {
+                return response()->json([
+                    'status' => 0,
+                    'message' => 'No tiene productos agregados'
+                ]);
+            }
+            foreach($regProd as $key){
+                $shoppDetails = new shopping_enlistment_details();
+                $shoppDetails->shopping_enlistment_id = $shopp->id;
+                $shoppDetails->products_id = $key->products_id;
+                $shoppDetails->stock_actual = $key->stock;
+                $shoppDetails->conteo_fisico = $key->fisico;
+                $shoppDetails->kgrequeridos = $key->kgrequeridos;
+                $shoppDetails->newstock = $key->newstock;
+                $shoppDetails->save();
+            }
+            
+            $invalist = Alistamiento::where('id', $request->alistamientoId)->first();
+            $invalist->inventario = "added";
+            $invalist->save();
+
+            DB::commit();
+            return response()->json([
+                'status' => 1,
+                'alistamiento' => $regProd,
+                'count' => $count,
+                'message' => 'Se guardo co exito'
+            ]);
+        } catch (\Throwable $th) {
+            DB::rollback();
+            return response()->json([
+                'status' => 0,
+                'array' => (array) $th
+            ]);
+        }
+
     }
 }
