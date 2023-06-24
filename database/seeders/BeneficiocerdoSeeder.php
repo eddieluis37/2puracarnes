@@ -21,7 +21,7 @@ class BeneficiocerdoSeeder extends Seeder
 		$dateNextMonday = $current_date->format('Y-m-d'); // Output the date in Y-m-d format
         Beneficiocerdo::create([
             'thirds_id' => 674,
-            'plantasacrificio_id' => 1,      
+            'plantasacrificiocerdo_id' => 1,      
             'cantidad' => 30,
             'fecha_beneficio' => $now,
             'fecha_cierre' => $dateNextMonday,

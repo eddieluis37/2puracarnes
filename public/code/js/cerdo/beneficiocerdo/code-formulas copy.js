@@ -1,5 +1,5 @@
   //let cantidad = $('#cantidad');
-  let plantasacrificiocerdo_id = $("#plantasacrificiocerdo_id");
+  let plantasacrificio_id = $("#plantasacrificio_id");
   let cantidadMacho = $("#cantidadMacho");
   let cantidadHembra = $("#cantidadHembra");
   let valorMacho = $("#valorUnitarioMacho");
@@ -20,9 +20,9 @@
   let canalcaliente = $("#canalcaliente");
   let canalplanta = $("#canalplanta");
 
-    plantasacrificiocerdo_id.change(function () {
-      var plantasacrificiocerdo_id = $('#plantasacrificiocerdo_id');
-      $(obtener_registroid(plantasacrificiocerdo_id.val()));
+    plantasacrificio_id.change(function () {
+      var plantasacrificio_id = $('#plantasacrificio_id');
+      $(obtener_registroid(plantasacrificio_id.val()));
     });
 
   //cantidad.change(function () { calculatotales(); });
@@ -116,8 +116,8 @@
   cantidadHembra.change(function () { CalculateTotalHembra(); });
   /**********************************************************/
 
-  function obtener_registroid(plantasacrificiocerdo_id) {
-    // alert("id "+plantasacrificiocerdo_id);
+  function obtener_registroid(plantasacrificio_id) {
+    // alert("id "+plantasacrificio_id);
     $.ajax({
       url: "/get_plantasacrificiocerdo_by_id",
       dataType: 'json',
@@ -126,7 +126,7 @@
         'X-CSRF-TOKEN': '{{ csrf_token() }}'
       },
       data: {
-        plantasacrificiocerdo_id: plantasacrificiocerdo_id,
+        plantasacrificio_id: plantasacrificio_id,
       },
       success: function (data) {
         console.log(data);
@@ -141,7 +141,7 @@
       }
     });
   };
-
+  
   function calculatotales() {
     let cantidadMacho = $("#cantidadMacho").val();
     let cantidadHemdra = $("#cantidadHembra").val();

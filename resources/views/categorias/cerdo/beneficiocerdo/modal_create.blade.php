@@ -73,13 +73,13 @@
 										<div class="form-group">
 											<label>Planta Sacrificio</label>
 											<div>
-												<select class="form-control form-control-sm" name="plantasacrificio_id" id="plantasacrificio_id" required="">
+												<select class="form-control form-control-sm" name="plantasacrificiocerdo_id" id="plantasacrificiocerdo_id" required="">
 													<option value="">Seleccione planta Sacrificio</option>
 													@foreach ($sacrificios as $s)
 													<option value="{{$s->id}}">{{$s->name}}</option>
 													@endforeach
 												</select>
-												@error('plantasacrificioid') <span class="text-danger er">{{ $message}}</span>@enderror
+												@error('plantasacrificiocerdoid') <span class="text-danger er">{{ $message}}</span>@enderror
 											</div>
 										</div>
 									</div>
@@ -161,7 +161,7 @@
 													<div class="col">
 														<label for="sell_price1">Peso pie 1</label>
 														<div class="input-group flex-nowrap">
-															<input type="text" name="pesopie1" id="pesopie1" class="form-control" aria-describedby="helpId" placeholder="000.000" step="0.01" required="">
+															<input type="text" name="pesopie1" id="pesopie1" class="form-control" aria-describedby="helpId" placeholder="0" step="0.01" required="">
 															<span class="input-group-text" id="addon-wrapping">KG</span>
 														</div>
 													</div>
@@ -169,7 +169,7 @@
 														<label for="sell_price">Costo Animal 1</label>
 														<div class="input-group flex-nowrap">
 															<span class="input-group-text" id="addon-wrapping">$</span>
-															<input type="text" name="costoanimal1" id="costoanimal1" class="form-control" aria-describedby="helpId" placeholder="000.000" step="0.01" required>
+															<input type="text" name="costoanimal1" id="costoanimal1" class="form-control" aria-describedby="helpId" placeholder="0" step="0.01" required>
 														</div>
 													</div>
 												</div>
@@ -313,28 +313,28 @@
 											<div class="col-md-2">
 												<label for="canalcaliente">Canal Caliente</label>
 												<div class="input-group flex-nowrap">
-													<input type="text" name="canalcaliente" id="canalcaliente" class="form-control" placeholder="000.000" aria-describedby="helpId" step="0.01" required>
+													<input type="text" name="canalcaliente" id="canalcaliente" class="form-control" placeholder="0" aria-describedby="helpId" step="0.01" required>
 													<span class="input-group-text" id="addon-wrapping">KG</span>
 												</div>
 											</div>
 											<div class="col-md-2">
 												<label for="canalfria">Canal Fria</label>
 												<div class="input-group flex-nowrap">
-													<input type="text" name="canalfria" id="canalfria" value="0" class="form-control" placeholder="000.000" aria-describedby="helpId" step="0.01">
+													<input type="text" name="canalfria" id="canalfria" value="0" class="form-control" placeholder="0" aria-describedby="helpId" step="0.01">
 													<span class="input-group-text" id="addon-wrapping">KG</span>
 												</div>
 											</div>
 											<div class="col-md-2">
 												<label for="sell_price">Canal Planta</label>
 												<div class="input-group flex-nowrap">
-													<input type="text" name="canalplanta" id="canalplanta" value="0" class="form-control" placeholder="000.000" aria-describedby="helpId" step="0.01">
+													<input type="text" name="canalplanta" id="canalplanta" value="0" class="form-control" placeholder="0" aria-describedby="helpId" step="0.01">
 													<span class="input-group-text" id="addon-wrapping">KG</span>
 												</div>
 											</div>
 											<div class="col-md-2">
 												<label for="pieleskg">Pieles Kg</label>
 												<div class="input-group flex-nowrap">
-													<input type="text" name="pieleskg" id="pieleskg" class="form-control" placeholder="000.000" aria-describedby="helpId" step="0.01" required>
+													<input type="text" name="pieleskg" id="pieleskg" class="form-control" placeholder="0" aria-describedby="helpId" step="0.01" required>
 													<span class="input-group-text" id="addon-wrapping">KG</span>
 												</div>
 											</div>
@@ -342,7 +342,7 @@
 												<label for="pielescosto">Piel Costo</label>
 												<div class="input-group flex-nowrap">
 													<span class="input-group-text" id="addon-wrapping">$</span>
-													<input type="text" name="pielescosto" id="pielescosto" class="form-control" placeholder="000.000" aria-describedby="helpId" step="0.01" required>
+													<input type="text" name="pielescosto" id="pielescosto" class="form-control" placeholder="0" aria-describedby="helpId" step="0.01" required>
 												</div>
 											</div>
 											<div class="col-md-2">
