@@ -236,6 +236,7 @@ Route::post('alistamientoById', [alistamientorogercodeController::class,'editAli
 Route::post('getproductospadre', [alistamientorogercodeController::class,'getProductsCategoryPadre'])->name('alistamiento.getproductospadre');
 Route::post('/downmmainalistamiento', [alistamientorogercodeController::class, 'destroyAlistamiento'])->name('alistamiento.downAlistamiento');
 Route::post('/downmmainalistamiento', [alistamientorogercodeController::class, 'destroyAlistamiento'])->name('alistamiento.downAlistamiento');
+Route::post('alistamientoAddShoping', [alistamientorogercodeController::class,'add_shopping'])->name('alistamiento.addShopping');
 
 /***** BENEFICIO AVES******** */
 Route::get('beneficioaves', [beneficioavesrogercodeController::class,'index'])->name('beneficioaves.index');

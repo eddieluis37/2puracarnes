@@ -1,11 +1,15 @@
 import {sendData} from '../exportModule/core/rogercode-core.js';
 import { successToastMessage, errorMessage } from '../exportModule/message/rogercode-message.js';
+import { loadingStart, loadingEnd } from '../exportModule/core/rogercode-core.js';
 const token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
 const formDetail = document.querySelector('#form-detail');
 const showRegTbody = document.querySelector("#tbodyDetail");
 const tableAlistamiento = document.querySelector("#tableAlistamiento");
 const tbodyTable = document.querySelector("#tableAlistamiento tbody")
+const tfootTable = document.querySelector("#tableAlistamiento tfoot")
 const stockPadre = document.querySelector("#stockCortePadre");
+const pesokg = document.querySelector("#pesokg");
+
 const newStockPadre = document.querySelector("#newStockPadre");
 const meatcutId = document.querySelector("#meatcutId");
 const tableFoot = document.querySelector("#tabletfoot");
@@ -14,6 +18,9 @@ const selectCategoria = document.querySelector("#productoCorte");
 const btnAddAlist = document.querySelector('#btnAddAlistamiento');
 const alistamientoId = document.querySelector("#alistamientoId");
 const kgrequeridos = document.querySelector("#kgrequeridos");
+const addShopping = document.querySelector("#addShopping");
+const productoPadre = document.querySelector("#productopadreId");
+
 
 $('.select2Prod').select2({
 	placeholder: 'Busca un producto',
@@ -119,7 +126,7 @@ const showData = (data) => {
 		    <th>${formatCantidad(arrayTotales.kgTotalRequeridos)} KG</td>
 		    <th>${formatCantidad(arrayTotales.newTotalStock)} KG</th>
 		    <td class="text-center">
-                <button class="btn btn-success btn-sm">Cargar al inventario</button>
+                <button class="btn btn-success btn-sm" id="addShopping">Cargar al inventario</button>
             </td>
 	    </tr>
     `;
@@ -195,6 +202,54 @@ tbodyTable.addEventListener("click", (e) => {
 		})
     }
 });
+
+tfootTable.addEventListener('click', (e) => {
+    e.preventDefault();
+    let element = e.target;
+    console.log(element);
+    if (element.id === 'addShopping') {//added to inventory
+        console.log("click");
+        loadingStart(element)
+        const dataform = new FormData();
+        dataform.append("alistamientoId", Number(alistamientoId.value));
+        dataform.append("newStockPadre", Number(newStockPadre.value));
+        dataform.append("pesokg", Number(pesokg.value));
+        dataform.append("stockPadre", Number(stockPadre.value));
+        dataform.append("productoPadre", Number(productoPadre.value));
+
+        sendData("/alistamientoAddShoping",dataform,token).then((result) => {
+            console.log(result);
+            if (result.status == 1) {
+                loadingEnd(element,"success","Cargar al inventario")
+                element.disabled = true;
+                window.location.href = `/alistamiento`;
+            }
+            if (result.status == 0) {
+                loadingEnd(element,"success","Cargar al inventario")
+                errorMessage(result.message);
+            }
+        })
+    }
+})
+
+//if (addShopping) {
+    /*addShopping.addEventListener('click', (e) => {
+        e.preventDefault();
+        const dataform = new FormData();
+        loadingStart(addShopping)
+        dataform.append("alistamientoId", Number(alistamientoId.value));
+        dataform.append("newStockPadre", Number(newStockPadre.value));
+        dataform.append("pesokg", Number(pesokg.value));
+        dataform.append("stockPadre", Number(stockPadre.value));
+
+        sendData("/alistamientoAddShoping",dataform,token).then((result) => {
+            console.log(result);
+            loadingEnd(addShopping,"success","Cargar al inventario")
+            //showData(result)
+        })
+    });*/
+//}
+
 /*selectCategoria.addEventListener("change", function() {
     const selectedValue = this.value;
     console.log("Selected value:", selectedValue);*/

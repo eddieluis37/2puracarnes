@@ -33,3 +33,21 @@ export const sendData = async (url,form,token) => {
     }
         
 }
+
+export const loadingStart = (btn) => {
+    btn.disabled = true;
+    btn.innerHTML = '';
+    btn.innerHTML += `
+        <div class="spinner-border spinner-border-sm" role="status">
+        <span class="visually-hidden">...</span>
+        </div>
+    ` 
+}
+
+export const loadingEnd = (btn,icon,text) => {
+    btn.innerHTML = '';
+    btn.innerHTML += `
+        <i class="${icon}"></i> ${text}</i>
+    `
+    btn.disabled = false;
+}
