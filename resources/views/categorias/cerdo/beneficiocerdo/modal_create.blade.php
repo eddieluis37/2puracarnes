@@ -73,13 +73,13 @@
 										<div class="form-group">
 											<label>Planta Sacrificio</label>
 											<div>
-												<select class="form-control form-control-sm" name="plantasacrificio_id" id="plantasacrificio_id" required="">
+												<select class="form-control form-control-sm" name="plantasacrificiocerdo_id" id="plantasacrificiocerdo_id" required="">
 													<option value="">Seleccione planta Sacrificio</option>
 													@foreach ($sacrificios as $s)
 													<option value="{{$s->id}}">{{$s->name}}</option>
 													@endforeach
 												</select>
-												@error('plantasacrificioid') <span class="text-danger er">{{ $message}}</span>@enderror
+												@error('plantasacrificiocerdoid') <span class="text-danger er">{{ $message}}</span>@enderror
 											</div>
 										</div>
 									</div>

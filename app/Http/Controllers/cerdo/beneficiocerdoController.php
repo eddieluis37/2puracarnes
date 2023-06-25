@@ -27,7 +27,7 @@ class beneficiocerdoController extends Controller
     public function index()
     {
         $thirds = Third::orderBy('name', 'asc')->get();
-        $sacrificios = Sacrificio::orderBy('name', 'asc')->get();
+        $sacrificios = Sacrificiocerdo::orderBy('name', 'asc')->get();
 		//dd($sacrificios);
         return view('categorias.cerdo.beneficiocerdo.index', compact('thirds','sacrificios'));
     }
@@ -87,7 +87,7 @@ class beneficiocerdoController extends Controller
 			    $dateNextMonday = $current_date->format('Y-m-d'); // Output the date in Y-m-d format
 			    $newBeneficiocerdo = new Beneficiocerdo();
 			    $newBeneficiocerdo->thirds_id = $request->thirds_id;
-			    $newBeneficiocerdo->plantasacrificio_id  = $request->plantasacrificio_id;
+			    $newBeneficiocerdo->plantasacrificiocerdo_id  = $request->plantasacrificiocerdo_id;
 			    $newBeneficiocerdo->cantidadmacho = $this->MoneyToNumber($request->cantidadMacho);
 			    $newBeneficiocerdo->valorunitariomacho = $this->MoneyToNumber($request->valorUnitarioMacho);
 			    $newBeneficiocerdo->valortotalmacho = $this->MoneyToNumber($request->valorTotalMacho);
@@ -153,7 +153,7 @@ class beneficiocerdoController extends Controller
 
 			    $updateBeneficiocerdo = Beneficiocerdo::firstWhere('id', $request->idbeneficio);
 			    $updateBeneficiocerdo->thirds_id = $request->thirds_id;
-			    $updateBeneficiocerdo->plantasacrificio_id  = $request->plantasacrificio_id;
+			    $updateBeneficiocerdo->plantasacrificiocerdo_id  = $request->plantasacrificiocerdo_id;
 			    $updateBeneficiocerdo->cantidadmacho = $this->MoneyToNumber($request->cantidadMacho);
 			    $updateBeneficiocerdo->valorunitariomacho = $this->MoneyToNumber($request->valorUnitarioMacho);
 			    $updateBeneficiocerdo->valortotalmacho = $this->MoneyToNumber($request->valorTotalMacho);
@@ -297,7 +297,7 @@ class beneficiocerdoController extends Controller
 
     public function get_plantasacrificiocerdo_by_id(Request $request)
 	{
-		$data1 = Sacrificiocerdo::where('id', $request->plantasacrificio_id)->firstOrFail();
+		$data1 = Sacrificiocerdo::where('id', $request->plantasacrificiocerdo_id)->firstOrFail();
 
 		return response()->json(
 			[
