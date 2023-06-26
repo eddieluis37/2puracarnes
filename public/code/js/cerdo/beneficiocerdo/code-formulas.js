@@ -117,7 +117,7 @@
   /**********************************************************/
 
   function obtener_registroid(plantasacrificiocerdo_id) {
-     alert("id "+plantasacrificiocerdo_id);
+    // alert("id "+plantasacrificiocerdo_id);
     $.ajax({
       url: "/get_plantasacrificiocerdo_by_id",
       dataType: 'json',
