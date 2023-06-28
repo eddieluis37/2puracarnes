@@ -36,7 +36,8 @@ class DatabaseSeeder extends Seeder
         $this->call(BeneficiocerdoSeeder::class);          
         $this->call(DespostereSeeder::class);
         $this->call(CentrocostoSeeder::class);
-        $this->call(Centro_costo_productSeeder::class);        
+        $this->call(Centro_costo_productSeeder::class);    
+        $this->call(Nicho_mercadoSeeder::class);        
 
     }
 }
