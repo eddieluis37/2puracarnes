@@ -21,9 +21,9 @@
   let canalplanta = $("#canalplanta");
 
     plantasacrificiocerdo_id.change(function () {
-      var plantasacrificiocerdo_id = $('#plantasacrificiocerdo_id');
-      $(obtener_registroid(plantasacrificiocerdo_id.val()));
-    });
+     let plantasacrificiocerdo_id = $('#plantasacrificiocerdo_id');
+     $(obtener_registroid(plantasacrificiocerdo_id.val()));
+  });
 
   //cantidad.change(function () { calculatotales(); });
   cantidadMacho.change(function () { calculatotales(); });

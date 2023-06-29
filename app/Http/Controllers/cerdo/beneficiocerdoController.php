@@ -70,7 +70,7 @@ class beneficiocerdoController extends Controller
             }else {
                 $regUltimo = Beneficiocerdo::select()->latest()->first()->toArray();
                 $consecutivo = $regUltimo['id']+1;
-                $newLote = "RES".$year.$month.$day.$consecutivo;
+                $newLote = "CE".$year.$month.$day.$consecutivo;
             }
 
 		    /******************************************************** */
