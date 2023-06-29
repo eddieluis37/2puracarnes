@@ -16,11 +16,11 @@ class CreateCentroCostoProductsTable extends Migration
         Schema::create('centro_costo_products', function (Blueprint $table) {
             $table->id();
 
-            $table->unsignedBigInteger('products_id')->nullable();
-            $table->foreign('products_id')->references('id')->on('products');
-
             $table->unsignedBigInteger('centrocosto_id')->nullable();
             $table->foreign('centrocosto_id')->references('id')->on('centro_costo');           
+
+            $table->unsignedBigInteger('products_id')->nullable();
+            $table->foreign('products_id')->references('id')->on('products');          
 
             $table->decimal('stock', 18, 2)->nullable(); // valor de cantidades de unidades sea KG
             $table->decimal('fisico', 18, 2)->nullable(); // valor de cantidades en inventario tangible real
