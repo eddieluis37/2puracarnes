@@ -25,97 +25,96 @@
      $(obtener_registroid(plantasacrificiocerdo_id.val()));
   });
 
-  //cantidad.change(function () { calculatotales(); });
-  cantidadMacho.change(function () { calculatotales(); });
-  cantidadHembra.change(function () {
-    let cantHembra = cantidadHembra.val();
+   //cantidad.change(function () { calculatotales(); });
+
+  document.querySelector("#cantidadMacho").addEventListener("change", function() {
+    calculatotales();
+  });
+   document.querySelector("#cantidadHembra").addEventListener("change", function() {
+    let cantHembra = document.querySelector("#cantidadHembra").value;
     if (Number(cantHembra) === 0) {
-      valorHembra.val(0);
-      $('#valorTotalHembra').val(0);
+      document.querySelector("#valorHembra").value = 0;
+      document.querySelector("#valorTotalHembra").value = 0;
     }
-    calculatotales(); 
+    calculatotales();
   });
 
-  costoanimal1.change(function () {
-    let costo1 = formatMoneyNumber($('#costoanimal1').val());
-    $('#costoanimal1').val(formatCantidadSinCero(costo1));
-    calculatotales(); 
+  document.querySelector("#costoanimal1").addEventListener("change", function() {
+    let costo1 = formatMoneyNumber(document.querySelector("#costoanimal1").value);
+    document.querySelector("#costoanimal1").value = formatCantidadSinCero(costo1);
+    calculatotales();
   });
-  costoanimal2.change(function () {
-    let costo2 = formatMoneyNumber($('#costoanimal2').val());
-    $('#costoanimal2').val(formatCantidadSinCero(costo2));
-    calculatotales(); 
+   document.querySelector("#costoanimal2").addEventListener("change", function() {
+    let costo2 = formatMoneyNumber(document.querySelector("#costoanimal2").value);
+    document.querySelector("#costoanimal2").value = formatCantidadSinCero(costo2);
+    calculatotales();
   });
-  costoanimal3.change(function () { 
-    let costo3 = formatMoneyNumber($('#costoanimal3').val());
-    $('#costoanimal3').val(formatCantidadSinCero(costo3));
-    calculatotales(); 
+   document.querySelector("#costoanimal3").addEventListener("change", function() {
+    let costo3 = formatMoneyNumber(document.querySelector("#costoanimal3").value);
+    document.querySelector("#costoanimal3").value = formatCantidadSinCero(costo3);
+    calculatotales();
   });
-
-  canalfria.change(function () {
-    let canalf = formatkg($('#canalfria').val());
-    $('#canalfria').val(canalf);
-    console.log("peso :" + canalf)
-    calculatotales(); 
+   document.querySelector("#canalfria").addEventListener("change", function() {
+    let canalf = formatkg(document.querySelector("#canalfria").value);
+    document.querySelector("#canalfria").value = canalf;
+    console.log("peso: " + canalf);
+    calculatotales();
   });
-
-  pieleskg.change(function () { 
-    let piel = formatMoneyNumber($('#pieleskg').val());
-    $('#pieleskg').val(formatCantidadSinCero(piel));
-    calculatotales(); 
+   document.querySelector("#pieleskg").addEventListener("change", function() {
+    let piel = formatMoneyNumber(document.querySelector("#pieleskg").value);
+    document.querySelector("#pieleskg").value = formatCantidadSinCero(piel);
+    calculatotales();
   });
-  pielescosto.change(function () { 
-    let pielc = formatMoneyNumber($('#pielescosto').val());
-    $('#pielescosto').val(formatCantidadSinCero(pielc));
-    calculatotales(); 
+   document.querySelector("#pielescosto").addEventListener("change", function() {
+    let pielc = formatMoneyNumber(document.querySelector("#pielescosto").value);
+    document.querySelector("#pielescosto").value = formatCantidadSinCero(pielc);
+    calculatotales();
   });
-  visceras.change(function () { 
-    let visc = formatkg($('#visceras').val());
-    $('#visceras').val(visc);
-    console.log("peso :" + visc)
-    calculatotales(); 
+   document.querySelector("#visceras").addEventListener("change", function() {
+    let visc = formatkg(document.querySelector("#visceras").value);
+    document.querySelector("#visceras").value = visc;
+    console.log("peso: " + visc);
+    calculatotales();
   });
-
-  pesopie1.change(function () {
-    let pesokg1 = formatkg($('#pesopie1').val());
-    $('#pesopie1').val(pesokg1);
-    console.log("peso :" + pesokg1)
-    calculatotales(); 
+   document.querySelector("#pesopie1").addEventListener("change", function() {
+    let pesokg1 = formatkg(document.querySelector("#pesopie1").value);
+    document.querySelector("#pesopie1").value = pesokg1;
+    console.log("peso: " + pesokg1);
+    calculatotales();
   });
-  pesopie2.change(function () { 
-    let pesokg2 = formatkg($('#pesopie2').val());
-    $('#pesopie2').val(pesokg2);
-    console.log("peso :" + pesokg2)
-    calculatotales(); 
+   document.querySelector("#pesopie2").addEventListener("change", function() {
+    let pesokg2 = formatkg(document.querySelector("#pesopie2").value);
+    document.querySelector("#pesopie2").value = pesokg2;
+    console.log("peso: " + pesokg2);
+    calculatotales();
   });
-  pesopie3.change(function () { 
-    let pesokg3 = formatkg($('#pesopie3').val());
-    $('#pesopie3').val(pesokg3);
-    console.log("peso :" + pesokg3)
-    calculatotales(); 
+   document.querySelector("#pesopie3").addEventListener("change", function() {
+    let pesokg3 = formatkg(document.querySelector("#pesopie3").value);
+    document.querySelector("#pesopie3").value = pesokg3;
+    console.log("peso: " + pesokg3);
+    calculatotales();
   });
-
-  canalcaliente.change(function () { 
-    let canal = formatkg($('#canalcaliente').val());
-    $('#canalcaliente').val(canal);
-    console.log("peso :" + canal)
-    calculatotales(); 
+   document.querySelector("#canalcaliente").addEventListener("change", function() {
+    let canal = formatkg(document.querySelector("#canalcaliente").value);
+    document.querySelector("#canalcaliente").value = canal;
+    console.log("peso: " + canal);
+    calculatotales();
   });
-
-  canalplanta.change(function () { 
-    let canalp = formatkg($('#canalplanta').val());
-    $('#canalplanta').val(canalp);
-    console.log("peso :" + canalp)
-    calculatotales(); 
+   document.querySelector("#canalplanta").addEventListener("change", function() {
+    let canalp = formatkg(document.querySelector("#canalplanta").value);
+    document.querySelector("#canalplanta").value = canalp;
+    console.log("peso: " + canalp);
+    calculatotales();
   });
 
+  
   /**********************************************************/
   valorMacho.change(function () { CalculateTotalMacho(); });
   cantidadMacho.change(function () { CalculateTotalMacho(); });
   valorHembra.change(function () { CalculateTotalHembra(); });
   cantidadHembra.change(function () { CalculateTotalHembra(); });
   /**********************************************************/
-
+  
   function obtener_registroid(plantasacrificiocerdo_id) {
     // alert("id "+plantasacrificiocerdo_id);
     $.ajax({
@@ -143,9 +142,10 @@
   };
 
   function calculatotales() {
-    let cantidadMacho = $("#cantidadMacho").val();
-    let cantidadHemdra = $("#cantidadHembra").val();
+    let cantidadMacho = document.getElementById("cantidadMacho").value;
+    let cantidadHemdra = document.getElementById("cantidadHembra").value;
     let totalCantidad = Number(cantidadMacho) + Number(cantidadHemdra);
+    console.log(totalCantidad);
     console.log(totalCantidad);
     //var cantidad = $('#cantidad').val();
     var cantidad = totalCantidad;
@@ -185,9 +185,9 @@
     var totalc = tpie1 + tpie2 + tpie3;// + tsacrif + tfomen + tdgue + tbascu + ttrans;// - (tpielc + tvisce);
     console.log("total c " + totalc)
     var totalgastos = tsacrif + tfomen + tdgue + tbascu + ttrans;
-    console.log("Total gastos" + totalgastos)
+    console.log("Total gastos: " + totalgastos)
     var totalingresos = (pieleskg * pielescosto) + visceras;
-    console.log("Total ingresos" + totalingresos)
+    console.log("Total ingresos: " + totalingresos)
     let totalCantidadCostos = (totalc + totalgastos) - totalingresos;
     $('#totalcostos').val(formatCantidadSinCero(totalCantidadCostos));
     //$('#totalcostos').val(formatCantidadSinCero(totalc));
@@ -231,28 +231,33 @@
 
   }
 
-  const CalculateTotalMacho = () => {
-    let cantidadMacho = Number($("#cantidadMacho").val());
-    let valorUnitarioMacho = formatMoneyNumber($("#valorUnitarioMacho").val());
-    let valorTotal = $("#valorTotalMacho").val(formatCantidadSinCero(cantidadMacho * valorUnitarioMacho));
-    $("#valorUnitarioMacho").val(formatCantidadSinCero(valorUnitarioMacho));
-    setCantidadVicerasCosto();
-  }
-  const CalculateTotalHembra = () => {
-    let cantidadHembra = Number($("#cantidadHembra").val());
-    let valorUnitarioHembra = formatMoneyNumber($("#valorUnitarioHembra").val());
-    let valorTotal = $("#valorTotalHembra").val(formatCantidadSinCero(cantidadHembra * valorUnitarioHembra));
-    $("#valorUnitarioHembra").val(formatCantidadSinCero(valorUnitarioHembra));
+  const CalculateTotalMacho = () => {    
+    let cantidadMacho = Number(document.querySelector("#cantidadMacho").value);   
+    let valorUnitarioMacho = formatMoneyNumber(document.querySelector("#valorUnitarioMacho").value);
+    let valorTotal = document.querySelector("#valorTotalMacho");
+    valorTotal.value = formatCantidadSinCero(cantidadMacho * valorUnitarioMacho);
+    let valorUnitario = document.querySelector("#valorUnitarioMacho");
+    valorUnitario.value = formatCantidadSinCero(valorUnitarioMacho);
     setCantidadVicerasCosto();
   }
 
+  const CalculateTotalHembra = () => {
+    let cantidadHembra = Number(document.querySelector("#cantidadHembra").value);
+    let valorUnitarioHembra = formatMoneyNumber(document.querySelector("#valorUnitarioHembra").value);
+    let valorTotal = document.querySelector("#valorTotalHembra");
+    valorTotal.value = formatCantidadSinCero(cantidadHembra * valorUnitarioHembra);
+    let valorUnitario = document.querySelector("#valorUnitarioHembra");
+    valorUnitario.value = formatCantidadSinCero(valorUnitarioHembra);
+    setCantidadVicerasCosto();
+  }  
+
   const setCantidadVicerasCosto = () => {
-    let cantTotalMacho = formatMoneyNumber($("#valorTotalMacho").val());
-    console.log(cantTotalMacho)
-    let cantTotalHembra = formatMoneyNumber($("#valorTotalHembra").val());
-    console.log(cantTotalHembra)
+    let cantTotalMacho = formatMoneyNumber(document.querySelector("#valorTotalMacho").value);
+    console.log("cantTotalMacho : " + cantTotalMacho);
+    let cantTotalHembra = formatMoneyNumber(document.querySelector("#valorTotalHembra").value);
+    console.log(cantTotalHembra);
     let sum = cantTotalMacho + cantTotalHembra;
     console.log("sum : " + formatCantidadSinCero(sum));
-    $("#visceras").val(formatCantidadSinCero(sum));
-    $("#tvisceras").val(formatCantidadSinCero(sum * -1));
+    document.querySelector("#visceras").value = formatCantidadSinCero(sum);
+    document.querySelector("#tvisceras").value = formatCantidadSinCero(sum * -1);
   }
