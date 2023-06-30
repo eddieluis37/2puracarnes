@@ -1,13 +1,13 @@
 <style>
     .marquee {
-        width: 40%;
+        width: 20%;
         overflow: hidden;
         white-space: nowrap;
     }
 
     .marquee span {
         display: inline-block;
-        padding-left: 100%;
+        padding-left: 50%;
         animation: marquee 15s linear infinite;
         color: red;
         /* Color rojo */
