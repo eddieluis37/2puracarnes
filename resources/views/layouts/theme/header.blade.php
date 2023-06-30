@@ -1,6 +1,6 @@
 <style>
     .marquee {
-        width: 100%;
+        width: 40%;
         overflow: hidden;
         white-space: nowrap;
     }
@@ -33,6 +33,7 @@
                     <img src="{{asset('assets/img/logo.jpg')}}" class="navbar-logo" alt="logo">
                 </a>
             </li>
+
         </ul>
 
         <a href="javascript:void(0);" class="sidebarCollapse" data-placement="bottom"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-list">
@@ -44,6 +45,10 @@
                 <line x1="3" y1="18" x2="3" y2="18"></line>
             </svg></a>
 
+        <div class="marquee">
+            <span>Entrenamiento PuraCarnes SAS</span>
+        </div>
+
         <ul class="navbar-item flex-row search-ul">
             <li class="nav-item align-self-center search-animated">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search toggle-search">
@@ -53,11 +58,15 @@
                 <form class="form-inline search-full form-inline search" role="search">
                     <div class="search-bar marquee">
                         <input type="text" class="form-control search-form-control  ml-lg-auto" placeholder="Search...">
-                         <span>Ambiente de entrenamiento PuraCarnes SAS Colombia</span>
-                    </div>                                    
+
+                    </div>
+
                 </form>
+
             </li>
         </ul>
+
+
         <ul class="navbar-item flex-row navbar-dropdown">
             <li class="nav-item dropdown language-dropdown more-dropdown">
                 <div class="dropdown  custom-dropdown-icon">
