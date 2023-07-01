@@ -49,6 +49,12 @@ class alistamientorogercodeController extends Controller
         ->where('ali.id', $id)
         ->get();
 
+        $enlistmentDetail = enlistment_details::Where([
+            ['enlistments_id',$id],
+            ['status',1]
+        ])->get();
+        
+        $countDetail = count($enlistmentDetail);
         //$cortes = Meatcut::Where([
             //['category_id',$dataAlistamiento[0]->categoria_id],
             //['status',1]
@@ -73,6 +79,7 @@ class alistamientorogercodeController extends Controller
                 ['p.status',1],
                 ['ce.centrocosto_id',$dataAlistamiento[0]->centrocosto_id],
             ])->get();
+        
 
         /**************************************** */
         $status = '';
@@ -108,7 +115,10 @@ class alistamientorogercodeController extends Controller
 
         $arrayTotales = $this->sumTotales($id);
 
-        $newStock = $arrayTotales['kgTotalRequeridos'] - $cortes[0]->stock;
+        $newStock = 0;
+        if ($countDetail != 0) {
+            $newStock = $arrayTotales['kgTotalRequeridos'] - $cortes[0]->stock;
+        }
 
         return view('alistamiento.create', compact('dataAlistamiento','cortes','enlistments','arrayTotales','newStock','status','statusInventory', 'display'));
     }
