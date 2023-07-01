@@ -23,10 +23,16 @@ class CreateShoppingEnlistment extends Migration
             $table->foreign('centrocosto_id')->references('id')->on('centro_costo');
             $table->unsignedBigInteger('meatcut_id')->nullable();           
             $table->foreign('meatcut_id')->references('id')->on('meatcuts')->onDelete("cascade");*/
+
             $table->unsignedBigInteger('enlistments_id')->nullable();
             $table->foreign('enlistments_id')->references('id')->on('enlistments');
+            $table->unsignedBigInteger('category_id');           
+            $table->foreign('category_id')->references('id')->on('categories')->onDelete("cascade");
             $table->unsignedBigInteger('productopadre_id')->nullable();
             $table->foreign('productopadre_id')->references('id')->on('products');
+            $table->unsignedBigInteger('centrocosto_id')->nullable();
+            $table->foreign('centrocosto_id')->references('id')->on('centro_costo');
+
             $table->decimal('stock_actual', 18, 2)->nullable(); // valor de cantidades de unidades sea KG
             $table->decimal('ultimo_conteo_fisico', 18, 2)->nullable(); // valor de cantidades de unidades sea KG
             $table->decimal('nuevo_stock', 18, 2)->nullable(); // valor de cantidades de unidades sea KG

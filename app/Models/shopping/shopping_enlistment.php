@@ -9,5 +9,11 @@ class shopping_enlistment extends Model
 {
     use HasFactory;
     protected $table = 'shopping_enlistment';
-	protected $fillable = ['users_id','enlistments_id','productopadre_id','stock_actual','ultimo_conteo_fisico','nuevo_stock','fecha_shopping'];
+	protected $fillable = [
+        'users_id',
+        'enlistments_id',
+        'category_id',
+        'productopadre_id',
+        'centrocosto_id',
+        'stock_actual','ultimo_conteo_fisico','nuevo_stock','fecha_shopping'];
 }
