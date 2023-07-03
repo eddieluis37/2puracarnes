@@ -79,7 +79,7 @@
 											<td>$ {{ number_format($item->precio, 0, ',', '.')}}</td>
 											<td>
 												@if($status == 'true')
-												<input type="text" class="form-control-sm" id="{{$item->id}}" value="{{$item->peso}}" placeholder="Ingresar" size="10">
+												<input type="text" class="form-control-sm" id="{{$item->id}}" value="{{$item->peso}}" placeholder="00" size="5">
 												@else
 													<p>{{$item->peso}}</p>
 												@endif
