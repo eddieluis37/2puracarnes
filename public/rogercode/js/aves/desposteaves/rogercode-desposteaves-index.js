@@ -6,8 +6,9 @@ const token = document.querySelector('meta[name="csrf-token"]').getAttribute('co
 const tableTbody = document.querySelector("#tbody");
 const tableTfoot = document.querySelector("#tfoot");
 const downReg = document.querySelector("#tableDesposteaves tbody");
+
 table.addEventListener("keydown", function(event) {
-  if (event.keyCode === 13) {
+  if (event.keyCode === 13 || event.keyCode === 9) {
     const target = event.target;
     if (target.tagName === "INPUT" && target.closest("tr")) {
        //Execute your code here
@@ -27,6 +28,15 @@ table.addEventListener("keydown", function(event) {
       sendData("/desposteavesUpdate",dataform,token).then((result) => {
         console.log(result);
         showDataTable(result);
+
+          const inputs = Array.from(table.querySelectorAll("input[type='text']")); // Cuando se envie la data, el cursor salte al siguiente input id="${element.id}" 
+        const currentIndex = inputs.findIndex(input => input.id === target.id);
+        const nextIndex = currentIndex + 1;
+        if (nextIndex < inputs.length) {
+          const nextInput = inputs[nextIndex];
+          nextInput.focus();
+          nextInput.select();
+        }  
       });
     }
   }
