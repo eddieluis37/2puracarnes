@@ -28,7 +28,7 @@ const utilidadAnimal = document.querySelector("#utilidadAnimal");
 
 
 table.addEventListener("keydown", function(event) {
-  if (event.keyCode === 13) {
+  if (event.keyCode === 13 || event.keyCode === 9) {
     const target = event.target;
     if (target.tagName === "INPUT" && target.closest("tr")) {
       // Execute your code here
@@ -47,6 +47,15 @@ table.addEventListener("keydown", function(event) {
       sendData("/desposteresUpdate",dataform,token).then((result) => {
         //console.log(result);
         showDataTable(result);
+
+         const inputs = Array.from(table.querySelectorAll("input[type='text']")); // Cuando se envie la data, el cursor salte al siguiente input id="${element.id}" 
+        const currentIndex = inputs.findIndex(input => input.id === target.id);
+        const nextIndex = currentIndex + 1;
+        if (nextIndex < inputs.length) {
+          const nextInput = inputs[nextIndex];
+          nextInput.focus();
+          nextInput.select();
+        }
       });
     }
   }
