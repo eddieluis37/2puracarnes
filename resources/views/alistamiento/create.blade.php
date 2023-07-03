@@ -120,7 +120,7 @@
 							<div class="col-md-4">
 								<label for="" class="form-label">Nuevo stock</label>
 								<div class="input-group flex-nowrap">
-								<input type="text" id="newStockPadre" name="newStockPadre" value="{{$newStock}}" class="form-control-sm form-control" placeholder="30,00 kg" readonly>
+								<input type="text" id="newStockPadre" name="newStockPadre" value="{{$dataAlistamiento[0]->nuevo_stock_padre}}" class="form-control-sm form-control" placeholder="30,00 kg" readonly>
 									<span class="input-group-text" id="addon-wrapping">KG</span>
 								</div>
 							</div>
