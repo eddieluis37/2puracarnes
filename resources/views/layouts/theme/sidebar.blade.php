@@ -16,7 +16,8 @@
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-left"><polyline points="15 18 9 12 15 6"></polyline></svg>
                     </li>
                     @endcan
-
+                    
+                    @role('Admin')
                     <li class="menu">
                         <a href="#more" data-active="false" class="menu-toggle">
                             <div class="base-menu">
@@ -28,7 +29,9 @@
                         </a>
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-left"><polyline points="15 18 9 12 15 6"></polyline></svg>
                     </li>
-
+                    @endcan              
+             
+                    @role('Admin')
                     <li class="">
                         <a href="{{url('alistamiento')}}" class="menu-toggle" data-active="false">
                             <div class="base-menu">
@@ -39,6 +42,40 @@
                             </div>
                         </a>
                     </li>
+                    @endcan 
+
+                    @role('Admin')
+                    <li class=""> 
+                        <a href="{{url('pedidos')}}" class="menu-toggle" data-active="false"> 
+                            <div class="base-menu"> 
+                                <div class="base-icons"> 
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-shopping-cart"> 
+                                        <circle cx="9" cy="21" r="1"></circle> 
+                                        <circle cx="20" cy="21" r="1"></circle> 
+                                        <path d="M1 1h4l2.25 7h13.5l2.25-7h4"></path> 
+                                    </svg> 
+                                </div> 
+                                <span>Pedidos</span> 
+                            </div> 
+                        </a> 
+                    </li>
+                    @endcan
+
+                    @role('Admin')
+                    <li class=""> 
+                        <a href="{{url('costos')}}" class="menu-toggle" data-active="false"> 
+                            <div class="base-menu"> 
+                                <div class="base-icons"> 
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-dollar-sign"> 
+                                        <line x1="12" y1="1" x2="12" y2="23"></line> 
+                                        <path d="M19 12h2M3 12h2M18 4.06l1.06 1.06M5.94 19.94L4.88 18"></path> 
+                                    </svg> 
+                                </div> 
+                                <span>Costos</span> 
+                            </div> 
+                        </a> 
+                    </li>
+                    @endcan
 
                     @can('Product_View')
                     <li class="">
@@ -66,7 +103,8 @@
                    </li>
                    @endcan
 
-                    <li class="menu">
+                   @role('Admin') 
+                   <li class="menu">
                         <a href="#app" data-active="false" class="menu-toggle">
                             <div class="base-menu">
                                 <div class="base-icons">
@@ -77,6 +115,7 @@
                         </a>
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-left"><polyline points="15 18 9 12 15 6"></polyline></svg>
                     </li>
+                    @endcan
 
 
                    @can('Cashout_Create')
