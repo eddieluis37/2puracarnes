@@ -78,6 +78,7 @@ sendData("/getproductos",dataform,token).then((result) => {
 btnAddAlist.addEventListener('click', (e) => {
     e.preventDefault();  
     const dataform = new FormData(formDetail);
+    dataform.append("stockPadre",stockPadre.value)
     sendData("/alistamientosavedetail",dataform,token).then((result) => {
         console.log(result);
         if (result.status === 1) {
@@ -167,6 +168,7 @@ tableAlistamiento.addEventListener("keydown", function(event) {
       dataform.append("alistamientoId", Number(alistamientoId.value));
       dataform.append("productoId", Number(productoId));
       dataform.append("centrocosto", Number(centrocosto.value));
+      dataform.append("stockPadre",stockPadre.value)
       
       sendData("/alistamientoUpdate",dataform,token).then((result) => {
         console.log(result);
@@ -200,6 +202,7 @@ tbodyTable.addEventListener("click", (e) => {
                 dataform.append("id", Number(id));
                 dataform.append("alistamientoId", Number(alistamientoId.value));
                 dataform.append("centrocosto", Number(centrocosto.value));
+                dataform.append("stockPadre",stockPadre.value)
                 sendData("/alistamientodown",dataform,token).then((result) => {
                     console.log(result);
                     showData(result)

@@ -49,12 +49,13 @@ class alistamientorogercodeController extends Controller
         ->where('ali.id', $id)
         ->get();
 
-        $enlistmentDetail = enlistment_details::Where([
+        /*$enlistmentDetail = enlistment_details::Where([
             ['enlistments_id',$id],
             ['status',1]
         ])->get();
         
-        $countDetail = count($enlistmentDetail);
+        $countDetail = count($enlistmentDetail);*/
+
         //$cortes = Meatcut::Where([
             //['category_id',$dataAlistamiento[0]->categoria_id],
             //['status',1]
@@ -115,12 +116,12 @@ class alistamientorogercodeController extends Controller
 
         $arrayTotales = $this->sumTotales($id);
 
-        $newStock = 0;
+        /*$newStock = 0;
         if ($countDetail != 0) {
             $newStock = $arrayTotales['kgTotalRequeridos'] - $cortes[0]->stock;
-        }
+        }*/
 
-        return view('alistamiento.create', compact('dataAlistamiento','cortes','enlistments','arrayTotales','newStock','status','statusInventory', 'display'));
+        return view('alistamiento.create', compact('dataAlistamiento','cortes','enlistments','arrayTotales','status','statusInventory', 'display'));
     }
 
     /**
@@ -342,14 +343,20 @@ class alistamientorogercodeController extends Controller
             $details->newstock = $newStock;
             $details->save();
 
+
             $arraydetail = $this->getalistamientodetail($request->alistamientoId,$request->centrocosto);
             $arrayTotales = $this->sumTotales($request->alistamientoId);
+
+            $newStockPadre = $arrayTotales['kgTotalRequeridos'] - $request->stockPadre;
+            $alist = Alistamiento::firstWhere('id', $request->alistamientoId);
+            $alist->nuevo_stock_padre = $newStockPadre;
+            $alist->save();
 
             return response()->json([
                 'status' => 1,
                 'message' => "Agregado correctamente",
                 'array' => $arraydetail,
-                'arrayTotales' => $arrayTotales
+                'arrayTotales' => $arrayTotales,
             ]);
         } catch (\Throwable $th) {
             return response()->json([
@@ -413,6 +420,11 @@ class alistamientorogercodeController extends Controller
             $arraydetail = $this->getalistamientodetail($request->alistamientoId, $request->centrocosto );
             $arrayTotales = $this->sumTotales($request->alistamientoId);
 
+            $newStockPadre = $arrayTotales['kgTotalRequeridos'] - $request->stockPadre;
+            $alist = Alistamiento::firstWhere('id', $request->alistamientoId);
+            $alist->nuevo_stock_padre = $newStockPadre;
+            $alist->save();
+            
             return response()->json([
                 'status' => 1,
                 'message' => 'Guardado correctamente',
@@ -483,6 +495,11 @@ class alistamientorogercodeController extends Controller
 
             $arraydetail = $this->getalistamientodetail($request->alistamientoId, $request->centrocosto);
             $arrayTotales = $this->sumTotales($request->alistamientoId);
+
+            $newStockPadre = $arrayTotales['kgTotalRequeridos'] - $request->stockPadre;
+            $alist = Alistamiento::firstWhere('id', $request->alistamientoId);
+            $alist->nuevo_stock_padre = $newStockPadre;
+            $alist->save();
 
             return response()->json([
                 'status' => 1,
