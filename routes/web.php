@@ -38,8 +38,10 @@ use App\Http\Controllers\inventory\mensualrogercodeController;
 use App\Http\Controllers\compensado\resrogercodeController;
 use App\Http\Controllers\compensado\compensadorogercodeController;
 use App\Http\Controllers\alistamiento\alistamientorogercodeController;
+use App\Http\Controllers\costo\costoController;
 use App\Http\Controllers\aves\beneficioavesrogercodeController;
 use App\Http\Controllers\aves\desposteavesrogercodeController;
+
 
 /************************************************* */
 
@@ -248,3 +250,8 @@ Route::get('/beneficioavesedit/{id}', [beneficioavesrogercodeController::class, 
 Route::get('desposteaves/{id}', [desposteavesrogercodeController::class, 'create'])->name('desposteaves.create');
 Route::post('/desposteavesUpdate', [desposteavesrogercodeController::class, 'update'])->name('desposteaves.update');
 Route::post('/downdesposteave', [desposteavesrogercodeController::class, 'destroy'])->name('desposteaves.destroy');
+
+/**COSTO*/
+Route::get('costo', [costoController::class,'index'])->name('costo.index');
+Route::get('showcosto', [costoController::class,'show'])->name('costo.showlist');
+Route::get('costo/create/{id}', [costoController::class,'create'])->name('costo.create');
