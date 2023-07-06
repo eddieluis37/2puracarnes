@@ -1,3 +1,10 @@
+					<style>
+						.input-ave {
+							width: 90%;
+							 /*outline: none;
+							 border: none;*/
+						}
+					</style>
 					<div class="row">
 
 						<div class="col-sm-12">
@@ -55,7 +62,7 @@
 														</div>
 													</div>
 
-													<div class="col-sm-12 col-md-2">
+													<div class="col-sm-12 col-md-4">
 														<div class="task-header">
 															<div class="form-group">
 																<label>Factura</label>
@@ -65,6 +72,15 @@
 														</div>
 													</div>
 
+													<div class="col-sm-12 col-md-4">
+														<div class="task-header">
+															<div class="form-group">
+																<label>Finca</label>
+																<input type="text" class="form-control" name="finca" id="finca" placeholder="Nombre" required="">
+																@error('cantidad') <span class="text-danger er">{{ $message}}</span>@enderror
+															</div>
+														</div>
+													</div>
 													<div class="col-sm-12 col-md-4">
 														<div class="task-header">
 															<div class="form-group">
@@ -81,7 +97,7 @@
 															</div>
 														</div>
 													</div>
-													<div class="col-sm-12 col-md-3">
+													<!--div class="col-sm-12 col-md-3">
 														<div class="task-header">
 															<div class="form-group">
 																<label>Cantidad</label>
@@ -89,13 +105,44 @@
 																@error('cantidad') <span class="text-danger er">{{ $message}}</span>@enderror
 															</div>
 														</div>
-													</div>
-
-													<div class="col-sm-12 col-md-3">
-														<label for="sacrificio">Sacrificio</label>
-														<div class="input-group flex-nowrap">
-															<span class="input-group-text" id="addon-wrapping">$</span>
-															<input type="text" name="sacrificio" id="sacrificio" class="form-control" aria-describedby="helpId" step="0.01" readonly>
+													</div>-->
+													<div class="form-group col-md-12">
+														<div class="form-row">
+															<div class="col">
+																<label for="sacrificio">Sacrificio</label>
+																<div class="input-group flex-nowrap">
+																<span class="input-group-text" id="addon-wrapping">$</span>
+																<input type="text" name="sacrificio" id="sacrificio" class="form-control" aria-describedby="helpId" step="0.01" readonly>
+																</div>
+															</div>
+															<div class="col">
+																<label for="fomento">Fomento</label>
+																<div class="input-group flex-nowrap">
+																	<span class="input-group-text" id="addon-wrapping">$</span>
+																	<input type="text" name="fomento" id="fomento" class="form-control" aria-describedby="helpId" step="0.01">
+																</div>
+															</div>
+															<div class="col">
+																<label for="deguello">Deguello</label>
+																<div class="input-group flex-nowrap">
+																	<span class="input-group-text" id="addon-wrapping">$</span>
+																	<input type="text" name="deguello" id="deguello" class="form-control" aria-describedby="helpId" readonly step="0.01">
+																</div>
+															</div>
+															<div class="col">
+																<label for="bascula">Báscula</label>
+																<div class="input-group flex-nowrap">
+																	<span class="input-group-text" id="addon-wrapping">$</span>
+																	<input type="text" name="bascula" id="bascula" class="form-control" aria-describedby="helpId" readonly step="0.01">
+																</div>
+															</div>
+															<div class="col">
+																<label for="transporte">Transporte</label>
+																<div class="input-group flex-nowrap">
+																	<span class="input-group-text" id="addon-wrapping">$</span>
+																	<input type="text" name="transporte" id="transporte" class="form-control" aria-describedby="helpId" step="0.01" readonly>
+																</div>
+															</div>
 														</div>
 													</div>
 
@@ -199,10 +246,330 @@
 											</div>
 										</div>
 
-										<div class="">
+										<!--div class="card">
+											<div class="card-body">
+												<div class="row">
+													<div class="col-sm-12 col-md-2">
+														<div class="task-header">
+															<div class="form-group">
+																<label>Cantidad <br> Macho</label>
+																<input type="number" name="cantidadMacho" id="cantidadMacho" class="form-control" "aria-describedby=" helpId" required="" min="1" max="30" step="1" value="1">
+																@error('cantidadMacho') <span class="text-danger er">{{ $message}}</span>@enderror
+															</div>
+														</div>
+													</div>
+													<div class="col-sm-12 col-md-2">
+														<div class="task-header">
+															<label>Valor Viscera Macho</label>
+															<div class="input-group flex-nowrap">
+																<span class="input-group-text" id="addon-wrapping">$</span>
+																<input type="text" name="valorUnitarioMacho" id="valorUnitarioMacho" class="form-control" "aria-describedby=" helpId" placeholder="000.000" required="" min="1" step="1">
+															</div>
+														</div>
+													</div>
+													<div class="col-sm-12 col-md-2">
+														<div class="task-header">
+															<label>Total <br> Macho</label>
+															<div class="input-group flex-nowrap">
+																<span class="input-group-text" id="addon-wrapping">$</span>
+																<input type="text" name="valorTotalMacho" id="valorTotalMacho" class="form-control" "aria-describedby=" helpId" required="" min="1"  step="1" readonly>
+															</div>
+														</div>
+													</div>
+													<div class="col-sm-12 col-md-2">
+														<div class="task-header">
+															<div class="form-group">
+																<label>Cantidad <br> Hembra</label>
+																<input type="number" name="cantidadHembra" id="cantidadHembra" class="form-control" "aria-describedby=" helpId" required="" min="0" max="30" step="0" value="1">
+															</div>
+														</div>
+													</div>
+													<div class="col-sm-12 col-md-2">
+														<div class="task-header">
+															<label>Valor Viscera Hembra</label>
+															<div class="input-group flex-nowrap">
+																<span class="input-group-text" id="addon-wrapping">$</span>
+																<input type="text" name="valorUnitarioHembra" id="valorUnitarioHembra" class="form-control" "aria-describedby=" helpId" placeholder="000.000" required="" min="0"  step="0"  >
+															</div>
+														</div>
+													</div>
+													<div class="col-sm-12 col-md-2">
+														<div class="task-header">
+															<label>Total <br>Hembra</label>
+															<div class="input-group flex-nowrap">
+																<span class="input-group-text" id="addon-wrapping">$</span>
+																<input type="text" name="valorTotalHembra" id="valorTotalHembra" class="form-control" "aria-describedby=" helpId" required="" min="0"  step="0" readonly>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>-->
+
+										<div class="card">
+											<div class="card-header text-center">
+												Modelo proceso de pollo
+											</div>
+											<div class="card-body">
+												<!--div class="form-row mt-3">
+													<div class="col-md-2">
+														<label for="canalfria">Peso promedio</label>
+														<div class="input-group flex-nowrap">
+															<input type="text" name="canalfria" id="canalfria" class="form-control" aria-describedby="helpId" step="0.01" required>
+															<span class="input-group-text" id="addon-wrapping">KG</span>
+														</div>
+													</div>
+													<div class="col-md-2">
+														<label for="pieleskg">Costo</label>
+														<div class="input-group flex-nowrap">
+															<input type="text" name="pieleskg" id="pieleskg" class="form-control" aria-describedby="helpId" step="0.01" required>
+															<span class="input-group-text" id="addon-wrapping">KG</span>
+														</div>
+													</div>
+
+													<div class="col-md-2">
+														<label for="pielescosto">Costo de venta</label>
+														<div class="input-group flex-nowrap">
+															<span class="input-group-text" id="addon-wrapping">KG</span>
+															<input type="text" name="pielescosto" id="pielescosto" class="form-control" aria-describedby="helpId" step="0.01" required>
+														</div>
+													</div>
+													<div class="col-md-2">
+														<label for="visceras">Precio de venta</label>
+														<div class="input-group flex-nowrap">
+															<span class="input-group-text" id="addon-wrapping">KG</span>
+															<input type="text" name="visceras" id="visceras" class="form-control" aria-describedby="helpId" step="0.01" required>
+														</div>
+													</div>
+													<div class="col-md-2">
+														<label for="visceras">Venta en kg</label>
+														<div class="input-group flex-nowrap">
+															<span class="input-group-text" id="addon-wrapping">$</span>
+															<input type="text" name="visceras" id="visceras" class="form-control" aria-describedby="helpId" step="0.01" required>
+														</div>
+													</div>
+													<div class="col-md-2">
+														<label for="visceras">Ventas netas</label>
+														<div class="input-group flex-nowrap">
+															<span class="input-group-text" id="addon-wrapping">$</span>
+															<input type="text" name="visceras" id="visceras" class="form-control" aria-describedby="helpId" step="0.01" required>
+														</div>
+													</div>
+													<div class="col-md-2">
+														<label for="visceras">Utilidad</label>
+														<div class="input-group flex-nowrap">
+															<span class="input-group-text" id="addon-wrapping">%</span>
+															<input type="text" name="visceras" id="visceras" class="form-control" aria-describedby="helpId" step="0.01" required>
+														</div>
+													</div>
+													<div class="col-md-2">
+														<label for="visceras">Utilidad</label>
+														<div class="input-group flex-nowrap">
+															<span class="input-group-text" id="addon-wrapping">$</span>
+															<input type="text" name="visceras" id="visceras" class="form-control" aria-describedby="helpId" step="0.01" required>
+														</div>
+													</div>
+												</div>-->
+												<table class="table">
+													<thead>
+														<tr>
+														<th scope="col">Producto</th>
+														<th scope="col">Peso promedio</th>
+														<th scope="col">Costo</th>
+														<th scope="col">Costo de venta kg</th>
+														<th scope="col">Precio de venta kg</th>
+														<th scope="col">Venta en kg</th>
+														<th scope="col">Ventas netas</th>
+														<th scope="col">Utilidad %</th>
+														</tr>
+													</thead>
+													<tbody>
+														<tr>
+														<th>Pollo entero promedio</th>
+														<td><input type="text" class="input-ave form-control"></td>
+														<td><input type="text" class="input-ave form-control"></td>
+														<td><input type="text" class="input-ave form-control"></td>
+														<td><input type="text" class="input-ave form-control"></td>
+														<td><input type="text" class="input-ave form-control"></td>
+														<td><input type="text" class="input-ave form-control"></td>
+														<td><input type="text" class="input-ave form-control"></td>
+														</tr>
+														<tr>
+														<th>Cantidad</th>
+														<td><input type="text" class="input-ave form-control"></td>
+														<td><input type="hidden" class="input-ave"></td>
+														<td><input type="hidden" class="input-ave"></td>
+														<td><input type="hidden" class="input-ave"></td>
+														<td>Utilidad</td>
+														<td><input type="text" class="input-ave form-control"></td>
+														<td><input type="hidden" class="input-ave"></td>
+														</tr>
+														
+													</tbody>
+												</table>
+												<table class="table">
+													<thead>
+														<tr>
+														<th scope="col">Producto</th>
+														<th scope="col">Esperado</th>
+														<th scope="col">Peso kg</th>
+														<th scope="col">Real</th>
+														<th scope="col">Peso kg</th>
+														</tr>
+													</thead>
+													<tbody>
+														<tr>
+														<th>Peso pie en planta</th>
+														<td><input type="text" class="input-ave form-control"></td>
+														<td><input type="text" class="input-ave form-control"></td>
+														<td><input type="text" class="input-ave form-control"></td>
+														<td><input type="text" class="input-ave form-control"></td>
+														</tr>
+														<tr>
+														<th>Canal fria puesta en sala desposte</th>
+														<td><input type="text" class="input-ave form-control"></td>
+														<td><input type="text" class="input-ave form-control"></td>
+														<td><input type="text" class="input-ave form-control"></td>
+														<td><input type="text" class="input-ave form-control"></td>
+														</tr>
+														<!--tr>
+														<th>Pollo en canal</th>
+														<td><input type="text" class="input-ave form-control"></td>
+														<td><input type="text" class="input-ave form-control"></td>
+														<td><input type="text" class="input-ave form-control"></td>
+														<td><input type="text" class="input-ave form-control"></td>
+														</tr>-->
+														<tr>
+														<th>Visceras</th>
+														<td><input type="text" class="input-ave form-control"></td>
+														<td><input type="text" class="input-ave form-control"></td>
+														<td><input type="text" class="input-ave form-control"></td>
+														<td><input type="text" class="input-ave form-control"></td>
+														</tr>
+														<tr>
+														<th>Mollejas</th>
+														<td><input type="text" class="input-ave form-control"></td>
+														<td><input type="text" class="input-ave form-control"></td>
+														<td><input type="text" class="input-ave form-control"></td>
+														<td><input type="text" class="input-ave form-control"></td>
+														</tr>
+														<tr>
+														<th>Corazones</th>
+														<td><input type="text" class="input-ave form-control"></td>
+														<td><input type="text" class="input-ave form-control"></td>
+														<td><input type="text" class="input-ave form-control"></td>
+														<td><input type="text" class="input-ave form-control"></td>
+														</tr>
+														<tr>
+														<th>Despojo</th>
+														<td><input type="text" class="input-ave form-control"></td>
+														<td><input type="text" class="input-ave form-control"></td>
+														<td><input type="text" class="input-ave form-control"></td>
+														<td><input type="text" class="input-ave form-control"></td>
+														</tr>
+														<tr>
+														<th>Total peso</th>
+														<td><input type="text" class="input-ave form-control"></td>
+														<td><input type="text" class="input-ave form-control"></td>
+														<td><input type="text" class="input-ave form-control"></td>
+														<td><input type="text" class="input-ave form-control"></td>
+														</tr>
+													</tbody>
+												</table> 	
+												<div class="div.card">
+													<div class="card-header text-center">
+														Fletes - transporte
+													</div>
+												</div><br>
+												<table class="table">
+													<thead>
+														<tr>
+														<th scope="col">Ciudad</th>
+														<th scope="col">Costo</th>
+														<th scope="col">Cantidad</th>
+														<th scope="col">Valor unidad</th>
+														</tr>
+													</thead>
+													<tbody>
+														<tr>
+														<td><input type="text" class="input-ave form-control" value="bogota - planta"></td>
+														<td><input type="text" class="input-ave form-control" value="0"></td>
+														<td><input type="text" class="input-ave form-control" value="425"></td>
+														<td><input type="text" class="input-ave form-control" value="0"></td>
+														</tr>
+														<tr>
+														<td><input type="text" class="input-ave form-control" value="0"></td>
+														<td><input type="text" class="input-ave form-control" value="pollo canal 5%"></td>
+														<td><input type="text" class="input-ave form-control" value="pollo en pie"></td>
+														<td><input type="text" class="input-ave form-control" value="2.55"></td>
+														</tr>
+														<tr>
+														<td><input type="text" class="input-ave form-control" value="425"></td>
+														<td><input type="text" class="input-ave form-control" value="pollo desposte 5%"></td>
+														<td><input type="text" class="input-ave form-control" value="pollo en canal"></td>
+														<td><input type="text" class="input-ave form-control" value="2.55"></td>
+														</tr>
+														<tr>
+														<td><input type="text" class="input-ave form-control" value="425"></td>
+														<td><input type="text" class="input-ave form-control" value="100%"></td>
+														<td><input type="text" class="input-ave form-control" value="Rendimiento"></td>
+														<td><input type="text" class="input-ave form-control" value="100"></td>
+														</tr>
+													</tbody>
+												</table>
+												<div class="div.card">
+													<div class="card-header text-center">
+														Gastos
+													</div>
+												</div><br>
+												<table class="table">
+													<thead>
+														<tr>
+														<th scope="col">Concepto gastos</th>
+														<th scope="col">Valor</th>
+														<th scope="col">Unidad</th>
+														<th scope="col">Cantidad</th>
+														<th scope="col">Total</th>
+														</tr>
+													</thead>
+													<tbody>
+														<tr>
+														<th>Animal puesto en planta</th>
+														<td><input type="text" class="input-ave form-control"></td>
+														<td><input type="text" class="input-ave form-control"></td>
+														<td><input type="text" class="input-ave form-control"></td>
+														<td><input type="text" class="input-ave form-control"></td>
+														</tr>
+														<tr>
+														<th>servicio de sacrificio</th>
+														<td><input type="text" class="input-ave form-control"></td>
+														<td><input type="text" class="input-ave form-control"></td>
+														<td><input type="text" class="input-ave form-control"></td>
+														<td><input type="text" class="input-ave form-control"></td>
+														</tr>
+														<tr>
+														<th>Transporte por canal</th>
+														<td><input type="text" class="input-ave form-control"></td>
+														<td><input type="text" class="input-ave form-control"></td>
+														<td><input type="text" class="input-ave form-control"></td>
+														<td><input type="text" class="input-ave form-control"></td>
+														</tr>
+														<tr>
+														<th>Total</th>
+														<td><input type="hidden" class="input-ave form-control"></td>
+														<td><input type="hidden" class="input-ave form-control"></td>
+														<td><input type="hidden" class="input-ave form-control"></td>
+														<td><input type="text" class="input-ave form-control"></td>
+														</tr>
+													</tbody>
+												</table>
+											</div>
+										</div>
+
+										<!--div class="">
 											<div class="">
 												<div class="">
-													<div class="card ">
+													<div class="card">
 														<div class="card-header text-center">
 															Datos Frigorifico
 														</div>
@@ -217,13 +584,9 @@
 																	</div>
 																</div>
 																<div class="form-group col-md-2">
-																	<!--label for="canalcaliente">Canal caliente</label>
-																	<input type="number" name="canalcaliente" id="canalcaliente" class="form-control" aria-describedby="helpId" step="0.01"-->
 																</div>
 
 																<div class="form-group col-md-2">
-																	<!--label for="sell_price">Canal planta</label>
-																	<input type="number" name="canalplanta" id="canalplanta" class="form-control" aria-describedby="helpId" step="0.01"-->
 																</div>
 																<div class="col-md-2">
 																	<label for="pieleskg">Kg Menudencias</label>
@@ -290,35 +653,6 @@
 																		<input type="text" name="tsacrificio" id="tsacrificio" class="form-control " aria-describedby="helpId" readonly >
 																	</div>
 																</div>
-																<!--div class="col-md-4">
-																	<label for="tfomento">Fomento</label>
-																	<div class="input-group flex-nowrap">
-																		<span class="input-group-text" id="addon-wrapping">$</span>
-																		<input type="text" name="tfomento" id="tfomento" class="form-control" aria-describedby="helpId" readonly step="0.01">
-																	</div>
-																</div>
-																<div class="col-md-4">
-																	<label for="tdeguello">Deguello</label>
-																	<div class="input-group flex-nowrap">
-																		<span class="input-group-text" id="addon-wrapping">$</span>
-																		<input type="text" name="tdeguello" id="tdeguello" class="form-control" aria-describedby="helpId" readonly step="0.01">
-																	</div>
-																</div>
-
-																<div class="col-md-4">
-																	<label for="tbascula">Báscula</label>
-																	<div class="input-group flex-nowrap">
-																		<span class="input-group-text" id="addon-wrapping">$</span>
-																		<input type="text" name="tbascula" id="tbascula" class="form-control" aria-describedby="helpId" readonly step="0.01">
-																	</div>
-																</div>
-																<div class="col-md-4">
-																	<label for="ttransporte">Transporte</label>
-																	<div class="input-group flex-nowrap">
-																		<span class="input-group-text" id="addon-wrapping">$</span>
-																		<input type="text" name="ttransporte" id="ttransporte" class="form-control" aria-describedby="helpId" readonly step="0.01">
-																	</div>
-																</div>-->
 																<div class="col-md-4">
 																	<label for="tpieles">Pieles</label>
 																	<div class="input-group flex-nowrap">
@@ -388,20 +722,6 @@
 																		<span class="input-group-text" id="addon-wrapping">KG</span>
 																	</div>
 																</div>
-																<!--div class="col-md-4">
-																	<label for="rtcanalcaliente">Canal Caliente</label>
-																	<div class="input-group flex-nowrap">
-																		<input type="text" name="rtcanalcaliente" id="rtcanalcaliente" class="form-control" aria-describedby="helpId" readonly step="0.01">
-																		<span class="input-group-text" id="addon-wrapping">KG</span>
-																	</div>
-																</div>
-																<div class="col-md-4">
-																	<label for="rtcanalplanta">Canal Planta</label>
-																	<div class="input-group flex-nowrap">
-																		<input type="text" name="rtcanalplanta" id="rtcanalplanta" class="form-control" aria-describedby="helpId" readonly step="0.01">
-																		<span class="input-group-text" id="addon-wrapping">KG</span>
-																	</div>
-																</div>-->
 
 																<div class="col-md-4">
 																	<label for="rtcanalfria">Canal Fría</label>
@@ -410,20 +730,6 @@
 																		<span class="input-group-text" id="addon-wrapping">KG</span>
 																	</div>
 																</div>
-																<!--div class="col-md-4">
-																	<label for="rendcaliente">Rend.Caliente</label>
-																	<div class="input-group flex-nowrap">
-																		<input type="text" name="rendcaliente" id="rendcaliente" class="form-control" aria-describedby="helpId" readonly step="0.01">
-																		<span class="input-group-text" id="addon-wrapping">KG</span>
-																	</div>
-																</div>
-																<div class="col-md-4">
-																	<label for="rendplanta">Rend.Planta</label>
-																	<div class="input-group flex-nowrap">
-																		<input type="text" name="rendplanta" id="rendplanta" class="form-control" aria-describedby="helpId" readonly step="0.01">
-																		<span class="input-group-text" id="addon-wrapping">KG</span>
-																	</div>
-																</div>-->
 																<div class="col-md-4">
 																	<label for="rendfrio">Rend.Frio</label>
 																	<div class="input-group flex-nowrap">
@@ -437,7 +743,7 @@
 													</div>
 												</div>
 											</div>
-										</div>
+										</div>-->
 
 									</div>
 

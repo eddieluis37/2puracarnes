@@ -133,7 +133,7 @@ const showData = (data) => {
             </td>
 	    </tr>
     `;
-    let newTotalStockPadre = arrayTotales.kgTotalRequeridos - stockPadre.value;
+    let newTotalStockPadre = stockPadre.value - arrayTotales.kgTotalRequeridos;
     newStockPadre.value = newTotalStockPadre;
 }
 
