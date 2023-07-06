@@ -27,7 +27,7 @@ class beneficioavesrogercodeController extends Controller
     public function index()
     {
         $thirds = Third::orderBy('name', 'asc')->get();
-        $sacrificios = Sacrificio::orderBy('name', 'asc')->get();
+        $sacrificios = Sacrificiopollo::orderBy('name', 'asc')->get();
         return view('categorias.aves.beneficioaves.index', compact('thirds','sacrificios'));
     }
 

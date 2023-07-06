@@ -347,7 +347,7 @@ class alistamientorogercodeController extends Controller
             $arraydetail = $this->getalistamientodetail($request->alistamientoId,$request->centrocosto);
             $arrayTotales = $this->sumTotales($request->alistamientoId);
 
-            $newStockPadre = $arrayTotales['kgTotalRequeridos'] - $request->stockPadre;
+            $newStockPadre = $request->stockPadre - $arrayTotales['kgTotalRequeridos'];
             $alist = Alistamiento::firstWhere('id', $request->alistamientoId);
             $alist->nuevo_stock_padre = $newStockPadre;
             $alist->save();
@@ -420,7 +420,7 @@ class alistamientorogercodeController extends Controller
             $arraydetail = $this->getalistamientodetail($request->alistamientoId, $request->centrocosto );
             $arrayTotales = $this->sumTotales($request->alistamientoId);
 
-            $newStockPadre = $arrayTotales['kgTotalRequeridos'] - $request->stockPadre;
+            $newStockPadre = $request->stockPadre - $arrayTotales['kgTotalRequeridos'];
             $alist = Alistamiento::firstWhere('id', $request->alistamientoId);
             $alist->nuevo_stock_padre = $newStockPadre;
             $alist->save();
@@ -496,7 +496,7 @@ class alistamientorogercodeController extends Controller
             $arraydetail = $this->getalistamientodetail($request->alistamientoId, $request->centrocosto);
             $arrayTotales = $this->sumTotales($request->alistamientoId);
 
-            $newStockPadre = $arrayTotales['kgTotalRequeridos'] - $request->stockPadre;
+            $newStockPadre = $request->stockPadre - $arrayTotales['kgTotalRequeridos'];
             $alist = Alistamiento::firstWhere('id', $request->alistamientoId);
             $alist->nuevo_stock_padre = $newStockPadre;
             $alist->save();
