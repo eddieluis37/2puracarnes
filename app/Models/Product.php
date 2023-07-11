@@ -12,6 +12,8 @@ class Product extends Model
 
 	protected $fillable = ['category_id','meatcut_id','unitofmeasure_id','name','code','barcode','cost','price','iva','stock','alerts','image'];
 
+	protected $table = 'products';
+
 
 	public function category()
 	{
@@ -47,6 +49,12 @@ class Product extends Model
 
 	}
 
+	
+	public function centroCostos()
+    {
+        return $this->belongsToMany(CentroCosto::class, 'centro_costo_products', 'product_id', 'centro_costo_id')
+                    ->withPivot('quantity');
+    }
 
 	
 
