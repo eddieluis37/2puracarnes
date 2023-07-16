@@ -15,10 +15,20 @@ class CreateTransfersTable extends Migration
     {
         Schema::create('transfers', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('from_cost_center_id');
-            $table->unsignedBigInteger('to_cost_center_id');
-            $table->unsignedBigInteger('product_id');
-            $table->integer('quantity');
+            $table->unsignedBigInteger('from_cost_center_id')->nullable();
+            $table->foreign('from_cost_center_id')->references('id')->on('centro_costo');
+            
+            $table->unsignedBigInteger('to_cost_center_id')->nullable();
+            $table->foreign('to_cost_center_id')->references('id')->on('centro_costo');
+            
+            $table->unsignedBigInteger('categoria_id')->nullable();
+            $table->foreign('categoria_id')->references('id')->on('categories');            
+            
+            $table->unsignedBigInteger('centro_costo_products_id')->nullable();
+            $table->foreign('centro_costo_products_id')->references('id')->on('centro_costo_products');
+
+            $table->decimal('quantity', 18, 2)->nullable(); // valor de cantidades de unidades trasladada
+
             $table->timestamps();
         });
     }

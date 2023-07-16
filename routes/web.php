@@ -254,6 +254,8 @@ Route::post('/downdesposteave', [desposteavesrogercodeController::class, 'destro
 
 /***** TRANSFER ******** */
 Route::get('transfer', [TransferController::class, 'index'])->name('transfer.index');
+Route::post('getproductsbycostcenterorigin', [TransferController::class,'getProductsByCostcenterOrigin'])->name('transfer.getproductsbycostcenterorigin');
+Route::post('getproductsbycostcenterdest', [TransferController::class,'getProductsByCostcenterDest'])->name('transfer.getproductsbycostcenterdest');
 Route::post('transfersave', [TransferController::class, 'store'])->name('transfer.store');
 Route::get('showtransfer', [TransferController::class,'show'])->name('transfer.showlist');
 Route::get('transfer/create/{id}', [TransferController::class,'create'])->name('transfer.create');
@@ -263,7 +265,7 @@ Route::post('transfersavedetail', [TransferController::class,'savedetail'])->nam
 Route::post('/transferUpdate', [TransferController::class, 'updatedetail'])->name('transfer.update');
 Route::post('transferdown', [TransferController::class,'destroy'])->name('transfer.down');
 Route::post('transferById', [TransferController::class,'editTranfer'])->name('transfer.edit');
-Route::post('getproductospadreandhijo', [TransferController::class,'getMeatcutAndProducts'])->name('transfer.getproductospadreandhijo');
+
 Route::post('/downmmaintransfer', [TransferController::class, 'destroyTransfer'])->name('transfer.downAlistamiento');
 Route::post('/downmmaintransfer', [TransferController::class, 'destroyTransfer'])->name('transfer.downAlistamiento');
 Route::post('transferAddShoping', [TransferController::class,'add_shopping'])->name('transfer.addShopping');

@@ -8,9 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class Product extends Model
 {
 	use HasFactory;
-	
 
-	protected $fillable = ['category_id','meatcut_id','unitofmeasure_id','name','code','barcode','cost','price','iva','stock','alerts','image'];
+
+	protected $fillable = ['category_id', 'meatcut_id', 'unitofmeasure_id', 'name', 'code', 'barcode', 'cost', 'price', 'iva', 'stock', 'alerts', 'image'];
 
 	protected $table = 'products';
 
@@ -27,12 +27,11 @@ class Product extends Model
 
 
 	public function getImagenAttribute()
-	{	
-		if($this->image != null)
+	{
+		if ($this->image != null)
 			return (file_exists('storage/products/' . $this->image) ? $this->image : 'noimg.jpg');
 		else
-			return 'noimg.jpg';		
-		
+			return 'noimg.jpg';
 	}
 
 	public function getPriceAttribute($value)
@@ -44,19 +43,19 @@ class Product extends Model
 	}
 	public function setPriceAttribute($value)
 	{
-        //$this->attributes['price'] = str_replace(',', '.', $value);
-		$this->attributes['price'] =str_replace(',', '.', preg_replace( '/,/', '', $value, preg_match_all( '/,/', $value) - 1));
-
+		//$this->attributes['price'] = str_replace(',', '.', $value);
+		$this->attributes['price'] = str_replace(',', '.', preg_replace('/,/', '', $value, preg_match_all('/,/', $value) - 1));
 	}
 
-	
+
 	public function centroCostos()
-    {
-        return $this->belongsToMany(CentroCosto::class, 'centro_costo_products', 'product_id', 'centro_costo_id')
-                    ->withPivot('quantity');
-    }
+	{
+		return $this->belongsToMany(CentroCosto::class, 'centro_costo_products', 'product_id', 'centro_costo_id')
+			->withPivot('quantity');
+	}
 
-	
-
-
+	public function centroCostoProductos()
+	{
+		return $this->belongsTo(Centro_costo_product::class);
+	}
 }
