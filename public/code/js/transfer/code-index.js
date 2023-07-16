@@ -152,35 +152,38 @@ function getProductsByCostcenterOrigin(costcenteroriginId) {
         let prod = result.productsorigin;
         console.log(prod);
         selectCortePadre.innerHTML = "";
-        selectCortePadre.innerHTML += `<option value="">Select the product</option>`;
+        selectCortePadre.innerHTML += `<option value="">Selecciona el producto</option>`;
         prod.forEach((option) => {
             const optionElement = document.createElement("option");
             optionElement.value = option.id;
             optionElement.text = option.name;
+            optionElement.dataset.stock = option.stock; // Agregar el valor del stock al dataset
             selectCortePadre.appendChild(optionElement);
         });
     });
 }
-
-function handleCostcenterOriginChange() {
+ function handleCostcenterOriginChange() {
     const selectedValue = this.value;
-    console.log("Selected cost center origin:", selectedValue);
+    console.log("Centro de costo origen seleccionado:", selectedValue);
     getProductsByCostcenterOrigin(selectedValue);
 }
-
-selectCostcenterOrigin.addEventListener("change", handleCostcenterOriginChange);
-
-function actualizarStockActualOrigen() {
+ selectCostcenterOrigin.addEventListener("change", handleCostcenterOriginChange);
+ function actualizarStockActualOrigen() {
     var selectCortePadre = document.getElementById("selectCortePadre");
     var stockActualCenterCostOrigin = document.getElementById(
         "stockActualCenterCostOrigin"
     );
-
-    // Obtener el valor seleccionado en el select
+    var stockActualCenterCostDest = document.getElementById(
+        "stockActualCenterCostDest"
+    );
+     // Obtener el valor seleccionado en el select
     var seleccionado = selectCortePadre.value;
-
-    // Actualizar el valor del campo stockActualCenterCostOrigin
-    stockActualCenterCostOrigin.value = seleccionado;
+     // Obtener el stock del producto seleccionado
+    var selectedOption = selectCortePadre.options[selectCortePadre.selectedIndex];
+    var stock = selectedOption.dataset.stock;
+     // Actualizar el valor del campo stockActualCenterCostOrigin
+    stockActualCenterCostOrigin.value = stock;
+    stockActualCenterCostDest.value = stock; // Establecer el valor del stock en el campo de destino
 }
 
 /* Proceso para obtener Stock actual centro costo destino */
