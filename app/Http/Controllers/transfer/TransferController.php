@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\centros\Centrocosto;
 use App\Models\Category;
 use App\Models\alistamiento\Alistamiento;
+use App\Models\alistamiento\enlistment_details;
 use App\Models\transfer\Transfer;
 
 use App\Models\Centro_costo_product;
@@ -148,11 +149,40 @@ class transferController extends Controller
         }
     }
 
+    public function getalistamientodetail($alistamientoId,$centrocostoId)
+    {
+        $detail = DB::table('enlistment_details as en')
+        ->join('products as pro', 'en.products_id', '=', 'pro.id')
+        ->join('centro_costo_products as ce', 'pro.id', '=', 'ce.products_id')
+        ->select('en.*', 'pro.name as nameprod','pro.code','ce.stock','ce.fisico')
+        ->where([
+            ['ce.centrocosto_id',$centrocostoId],
+            ['en.enlistments_id',$alistamientoId],
+            ['en.status',1]
+        ])->get();
+
+        return $detail;
+    }
+
+    public function sumTotales($id)
+    {
+
+        $kgTotalRequeridos = (float)enlistment_details::Where([['enlistments_id',$id],['status',1]])->sum('kgrequeridos');
+        $newTotalStock = (float)enlistment_details::Where([['enlistments_id',$id],['status',1]])->sum('newstock');
+
+        $array = [
+            'kgTotalRequeridos' => $kgTotalRequeridos,
+            'newTotalStock' => $newTotalStock,
+        ];
+
+        return $array;
+    }
+
     
 
     public function create($id)
     {
-        dd($id);
+        //dd($id);
         $dataAlistamiento = DB::table('enlistments as ali')
         ->join('categories as cat', 'ali.categoria_id', '=', 'cat.id')
         ->join('centro_costo as centro', 'ali.centrocosto_id', '=', 'centro.id')

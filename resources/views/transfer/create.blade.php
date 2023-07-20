@@ -132,12 +132,12 @@
                 <div class="card">
                     <div class="card-body">
 							<div class="table-responsive mt-3">
-								<table id="tableAlistamiento" class="table table-sm table-striped table-bordered">
+								<table id="tableTransfer" class="table table-sm table-striped table-bordered">
 									<thead class="text-white" style="background: #3B3F5C">
 										<tr>
 											<!--th class="table-th text-white">Item</th>-->
 											<th class="table-th text-white">#</th>
-											<th class="table-th text-white">Codigo</th>
+											<th class="table-th text-white">Codi</th>
 											<th class="table-th text-white">Producto hijo</th>
 											<th class="table-th text-white">Stock actual</th>
 											<th class="table-th text-white">Fisico</th>
