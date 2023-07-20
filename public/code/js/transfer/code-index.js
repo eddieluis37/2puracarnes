@@ -1,6 +1,6 @@
 console.log("Starting");
-const btnAddAlistamiento = document.querySelector("#btnAddalistamiento");
-const formAlistamiento = document.querySelector("#form-alistamiento");
+const btnAddTransfer = document.querySelector("#btnAddTransfer");
+const formTransfer = document.querySelector("#form-transfer");
 const token = document
     .querySelector('meta[name="csrf-token"]')
     .getAttribute("content");
@@ -9,7 +9,7 @@ const btnClose = document.querySelector("#btnModalClose");
 const selectCostcenterOrigin = document.querySelector("#centrocostoorigen");
 const selectCostcenterDest = document.querySelector("#centrocostodestino");
 
-const alistamiento_id = document.querySelector("#alistamientoId");
+const alistamiento_id = document.querySelector("#transferId");
 const contentform = document.querySelector("#contentDisable");
 
 const selectCortePadre = document.querySelector("#selectCortePadre");
@@ -23,7 +23,7 @@ const stockActualCenterCostDest = document.getElementById(
 
 $(document).ready(function () {
     $(function () {
-        $("#tableAlistamiento").DataTable({
+        $("#tableTransfer").DataTable({
             paging: true,
             pageLength: 5,
             autoWidth: false,
@@ -80,15 +80,15 @@ const showModalcreate = () => {
     }
     $(".select2corte").val("").trigger("change");
     selectCortePadre.innerHTML = "";
-    formAlistamiento.reset();
-    alistamiento_id.value = 0;
+    formTransfer.reset();
+    transfer_id.value = 0;
 };
 
 const showDataForm = (id) => {
     console.log(id);
     const dataform = new FormData();
     dataform.append("id", id);
-    send(dataform, "/alistamientoById").then((resp) => {
+    send(dataform, "/transferById").then((resp) => {
         console.log(resp);
         console.log(resp.reg);
         showData(resp);
@@ -136,7 +136,7 @@ function validateCentroCosto() {
     return true;
 }
 
-const form = document.getElementById("alistamientoId");
+const form = document.getElementById("transferId");
 form.addEventListener("submit", function (event) {
     if (!validateCentroCosto()) {
         event.preventDefault(); // Evitar el envío del formulario si la validación falla
@@ -145,89 +145,56 @@ form.addEventListener("submit", function (event) {
 
 /* Proceso para obtener Stock actual centro costo origen */
 function getProductsByCostcenterOrigin(costcenteroriginId) {
+    console.log("centrocostoorigenId:", costcenteroriginId);
     const dataform = new FormData();
     dataform.append("centrocostoorigenId", Number(costcenteroriginId));
     send(dataform, "/getproductsbycostcenterorigin").then((result) => {
         console.log(result);
         let prod = result.productsorigin;
         console.log(prod);
-        selectCortePadre.innerHTML = "";
-        selectCortePadre.innerHTML += `<option value="">Selecciona el producto</option>`;
-        prod.forEach((option) => {
-            const optionElement = document.createElement("option");
-            optionElement.value = option.id;
-            optionElement.text = option.name;
-            optionElement.dataset.stock = option.stock; // Agregar el valor del stock al dataset
-            selectCortePadre.appendChild(optionElement);
-        });
     });
 }
- function handleCostcenterOriginChange() {
+function handleCostcenterOriginChange() {
     const selectedValue = this.value;
     console.log("Centro de costo origen seleccionado:", selectedValue);
     getProductsByCostcenterOrigin(selectedValue);
 }
- selectCostcenterOrigin.addEventListener("change", handleCostcenterOriginChange);
- function actualizarStockActualOrigen() {
+selectCostcenterOrigin.addEventListener("change", handleCostcenterOriginChange);
+function actualizarStockActualOrigen() {
     var selectCortePadre = document.getElementById("selectCortePadre");
     var stockActualCenterCostOrigin = document.getElementById(
         "stockActualCenterCostOrigin"
     );
-    var stockActualCenterCostDest = document.getElementById(
-        "stockActualCenterCostDest"
-    );
-     // Obtener el valor seleccionado en el select
-    var seleccionado = selectCortePadre.value;
-     // Obtener el stock del producto seleccionado
-    var selectedOption = selectCortePadre.options[selectCortePadre.selectedIndex];
-    var stock = selectedOption.dataset.stock;
-     // Actualizar el valor del campo stockActualCenterCostOrigin
-    stockActualCenterCostOrigin.value = stock;
-    stockActualCenterCostDest.value = stock; // Establecer el valor del stock en el campo de destino
 }
 
 /* Proceso para obtener Stock actual centro costo destino */
-function getProductsByCostcenterDest(costcenterdestId) {
+
+function ProductsByCostcenterDest(costcenterdestId) {
+    console.log("centrocostodestinoId:", costcenterdestId);
     const dataform = new FormData();
-    dataform.append("centrocostodestId", Number(costcenterdestId));
-    send(dataform, "/getproductsbycostcenterdest").then((result) => {
+    dataform.append("centrocostodestinoId", Number(costcenterdestId));
+    send(dataform, "/productsbycostcenterdest").then((result) => {
         console.log(result);
         let prodDest = result.productsdest;
         console.log(prodDest);
-      /*   selectCortePadre.innerHTML = ""; */
-    /*     selectCortePadre.innerHTML += `<option value="">Select the product</option>`; */
-        prodDest.forEach((option) => {
-            const optionElement = document.createElement("option");
-            optionElement.value = option.id;
-            optionElement.text = option.name;
-            selectCortePadre.appendChild(optionElement);
-        });
     });
 }
 
 function handleCostcenterDestChange() {
     const selectedValue = this.value;
-    console.log("Selected cost center dest:", selectedValue);
-    getProductsByCostcenterDest(selectedValue);
+    console.log("Centro de costo destino seleccionado:", selectedValue);
+    ProductsByCostcenterDest(selectedValue); // Pass the selected value to the function
 }
 
 selectCostcenterDest.addEventListener("change", handleCostcenterDestChange);
-
-function actualizarStockActualDest() {
+function actualizarStockActualDest(seleccionado) {
     var selectCortePadre = document.getElementById("selectCortePadre");
     var stockActualCenterCostDest = document.getElementById(
         "stockActualCenterCostDest"
     );
-
-    // Obtener el valor seleccionado en el select
-    var seleccionado = selectCortePadre.value;
-
-    // Actualizar el valor del campo stockActualCenterCostOrigin
-    stockActualCenterCostDest.value = seleccionado;
 }
 
-
-const downAlistamiento = (id) => {
+const downTransfer = (id) => {
     swal({
         title: "CONFIRMAR",
         text: "¿CONFIRMAS ELIMINAR EL REGISTRO?",
@@ -251,6 +218,6 @@ const downAlistamiento = (id) => {
 };
 
 const refresh_table = () => {
-    let table = $("#tableAlistamiento").dataTable();
+    let table = $("#formTransfer").dataTable();
     table.fnDraw(false);
 };

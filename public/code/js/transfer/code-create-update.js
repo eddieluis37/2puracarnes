@@ -1,18 +1,18 @@
 import {sendData} from '../exportModule/core/rogercode-core.js';
 import { successToastMessage, errorMessage } from '../exportModule/message/rogercode-message.js';
-btnAddAlistamiento.addEventListener("click", async (e) => {
+btnAddTransfer.addEventListener("click", async (e) => {
     e.preventDefault();
     console.log("log")
-    const dataform = new FormData(formAlistamiento);
-    sendData('/alistamientosave',dataform,token).then((resp) => {
+    const dataform = new FormData(formTransfer);
+    sendData('/transfersave',dataform,token).then((resp) => {
         console.log(resp);
         if (resp.status == 1) {
-            formAlistamiento.reset();   
+            formTransfer.reset();   
             btnClose.click();
             successToastMessage(resp.message); 
             refresh_table();
             if (resp.registroId != 0) {//for new register
-                window.location.href = `alistamiento/create/${resp.registroId}`;
+                window.location.href = `transfer/create/${resp.registroId}`;
             }else{
                 //refresh_table();
             }

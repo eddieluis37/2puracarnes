@@ -12,7 +12,7 @@
 			<div class="row">
 				<div class="col-sm-5">
 					<h4 class="">
-						<b> Alistamiento / Categoria </b>
+						<b> Traslado / Categoria </b>
 					</h4>
 				</div>
 			</div>
@@ -24,8 +24,8 @@
 							<div class="col-md-4">
 								<div class="task-header">
 									<div class="form-group">
-                                        <label for="" class="form-label">Fecha de compra</label>
-										<p>{{$dataAlistamiento[0]->created_at}}</p>
+                                        <label for="" class="form-label">Fecha de traslado</label>
+										<p>{{$dataTransfer[0]->created_at}}</p>
 									</div>
 								</div>
 							</div>
@@ -33,8 +33,8 @@
 								<div class="task-header">
 									<div class="form-group">
                                         <label for="" class="form-label">Categoria</label>
-										<input type="hidden" id="categoryId" name="categoryId" value="{{$dataAlistamiento[0]->categoria_id}}">
-										<p>{{$dataAlistamiento[0]->namecategoria}}</p>
+										<input type="hidden" id="categoryId" name="categoryId" value="{{$dataTransfer[0]->categoria_id}}">
+										<p>{{$dataTransfer[0]->namecategoria}}</p>
 									</div>
 								</div>
 							</div>
@@ -42,7 +42,7 @@
 								<div class="task-header">
 									<div class="form-group">
                                         <label for="" class="form-label">Centro de costo</label>
-										<p>{{$dataAlistamiento[0]->namecentrocosto}}</p>
+										<p>{{$dataTransfer[0]->namecentrocosto}}</p>
 									</div>
 								</div>
 							</div>
@@ -55,15 +55,15 @@
 				<div class="card">
 					<div class="card-body">
 						<form id="form-detail">
-						<input type="hidden" id="alistamientoId" name="alistamientoId" value="{{$dataAlistamiento[0]->id}}">
+						<input type="hidden" id="transferId" name="transferId" value="{{$dataTransfer[0]->id}}">
 						<div class="row g-3">
 							<div class="col-md-4">
 								<div class="task-header">
 									<div class="form-group">
                                         <label for="" class="form-label">Buscar corte padre</label>
-										<input type="hidden" id="meatcutId" name="meatcutId" value="{{$dataAlistamiento[0]->meatcut_id}}">
+										<input type="hidden" id="meatcutId" name="meatcutId" value="{{$dataTransfer[0]->meatcut_id}}">
 										<input type="hidden" id="productopadreId" name="productopadreId" value="{{$cortes[0]->productopadreId}}">
-										<input type="hidden" id="centrocosto" name="centrocosto" value="{{$dataAlistamiento[0]->centrocosto_id}}">
+										<input type="hidden" id="centrocosto" name="centrocosto" value="{{$dataTransfer[0]->centrocosto_id}}">
 										<input type="text" id="productoCorte" name="productoCorte"value="{{$cortes[0]->name}}" class="form-control input" readonly >
 					                    <!--select class="form-control form-control-sm select2Prod" name="productoCorte" id="productoCorte" required="">
 											<option value="">Seleccione el producto</option>
@@ -89,7 +89,7 @@
 							<div class="col-md-2 text-center">
 								<div class="" style="margin-top:30px;">
 								<div class="d-grid gap-2">
-									<button id="btnAddAlistamiento" class="btn btn-primary">Aceptar</button>
+									<button id="btnAddTransfer" class="btn btn-primary">Aceptar</button>
 								</div>
 								</div>
 							</div>
@@ -120,7 +120,7 @@
 							<div class="col-md-4">
 								<label for="" class="form-label">Nuevo stock</label>
 								<div class="input-group flex-nowrap">
-								<input type="text" id="newStockPadre" name="newStockPadre" value="{{$dataAlistamiento[0]->nuevo_stock_padre}}" class="form-control-sm form-control" placeholder="30,00 kg" readonly>
+								<input type="text" id="newStockPadre" name="newStockPadre" value="{{$dataTransfer[0]->nuevo_stock_padre}}" class="form-control-sm form-control" placeholder="30,00 kg" readonly>
 									<span class="input-group-text" id="addon-wrapping">KG</span>
 								</div>
 							</div>
@@ -184,7 +184,7 @@
 											<th> {{number_format($arrayTotales['kgTotalRequeridos'], 2, ',', '.')}} KG</th>
 											<th> {{number_format($arrayTotales['newTotalStock'], 2, ',', '.')}} KG</th>
 											<th class="text-center">
-												@if($dataAlistamiento[0]->inventario == 'pending')
+												@if($dataTransfer[0]->inventario == 'pending')
 												<button class="btn btn-success btn-sm" id="addShopping">Cargar al inventario</button>
 												@endif
 											</th>

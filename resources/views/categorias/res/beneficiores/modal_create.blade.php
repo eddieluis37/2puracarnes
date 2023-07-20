@@ -247,7 +247,7 @@
 										<div class="form-group">
 											<label>Cantidad <br> Macho</label>
 											<!--input type="number" name="cantidad" id="cantidad" class="form-control" "aria-describedby=" helpId" required="" min="1" max="30" step="1" value="1">-->
-											<input type="number" name="cantidadMacho" id="cantidadMacho" class="form-control" "aria-describedby=" helpId" required="" min="1" max="30" step="1" value="1">
+											<input type="number" name="cantidadMacho" id="cantidadMacho" class="form-control" "aria-describedby=" helpId" required="" min="0" max="40" step="1" value="1">
 											@error('cantidadMacho') <span class="text-danger er">{{ $message}}</span>@enderror
 										</div>
 									</div>

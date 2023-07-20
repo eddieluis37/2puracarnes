@@ -226,6 +226,17 @@ Route::post('savebeneficiocerdo', [beneficiocerdoController::class, 'store'])->n
 Route::get('/beneficiocerdoedit/{id}', [beneficiocerdoController::class, 'edit'])->name('beneficiocerdo.edit');
 Route::get('downbeneficiocerdo/{id}', [beneficiocerdoController::class, 'destroy'])->name('beneficiocerdo.destroy');
 
+/***** BENEFICIO AVES******** */
+Route::get('beneficioaves', [beneficioavesrogercodeController::class,'index'])->name('beneficioaves.index');
+Route::get('get_plantasacrificiopollo_by_id', [beneficioavesrogercodeController::class, 'get_plantasacrificiopollo_by_id'])->name('get_plantasacrificiopollo_by_id');
+Route::post('savebeneficioaves', [beneficioavesrogercodeController::class, 'store'])->name('beneficioaves.save');
+Route::get('showbeneficioaves', [beneficioavesrogercodeController::class,'show'])->name('beneficioaves.showlist');
+Route::get('/beneficioavesedit/{id}', [beneficioavesrogercodeController::class, 'edit'])->name('beneficioaves.edit');
+
+Route::get('desposteaves/{id}', [desposteavesrogercodeController::class, 'create'])->name('desposteaves.create');
+Route::post('/desposteavesUpdate', [desposteavesrogercodeController::class, 'update'])->name('desposteaves.update');
+Route::post('/downdesposteave', [desposteavesrogercodeController::class, 'destroy'])->name('desposteaves.destroy');
+
 /**ALISTAMIENTO*/
 Route::get('alistamiento', [alistamientorogercodeController::class,'index'])->name('alistamiento.index');
 Route::post('alistamientosave', [alistamientorogercodeController::class,'store'])->name('alistamiento.save');
@@ -241,31 +252,20 @@ Route::post('/downmmainalistamiento', [alistamientorogercodeController::class, '
 Route::post('/downmmainalistamiento', [alistamientorogercodeController::class, 'destroyAlistamiento'])->name('alistamiento.downAlistamiento');
 Route::post('alistamientoAddShoping', [alistamientorogercodeController::class,'add_shopping'])->name('alistamiento.addShopping');
 
-/***** BENEFICIO AVES******** */
-Route::get('beneficioaves', [beneficioavesrogercodeController::class,'index'])->name('beneficioaves.index');
-Route::get('get_plantasacrificiopollo_by_id', [beneficioavesrogercodeController::class, 'get_plantasacrificiopollo_by_id'])->name('get_plantasacrificiopollo_by_id');
-Route::post('savebeneficioaves', [beneficioavesrogercodeController::class, 'store'])->name('beneficioaves.save');
-Route::get('showbeneficioaves', [beneficioavesrogercodeController::class,'show'])->name('beneficioaves.showlist');
-Route::get('/beneficioavesedit/{id}', [beneficioavesrogercodeController::class, 'edit'])->name('beneficioaves.edit');
-
-Route::get('desposteaves/{id}', [desposteavesrogercodeController::class, 'create'])->name('desposteaves.create');
-Route::post('/desposteavesUpdate', [desposteavesrogercodeController::class, 'update'])->name('desposteaves.update');
-Route::post('/downdesposteave', [desposteavesrogercodeController::class, 'destroy'])->name('desposteaves.destroy');
-
 /***** TRANSFER ******** */
-Route::get('transfer', [TransferController::class, 'index'])->name('transfer.index');
-Route::post('getproductsbycostcenterorigin', [TransferController::class,'getProductsByCostcenterOrigin'])->name('transfer.getproductsbycostcenterorigin');
-Route::post('getproductsbycostcenterdest', [TransferController::class,'getProductsByCostcenterDest'])->name('transfer.getproductsbycostcenterdest');
-Route::post('transfersave', [TransferController::class, 'store'])->name('transfer.store');
-Route::get('showtransfer', [TransferController::class,'show'])->name('transfer.showlist');
-Route::get('transfer/create/{id}', [TransferController::class,'create'])->name('transfer.create');
+Route::get('transfer', [transferController::class, 'index'])->name('transfer.index');
+Route::post('transfersave', [transferController::class,'store'])->name('transfer.save');
+Route::get('showtransfer', [transferController::class,'show'])->name('transfer.showlist');
+Route::get('transfer/create/{id}', [transferController::class,'create'])->name('transfer.create');
+Route::post('getproductos', [transferController::class,'getproducts'])->name('transfer.getproductos');
 
-Route::post('getproductos', [TransferController::class,'getproducts'])->name('transfer.getproductos');
-Route::post('transfersavedetail', [TransferController::class,'savedetail'])->name('transfer.savedetail');
-Route::post('/transferUpdate', [TransferController::class, 'updatedetail'])->name('transfer.update');
-Route::post('transferdown', [TransferController::class,'destroy'])->name('transfer.down');
-Route::post('transferById', [TransferController::class,'editTranfer'])->name('transfer.edit');
+Route::post('productsbycostcenterdest', [transferController::class,'ProductsByCostcenterDest'])->name('transfer.productsbycostcenterdest');
+Route::post('getproductsbycostcenterorigin', [transferController::class,'getProductsByCostcenterOrigin'])->name('transfer.getproductsbycostcenterorigin');
 
-Route::post('/downmmaintransfer', [TransferController::class, 'destroyTransfer'])->name('transfer.downAlistamiento');
-Route::post('/downmmaintransfer', [TransferController::class, 'destroyTransfer'])->name('transfer.downAlistamiento');
-Route::post('transferAddShoping', [TransferController::class,'add_shopping'])->name('transfer.addShopping');
+Route::post('transfersavedetail', [transferController::class,'savedetail'])->name('transfer.savedetail');
+Route::post('/transferUpdate', [transferController::class, 'updatedetail'])->name('transfer.update');
+Route::post('transferdown', [transferController::class,'destroy'])->name('transfer.down');
+Route::post('transferById', [transferController::class,'editTranfer'])->name('transfer.edit');
+Route::post('getproductospadre', [transferController::class,'getProductsCategoryPadre'])->name('transfer.getproductospadre');
+Route::post('/downmmaintransfer', [transferController::class, 'destroyTransfer'])->name('transfer.downAlistamiento');
+Route::post('transferAddShoping', [transferController::class,'add_shopping'])->name('transfer.addShopping');

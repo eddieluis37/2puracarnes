@@ -10,14 +10,14 @@
 				</h4>
 				<ul class="tabs tab-pills">
 					<li>
-						<a href="javascript:void(0)" onclick="showModalcreate()" class="tabmenu bg-dark" data-toggle="modal" data-target="#modal-create-alistamiento" title="Nuevo alistamiento">Agregar</a>
+						<a href="javascript:void(0)" onclick="showModalcreate()" class="tabmenu bg-dark" data-toggle="modal" data-target="#modal-create-transfer" title="Nuevo traslado">Agregar</a>
 					</li>
 				</ul>
 			</div>
 
 			<div class="widget-content">
 				<div class="table-responsive">
-					<table id="tableAlistamiento" class="table table-striped mt-1">
+					<table id="tableTransfer" class="table table-striped mt-1">
 						<thead class="text-white" style="background: #3B3F5C">
 							<tr>
 								<th class="table-th text-white">#</th>
@@ -38,11 +38,11 @@
 		</div>
 	</div>
 	<!-- modal -->
-	<div class="modal fade" id="modal-create-alistamiento" aria-hidden="true" data-keyboard="false" data-backdrop="static" >
-		<div class="modal-dialog modal-xl" role="document">
+	<div class="modal fade" id="modal-create-transfer" aria-hidden="true" data-keyboard="false" data-backdrop="static" >
+		<div class="modal-dialog modal-md" role="document">
 			<div class="modal-content bg-default">
 				<fieldset id="contentDisable">
-					<form action="" id="form-alistamiento">
+					<form action="" id="form-transfer">
 						<div class="modal-header">
 							<h4 class="modal-title">Crear Traslado</h4>
 							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -53,7 +53,7 @@
 						</div>
 						<div class="modal-footer">
 							<button type="button" id="btnModalClose" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-							<button type="submit" id="btnAddalistamiento" class="btn btn-primary">Aceptar</button>
+							<button type="submit" id="btnAddTransfer" class="btn btn-primary">Aceptar</button>
 						</div>
 					</form>
 				</fieldset>
