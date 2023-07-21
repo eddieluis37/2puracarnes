@@ -15,7 +15,7 @@ const meatcutId = document.querySelector("#meatcutId");
 const tableFoot = document.querySelector("#tabletfoot");
 const selectProducto = document.getElementById("producto");
 const selectCategoria = document.querySelector("#productoCorte");
-const btnAddAlist = document.querySelector("#btnAddTransfer");
+const btnAddTrans = document.querySelector("#btnAddTransfer");
 const transferId = document.querySelector("#transferId");
 const kgrequeridos = document.querySelector("#kgrequeridos");
 const addShopping = document.querySelector("#addShopping");
@@ -74,7 +74,7 @@ sendData("/getproductos",dataform,token).then((result) => {
     });
 });*/
 
-btnAddAlist.addEventListener("click", (e) => {
+btnAddTrans.addEventListener("click", (e) => {
     e.preventDefault();
     const dataform = new FormData(formDetail);
     dataform.append("stockPadre", stockPadre.value);
@@ -86,7 +86,7 @@ btnAddAlist.addEventListener("click", (e) => {
             showData(result);
         }
         if (result.status === 0) {
-            errorMessage("Tienes campos vacios");
+            errorMessage("Tienes vacios");
         }
     });
 });

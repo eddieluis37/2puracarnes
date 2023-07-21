@@ -198,7 +198,7 @@ class transferController extends Controller
                 ], 422);
             }
 
-            $getReg = Alistamiento::firstWhere('id', $request->compensadoId);
+            $getReg = Transfer::firstWhere('id', $request->compensadoId);
 
             if ($getReg == null) {
                 $currentDateTime = Carbon::now();
@@ -209,7 +209,7 @@ class transferController extends Controller
 
                 $id_user = Auth::user()->id;
 
-                $alist = new Alistamiento();
+                $alist = new Transfer();
                 $alist->users_id = $id_user;
                 $alist->categoria_id = $request->categoria;
                 $alist->centrocosto_id = $request->centrocosto;
@@ -331,19 +331,19 @@ class transferController extends Controller
             
             $formatkgrequeridos = $formatCantidad->MoneyToNumber($request->kgrequeridos);
             $newStock = $prod[0]->stock + $formatkgrequeridos;
-            $details = new enlistment_details();
-            $details->enlistments_id = $request->alistamientoId;
+            $details = new transfer_details();
+            $details->transfers_id = $request->transferId;
             $details->products_id = $request->producto;
             $details->kgrequeridos = $formatkgrequeridos;
             $details->newstock = $newStock;
             $details->save();
 
 
-            $arraydetail = $this->getalistamientodetail($request->alistamientoId,$request->centrocosto);
-            $arrayTotales = $this->sumTotales($request->alistamientoId);
+            $arraydetail = $this->gettransferdetail($request->transferId,$request->centrocosto);
+            $arrayTotales = $this->sumTotales($request->transferId);
 
             $newStockPadre = $request->stockPadre - $arrayTotales['kgTotalRequeridos'];
-            $alist = Alistamiento::firstWhere('id', $request->alistamientoId);
+            $alist = Transfer::firstWhere('id', $request->transferId);
             $alist->nuevo_stock_padre = $newStockPadre;
             $alist->save();
 
@@ -565,15 +565,15 @@ class transferController extends Controller
     public function destroy(Request $request)
     {
         try {
-            $enlist = enlistment_details::where('id', $request->id)->first();
+            $enlist = transfer_details::where('id', $request->id)->first();
             $enlist->status = 0;
             $enlist->save();
 
-            $arraydetail = $this->getalistamientodetail($request->alistamientoId, $request->centrocosto);
-            $arrayTotales = $this->sumTotales($request->alistamientoId);
+            $arraydetail = $this->gettransferdetail($request->transferId, $request->centrocosto);
+            $arrayTotales = $this->sumTotales($request->transferId);
 
             $newStockPadre = $request->stockPadre - $arrayTotales['kgTotalRequeridos'];
-            $alist = Alistamiento::firstWhere('id', $request->alistamientoId);
+            $alist = Alistamiento::firstWhere('id', $request->transferId);
             $alist->nuevo_stock_padre = $newStockPadre;
             $alist->save();
 
@@ -618,7 +618,7 @@ class transferController extends Controller
             DB::beginTransaction();
             $shopp = new shopping_enlistment();
             $shopp->users_id = $id_user;
-            $shopp->enlistments_id = $request->alistamientoId;
+            $shopp->enlistments_id = $request->transferId;
             $shopp->category_id = $request->categoryId;
             $shopp->productopadre_id = $request->productoPadre;
             $shopp->centrocosto_id = $request->centrocosto;
@@ -628,7 +628,7 @@ class transferController extends Controller
             $shopp->fecha_shopping = $currentDateTime;
             $shopp->save();
 
-            $regProd = $this->getalistamientodetail($request->alistamientoId,$request->centrocosto);
+            $regProd = $this->gettransferdetail($request->transferId,$request->centrocosto);
             $count = count($regProd);
             if ($count == 0) {
                 return response()->json([
@@ -637,7 +637,7 @@ class transferController extends Controller
                 ]);
             }
             foreach($regProd as $key){
-                $shoppDetails = new shopping_enlistment_details();
+                $shoppDetails = new shopping_transfer_details();
                 $shoppDetails->shopping_enlistment_id = $shopp->id;
                 $shoppDetails->products_id = $key->products_id;
                 $shoppDetails->stock_actual = $key->stock;
@@ -647,7 +647,7 @@ class transferController extends Controller
                 $shoppDetails->save();
             }
             
-            $invalist = Alistamiento::where('id', $request->alistamientoId)->first();
+            $invalist = Alistamiento::where('id', $request->transferId)->first();
             $invalist->inventario = "added";
             $invalist->save();
 
