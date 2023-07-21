@@ -38,7 +38,7 @@ $('.select2ProdHijos').select2({
 });
 const dataform = new FormData();
 dataform.append("categoriaId", Number(meatcutId.value));
-sendData("/getproductos",dataform,token).then((result) => {
+sendData("/transgetproductos",dataform,token).then((result) => {
     console.log(result);
     let prod = result.products;
     console.log(prod);
@@ -200,7 +200,7 @@ tbodyTable.addEventListener("click", (e) => {
                 console.log(id);
                 const dataform = new FormData();
                 dataform.append("id", Number(id));
-                dataform.append("transferId", Number(alistamientoId.value));
+                dataform.append("transferId", Number(transferId.value));
                 dataform.append("centrocosto", Number(centrocosto.value));
                 dataform.append("stockPadre",stockPadre.value)
                 sendData("/transferdown",dataform,token).then((result) => {
@@ -242,108 +242,3 @@ tfootTable.addEventListener('click', (e) => {
         })
     }
 })
-
-//if (addShopping) {
-    /*addShopping.addEventListener('click', (e) => {
-        e.preventDefault();
-        const dataform = new FormData();
-        loadingStart(addShopping)
-        dataform.append("alistamientoId", Number(alistamientoId.value));
-        dataform.append("newStockPadre", Number(newStockPadre.value));
-        dataform.append("pesokg", Number(pesokg.value));
-        dataform.append("stockPadre", Number(stockPadre.value));
-
-        sendData("/alistamientoAddShoping",dataform,token).then((result) => {
-            console.log(result);
-            loadingEnd(addShopping,"success","Cargar al inventario")
-            //showData(result)
-        })
-    });*/
-//}
-
-/*selectCategoria.addEventListener("change", function() {
-    const selectedValue = this.value;
-    console.log("Selected value:", selectedValue);*/
-
-    /*const dataform = new FormData();
-    dataform.append("categoriaId", Number(selectedValue));
-    sendData("/getproductos",dataform,token).then((result) => {
-        console.log(result);
-        let prod = result.products;
-        console.log(prod);
-        selectProducto.innerHTML = "";
-        selectProducto.innerHTML += `<option value="">Seleccione el producto</option>`;
-        prod.forEach(option => {
-        const optionElement = document.createElement("option");
-        optionElement.value = option.id;
-        optionElement.text = option.name;
-        selectProducto.appendChild(optionElement);
-        });
-    });*/
-
-//});
-
-/*tbodyTable.addEventListener("click", (e) => {
-    e.preventDefault(); 
-    let element = e.target;
-    if (element.name === 'btnDown') {
-        console.log(element);
-		swal({
-			title: 'CONFIRMAR',
-			text: '¿CONFIRMAS ELIMINAR EL REGISTRO?',
-			type: 'warning',
-			showCancelButton: true,
-			cancelButtonText: 'Cerrar',
-			cancelButtonColor: '#fff',
-			confirmButtonColor: '#3B3F5C',
-			confirmButtonText: 'Aceptar'
-		}).then(function(result) {
-			if (result.value) {
-                let id = element.getAttribute('data-id');
-                console.log(id);
-                const dataform = new FormData();
-                dataform.append("id", Number(id));
-                dataform.append("compensadoId", Number(compensado_id.value));
-                sendData("/compensadodown",dataform,token).then((result) => {
-                    console.log(result);
-                    showData(result)
-                })
-
-			}
-
-		})
-    }
-
-    if (element.name === 'btnEdit') {
-        console.log(element);
-        let id = element.getAttribute('data-id');
-        console.log(id);
-        const dataform = new FormData();
-        dataform.append("id", Number(id));
-        sendData("/compensadogetById",dataform,token).then((result) => {
-            console.log(result);
-            let editReg = result.reg;
-            console.log(editReg);
-            regDetail.value = editReg.id;
-            pcompra.value = formatCantidadSinCero(editReg.pcompra);
-            pesokg.value = formatCantidad(editReg.peso);
-            $('.select2Prod').val(editReg.products_id).trigger('change');
-        })
-    }
-});
-
-
-
-pcompra.addEventListener("change", function() {
-  const enteredValue = formatMoneyNumber(pcompra.value);
-  console.log("Entered value: " + enteredValue);
-  pcompra.value = formatCantidadSinCero(enteredValue);
-});
-
-pesokg.addEventListener("change", function() {
-  const enteredValue = formatkg(pesokg.value);
-  console.log("Entered value: " + enteredValue);
-  pesokg.value = enteredValue;
-});*/
-
-

@@ -19,6 +19,25 @@ class CreateTransfersTable extends Migration
             $table->unsignedBigInteger('users_id')->nullable();
             $table->foreign('users_id')->references('id')->on('users');
 
+            $table->unsignedBigInteger('categoria_id')->nullable();
+            $table->foreign('categoria_id')->references('id')->on('categories');
+
+            $table->unsignedBigInteger('centrocosto_id')->nullable();
+            $table->foreign('centrocosto_id')->references('id')->on('centro_costo');
+
+            $table->unsignedBigInteger('meatcut_id')->nullable();           
+            $table->foreign('meatcut_id')->references('id')->on('meatcuts')->onDelete("cascade");
+
+            $table->decimal('nuevo_stock_padre', 18, 2)->default(0);
+            $table->enum('inventario', ['pending', 'added'])->default('pending');
+            $table->date('fecha_alistamiento');
+            $table->date('fecha_cierre')->nullable();
+
+            $table->boolean('status')->parent_select()->default(true)->nullable(); 
+
+            /* $table->unsignedBigInteger('users_id')->nullable();
+            $table->foreign('users_id')->references('id')->on('users');
+
             $table->unsignedBigInteger('centro_costo_origen_id')->nullable();
             $table->foreign('centro_costo_origen_id')->references('id')->on('centro_costo');
             
@@ -35,7 +54,7 @@ class CreateTransfersTable extends Migration
             $table->date('fecha_trasnfer');
             $table->date('fecha_cierre')->nullable();
             
-            $table->boolean('status')->parent_select()->default(true)->nullable(); 
+            $table->boolean('status')->parent_select()->default(true)->nullable();  */
             $table->timestamps();
         });
     }

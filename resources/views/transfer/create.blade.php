@@ -12,7 +12,7 @@
 			<div class="row">
 				<div class="col-sm-5">
 					<h4 class="">
-						<b> Traslado / Categoria </b>
+						<b> Traslado | Categoria </b>
 					</h4>
 				</div>
 			</div>

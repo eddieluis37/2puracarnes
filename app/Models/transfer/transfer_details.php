@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models\alistamiento;
+namespace App\Models\transfer;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;

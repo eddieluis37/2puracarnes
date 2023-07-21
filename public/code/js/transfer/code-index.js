@@ -6,10 +6,11 @@ const token = document
     .getAttribute("content");
 const btnClose = document.querySelector("#btnModalClose");
 
+const selectCategory = document.querySelector("#categoria");
 const selectCostcenterOrigin = document.querySelector("#centrocostoorigen");
 const selectCostcenterDest = document.querySelector("#centrocostodestino");
 
-const alistamiento_id = document.querySelector("#transferId");
+const transfer_id = document.querySelector("#transferId");
 const contentform = document.querySelector("#contentDisable");
 
 const selectCortePadre = document.querySelector("#selectCortePadre");
@@ -126,6 +127,32 @@ const send = async (dataform, ruta) => {
     return data;
 };
 
+selectCategory.addEventListener("change", function () {
+    const selectedValue = this.value;
+    console.log("Selected value:", selectedValue);
+    getCortes(selectedValue);
+});
+
+getCortes = (categoryId) => {
+    const dataform = new FormData();
+    dataform.append("categoriaId", Number(categoryId));
+    send(dataform, "/getproductospadre").then((result) => {
+        console.log(result);
+        let prod = result.products;
+        console.log(prod);
+        //showDataTable(result);
+        selectCortePadre.innerHTML = "";
+        selectCortePadre.innerHTML += `<option value="">Seleccione el producto</option>`;
+        // Create and append options to the select element
+        prod.forEach((option) => {
+            const optionElement = document.createElement("option");
+            optionElement.value = option.id;
+            optionElement.text = option.name;
+            selectCortePadre.appendChild(optionElement);
+        });
+    });
+}
+
 function validateCentroCosto() {
     if (centrocostoorigen.value === centrocostodestino.value) {
         alert(
@@ -144,7 +171,7 @@ form.addEventListener("submit", function (event) {
 });
 
 /* Proceso para obtener Stock actual centro costo origen */
-function getProductsByCostcenterOrigin(costcenteroriginId) {
+/* function getProductsByCostcenterOrigin(costcenteroriginId) {
     console.log("centrocostoorigenId:", costcenteroriginId);
     const dataform = new FormData();
     dataform.append("centrocostoorigenId", Number(costcenteroriginId));
@@ -166,10 +193,10 @@ function actualizarStockActualOrigen() {
         "stockActualCenterCostOrigin"
     );
 }
-
+ */
 /* Proceso para obtener Stock actual centro costo destino */
 
-function ProductsByCostcenterDest(costcenterdestId) {
+/* function ProductsByCostcenterDest(costcenterdestId) {
     console.log("centrocostodestinoId:", costcenterdestId);
     const dataform = new FormData();
     dataform.append("centrocostodestinoId", Number(costcenterdestId));
@@ -192,7 +219,7 @@ function actualizarStockActualDest(seleccionado) {
     var stockActualCenterCostDest = document.getElementById(
         "stockActualCenterCostDest"
     );
-}
+} */
 
 const downTransfer = (id) => {
     swal({
@@ -209,7 +236,7 @@ const downTransfer = (id) => {
             console.log(id);
             const dataform = new FormData();
             dataform.append("id", id);
-            send(dataform, "/downmmainalistamiento").then((resp) => {
+            send(dataform, "/downmmaintransfer").then((resp) => {
                 console.log(resp);
                 refresh_table();
             });
@@ -218,6 +245,6 @@ const downTransfer = (id) => {
 };
 
 const refresh_table = () => {
-    let table = $("#formTransfer").dataTable();
+    let table = $("#tableTransfer").dataTable();
     table.fnDraw(false);
 };

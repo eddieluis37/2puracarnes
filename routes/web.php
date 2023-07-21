@@ -257,7 +257,7 @@ Route::get('transfer', [transferController::class, 'index'])->name('transfer.ind
 Route::post('transfersave', [transferController::class,'store'])->name('transfer.save');
 Route::get('showtransfer', [transferController::class,'show'])->name('transfer.showlist');
 Route::get('transfer/create/{id}', [transferController::class,'create'])->name('transfer.create');
-Route::post('getproductos', [transferController::class,'getproducts'])->name('transfer.getproductos');
+Route::post('transgetproductos', [transferController::class,'getproductostrans'])->name('transfer.transgetproductos');
 
 Route::post('productsbycostcenterdest', [transferController::class,'ProductsByCostcenterDest'])->name('transfer.productsbycostcenterdest');
 Route::post('getproductsbycostcenterorigin', [transferController::class,'getProductsByCostcenterOrigin'])->name('transfer.getproductsbycostcenterorigin');
