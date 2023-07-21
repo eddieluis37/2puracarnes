@@ -1,12 +1,12 @@
-import {sendData} from '../exportModule/core/rogercode-core.js';
-import { successToastMessage, errorMessage } from '../exportModule/message/rogercode-message.js';
-import { loadingStart, loadingEnd } from '../exportModule/core/rogercode-core.js';
+import {sendData} from '../../../rogercode/js/exportModule/core/rogercode-core.js';
+import { successToastMessage, errorMessage } from '../../../rogercode/js/exportModule/message/rogercode-message.js';
+import { loadingStart, loadingEnd } from '../../../rogercode/js/exportModule/core/rogercode-core.js';
 const token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
 const formDetail = document.querySelector('#form-detail');
 const showRegTbody = document.querySelector("#tbodyDetail");
 const tableTransfer = document.querySelector("#tableTransfer");
-const tbodyTable = document.querySelector("#tableTransfer tbody")
-const tfootTable = document.querySelector("#tableTransfer tfoot")
+const tbodyTable = document.querySelector("#tableTransfer tbody");
+const tfootTable = document.querySelector("#tableTransfer tfoot");
 const stockPadre = document.querySelector("#stockCortePadre");
 const pesokg = document.querySelector("#pesokg");
 
@@ -15,7 +15,7 @@ const meatcutId = document.querySelector("#meatcutId");
 const tableFoot = document.querySelector("#tabletfoot");
 const selectProducto = document.getElementById("producto");
 const selectCategoria = document.querySelector("#productoCorte");
-const btnAddAlist = document.querySelector('#btnAddTransfer');
+const btnAddAlist = document.querySelector("#btnAddTransfer");
 const transferId = document.querySelector("#transferId");
 const kgrequeridos = document.querySelector("#kgrequeridos");
 const addShopping = document.querySelector("#addShopping");
@@ -23,22 +23,21 @@ const productoPadre = document.querySelector("#productopadreId");
 const centrocosto = document.querySelector("#centrocosto");
 const categoryId = document.querySelector("#categoryId");
 
-
-$('.select2Prod').select2({
-	placeholder: 'Busca un producto',
-	width: '100%',
-	theme: "bootstrap-5",
-	allowClear: true,
+$(".select2Prod").select2({
+    placeholder: "Busca un producto",
+    width: "100%",
+    theme: "bootstrap-5",
+    allowClear: true,
 });
-$('.select2ProdHijos').select2({
-	placeholder: 'Busca hijos',
-	width: '100%',
-	theme: "bootstrap-5",
-	allowClear: true,
+$(".select2ProdHijos").select2({
+    placeholder: "Busca hijos",
+    width: "100%",
+    theme: "bootstrap-5",
+    allowClear: true,
 });
 const dataform = new FormData();
 dataform.append("categoriaId", Number(meatcutId.value));
-sendData("/transgetproductos",dataform,token).then((result) => {
+sendData("/getproductos",dataform,token).then((result) => {
     console.log(result);
     let prod = result.products;
     console.log(prod);
@@ -75,29 +74,29 @@ sendData("/transgetproductos",dataform,token).then((result) => {
     });
 });*/
 
-btnAddAlist.addEventListener('click', (e) => {
-    e.preventDefault();  
+btnAddAlist.addEventListener("click", (e) => {
+    e.preventDefault();
     const dataform = new FormData(formDetail);
-    dataform.append("stockPadre",stockPadre.value)
-    sendData("/transfersavedetail",dataform,token).then((result) => {
+    dataform.append("stockPadre", stockPadre.value);
+    sendData("/transfersavedetail", dataform, token).then((result) => {
         console.log(result);
         if (result.status === 1) {
-            $('#producto').val('').trigger('change');
+            $("#producto").val("").trigger("change");
             formDetail.reset();
-            showData(result)
+            showData(result);
         }
         if (result.status === 0) {
             errorMessage("Tienes campos vacios");
         }
     });
-})
+});
 
 const showData = (data) => {
     let dataAll = data.array;
     console.log(dataAll);
-	showRegTbody.innerHTML = "";
-	dataAll.forEach((element,indice) => {
-	    showRegTbody.innerHTML += `
+    showRegTbody.innerHTML = "";
+    dataAll.forEach((element, indice) => {
+        showRegTbody.innerHTML += `
     	    <tr>
       	    <td>${element.id}</td>
       	    <td>${element.code}</td>
@@ -105,20 +104,26 @@ const showData = (data) => {
       	    <td>${formatCantidad(element.stock)} KG</td>
       	    <td>${formatCantidad(element.fisico)} KG</td>
       	    <td>
-            <input type="text" class="form-control-sm" data-id="${element.products_id}" id="${element.id}" value="${element.kgrequeridos}" placeholder="Ingresar" size="10">
+            <input type="text" class="form-control-sm" data-id="${
+                element.products_id
+            }" id="${element.id}" value="${
+            element.kgrequeridos
+        }" placeholder="Ingresar" size="10">
             </td>
       	    <td>${formatCantidad(element.newstock)} KG</td>
 			<td class="text-center">
-				<button class="btn btn-dark fas fa-trash" name="btnDownReg" data-id="${element.id}" title="Borrar" >
+				<button class="btn btn-dark fas fa-trash" name="btnDownReg" data-id="${
+                    element.id
+                }" title="Borrar" >
 				</button>
 			</td>
     	    </tr>
 	    `;
-	});
+    });
 
-    let arrayTotales = data.arrayTotales; 
+    let arrayTotales = data.arrayTotales;
     console.log(arrayTotales);
-    tableFoot.innerHTML = '';
+    tableFoot.innerHTML = "";
     tableFoot.innerHTML += `
 	    <tr>
 		    <td></td>
@@ -135,91 +140,90 @@ const showData = (data) => {
     `;
     let newTotalStockPadre = stockPadre.value - arrayTotales.kgTotalRequeridos;
     newStockPadre.value = newTotalStockPadre;
-}
+};
 
-kgrequeridos.addEventListener("change", function() {
-  const enteredValue = formatkg(kgrequeridos.value);
-  console.log("Entered value: " + enteredValue);
-  kgrequeridos.value = enteredValue;
+kgrequeridos.addEventListener("change", function () {
+    const enteredValue = formatkg(kgrequeridos.value);
+    console.log("Entered value: " + enteredValue);
+    kgrequeridos.value = enteredValue;
 });
 
-tableTransfer.addEventListener("keydown", function(event) {
-  if (event.keyCode === 13) {
-    const target = event.target;
-    console.log(target);
-    if (target.tagName === "INPUT" && target.closest("tr")) {
-      console.log("Enter key pressed on an input inside a table row");
-      console.log(event.target.value);
-      console.log(event.target.id);
-      
-      const inputValue = event.target.value;
-      if (inputValue == "") {
-        return false;
-      }
+tableTransfer.addEventListener("keydown", function (event) {
+    if (event.keyCode === 13) {
+        const target = event.target;
+        console.log(target);
+        if (target.tagName === "INPUT" && target.closest("tr")) {
+            console.log("Enter key pressed on an input inside a table row");
+            console.log(event.target.value);
+            console.log(event.target.id);
 
-      let productoId = target.getAttribute('data-id');
-      console.log("prod test id: " + transferId.value);
-      console.log(productoId);
-      console.log(centrocosto.value);
-      const trimValue = inputValue.trim();
-      const dataform = new FormData();
-      dataform.append("id", Number(event.target.id));
-      dataform.append("newkgrequeridos", Number(trimValue));
-      dataform.append("transferId", Number(transferId.value));
-      dataform.append("productoId", Number(productoId));
-      dataform.append("centrocosto", Number(centrocosto.value));
-      dataform.append("stockPadre",stockPadre.value)
-      
-      sendData("/transferUpdate",dataform,token).then((result) => {
-        console.log(result);
-        showData(result);
-      });
+            const inputValue = event.target.value;
+            if (inputValue == "") {
+                return false;
+            }
 
+            let productoId = target.getAttribute("data-id");
+            console.log("prod test id: " + transferId.value);
+            console.log(productoId);
+            console.log(centrocosto.value);
+            const trimValue = inputValue.trim();
+            const dataform = new FormData();
+            dataform.append("id", Number(event.target.id));
+            dataform.append("newkgrequeridos", Number(trimValue));
+            dataform.append("transferId", Number(transferId.value));
+            dataform.append("productoId", Number(productoId));
+            dataform.append("centrocosto", Number(centrocosto.value));
+            dataform.append("stockPadre", stockPadre.value);
+
+            sendData("/transferUpdate", dataform, token).then((result) => {
+                console.log(result);
+                showData(result);
+            });
+        }
     }
-  }
 });
 
 tbodyTable.addEventListener("click", (e) => {
-    e.preventDefault(); 
+    e.preventDefault();
     let element = e.target;
-    if (element.name === 'btnDownReg') {
+    if (element.name === "btnDownReg") {
         console.log(element);
         console.log(element);
-		swal({
-			title: 'CONFIRMAR',
-			text: '¿CONFIRMAS ELIMINAR EL REGISTRO?',
-			type: 'warning',
-			showCancelButton: true,
-			cancelButtonText: 'Cerrar',
-			cancelButtonColor: '#fff',
-			confirmButtonColor: '#3B3F5C',
-			confirmButtonText: 'Aceptar'
-		}).then(function(result) {
-			if (result.value) {
-                let id = element.getAttribute('data-id');
+        swal({
+            title: "CONFIRMAR",
+            text: "¿CONFIRMAS ELIMINAR EL REGISTRO?",
+            type: "warning",
+            showCancelButton: true,
+            cancelButtonText: "Cerrar",
+            cancelButtonColor: "#fff",
+            confirmButtonColor: "#3B3F5C",
+            confirmButtonText: "Aceptar",
+        }).then(function (result) {
+            if (result.value) {
+                let id = element.getAttribute("data-id");
                 console.log(id);
                 const dataform = new FormData();
                 dataform.append("id", Number(id));
                 dataform.append("transferId", Number(transferId.value));
                 dataform.append("centrocosto", Number(centrocosto.value));
-                dataform.append("stockPadre",stockPadre.value)
-                sendData("/transferdown",dataform,token).then((result) => {
+                dataform.append("stockPadre", stockPadre.value);
+                sendData("/transferdown", dataform, token).then((result) => {
                     console.log(result);
-                    showData(result)
-                })
-			}
-
-		})
+                    showData(result);
+                });
+            }
+        });
     }
 });
 
-tfootTable.addEventListener('click', (e) => {
+tfootTable.addEventListener("click", (e) => {
     e.preventDefault();
     let element = e.target;
     console.log(element);
-    if (element.id === 'addShopping') {//added to inventory
+    if (element.id === "addShopping") {
+        //added to inventory
         console.log("click");
-        loadingStart(element)
+        loadingStart(element);
         const dataform = new FormData();
         dataform.append("transferId", Number(alistamientoId.value));
         dataform.append("newStockPadre", Number(newStockPadre.value));
@@ -228,17 +232,17 @@ tfootTable.addEventListener('click', (e) => {
         dataform.append("productoPadre", Number(productoPadre.value));
         dataform.append("centrocosto", Number(centrocosto.value));
         dataform.append("categoryId", Number(categoryId.value));
-        sendData("/transferAddShoping",dataform,token).then((result) => {
+        sendData("/transferAddShoping", dataform, token).then((result) => {
             console.log(result);
             if (result.status == 1) {
-                loadingEnd(element,"success","Cargar al inventario")
+                loadingEnd(element, "success", "Cargar al inventario");
                 element.disabled = true;
                 window.location.href = `/transfer`;
             }
             if (result.status == 0) {
-                loadingEnd(element,"success","Cargar al inventario")
+                loadingEnd(element, "success", "Cargar al inventario");
                 errorMessage(result.message);
             }
-        })
+        });
     }
-})
+});

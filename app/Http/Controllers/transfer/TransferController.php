@@ -30,7 +30,7 @@ class transferController extends Controller
     {
         $category = Category::WhereIn('id', [1, 2, 3])->get();
         $costcenter = Centrocosto::Where('status', 1)->get();
-        $centros = Centrocosto::Where('status',1)->get();
+        $centros = Centrocosto::Where('status', 1)->get();
         $centroCostoProductos = Centro_costo_product::all();
         //  $products = Product::pluck('name', 'id');
         /*  $dataAlistamiento = DB::table('enlistments as ali')
@@ -43,33 +43,33 @@ class transferController extends Controller
         return view("transfer.index", compact('category', 'costcenter', 'centros', 'centroCostoProductos'));
     }
 
-    
+
     public function create($id)
     {
         //dd($id);
         $dataTransfer = DB::table('enlistments as ali')
-        ->join('categories as cat', 'ali.categoria_id', '=', 'cat.id')
-        ->join('centro_costo as centro', 'ali.centrocosto_id', '=', 'centro.id')
-        ->select('ali.*', 'cat.name as namecategoria','centro.name as namecentrocosto')
-        ->where('ali.id', $id)
-        ->get();
+            ->join('categories as cat', 'ali.categoria_id', '=', 'cat.id')
+            ->join('centro_costo as centro', 'ali.centrocosto_id', '=', 'centro.id')
+            ->select('ali.*', 'cat.name as namecategoria', 'centro.name as namecentrocosto')
+            ->where('ali.id', $id)
+            ->get();
 
         $cortes = DB::table('products as p')
-        ->join('centro_costo_products as ce', 'p.id', '=', 'ce.products_id')
-        ->select('p.*', 'ce.stock','ce.fisico','p.id as productopadreId')
+            ->join('centro_costo_products as ce', 'p.id', '=', 'ce.products_id')
+            ->select('p.*', 'ce.stock', 'ce.fisico', 'p.id as productopadreId')
             ->where([
-                ['p.level_product_id',1],
-                ['p.meatcut_id',$dataTransfer[0]->meatcut_id],
-                ['p.status',1],
-                ['ce.centrocosto_id',$dataTransfer[0]->centrocosto_id],
+                ['p.level_product_id', 1],
+                ['p.meatcut_id', $dataTransfer[0]->meatcut_id],
+                ['p.status', 1],
+                ['ce.centrocosto_id', $dataTransfer[0]->centrocosto_id],
             ])->get();
-        
+
 
         /**************************************** */
         $status = '';
         $fechaAlistamientoCierre = Carbon::parse($dataTransfer[0]->fecha_cierre);
         $date = Carbon::now();
-		$currentDate = Carbon::parse($date->format('Y-m-d'));
+        $currentDate = Carbon::parse($date->format('Y-m-d'));
         if ($currentDate->gt($fechaAlistamientoCierre)) {
             //'Date 1 is greater than Date 2';
             $status = 'false';
@@ -84,25 +84,25 @@ class transferController extends Controller
         $statusInventory = "";
         if ($dataTransfer[0]->inventario == "added") {
             $statusInventory = "true";
-        }else{
+        } else {
             $statusInventory = "false";
         }
         /**************************************** */
         //dd($tt = [$status, $statusInventory]);
 
         $display = "";
-        if($status == "false" || $statusInventory == "true"){
+        if ($status == "false" || $statusInventory == "true") {
             $display = "display:none;";
         }
 
-        $enlistments = $this->gettransferdetail($id,$dataTransfer[0]->centrocosto_id);
+        $enlistments = $this->gettransferdetail($id, $dataTransfer[0]->centrocosto_id);
 
         $arrayTotales = $this->sumTotales($id);
 
-        return view('transfer.create', compact('dataTransfer','cortes','enlistments','arrayTotales','status','statusInventory', 'display'));
+        return view('transfer.create', compact('dataTransfer', 'cortes', 'enlistments', 'arrayTotales', 'status', 'statusInventory', 'display'));
     }
 
-   /*    public function store(Request $request)
+    /*    public function store(Request $request)
     {
         try {
 
@@ -191,7 +191,7 @@ class transferController extends Controller
             ];
 
             $validator = Validator::make($request->all(), $rules, $messages);
-            if ($validator->fails()) {  
+            if ($validator->fails()) {
                 return response()->json([
                     'status' => 0,
                     'errors' => $validator->errors()
@@ -200,42 +200,42 @@ class transferController extends Controller
 
             $getReg = Alistamiento::firstWhere('id', $request->compensadoId);
 
-            if($getReg == null) {
+            if ($getReg == null) {
                 $currentDateTime = Carbon::now();
                 $currentDateFormat = Carbon::parse($currentDateTime->format('Y-m-d'));
                 $current_date = Carbon::parse($currentDateTime->format('Y-m-d'));
-			    $current_date->modify('next monday'); // Move to the next Monday
-			    $dateNextMonday = $current_date->format('Y-m-d'); // Output the date in Y-m-d format
+                $current_date->modify('next monday'); // Move to the next Monday
+                $dateNextMonday = $current_date->format('Y-m-d'); // Output the date in Y-m-d format
 
-                $id_user= Auth::user()->id;
+                $id_user = Auth::user()->id;
 
                 $alist = new Alistamiento();
                 $alist->users_id = $id_user;
                 $alist->categoria_id = $request->categoria;
                 $alist->centrocosto_id = $request->centrocosto;
                 $alist->meatcut_id = $request->selectCortePadre;
-                $alist->fecha_alistamiento= $currentDateFormat;
+                $alist->fecha_alistamiento = $currentDateFormat;
                 $alist->fecha_cierre = $dateNextMonday;
                 $alist->save();
                 return response()->json([
                     'status' => 1,
                     'message' => 'Guardado correctamente',
-					"registroId" => $alist->id
+                    "registroId" => $alist->id
                 ]);
-            }    
+            }
             //}else{
-                //$getReg = Compensadores::firstWhere('id', $request->compensadoId);
-                //$getReg->categoria_id = $request->categoria;
-                //$getReg->thirds_id = $request->provider;
-                //$getReg->centrocosto_id = $request->centrocosto;
-                //$getReg->factura = $request->factura;
-                //$getReg->save();
+            //$getReg = Compensadores::firstWhere('id', $request->compensadoId);
+            //$getReg->categoria_id = $request->categoria;
+            //$getReg->thirds_id = $request->provider;
+            //$getReg->centrocosto_id = $request->centrocosto;
+            //$getReg->factura = $request->factura;
+            //$getReg->save();
 
-                //return response()->json([
-                    //'status' => 1,
-                    //'message' => 'Guardado correctamente',
-					//"registroId" => 0
-                //]);
+            //return response()->json([
+            //'status' => 1,
+            //'message' => 'Guardado correctamente',
+            //"registroId" => 0
+            //]);
             //}
 
 
@@ -283,19 +283,95 @@ class transferController extends Controller
         ]);
     }
 
-  
 
-    public function gettransferdetail($transferId,$centrocostoId)
+    public function getproducts(Request $request)
+    {
+        $prod = Product::Where([
+            ['meatcut_id', $request->categoriaId],
+            ['status', 1],
+            ['level_product_id', 2]
+        ])->get();
+        return response()->json(['products' => $prod]);
+    }
+
+    public function savedetail(Request $request)
+    {
+        try {
+
+            $rules = [
+                'kgrequeridos' => 'required',
+                'producto' => 'required',
+            ];
+            $messages = [
+                'kgrequeridos.required' => 'Los kg requeridos son necesarios',
+                'producto.required' => 'El producto es requerido',
+            ];
+
+            $validator = Validator::make($request->all(), $rules, $messages);
+            if ($validator->fails()) {  
+                return response()->json([
+                    'status' => 0,
+                    'errors' => $validator->errors()
+                ], 422);
+            }
+
+
+           $prod = DB::table('products as p')
+            ->join('centro_costo_products as ce', 'p.id', '=', 'ce.products_id')
+            ->select('ce.stock','ce.fisico')
+            ->where([
+                ['p.id',$request->producto],
+                ['ce.centrocosto_id',$request->centrocosto],
+                ['p.status',1],
+                
+            ])->get();
+
+            $formatCantidad = new metodosrogercodeController();
+            //$prod = Product::firstWhere('id', $request->producto);
+            
+            $formatkgrequeridos = $formatCantidad->MoneyToNumber($request->kgrequeridos);
+            $newStock = $prod[0]->stock + $formatkgrequeridos;
+            $details = new enlistment_details();
+            $details->enlistments_id = $request->alistamientoId;
+            $details->products_id = $request->producto;
+            $details->kgrequeridos = $formatkgrequeridos;
+            $details->newstock = $newStock;
+            $details->save();
+
+
+            $arraydetail = $this->getalistamientodetail($request->alistamientoId,$request->centrocosto);
+            $arrayTotales = $this->sumTotales($request->alistamientoId);
+
+            $newStockPadre = $request->stockPadre - $arrayTotales['kgTotalRequeridos'];
+            $alist = Alistamiento::firstWhere('id', $request->alistamientoId);
+            $alist->nuevo_stock_padre = $newStockPadre;
+            $alist->save();
+
+            return response()->json([
+                'status' => 1,
+                'message' => "Agregado correctamente",
+                'array' => $arraydetail,
+                'arrayTotales' => $arrayTotales,
+            ]);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'status' => 0,
+                'array' => (array) $th
+            ]);
+        }
+    }
+
+    public function gettransferdetail($transferId, $centrocostoId)
     {
         $detail = DB::table('transfer_details as en')
-        ->join('products as pro', 'en.products_id', '=', 'pro.id')
-        ->join('centro_costo_products as ce', 'pro.id', '=', 'ce.products_id')
-        ->select('en.*', 'pro.name as nameprod','pro.code','ce.stock','ce.fisico')
-        ->where([
-            ['ce.centrocosto_id',$centrocostoId],
-            ['en.transfers_id',$transferId],
-            ['en.status',1]
-        ])->get();
+            ->join('products as pro', 'en.products_id', '=', 'pro.id')
+            ->join('centro_costo_products as ce', 'pro.id', '=', 'ce.products_id')
+            ->select('en.*', 'pro.name as nameprod', 'pro.code', 'ce.stock', 'ce.fisico')
+            ->where([
+                ['ce.centrocosto_id', $centrocostoId],
+                ['en.transfers_id', $transferId],
+                ['en.status', 1]
+            ])->get();
 
         return $detail;
     }
@@ -303,8 +379,8 @@ class transferController extends Controller
     public function sumTotales($id)
     {
 
-        $kgTotalRequeridos = (float)transfer_details::Where([['transfers_id',$id],['status',1]])->sum('kgrequeridos');
-        $newTotalStock = (float)transfer_details::Where([['transfers_id',$id],['status',1]])->sum('newstock');
+        $kgTotalRequeridos = (float)transfer_details::Where([['transfers_id', $id], ['status', 1]])->sum('kgrequeridos');
+        $newTotalStock = (float)transfer_details::Where([['transfers_id', $id], ['status', 1]])->sum('newstock');
 
         $array = [
             'kgTotalRequeridos' => $kgTotalRequeridos,
@@ -394,18 +470,18 @@ class transferController extends Controller
     }
 
     public function updatedetail(Request $request)
-    {   
+    {
         try {
 
-           $prod = DB::table('products as p')
-            ->join('centro_costo_products as ce', 'p.id', '=', 'ce.products_id')
-            ->select('ce.stock','ce.fisico')
-            ->where([
-                ['p.id',$request->productoId],
-                ['ce.centrocosto_id',$request->centrocosto],
-                ['p.status',1],
-                
-            ])->get();
+            $prod = DB::table('products as p')
+                ->join('centro_costo_products as ce', 'p.id', '=', 'ce.products_id')
+                ->select('ce.stock', 'ce.fisico')
+                ->where([
+                    ['p.id', $request->productoId],
+                    ['ce.centrocosto_id', $request->centrocosto],
+                    ['p.status', 1],
+
+                ])->get();
             //$prod = Product::firstWhere('id', $request->productoId);
             //$newStock = $prod->stock + $request->newkgrequeridos;
             $newStock = $prod[0]->stock + $request->newkgrequeridos;
@@ -415,14 +491,14 @@ class transferController extends Controller
             $updatedetails->newstock = $newStock;
             $updatedetails->save();
 
-            $arraydetail = $this->gettransferdetail($request->transferId, $request->centrocosto );
+            $arraydetail = $this->gettransferdetail($request->transferId, $request->centrocosto);
             $arrayTotales = $this->sumTotales($request->transferId);
 
             $newStockPadre = $request->stockPadre - $arrayTotales['kgTotalRequeridos'];
             $alist = Alistamiento::firstWhere('id', $request->transferId);
             $alist->nuevo_stock_padre = $newStockPadre;
             $alist->save();
-            
+
             return response()->json([
                 'status' => 1,
                 'message' => 'Guardado correctamente',
@@ -435,7 +511,6 @@ class transferController extends Controller
                 'array' => (array) $th
             ]);
         }
-
     }
 
 
@@ -447,7 +522,7 @@ class transferController extends Controller
             'reg' => $reg
         ]);
     }
-    
+
 
     public function getProductsCategoryPadre(Request $request)
     {
@@ -458,13 +533,138 @@ class transferController extends Controller
         return response()->json(['products' => $cortes]);
     }
 
-    public function getproducts(Request $request)
+       /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($id)
     {
-        $prod = Product::Where([
-            ['meatcut_id', $request->categoriaId],
-            ['status', 1],
-            ['level_product_id', 2]
-        ])->get();
-        return response()->json(['products' => $prod]);
+        //
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, $id)
+    {
+        //
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy(Request $request)
+    {
+        try {
+            $enlist = enlistment_details::where('id', $request->id)->first();
+            $enlist->status = 0;
+            $enlist->save();
+
+            $arraydetail = $this->getalistamientodetail($request->alistamientoId, $request->centrocosto);
+            $arrayTotales = $this->sumTotales($request->alistamientoId);
+
+            $newStockPadre = $request->stockPadre - $arrayTotales['kgTotalRequeridos'];
+            $alist = Alistamiento::firstWhere('id', $request->alistamientoId);
+            $alist->nuevo_stock_padre = $newStockPadre;
+            $alist->save();
+
+            return response()->json([
+                'status' => 1,
+                'array' => $arraydetail,
+                'arrayTotales' => $arrayTotales
+            ]);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'status' => 0,
+                'array' => (array) $th
+            ]);
+        }
+    }
+
+    public function destroyAlistamiento(Request $request)
+    {
+        try {
+            $alist = Alistamiento::where('id', $request->id)->first();
+            $alist->status = 0;
+            $alist->save();
+
+            return response()->json([
+                'status' => 1,
+                'message' => 'Se realizo con exito'
+            ]);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'status' => 0,
+                'array' => (array) $th
+            ]);
+        }
+    }
+
+    public function add_shopping(Request $request)
+    {
+        try {
+            $id_user= Auth::user()->id;
+            $currentDateTime = Carbon::now();
+
+            DB::beginTransaction();
+            $shopp = new shopping_enlistment();
+            $shopp->users_id = $id_user;
+            $shopp->enlistments_id = $request->alistamientoId;
+            $shopp->category_id = $request->categoryId;
+            $shopp->productopadre_id = $request->productoPadre;
+            $shopp->centrocosto_id = $request->centrocosto;
+            $shopp->stock_actual = $request->stockPadre;
+            $shopp->ultimo_conteo_fisico = $request->pesokg;
+            $shopp->nuevo_stock = $request->newStockPadre;
+            $shopp->fecha_shopping = $currentDateTime;
+            $shopp->save();
+
+            $regProd = $this->getalistamientodetail($request->alistamientoId,$request->centrocosto);
+            $count = count($regProd);
+            if ($count == 0) {
+                return response()->json([
+                    'status' => 0,
+                    'message' => 'No tiene productos agregados'
+                ]);
+            }
+            foreach($regProd as $key){
+                $shoppDetails = new shopping_enlistment_details();
+                $shoppDetails->shopping_enlistment_id = $shopp->id;
+                $shoppDetails->products_id = $key->products_id;
+                $shoppDetails->stock_actual = $key->stock;
+                $shoppDetails->conteo_fisico = $key->fisico;
+                $shoppDetails->kgrequeridos = $key->kgrequeridos;
+                $shoppDetails->newstock = $key->newstock;
+                $shoppDetails->save();
+            }
+            
+            $invalist = Alistamiento::where('id', $request->alistamientoId)->first();
+            $invalist->inventario = "added";
+            $invalist->save();
+
+            DB::commit();
+            return response()->json([
+                'status' => 1,
+                'alistamiento' => $regProd,
+                'count' => $count,
+                'message' => 'Se guardo co exito'
+            ]);
+        } catch (\Throwable $th) {
+            DB::rollback();
+            return response()->json([
+                'status' => 0,
+                'array' => (array) $th
+            ]);
+        }
+
     }
 }
