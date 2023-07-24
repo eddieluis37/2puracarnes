@@ -258,14 +258,13 @@ Route::post('transfersave', [transferController::class,'store'])->name('transfer
 Route::get('showtransfer', [transferController::class,'show'])->name('transfer.showlist');
 Route::get('transfer/create/{id}', [transferController::class,'create'])->name('transfer.create');
 Route::post('getproductos', [transferController::class,'getproducts'])->name('transfer.getproductos');
-
 Route::post('productsbycostcenterdest', [transferController::class,'ProductsByCostcenterDest'])->name('transfer.productsbycostcenterdest');
 Route::post('getproductsbycostcenterorigin', [transferController::class,'getProductsByCostcenterOrigin'])->name('transfer.getproductsbycostcenterorigin');
 
 Route::post('transfersavedetail', [transferController::class,'savedetail'])->name('transfer.savedetail');
 Route::post('/transferUpdate', [transferController::class, 'updatedetail'])->name('transfer.update');
 Route::post('transferdown', [transferController::class,'destroy'])->name('transfer.down');
-Route::post('transferById', [transferController::class,'editTranfer'])->name('transfer.edit');
+Route::post('transferById', [transferController::class,'editTransfer'])->name('transfer.edit');
 Route::post('getproductospadre', [transferController::class,'getProductsCategoryPadre'])->name('transfer.getproductospadre');
 Route::post('/downmmaintransfer', [transferController::class, 'destroyTransfer'])->name('transfer.downAlistamiento');
 Route::post('transferAddShoping', [transferController::class,'add_shopping'])->name('transfer.addShopping');

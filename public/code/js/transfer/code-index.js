@@ -7,6 +7,8 @@ const token = document
 const btnClose = document.querySelector("#btnModalClose");
 
 const selectCategory = document.querySelector("#categoria");
+const selectCentrocosto = document.querySelector("#centrocosto");
+
 const selectCostcenterOrigin = document.querySelector("#centrocostoorigen");
 const selectCostcenterDest = document.querySelector("#centrocostodestino");
 

@@ -283,18 +283,7 @@ class transferController extends Controller
             'productsdest' => $productsdest,
             'categories' => $categories
         ]);
-    }
-
-
-    public function getproducts(Request $request)
-    {
-        $prod = Product::Where([
-            ['meatcut_id', $request->categoriaId],
-            ['status', 1],
-            ['level_product_id', 2]
-        ])->get();
-        return response()->json(['products' => $prod]);
-    }
+    } 
 
     public function savedetail(Request $request)
     {
@@ -439,13 +428,13 @@ class transferController extends Controller
                     }
                     $btn = '
                     <div class="text-center">
-					<a href="transfer/create/' . $data->id . '" class="btn btn-dark" title="Alistar" >
+					<a href="transfer/create/'.$data->id.'" class="btn btn-dark" title="Alistar" >
 						<i class="fas fa-directions"></i>
 					</a>
-					<button class="btn btn-dark" title="" onclick="showDataForm(' . $data->id . ')">
+					<button class="btn btn-dark" title="" onclick="showDataForm('.$data->id.')">
 						<i class="fas fa-eye"></i>
 					</button>
-					<button class="btn btn-dark" title="Borrar Beneficio" onclick="downTransfer(' . $data->id . ');" ' . $status . '>
+					<button class="btn btn-dark" title="Borrar Beneficio" onclick="downTransfer('.$data->id.');" '.$status.'>
 						<i class="fas fa-trash"></i>
 					</button>
                     </div>
@@ -453,10 +442,10 @@ class transferController extends Controller
                 } else {
                     $btn = '
                     <div class="text-center">
-					<a href="transfer/create/' . $data->id . '" class="btn btn-dark" title="Alistar" >
+					<a href="transfer/create/'.$data->id.'" class="btn btn-dark" title="Alistar" >
 						<i class="fas fa-directions"></i>
 					</a>
-					<button class="btn btn-dark" title="" onclick="showDataForm(' . $data->id . ')">
+					<button class="btn btn-dark" title="" onclick="showDataForm('.$data->id.')">
 						<i class="fas fa-eye"></i>
 					</button>
 					<button class="btn btn-dark" title="" disabled>
@@ -469,6 +458,16 @@ class transferController extends Controller
             })
             ->rawColumns(['date', 'inventory', 'action'])
             ->make(true);
+    }
+
+    public function getproducts(Request $request)
+    {
+        $prod = Product::Where([
+            ['meatcut_id', $request->categoriaId],
+            ['status', 1],
+            ['level_product_id', 2]
+        ])->get();
+        return response()->json(['products' => $prod]);
     }
 
     public function updatedetail(Request $request)
@@ -497,7 +496,7 @@ class transferController extends Controller
             $arrayTotales = $this->sumTotales($request->transferId);
 
             $newStockPadre = $request->stockPadre - $arrayTotales['kgTotalRequeridos'];
-            $alist = Alistamiento::firstWhere('id', $request->transferId);
+            $alist = Transfer::firstWhere('id', $request->transferId);
             $alist->nuevo_stock_padre = $newStockPadre;
             $alist->save();
 
@@ -515,7 +514,6 @@ class transferController extends Controller
         }
     }
 
-
     public function editTransfer(Request $request)
     {
         $reg = Transfer::where('id', $request->id)->first();
@@ -524,7 +522,6 @@ class transferController extends Controller
             'reg' => $reg
         ]);
     }
-
 
     public function getProductsCategoryPadre(Request $request)
     {
@@ -592,7 +589,7 @@ class transferController extends Controller
         }
     }
 
-    public function destroyAlistamiento(Request $request)
+    public function destroyTransfer(Request $request)
     {
         try {
             $alist = Transfer::where('id', $request->id)->first();

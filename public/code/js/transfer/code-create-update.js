@@ -1,5 +1,5 @@
-import {sendData} from '../exportModule/core/rogercode-core.js';
-import { successToastMessage, errorMessage } from '../exportModule/message/rogercode-message.js';
+import {sendData} from '../../../rogercode/js/exportModule/core/rogercode-core.js';
+import { successToastMessage, errorMessage } from '../../../rogercode/js/exportModule/message/rogercode-message.js';
 btnAddTransfer.addEventListener("click", async (e) => {
     e.preventDefault();
     console.log("log")
