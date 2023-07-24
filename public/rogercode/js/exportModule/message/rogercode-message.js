@@ -1,6 +1,6 @@
 export const errorMessage = (message) => {
     Swal.fire(
-        'Error!',
+        'Error en Js!',
         message,
         'error'
     )

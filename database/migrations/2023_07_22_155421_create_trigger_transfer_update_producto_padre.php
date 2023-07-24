@@ -5,7 +5,7 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\DB;
 
-class CreateTriggerEnlistmentUpdateProductoPadre extends Migration
+class CreateTriggerTransferUpdateProductoPadre extends Migration
 {
     /**
      * Run the migrations.
@@ -15,7 +15,7 @@ class CreateTriggerEnlistmentUpdateProductoPadre extends Migration
     public function up()
     {
         DB::unprepared('
-            CREATE TRIGGER trigger_enlistment_update_producto_padre AFTER INSERT ON shopping_enlistment FOR EACH ROW
+            CREATE TRIGGER trigger_transfer_update_producto_padre AFTER INSERT ON updating_transfer FOR EACH ROW
             BEGIN
                 /*UPDATE products
                 SET stock = NEW.nuevo_stock
@@ -35,6 +35,6 @@ class CreateTriggerEnlistmentUpdateProductoPadre extends Migration
      */
     public function down()
     {
-        DB::unprepared('DROP TRIGGER IF EXISTS trigger_enlistment_update_producto_padre');
+        DB::unprepared('DROP TRIGGER IF EXISTS trigger_transfer_update_producto_padre');
     }
 }

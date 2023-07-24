@@ -147,7 +147,7 @@
 										</tr>
 									</thead>
 									<tbody id="tbodyDetail">
-										@foreach($enlistments as $proddetail)
+										@foreach($transfers as $proddetail)
 										<tr>
 											<td>{{$proddetail->id}}</td>
 											<td>{{$proddetail->code}}</td>

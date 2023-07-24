@@ -21,6 +21,8 @@ use App\Models\Products\Meatcut;
 use App\Http\Controllers\metodosgenerales\metodosrogercodeController;
 use App\Models\shopping\shopping_enlistment;
 use App\Models\shopping\shopping_enlistment_details;
+use App\Models\updating\updating_transfer;
+use App\Models\updating\updating_transfer_details;
 
 
 
@@ -47,11 +49,11 @@ class transferController extends Controller
     public function create($id)
     {
         //dd($id);
-        $dataTransfer = DB::table('enlistments as ali')
-            ->join('categories as cat', 'ali.categoria_id', '=', 'cat.id')
-            ->join('centro_costo as centro', 'ali.centrocosto_id', '=', 'centro.id')
-            ->select('ali.*', 'cat.name as namecategoria', 'centro.name as namecentrocosto')
-            ->where('ali.id', $id)
+        $dataTransfer = DB::table('transfers as tra')
+            ->join('categories as cat', 'tra.categoria_id', '=', 'cat.id')
+            ->join('centro_costo as centro', 'tra.centrocosto_id', '=', 'centro.id')
+            ->select('tra.*', 'cat.name as namecategoria', 'centro.name as namecentrocosto')
+            ->where('tra.id', $id)
             ->get();
 
         $cortes = DB::table('products as p')
@@ -67,13 +69,13 @@ class transferController extends Controller
 
         /**************************************** */
         $status = '';
-        $fechaAlistamientoCierre = Carbon::parse($dataTransfer[0]->fecha_cierre);
+        $fechaTransferCierre = Carbon::parse($dataTransfer[0]->fecha_cierre);
         $date = Carbon::now();
         $currentDate = Carbon::parse($date->format('Y-m-d'));
-        if ($currentDate->gt($fechaAlistamientoCierre)) {
+        if ($currentDate->gt($fechaTransferCierre)) {
             //'Date 1 is greater than Date 2';
             $status = 'false';
-        } elseif ($currentDate->lt($fechaAlistamientoCierre)) {
+        } elseif ($currentDate->lt($fechaTransferCierre)) {
             //'Date 1 is less than Date 2';
             $status = 'true';
         } else {
@@ -95,11 +97,11 @@ class transferController extends Controller
             $display = "display:none;";
         }
 
-        $enlistments = $this->gettransferdetail($id, $dataTransfer[0]->centrocosto_id);
+        $transfers = $this->gettransferdetail($id, $dataTransfer[0]->centrocosto_id);
 
         $arrayTotales = $this->sumTotales($id);
 
-        return view('transfer.create', compact('dataTransfer', 'cortes', 'enlistments', 'arrayTotales', 'status', 'statusInventory', 'display'));
+        return view('transfer.create', compact('dataTransfer', 'cortes', 'transfers', 'arrayTotales', 'status', 'statusInventory', 'display'));
     }
 
     /*    public function store(Request $request)
@@ -573,7 +575,7 @@ class transferController extends Controller
             $arrayTotales = $this->sumTotales($request->transferId);
 
             $newStockPadre = $request->stockPadre - $arrayTotales['kgTotalRequeridos'];
-            $alist = Alistamiento::firstWhere('id', $request->transferId);
+            $alist = Transfer::firstWhere('id', $request->transferId);
             $alist->nuevo_stock_padre = $newStockPadre;
             $alist->save();
 
@@ -593,7 +595,7 @@ class transferController extends Controller
     public function destroyAlistamiento(Request $request)
     {
         try {
-            $alist = Alistamiento::where('id', $request->id)->first();
+            $alist = Transfer::where('id', $request->id)->first();
             $alist->status = 0;
             $alist->save();
 
@@ -616,16 +618,16 @@ class transferController extends Controller
             $currentDateTime = Carbon::now();
 
             DB::beginTransaction();
-            $shopp = new shopping_enlistment();
+            $shopp = new updating_transfer();
             $shopp->users_id = $id_user;
-            $shopp->enlistments_id = $request->transferId;
+            $shopp->transfers_id = $request->transferId;
             $shopp->category_id = $request->categoryId;
             $shopp->productopadre_id = $request->productoPadre;
             $shopp->centrocosto_id = $request->centrocosto;
             $shopp->stock_actual = $request->stockPadre;
             $shopp->ultimo_conteo_fisico = $request->pesokg;
             $shopp->nuevo_stock = $request->newStockPadre;
-            $shopp->fecha_shopping = $currentDateTime;
+            $shopp->fecha_updating = $currentDateTime;
             $shopp->save();
 
             $regProd = $this->gettransferdetail($request->transferId,$request->centrocosto);
@@ -637,8 +639,8 @@ class transferController extends Controller
                 ]);
             }
             foreach($regProd as $key){
-                $shoppDetails = new shopping_transfer_details();
-                $shoppDetails->shopping_enlistment_id = $shopp->id;
+                $shoppDetails = new updating_transfer_details();
+                $shoppDetails->updating_transfer_id = $shopp->id;
                 $shoppDetails->products_id = $key->products_id;
                 $shoppDetails->stock_actual = $key->stock;
                 $shoppDetails->conteo_fisico = $key->fisico;
@@ -647,14 +649,14 @@ class transferController extends Controller
                 $shoppDetails->save();
             }
             
-            $invalist = Alistamiento::where('id', $request->transferId)->first();
+            $invalist = Transfer::where('id', $request->transferId)->first();
             $invalist->inventario = "added";
             $invalist->save();
 
             DB::commit();
             return response()->json([
                 'status' => 1,
-                'alistamiento' => $regProd,
+                'transfer' => $regProd,
                 'count' => $count,
                 'message' => 'Se guardo co exito'
             ]);
