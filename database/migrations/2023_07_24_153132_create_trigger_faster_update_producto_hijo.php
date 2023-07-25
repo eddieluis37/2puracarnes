@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\DB;
 
 class CreateTriggerFasterUpdateProductoHijo extends Migration
 {
-    
+
     public function up()
     {
         DB::unprepared('

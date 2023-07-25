@@ -15,10 +15,13 @@ class CreateUpdatingFasterDetailsTable extends Migration
     {
         Schema::create('updating_faster_details', function (Blueprint $table) {
             $table->id();
+
             $table->unsignedBigInteger('updating_faster_id')->nullable();
             $table->foreign('updating_faster_id')->references('id')->on('updating_faster');
+
             $table->unsignedBigInteger('products_id')->nullable();
             $table->foreign('products_id')->references('id')->on('products');
+            
             $table->decimal('stock_actual', 18, 2)->nullable(); // valor de cantidades de unidades sea KG
             $table->decimal('conteo_fisico', 18, 2)->nullable(); // valor de cantidades en inventario tangible real           
             $table->decimal('kgrequeridos', 18, 2)->nullable();
