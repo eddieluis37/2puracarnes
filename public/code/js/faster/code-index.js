@@ -24,50 +24,51 @@ const stockActualCenterCostDest = document.getElementById(
     "stockActualCenterCostDest"
 );
 
-$(document).ready(function () {
-    $(function () {
-        $("#tableFaster").DataTable({
-            paging: true,
-            pageLength: 5,
-            autoWidth: false,
-            processing: true,
-            serverSide: true,
-            ajax: {
-                url: "/showfaster",
-                type: "GET",
+function initializeDataTable() {
+    $("#tableFaster").DataTable({
+        paging: true,
+        pageLength: 5,
+        autoWidth: false,
+        processing: true,
+        serverSide: true,
+        ajax: {
+            url: "/showfaster",
+            type: "GET",
+        },
+        columns: [
+            { data: "id", name: "id" },
+            { data: "namecategoria", name: "namecategoria" },
+            { data: "namecentrocosto", name: "namecentrocosto" },
+            { data: "namecut", name: "namecut" },
+            { data: "nuevo_stock_padre", name: "nuevo_stock_padre" },
+            { data: "inventory", name: "inventory" },
+            { data: "date", name: "date" },
+            { data: "action", name: "action" },
+        ],
+        order: [[0, "DESC"]],
+        language: {
+            processing: "Procesando...",
+            lengthMenu: "Mostrar _MENU_ registros",
+            zeroRecords: "No se encontraron resultados",
+            emptyTable: "Ningún dato disponible en esta tabla",
+            sInfo: "Mostrando del _START_ al _END_ de total _TOTAL_ registros",
+            infoEmpty:
+                "Mostrando registros del 0 al 0 de un total de 0 registros",
+            infoFiltered: "(filtrado de un total de _MAX_ registros)",
+            search: "Buscar:",
+            infoThousands: ",",
+            loadingRecords: "Cargando...",
+            paginate: {
+                first: "Primero",
+                last: "Último",
+                next: "Siguiente",
+                previous: "Anterior",
             },
-            columns: [
-                { data: "id", name: "id" },
-                { data: "namecategoria", name: "namecategoria" },
-                { data: "namecentrocosto", name: "namecentrocosto" },
-                { data: "namecut", name: "namecut" },
-                { data: "nuevo_stock_padre", name: "nuevo_stock_padre" },
-                { data: "inventory", name: "inventory" },
-                { data: "date", name: "date" },
-                { data: "action", name: "action" },
-            ],
-            order: [[0, "DESC"]],
-            language: {
-                processing: "Procesando...",
-                lengthMenu: "Mostrar _MENU_ registros",
-                zeroRecords: "No se encontraron resultados",
-                emptyTable: "Ningún dato disponible en esta tabla",
-                sInfo: "Mostrando del _START_ al _END_ de total _TOTAL_ registros",
-                infoEmpty:
-                    "Mostrando registros del 0 al 0 de un total de 0 registros",
-                infoFiltered: "(filtrado de un total de _MAX_ registros)",
-                search: "Buscar:",
-                infoThousands: ",",
-                loadingRecords: "Cargando...",
-                paginate: {
-                    first: "Primero",
-                    last: "Último",
-                    next: "Siguiente",
-                    previous: "Anterior",
-                },
-            },
-        });
+        },
     });
+}
+ $(document).ready(function () {
+    initializeDataTable();
     $(".select2corte").select2({
         placeholder: "Busca un producto",
         width: "100%",
