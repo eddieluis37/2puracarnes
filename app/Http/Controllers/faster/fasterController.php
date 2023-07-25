@@ -284,7 +284,6 @@ class fasterController extends Controller
                 ], 422);
             }
 
-
            $prod = DB::table('products as p')
             ->join('centro_costo_products as ce', 'p.id', '=', 'ce.products_id')
             ->select('ce.stock','ce.fisico')
@@ -300,6 +299,7 @@ class fasterController extends Controller
             
             $formatkgrequeridos = $formatCantidad->MoneyToNumber($request->kgrequeridos);
             $newStock = $prod[0]->stock + $formatkgrequeridos;
+            
             $details = new faster_details();
             $details->fasters_id = $request->fasterId;
             $details->products_id = $request->producto;
@@ -307,11 +307,11 @@ class fasterController extends Controller
             $details->newstock = $newStock;
             $details->save();
 
-
             $arraydetail = $this->getfasterdetail($request->fasterId,$request->centrocosto);
             $arrayTotales = $this->sumTotales($request->fasterId);
 
             $newStockPadre = $request->stockPadre - $arrayTotales['kgTotalRequeridos'];
+
             $alist = Faster::firstWhere('id', $request->fasterId);
             $alist->nuevo_stock_padre = $newStockPadre;
             $alist->save();
@@ -332,14 +332,14 @@ class fasterController extends Controller
 
     public function getfasterdetail($fasterId, $centrocostoId)
     {
-        $detail = DB::table('faster_details as en')
-            ->join('products as pro', 'en.products_id', '=', 'pro.id')
+        $detail = DB::table('faster_details as fd')
+            ->join('products as pro', 'fd.products_id', '=', 'pro.id')
             ->join('centro_costo_products as ce', 'pro.id', '=', 'ce.products_id')
-            ->select('en.*', 'pro.name as nameprod', 'pro.code', 'ce.stock', 'ce.fisico')
+            ->select('fd.*', 'pro.name as nameprod', 'pro.code', 'ce.stock', 'ce.fisico')
             ->where([
                 ['ce.centrocosto_id', $centrocostoId],
-                ['en.fasters_id', $fasterId],
-                ['en.status', 1]
+                ['fd.fasters_id', $fasterId],
+                ['fd.status', 1]
             ])->get();
 
         return $detail;
@@ -361,12 +361,12 @@ class fasterController extends Controller
 
     public function show()
     {
-        $data = DB::table('fasters as tra')
-            ->join('categories as cat', 'tra.categoria_id', '=', 'cat.id')
-            ->join('meatcuts as cut', 'tra.meatcut_id', '=', 'cut.id')
-            ->join('centro_costo as centro', 'tra.centrocosto_id', '=', 'centro.id')
-            ->select('tra.*', 'cat.name as namecategoria', 'centro.name as namecentrocosto', 'cut.name as namecut')
-            ->where('tra.status', 1)
+        $data = DB::table('fasters as fas')
+            ->join('categories as cat', 'fas.categoria_id', '=', 'cat.id')
+            ->join('meatcuts as cut', 'fas.meatcut_id', '=', 'cut.id')
+            ->join('centro_costo as centro', 'fas.centrocosto_id', '=', 'centro.id')
+            ->select('fas.*', 'cat.name as namecategoria', 'centro.name as namecentrocosto', 'cut.name as namecut')
+            ->where('fas.status', 1)
             ->get();
         //$data = Compensadores::orderBy('id','desc');
         return Datatables::of($data)->addIndexColumn()
