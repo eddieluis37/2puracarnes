@@ -42,6 +42,7 @@ use App\Http\Controllers\aves\beneficioavesrogercodeController;
 use App\Http\Controllers\aves\desposteavesrogercodeController;
 
 use App\Http\Controllers\CostCenterController;
+use App\Http\Controllers\faster\fasterController;
 use App\Http\Controllers\transfer\TransferController;
 
 /************************************************* */
@@ -268,3 +269,17 @@ Route::post('transferById', [transferController::class,'editTransfer'])->name('t
 Route::post('getproductospadre', [transferController::class,'getProductsCategoryPadre'])->name('transfer.getproductospadre');
 Route::post('/downmmaintransfer', [transferController::class, 'destroyTransfer'])->name('transfer.downAlistamiento');
 Route::post('transferAddShoping', [transferController::class,'add_shopping'])->name('transfer.addShopping');
+
+/***** FASTER ******** */
+Route::get('faster', [fasterController::class, 'index'])->name('faster.index');
+Route::post('fastersave', [fasterController::class,'store'])->name('faster.save');
+Route::get('showfaster', [fasterController::class,'show'])->name('faster.showlist');
+Route::get('faster/create/{id}', [fasterController::class,'create'])->name('faster.create');
+Route::post('getproductos', [fasterController::class,'getproducts'])->name('faster.getproductos');
+Route::post('fastersavedetail', [fasterController::class,'savedetail'])->name('faster.savedetail');
+Route::post('/fasterUpdate', [fasterController::class, 'updatedetail'])->name('faster.update');
+Route::post('fasterdown', [fasterController::class,'destroy'])->name('faster.down');
+Route::post('fasterById', [fasterController::class,'editFaster'])->name('faster.edit');
+Route::post('getproductospadre', [fasterController::class,'getProductsCategoryPadre'])->name('faster.getproductospadre');
+Route::post('/downmmainfaster', [fasterController::class, 'destroyFaster'])->name('faster.downAlistamiento');
+Route::post('fasterAddShoping', [fasterController::class,'add_shopping'])->name('faster.addShopping');

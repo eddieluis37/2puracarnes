@@ -46,7 +46,7 @@
 
                     @role('Admin')
                     <li class=""> 
-                        <a href="{{url('pedidos')}}" class="menu-toggle" data-active="false"> 
+                        <a href="{{url('faster')}}" class="menu-toggle" data-active="false"> 
                             <div class="base-menu"> 
                                 <div class="base-icons"> 
                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-shopping-cart"> 
@@ -55,7 +55,7 @@
                                         <path d="M1 1h4l2.25 7h13.5l2.25-7h4"></path> 
                                     </svg> 
                                 </div> 
-                                <span>Pedidos</span> 
+                                <span>Faster</span> 
                             </div> 
                         </a> 
                     </li>
