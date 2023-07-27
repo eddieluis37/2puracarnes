@@ -7,7 +7,7 @@ const token = document
 const btnClose = document.querySelector("#btnModalClose");
 
 const selectCategory = document.querySelector("#categoria");
-const selectCentrocosto = document.querySelector("#centrocosto");
+const selectCentrocosto = document.querySelector("#centrocostoOrigen");
 
 const selectCostcenterOrigin = document.querySelector("#centrocostoorigen");
 const selectCostcenterDest = document.querySelector("#centrocostodestino");
@@ -39,7 +39,7 @@ $(document).ready(function () {
             columns: [
                 { data: "id", name: "id" },
                 { data: "namecategoria", name: "namecategoria" },
-                { data: "namecentrocosto", name: "namecentrocosto" },
+                { data: "namecentrocostoOrigen", name: "namecentrocostoOrigen" },
                 { data: "namecut", name: "namecut" },
                 { data: "nuevo_stock_padre", name: "nuevo_stock_padre" },
                 { data: "inventory", name: "inventory" },
@@ -107,7 +107,7 @@ const showData = (resp) => {
     let register = resp.reg;
     //alistamiento_id.value = register.id;
     selectCategory.value = register.categoria_id;
-    selectCentrocosto.value = register.centrocosto_id;
+    selectCentrocosto.value = register.centrocostoOrigen_id;
     getCortes(register.categoria_id);
 
     const modal = new bootstrap.Modal(
@@ -138,7 +138,7 @@ selectCategory.addEventListener("change", function () {
 getCortes = (categoryId) => {
     const dataform = new FormData();
     dataform.append("categoriaId", Number(categoryId));
-    send(dataform, "/getproductospadre").then((result) => {
+    send(dataform, "/productospadre").then((result) => {
         console.log(result);
         let prod = result.products;
         console.log(prod);

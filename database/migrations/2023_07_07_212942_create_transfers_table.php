@@ -22,15 +22,15 @@ class CreateTransfersTable extends Migration
             $table->unsignedBigInteger('categoria_id')->nullable();
             $table->foreign('categoria_id')->references('id')->on('categories');
 
-            $table->unsignedBigInteger('centrocosto_id')->nullable();
-            $table->foreign('centrocosto_id')->references('id')->on('centro_costo');
+            $table->unsignedBigInteger('centrocostoOrigen_id')->nullable();
+            $table->foreign('centrocostoOrigen_id')->references('id')->on('centro_costo');
 
             $table->unsignedBigInteger('meatcut_id')->nullable();           
             $table->foreign('meatcut_id')->references('id')->on('meatcuts')->onDelete("cascade");
 
             $table->decimal('nuevo_stock_padre', 18, 2)->default(0);
             $table->enum('inventario', ['pending', 'added'])->default('pending');
-            $table->date('fecha_alistamiento');
+            $table->date('fecha_tranfer');
             $table->date('fecha_cierre')->nullable();
 
             $table->boolean('status')->parent_select()->default(true)->nullable(); 

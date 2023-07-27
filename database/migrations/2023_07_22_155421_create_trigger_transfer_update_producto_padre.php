@@ -16,14 +16,10 @@ class CreateTriggerTransferUpdateProductoPadre extends Migration
     {
         DB::unprepared('
             CREATE TRIGGER trigger_transfer_update_producto_padre AFTER INSERT ON updating_transfer FOR EACH ROW
-            BEGIN
-                /*UPDATE products
-                SET stock = NEW.nuevo_stock
-                WHERE id = NEW.productopadre_id;*/
-
+            BEGIN                          
                 UPDATE centro_costo_products
                 SET stock = NEW.nuevo_stock
-                WHERE products_id = NEW.productopadre_id AND centrocosto_id = NEW.centrocosto_id;
+                WHERE products_id = NEW.productopadre_id AND centrocosto_id = NEW.centrocostoOrigen_id;
             END
         ');
     }

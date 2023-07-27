@@ -26,12 +26,15 @@ class CreateUpdatingTransferTable extends Migration
 
             $table->unsignedBigInteger('transfers_id')->nullable();
             $table->foreign('transfers_id')->references('id')->on('transfers');
+
             $table->unsignedBigInteger('category_id');           
             $table->foreign('category_id')->references('id')->on('categories')->onDelete("cascade");
+            
             $table->unsignedBigInteger('productopadre_id')->nullable();
             $table->foreign('productopadre_id')->references('id')->on('products');
-            $table->unsignedBigInteger('centrocosto_id')->nullable();
-            $table->foreign('centrocosto_id')->references('id')->on('centro_costo');
+
+            $table->unsignedBigInteger('centrocostoOrigen_id')->nullable();
+            $table->foreign('centrocostoOrigen_id')->references('id')->on('centro_costo');
 
             $table->decimal('stock_actual', 18, 2)->nullable(); // valor de cantidades de unidades sea KG
             $table->decimal('ultimo_conteo_fisico', 18, 2)->nullable(); // valor de cantidades de unidades sea KG

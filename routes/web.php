@@ -266,7 +266,7 @@ Route::post('transfersavedetail', [transferController::class,'savedetail'])->nam
 Route::post('/transferUpdate', [transferController::class, 'updatedetail'])->name('transfer.update');
 Route::post('transferdown', [transferController::class,'destroy'])->name('transfer.down');
 Route::post('transferById', [transferController::class,'editTransfer'])->name('transfer.edit');
-Route::post('getproductospadre', [transferController::class,'getProductsCategoryPadre'])->name('transfer.getproductospadre');
+Route::post('productospadre', [transferController::class,'getProductsCategoryPadre'])->name('transfer.productospadre');
 Route::post('/downmmaintransfer', [transferController::class, 'destroyTransfer'])->name('transfer.downAlistamiento');
 Route::post('transferAddShoping', [transferController::class,'add_shopping'])->name('transfer.addShopping');
 

@@ -16,18 +16,15 @@ class CreateTriggerTransferUpdateProductoHijo extends Migration
     {
         DB::unprepared('
             CREATE TRIGGER trigger_transfer_update_producto_hijo AFTER INSERT ON updating_transfer_details FOR EACH ROW
-            BEGIN
-                /*UPDATE products
-                SET stock = NEW.newstock
-                WHERE id = NEW.products_id;*/
+            BEGIN                
                 
-                DECLARE centrocostoId INT;
+                DECLARE centrocostoOrigenId INT;
 
-                select shop.centrocosto_id INTO centrocostoId FROM updating_transfer AS shop WHERE shop.id = NEW.updating_transfer_id;
+                select shop.centrocostoOrigen_id INTO centrocostoOrigenId FROM updating_transfer AS shop WHERE shop.id = NEW.updating_transfer_id;
                 
                 UPDATE centro_costo_products
                 SET stock = NEW.newstock
-                WHERE products_id = NEW.products_id AND centrocosto_id = centrocostoId;
+                WHERE products_id = NEW.products_id AND centrocosto_id = centrocostoOrigenId;
 
             END
         ');

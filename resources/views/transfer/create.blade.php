@@ -42,7 +42,7 @@
 								<div class="task-header">
 									<div class="form-group">
                                         <label for="" class="form-label">Centro de costo</label>
-										<p>{{$dataTransfer[0]->namecentrocosto}}</p>
+										<p>{{$dataTransfer[0]->namecentrocostoOrigen}}</p>
 									</div>
 								</div>
 							</div>
@@ -63,7 +63,7 @@
                                         <label for="" class="form-label">Buscar corte padre</label>
 										<input type="hidden" id="meatcutId" name="meatcutId" value="{{$dataTransfer[0]->meatcut_id}}">
 										<input type="hidden" id="productopadreId" name="productopadreId" value="{{$cortes[0]->productopadreId}}">
-										<input type="hidden" id="centrocosto" name="centrocosto" value="{{$dataTransfer[0]->centrocosto_id}}">
+										<input type="hidden" id="centrocostoOrigen" name="centrocostoOrigen" value="{{$dataTransfer[0]->centrocostoOrigen_id}}">
 										<input type="text" id="productoCorte" name="productoCorte"value="{{$cortes[0]->name}}" class="form-control input" readonly >
 					                    <!--select class="form-control form-control-sm select2Prod" name="productoCorte" id="productoCorte" required="">
 											<option value="">Seleccione el producto</option>

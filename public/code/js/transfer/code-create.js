@@ -20,7 +20,7 @@ const transferId = document.querySelector("#transferId");
 const kgrequeridos = document.querySelector("#kgrequeridos");
 const addShopping = document.querySelector("#addShopping");
 const productoPadre = document.querySelector("#productopadreId");
-const centrocosto = document.querySelector("#centrocosto");
+const centrocostoOrigen = document.querySelector("#centrocostoOrigen");
 const categoryId = document.querySelector("#categoryId");
 
 $(".select2Prod").select2({
@@ -165,14 +165,14 @@ tableTransfer.addEventListener("keydown", function (event) {
             let productoId = target.getAttribute("data-id");
             console.log("prod test id: " + transferId.value);
             console.log(productoId);
-            console.log(centrocosto.value);
+            console.log(centrocostoOrigen.value);
             const trimValue = inputValue.trim();
             const dataform = new FormData();
             dataform.append("id", Number(event.target.id));
             dataform.append("newkgrequeridos", Number(trimValue));
             dataform.append("transferId", Number(transferId.value));
             dataform.append("productoId", Number(productoId));
-            dataform.append("centrocosto", Number(centrocosto.value));
+            dataform.append("centrocostoOrigen", Number(centrocostoOrigen.value));
             dataform.append("stockPadre", stockPadre.value);
 
             sendData("/transferUpdate", dataform, token).then((result) => {
@@ -205,7 +205,7 @@ tbodyTable.addEventListener("click", (e) => {
                 const dataform = new FormData();
                 dataform.append("id", Number(id));
                 dataform.append("transferId", Number(transferId.value));
-                dataform.append("centrocosto", Number(centrocosto.value));
+                dataform.append("centrocostoOrigen", Number(centrocostoOrigen.value));
                 dataform.append("stockPadre", stockPadre.value);
                 sendData("/transferdown", dataform, token).then((result) => {
                     console.log(result);
@@ -230,7 +230,7 @@ tfootTable.addEventListener("click", (e) => {
         dataform.append("pesokg", Number(pesokg.value));
         dataform.append("stockPadre", Number(stockPadre.value));
         dataform.append("productoPadre", Number(productoPadre.value));
-        dataform.append("centrocosto", Number(centrocosto.value));
+        dataform.append("centrocostoOrigen", Number(centrocostoOrigen.value));
         dataform.append("categoryId", Number(categoryId.value));
         sendData("/transferAddShoping", dataform, token).then((result) => {
             console.log(result);
