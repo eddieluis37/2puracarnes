@@ -28,7 +28,6 @@ class alistamientorogercodeController extends Controller
      */
     public function index()
     {
-
         $category = Category::WhereIn('id',[1,2,3])->get();
         $centros = Centrocosto::Where('status',1)->get();
         return view("alistamiento.index",compact('category','centros'));
@@ -48,29 +47,7 @@ class alistamientorogercodeController extends Controller
         ->select('ali.*', 'cat.name as namecategoria','centro.name as namecentrocosto')
         ->where('ali.id', $id)
         ->get();
-
-        /*$enlistmentDetail = enlistment_details::Where([
-            ['enlistments_id',$id],
-            ['status',1]
-        ])->get();
-        
-        $countDetail = count($enlistmentDetail);*/
-
-        //$cortes = Meatcut::Where([
-            //['category_id',$dataAlistamiento[0]->categoria_id],
-            //['status',1]
-        //])->get();
-         
-        /*$cortes = DB::table('meatcuts as me')
-        ->join('products as pro', 'me.id', '=', 'pro.meatcut_id')
-        ->select('me.*', 'pro.stock','pro.fisico','pro.id as productopadreId')
-        ->where([
-            ['pro.level_product_id',1],
-            ['me.id',$dataAlistamiento[0]->meatcut_id],
-            ['pro.category_id',$dataAlistamiento[0]->categoria_id],
-            ['pro.status',1]
-        ])
-        ->get();*/
+           
         $cortes = DB::table('products as p')
         ->join('centro_costo_products as ce', 'p.id', '=', 'ce.products_id')
         ->select('p.*', 'ce.stock','ce.fisico','p.id as productopadreId')
@@ -79,8 +56,7 @@ class alistamientorogercodeController extends Controller
                 ['p.meatcut_id',$dataAlistamiento[0]->meatcut_id],
                 ['p.status',1],
                 ['ce.centrocosto_id',$dataAlistamiento[0]->centrocosto_id],
-            ])->get();
-        
+            ])->get();        
 
         /**************************************** */
         $status = '';
@@ -115,11 +91,6 @@ class alistamientorogercodeController extends Controller
         $enlistments = $this->getalistamientodetail($id,$dataAlistamiento[0]->centrocosto_id);
 
         $arrayTotales = $this->sumTotales($id);
-
-        /*$newStock = 0;
-        if ($countDetail != 0) {
-            $newStock = $arrayTotales['kgTotalRequeridos'] - $cortes[0]->stock;
-        }*/
 
         return view('alistamiento.create', compact('dataAlistamiento','cortes','enlistments','arrayTotales','status','statusInventory', 'display'));
     }
