@@ -155,7 +155,7 @@ class alistamientorogercodeController extends Controller
                 ], 422);
             }
 
-            $getReg = Alistamiento::firstWhere('id', $request->compensadoId);
+            $getReg = Alistamiento::firstWhere('id', $request->alistamientoId);
 
             if($getReg == null) {
                 $currentDateTime = Carbon::now();
