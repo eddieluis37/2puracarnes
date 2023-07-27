@@ -130,7 +130,7 @@ class alistamientorogercodeController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request) // Llenado del modal_create.blade
     {
         try {
 
@@ -180,22 +180,7 @@ class alistamientorogercodeController extends Controller
 					"registroId" => $alist->id
                 ]);
             }    
-            //}else{
-                //$getReg = Compensadores::firstWhere('id', $request->compensadoId);
-                //$getReg->categoria_id = $request->categoria;
-                //$getReg->thirds_id = $request->provider;
-                //$getReg->centrocosto_id = $request->centrocosto;
-                //$getReg->factura = $request->factura;
-                //$getReg->save();
-
-                //return response()->json([
-                    //'status' => 1,
-                    //'message' => 'Guardado correctamente',
-					//"registroId" => 0
-                //]);
-            //}
-
-
+        
         } catch (\Throwable $th) {
             return response()->json([
                 'status' => 0,
