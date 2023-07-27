@@ -148,7 +148,7 @@ class alistamientorogercodeController extends Controller
             ];
 
             $validator = Validator::make($request->all(), $rules, $messages);
-            if ($validator->fails()) {  
+            if ($validator->fails()) {
                 return response()->json([
                     'status' => 0,
                     'errors' => $validator->errors()
@@ -157,30 +157,29 @@ class alistamientorogercodeController extends Controller
 
             $getReg = Alistamiento::firstWhere('id', $request->alistamientoId);
 
-            if($getReg == null) {
+            if ($getReg == null) {
                 $currentDateTime = Carbon::now();
                 $currentDateFormat = Carbon::parse($currentDateTime->format('Y-m-d'));
                 $current_date = Carbon::parse($currentDateTime->format('Y-m-d'));
-			    $current_date->modify('next monday'); // Move to the next Monday
-			    $dateNextMonday = $current_date->format('Y-m-d'); // Output the date in Y-m-d format
+                $current_date->modify('next monday'); // Move to the next Monday
+                $dateNextMonday = $current_date->format('Y-m-d'); // Output the date in Y-m-d format
 
-                $id_user= Auth::user()->id;
+                $id_user = Auth::user()->id;
 
                 $alist = new Alistamiento();
                 $alist->users_id = $id_user;
                 $alist->categoria_id = $request->categoria;
                 $alist->centrocosto_id = $request->centrocosto;
                 $alist->meatcut_id = $request->selectCortePadre;
-                $alist->fecha_alistamiento= $currentDateFormat;
+                $alist->fecha_alistamiento = $currentDateFormat;
                 $alist->fecha_cierre = $dateNextMonday;
                 $alist->save();
                 return response()->json([
                     'status' => 1,
                     'message' => 'Guardado correctamente',
-					"registroId" => $alist->id
+                    "registroId" => $alist->id
                 ]);
-            }    
-        
+            }
         } catch (\Throwable $th) {
             return response()->json([
                 'status' => 0,
