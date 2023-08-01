@@ -67,11 +67,18 @@
 						<form id="form-detail">
 							<input type="hidden" id="transferId" name="transferId" value="{{$dataTransfer[0]->id}}">
 							<div class="row g-3">
-								
-								<div class="col-md-3">
-									<label for="" class="form-label">Seleccionar hijo </label>
-									<select class="form-control form-control-sm select2ProdHijos" name="producto" id="producto" required="">
-									</select>
+								<div class="col-md-4">
+									<div class="task-header">
+										<div class="form-group">
+											<label for="" class="form-label">Buscar producto</label>
+											<select class="form-control form-control-sm select2Prod" name="producto" id="producto" required="">
+												<option value="">Seleccione el producto</option>
+												@foreach ($prod as $p)
+												<option value="{{$p->id}}">{{$p->name}}</option>
+												@endforeach
+											</select>
+										</div>
+									</div>
 								</div>
 								<div class="col-md-3">
 									<label for="" class="form-label">KG requeridos</label>
@@ -98,19 +105,20 @@
 					<div class="card-body">
 						<div class="row">
 							<div class="col-md-4">
-								<label for="" class="form-label">Stock actual</label>
+								<label for="" class="form-label">Conteo fisico origen</label>
 								<div class="input-group flex-nowrap">
-								
+									<input type="text" id="pesokg" name="pesokg" value="{{$prod[0]->fisico}}" class="form-control-sm form-control" placeholder="180.40 kg" readonly>
 									<span class="input-group-text" id="addon-wrapping">KG</span>
 								</div>
 							</div>
 							<div class="col-md-4">
-								<label for="" class="form-label">Ultimo conteo fisico</label>
+								<label for="" class="form-label">Stock actual origen</label>
 								<div class="input-group flex-nowrap">
-									
+									<input type="text" id="stockCortePadre" name="stockCortePadre" value="{{$prod[0]->stock}}" class="form-control-sm form-control" placeholder="10,00 kg" readonly>
 									<span class="input-group-text" id="addon-wrapping">KG</span>
 								</div>
 							</div>
+
 							<div class="col-md-4">
 								<label for="" class="form-label">Nuevo stock</label>
 								<div class="input-group flex-nowrap">

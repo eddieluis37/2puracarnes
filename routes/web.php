@@ -262,6 +262,8 @@ Route::post('getproductos', [transferController::class,'getproducts'])->name('tr
 Route::post('productsbycostcenterdest', [transferController::class,'ProductsByCostcenterDest'])->name('transfer.productsbycostcenterdest');
 Route::post('getproductsbycostcenterorigin', [transferController::class,'getProductsByCostcenterOrigin'])->name('transfer.getproductsbycostcenterorigin');
 
+Route::get('/obtener-valores-producto', [transferController::class,'obtenerValoresProducto'])->name('transfer.obtener-valores-producto');
+
 Route::post('transfersavedetail', [transferController::class,'savedetail'])->name('transfer.savedetail');
 Route::post('/transferUpdate', [transferController::class, 'updatedetail'])->name('transfer.update');
 Route::post('transferdown', [transferController::class,'destroy'])->name('transfer.down');

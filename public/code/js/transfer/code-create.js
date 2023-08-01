@@ -29,50 +29,33 @@ $(".select2Prod").select2({
     theme: "bootstrap-5",
     allowClear: true,
 });
-$(".select2ProdHijos").select2({
-    placeholder: "Busca hijos",
-    width: "100%",
-    theme: "bootstrap-5",
-    allowClear: true,
-});
-const dataform = new FormData();
-dataform.append("categoriaId", Number(productopadreId.value));
-sendData("/getproductos",dataform,token).then((result) => {
-    console.log(result);
-    let prod = result.products;
-    console.log(prod);
-    selectProducto.innerHTML = "";
-    selectProducto.innerHTML += `<option value="">Seleccione el producto</option>`;
-    prod.forEach(option => {
-    const optionElement = document.createElement("option");
-    optionElement.value = option.id;
-    optionElement.text = option.name;
-    selectProducto.appendChild(optionElement);
+
+$(document).ready(function() {
+    $('#producto').change(function() {
+      var productId = $(this).val();
+      // Llama a una función para actualizar los valores en función del producto seleccionado
+      actualizarValoresProducto(productId);
     });
-});
-/*$('.select2Prod').on('change', function() {
-    const selectedValue = $(this).val();
-    console.log("Selected value: " + selectedValue);
-    const selectedOption = $(this).find('option:selected');
-    const attributeStock = selectedOption.attr('data-stock');
-    console.log("Attribute value: " + attributeStock);
-    stockPadre.value = attributeStock;
-    const dataform = new FormData();
-    dataform.append("categoriaId", Number(selectedValue));
-    sendData("/getproductos",dataform,token).then((result) => {
-        console.log(result);
-        let prod = result.products;
-        console.log(prod);
-        selectProducto.innerHTML = "";
-        selectProducto.innerHTML += `<option value="">Seleccione el producto</option>`;
-        prod.forEach(option => {
-        const optionElement = document.createElement("option");
-        optionElement.value = option.id;
-        optionElement.text = option.name;
-        selectProducto.appendChild(optionElement);
-        });
+  });
+
+  function actualizarValoresProducto(productId) {
+    $.ajax({
+      url: '/obtener-valores-producto', // Reemplaza con tu ruta o URL para obtener los valores del producto
+      type: 'GET',
+      data: {
+        productId: productId
+      },
+      success: function(response) {
+        // Actualiza los valores en los campos de entrada
+        $('#stockCortePadre').val(response.stock);
+        $('#pesokg').val(response.fisico);
+      },
+      error: function(xhr, status, error) {
+        // Maneja el error si la solicitud AJAX falla
+        console.log(error);
+      }
     });
-});*/
+  }
 
 btnAddTrans.addEventListener("click", (e) => {
     e.preventDefault();

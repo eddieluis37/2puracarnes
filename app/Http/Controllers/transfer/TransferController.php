@@ -47,17 +47,17 @@ class transferController extends Controller
 
             $rules = [
                 'transferId' => 'required',
-                 'categoria' => 'required',
+                'categoria' => 'required',
                 'centrocostoOrigen' => 'required',
                 'centrocostoDestino' => 'required',
                 //'selectCortePadre' => 'required',
             ];
             $messages = [
                 'transferId.required' => 'El transferId es requerido',
-                 'categoria.required' => 'La categoria es requerida',
+                'categoria.required' => 'La categoria es requerida',
                 'centrocostoOrigen.required' => 'El centro de costo es requerido',
                 'centrocostoDestino.required' => 'El centro de costo es requerido',
-              //  'selectCortePadre.required' => 'El corte es requerido',
+                //  'selectCortePadre.required' => 'El corte es requerido',
             ];
 
             $validator = Validator::make($request->all(), $rules, $messages);
@@ -84,7 +84,7 @@ class transferController extends Controller
                 $tranf->categoria_id = $request->categoria;
                 $tranf->centrocostoOrigen_id = $request->centrocostoOrigen;
                 $tranf->centrocostoDestino_id = $request->centrocostoDestino;
-             //   $tranf->products_id = 2;
+                //   $tranf->products_id = 2;
                 $tranf->fecha_tranfer = $currentDateFormat;
                 $tranf->fecha_cierre = $dateNextMonday;
                 $tranf->save();
@@ -93,9 +93,7 @@ class transferController extends Controller
                     'message' => 'Guardado correctamente',
                     "registroId" => $tranf->id
                 ]);
-            }           
-
-
+            }
         } catch (\Throwable $th) {
             return response()->json([
                 'status' => 0,
@@ -105,9 +103,9 @@ class transferController extends Controller
     }
 
 
-    public function create($id) // http://2puracarnes.test:8080/transfer/create/2  llenado del Translado | Categoria
+    public function create($id) // http://2puracarnes.test:8080/transfer/create/2  llenado de la vista Translado | Categoria
     {
-       // dd($id);
+        // dd($id);
         $dataTransfer = DB::table('transfers as tra')
             ->join('categories as cat', 'tra.categoria_id', '=', 'cat.id')
             ->join('centro_costo as centroOrigen', 'tra.centrocostoOrigen_id', '=', 'centroOrigen.id')
@@ -116,18 +114,18 @@ class transferController extends Controller
             ->where('tra.id', $id)
             ->get();
 
-      /*   $cortes = DB::table('products as p')
+        $prod = DB::table('products as p')
             ->join('centro_costo_products as ce', 'p.id', '=', 'ce.products_id')
             ->select('p.*', 'ce.stock', 'ce.fisico', 'p.id as productopadreId')
             ->where([
-               // ['p.level_product_id', [1,2]],
-             //   ['p.id', $dataTransfer[0]->products_id],
+                // ['p.level_product_id', [1,2]],
+                //   ['p.id', $dataTransfer[0]->products_id],
                 ['p.category_id', $dataTransfer[0]->categoria_id],
                 ['p.status', 1],
                 ['ce.centrocosto_id', $dataTransfer[0]->centrocostoOrigen_id],
             ])->get();
 
- */
+
         /**************************************** */
         $status = '';
         $fechaTransferCierre = Carbon::parse($dataTransfer[0]->fecha_cierre);
@@ -162,81 +160,19 @@ class transferController extends Controller
 
         $arrayTotales = $this->sumTotales($id);
 
-        return view('transfer.create', compact('dataTransfer','transfers', 'arrayTotales', 'status', 'statusInventory', 'display'));
+        return view('transfer.create', compact('dataTransfer', 'transfers', 'prod', 'arrayTotales', 'status', 'statusInventory', 'display'));
     }
 
-    /*    public function store(Request $request)
+    public function obtenerValoresProducto(Request $request)
     {
-        try {
-
-            $rules = [
-                'centrocostoorigen' => 'required',
-                'centrocostodestino' => 'required',
-            ];
-            $messages = [
-                'centrocostoorigen.required' => 'El centro de costo origen es requerido',
-                'centrocostodestino.required' => 'El centro de costo destino es requerido',
-
-            ];
-
-            $validator = Validator::make($request->all(), $rules, $messages);
-            if ($validator->fails()) {
-                return response()->json([
-                    'status' => 0,
-                    'errors' => $validator->errors()
-                ], 422);
-            }
-
-            $getReg = Transfer::firstWhere('id', $request->transferId);
-
-            if ($getReg == null) {
-                $currentDateTime = Carbon::now();
-                $currentDateFormat = Carbon::parse($currentDateTime->format('Y-m-d'));
-                $current_date = Carbon::parse($currentDateTime->format('Y-m-d'));
-                $current_date->modify('next monday'); // Move to the next Monday
-                $dateNextMonday = $current_date->format('Y-m-d'); // Output the date in Y-m-d format
-
-                $id_user = Auth::user()->id;
-
-                $tran = new Transfer();
-                $tran->users_id = $id_user;
-                $tran->centro_costo_origen_id = $request->centrocostoorigen;
-                $tran->centro_costo_destino_id = $request->centrocostodestino;
-                
-                $tran->fecha_transfer = $currentDateFormat;
-                $tran->fecha_cierre = $dateNextMonday;
-                $tran->save();
-                return response()->json([
-                    'status' => 1,
-                    'message' => 'Guardado correctamente',
-                    "registroId" => $tran->id
-                ]);
-            }
-            //}else{
-            //$getReg = Compensadores::firstWhere('id', $request->compensadoId);
-            //$getReg->categoria_id = $request->categoria;
-            //$getReg->thirds_id = $request->provider;
-            //$getReg->centrocostoOrigen_id = $request->centrocosto;
-            //$getReg->factura = $request->factura;
-            //$getReg->save();
-
-            //return response()->json([
-            //'status' => 1,
-            //'message' => 'Guardado correctamente',
-            //"registroId" => 0
-            //]);
-            //}
-
-
-        } catch (\Throwable $th) {
-            return response()->json([
-                'status' => 0,
-                'array' => (array) $th
-            ]);
-        }
-    } */
-
-   
+        $productId = $request->input('productId');
+        // Obtén los valores de stock y fisico para el producto seleccionado
+        $producto = DB::table('products')->where('id', $productId)->first();
+        return response()->json([
+            'stock' => $producto->stock,
+            'fisico' => $producto->fisico
+        ]);
+    }
 
     public function getProductsByCostcenterOrigin(Request $request)
     {
@@ -272,7 +208,7 @@ class transferController extends Controller
             'productsdest' => $productsdest,
             'categories' => $categories
         ]);
-    } 
+    }
 
     public function savedetail(Request $request)
     {
@@ -288,7 +224,7 @@ class transferController extends Controller
             ];
 
             $validator = Validator::make($request->all(), $rules, $messages);
-            if ($validator->fails()) {  
+            if ($validator->fails()) {
                 return response()->json([
                     'status' => 0,
                     'errors' => $validator->errors()
@@ -296,19 +232,19 @@ class transferController extends Controller
             }
 
 
-           $prod = DB::table('products as p')
-            ->join('centro_costo_products as ce', 'p.id', '=', 'ce.products_id')
-            ->select('ce.stock','ce.fisico')
-            ->where([
-                ['p.id',$request->producto],
-                ['ce.centrocosto_id',$request->centrocostoOrigen],
-                ['p.status',1],
-                
-            ])->get();
+            $prod = DB::table('products as p')
+                ->join('centro_costo_products as ce', 'p.id', '=', 'ce.products_id')
+                ->select('ce.stock', 'ce.fisico')
+                ->where([
+                    ['p.id', $request->producto],
+                    ['ce.centrocosto_id', $request->centrocostoOrigen],
+                    ['p.status', 1],
+
+                ])->get();
 
             $formatCantidad = new metodosrogercodeController();
             //$prod = Product::firstWhere('id', $request->producto);
-            
+
             $formatkgrequeridos = $formatCantidad->MoneyToNumber($request->kgrequeridos);
             $newStock = $prod[0]->stock + $formatkgrequeridos;
 
@@ -320,7 +256,7 @@ class transferController extends Controller
             $details->save();
 
 
-            $arraydetail = $this->gettransferdetail($request->transferId,$request->centrocostoOrigen);
+            $arraydetail = $this->gettransferdetail($request->transferId, $request->centrocostoOrigen);
             $arrayTotales = $this->sumTotales($request->transferId);
 
             $newStockPadre = $request->stockPadre - $arrayTotales['kgTotalRequeridos'];
@@ -375,7 +311,7 @@ class transferController extends Controller
     {
         $data = DB::table('transfers as tra')
             ->join('categories as cat', 'tra.categoria_id', '=', 'cat.id')
-         //   ->join('products as cut', 'tra.products_id', '=', 'cut.id')
+            //   ->join('products as cut', 'tra.products_id', '=', 'cut.id')
             ->join('centro_costo as centroOrigen', 'tra.centrocostoOrigen_id', '=', 'centroOrigen.id')
             ->join('centro_costo as centroDestino', 'tra.centrocostoDestino_id', '=', 'centroDestino.id')
             ->select('tra.*', 'cat.name as namecategoria', 'centroOrigen.name as namecentrocostoOrigen', 'centroDestino.name as namecentrocostoDestino')
@@ -419,13 +355,13 @@ class transferController extends Controller
                     }
                     $btn = '
                     <div class="text-center">
-					<a href="transfer/create/'.$data->id.'" class="btn btn-dark" title="tranfar" >
+					<a href="transfer/create/' . $data->id . '" class="btn btn-dark" title="tranfar" >
 						<i class="fas fa-directions"></i>
 					</a>
-					<button class="btn btn-dark" title="" onclick="showDataForm('.$data->id.')">
+					<button class="btn btn-dark" title="" onclick="showDataForm(' . $data->id . ')">
 						<i class="fas fa-eye"></i>
 					</button>
-					<button class="btn btn-dark" title="Borrar Beneficio" onclick="downTransfer('.$data->id.');" '.$status.'>
+					<button class="btn btn-dark" title="Borrar Beneficio" onclick="downTransfer(' . $data->id . ');" ' . $status . '>
 						<i class="fas fa-trash"></i>
 					</button>
                     </div>
@@ -433,10 +369,10 @@ class transferController extends Controller
                 } else {
                     $btn = '
                     <div class="text-center">
-					<a href="transfer/create/'.$data->id.'" class="btn btn-dark" title="tranfar" >
+					<a href="transfer/create/' . $data->id . '" class="btn btn-dark" title="tranfar" >
 						<i class="fas fa-directions"></i>
 					</a>
-					<button class="btn btn-dark" title="" onclick="showDataForm('.$data->id.')">
+					<button class="btn btn-dark" title="" onclick="showDataForm(' . $data->id . ')">
 						<i class="fas fa-eye"></i>
 					</button>
 					<button class="btn btn-dark" title="" disabled>
@@ -539,7 +475,7 @@ class transferController extends Controller
         ]);
     }
 
-       /**
+    /**
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
@@ -618,7 +554,7 @@ class transferController extends Controller
     public function add_shopping(Request $request)
     {
         try {
-            $id_user= Auth::user()->id;
+            $id_user = Auth::user()->id;
             $currentDateTime = Carbon::now();
 
             DB::beginTransaction();
@@ -634,7 +570,7 @@ class transferController extends Controller
             $shopp->fecha_updating = $currentDateTime;
             $shopp->save();
 
-            $regProd = $this->gettransferdetail($request->transferId,$request->centrocostoOrigen);
+            $regProd = $this->gettransferdetail($request->transferId, $request->centrocostoOrigen);
             $count = count($regProd);
             if ($count == 0) {
                 return response()->json([
@@ -642,7 +578,7 @@ class transferController extends Controller
                     'message' => 'No tiene productos agregados'
                 ]);
             }
-            foreach($regProd as $key){
+            foreach ($regProd as $key) {
                 $shoppDetails = new updating_transfer_details();
                 $shoppDetails->updating_transfer_id = $shopp->id;
                 $shoppDetails->products_id = $key->products_id;
@@ -652,7 +588,7 @@ class transferController extends Controller
                 $shoppDetails->newstock = $key->newstock;
                 $shoppDetails->save();
             }
-            
+
             $invtranf = Transfer::where('id', $request->transferId)->first();
             $invtranf->inventario = "added";
             $invtranf->save();
@@ -671,6 +607,5 @@ class transferController extends Controller
                 'array' => (array) $th
             ]);
         }
-
     }
 }
