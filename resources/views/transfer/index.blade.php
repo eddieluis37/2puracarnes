@@ -21,12 +21,12 @@
 						<thead class="text-white" style="background: #3B3F5C">
 							<tr>
 								<th class="table-th text-white">#</th>
-								<th class="table-th text-white">Categoria</th>
-								<th class="table-th text-white ">Centro de costo</th>
-								<th class="table-th text-white ">Corte de padre</th>
-								<th class="table-th text-white ">Nuevo stock</th>
-								<th class="table-th text-white ">Inventario</th>
 								<th class="table-th text-white">Fecha</th>
+								<th class="table-th text-white">Categoria</th>
+								<th class="table-th text-white ">Centro origen</th>
+								<th class="table-th text-white ">Centro destino</th>
+								<th class="table-th text-white ">Nuevo stock</th>
+								<th class="table-th text-white ">Inventario</th>							
 								<th class="table-th text-white text-center">Acciones</th>
 							</tr>
 						</thead>

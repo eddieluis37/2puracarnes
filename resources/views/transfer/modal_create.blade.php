@@ -35,6 +35,20 @@
 			<div class="col-md-6">
 				<div class="task-header">
 					<div class="form-group">
+						<label for="" class="form-label">Centro de costo Destino</label>
+						<select class="form-control form-control-sm input" name="centrocostoDestino" id="centrocostoDestino" required>
+							<option value="">Seleccione el centro de costo</option>
+							@foreach($centros as $option)
+							<option value="{{ $option['id'] }}" data="{{$option}}">{{ $option['name'] }}</option>
+							@endforeach
+						</select>
+						<span class="text-danger error-message"></span>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-6">
+				<div class="task-header">
+					<div class="form-group">
 						<label for="" class="form-label">Seleccionar corte padre</label>
 						<select class="form-control form-control-sm input select2corte" name="selectCortePadre" id="selectCortePadre" required>
 						</select>

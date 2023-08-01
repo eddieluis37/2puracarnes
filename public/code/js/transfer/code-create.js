@@ -36,7 +36,7 @@ $(".select2ProdHijos").select2({
     allowClear: true,
 });
 const dataform = new FormData();
-dataform.append("categoriaId", Number(meatcutId.value));
+dataform.append("categoriaId", Number(productopadreId.value));
 sendData("/getproductos",dataform,token).then((result) => {
     console.log(result);
     let prod = result.products;

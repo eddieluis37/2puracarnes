@@ -8,6 +8,7 @@ const btnClose = document.querySelector("#btnModalClose");
 
 const selectCategory = document.querySelector("#categoria");
 const selectCentrocosto = document.querySelector("#centrocostoOrigen");
+const selectCentrocostoDestino = document.querySelector("#centrocostoDestino");
 
 const selectCostcenterOrigin = document.querySelector("#centrocostoorigen");
 const selectCostcenterDest = document.querySelector("#centrocostodestino");
@@ -38,12 +39,13 @@ $(document).ready(function () {
             },
             columns: [
                 { data: "id", name: "id" },
+                { data: "date", name: "date" },
                 { data: "namecategoria", name: "namecategoria" },
                 { data: "namecentrocostoOrigen", name: "namecentrocostoOrigen" },
-                { data: "namecut", name: "namecut" },
+                { data: "namecentrocostoDestino", name: "namecentrocostoDestino" },
+           /*      { data: "namecut", name: "namecut" }, */
                 { data: "nuevo_stock_padre", name: "nuevo_stock_padre" },
-                { data: "inventory", name: "inventory" },
-                { data: "date", name: "date" },
+                { data: "inventory", name: "inventory" },             
                 { data: "action", name: "action" },
             ],
             order: [[0, "DESC"]],
@@ -108,6 +110,7 @@ const showData = (resp) => {
     //alistamiento_id.value = register.id;
     selectCategory.value = register.categoria_id;
     selectCentrocosto.value = register.centrocostoOrigen_id;
+    selectCentrocostoDestino.value = register.centrocostoDestino_id;
     getCortes(register.categoria_id);
 
     const modal = new bootstrap.Modal(

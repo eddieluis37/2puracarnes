@@ -24,7 +24,8 @@ const stockActualCenterCostDest = document.getElementById(
     "stockActualCenterCostDest"
 );
 
-function initializeDataTable() {
+$(document).ready(initializeDataTable);
+ function initializeDataTable() {
     $("#tableFaster").DataTable({
         paging: true,
         pageLength: 5,
@@ -52,8 +53,7 @@ function initializeDataTable() {
             zeroRecords: "No se encontraron resultados",
             emptyTable: "Ningún dato disponible en esta tabla",
             sInfo: "Mostrando del _START_ al _END_ de total _TOTAL_ registros",
-            infoEmpty:
-                "Mostrando registros del 0 al 0 de un total de 0 registros",
+            infoEmpty: "Mostrando registros del 0 al 0 de un total de 0 registros",
             infoFiltered: "(filtrado de un total de _MAX_ registros)",
             search: "Buscar:",
             infoThousands: ",",
@@ -65,17 +65,23 @@ function initializeDataTable() {
                 previous: "Anterior",
             },
         },
+        dom: 'Bfrtip',
+        buttons: [
+            'copy',
+            'csv',
+            'excel',
+            'pdf'
+        ],
     });
-}
- $(document).ready(function () {
-    initializeDataTable();
+
     $(".select2corte").select2({
         placeholder: "Busca un producto",
         width: "100%",
         theme: "bootstrap-5",
         allowClear: true,
     });
-});
+}
+
 
 const showModalcreate = () => {
     if (contentform.hasAttribute("disabled")) {

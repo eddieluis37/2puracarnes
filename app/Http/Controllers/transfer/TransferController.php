@@ -41,21 +41,23 @@ class transferController extends Controller
         return view("transfer.index", compact('category', 'costcenter', 'centros', 'centroCostoProductos'));
     }
 
-    public function store(Request $request) // modal create
+    public function store(Request $request) // modal create primer paso del diligenciado y llenado de la tabla transfer.
     {
         try {
 
             $rules = [
                 'transferId' => 'required',
-                'categoria' => 'required',
+                 'categoria' => 'required',
                 'centrocostoOrigen' => 'required',
-                'selectCortePadre' => 'required',
+                'centrocostoDestino' => 'required',
+                //'selectCortePadre' => 'required',
             ];
             $messages = [
                 'transferId.required' => 'El transferId es requerido',
-                'categoria.required' => 'La categoria es requerida',
+                 'categoria.required' => 'La categoria es requerida',
                 'centrocostoOrigen.required' => 'El centro de costo es requerido',
-                'selectCortePadre.required' => 'El corte es requerido',
+                'centrocostoDestino.required' => 'El centro de costo es requerido',
+              //  'selectCortePadre.required' => 'El corte es requerido',
             ];
 
             $validator = Validator::make($request->all(), $rules, $messages);
@@ -81,7 +83,8 @@ class transferController extends Controller
                 $tranf->users_id = $id_user;
                 $tranf->categoria_id = $request->categoria;
                 $tranf->centrocostoOrigen_id = $request->centrocostoOrigen;
-                $tranf->meatcut_id = $request->selectCortePadre;
+                $tranf->centrocostoDestino_id = $request->centrocostoDestino;
+             //   $tranf->products_id = 2;
                 $tranf->fecha_tranfer = $currentDateFormat;
                 $tranf->fecha_cierre = $dateNextMonday;
                 $tranf->save();
@@ -90,21 +93,7 @@ class transferController extends Controller
                     'message' => 'Guardado correctamente',
                     "registroId" => $tranf->id
                 ]);
-            }
-            //}else{
-            //$getReg = Compensadores::firstWhere('id', $request->compensadoId);
-            //$getReg->categoria_id = $request->categoria;
-            //$getReg->thirds_id = $request->provider;
-            //$getReg->centrocosto_id = $request->centrocosto;
-            //$getReg->factura = $request->factura;
-            //$getReg->save();
-
-            //return response()->json([
-            //'status' => 1,
-            //'message' => 'Guardado correctamente',
-            //"registroId" => 0
-            //]);
-            //}
+            }           
 
 
         } catch (\Throwable $th) {
@@ -116,27 +105,29 @@ class transferController extends Controller
     }
 
 
-    public function create($id) // http://2puracarnes.test:8080/transfer/create/2
+    public function create($id) // http://2puracarnes.test:8080/transfer/create/2  llenado del Translado | Categoria
     {
        // dd($id);
         $dataTransfer = DB::table('transfers as tra')
             ->join('categories as cat', 'tra.categoria_id', '=', 'cat.id')
-            ->join('centro_costo as centro', 'tra.centrocostoOrigen_id', '=', 'centro.id')
-            ->select('tra.*', 'cat.name as namecategoria', 'centro.name as namecentrocostoOrigen')
+            ->join('centro_costo as centroOrigen', 'tra.centrocostoOrigen_id', '=', 'centroOrigen.id')
+            ->join('centro_costo as centroDestino', 'tra.centrocostoDestino_id', '=', 'centroDestino.id')
+            ->select('tra.*', 'cat.name as namecategoria', 'centroOrigen.name as namecentrocostoOrigen', 'centroDestino.name as namecentrocostoDestino')
             ->where('tra.id', $id)
             ->get();
 
-        $cortes = DB::table('products as p')
+      /*   $cortes = DB::table('products as p')
             ->join('centro_costo_products as ce', 'p.id', '=', 'ce.products_id')
             ->select('p.*', 'ce.stock', 'ce.fisico', 'p.id as productopadreId')
             ->where([
-                ['p.level_product_id', 1],
-                ['p.meatcut_id', $dataTransfer[0]->meatcut_id],
+               // ['p.level_product_id', [1,2]],
+             //   ['p.id', $dataTransfer[0]->products_id],
+                ['p.category_id', $dataTransfer[0]->categoria_id],
                 ['p.status', 1],
                 ['ce.centrocosto_id', $dataTransfer[0]->centrocostoOrigen_id],
             ])->get();
 
-
+ */
         /**************************************** */
         $status = '';
         $fechaTransferCierre = Carbon::parse($dataTransfer[0]->fecha_cierre);
@@ -171,7 +162,7 @@ class transferController extends Controller
 
         $arrayTotales = $this->sumTotales($id);
 
-        return view('transfer.create', compact('dataTransfer', 'cortes', 'transfers', 'arrayTotales', 'status', 'statusInventory', 'display'));
+        return view('transfer.create', compact('dataTransfer','transfers', 'arrayTotales', 'status', 'statusInventory', 'display'));
     }
 
     /*    public function store(Request $request)
@@ -380,13 +371,14 @@ class transferController extends Controller
         return $array;
     }
 
-    public function show() // http://2puracarnes.test:8080/transfer
+    public function show() // http://2puracarnes.test:8080/transfer  Datatable Traslado | listado
     {
         $data = DB::table('transfers as tra')
             ->join('categories as cat', 'tra.categoria_id', '=', 'cat.id')
-            ->join('meatcuts as cut', 'tra.meatcut_id', '=', 'cut.id')
-            ->join('centro_costo as centro', 'tra.centrocostoOrigen_id', '=', 'centro.id')
-            ->select('tra.*', 'cat.name as namecategoria', 'centro.name as namecentrocostoOrigen', 'cut.name as namecut')
+         //   ->join('products as cut', 'tra.products_id', '=', 'cut.id')
+            ->join('centro_costo as centroOrigen', 'tra.centrocostoOrigen_id', '=', 'centroOrigen.id')
+            ->join('centro_costo as centroDestino', 'tra.centrocostoDestino_id', '=', 'centroDestino.id')
+            ->select('tra.*', 'cat.name as namecategoria', 'centroOrigen.name as namecentrocostoOrigen', 'centroDestino.name as namecentrocostoDestino')
             ->where('tra.status', 1)
             ->get();
         //$data = Compensadores::orderBy('id','desc');
@@ -462,7 +454,7 @@ class transferController extends Controller
     public function getproducts(Request $request)
     {
         $prod = Product::Where([
-            ['meatcut_id', $request->categoriaId],
+            ['products_id', $request->categoriaId],
             ['status', 1],
             ['level_product_id', 2]
         ])->get();
