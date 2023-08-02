@@ -115,7 +115,7 @@
 							<div class="col-md-4">
 								<label for="" class="form-label">Stock actual origen</label>
 								<div class="input-group flex-nowrap">
-									<input type="text" id="stockCortePadreOrigen" name="stockCortePadreOrigen" value="{{$arrayProductsOrigin[0]->stock_origen}}" class="form-control-sm form-control" placeholder="10,00 kg" readonly>
+									<input type="text" id="stockOrigen" name="stockOrigen" value="{{$arrayProductsOrigin[0]->stock_origen}}" class="form-control-sm form-control" placeholder="10,00 kg" readonly>
 									<span class="input-group-text" id="addon-wrapping">KG</span>
 								</div>
 							</div>
@@ -146,7 +146,7 @@
 							<div class="col-md-4">
 								<label for="" class="form-label">Stock actual destino</label>
 								<div class="input-group flex-nowrap">
-									<input type="text" id="stockCortePadreDestino" name="stockCortePadreDestino" value="{{$arrayProductsDestination[0]->stock_destino}}" class="form-control-sm form-control" placeholder="10,00 kg" readonly>
+									<input type="text" id="stockDestino" name="stockDestino" value="{{$arrayProductsDestination[0]->stock_destino}}" class="form-control-sm form-control" placeholder="10,00 kg" readonly>
 									<span class="input-group-text" id="addon-wrapping">KG</span>
 								</div>
 							</div>
@@ -172,12 +172,12 @@
 									<tr>
 										<!--th class="table-th text-white">Item</th>-->
 										<th class="table-th text-white">#</th>
-										<th class="table-th text-white">Codi</th>
-										<th class="table-th text-white">Producto hijo</th>
+										<th class="table-th text-white">Cod</th>
+										<th class="table-th text-white">Producto</th>
 										<th class="table-th text-white">Stock actual</th>
 										<th class="table-th text-white">Fisico</th>
-										<th class="table-th text-white">kg requeridos</th>
-										<th class="table-th text-white">New stock hijo</th>
+										<th class="table-th text-white">kg a trasladar</th>
+										<th class="table-th text-white">New stock destino</th>
 										<th class="table-th text-white text-center">Acciones</th>
 									</tr>
 								</thead>

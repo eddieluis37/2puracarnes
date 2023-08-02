@@ -49,14 +49,12 @@ class transferController extends Controller
                 'categoria' => 'required',
                 'centrocostoOrigen' => 'required',
                 'centrocostoDestino' => 'required',
-                //'selectCortePadre' => 'required',
             ];
             $messages = [
                 'transferId.required' => 'El transferId es requerido',
                 'categoria.required' => 'La categoria es requerida',
                 'centrocostoOrigen.required' => 'El centro de costo es requerido',
                 'centrocostoDestino.required' => 'El centro de costo es requerido',
-                //  'selectCortePadre.required' => 'El corte es requerido',
             ];
 
             $validator = Validator::make($request->all(), $rules, $messages);

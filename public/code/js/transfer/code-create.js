@@ -67,7 +67,7 @@ $(document).ready(function() {
       },
       success: function(response) {
         // Actualiza los valores en los campos de entrada
-        $('#stockCortePadreOrigen').val(response.stock);
+        $('#stockOrigen').val(response.stock);
         $('#pesokg').val(response.fisico);
         $('#stockCortePadreDestino').val(response.stock_destino);
       },

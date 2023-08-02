@@ -39,7 +39,7 @@
 	</div>
 	<!-- modal -->
 	<div class="modal fade" id="modal-create-transfer" aria-hidden="true" data-keyboard="false" data-backdrop="static" >
-		<div class="modal-dialog modal-md" role="document">
+		<div class="modal-dialog modal-lg" role="document">
 			<div class="modal-content bg-default">
 				<fieldset id="contentDisable">
 					<form action="" id="form-transfer">
