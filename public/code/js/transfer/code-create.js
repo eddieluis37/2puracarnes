@@ -23,6 +23,25 @@ const productoPadre = document.querySelector("#productopadreId");
 const centrocostoOrigen = document.querySelector("#centrocostoOrigen");
 const categoryId = document.querySelector("#categoryId");
 
+// Obtén el valor del campo
+var centrocostoOrigenId = document.getElementById('centrocostoOrigen').value;
+
+console.log(centrocostoOrigenId);
+
+// Envía el valor al controlador mediante una solicitud AJAX
+var xhr = new XMLHttpRequest();
+xhr.open('GET', '/obtener-valores-producto?centrocostoOrigenId=' + centrocostoOrigenId, true);
+xhr.onreadystatechange = function() {
+  if (xhr.readyState === 4 && xhr.status === 200) {
+    // Procesa la respuesta del controlador
+    var response = JSON.parse(xhr.responseText);
+    var stock = response.stock;
+    var fisico = response.fisico;
+    // Realiza las acciones necesarias con los valores obtenidos
+  }
+};
+xhr.send();
+
 $(".select2Prod").select2({
     placeholder: "Busca un producto",
     width: "100%",
@@ -43,12 +62,14 @@ $(document).ready(function() {
       url: '/obtener-valores-producto', // Reemplaza con tu ruta o URL para obtener los valores del producto
       type: 'GET',
       data: {
-        productId: productId
+        productId: productId,
+        centrocostoOrigen: $('#centrocostoOrigen').val() // Obtén el valor del campo centrocostoOrigen
       },
       success: function(response) {
         // Actualiza los valores en los campos de entrada
-        $('#stockCortePadre').val(response.stock);
+        $('#stockCortePadreOrigen').val(response.stock);
         $('#pesokg').val(response.fisico);
+        $('#stockCortePadreDestino').val(response.stock_destino);
       },
       error: function(xhr, status, error) {
         // Maneja el error si la solicitud AJAX falla

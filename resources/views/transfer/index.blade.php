@@ -25,7 +25,7 @@
 								<th class="table-th text-white">Categoria</th>
 								<th class="table-th text-white ">Centro origen</th>
 								<th class="table-th text-white ">Centro destino</th>
-								<th class="table-th text-white ">Nuevo stock</th>
+								<th class="table-th text-white ">New stock origen</th>
 								<th class="table-th text-white ">Inventario</th>							
 								<th class="table-th text-white text-center">Acciones</th>
 							</tr>

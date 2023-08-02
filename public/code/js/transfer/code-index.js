@@ -44,7 +44,7 @@ $(document).ready(function () {
                 { data: "namecentrocostoOrigen", name: "namecentrocostoOrigen" },
                 { data: "namecentrocostoDestino", name: "namecentrocostoDestino" },
            /*      { data: "namecut", name: "namecut" }, */
-                { data: "nuevo_stock_padre", name: "nuevo_stock_padre" },
+                { data: "nuevo_stock_origen", name: "nuevo_stock_origen" },
                 { data: "inventory", name: "inventory" },             
                 { data: "action", name: "action" },
             ],

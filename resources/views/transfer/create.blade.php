@@ -71,9 +71,10 @@
 									<div class="task-header">
 										<div class="form-group">
 											<label for="" class="form-label">Buscar producto</label>
+											<input type="hidden" id="centrocostoOrigen" name="centrocostoOrigen" value="{{$dataTransfer[0]->centrocostoOrigen_id}}" data-id="{{$dataTransfer[0]->centrocostoOrigen_id}}">
 											<select class="form-control form-control-sm select2Prod" name="producto" id="producto" required="">
 												<option value="">Seleccione el producto</option>
-												@foreach ($prod as $p)
+												@foreach ($arrayProductsOrigin as $p)
 												<option value="{{$p->id}}">{{$p->name}}</option>
 												@endforeach
 											</select>
@@ -81,7 +82,7 @@
 									</div>
 								</div>
 								<div class="col-md-3">
-									<label for="" class="form-label">KG requeridos</label>
+									<label for="" class="form-label">KG a trasladar</label>
 									<div class="input-group flex-nowrap">
 										<input type="text" id="kgrequeridos" name="kgrequeridos" class="form-control input" placeholder="EJ: 10,00">
 										<span class="input-group-text" id="addon-wrapping">KG</span>
@@ -107,22 +108,22 @@
 							<div class="col-md-4">
 								<label for="" class="form-label">Conteo fisico origen</label>
 								<div class="input-group flex-nowrap">
-									<input type="text" id="pesokg" name="pesokg" value="{{$prod[0]->fisico}}" class="form-control-sm form-control" placeholder="180.40 kg" readonly>
+									<input type="text" id="pesokg" name="pesokg" value="{{$arrayProductsOrigin[0]->fisico_origen}}" class="form-control-sm form-control" placeholder="180.40 kg" readonly>
 									<span class="input-group-text" id="addon-wrapping">KG</span>
 								</div>
 							</div>
 							<div class="col-md-4">
 								<label for="" class="form-label">Stock actual origen</label>
 								<div class="input-group flex-nowrap">
-									<input type="text" id="stockCortePadre" name="stockCortePadre" value="{{$prod[0]->stock}}" class="form-control-sm form-control" placeholder="10,00 kg" readonly>
+									<input type="text" id="stockCortePadreOrigen" name="stockCortePadreOrigen" value="{{$arrayProductsOrigin[0]->stock_origen}}" class="form-control-sm form-control" placeholder="10,00 kg" readonly>
 									<span class="input-group-text" id="addon-wrapping">KG</span>
 								</div>
 							</div>
 
 							<div class="col-md-4">
-								<label for="" class="form-label">Nuevo stock</label>
+								<label for="" class="form-label">Nuevo stock origen</label>
 								<div class="input-group flex-nowrap">
-									<input type="text" id="newStockPadre" name="newStockPadre" value="{{$dataTransfer[0]->nuevo_stock_padre}}" class="form-control-sm form-control" placeholder="30,00 kg" readonly>
+									<input type="text" id="newStockPadre" name="newStockPadre" value="{{$dataTransfer[0]->nuevo_stock_origen}}" class="form-control-sm form-control" placeholder="30,00 kg" readonly>
 									<span class="input-group-text" id="addon-wrapping">KG</span>
 								</div>
 							</div>
@@ -130,6 +131,38 @@
 					</div>
 				</div>
 			</div>
+
+			<div class="widget-content mt-3">
+				<div class="card">
+					<div class="card-body">
+						<div class="row">
+							<div class="col-md-4">
+								<label for="" class="form-label">Conteo fisico destino</label>
+								<div class="input-group flex-nowrap">
+									<input type="text" id="pesokg" name="pesokg" value="{{$arrayProductsDestination[0]->fisico_destino}}" class="form-control-sm form-control" placeholder="180.40 kg" readonly>
+									<span class="input-group-text" id="addon-wrapping">KG</span>
+								</div>
+							</div>
+							<div class="col-md-4">
+								<label for="" class="form-label">Stock actual destino</label>
+								<div class="input-group flex-nowrap">
+									<input type="text" id="stockCortePadreDestino" name="stockCortePadreDestino" value="{{$arrayProductsDestination[0]->stock_destino}}" class="form-control-sm form-control" placeholder="10,00 kg" readonly>
+									<span class="input-group-text" id="addon-wrapping">KG</span>
+								</div>
+							</div>
+
+							<div class="col-md-4">
+								<label for="" class="form-label">Nuevo stock destino</label>
+								<div class="input-group flex-nowrap">
+									<input type="text" id="newStockPadre" name="newStockPadre" value="{{$dataTransfer[0]->nuevo_stock_origen}}" class="form-control-sm form-control" placeholder="30,00 kg" readonly>
+									<span class="input-group-text" id="addon-wrapping">KG</span>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
 			<div class="widget-content mt-3">
 				<div class="card">
 					<div class="card-body">

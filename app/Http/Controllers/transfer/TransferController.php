@@ -21,7 +21,6 @@ use App\Models\updating\updating_transfer;
 use App\Models\updating\updating_transfer_details;
 
 
-
 class transferController extends Controller
 {
     public function index() // Alimenta el modal_create.blade para posterior store
@@ -102,7 +101,6 @@ class transferController extends Controller
         }
     }
 
-
     public function create($id) // http://2puracarnes.test:8080/transfer/create/2  llenado de la vista Translado | Categoria
     {
         // dd($id);
@@ -114,17 +112,31 @@ class transferController extends Controller
             ->where('tra.id', $id)
             ->get();
 
-        $prod = DB::table('products as p')
+        $arrayProductsOrigin = DB::table('products as p')
             ->join('centro_costo_products as ce', 'p.id', '=', 'ce.products_id')
-            ->select('p.*', 'ce.stock', 'ce.fisico', 'p.id as productopadreId')
+            ->select('p.*', 'ce.stock as stock_origen', 'ce.fisico as fisico_origen', 'p.id as productopadreId')
             ->where([
                 // ['p.level_product_id', [1,2]],
                 //   ['p.id', $dataTransfer[0]->products_id],
                 ['p.category_id', $dataTransfer[0]->categoria_id],
-                ['p.status', 1],
+                [
+                    'p.status', 1
+                ],
                 ['ce.centrocosto_id', $dataTransfer[0]->centrocostoOrigen_id],
             ])->get();
 
+        $arrayProductsDestination = DB::table('products as p')
+            ->join('centro_costo_products as ce', 'p.id', '=', 'ce.products_id')
+            ->select('p.*', 'ce.stock as stock_destino', 'ce.fisico as fisico_destino', 'p.id as productopadreId')
+            ->where([
+                // ['p.level_product_id', [1,2]],
+                //   ['p.id', $dataTransfer[0]->products_id],
+                ['p.category_id', $dataTransfer[0]->categoria_id],
+                [
+                    'p.status', 1
+                ],
+                ['ce.centrocosto_id', $dataTransfer[0]->centrocostoDestino_id],
+            ])->get();
 
         /**************************************** */
         $status = '';
@@ -160,18 +172,31 @@ class transferController extends Controller
 
         $arrayTotales = $this->sumTotales($id);
 
-        return view('transfer.create', compact('dataTransfer', 'transfers', 'prod', 'arrayTotales', 'status', 'statusInventory', 'display'));
+        return view('transfer.create', compact('dataTransfer', 'transfers', 'arrayProductsOrigin', 'arrayProductsDestination', 'arrayTotales', 'status', 'statusInventory', 'display'));
     }
 
     public function obtenerValoresProducto(Request $request)
     {
-        $productId = $request->input('productId');
+        // $productId = $request->input('productId');
         // Obtén los valores de stock y fisico para el producto seleccionado
-        $producto = DB::table('products')->where('id', $productId)->first();
-        return response()->json([
-            'stock' => $producto->stock,
-            'fisico' => $producto->fisico
-        ]);
+        $centrocostoOrigenId = $request->input('centrocostoOrigen');
+        $producto = DB::table('products')
+            ->join('centro_costo_products as ce', 'products.id', '=', 'ce.products_id')
+            ->where('products.id', $request->productId)
+            ->where('ce.centrocosto_id', $centrocostoOrigenId)
+            ->first();
+
+        if ($producto) {
+            return response()->json([
+                'stock' => $producto->stock,
+                'fisico' => $producto->fisico
+            ]);
+        } else {
+            // Handle the case when $producto is null
+            return response()->json([
+                'error' => 'Product not found'
+            ], 404);
+        }
     }
 
     public function getProductsByCostcenterOrigin(Request $request)
@@ -261,7 +286,7 @@ class transferController extends Controller
 
             $newStockPadre = $request->stockPadre - $arrayTotales['kgTotalRequeridos'];
             $tranf = Transfer::firstWhere('id', $request->transferId);
-            $tranf->nuevo_stock_padre = $newStockPadre;
+            $tranf->nuevo_stock_origen = $newStockPadre;
             $tranf->save();
 
             return response()->json([
@@ -424,7 +449,7 @@ class transferController extends Controller
 
             $newStockPadre = $request->stockPadre - $arrayTotales['kgTotalRequeridos'];
             $tranf = Transfer::firstWhere('id', $request->transferId);
-            $tranf->nuevo_stock_padre = $newStockPadre;
+            $tranf->nuevo_stock_origen = $newStockPadre;
             $tranf->save();
 
             return response()->json([
@@ -516,7 +541,7 @@ class transferController extends Controller
 
             $newStockPadre = $request->stockPadre - $arrayTotales['kgTotalRequeridos'];
             $tranf = Transfer::firstWhere('id', $request->transferId);
-            $tranf->nuevo_stock_padre = $newStockPadre;
+            $tranf->nuevo_stock_origen = $newStockPadre;
             $tranf->save();
 
             return response()->json([
