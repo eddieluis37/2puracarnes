@@ -197,6 +197,30 @@ class transferController extends Controller
         }
     }
 
+    public function obtenerValoresProductoDestino(Request $request)
+    {
+        // $productId = $request->input('productId');
+        // Obtén los valores de stock y fisico para el producto seleccionado
+        $centrocostoDestinoId = $request->input('centrocostoDestino');
+        $producto = DB::table('products')
+            ->join('centro_costo_products as ce', 'products.id', '=', 'ce.products_id')
+            ->where('products.id', $request->productId)
+            ->where('ce.centrocosto_id', $centrocostoDestinoId)
+            ->first();
+
+        if ($producto) {
+            return response()->json([
+                'stock' => $producto->stock,
+                'fisico' => $producto->fisico
+            ]);
+        } else {
+            // Handle the case when $producto is null
+            return response()->json([
+                'error' => 'Product not found'
+            ], 404);
+        }
+    }
+
     public function getProductsByCostcenterOrigin(Request $request)
     {
         $productsorigin = Product::join('centro_costo_products', 'products.id', '=', 'centro_costo_products.products_id')

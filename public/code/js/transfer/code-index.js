@@ -25,8 +25,8 @@ const stockActualCenterCostDest = document.getElementById(
     "stockActualCenterCostDest"
 );
 
-$(document).ready(function () {
-    $(function () {
+$(document).ready(initializeDataTable);
+    function initializeDataTable() {
         $("#tableTransfer").DataTable({
             paging: true,
             pageLength: 5,
@@ -68,15 +68,22 @@ $(document).ready(function () {
                     previous: "Anterior",
                 },
             },
+            dom: 'Bfrtip',
+            buttons: [
+                'copy',
+                'csv',
+                'excel',
+                'pdf'
+            ],
         });
-    });
-    $(".select2corte").select2({
-        placeholder: "Busca un producto",
-        width: "100%",
-        theme: "bootstrap-5",
-        allowClear: true,
-    });
-});
+    
+        $(".select2corte").select2({
+            placeholder: "Busca un producto",
+            width: "100%",
+            theme: "bootstrap-5",
+            allowClear: true,
+        });
+    }
 
 const showModalcreate = () => {
     if (contentform.hasAttribute("disabled")) {
@@ -84,7 +91,7 @@ const showModalcreate = () => {
         $(".select2corte").prop("disabled", false);
     }
     $(".select2corte").val("").trigger("change");
-    selectCortePadre.innerHTML = "";
+  //  selectCortePadre.innerHTML = "";
     formTransfer.reset();
     transfer_id.value = 0;
 };
@@ -132,13 +139,13 @@ const send = async (dataform, ruta) => {
     return data;
 };
 
-selectCategory.addEventListener("change", function () {
+/* selectCategory.addEventListener("change", function () {
     const selectedValue = this.value;
     console.log("Selected value:", selectedValue);
     getCortes(selectedValue);
-});
+}); */
 
-getCortes = (categoryId) => {
+/* getCortes = (categoryId) => {
     const dataform = new FormData();
     dataform.append("categoriaId", Number(categoryId));
     send(dataform, "/productospadre").then((result) => {
@@ -157,7 +164,7 @@ getCortes = (categoryId) => {
         });
     });
 }
-
+ */
 function validateCentroCosto() {
     if (centrocostoorigen.value === centrocostodestino.value) {
         alert(

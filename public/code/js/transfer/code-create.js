@@ -27,7 +27,7 @@ const categoryId = document.querySelector("#categoryId");
 var centrocostoOrigenId = document.getElementById('centrocostoOrigen').value;
 
 console.log(centrocostoOrigenId);
-
+/* 
 // Envía el valor al controlador mediante una solicitud AJAX
 var xhr = new XMLHttpRequest();
 xhr.open('GET', '/obtener-valores-producto?centrocostoOrigenId=' + centrocostoOrigenId, true);
@@ -41,7 +41,7 @@ xhr.onreadystatechange = function() {
   }
 };
 xhr.send();
-
+ */
 $(".select2Prod").select2({
     placeholder: "Busca un producto",
     width: "100%",
@@ -54,6 +54,7 @@ $(document).ready(function() {
       var productId = $(this).val();
       // Llama a una función para actualizar los valores en función del producto seleccionado
       actualizarValoresProducto(productId);
+      actualizarValoresProductoDestino(productId);
     });
   });
 
@@ -68,8 +69,27 @@ $(document).ready(function() {
       success: function(response) {
         // Actualiza los valores en los campos de entrada
         $('#stockOrigen').val(response.stock);
-        $('#pesokg').val(response.fisico);
-        $('#stockCortePadreDestino').val(response.stock_destino);
+        $('#pesoKgOrigen').val(response.fisico);
+      },
+      error: function(xhr, status, error) {
+        // Maneja el error si la solicitud AJAX falla
+        console.log(error);
+      }
+    });
+  }
+
+  function actualizarValoresProductoDestino(productId) {
+    $.ajax({
+      url: '/obtener-valores-producto-destino', // Reemplaza con tu ruta o URL para obtener los valores del producto
+      type: 'GET',
+      data: {
+        productId: productId,
+        centrocostoDestino: $('#centrocostoDestino').val() // Obtén el valor del campo centrocostoOrigen
+      },
+      success: function(response) {
+        // Actualiza los valores en los campos de entrada
+        $('#stockDestino').val(response.stock);
+        $('#pesoKgDestino').val(response.fisico);
       },
       error: function(xhr, status, error) {
         // Maneja el error si la solicitud AJAX falla
@@ -81,7 +101,7 @@ $(document).ready(function() {
 btnAddTrans.addEventListener("click", (e) => {
     e.preventDefault();
     const dataform = new FormData(formDetail);
-    dataform.append("stockPadre", stockPadre.value);
+    dataform.append("stockOrigen", stockOrigen.value);
     sendData("/transfersavedetail", dataform, token).then((result) => {
         console.log(result);
         if (result.status === 1) {
@@ -142,7 +162,7 @@ const showData = (data) => {
             </td>
 	    </tr>
     `;
-    let newTotalStockPadre = stockPadre.value - arrayTotales.kgTotalRequeridos;
+    let newTotalStockPadre = stockOrigen.value - arrayTotales.kgTotalRequeridos;
     newStockPadre.value = newTotalStockPadre;
 };
 
@@ -177,7 +197,7 @@ tableTransfer.addEventListener("keydown", function (event) {
             dataform.append("transferId", Number(transferId.value));
             dataform.append("productoId", Number(productoId));
             dataform.append("centrocostoOrigen", Number(centrocostoOrigen.value));
-            dataform.append("stockPadre", stockPadre.value);
+            dataform.append("stockOrigen", stockOrigen.value);
 
             sendData("/transferUpdate", dataform, token).then((result) => {
                 console.log(result);
@@ -210,7 +230,7 @@ tbodyTable.addEventListener("click", (e) => {
                 dataform.append("id", Number(id));
                 dataform.append("transferId", Number(transferId.value));
                 dataform.append("centrocostoOrigen", Number(centrocostoOrigen.value));
-                dataform.append("stockPadre", stockPadre.value);
+                dataform.append("stockOrigen", stockOrigen.value);
                 sendData("/transferdown", dataform, token).then((result) => {
                     console.log(result);
                     showData(result);
@@ -232,7 +252,7 @@ tfootTable.addEventListener("click", (e) => {
         dataform.append("transferId", Number(transferId.value));
         dataform.append("newStockPadre", Number(newStockPadre.value));
         dataform.append("pesokg", Number(pesokg.value));
-        dataform.append("stockPadre", Number(stockPadre.value));
+        dataform.append("stockOrigen", Number(stockOrigen.value));
         dataform.append("productoPadre", Number(productoPadre.value));
         dataform.append("centrocostoOrigen", Number(centrocostoOrigen.value));
         dataform.append("categoryId", Number(categoryId.value));

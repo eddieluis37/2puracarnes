@@ -66,7 +66,7 @@
 					<div class="card-body">
 						<form id="form-detail">
 							<input type="hidden" id="transferId" name="transferId" value="{{$dataTransfer[0]->id}}">
-							<div class="row g-3">
+							<div class="row g-3 justify-content-center"> <!-- Añadido justify-content-center para centrar los campos horizontalmente -->
 								<div class="col-md-4">
 									<div class="task-header">
 										<div class="form-group">
@@ -108,7 +108,7 @@
 							<div class="col-md-4">
 								<label for="" class="form-label">Conteo fisico origen</label>
 								<div class="input-group flex-nowrap">
-									<input type="text" id="pesokg" name="pesokg" value="{{$arrayProductsOrigin[0]->fisico_origen}}" class="form-control-sm form-control" placeholder="180.40 kg" readonly>
+									<input type="text" id="pesoKgOrigen" name="pesoKgOrigen" value="{{$arrayProductsOrigin[0]->fisico_origen}}" class="form-control-sm form-control" placeholder="180.40 kg" readonly>
 									<span class="input-group-text" id="addon-wrapping">KG</span>
 								</div>
 							</div>
@@ -139,7 +139,7 @@
 							<div class="col-md-4">
 								<label for="" class="form-label">Conteo fisico destino</label>
 								<div class="input-group flex-nowrap">
-									<input type="text" id="pesokg" name="pesokg" value="{{$arrayProductsDestination[0]->fisico_destino}}" class="form-control-sm form-control" placeholder="180.40 kg" readonly>
+									<input type="text" id="pesoKgDestino" name="pesoKgDestino" value="{{$arrayProductsDestination[0]->fisico_destino}}" class="form-control-sm form-control" placeholder="180.40 kg" readonly>
 									<span class="input-group-text" id="addon-wrapping">KG</span>
 								</div>
 							</div>
@@ -162,6 +162,8 @@
 					</div>
 				</div>
 			</div>
+
+			
 
 			<div class="widget-content mt-3">
 				<div class="card">
