@@ -42,9 +42,7 @@ $(document).ready(initializeDataTable);
                 { data: "date", name: "date" },
                 { data: "namecategoria", name: "namecategoria" },
                 { data: "namecentrocostoOrigen", name: "namecentrocostoOrigen" },
-                { data: "namecentrocostoDestino", name: "namecentrocostoDestino" },
-           /*      { data: "namecut", name: "namecut" }, */
-                { data: "nuevo_stock_origen", name: "nuevo_stock_origen" },
+                { data: "namecentrocostoDestino", name: "namecentrocostoDestino" },        
                 { data: "inventory", name: "inventory" },             
                 { data: "action", name: "action" },
             ],

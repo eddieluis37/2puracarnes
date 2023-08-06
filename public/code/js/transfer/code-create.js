@@ -10,7 +10,7 @@ const tfootTable = document.querySelector("#tableTransfer tfoot");
 const stockPadre = document.querySelector("#stockCortePadre");
 const pesokg = document.querySelector("#pesokg");
 
-const newStockPadre = document.querySelector("#newStockPadre");
+const newStockOrigen = document.querySelector("#newStockOrigen");
 const meatcutId = document.querySelector("#meatcutId");
 const tableFoot = document.querySelector("#tabletfoot");
 const selectProducto = document.getElementById("producto");
@@ -21,27 +21,16 @@ const kgrequeridos = document.querySelector("#kgrequeridos");
 const addShopping = document.querySelector("#addShopping");
 const productoPadre = document.querySelector("#productopadreId");
 const centrocostoOrigen = document.querySelector("#centrocostoOrigen");
+const centrocostoDestino = document.querySelector("#centrocostoDestino");
 const categoryId = document.querySelector("#categoryId");
 
 // Obtén el valor del campo
 var centrocostoOrigenId = document.getElementById('centrocostoOrigen').value;
+var centrocostoDestinoId = document.getElementById('centrocostoDestino').value;
 
 console.log(centrocostoOrigenId);
-/* 
-// Envía el valor al controlador mediante una solicitud AJAX
-var xhr = new XMLHttpRequest();
-xhr.open('GET', '/obtener-valores-producto?centrocostoOrigenId=' + centrocostoOrigenId, true);
-xhr.onreadystatechange = function() {
-  if (xhr.readyState === 4 && xhr.status === 200) {
-    // Procesa la respuesta del controlador
-    var response = JSON.parse(xhr.responseText);
-    var stock = response.stock;
-    var fisico = response.fisico;
-    // Realiza las acciones necesarias con los valores obtenidos
-  }
-};
-xhr.send();
- */
+console.log(centrocostoDestinoId);
+ 
 $(".select2Prod").select2({
     placeholder: "Busca un producto",
     width: "100%",
@@ -67,7 +56,7 @@ $(document).ready(function() {
         centrocostoOrigen: $('#centrocostoOrigen').val() // Obtén el valor del campo centrocostoOrigen
       },
       success: function(response) {
-        // Actualiza los valores en los campos de entrada
+        // Actualiza los valores en los campos de entrada del centro de costo origen
         $('#stockOrigen').val(response.stock);
         $('#pesoKgOrigen').val(response.fisico);
       },
@@ -84,10 +73,10 @@ $(document).ready(function() {
       type: 'GET',
       data: {
         productId: productId,
-        centrocostoDestino: $('#centrocostoDestino').val() // Obtén el valor del campo centrocostoOrigen
+        centrocostoDestino: $('#centrocostoDestino').val() // Obtén el valor del campo centrocostoDestino
       },
       success: function(response) {
-        // Actualiza los valores en los campos de entrada
+        // Actualiza los valores en los campos de entrada del centro de consto destino
         $('#stockDestino').val(response.stock);
         $('#pesoKgDestino').val(response.fisico);
       },
@@ -98,10 +87,13 @@ $(document).ready(function() {
     });
   }
 
+/* Insertar registros al tableTransfer del detalle. Se activa al darle enter en KG a trasladar o boton btnAddTransfer */
 btnAddTrans.addEventListener("click", (e) => {
     e.preventDefault();
     const dataform = new FormData(formDetail);
     dataform.append("stockOrigen", stockOrigen.value);
+    dataform.append("centrocostoDestino", centrocostoDestino.value);
+    dataform.append("stockDestino", stockDestino.value);
     sendData("/transfersavedetail", dataform, token).then((result) => {
         console.log(result);
         if (result.status === 1) {
@@ -115,6 +107,9 @@ btnAddTrans.addEventListener("click", (e) => {
     });
 });
 
+
+{/* <tbody id="tbodyDetail"></tbody> insertado con transfersavedetail a la vista create http://2puracarnes.test:8080/transfer/create/4 */}
+
 const showData = (data) => {
     let dataAll = data.array;
     console.log(dataAll);
@@ -126,15 +121,17 @@ const showData = (data) => {
       	    <td>${element.code}</td>
       	    <td>${element.nameprod}</td>
       	    <td>${formatCantidad(element.stock)} KG</td>
-      	    <td>${formatCantidad(element.fisico)} KG</td>
-      	    <td>
-            <input type="text" class="form-control-sm" data-id="${
-                element.products_id
-            }" id="${element.id}" value="${
-            element.kgrequeridos
-        }" placeholder="Ingresar" size="10">
-            </td>
-      	    <td>${formatCantidad(element.newstock)} KG</td>
+              <td>
+              <input type="text" class="form-control-sm" data-id="${
+                  element.products_id
+              }" id="${element.id}" value="${
+              element.kgrequeridos
+          }" placeholder="Ingresar" size="10">
+              </td>
+      	    <td>${formatCantidad(element.nuevo_stock_origen)} KG</td>
+      	    
+      	    <td>${formatCantidad(element.actual_stock_destino)} KG</td>
+            <td>${formatCantidad(element.nuevo_stock_destino)} KG</td>
 			<td class="text-center">
 				<button class="btn btn-dark fas fa-trash" name="btnDownReg" data-id="${
                     element.id
@@ -153,17 +150,16 @@ const showData = (data) => {
 		    <td></td>
 		    <td></td>
 		    <th>Totales</th>
-		    <td></td>
-		    <td></td>
+		    <td></td>		   
 		    <th>${formatCantidad(arrayTotales.kgTotalRequeridos)} KG</td>
 		    <th>${formatCantidad(arrayTotales.newTotalStock)} KG</th>
 		    <td class="text-center">
-                <button class="btn btn-success btn-sm" id="addShopping">Cargar al inventario</button>
+                <button class="btn btn-success btn-sm" id="addShopping">Cargar al inventario desde JS</button>
             </td>
 	    </tr>
     `;
     let newTotalStockPadre = stockOrigen.value - arrayTotales.kgTotalRequeridos;
-    newStockPadre.value = newTotalStockPadre;
+    newStockOrigen.value = newTotalStockPadre;
 };
 
 kgrequeridos.addEventListener("change", function () {
@@ -187,9 +183,10 @@ tableTransfer.addEventListener("keydown", function (event) {
             }
 
             let productoId = target.getAttribute("data-id");
-            console.log("prod test id: " + transferId.value);
+            console.log("prodDestino test id: " + transferId.value);
             console.log(productoId);
             console.log(centrocostoOrigen.value);
+            console.log(centrocostoDestino.value);
             const trimValue = inputValue.trim();
             const dataform = new FormData();
             dataform.append("id", Number(event.target.id));
@@ -197,6 +194,7 @@ tableTransfer.addEventListener("keydown", function (event) {
             dataform.append("transferId", Number(transferId.value));
             dataform.append("productoId", Number(productoId));
             dataform.append("centrocostoOrigen", Number(centrocostoOrigen.value));
+            dataform.append("centrocostoDestino", Number(centrocostoDestino.value));
             dataform.append("stockOrigen", stockOrigen.value);
 
             sendData("/transferUpdate", dataform, token).then((result) => {
@@ -230,6 +228,7 @@ tbodyTable.addEventListener("click", (e) => {
                 dataform.append("id", Number(id));
                 dataform.append("transferId", Number(transferId.value));
                 dataform.append("centrocostoOrigen", Number(centrocostoOrigen.value));
+                dataform.append("centrocostoDestino", Number(centrocostoDestino.value));
                 dataform.append("stockOrigen", stockOrigen.value);
                 sendData("/transferdown", dataform, token).then((result) => {
                     console.log(result);
@@ -240,6 +239,7 @@ tbodyTable.addEventListener("click", (e) => {
     }
 });
 
+/* Accciona el boton Cargar Inventario */
 tfootTable.addEventListener("click", (e) => {
     e.preventDefault();
     let element = e.target;
@@ -250,11 +250,12 @@ tfootTable.addEventListener("click", (e) => {
         loadingStart(element);
         const dataform = new FormData();
         dataform.append("transferId", Number(transferId.value));
-        dataform.append("newStockPadre", Number(newStockPadre.value));
+        dataform.append("newStockOrigen", Number(newStockOrigen.value));
         dataform.append("pesokg", Number(pesokg.value));
         dataform.append("stockOrigen", Number(stockOrigen.value));
         dataform.append("productoPadre", Number(productoPadre.value));
         dataform.append("centrocostoOrigen", Number(centrocostoOrigen.value));
+        dataform.append("centrocostoDestino", Number(centrocostoDestino.value));
         dataform.append("categoryId", Number(categoryId.value));
         sendData("/transferAddShoping", dataform, token).then((result) => {
             console.log(result);

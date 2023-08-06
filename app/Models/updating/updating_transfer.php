@@ -13,7 +13,7 @@ class updating_transfer extends Model
         'users_id',
         'transfers_id',
         'category_id',
-        'productopadre_id',
+        'producto_id',
         'centrocostoOrigen_id',
-        'stock_actual','ultimo_conteo_fisico','nuevo_stock','fecha_shopping'];
+        'stock_actual','ultimo_conteo_fisico','nuevo_stock','fecha_updating'];
 }

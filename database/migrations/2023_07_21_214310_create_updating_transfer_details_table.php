@@ -23,10 +23,17 @@ class CreateUpdatingTransferDetailsTable extends Migration
             $table->foreign('products_id')->references('id')->on('products');
 
             $table->decimal('stock_actual', 18, 2)->nullable(); // valor de cantidades de unidades sea KG
-            $table->decimal('conteo_fisico', 18, 2)->nullable(); // valor de cantidades en inventario tangible real           
+         
+            $table->decimal('conteo_tangible', 18, 2)->nullable(); // valor de cantidades en inventario tangible real           
+         
             $table->decimal('kgrequeridos', 18, 2)->nullable();
-            $table->decimal('newstock', 18, 2)->nullable();
+
+            $table->decimal('nuevo_stock_origen', 18, 2)->nullable();
+
+            $table->decimal('nuevo_stock_destino', 18, 2)->nullable();
+
             $table->boolean('status')->parent_select()->default(true);
+            
             $table->timestamps();
         });
     }

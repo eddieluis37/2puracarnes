@@ -19,10 +19,17 @@ class CreateTransferDetailsTable extends Migration
             $table->foreign('transfers_id')->references('id')->on('transfers');
 
             $table->unsignedBigInteger('products_id')->nullable();
-            $table->foreign('products_id')->references('id')->on('products');
+            $table->foreign('products_id')->references('id')->on('products');         
 
+            $table->decimal('actual_stock_origen', 18, 2)->nullable();
+            
             $table->decimal('kgrequeridos', 18, 2)->nullable();
-            $table->decimal('newstock', 18, 2)->nullable();
+
+            $table->decimal('nuevo_stock_origen', 18, 2)->nullable();
+
+            $table->decimal('actual_stock_destino', 18, 2)->nullable();
+
+            $table->decimal('nuevo_stock_destino', 18, 2)->nullable();
 
             $table->boolean('status')->parent_select()->default(true)->nullable();  
 

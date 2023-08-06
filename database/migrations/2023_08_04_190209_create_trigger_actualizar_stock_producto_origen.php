@@ -5,7 +5,7 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\DB;
 
-class CreateTriggerTransferUpdateProductoPadre extends Migration
+class CreateTriggerActualizarStockProductoOrigen extends Migration
 {
     /**
      * Run the migrations.
@@ -14,14 +14,16 @@ class CreateTriggerTransferUpdateProductoPadre extends Migration
      */
     public function up()
     {
-        DB::unprepared('
-            CREATE TRIGGER trigger_transfer_update_producto_padre AFTER INSERT ON updating_transfer FOR EACH ROW
+        
+       DB::unprepared('
+            CREATE TRIGGER trigger_actualizar_stock_producto_origen AFTER INSERT ON updating_transfer FOR EACH ROW
             BEGIN                          
                 UPDATE centro_costo_products
-                SET stock = NEW.nuevo_stock
-                WHERE products_id = NEW.productopadre_id AND centrocosto_id = NEW.centrocostoOrigen_id;
+                SET stock = NEW.nuevo_stock 
+                WHERE products_id = NEW.producto_id AND centrocosto_id = NEW.centrocostoOrigen_id;
             END
         ');
+        
     }
 
     /**
@@ -31,6 +33,7 @@ class CreateTriggerTransferUpdateProductoPadre extends Migration
      */
     public function down()
     {
-        DB::unprepared('DROP TRIGGER IF EXISTS trigger_transfer_update_producto_padre');
+        DB::unprepared('DROP TRIGGER IF EXISTS trigger_actualizar_stock_producto_destino');
     }
+    
 }
