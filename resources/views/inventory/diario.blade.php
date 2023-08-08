@@ -22,20 +22,36 @@
       </div>
       <div class="row g-3 mt-3">
         <div class="col-md-4">
-          <label for="" class="form-label">Seccion</label>
-					<select class="form-control form-control-sm " name="" id="" required="">
-						<option value="">Seleccione la seccion</option>
-					</select>
+        <div class="task-header">
+          <div class="form-group">
+            <label for="categoria" class="form-label">Categoria</label>
+            <select class="form-control form-control-sm input" name="categoria" id="categoria" required>
+              <option value="">Seleccione la categoria</option>
+              @foreach($category as $option)
+              <option value="{{ $option['id'] }}" data="{{ $option }}">{{ $option['name'] }}</option>
+              @endforeach
+            </select>
+            <span class="text-danger error-message"></span>
+          </div>
+        </div>
         </div>
         <div class="col-md-4">
           <label for="date1" class="form-label">Fecha</label>
           <input type="date" class="form-control" placeholder="Last name" aria-label="Last name" value="{{date('Y-m-d')}}">
         </div>
         <div class="col-md-4">
-          <label for="" class="form-label">Centro de costo</label>
-					<select class="form-control form-control-sm " name="" id="" required="">
-						<option value="">Seleccione el centro de costo</option>
-					</select>
+        <div class="task-header">
+          <div class="form-group">
+            <label for="centrocostoOrigen" class="form-label">Centro de costo</label>
+            <select class="form-control form-control-sm input" name="centrocosto" id="centrocosto" required>
+              <option value="">Seleccione el centro de costo</option>
+              @foreach($centros as $option)
+              <option value="{{ $option['id'] }}" data="{{ $option }}">{{ $option['name'] }}</option>
+              @endforeach
+            </select>
+            <span class="text-danger error-message"></span>
+          </div>
+        </div>
         </div>
         <div class="col-md-4">
           <label for="date1" class="form-label">Responsable</label>
@@ -44,82 +60,50 @@
 					</select>
         </div>
         <div class="col-md-4">
-          <div style="margin-top:28px;" clas="">
-            <button class="btn btn-primary btn-lg" type="button">Aceptar</button>
+          <div style="margin-top:28px;" clas="">          
+            <button type="submit" id="btnAddTransfer" class="btn btn-primary btn-lg">Aceptar</button>
           </div>
         </div>
       </div>
       <div class="table-responsive mt-3">
-        <table class="table table-sm table-inventario">
+        <table id="tableInventory" class="table table-striped mt-1">
           <thead class="text-white" style="background: #3B3F5C">
             <tr>
+              <th class="table-th text-white">ID</th>
+              <th class="table-th text-white">COD</th>
               <th class="table-th text-white">PRODUCTO</th>
-              <th class="table-th text-white">UNID DE MEDIDA</th>
-              <th class="table-th text-white">COMPRAS LOTES</th>
-              <th class="table-th text-white">COMPENSADO</th>
-              <th class="table-th text-white">VENTAS</th>
+              <th class="table-th text-white">INV INICIAL</th>
+              <th class="table-th text-white">COSTO UNIT INV INI</th>
+              <th class="table-th text-white">TOTAL INV INI</th>
+              <th class="table-th text-white">COMPRA LOTE</th>
+              <th class="table-th text-white">COSTO UNI LOTE</th>
+              <th class="table-th text-white">TOTAL LOTE</th>
+              <th class="table-th text-white">COMPENSADOS</th>
+              <th class="table-th text-white">TOTAL COMP</th>
+              <th class="table-th text-white">TRASLADO INGRESO</th>
+              <th class="table-th text-white">COSTO UNI TRAS ING</th>
+              <th class="table-th text-white">TOTAL ING</th>
+              <th class="table-th text-white">VENTA</th>
+              <th class="table-th text-white">TOTAL VENTA</th>
+              <th class="table-th text-white">PRECIO VENTA PROD</th>
+              <th class="table-th text-white">PRECIO VENTA MIN</th>
+              <th class="table-th text-white">DIF</th>
+              <th class="table-th text-white">TRAS SALIDA</th>
+              <th class="table-th text-white">COSTO UNI TRAS SALIDA</th>
+              <th class="table-th text-white">TOTAL TRAS SALIDA</th>
               <th class="table-th text-white">STOCK IDEAL</th>
-              <th class="table-th text-white">TRASLADO DE INGRESO</th>
-              <th class="table-th text-white">TRASLADO DE SALIDA</th>
+              <th class="table-th text-white">INVENTARIO FINAL</th>
+              <th class="table-th text-white">COSTO UNIT INV INI</th>
+              <th class="table-th text-white">TOTAL INV INV</th>
+              <th class="table-th text-white">DISPONIBLE</th>
+              <th class="table-th text-white">MERMA</th>
+              <th class="table-th text-white">% MERMA</th>
+              <th class="table-th text-white">UTILIDAD</th>
+
               <th class="table-th text-white">% MERMA</th>
             </tr>
           </thead>
-          <tbody>
-            <tr>
-              <td>Bola de pierna</td>
-              <td>Kilos</td>
-              <td>0.00</td>
-              <td>460.00</td>
-              <td>0.00</td>
-              <td>0.00</td>
-              <td>0.00</td>
-              <td>323.89</td>
-              <td>26.95</td>
-            </tr>
-            <tr>
-              <td>Brazo completo</td>
-              <td>Kilos</td>
-              <td>0.00</td>
-              <td>460.00</td>
-              <td>0.00</td>
-              <td>0.00</td>
-              <td>323.89</td>
-              <td>26.95</td>
-              <td>26.95</td>
-            </tr>
-            <tr>
-              <td>Cadera completa</td>
-              <td>Kilos</td>
-              <td>0.00</td>
-              <td>460.00</td>
-              <td>0.00</td>
-              <td>0.00</td>
-              <td>0.00</td>
-              <td>323.89</td>
-              <td>26.95</td>
-            </tr>
-            <tr>
-              <td>Pachas</td>
-              <td>Kilos</td>
-              <td>0.00</td>
-              <td>460.00</td>
-              <td>0.00</td>
-              <td>0.00</td>
-              <td>323.89</td>
-              <td>26.95</td>
-              <td>26.95</td>
-            </tr>
-            <tr>
-              <td>Hueso poroso</td>
-              <td>Kilos</td>
-              <td>0.00</td>
-              <td>460.00</td>
-              <td>0.00</td>
-              <td>0.00</td>
-              <td>0.00</td>
-              <td>323.89</td>
-              <td>26.95</td>
-            </tr>
+          <tbody>       
           </tbody>
           <tfoot>
             <tr>
@@ -139,4 +123,7 @@
     </div>
   </div>
 </div>
+@endsection
+@section('script')
+<script src="{{asset('code/js/inventory/code-index.js')}}"></script>
 @endsection
