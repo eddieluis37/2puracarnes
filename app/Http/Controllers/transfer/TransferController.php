@@ -40,13 +40,14 @@ class transferController extends Controller
             $rules = [
                 'transferId' => 'required',
                 'categoria' => 'required',
-                'centrocostoOrigen' => 'required',
+                'centrocostoOrigen' => 'required|different:centrocostoDestino',
                 'centrocostoDestino' => 'required',
             ];
             $messages = [
                 'transferId.required' => 'El transferId es requerido',
                 'categoria.required' => 'La categoria es requerida',
                 'centrocostoOrigen.required' => 'El centro de costo es requerido',
+                'centrocostoOrigen.different' => 'El centro de costo de origen debe ser diferente al centro de costo destino',
                 'centrocostoDestino.required' => 'El centro de costo es requerido',
             ];
 
@@ -408,7 +409,7 @@ class transferController extends Controller
     public function updatedetail(Request $request)
     {
         try {
-          
+
             $prodOrigen = DB::table('products as p')
                 ->join('centro_costo_products as ce', 'p.id', '=', 'ce.products_id')
                 ->select('ce.stock', 'ce.fisico')
@@ -439,7 +440,7 @@ class transferController extends Controller
             $updatedetails->nuevo_stock_origen = $newStockOrigen;
             $updatedetails->actual_stock_destino = $request->stockDestino;
             $updatedetails->nuevo_stock_destino = $request->$newStockDestino;
-            
+
             $updatedetails->save();
 
             $arraydetail = $this->gettransferdetail($request->transferId, $request->centrocostoOrigen);
