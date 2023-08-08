@@ -143,17 +143,17 @@
 				<div class="card">
 					<div class="card-body">
 						<div class="table-responsive mt-3">
-							<table id="tableTransfer" class="table table-sm table-striped table-bordered"> <!-- http://2puracarnes.test:8080/transfer/create/1  code-create.js showData -->
+							<table id="tableTransfer" class="table table-sm table-striped mt-1 table-bordered"> <!-- http://2puracarnes.test:8080/transfer/create/1  code-create.js showData -->
 								<thead class="text-white" style="background: #3B3F5C">
 									<tr>
 										<!--th class="table-th text-white">Item</th>-->
 										<th class="table-th text-white">#</th>
 										<th class="table-th text-white">Cod</th>
 										<th class="table-th text-white">Producto</th>
-										<th class="table-th text-white">Act stk origen</th>
+										<th class="table-th text-white">Stk act origen</th>
 										<th class="table-th text-white">kg a trasladar</th>
 										<th class="table-th text-white">New stk origen</th>
-										<th class="table-th text-white">Act stk destino</th>
+										<th class="table-th text-white">Stk act destino</th>
 										<th class="table-th text-white">New stk destino</th>
 										<th class="table-th text-white text-center">Acciones</th>
 									</tr>

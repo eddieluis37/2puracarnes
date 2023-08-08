@@ -156,7 +156,7 @@ const showData = (data) => {
             <td></td>
 		    <td></td>
 		    <td class="text-center">
-                <button class="btn btn-success btn-sm" id="addShopping">Cargar al inventario desde JS</button>
+                <button class="btn btn-success btn-sm" id="addShopping">Afectar inventario</button>
             </td>
 	    </tr>
     `;
