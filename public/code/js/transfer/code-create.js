@@ -153,13 +153,15 @@ const showData = (data) => {
 		    <td></td>		   
 		    <th>${formatCantidad(arrayTotales.kgTotalRequeridos)} KG</td>
 		    <th>${formatCantidad(arrayTotales.newTotalStock)} KG</th>
+            <td></td>
+		    <td></td>
 		    <td class="text-center">
                 <button class="btn btn-success btn-sm" id="addShopping">Cargar al inventario desde JS</button>
             </td>
 	    </tr>
     `;
-    let newTotalStockPadre = stockOrigen.value - arrayTotales.kgTotalRequeridos;
-    newStockOrigen.value = newTotalStockPadre;
+   /*  let newTotalStockPadre = stockOrigen.value - arrayTotales.kgTotalRequeridos;
+    newStockOrigen.value = newTotalStockPadre; */
 };
 
 kgrequeridos.addEventListener("change", function () {

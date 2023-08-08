@@ -198,9 +198,11 @@
 										<th></th>
 										<th> {{number_format($arrayTotales['kgTotalRequeridos'], 2, ',', '.')}} KG</th>
 										<th> {{number_format($arrayTotales['newTotalStock'], 2, ',', '.')}} KG</th>
+										<th></th>
+										<th></th>
 										<th class="text-center">
 											@if($dataTransfer[0]->inventario == 'pending')
-											<button class="btn btn-success btn-sm" id="addShopping">Cargar inventario</button>
+											<button class="btn btn-success btn-sm" id="addShopping">Afectar inventario</button>
 											@endif
 										</th>
 									</tr>

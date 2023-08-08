@@ -273,7 +273,6 @@ class transferController extends Controller
             $details->nuevo_stock_destino = $newStockDestino;
             $details->save();
 
-
             $arraydetail = $this->gettransferdetail($request->transferId, $request->centrocostoOrigen);
             $arrayTotales = $this->sumTotales($request->transferId);
 
@@ -409,23 +408,38 @@ class transferController extends Controller
     public function updatedetail(Request $request)
     {
         try {
-
-            $prod = DB::table('products as p')
+          
+            $prodOrigen = DB::table('products as p')
                 ->join('centro_costo_products as ce', 'p.id', '=', 'ce.products_id')
                 ->select('ce.stock', 'ce.fisico')
                 ->where([
-                    ['p.id', $request->productoId],
-                    ['ce.centrocostoOrigen_id', $request->centrocostoOrigen],
+                    ['p.id', $request->producto],
+                    ['ce.centrocosto_id', $request->centrocostoOrigen],
                     ['p.status', 1],
-
                 ])->get();
+
+            $prodDestino = DB::table('products as p')
+                ->join('centro_costo_products as ce', 'p.id', '=', 'ce.products_id')
+                ->select('ce.stock', 'ce.fisico')
+                ->where([
+                    ['p.id', $request->producto],
+                    ['ce.centrocosto_id', $request->centrocostoDestino],
+                    ['p.status', 1],
+                ])->get();
+
+
             //$prod = Product::firstWhere('id', $request->productoId);
             //$newStockOrigen = $prod->stock + $request->newkgrequeridos;
-            $newStockOrigen = $prod[0]->stock + $request->newkgrequeridos;
+            $newStockOrigen = $prodOrigen[0]->stock + $request->newkgrequeridos;
+            $newStockDestino = $prodDestino[0]->stock + $request->newkgrequeridos;
 
             $updatedetails = transfer_details::firstWhere('id', $request->id);
+            $updatedetails->actual_stock_origen = $request->StockOrigen;
             $updatedetails->kgrequeridos = $request->newkgrequeridos;
             $updatedetails->nuevo_stock_origen = $newStockOrigen;
+            $updatedetails->actual_stock_destino = $request->stockDestino;
+            $updatedetails->nuevo_stock_destino = $request->$newStockDestino;
+            
             $updatedetails->save();
 
             $arraydetail = $this->gettransferdetail($request->transferId, $request->centrocostoOrigen);
