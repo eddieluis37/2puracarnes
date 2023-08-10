@@ -44,6 +44,7 @@ use App\Http\Controllers\aves\desposteavesrogercodeController;
 use App\Http\Controllers\CostCenterController;
 use App\Http\Controllers\faster\fasterController;
 use App\Http\Controllers\transfer\TransferController;
+use App\Http\Controllers\workshop\workshopController;
 
 /************************************************* */
 
@@ -253,6 +254,20 @@ Route::post('getproductospadre', [alistamientorogercodeController::class,'getPro
 Route::post('/downmmainalistamiento', [alistamientorogercodeController::class, 'destroyAlistamiento'])->name('alistamiento.downAlistamiento');
 Route::post('/downmmainalistamiento', [alistamientorogercodeController::class, 'destroyAlistamiento'])->name('alistamiento.downAlistamiento');
 Route::post('alistamientoAddShoping', [alistamientorogercodeController::class,'add_shopping'])->name('alistamiento.addShopping');
+
+/** TALLER ***/
+Route::get('workshop', [workshopController::class,'index'])->name('workshop.index');
+Route::post('workshopsave', [workshopController::class,'store'])->name('workshop.save');
+Route::get('showworkshop', [workshopController::class,'show'])->name('workshop.showlist');
+Route::get('workshop/create/{id}', [workshopController::class,'create'])->name('workshop.create');
+Route::post('getproductos', [workshopController::class,'getproducts'])->name('workshop.getproductos');
+Route::post('workshopsavedetail', [workshopController::class,'savedetail'])->name('workshop.savedetail');
+Route::post('/workshopUpdate', [workshopController::class, 'updatedetail'])->name('workshop.update');
+Route::post('workshopdown', [workshopController::class,'destroy'])->name('workshop.down');
+Route::post('workshopById', [workshopController::class,'editWorkshop'])->name('workshop.edit');
+Route::post('getproductospadre', [workshopController::class,'getProductsCategoryPadre'])->name('workshop.getproductospadre');
+Route::post('/downmmainworkshop', [workshopController::class, 'destroyWorkshop'])->name('workshop.downAlistamiento');
+Route::post('workshopAddShoping', [workshopController::class,'add_shopping'])->name('workshop.addShopping');
 
 /***** TRANSFER ******** */
 Route::get('transfer', [transferController::class, 'index'])->name('transfer.index');
