@@ -24,8 +24,7 @@
 								<th class="table-th text-white">Categoria</th>
 								<th class="table-th text-white ">Centro de costo</th>
 								<th class="table-th text-white ">Corte de padre</th>
-								<th class="table-th text-white ">Nuevo stock</th>
-								<th class="table-th text-white ">Inventario</th>
+								<th class="table-th text-white ">Peso padre</th>								
 								<th class="table-th text-white">Fecha</th>
 								<th class="table-th text-white text-center">Acciones</th>
 							</tr>
@@ -39,7 +38,7 @@
 	</div>
 	<!-- modal -->
 	<div class="modal fade" id="modal-create-workshop" aria-hidden="true" data-keyboard="false" data-backdrop="static" >
-		<div class="modal-dialog modal-xl" role="document">
+		<div class="modal-dialog modal-lg" role="document">
 			<div class="modal-content bg-default">
 				<fieldset id="contentDisable">
 					<form action="" id="form-workshop">

@@ -25,7 +25,8 @@ class CreateWorkshopDetailsTable extends Migration
             $table->unsignedBigInteger('products_id')->nullable();
             $table->foreign('products_id')->references('id')->on('products');
 
-            $table->decimal('kgrequeridos', 18, 2)->nullable();
+            $table->decimal('peso_producto_hijo', 18, 2)->default(0)->nullable();
+
             $table->decimal('newstock', 18, 2)->nullable(); 
 
             $table->decimal('peso', 18, 2)->nullable();
@@ -35,7 +36,7 @@ class CreateWorkshopDetailsTable extends Migration
             $table->decimal('precio', 18, 2)->nullable();
             $table->decimal('totalventa', 18,2)->nullable();
             $table->decimal('total', 18, 2)->nullable();
-            $table->decimal('porcventa', 18, 2)->nullable();
+            $table->decimal('porcventa', 18, 2)->default(0)->nullable();;
             $table->string('porcutilidad', 18, 2)->nullable();
             $table->decimal('peso_acomulado', 18, 2)->nullable();
             $table->enum('status',['VALID','CANCELED'])->default('VALID');          

@@ -266,71 +266,98 @@ class workshopController extends Controller
 
     public function savedetail(Request $request)
     {
+
+
+        $rules = [
+            'peso_producto_hijo' => 'required',
+            'producto' => 'required',
+        ];
+        $messages = [
+            'peso_producto_hijo.required' => 'Los kg requeridos son necesarios',
+            'producto.required' => 'El producto es requerido',
+        ];
+
+        $validator = Validator::make($request->all(), $rules, $messages);
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => 0,
+                'errors' => $validator->errors()
+            ], 422);
+        }
+
+
+        $prod = DB::table('products as p')
+            ->join('centro_costo_products as ce', 'p.id', '=', 'ce.products_id')
+            ->select('ce.stock', 'ce.fisico', 'p.price_fama')
+            ->where([
+                ['p.id', $request->producto],
+                ['ce.centrocosto_id', $request->centrocosto],
+                ['p.status', 1],
+
+            ])->get();
+            
         try {
-
-            $rules = [
-                'peso_producto_hijo' => 'required',
-                'producto' => 'required',
-            ];
-            $messages = [
-                'peso_producto_hijo.required' => 'Los kg requeridos son necesarios',
-                'producto.required' => 'El producto es requerido',
-            ];
-
-            $validator = Validator::make($request->all(), $rules, $messages);
-            if ($validator->fails()) {
-                return response()->json([
-                    'status' => 0,
-                    'errors' => $validator->errors()
-                ], 422);
-            }
-
-
-            $prod = DB::table('products as p')
-                ->join('centro_costo_products as ce', 'p.id', '=', 'ce.products_id')
-                ->select('ce.stock', 'ce.fisico', 'p.price_fama')
-                ->where([
-                    ['p.id', $request->producto],
-                    ['ce.centrocosto_id', $request->centrocosto],
-                    ['p.status', 1],
-
-                ])->get();
 
             $formatCantidad = new metodosrogercodeController();
             //$prod = Product::firstWhere('id', $request->producto);
-            //  $nuevoPesoProductoHijo = $registro->peso_producto_hijo;
 
-
-            $registros = Workshop_detail::Where([
-                ['workshops_id', $request->workshopId]
-            ])->get();
+            $arrayTotales = $this->sumTotales($request->tallerId);
 
             $formatpeso_producto_hijo = $formatCantidad->MoneyToNumber($request->peso_producto_hijo);
             $newStock = $prod[0]->stock + $formatpeso_producto_hijo;
-            $details = new workshop_detail();
-            $details->workshops_id = $request->tallerId;
-            $details->products_id = $request->producto;
-            $details->precio = $prod[0]->price_fama;
-            $details->peso_producto_hijo = $formatpeso_producto_hijo;
-            $details->total = $formatpeso_producto_hijo * $prod[0]->price_fama;
-            $details->save();
+
+            $getWorkshops = Workshop::Where('id', $request->workshopId)->get();
+            $getWorkshops->status = 'CANCELED';
+
+            $registros = Workshop_detail::Where([['workshops_id', $request->workshopId], ['status', 'VALID']])->get();
+            $porcentajeVenta = 0;
+            $porcentajeDesposte = 0;
+
+            foreach ($registros as $registro) {
+                // Obtener los valores actualizados del registro actual
+                $nuevoPesoProductoHijo = $registro->peso_producto_hijo;
+
+                // Colocar el código anterior dentro del bucl
+
+                $details = new workshop_detail();
+                $details->workshops_id = $request->tallerId;
+                $details->products_id = $request->producto;
+                $details->precio = $prod[0]->price_fama;
+                //    $details->peso_producto_hijo = $formatpeso_producto_hijo;
+                $details->peso_producto_hijo = $nuevoPesoProductoHijo;
+                $details->total = $nuevoPesoProductoHijo * $prod[0]->price_fama;
+
+                //          $details->porcventa = (float)number_format(($formatpeso_producto_hijo * $prod[0]->price_fama) / ($arrayTotales['totalPesoProductoHijo']) * 100, 2); 
+
+                if ($arrayTotales['totalPesoProductoHijo'] != 0) {
+                    $details->porcventa = (float)number_format(($formatpeso_producto_hijo * $prod[0]->price_fama) / ($arrayTotales['totalPesoProductoHijo']) * 100, 2);
+                } else {
+                    // Manejar la división por cero aquí
+                    $details->porcventa = 0; // Asignar un valor predeterminado
+                    // O mostrar un mensaje de error
+                    // echo "Error: División por cero";
+                }
+
+                $details->newstock = $newStock;
+                $details->save();
+
+                //  $this->recalcularPorcventa($request->tallerId, $request->centrocosto);
+
+                $arraydetail = $this->getworkshopdetail($request->tallerId, $request->centrocosto);
 
 
-            $arraydetail = $this->getworkshopdetail($request->tallerId, $request->centrocosto);
-           
-            $arrayTotales = $this->sumTotales($request->tallerId);
+                $newStockPadre = $request->stockPadre - $arrayTotales['totalPesoProductoHijo'];
+                $alist = Workshop::firstWhere('id', $request->tallerId);
+                $alist->nuevo_stock_padre = $newStockPadre;
+                $alist->save();
 
-         //   $newStockPadre = $request->stockPadre - $arrayTotales['totalPesoProductoHijo'];
-            $alist = Workshop::firstWhere('id', $request->tallerId);
-            //$alist->nuevo_stock_padre = $newStockPadre;
-            $alist->save();
-
-            return response()->json([
-                'status' => 1,
-                'message' => "Agregado correctamente",
-                'array' => $arraydetail,
-                'arrayTotales' => $arrayTotales,
-            ]);
+                return response()->json([
+                    'status' => 1,
+                    'message' => "Agregado correctamente",
+                    'array' => $arraydetail,
+                    'arrayTotales' => $arrayTotales,
+                ]);
+            }
         } catch (\Throwable $th) {
             return response()->json([
                 'status' => 0,

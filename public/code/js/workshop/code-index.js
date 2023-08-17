@@ -28,8 +28,7 @@ $(document).ready(function () {
                 { data:'namecategoria', name: 'namecategoria'},
                 { data: 'namecentrocosto', name: 'namecentrocosto' },
                 { data: 'namecut', name: 'namecut' },
-                { data: 'nuevo_stock_padre', name: 'nuevo_stock_padre' },
-                { data: 'inventory', name: 'inventory' },
+                { data: 'peso_producto_padre', name: 'namepeso_producto_padre' },                
                 { data: 'date', name: 'date' },
                 {data: 'action', name:'action'}
             ],
