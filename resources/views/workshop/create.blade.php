@@ -105,26 +105,29 @@
 					<div class="card-body">
 						<div class="row">
 							<div class="col-md-4">
-								<label for="" class="form-label">Stock actual</label>
-								<div class="input-group flex-nowrap">
-									<input type="text" id="stockCortePadre" name="stockCortePadre" value="{{$cortes[0]->stock}}" class="form-control-sm form-control" placeholder="10,00 kg" readonly>
-									<span class="input-group-text" id="addon-wrapping">KG</span>
-								</div>
-							</div>
-							<div class="col-md-4">
-								<label for="" class="form-label">Ultimo conteo tangible</label>
-								<div class="input-group flex-nowrap">
-									<input type="text" id="pesokg" name="pesokg" value="{{$cortes[0]->fisico}}" class="form-control-sm form-control" placeholder="180.40 kg" readonly>
-									<span class="input-group-text" id="addon-wrapping">KG</span>
-								</div>
-							</div>
-							<div class="col-md-4">
 								<label for="" class="form-label">Peso producto padre</label>
 								<div class="input-group flex-nowrap">
 									<input type="text" id="pesoProductoHijo" name="pesoProductoHijo" value="{{$dataWorkshop[0]->peso_producto_padre}}" class="form-control-sm form-control" placeholder="30,00 kg" readonly>
 									<span class="input-group-text" id="addon-wrapping">KG</span>
 								</div>
 							</div>
+
+							<div class="col-md-4">
+								<label for="" class="form-label">Stock actual</label>
+								<div class="input-group flex-nowrap">
+									<input type="text" id="stockCortePadre" name="stockCortePadre" value="{{$cortes[0]->stock}}" class="form-control-sm form-control" placeholder="10,00 kg" readonly>
+									<span class="input-group-text" id="addon-wrapping">KG</span>
+								</div>
+							</div>
+
+							<div class="col-md-4">
+								<label for="" class="form-label">Merma</label>
+								<div class="input-group flex-nowrap">
+									<input type="text" id="pesokg" name="pesokg" value="{{$cortes[0]->fisico}}" class="form-control-sm form-control" placeholder="180.40 kg" readonly>
+									<span class="input-group-text" id="addon-wrapping">KG</span>
+								</div>
+							</div>
+							
 						</div>
 					</div>
 				</div>
@@ -137,7 +140,6 @@
 								<thead class="text-white" style="background: #3B3F5C">
 									<tr>
 										<!--th class="table-th text-white">Item</th>-->
-										<th class="table-th text-white">#</th>
 										<th class="table-th text-white">Codigo</th>
 										<th class="table-th text-white">Producto hijo</th>
 										<th class="table-th text-white">Precio venta</th>
@@ -152,7 +154,6 @@
 								<tbody id="tbodyDetail">
 									@foreach($workshops as $proddetail)
 									<tr>
-										<td>{{$proddetail->id}}</td>
 										<td>{{$proddetail->code}}</td>
 										<td>{{$proddetail->nameprod}}</td>
 										<td>$ {{ number_format($proddetail->precio, 0, ',', '.')}}</td>
@@ -165,10 +166,8 @@
 										</td>
 										<td>$ {{ number_format($proddetail->total, 0, ',', '.')}}</td>
 										<td>{{$proddetail->porcventa}}</td>
-										<td>{{ number_format($proddetail->stock, 2, ',', '.')}} KG</td>
-										<td>{{ number_format($proddetail->fisico, 2, ',', '.')}} </td>
-
-										<td>{{ number_format($proddetail->newstock, 2, ',', '.')}} </td>
+										<td>{{ number_format($proddetail->costo, 2, ',', '.')}}</td>
+										<td>{{ number_format($proddetail->costo_kilo, 2, ',', '.')}} </td>
 										<td class="text-center">
 											@if($status == 'true' && $statusInventory == 'false')
 											<button type="button" name="btnDownReg" data-id="{{$proddetail->id}}" class="btn btn-dark btn-sm fas fa-trash" title="Cancelar">
@@ -184,14 +183,13 @@
 								<tfoot id="tabletfoot">
 									<tr>
 										<th></th>
-										<th></th>
 										<th>Totales</th>
-										<th></th>										
+										<th></th>
 										<th> {{number_format($arrayTotales['totalPesoProductoHijo'], 2, ',', '.')}} KG</th>
-										<th> {{number_format($arrayTotales['newTotalStock'], 2, ',', '.')}} </th>
+										<th>$ {{number_format($arrayTotales['totalPrecioVenta'], 0, ',', '.')}} </th>
 										<th></th>
 										<th></th>
-										
+
 									</tr>
 								</tfoot>
 							</table>

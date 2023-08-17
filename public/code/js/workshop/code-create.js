@@ -114,8 +114,7 @@ const showData = (data) => {
     showRegTbody.innerHTML = "";
     dataAll.forEach((element, indice) => {
         showRegTbody.innerHTML += `
-    	    <tr>
-      	    <td>${element.id}</td>
+    	    <tr>      	  
       	    <td>${element.code}</td>
       	    <td>${element.nameprod}</td>           
             <td>$ ${formatCantidadSinCero(element.precio)}</td>
@@ -145,7 +144,6 @@ const showData = (data) => {
     tableFoot.innerHTML = "";
     tableFoot.innerHTML += `
 	    <tr>
-		    <td></td>
 		    <td></td>
 		    <th>Totales</th>
 		    <td></td>		

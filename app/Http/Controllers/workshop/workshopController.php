@@ -285,7 +285,6 @@ class workshopController extends Controller
                 ], 422);
             }
 
-
             $prod = DB::table('products as p')
                 ->join('centro_costo_products as ce', 'p.id', '=', 'ce.products_id')
                 ->select('ce.stock', 'ce.fisico', 'p.price_fama')
@@ -296,34 +295,65 @@ class workshopController extends Controller
 
                 ])->get();
 
+
             $formatCantidad = new metodosrogercodeController();
             //$prod = Product::firstWhere('id', $request->producto);
             //  $nuevoPesoProductoHijo = $registro->peso_producto_hijo;
 
-
+            /* 
             $registros = Workshop_detail::Where([
                 ['workshops_id', $request->workshopId]
-            ])->get();
+            ])->get();                   
+ */
+            $sumakilosTotal = (float)Workshop_detail::Where([['workshops_id', $request->workshopId], ['status', 'VALID']])->sum('peso');
+            //  $porc = (float)number_format($key->peso / $sumakilosTotal,4);
+            //   $porcentajeDesposte = (float)number_format($porc * 100,2);
 
+        
             $formatpeso_producto_hijo = $formatCantidad->MoneyToNumber($request->peso_producto_hijo);
             $newStock = $prod[0]->stock + $formatpeso_producto_hijo;
+
+            $users_id = Auth::user()->id;
+
+
             $details = new workshop_detail();
             $details->workshops_id = $request->tallerId;
             $details->products_id = $request->producto;
+            $details->users_id = $users_id;
             $details->precio = $prod[0]->price_fama;
             $details->peso_producto_hijo = $formatpeso_producto_hijo;
             $details->total = $formatpeso_producto_hijo * $prod[0]->price_fama;
-            $details->save();
 
-
-            $arraydetail = $this->getworkshopdetail($request->tallerId, $request->centrocosto);
-           
             $arrayTotales = $this->sumTotales($request->tallerId);
 
-         //   $newStockPadre = $request->stockPadre - $arrayTotales['totalPesoProductoHijo'];
+            if ($arrayTotales['totalPesoProductoHijo'] != 0) {
+                $details->porcventa = (float)number_format(($formatpeso_producto_hijo * $prod[0]->price_fama) / ($arrayTotales['totalPesoProductoHijo']) * 100, 2);
+            } else {
+                // Manejar la división por cero aquí
+                $details->porcventa = (float)number_format($formatpeso_producto_hijo * $prod[0]->price_fama / $formatpeso_producto_hijo);
+                // O mostrar un mensaje de error
+                // echo "Error: División por cero";
+            }
+
+            //$details->costo = $formatCantidad->MoneyToNumber($request->porcventa * ($arrayTotales['totalPesoProductoHijo']));
+
+         
+
+
+            $details->costo = (float)$request->porcventa * (float)($arrayTotales['totalPesoProductoHijo']);
+
+      
+            $details->save();
+
+            $arraydetail = $this->getworkshopdetail($request->tallerId, $request->centrocosto);
+
+            //   $newStockPadre = $request->stockPadre - $arrayTotales['totalPesoProductoHijo'];
             $alist = Workshop::firstWhere('id', $request->tallerId);
+
+
             //$alist->nuevo_stock_padre = $newStockPadre;
             $alist->save();
+
 
             return response()->json([
                 'status' => 1,
@@ -380,13 +410,15 @@ class workshopController extends Controller
     public function sumTotales($id)
     {
 
-        $porcVentaTotal = (float)workshop_detail::Where([['workshops_id', $id], ['status', 'VALID']])->sum('porcventa');
         $totalPesoProductoHijo = (float)workshop_detail::Where([['workshops_id', $id], ['status', 1]])->sum('peso_producto_hijo');
+        $totalPrecioVenta = (float)workshop_detail::Where([['workshops_id', $id], ['status', 1]])->sum('total');
+        $porcVentaTotal = (float)workshop_detail::Where([['workshops_id', $id], ['status', 'VALID']])->sum('porcventa');
         $newTotalStock = (float)workshop_detail::Where([['workshops_id', $id], ['status', 1]])->sum('newstock');
 
         $array = [
-            'porcVentaTotal' => $porcVentaTotal,
             'totalPesoProductoHijo' => $totalPesoProductoHijo,
+            'totalPrecioVenta' => $totalPrecioVenta,
+            'porcVentaTotal' => $porcVentaTotal,
             'newTotalStock' => $newTotalStock,
         ];
 

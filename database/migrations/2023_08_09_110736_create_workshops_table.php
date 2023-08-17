@@ -30,6 +30,8 @@ class CreateWorkshopsTable extends Migration
 
             $table->decimal('peso_producto_padre', 18, 2)->default(0);
 
+            $table->decimal('merma', 18, 2)->default(0);
+
             $table->decimal('nuevo_stock_padre', 18, 2)->default(0);
             $table->enum('inventario', ['pending', 'added'])->default('pending');
             $table->date('fecha_workshop');
