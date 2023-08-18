@@ -309,7 +309,7 @@ class workshopController extends Controller
             //  $porc = (float)number_format($key->peso / $sumakilosTotal,4);
             //   $porcentajeDesposte = (float)number_format($porc * 100,2);
 
-        
+
             $formatpeso_producto_hijo = $formatCantidad->MoneyToNumber($request->peso_producto_hijo);
             $newStock = $prod[0]->stock + $formatpeso_producto_hijo;
 
@@ -337,12 +337,12 @@ class workshopController extends Controller
 
             //$details->costo = $formatCantidad->MoneyToNumber($request->porcventa * ($arrayTotales['totalPesoProductoHijo']));
 
-         
+
 
 
             $details->costo = (float)$request->porcventa * (float)($arrayTotales['totalPesoProductoHijo']);
 
-      
+
             $details->save();
 
             $arraydetail = $this->getworkshopdetail($request->tallerId, $request->centrocosto);
@@ -428,27 +428,64 @@ class workshopController extends Controller
     public function updatedetail(Request $request)
     {
         try {
-
             $prod = DB::table('products as p')
                 ->join('centro_costo_products as ce', 'p.id', '=', 'ce.products_id')
-                ->select('ce.stock', 'ce.fisico')
+                ->select('ce.stock', 'ce.fisico', 'p.price_fama')
                 ->where([
                     ['p.id', $request->productoId],
                     ['ce.centrocosto_id', $request->centrocosto],
                     ['p.status', 1],
-
                 ])->get();
-            //$prod = Product::firstWhere('id', $request->productoId);
-            //$newStock = $prod->stock + $request->newpeso_producto_hijo;
+
             $newStock = $prod[0]->stock + $request->newpeso_producto_hijo;
 
             $updatedetails = workshop_detail::firstWhere('id', $request->id);
             $updatedetails->peso_producto_hijo = $request->newpeso_producto_hijo;
+            $updatedetails->total = ($request->newpeso_producto_hijo) * ($prod[0]->price_fama);
             $updatedetails->newstock = $newStock;
             $updatedetails->save();
 
-            $arraydetail = $this->getworkshopdetail($request->tallerId, $request->centrocosto);
+            // Update all records in the table
+            workshop_detail::where('id', $request->id)
+                ->update([
+                    'total' => ($request->newpeso_producto_hijo) * ($prod[0]->price_fama),
+                ]);
+
             $arrayTotales = $this->sumTotales($request->tallerId);
+
+            // Update the "total" field for all records in the table
+
+            $workshopDetails = workshop_detail::Where([['workshops_id', $request->tallerId], ['status', 'VALID']])->get();
+            $porcentajeVenta = 0;
+            $porcentajeDesposte = 0;
+
+            foreach ($workshopDetails as $detail) {
+                $sumakilosTotal = (float)workshop_detail::Where([['workshops_id', $request->tallerId], ['status', 'VALID']])->sum('peso_producto_hijo');
+                $porc = (float)number_format($detail->peso_producto_hijo / $sumakilosTotal, 4);
+
+                $sumaTotal = (float)workshop_detail::Where([['workshops_id', $request->tallerId], ['status', 'VALID']])->sum('total');
+                $porcve = (float)number_format($detail->total / $sumaTotal, 4);
+                $porcentajeVenta = (float)number_format($porcve * 100, 2);
+
+             //   $porcentajecostoTotal = (float)number_format($porcentajeVenta / 100, 4);
+               // $costoTotal = $porcentajecostoTotal * 2;
+
+             
+
+                $updateworkshop = workshop_detail::firstWhere('id', $detail->id);
+                $updateworkshop->porcventa = $porcentajeVenta;
+                $updateworkshop->save();
+
+
+                //   $detail->porcventa = (float)number_format(($request->newpeso_producto_hijo * $prod[0]->price_fama) / ($arrayTotales['totalPesoProductoHijo']) * 100, 2);
+
+
+                // $detail->save();
+            }
+
+
+            $arraydetail = $this->getworkshopdetail($request->tallerId, $request->centrocosto);
+
 
             $newStockPadre = $request->stockPadre - $arrayTotales['totalPesoProductoHijo'];
             $alist = Workshop::firstWhere('id', $request->tallerId);
