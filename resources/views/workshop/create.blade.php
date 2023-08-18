@@ -104,13 +104,6 @@
 				<div class="card">
 					<div class="card-body">
 						<div class="row">
-							<div class="col-md-4">
-								<label for="" class="form-label">Peso producto padre</label>
-								<div class="input-group flex-nowrap">
-									<input type="text" id="pesoProductoHijo" name="pesoProductoHijo" value="{{$dataWorkshop[0]->peso_producto_padre}}" class="form-control-sm form-control" placeholder="30,00 kg" readonly>
-									<span class="input-group-text" id="addon-wrapping">KG</span>
-								</div>
-							</div>
 
 							<div class="col-md-4">
 								<label for="" class="form-label">Stock actual</label>
@@ -119,15 +112,25 @@
 									<span class="input-group-text" id="addon-wrapping">KG</span>
 								</div>
 							</div>
+							
+							<div class="col-md-4">
+								<label for="" class="form-label">Peso producto padre</label>
+								<div class="input-group flex-nowrap">
+									<input type="text" id="pesoProductoPadre" name="pesoProductoPadre" value="{{$dataWorkshop[0]->peso_producto_padre}}" class="form-control-sm form-control" placeholder="30,00 kg" readonly>
+									<span class="input-group-text" id="addon-wrapping">KG</span>
+								</div>
+							</div>
+
+
 
 							<div class="col-md-4">
 								<label for="" class="form-label">Merma</label>
 								<div class="input-group flex-nowrap">
-									<input type="text" id="pesokg" name="pesokg" value="{{$cortes[0]->fisico}}" class="form-control-sm form-control" placeholder="180.40 kg" readonly>
+									<input type="text" id="merma" name="merma" value="{{$dataWorkshop[0]->merma}}" class="form-control-sm form-control" placeholder="180.40 kg" readonly>
 									<span class="input-group-text" id="addon-wrapping">KG</span>
 								</div>
 							</div>
-							
+
 						</div>
 					</div>
 				</div>
@@ -166,8 +169,8 @@
 										</td>
 										<td>$ {{ number_format($proddetail->total, 0, ',', '.')}}</td>
 										<td>{{$proddetail->porcventa}}</td>
-										<td>{{ number_format($proddetail->costo, 2, ',', '.')}}</td>
-										<td>{{ number_format($proddetail->costo_kilo, 2, ',', '.')}} </td>
+										<td>{{ number_format($proddetail->costo, 0, ',', '.')}}</td>
+										<td>{{ number_format($proddetail->costo_kilo, 0, ',', '.')}} </td>
 										<td class="text-center">
 											@if($status == 'true' && $statusInventory == 'false')
 											<button type="button" name="btnDownReg" data-id="{{$proddetail->id}}" class="btn btn-dark btn-sm fas fa-trash" title="Cancelar">

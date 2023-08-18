@@ -15,8 +15,12 @@ const showRegTbody = document.querySelector("#tbodyDetail");
 const tableWorkshop = document.querySelector("#tableWorkshop");
 const tbodyTable = document.querySelector("#tableWorkshop tbody");
 const tfootTable = document.querySelector("#tableWorkshop tfoot");
+
+pesoProductoPadre
+
 const stockPadre = document.querySelector("#stockCortePadre");
 const pesokg = document.querySelector("#pesokg");
+const merma = document.querySelector("#merma");
 
 const newStockPadre = document.querySelector("#newStockPadre");
 const meatcutId = document.querySelector("#meatcutId");
@@ -155,7 +159,7 @@ const showData = (data) => {
 	    </tr>
     `;
     let newTotalStockPadre =
-        stockPadre.value - arrayTotales.totalPesoProductoHijo;
+    pesoProductoPadre.value - arrayTotales.totalPesoProductoHijo;
   //  newStockPadre.value = newTotalStockPadre;
 };
 
@@ -190,7 +194,7 @@ tableWorkshop.addEventListener("keydown", function (event) {
             dataform.append("tallerId", Number(tallerId.value));
             dataform.append("productoId", Number(productoId));
             dataform.append("centrocosto", Number(centrocosto.value));
-            dataform.append("stockPadre", stockPadre.value);
+            dataform.append("pesoProductoPadre", pesoProductoPadre.value);
 
             sendData("/workshopUpdate", dataform, token).then((result) => {
                 console.log(result);
@@ -223,7 +227,7 @@ tbodyTable.addEventListener("click", (e) => {
                 dataform.append("id", Number(id));
                 dataform.append("tallerId", Number(tallerId.value));
                 dataform.append("centrocosto", Number(centrocosto.value));
-                dataform.append("stockPadre", stockPadre.value);
+                dataform.append("pesoProductoPadre", pesoProductoPadre.value);
                 sendData("/workshopdown", dataform, token).then((result) => {
                     console.log(result);
                     showData(result);
@@ -245,7 +249,7 @@ tfootTable.addEventListener("click", (e) => {
         dataform.append("tallerId", Number(tallerId.value));
         /*  dataform.append("newStockPadre", Number(newStockPadre.value)); */
         dataform.append("pesokg", Number(pesokg.value));
-        dataform.append("stockPadre", Number(stockPadre.value));
+        dataform.append("pesoProductoPadre", Number(pesoProductoPadre.value));
         dataform.append("productoPadre", Number(productoPadre.value));
         dataform.append("centrocosto", Number(centrocosto.value));
         dataform.append("categoryId", Number(categoryId.value));

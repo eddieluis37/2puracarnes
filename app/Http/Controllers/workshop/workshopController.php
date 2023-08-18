@@ -449,6 +449,7 @@ class workshopController extends Controller
             workshop_detail::where('id', $request->id)
                 ->update([
                     'total' => ($request->newpeso_producto_hijo) * ($prod[0]->price_fama),
+                    'costo' => ($request->porcventa) * ($request->totalPrecioVenta),
                 ]);
 
             $arrayTotales = $this->sumTotales($request->tallerId);
@@ -467,13 +468,17 @@ class workshopController extends Controller
                 $porcve = (float)number_format($detail->total / $sumaTotal, 4);
                 $porcentajeVenta = (float)number_format($porcve * 100, 2);
 
-             //   $porcentajecostoTotal = (float)number_format($porcentajeVenta / 100, 4);
-               // $costoTotal = $porcentajecostoTotal * 2;
+                //   $porcentajecostoTotal = (float)number_format($porcentajeVenta / 100, 4);
+                // $costoTotal = $porcentajecostoTotal * 2;
 
-             
+                $costo = $porcentajeVenta * $sumaTotal;
+                $costo_kilo = $costo / $detail->peso_producto_hijo;
 
                 $updateworkshop = workshop_detail::firstWhere('id', $detail->id);
                 $updateworkshop->porcventa = $porcentajeVenta;
+                $updateworkshop->costo = $costo;
+                $updateworkshop->costo_kilo = $costo_kilo;
+
                 $updateworkshop->save();
 
 
@@ -486,10 +491,15 @@ class workshopController extends Controller
 
             $arraydetail = $this->getworkshopdetail($request->tallerId, $request->centrocosto);
 
+            $peso_producto_padre = $request->pesoProductoPadre;
+            $sumakilosTotal = (float)workshop_detail::where([['workshops_id', $request->tallerId], ['status', 'VALID']])->sum('peso_producto_hijo');
+            $merma = $peso_producto_padre - $sumakilosTotal;
+
 
             $newStockPadre = $request->stockPadre - $arrayTotales['totalPesoProductoHijo'];
             $alist = Workshop::firstWhere('id', $request->tallerId);
             $alist->nuevo_stock_padre = $newStockPadre;
+            $alist->merma = $merma;
             $alist->save();
 
             return response()->json([
