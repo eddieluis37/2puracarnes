@@ -62,6 +62,23 @@ class workshopController extends Controller
                 ['p.status', 1],
                 ['ce.centrocosto_id', $dataWorkshop[0]->centrocosto_id],
             ])->get();
+        //  dd($cortes);
+        
+        $getCostoKilo = DB::table('desposteres')
+            ->join('products as p', 'desposteres.products_id', '=', 'p.id')
+            ->join('centro_costo_products as ce', 'p.id', '=', 'ce.products_id')
+            ->select('p.name', 'desposteres.costo_kilo')
+            ->where([
+                ['desposteres.status', 'VALID'],
+                ['p.level_product_id', 1],
+                ['p.meatcut_id', $dataWorkshop[0]->meatcut_id],
+                ['p.status', 1],
+                ['ce.centrocosto_id', $dataWorkshop[0]->centrocosto_id],
+            ])
+            ->orderBy('desposteres.costo_kilo', 'desc')
+            ->limit(1)
+            ->get();
+       //  dd($getCostoKilo);
 
         /**************************************** */
         $status = '';
@@ -97,7 +114,7 @@ class workshopController extends Controller
 
         $arrayTotales = $this->sumTotales($id);
 
-        return view('workshop.create', compact('dataWorkshop', 'cortes', 'workshops', 'arrayTotales', 'status', 'statusInventory', 'display'));
+        return view('workshop.create', compact('dataWorkshop', 'cortes', 'getCostoKilo', 'workshops', 'arrayTotales', 'status', 'statusInventory', 'display'));
     }
 
     /**

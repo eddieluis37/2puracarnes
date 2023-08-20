@@ -105,7 +105,14 @@
 					<div class="card-body">
 						<div class="row">
 
-							<div class="col-md-4">
+						<div class="col-md-3">
+								<label for="" class="form-label">Costo Kilo padre</label>
+								<div class="input-group flex-nowrap">									
+									<input type="text" id="costoKiloPadre" name="costoKiloPadre" value="{{ '$ ' . number_format($getCostoKilo[0]->costo_kilo, 0) }}" class="form-control-sm form-control" placeholder="10,00 kg" readonly>					
+								</div>
+							</div>
+
+							<div class="col-md-3">
 								<label for="" class="form-label">Stock actual</label>
 								<div class="input-group flex-nowrap">
 									<input type="text" id="stockCortePadre" name="stockCortePadre" value="{{$cortes[0]->stock}}" class="form-control-sm form-control" placeholder="10,00 kg" readonly>
@@ -113,7 +120,7 @@
 								</div>
 							</div>
 							
-							<div class="col-md-4">
+							<div class="col-md-3">
 								<label for="" class="form-label">Peso producto padre</label>
 								<div class="input-group flex-nowrap">
 									<input type="text" id="pesoProductoPadre" name="pesoProductoPadre" value="{{$dataWorkshop[0]->peso_producto_padre}}" class="form-control-sm form-control" placeholder="30,00 kg" readonly>
@@ -123,7 +130,7 @@
 
 
 
-							<div class="col-md-4">
+							<div class="col-md-3">
 								<label for="" class="form-label">Merma</label>
 								<div class="input-group flex-nowrap">
 									<input type="text" id="merma" name="merma" value="{{$dataWorkshop[0]->merma}}" class="form-control-sm form-control" placeholder="180.40 kg" readonly>
