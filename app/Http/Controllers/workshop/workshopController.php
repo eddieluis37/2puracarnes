@@ -63,7 +63,7 @@ class workshopController extends Controller
                 ['ce.centrocosto_id', $dataWorkshop[0]->centrocosto_id],
             ])->get();
         //  dd($cortes);
-        
+
         $getCostoKilo = DB::table('desposteres')
             ->join('products as p', 'desposteres.products_id', '=', 'p.id')
             ->join('centro_costo_products as ce', 'p.id', '=', 'ce.products_id')
@@ -78,7 +78,7 @@ class workshopController extends Controller
             ->orderBy('desposteres.costo_kilo', 'desc')
             ->limit(1)
             ->get();
-       //  dd($getCostoKilo);
+        //  dd($getCostoKilo);
 
         /**************************************** */
         $status = '';
@@ -133,8 +133,8 @@ class workshopController extends Controller
                 'centrocosto' => 'required',
                 'selectCortePadre' => 'required',
                 'peso_producto_padre' => 'required|regex:/^\d+(\.\d+)?$/',
-                           
-                
+
+
             ];
 
             $messages = [
@@ -144,7 +144,7 @@ class workshopController extends Controller
                 'selectCortePadre.required' => 'El corte padre es requerido',
                 'peso_producto_padre.required' => 'Peso producto padre es requerido',
                 'peso_producto_padre.regex' => 'El peso producto padre debe ser un número entero o decimal separado por punto',
-              
+
             ];
 
             $validator = Validator::make($request->all(), $rules, $messages);
@@ -171,7 +171,7 @@ class workshopController extends Controller
                 $alist->categoria_id = $request->categoria;
                 $alist->centrocosto_id = $request->centrocosto;
                 $alist->meatcut_id = $request->selectCortePadre;
-                $alist->peso_producto_padre = $request->peso_producto_padre;            
+                $alist->peso_producto_padre = $request->peso_producto_padre;
                 $alist->fecha_workshop = $currentDateFormat;
                 $alist->fecha_cierre = $dateNextMonday;
                 $alist->save();
@@ -291,8 +291,8 @@ class workshopController extends Controller
             $rules = [
                 'peso_producto_hijo' => 'required',
                 'producto' => 'required',
-                'costo_kilo_padre' => 'required|regex:/^\d+(\.\d+)?$/' 
-                
+                'costo_kilo_padre' => 'required|regex:/^\d+(\.\d+)?$/'
+
             ];
             $messages = [
                 'peso_producto_hijo.required' => 'Los kg requeridos son necesarios',
@@ -371,7 +371,7 @@ class workshopController extends Controller
             $arraydetail = $this->getworkshopdetail($request->tallerId, $request->centrocosto);
 
             //   $newStockPadre = $request->stockPadre - $arrayTotales['totalPesoProductoHijo'];
-            $alist = Workshop::firstWhere('id', $request->tallerId);      
+            $alist = Workshop::firstWhere('id', $request->tallerId);
             $alist->costo_kilo_padre = $request->input('costo_kilo_padre');
             //$alist->nuevo_stock_padre = $newStockPadre;
             $alist->save();
@@ -490,10 +490,18 @@ class workshopController extends Controller
                 $porcve = (float)number_format($detail->total / $sumaTotal, 4);
                 $porcentajeVenta = (float)number_format($porcve * 100, 2);
 
-                //   $porcentajecostoTotal = (float)number_format($porcentajeVenta / 100, 4);
-                // $costoTotal = $porcentajecostoTotal * 2;
+                $porcentajecostoTotal = (float)number_format($porcentajeVenta / 100, 4);
+                // $costoTotal = $porcentajecostoTotal * 2;                
 
-                $costo = $porcentajeVenta * $sumaTotal;
+                $workshop = Workshop::firstWhere('id', $request->tallerId);
+                $costo_kilo_padre = $workshop->costo_kilo_padre;
+                $peso_producto_padre = $workshop->peso_producto_padre;
+
+                $total2 = $peso_producto_padre * $costo_kilo_padre;
+
+                //  $total = $detail->peso_producto_hijo *  $costo_kilo_padre;
+
+                $costo = $porcentajecostoTotal * $total2;
                 $costo_kilo = $costo / $detail->peso_producto_hijo;
 
                 $updateworkshop = workshop_detail::firstWhere('id', $detail->id);

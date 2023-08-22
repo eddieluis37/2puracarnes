@@ -176,8 +176,8 @@
 										</td>
 										<td>$ {{ number_format($proddetail->total, 0, ',', '.')}}</td>
 										<td>{{$proddetail->porcventa}}</td>
-										<td>{{ number_format($proddetail->costo, 0, ',', '.')}}</td>
-										<td>{{ number_format($proddetail->costo_kilo, 0, ',', '.')}} </td>
+										<td>$ {{ number_format($proddetail->costo, 0, ',', '.')}}</td>
+										<td>$ {{ number_format($proddetail->costo_kilo, 0, ',', '.')}} </td>
 										<td class="text-center">
 											@if($status == 'true' && $statusInventory == 'false')
 											<button type="button" name="btnDownReg" data-id="{{$proddetail->id}}" class="btn btn-dark btn-sm fas fa-trash" title="Cancelar">
