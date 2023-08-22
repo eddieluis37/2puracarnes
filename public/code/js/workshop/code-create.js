@@ -16,7 +16,7 @@ const tableWorkshop = document.querySelector("#tableWorkshop");
 const tbodyTable = document.querySelector("#tableWorkshop tbody");
 const tfootTable = document.querySelector("#tableWorkshop tfoot");
 
-pesoProductoPadre
+pesoProductoPadre;
 
 const stockPadre = document.querySelector("#stockCortePadre");
 const pesokg = document.querySelector("#pesokg");
@@ -35,7 +35,11 @@ const addShopping = document.querySelector("#addShopping");
 const productoPadre = document.querySelector("#productopadreId");
 const centrocosto = document.querySelector("#centrocosto");
 const categoryId = document.querySelector("#categoryId");
+var costoKiloPadre = document
+    .getElementById("costoKiloPadre")
+    .getAttribute("data-id");
 
+    console.log('costoKiloPadre ' + costoKiloPadre)
 /* $porcventa = 0; */
 
 $(".select2Prod").select2({
@@ -92,9 +96,14 @@ sendData("/getproductos", dataform, token).then((result) => {
 btnAddWork.addEventListener("click", (e) => {
     e.preventDefault();
     const dataform = new FormData(formDetail);
-  //  dataform.append("stockPadre", stockPadre.value);
+    //  dataform.append("stockPadre", stockPadre.value);
     dataform.append("peso_producto_hijo", peso_producto_hijo.value);
 
+    var costoKiloPadre = document
+        .getElementById("costoKiloPadre")
+        .getAttribute("data-id");
+    dataform.append("costo_kilo_padre", costoKiloPadre);
+    console.log(costoKiloPadre);
     let porcventa = 1; // Initializing porcventa to 0
     dataform.append("porcventa", porcventa.value);
 
@@ -159,8 +168,8 @@ const showData = (data) => {
 	    </tr>
     `;
     let newTotalStockPadre =
-    pesoProductoPadre.value - arrayTotales.totalPesoProductoHijo;
-  //  newStockPadre.value = newTotalStockPadre;
+        pesoProductoPadre.value - arrayTotales.totalPesoProductoHijo;
+    //  newStockPadre.value = newTotalStockPadre;
 };
 
 peso_producto_hijo.addEventListener("change", function () {

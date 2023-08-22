@@ -108,7 +108,7 @@
 						<div class="col-md-3">
 								<label for="" class="form-label">Costo Kilo padre</label>
 								<div class="input-group flex-nowrap">									
-									<input type="text" id="costoKiloPadre" name="costoKiloPadre" value="{{ '$ ' . number_format($getCostoKilo[0]->costo_kilo, 0) }}" class="form-control-sm form-control" placeholder="10,00 kg" readonly>					
+								<input type="text" id="costoKiloPadre" name="costoKiloPadre" value="{{ '$ ' . number_format($getCostoKilo[0]->costo_kilo, 0) }}" data-id="{{ $getCostoKilo[0]->costo_kilo }}" class="form-control-sm form-control" placeholder="10,00 kg" readonly>
 								</div>
 							</div>
 

@@ -132,7 +132,9 @@ class workshopController extends Controller
                 'categoria' => 'required',
                 'centrocosto' => 'required',
                 'selectCortePadre' => 'required',
-                'peso_producto_padre' => 'required|regex:/^\d+(\.\d+)?$/'
+                'peso_producto_padre' => 'required|regex:/^\d+(\.\d+)?$/',
+                           
+                
             ];
 
             $messages = [
@@ -141,7 +143,8 @@ class workshopController extends Controller
                 'centrocosto.required' => 'El centro de costo es requerido',
                 'selectCortePadre.required' => 'El corte padre es requerido',
                 'peso_producto_padre.required' => 'Peso producto padre es requerido',
-                'peso_producto_padre.regex' => 'El peso producto padre debe ser un número entero o decimal separado por punto'
+                'peso_producto_padre.regex' => 'El peso producto padre debe ser un número entero o decimal separado por punto',
+              
             ];
 
             $validator = Validator::make($request->all(), $rules, $messages);
@@ -168,7 +171,7 @@ class workshopController extends Controller
                 $alist->categoria_id = $request->categoria;
                 $alist->centrocosto_id = $request->centrocosto;
                 $alist->meatcut_id = $request->selectCortePadre;
-                $alist->peso_producto_padre = $request->peso_producto_padre;
+                $alist->peso_producto_padre = $request->peso_producto_padre;            
                 $alist->fecha_workshop = $currentDateFormat;
                 $alist->fecha_cierre = $dateNextMonday;
                 $alist->save();
@@ -288,10 +291,13 @@ class workshopController extends Controller
             $rules = [
                 'peso_producto_hijo' => 'required',
                 'producto' => 'required',
+                'costo_kilo_padre' => 'required|regex:/^\d+(\.\d+)?$/' 
+                
             ];
             $messages = [
                 'peso_producto_hijo.required' => 'Los kg requeridos son necesarios',
                 'producto.required' => 'El producto es requerido',
+                'costo_kilo_padre.regex' => 'costo_kilo_padre es un número entero o decimal separado por punto'
             ];
 
             $validator = Validator::make($request->all(), $rules, $messages);
@@ -365,9 +371,8 @@ class workshopController extends Controller
             $arraydetail = $this->getworkshopdetail($request->tallerId, $request->centrocosto);
 
             //   $newStockPadre = $request->stockPadre - $arrayTotales['totalPesoProductoHijo'];
-            $alist = Workshop::firstWhere('id', $request->tallerId);
-
-
+            $alist = Workshop::firstWhere('id', $request->tallerId);      
+            $alist->costo_kilo_padre = $request->input('costo_kilo_padre');
             //$alist->nuevo_stock_padre = $newStockPadre;
             $alist->save();
 

@@ -28,7 +28,17 @@ $(document).ready(function () {
                 { data:'namecategoria', name: 'namecategoria'},
                 { data: 'namecentrocosto', name: 'namecentrocosto' },
                 { data: 'namecut', name: 'namecut' },
-                { data: 'peso_producto_padre', name: 'namepeso_producto_padre' },                
+                { data: 'peso_producto_padre', name: 'namepeso_producto_padre' },
+                {
+                    data: 'costo_kilo_padre',
+                    name: 'namecosto_kilo_padre',
+                    render: function(data) {
+                        return "$ " + parseFloat(data).toLocaleString(undefined, {
+                            minimumFractionDigits: 0,
+                            maximumFractionDigits: 0
+                        });
+                    }
+                },              
                 { data: 'date', name: 'date' },
                 {data: 'action', name:'action'}
             ],
