@@ -161,10 +161,7 @@ const showData = (data) => {
 		    <th>Totales</th>
 		    <td></td>		
 		    <th>${formatCantidad(arrayTotales.totalPesoProductoHijo)} KG</td>
-		    <th>${formatCantidad(arrayTotales.newTotalStock)} KG</th>
-		    <td class="text-center">
-                <button class="btn btn-success btn-sm" id="addShopping">Cargar al inventario</button>
-            </td>
+		    <th>$ ${formatCantidadSinCero(arrayTotales.totalPrecioVenta)}</th>		   
 	    </tr>
     `;
     let newTotalStockPadre =

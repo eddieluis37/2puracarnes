@@ -349,6 +349,8 @@ class workshopController extends Controller
 
             $arrayTotales = $this->sumTotales($request->tallerId);
 
+            /*
+
             if ($arrayTotales['totalPesoProductoHijo'] != 0) {
                 $details->porcventa = (float)number_format(($formatpeso_producto_hijo * $prod[0]->price_fama) / ($arrayTotales['totalPesoProductoHijo']) * 100, 2);
             } else {
@@ -356,11 +358,17 @@ class workshopController extends Controller
                 $details->porcventa = (float)number_format($formatpeso_producto_hijo * $prod[0]->price_fama / $formatpeso_producto_hijo);
                 // O mostrar un mensaje de error
                 // echo "Error: División por cero";
-            }
+            } */
 
             $sumakilosTotal = (float)workshop_detail::Where([['workshops_id', $request->tallerId], ['status', 'VALID']])->sum('peso_producto_hijo');
 
-            $porcve = (float)number_format($details->total / $sumakilosTotal, 4);
+            if ($sumakilosTotal != 0) {
+                $porcve = (float)number_format($details->total / $sumakilosTotal, 4);
+                $details->porcventa = $porcve;
+            } else {
+                $porcve = (float)number_format(100);
+                $details->porcventa = $porcve;
+            }
 
             $porcentajeVenta = (float)number_format($porcve * 100, 2);
 
@@ -380,15 +388,17 @@ class workshopController extends Controller
             $costo_kilo = $costo / $details->peso_producto_hijo;
             $details->costo = $costo;
             $details->costo_kilo = $costo_kilo;
-            $details->save();
-
+            $details->save(); 
+            
+            $arrayTotales = $this->sumTotales($request->tallerId);     
             $arraydetail = $this->getworkshopdetail($request->tallerId, $request->centrocosto);
 
             //   $newStockPadre = $request->stockPadre - $arrayTotales['totalPesoProductoHijo'];
             $alist = Workshop::firstWhere('id', $request->tallerId);
+            $alist->total_peso_producto_hijo =  $arrayTotales['totalPesoProductoHijo'];
             $alist->costo_kilo_padre = $request->input('costo_kilo_padre');
             //$alist->nuevo_stock_padre = $newStockPadre;
-            $alist->save();
+            $alist->save();            
 
             return response()->json([
                 'status' => 1,
@@ -396,6 +406,7 @@ class workshopController extends Controller
                 'array' => $arraydetail,
                 'arrayTotales' => $arrayTotales,
             ]);
+           
         } catch (\Throwable $th) {
             return response()->json([
                 'status' => 0,
