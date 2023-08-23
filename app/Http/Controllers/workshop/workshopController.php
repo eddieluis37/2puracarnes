@@ -358,14 +358,28 @@ class workshopController extends Controller
                 // echo "Error: División por cero";
             }
 
+            $sumakilosTotal = (float)workshop_detail::Where([['workshops_id', $request->tallerId], ['status', 'VALID']])->sum('peso_producto_hijo');
+
+            $porcve = (float)number_format($details->total / $sumakilosTotal, 4);
+
+            $porcentajeVenta = (float)number_format($porcve * 100, 2);
+
+            $porcentajecostoTotal = (float)number_format($porcentajeVenta / 100, 4);
+
+            $workshop = Workshop::firstWhere('id', $request->tallerId);
+            $costo_kilo_padre = $workshop->costo_kilo_padre;
+            $peso_producto_padre = $workshop->peso_producto_padre;
+
             //$details->costo = $formatCantidad->MoneyToNumber($request->porcventa * ($arrayTotales['totalPesoProductoHijo']));
 
+            $total2 = $peso_producto_padre * $costo_kilo_padre;
 
+            //  $total = $detail->peso_producto_hijo *  $costo_kilo_padre;
 
-
-            $details->costo = (float)$request->porcventa * (float)($arrayTotales['totalPesoProductoHijo']);
-
-
+            $costo = $porcentajecostoTotal * $total2;
+            $costo_kilo = $costo / $details->peso_producto_hijo;
+            $details->costo = $costo;
+            $details->costo_kilo = $costo_kilo;
             $details->save();
 
             $arraydetail = $this->getworkshopdetail($request->tallerId, $request->centrocosto);
@@ -375,7 +389,6 @@ class workshopController extends Controller
             $alist->costo_kilo_padre = $request->input('costo_kilo_padre');
             //$alist->nuevo_stock_padre = $newStockPadre;
             $alist->save();
-
 
             return response()->json([
                 'status' => 1,
@@ -390,29 +403,6 @@ class workshopController extends Controller
             ]);
         }
     }
-
-    /* 
-    private function recalcularPorcventa($tallerId, $centrocosto)
-    {
-        $arrayTotales = $this->sumTotales($tallerId);
-
-        $detallesTaller = workshop_detail::where([
-            ['workshops_id', $tallerId],
-            ['centrocosto_id', $centrocosto]
-        ])->get();
-
-        foreach ($detallesTaller as $detalle) {
-            $formatpeso_producto_hijo = $formatCantidad->MoneyToNumber($detalle->peso_producto_hijo);
-
-            if ($arrayTotales['totalPesoProductoHijo'] != 0) {
-                $detalle->porcventa = (float)number_format(($formatpeso_producto_hijo * $detalle->precio) / ($arrayTotales['totalPesoProductoHijo']) * 100, 2);
-            } else {
-                $detalle->porcventa = 0;
-            }
-
-            $detalle->save();
-        }
-    } */
 
     public function getworkshopdetail($tallerId, $centrocostoId)
     {
@@ -597,7 +587,7 @@ class workshopController extends Controller
     {
         try {
             $enlist = workshop_detail::where('id', $request->id)->first();
-            $enlist->status = 0;
+            $enlist->status = 'CANCELED';
             $enlist->save();
 
             $arraydetail = $this->getworkshopdetail($request->tallerId, $request->centrocosto);

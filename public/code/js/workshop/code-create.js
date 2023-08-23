@@ -139,9 +139,9 @@ const showData = (data) => {
         }" placeholder="Ingresar" size="4">
             </td>
       	    <td>$ ${formatCantidadSinCero(element.total)}</td>
-      	    <td>${formatCantidad(element.porcventa)} </td>
-      	    
-      	    <td>${formatCantidad(element.newstock)} KG</td>
+      	    <td>${formatCantidad(element.porcventa)} %</td>      	    
+      	    <td>$ ${formatCantidadSinCero(element.costo)}</td>
+            <td>$ ${formatCantidadSinCero(element.costo_kilo)}</td>
 			<td class="text-center">
 				<button class="btn btn-dark fas fa-trash" name="btnDownReg" data-id="${
                     element.id

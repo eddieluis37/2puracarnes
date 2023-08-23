@@ -175,7 +175,7 @@
 											@endif
 										</td>
 										<td>$ {{ number_format($proddetail->total, 0, ',', '.')}}</td>
-										<td>{{$proddetail->porcventa}}</td>
+										<td>{{$proddetail->porcventa}} %</td>
 										<td>$ {{ number_format($proddetail->costo, 0, ',', '.')}}</td>
 										<td>$ {{ number_format($proddetail->costo_kilo, 0, ',', '.')}} </td>
 										<td class="text-center">
