@@ -388,15 +388,18 @@ class workshopController extends Controller
             $costo_kilo = $costo / $details->peso_producto_hijo;
             $details->costo = $costo;
             $details->costo_kilo = $costo_kilo;
-            $details->save(); 
+            $details->save();
             
             $arrayTotales = $this->sumTotales($request->tallerId);     
             $arraydetail = $this->getworkshopdetail($request->tallerId, $request->centrocosto);
+
+            $merma = $peso_producto_padre - $sumakilosTotal;
 
             //   $newStockPadre = $request->stockPadre - $arrayTotales['totalPesoProductoHijo'];
             $alist = Workshop::firstWhere('id', $request->tallerId);
             $alist->total_peso_producto_hijo =  $arrayTotales['totalPesoProductoHijo'];
             $alist->costo_kilo_padre = $request->input('costo_kilo_padre');
+            $alist->merma = $merma;
             //$alist->nuevo_stock_padre = $newStockPadre;
             $alist->save();            
 
