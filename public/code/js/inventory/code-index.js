@@ -31,64 +31,70 @@ const tfootTable = document.querySelector("#tableInventory tfoot");
 const btnGetInventory = document.querySelector("#btnGetInventory");
 
 $(document).ready(initializeDataTable);
-    function initializeDataTable() {
-        $("#tableInventory").DataTable({
-            paging: true,
-            pageLength: 5,
-            autoWidth: false,
-            processing: true,
-            serverSide: true,
-            ajax: {
-                url: "/showinventory",
-                type: "GET",
-            },
-            columns: [           
-               
-                { data: "namecategoria", name: "namecategoria" },
-                { data: "nameproducto", name: "nameproducto" },
-                { data: "namefisico", name: "namefisico" },    
-                { data: "costo_kilo", name: "costo_kilo" },
-                { data: "total_inv_ini", name: "total_inv_ini" },
-                { data: "date", name: "date" },        
-                { data: "inventory", name: "inventory" },             
-                { data: "action", name: "action" },
-            ],
-            order: [[0, "DESC"]],
-            language: {
-                processing: "Procesando...",
-                lengthMenu: "Mostrar _MENU_ registros",
-                zeroRecords: "No se encontraron resultados",
-                emptyTable: "Ningún dato disponible en esta tabla",
-                sInfo: "Mostrando del _START_ al _END_ de total _TOTAL_ registros",
-                infoEmpty:
-                    "Mostrando registros del 0 al 0 de un total de 0 registros",
-                infoFiltered: "(filtrado de un total de _MAX_ registros)",
-                search: "Buscar:",
-                infoThousands: ",",
-                loadingRecords: "Cargando...",
-                paginate: {
-                    first: "Primero",
-                    last: "Último",
-                    next: "Siguiente",
-                    previous: "Anterior",
+function initializeDataTable() {
+    $("#tableInventory").DataTable({
+        paging: true,
+        pageLength: 5,
+        autoWidth: false,
+        processing: true,
+        serverSide: true,
+        ajax: {
+            url: "/showinventory",
+            type: "GET",
+        },
+        columns: [
+            { data: "namecategoria", name: "namecategoria" },
+            { data: "nameproducto", name: "nameproducto" },
+            { data: "namefisico", name: "namefisico" },
+            {
+                data: "costo_kilo",
+                name: "costo_kilo",
+                render: function (data, type, row) {
+                    return "$ " + formatCantidadSinCero(data);
                 },
             },
-            dom: 'Bfrtip',
-            buttons: [
-                'copy',
-                'csv',
-                'excel',
-                'pdf'
-            ],
-        });
-    
-        $(".select2corte").select2({
-            placeholder: "Busca un producto",
-            width: "100%",
-            theme: "bootstrap-5",
-            allowClear: true,
-        });
-    }
+            {
+                data: "total_inv_ini",
+                name: "total_inv_ini",
+                render: function (data, type, row) {
+                    return "$ " + formatCantidadSinCero(data);
+                },
+            },
+            { data: "date", name: "date" },
+            { data: "inventory", name: "inventory" },
+            { data: "action", name: "action" },
+        ],
+        order: [[0, "DESC"]],
+        language: {
+            processing: "Procesando...",
+            lengthMenu: "Mostrar _MENU_ registros",
+            zeroRecords: "No se encontraron resultados",
+            emptyTable: "Ningún dato disponible en esta tabla",
+            sInfo: "Mostrando del _START_ al _END_ de total _TOTAL_ registros",
+            infoEmpty:
+                "Mostrando registros del 0 al 0 de un total de 0 registros",
+            infoFiltered: "(filtrado de un total de _MAX_ registros)",
+            search: "Buscar:",
+            infoThousands: ",",
+            loadingRecords: "Cargando...",
+            paginate: {
+                first: "Primero",
+                last: "Último",
+                next: "Siguiente",
+                previous: "Anterior",
+            },
+        },
+        dom: "Bfrtip",
+        buttons: ["copy", "csv", "excel", "pdf"],
+    });
+
+    $(".select2corte").select2({
+        placeholder: "Busca un producto",
+        width: "100%",
+        theme: "bootstrap-5",
+        allowClear: true,
+    });
+}
 
 /* Insertar registros al tableTransfer del detalle. Se activa al darle enter en KG a trasladar o boton btnAddTransfer */
 /* btnGetInventory.addEventListener("click", (e) => {
@@ -110,13 +116,13 @@ $(document).ready(initializeDataTable);
     });
 }); */
 
-    const showModalcreate = () => {
+const showModalcreate = () => {
     if (contentform.hasAttribute("disabled")) {
         contentform.removeAttribute("disabled");
         $(".select2corte").prop("disabled", false);
     }
     $(".select2corte").val("").trigger("change");
-  //  selectCortePadre.innerHTML = "";
+    //  selectCortePadre.innerHTML = "";
     formTransfer.reset();
     transfer_id.value = 0;
 };
