@@ -60,34 +60,72 @@ class diariorogercodeController extends Controller
      */
     public function show()
     {
-        $data = DB::table('transfers as tra')
-            ->join('categories as cat', 'tra.categoria_id', '=', 'cat.id')
-            //   ->join('products as cut', 'tra.products_id', '=', 'cut.id')
-            ->join('centro_costo as centroOrigen', 'tra.centrocostoOrigen_id', '=', 'centroOrigen.id')
-            ->join('centro_costo as centroDestino', 'tra.centrocostoDestino_id', '=', 'centroDestino.id')
-            ->select('tra.*', 'cat.name as namecategoria', 'centroOrigen.name as namecentrocostoOrigen', 'centroDestino.name as namecentrocostoDestino')
-            ->where('tra.status', 1)
+        $data = DB::table('products as pro')
+            ->join('categories as cat', 'pro.category_id', '=', 'cat.id')
+            ->select('cat.name as namecategoria', 'pro.name as nameproducto', 'pro.fisico as namefisico')
             ->get();
-        //$data = Compensadores::orderBy('id','desc');
-        return Datatables::of($data)->addIndexColumn()
-            ->addColumn('date', function ($data) {
-                $date = Carbon::parse($data->fecha_tranfer);
-                $onlyDate = $date->toDateString();
-                return $onlyDate;
-            })
-            ->addColumn('inventory', function ($data) {
-                if ($data->inventario == 'pending') {
-                    $statusInventory = '<span class="badge bg-warning">Pendiente</span>';
-                } else {
-                    $statusInventory = '<span class="badge bg-success">Agregado</span>';
+
+        $getCostoKiloPadre = DB::table('desposteres')
+            ->join('products as p', 'desposteres.products_id', '=', 'p.id')
+            ->join('centro_costo_products as ce', 'p.id', '=', 'ce.products_id')
+            ->select('p.name', 'desposteres.costo_kilo')
+            ->where([
+                ['desposteres.status', 'VALID'],
+                ['p.status', 1],
+            ])
+            ->get();
+
+        $getCostoKiloHijo = DB::table('workshop_details')
+            ->join('products as p', 'workshop_details.products_id', '=', 'p.id')
+            ->join('centro_costo_products as ce', 'p.id', '=', 'ce.products_id')
+            ->select('p.name', 'workshop_details.costo_kilo')
+            ->where([
+                ['workshop_details.status', 'VALID'],
+                ['p.status', 1],
+            ])
+            ->get();
+
+        return Datatables::of($data)
+            ->addColumn('costo_kilo', function ($row) use ($getCostoKiloPadre, $getCostoKiloHijo) {
+                $costo_kilo = '';
+                foreach ($getCostoKiloPadre as $item) {
+                    if ($item->name == $row->nameproducto) {
+                        $costo_kilo = $item->costo_kilo;
+                        break;
+                    }
                 }
-                return $statusInventory;
+                if (empty($costo_kilo)) {
+                    foreach ($getCostoKiloHijo as $item) {
+                        if ($item->name == $row->nameproducto) {
+                            $costo_kilo = $item->costo_kilo;
+                            break;
+                        }
+                    }
+                }
+                return $costo_kilo;
             })
-           
-            ->rawColumns(['inventory','date'])
+            ->addColumn('total_inv_ini', function ($row) use ($getCostoKiloPadre, $getCostoKiloHijo) {
+                $costo_kilo = '';
+                foreach ($getCostoKiloPadre as $item) {
+                    if ($item->name == $row->nameproducto) {
+                        $costo_kilo = $item->costo_kilo;
+                        break;
+                    }
+                }
+                if (empty($costo_kilo)) {
+                    foreach ($getCostoKiloHijo as $item) {
+                        if ($item->name == $row->nameproducto) {
+                            $costo_kilo = $item->costo_kilo;
+                            break;
+                        }
+                    }
+                }
+                return $row->namefisico * $item->costo_kilo;
+            })
+            ->addIndexColumn()
+            ->rawColumns(['date'])
             ->make(true);
     }
-
     /**
      * Show the form for editing the specified resource.
      *

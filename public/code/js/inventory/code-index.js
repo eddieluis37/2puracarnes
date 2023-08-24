@@ -42,12 +42,13 @@ $(document).ready(initializeDataTable);
                 url: "/showinventory",
                 type: "GET",
             },
-            columns: [
-                { data: "id", name: "id" },
+            columns: [           
                
                 { data: "namecategoria", name: "namecategoria" },
-                { data: "namecentrocostoOrigen", name: "namecentrocostoOrigen" },
-                { data: "namecentrocostoDestino", name: "namecentrocostoDestino" },
+                { data: "nameproducto", name: "nameproducto" },
+                { data: "namefisico", name: "namefisico" },    
+                { data: "costo_kilo", name: "costo_kilo" },
+                { data: "total_inv_ini", name: "total_inv_ini" },
                 { data: "date", name: "date" },        
                 { data: "inventory", name: "inventory" },             
                 { data: "action", name: "action" },

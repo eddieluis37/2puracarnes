@@ -69,8 +69,7 @@
         <table id="tableInventory" class="table table-striped mt-1">
           <thead class="text-white" style="background: #3B3F5C">
             <tr>
-              <th class="table-th text-white">ID</th>
-              <th class="table-th text-white">COD</th>
+              <th class="table-th text-white">CAT</th>              
               <th class="table-th text-white">PRODUCTO</th>
               <th class="table-th text-white">INV INICIAL</th>
               <th class="table-th text-white">COSTO UNIT INV INI</th>
