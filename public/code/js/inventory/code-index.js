@@ -112,26 +112,6 @@ function initializeDataTable() {
     });
 }
 
-/* Insertar registros al tableTransfer del detalle. Se activa al darle enter en KG a trasladar o boton btnAddTransfer */
-/* btnGetInventory.addEventListener("click", (e) => {
-    e.preventDefault();
-    const dataform = new FormData(formDetail);
-    dataform.append("stockOrigen", stockOrigen.value);
-    dataform.append("centrocosto", centrocosto.value);
-    dataform.append("stockDestino", stockDestino.value);
-    sendData("/transfersavedetail", dataform, token).then((result) => {
-        console.log(result);
-        if (result.status === 1) {
-            $("#producto").val("").trigger("change");
-            formDetail.reset();
-            showData(result);
-        }
-        if (result.status === 0) {
-            errorMessage("Tienes vacios");
-        }
-    });
-}); */
-
 const showModalcreate = () => {
     if (contentform.hasAttribute("disabled")) {
         contentform.removeAttribute("disabled");
@@ -186,32 +166,6 @@ const send = async (dataform, ruta) => {
     return data;
 };
 
-/* selectCategory.addEventListener("change", function () {
-    const selectedValue = this.value;
-    console.log("Selected value:", selectedValue);
-    getCortes(selectedValue);
-}); */
-
-/* getCortes = (categoryId) => {
-    const dataform = new FormData();
-    dataform.append("categoriaId", Number(categoryId));
-    send(dataform, "/productospadre").then((result) => {
-        console.log(result);
-        let prod = result.products;
-        console.log(prod);
-        //showDataTable(result);
-        selectCortePadre.innerHTML = "";
-        selectCortePadre.innerHTML += `<option value="">Seleccione el producto</option>`;
-        // Create and append options to the select element
-        prod.forEach((option) => {
-            const optionElement = document.createElement("option");
-            optionElement.value = option.id;
-            optionElement.text = option.name;
-            selectCortePadre.appendChild(optionElement);
-        });
-    });
-}
- */
 function validateCentroCosto() {
     if (centrocostoorigen.value === centrocostodestino.value) {
         alert(
@@ -221,64 +175,6 @@ function validateCentroCosto() {
     }
     return true;
 }
-
-/* const form = document.getElementById("transferId");
-form.addEventListener("submit", function (event) {
-    if (!validateCentroCosto()) {
-        event.preventDefault(); // Evitar el envío del formulario si la validación falla
-    }
-}); */
-
-/* Proceso para obtener Stock actual centro costo origen */
-/* function getProductsByCostcenterOrigin(costcenteroriginId) {
-    console.log("centrocostoorigenId:", costcenteroriginId);
-    const dataform = new FormData();
-    dataform.append("centrocostoorigenId", Number(costcenteroriginId));
-    send(dataform, "/getproductsbycostcenterorigin").then((result) => {
-        console.log(result);
-        let prod = result.productsorigin;
-        console.log(prod);
-    });
-}
-function handleCostcenterOriginChange() {
-    const selectedValue = this.value;
-    console.log("Centro de costo origen seleccionado:", selectedValue);
-    getProductsByCostcenterOrigin(selectedValue);
-}
-selectCostcenterOrigin.addEventListener("change", handleCostcenterOriginChange);
-function actualizarStockActualOrigen() {
-    var selectCortePadre = document.getElementById("selectCortePadre");
-    var stockActualCenterCostOrigin = document.getElementById(
-        "stockActualCenterCostOrigin"
-    );
-}
- */
-/* Proceso para obtener Stock actual centro costo destino */
-
-/* function ProductsByCostcenterDest(costcenterdestId) {
-    console.log("centrocostodestinoId:", costcenterdestId);
-    const dataform = new FormData();
-    dataform.append("centrocostodestinoId", Number(costcenterdestId));
-    send(dataform, "/productsbycostcenterdest").then((result) => {
-        console.log(result);
-        let prodDest = result.productsdest;
-        console.log(prodDest);
-    });
-}
-
-function handleCostcenterDestChange() {
-    const selectedValue = this.value;
-    console.log("Centro de costo destino seleccionado:", selectedValue);
-    ProductsByCostcenterDest(selectedValue); // Pass the selected value to the function
-}
-
-selectCostcenterDest.addEventListener("change", handleCostcenterDestChange);
-function actualizarStockActualDest(seleccionado) {
-    var selectCortePadre = document.getElementById("selectCortePadre");
-    var stockActualCenterCostDest = document.getElementById(
-        "stockActualCenterCostDest"
-    );
-} */
 
 const downTransfer = (id) => {
     swal({
@@ -307,3 +203,33 @@ const refresh_table = () => {
     let table = $("#tableTransfer").dataTable();
     table.fnDraw(false);
 };
+
+  // Obtener el elemento select
+  const centrocostoSelect = document.getElementById('centrocosto');
+
+  // Agregar el evento change al select
+  centrocostoSelect.addEventListener('change', function() {
+      // Obtener el valor seleccionado
+      const centrocostoId = this.value;
+
+      console.log(centrocostoId);
+
+      // Enviar una solicitud AJAX al controlador
+      fetch('/showinventory', {
+          method: 'POST',
+          headers: {
+              'Content-Type': 'application/json',
+              'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+          },
+          body: JSON.stringify({ centrocostoId: centrocostoId })
+      })
+      .then(response => response.json())
+      .then(data => {
+          // Manipular los datos recibidos, por ejemplo, actualizar la tabla HTML
+          // con los resultados filtrados
+          console.log(data);
+      })
+      .catch(error => {
+          console.error('Error:', error);
+      });
+  });

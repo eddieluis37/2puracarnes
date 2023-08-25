@@ -58,12 +58,32 @@ class diariorogercodeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show()
+    public function show(Request $request)
     {
+        $centrocosto_id = $request->input('centrocosto');
+        // dump($centrocosto_id);
+
+        /*         $data = DB::table('products as pro')
+            ->join('categories as cat', 'pro.category_id', '=', 'cat.id')
+            ->join('centro_costo_products as ccp', 'pro.id', '=', 'ccp.id')
+            ->select('cat.name as namecategoria', 'pro.name as nameproducto', 'ccp.fisico as namefisico')
+            ->when($centrocosto_id, function ($query, $centrocosto_id) {
+                return $query->where('ccp.centrocosto_id', '=', $centrocosto_id);
+            })
+            ->get();    */
+
+        $centrocostoId = $request->input('centrocostoId');
+
         $data = DB::table('products as pro')
             ->join('categories as cat', 'pro.category_id', '=', 'cat.id')
-            ->select('cat.name as namecategoria', 'pro.name as nameproducto', 'pro.fisico as namefisico')
+            ->join('centro_costo_products as ccp', 'pro.id', '=', 'ccp.id')
+            ->select('cat.name as namecategoria', 'pro.name as nameproducto', 'ccp.fisico as namefisico')
+            ->when($centrocostoId, function ($query, $centrocostoId) {
+                return $query->where('ccp.centrocosto_id', '=', $centrocostoId);
+            })
             ->get();
+
+     //   return response()->json($data);
 
         $getCostoKiloPadre = DB::table('desposteres')
             ->join('products as p', 'desposteres.products_id', '=', 'p.id')
@@ -88,10 +108,16 @@ class diariorogercodeController extends Controller
         $getCompensados = DB::table('compensadores_details as comdet')
             ->join('products as p', 'comdet.products_id', '=', 'p.id')
             ->join('centro_costo_products as ce', 'p.id', '=', 'ce.products_id')
-            ->select('p.name', DB::raw('SUM(comdet.peso) as total_weight'))
-            ->groupBy('p.name')
+            ->join('centro_costo as cc', 'ce.centrocosto_id', '=', 'cc.id')
+            ->join('compensadores as comp', 'comdet.compensadores_id', '=', 'comp.id')
+            ->select('p.name', 'cc.name', 'comp.centrocosto_id', DB::raw('SUM(comdet.peso) as total_weight'))
+            ->where([
+                ['comp.status', 'VALID'],
+                ['p.status', 1],
+                ['cc.id', 1],
+            ])
+            ->groupBy('p.name', 'cc.name', 'comp.centrocosto_id')
             ->get();
-           // return $getCompensados;
 
         return Datatables::of($data)
             ->addColumn('costo_kilo', function ($row) use ($getCostoKiloPadre, $getCostoKiloHijo) {
@@ -157,8 +183,17 @@ class diariorogercodeController extends Controller
                 }
                 return $costo_kilo;
             })
+            ->addColumn('total_weight', function ($row) use ($getCompensados) {
+                $total_weight = '';
+                foreach ($getCompensados as $item) {
+                    if ($item->name == $row->nameproducto) {
+                        $total_weight = $item->total_weight;
+                        break;
+                    }
+                }
+                return $total_weight;
+            })
             ->addIndexColumn()
-            ->rawColumns(['total_weight'])
             //   ->rawColumns(['date'])
             ->make(true);
     }

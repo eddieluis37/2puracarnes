@@ -22,45 +22,45 @@
       </div>
       <div class="row g-3 mt-3">
         <div class="col-md-4">
-        <div class="task-header">
-          <div class="form-group">
-            <label for="categoria" class="form-label">Categoria</label>
-            <select class="form-control form-control-sm input" name="categoria" id="categoria" required>
-              <option value="">Seleccione la categoria</option>
-              @foreach($category as $option)
-              <option value="{{ $option['id'] }}" data="{{ $option }}">{{ $option['name'] }}</option>
-              @endforeach
-            </select>
-            <span class="text-danger error-message"></span>
+          <div class="task-header">
+            <div class="form-group">
+              <label for="categoria" class="form-label">Categoria</label>
+              <select class="form-control form-control-sm input" name="categoria" id="categoria" required>
+                <option value="">Seleccione la categoria</option>
+                @foreach($category as $option)
+                <option value="{{ $option['id'] }}" data="{{ $option }}">{{ $option['name'] }}</option>
+                @endforeach
+              </select>
+              <span class="text-danger error-message"></span>
+            </div>
           </div>
-        </div>
         </div>
         <div class="col-md-4">
           <label for="date1" class="form-label">Fecha</label>
-          <input type="date" class="form-control" placeholder="Last name" aria-label="Last name" value="{{date('Y-m-d')}}">
+          <input type="date" class="form-control" name="fecha" id="fecha" placeholder="Last name" aria-label="Last name" value="{{date('Y-m-d')}}">
         </div>
         <div class="col-md-4">
-        <div class="task-header">
-          <div class="form-group">
-            <label for="centrocostoOrigen" class="form-label">Centro de costo</label>
-            <select class="form-control form-control-sm input" name="centrocosto" id="centrocosto" required>
-              <option value="">Seleccione el centro de costo</option>
-              @foreach($centros as $option)
-              <option value="{{ $option['id'] }}" data="{{ $option }}">{{ $option['name'] }}</option>
-              @endforeach
-            </select>
-            <span class="text-danger error-message"></span>
+          <div class="task-header">
+            <div class="form-group">
+              <label for="centrocostoOrigen" class="form-label">Centro de costo</label>
+              <select class="form-control form-control-sm input" name="centrocosto" id="centrocosto" required>
+                <option value="">Seleccione el centro de costo</option>
+                @foreach($centros as $option)
+                <option value="{{ $option['id'] }}" data="{{ $option }}">{{ $option['name'] }}</option>
+                @endforeach
+              </select>
+              <span class="text-danger error-message"></span>
+            </div>
           </div>
-        </div>
         </div>
         <div class="col-md-4">
           <label for="date1" class="form-label">Responsable</label>
-					<select class="form-control form-control-sm " name="" id="" required="">
-						<option value="">Seleccione el responsable</option>
-					</select>
+          <select class="form-control form-control-sm " name="responsable" id="responsable" required="">
+            <option value="">Seleccione el responsable</option>
+          </select>
         </div>
         <div class="col-md-4">
-          <div style="margin-top:28px;" clas="">          
+          <div style="margin-top:28px;" clas="">
             <button type="submit" id="btnAddTransfer" class="btn btn-primary btn-lg">Aceptar</button>
           </div>
         </div>
@@ -69,7 +69,7 @@
         <table id="tableInventory" class="table table-striped mt-1">
           <thead class="text-white" style="background: #3B3F5C">
             <tr>
-              <th class="table-th text-white">CAT</th>              
+              <th class="table-th text-white">CAT</th>
               <th class="table-th text-white">PRODUCTO</th>
               <th class="table-th text-white">INV INICIAL</th>
               <th class="table-th text-white">COSTO UNIT INV INI</th>
@@ -98,11 +98,10 @@
               <th class="table-th text-white">MERMA</th>
               <th class="table-th text-white">% MERMA</th>
               <th class="table-th text-white">UTILIDAD</th>
-
               <th class="table-th text-white">% MERMA</th>
             </tr>
           </thead>
-          <tbody>       
+          <tbody>
           </tbody>
           <tfoot>
             <tr>
@@ -122,6 +121,16 @@
     </div>
   </div>
 </div>
+<form action="/inventory/diario" method="GET">
+    @csrf
+    <select class="form-control form-control-sm input" name="centrocosto" id="centrocosto" required>
+        <option value="">Seleccione el centro de costo</option>
+        @foreach($centros as $option)
+            <option value="{{ $option['id'] }}">{{ $option['name'] }}</option>
+        @endforeach
+    </select>
+    <button type="submit">Submit</button>
+</form>
 @endsection
 @section('script')
 <script src="{{asset('code/js/inventory/code-index.js')}}"></script>
