@@ -60,9 +60,25 @@ function initializeDataTable() {
                     return "$ " + formatCantidadSinCero(data);
                 },
             },
-            { data: "date", name: "date" },
-            { data: "inventory", name: "inventory" },
-            { data: "action", name: "action" },
+            { data: 'compraLote', name: 'compraLote' },
+            {
+                data: "costo_uni_lote",
+                name: "costo_uni_lote",
+                render: function (data, type, row) {
+                    return "$ " + formatCantidadSinCero(data);
+                },
+            },
+            { 
+                data: null, 
+                name: 'total_lote',
+                render: function(data, type, row) {
+                    var compraLote = parseFloat(row.compraLote);
+                    var costoUniLote = parseFloat(row.costo_uni_lote);
+                    var totalLote = compraLote * costoUniLote;
+                    return "$" + formatCantidadSinCero(totalLote);
+                }
+            },
+            { data: 'total_weight', name: 'total_weight' },           
         ],
         order: [[0, "DESC"]],
         language: {

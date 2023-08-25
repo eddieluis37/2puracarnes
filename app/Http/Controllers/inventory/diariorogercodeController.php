@@ -68,7 +68,7 @@ class diariorogercodeController extends Controller
         $getCostoKiloPadre = DB::table('desposteres')
             ->join('products as p', 'desposteres.products_id', '=', 'p.id')
             ->join('centro_costo_products as ce', 'p.id', '=', 'ce.products_id')
-            ->select('p.name', 'desposteres.costo_kilo')
+            ->select('p.name', 'desposteres.costo_kilo', 'desposteres.peso')
             ->where([
                 ['desposteres.status', 'VALID'],
                 ['p.status', 1],
@@ -84,6 +84,14 @@ class diariorogercodeController extends Controller
                 ['p.status', 1],
             ])
             ->get();
+
+        $getCompensados = DB::table('compensadores_details as comdet')
+            ->join('products as p', 'comdet.products_id', '=', 'p.id')
+            ->join('centro_costo_products as ce', 'p.id', '=', 'ce.products_id')
+            ->select('p.name', DB::raw('SUM(comdet.peso) as total_weight'))
+            ->groupBy('p.name')
+            ->get();
+           // return $getCompensados;
 
         return Datatables::of($data)
             ->addColumn('costo_kilo', function ($row) use ($getCostoKiloPadre, $getCostoKiloHijo) {
@@ -122,8 +130,36 @@ class diariorogercodeController extends Controller
                 }
                 return $row->namefisico * $item->costo_kilo;
             })
+            ->addColumn('compraLote', function ($row) use ($getCostoKiloPadre) {
+                $compraLote = 0;
+                foreach ($getCostoKiloPadre as $item) {
+                    if ($item->name == $row->nameproducto) {
+                        $compraLote += $item->peso;
+                    }
+                }
+                return $compraLote;
+            })
+            ->addColumn('costo_uni_lote', function ($row) use ($getCostoKiloPadre, $getCostoKiloHijo) {
+                $costo_kilo = '';
+                foreach ($getCostoKiloPadre as $item) {
+                    if ($item->name == $row->nameproducto) {
+                        $costo_kilo = $item->costo_kilo;
+                        break;
+                    }
+                }
+                if (empty($costo_kilo)) {
+                    foreach ($getCostoKiloHijo as $item) {
+                        if ($item->name == $row->nameproducto) {
+                            $costo_kilo = $item->costo_kilo;
+                            break;
+                        }
+                    }
+                }
+                return $costo_kilo;
+            })
             ->addIndexColumn()
-            ->rawColumns(['date'])
+            ->rawColumns(['total_weight'])
+            //   ->rawColumns(['date'])
             ->make(true);
     }
     /**
