@@ -61,29 +61,30 @@ class diariorogercodeController extends Controller
     public function show(Request $request)
     {
         $centrocosto_id = $request->input('centrocosto');
-        // dump($centrocosto_id);
 
-        /*         $data = DB::table('products as pro')
-            ->join('categories as cat', 'pro.category_id', '=', 'cat.id')
-            ->join('centro_costo_products as ccp', 'pro.id', '=', 'ccp.id')
-            ->select('cat.name as namecategoria', 'pro.name as nameproducto', 'ccp.fisico as namefisico')
-            ->when($centrocosto_id, function ($query, $centrocosto_id) {
-                return $query->where('ccp.centrocosto_id', '=', $centrocosto_id);
-            })
-            ->get();    */
+      //  $centrocostoId = $request->input('centrocostoId');
+           $centrocostoId = 1;
 
-        $centrocostoId = $request->input('centrocostoId');
+        //  var_dump($centrocostoId);
+       
+
+        //   $categoriaId = $request->input('categoriaId');
+        $categoriaId = 1;
+        //    var_dump($categoriaId);
+        // print_r($categoriaId);
+
 
         $data = DB::table('products as pro')
             ->join('categories as cat', 'pro.category_id', '=', 'cat.id')
             ->join('centro_costo_products as ccp', 'pro.id', '=', 'ccp.id')
             ->select('cat.name as namecategoria', 'pro.name as nameproducto', 'ccp.fisico as namefisico')
-            ->when($centrocostoId, function ($query, $centrocostoId) {
-                return $query->where('ccp.centrocosto_id', '=', $centrocostoId);
-            })
+            ->where('ccp.centrocosto_id', $centrocostoId)
+            ->where('pro.category_id', $categoriaId)
             ->get();
 
-     //   return response()->json($data);
+        //     return response()->json($data);
+
+     //   print_r($centrocostoId);
 
         $getCostoKiloPadre = DB::table('desposteres')
             ->join('products as p', 'desposteres.products_id', '=', 'p.id')

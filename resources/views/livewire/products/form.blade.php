@@ -43,8 +43,8 @@
 <div class="col-sm-12 col-md-4">
 	<div class="form-group">
 		<label >Precio</label>
-		<input type="text" wire:model.lazy="price" class="form-control" placeholder="ej: 0.00" >
-		@error('price') <span class="text-danger er">{{ $message}}</span>@enderror
+		<input type="text" wire:model.lazy="price_fama" class="form-control" placeholder="ej: 0.00" >
+		@error('price_fama') <span class="text-danger er">{{ $message}}</span>@enderror
 	</div>
 </div>
 

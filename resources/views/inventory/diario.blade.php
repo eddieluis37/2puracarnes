@@ -42,7 +42,7 @@
         <div class="col-md-4">
           <div class="task-header">
             <div class="form-group">
-              <label for="centrocostoOrigen" class="form-label">Centro de costo</label>
+              <label for="centrocosto" class="form-label">Centro de costo</label>
               <select class="form-control form-control-sm input" name="centrocosto" id="centrocosto" required>
                 <option value="">Seleccione el centro de costo</option>
                 @foreach($centros as $option)

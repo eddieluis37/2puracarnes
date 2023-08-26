@@ -51,7 +51,7 @@
 									<h6 class="text-center">{{$product->category}}</h6>
 								</td>
 								<td>
-									<h6 class="text-center">${{number_format($product->price,0)}}</h6>
+									<h6 class="text-center">${{number_format($product->price_fama,0)}}</h6>
 								</td>
 								<td>
 									<h6 class="text-center">{{number_format($product->iva)}}%</h6>
