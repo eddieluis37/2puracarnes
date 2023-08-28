@@ -201,7 +201,7 @@ Route::post('/downdespostec', [despostecerdoController::class, 'destroy']);
 Route::get('inventory/consolidado', [inventoryrogercodeController::class, 'index'])->name('inventory.consolidado');
 Route::get('inventory/diario', [diariorogercodeController::class, 'index'])->name('inventory.diario');
 Route::get('showinventory', [diariorogercodeController::class,'show'])->name('inventory.showlist');
-Route::post('showinvent', [diariorogercodeController::class,'show'])->name('inventory.showinvent');
+Route::post('showinventory', [diariorogercodeController::class,'show'])->name('inventory.showinvent');
 Route::get('inventory/mensual', [mensualrogercodeController::class, 'index'])->name('inventory.mensual');
 
 Route::get('compensado', [compensadorogercodeController::class,'index'])->name('compensado.index');

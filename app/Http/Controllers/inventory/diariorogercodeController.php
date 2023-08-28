@@ -62,8 +62,8 @@ class diariorogercodeController extends Controller
     {
         $centrocosto_id = $request->input('centrocosto');
 
-      //  $centrocostoId = $request->input('centrocostoId');
-           $centrocostoId = 1;
+  //    $centrocostoId = $request->input('centrocostoId');
+         $centrocostoId = 1;
 
         //  var_dump($centrocostoId);
        
@@ -82,7 +82,7 @@ class diariorogercodeController extends Controller
             ->where('pro.category_id', $categoriaId)
             ->get();
 
-        //     return response()->json($data);
+         // return response()->json($data);
 
      //   print_r($centrocostoId);
 

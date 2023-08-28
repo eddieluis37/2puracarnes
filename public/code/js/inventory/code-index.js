@@ -35,8 +35,6 @@ const catego = document.getElementById("categoria");
 
 const categoriaSelect = document.getElementById("categoria");
 
-
-
 $(document).ready(function () {
     var dataTable = $("#tableInventory").DataTable({
         paging: true,
@@ -122,7 +120,7 @@ $(document).ready(function () {
     });
     $("#categoria, #centrocosto").on("change", function () {
         dataTable.ajax.reload(function () {
-            dataTable.draw();
+            dataTable.draw(true);
         });
     });
 });
@@ -179,7 +177,9 @@ centrocostoSelect.addEventListener("change", function () {
 });
 
 function filterByCentroCosto(centrocostoId) {
-    fetch("/showinvent", {
+   
+    var draw = 1; // El valor de draw que deseas enviar
+    fetch("/showinventory", {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -192,54 +192,43 @@ function filterByCentroCosto(centrocostoId) {
         .then((response) => response.json())
         .then((data) => {
             console.log(data);
-            // Manipular los datos recibidos, por ejemplo, actualizar la tabla HTML
-            // con los resultados filtrados
-
-            function initializeDataTable() {
-                var dataTable = $("#tableInventory").DataTable({
-                    // Resto de la configuración del DataTable
-                });
-
-                $("#centrocosto").on("change", function () {
-                    // Obtén el valor seleccionado del centrocosto
-                    var centrocostoId = $(this).val();
-
-                    // Aplica el filtro al DataTable
-                    dataTable.column(0).search().draw();
-                });
-            }
+            // Update the DataTable data with the filtered results
+            var dataTable = $('#tableInventory').DataTable();
+            dataTable.clear().rows.add(data).draw(true);
+            
         })
         .catch((error) => {
             console.error("Error:", error);
         });
 }
 $(document).ready(function () {
+    var dataTable = $("#tableInventory").DataTable({
+        // Your DataTable configuration options
+        ajax: {
+            url: "/showinventory",
+            data: { centrocosto: $("#centrocosto").val() },
+            // Other data parameters if needed
+        },
+        // Other DataTable configurations
+    });
+
     $("#centrocosto").on("change", function () {
         // Get the selected centrocosto value
         var centrocostoId = $(this).val();
 
-        // Reinitialize the DataTable with the new centrocosto value
-        $("#tableInventory").DataTable({
-            // Your DataTable configuration options
-            ajax: {
-                url: "/inventory/diario",
-                data: { centrocosto: centrocostoId },
-                // Other data parameters if needed
-            },
-            // Other DataTable configurations
-            
-        });
+        // Update the DataTable data with the new centrocosto value
+         dataTable.ajax.url("/showinventory").data({ centrocosto: centrocostoId }).draw(true);
     });
 });
 
 categoriaSelect.addEventListener("change", function () {
     const categoriaId = this.value;
-    console.log('valorCategoria: ' + categoriaId);  
+    console.log("valorCategoria: " + categoriaId);
     // Make an AJAX request to the controller
     const xhr = new XMLHttpRequest();
-    xhr.open('GET', '/showinventory'); // Replace with your actual controller route
-    xhr.setRequestHeader('Content-Type', 'application/json');
-    xhr.setRequestHeader('X-CSRF-TOKEN', '{{ csrf_token() }}'); // If using Laravel's CSRF protection
+    xhr.open("GET", "/showinventory"); // Replace with your actual controller route
+    xhr.setRequestHeader("Content-Type", "application/json");
+    xhr.setRequestHeader("X-CSRF-TOKEN", "{{ csrf_token() }}"); // If using Laravel's CSRF protection
     xhr.onload = function () {
         if (xhr.status === 200) {
             // Handle the response from the controller
