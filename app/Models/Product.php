@@ -10,7 +10,7 @@ class Product extends Model
 	use HasFactory;
 
 
-	protected $fillable = ['category_id', 'meatcut_id', 'unitofmeasure_id', 'name', 'code', 'barcode', 'cost', 'price', 'iva', 'stock', 'alerts', 'image'];
+	protected $fillable = ['category_id', 'meatcut_id', 'unitofmeasure_id', 'name', 'code', 'barcode', 'cost', 'price_fama', 'price_insti', 'price_horeca', 'price_hogar', 'iva', 'stock', 'alerts', 'image'];
 
 	protected $table = 'products';
 
@@ -44,7 +44,7 @@ class Product extends Model
 	public function setPriceAttribute($value)
 	{
 		//$this->attributes['price'] = str_replace(',', '.', $value);
-		$this->attributes['price'] = str_replace(',', '.', preg_replace('/,/', '', $value, preg_match_all('/,/', $value) - 1));
+		$this->attributes['price_fama'] = str_replace(',', '.', preg_replace('/,/', '', $value, preg_match_all('/,/', $value) - 1));
 	}
 
 

@@ -50,6 +50,30 @@
 
 <div class="col-sm-12 col-md-4">
 	<div class="form-group">
+		<label >Precio ins</label>
+		<input type="text" wire:model.lazy="price_insti" class="form-control" placeholder="ej: 0.00" >
+		@error('price_insti') <span class="text-danger er">{{ $message}}</span>@enderror
+	</div>
+</div>
+
+<div class="col-sm-12 col-md-4">
+	<div class="form-group">
+		<label >Precio horeca</label>
+		<input type="text" wire:model.lazy="price_horeca" class="form-control" placeholder="ej: 0.00" >
+		@error('price_horeca') <span class="text-danger er">{{ $message}}</span>@enderror
+	</div>
+</div>
+
+<div class="col-sm-12 col-md-4">
+	<div class="form-group">
+		<label >Precio hogar</label>
+		<input type="text" wire:model.lazy="price_hogar" class="form-control" placeholder="ej: 0.00" >
+		@error('price_hogar') <span class="text-danger er">{{ $message}}</span>@enderror
+	</div>
+</div>
+
+<div class="col-sm-12 col-md-4">
+	<div class="form-group">
 		<label >Stock</label>
 		<input type="number"  wire:model.lazy="stock" class="form-control" placeholder="ej: 1000" >
 		@error('stock') <span class="text-danger er">{{ $message}}</span>@enderror
