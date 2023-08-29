@@ -5,7 +5,7 @@ namespace App\Http\Controllers\inventory;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-class inventoryrogercodeController extends Controller
+class mensualController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,7 +16,7 @@ class inventoryrogercodeController extends Controller
     {
         $startDate = '2023-05-01';
         $endDate = '2023-05-08';
-        return view('inventory.consolidado', compact('startDate', 'endDate'));
+        return view('inventory.consolidado_mensual', compact('startDate', 'endDate'));
     }
 
     /**

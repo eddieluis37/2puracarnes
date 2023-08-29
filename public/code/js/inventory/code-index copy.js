@@ -35,10 +35,8 @@ const catego = document.getElementById("categoria");
 
 const categoriaSelect = document.getElementById("categoria");
 
-var dataTable;
-
-function initializeDataTable() {
-    dataTable = $("#tableInventory").DataTable({
+$(document).ready(function () {
+    var dataTable = $("#tableInventory").DataTable({
         paging: true,
         pageLength: 5,
         autoWidth: false,
@@ -47,7 +45,10 @@ function initializeDataTable() {
         ajax: {
             url: "/showinventory",
             type: "GET",
-            
+            data: function (d) {
+                d.categoria = $("#categoria").val();
+                d.centrocosto = $("#centrocosto").val();
+            },
         },
         columns: [
             { data: "namecategoria", name: "namecategoria" },
@@ -110,34 +111,130 @@ function initializeDataTable() {
         dom: "Bfrtip",
         buttons: ["copy", "csv", "excel", "pdf"],
     });
-}
 
-$(document).ready(function () {
-    initializeDataTable();
-
-    $("#centrocosto").on("change", function () {
-        var centrocostoId = $(this).val();
-        filterByCentroCosto(centrocostoId);
+    $(".select2corte").select2({
+        placeholder: "Busca un producto",
+        width: "100%",
+        theme: "bootstrap-5",
+        allowClear: true,
+    });
+    $("#categoria, #centrocosto").on("change", function () {
+        dataTable.ajax.reload(function () {
+            dataTable.draw(true);
+        });
     });
 });
 
-function filterByCentroCosto(centrocostoId) {
-    $.ajax({
-      url: "/showinventory",
-      type: "POST",
-      contentType: "application/json",
-      headers: {
-        "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
-      },
-      data: JSON.stringify({ centrocostoId: centrocostoId }),
-      success: function (data) {
-        data.draw = 1; // Set draw value to 1
-       /*  dataTable.clear().draw();*/
-        dataTable.rows.add(data).draw(); 
-        console.log(data);
-      },
-      error: function (xhr, status, error) {
-        console.error("Error:", xhr.status);
-      },
+const showModalcreate = () => {
+    if (contentform.hasAttribute("disabled")) {
+        contentform.removeAttribute("disabled");
+        $(".select2corte").prop("disabled", false);
+    }
+    $(".select2corte").val("").trigger("change");
+    formTransfer.reset();
+    transfer_id.value = 0;
+};
+
+const showDataForm = (id) => {
+    console.log(id);
+    const dataform = new FormData();
+    dataform.append("id", id);
+    send(dataform, "/transferById").then((resp) => {
+        console.log(resp);
+        console.log(resp.reg);
+        showData(resp);
+        setTimeout(() => {
+            $(".select2corte").val(resp.reg.meatcut_id).trigger("change");
+        }, 1000);
+        $(".select2corte").prop("disabled", true);
+        contentform.setAttribute("disabled", "disabled");
     });
-  }
+};
+
+const send = async (dataform, ruta) => {
+    let response = await fetch(ruta, {
+        headers: {
+            "X-CSRF-TOKEN": token,
+        },
+        method: "POST",
+        body: dataform,
+    });
+    let data = await response.json();
+    return data;
+};
+
+const refresh_table = () => {
+    let table = $("#tableInventory").dataTable();
+    table.fnDraw(true);
+};
+
+const centrocostoSelect = document.getElementById("centrocosto");
+
+centrocostoSelect.addEventListener("change", function () {
+    const centrocostoId = this.value;
+    console.log(centrocostoId);
+    filterByCentroCosto(centrocostoId);
+});
+
+function filterByCentroCosto(centrocostoId) {
+   
+    var draw = 1; // El valor de draw que deseas enviar
+    fetch("/showinventory", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            "X-CSRF-TOKEN": document
+                .querySelector('meta[name="csrf-token"]')
+                .getAttribute("content"),
+        },
+        body: JSON.stringify({ centrocostoId: centrocostoId }),
+    })
+        .then((response) => response.json())
+        .then((data) => {
+            console.log(data);
+            // Update the DataTable data with the filtered results
+            var dataTable = $('#tableInventory').DataTable();
+            dataTable.clear().rows.add(data).draw(true);
+            
+        })
+        .catch((error) => {
+            console.error("Error:", error);
+        });
+}
+$(document).ready(function () {
+    var dataTable = $("#tableInventory").DataTable({
+        // Your DataTable configuration options
+        ajax: {
+            url: "/showinventory",
+            data: { centrocosto: $("#centrocosto").val() },
+            // Other data parameters if needed
+        },
+        // Other DataTable configurations
+    });
+
+    $("#centrocosto").on("change", function () {
+        // Get the selected centrocosto value
+        var centrocostoId = $(this).val();
+
+        // Update the DataTable data with the new centrocosto value
+         dataTable.ajax.url("/showinventory").data({ centrocosto: centrocostoId }).draw(true);
+    });
+});
+
+categoriaSelect.addEventListener("change", function () {
+    const categoriaId = this.value;
+    console.log("valorCategoria: " + categoriaId);
+    // Make an AJAX request to the controller
+    const xhr = new XMLHttpRequest();
+    xhr.open("GET", "/showinventory"); // Replace with your actual controller route
+    xhr.setRequestHeader("Content-Type", "application/json");
+    xhr.setRequestHeader("X-CSRF-TOKEN", "{{ csrf_token() }}"); // If using Laravel's CSRF protection
+    xhr.onload = function () {
+        if (xhr.status === 200) {
+            // Handle the response from the controller
+            console.log(xhr.responseText);
+        }
+    };
+    const data = JSON.stringify({ categoriaId: categoriaId });
+    xhr.send(data);
+});

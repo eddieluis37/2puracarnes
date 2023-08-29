@@ -32,9 +32,9 @@ use App\Http\Controllers\res\desposteresrogercodeController;
 use App\Http\Controllers\res\beneficioresrogercodeController;
 use App\Http\Controllers\cerdo\despostecerdoController;
 use App\Http\Controllers\cerdo\beneficiocerdoController;
-use App\Http\Controllers\inventory\inventoryrogercodeController;
-use App\Http\Controllers\inventory\diariorogercodeController;
-use App\Http\Controllers\inventory\mensualrogercodeController;
+use App\Http\Controllers\inventory\inventoryController;
+use App\Http\Controllers\inventory\diaryController;
+use App\Http\Controllers\inventory\mensualController;
 use App\Http\Controllers\compensado\resrogercodeController;
 use App\Http\Controllers\compensado\compensadorogercodeController;
 use App\Http\Controllers\alistamiento\alistamientorogercodeController;
@@ -185,25 +185,28 @@ Route::get('conte2', function () {
 Route::get('select2', Select2::class);
 
 
-/***************** RUTAS SIN LIVEWIRE ********************************** */
-/**DESPOSTE RES */
+/************************* RUTAS SIN LIVEWIRE ********************************** */
+
+/*****************************INVENTORY****************************************** */
+Route::get('inventory/diary', [diaryController::class, 'index'])->name('inventory.diary');
+Route::get('inventory/consolidado', [inventoryController::class, 'index'])->name('inventory.consolidado');
+Route::get('showinventory', [diaryController::class,'show'])->name('inventory.showlist');
+Route::post('showinventory', [diaryController::class,'show'])->name('inventory.showinvent');
+Route::get('inventory/mensual', [mensualController::class, 'index'])->name('inventory.mensual');
+
+/*****************************DESPOSTE-RES******************************************/
 Route::get('desposteres', [desposteresrogercodeController::class, 'index'])->name('desposteres.index');
 Route::get('desposteres/{id}', [desposteresrogercodeController::class, 'create']);
 Route::post('/desposteresUpdate', [desposteresrogercodeController::class, 'update']);
 Route::post('/downdesposter', [desposteresrogercodeController::class, 'destroy']);
 
-/**DESPOSTE CERDO */
+/*****************************DESPOSTE-CERDO******************************************/
 Route::get('despostecerdo', [despostecerdoController::class, 'index'])->name('despostecerdo.index');
 Route::get('despostecerdo/{id}', [despostecerdoController::class, 'create']);
 Route::post('/despostecerdoUpdate', [despostecerdoController::class, 'update']);
 Route::post('/downdespostec', [despostecerdoController::class, 'destroy']);
-/*****************************INVENTORY****************************************** */
-Route::get('inventory/consolidado', [inventoryrogercodeController::class, 'index'])->name('inventory.consolidado');
-Route::get('inventory/diario', [diariorogercodeController::class, 'index'])->name('inventory.diario');
-Route::get('showinventory', [diariorogercodeController::class,'show'])->name('inventory.showlist');
-Route::post('showinventory', [diariorogercodeController::class,'show'])->name('inventory.showinvent');
-Route::get('inventory/mensual', [mensualrogercodeController::class, 'index'])->name('inventory.mensual');
 
+/*****************************COMPRAS-COMPENSADOS****************************************** */
 Route::get('compensado', [compensadorogercodeController::class,'index'])->name('compensado.index');
 Route::get('compensado/create/{id}', [compensadorogercodeController::class,'create'])->name('compensado.create');
 Route::get('showlistcompensado', [compensadorogercodeController::class,'show'])->name('compensado.showlist');

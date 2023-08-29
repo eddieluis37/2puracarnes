@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\DB;
 use Yajra\Datatables\Datatables;
 use Carbon\Carbon;
 
-class diariorogercodeController extends Controller
+class diaryController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -25,10 +25,10 @@ class diariorogercodeController extends Controller
         $centros = Centrocosto::Where('status', 1)->get();
         $centroCostoProductos = Centro_costo_product::all();
 
-        return view("inventory.diario", compact('category', 'costcenter', 'centros', 'centroCostoProductos'));
+        return view("inventory.diary", compact('category', 'costcenter', 'centros', 'centroCostoProductos'));
 
-
-        // return view('inventory.diario');
+        // return view('hola');
+        //  return view('inventory.diary');
     }
 
     /**
@@ -62,11 +62,11 @@ class diariorogercodeController extends Controller
     {
         $centrocosto_id = $request->input('centrocosto');
 
-  //    $centrocostoId = $request->input('centrocostoId');
-         $centrocostoId = 1;
+        //    $centrocostoId = $request->input('centrocostoId');
+        $centrocostoId = 1;
 
         //  var_dump($centrocostoId);
-       
+
 
         //   $categoriaId = $request->input('categoriaId');
         $categoriaId = 1;
@@ -82,9 +82,9 @@ class diariorogercodeController extends Controller
             ->where('pro.category_id', $categoriaId)
             ->get();
 
-         // return response()->json($data);
+        // return response()->json($data);
 
-     //   print_r($centrocostoId);
+        //   print_r($centrocostoId);
 
         $getCostoKiloPadre = DB::table('desposteres')
             ->join('products as p', 'desposteres.products_id', '=', 'p.id')
