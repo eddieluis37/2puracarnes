@@ -19,7 +19,7 @@ use App\Http\Controllers\metodosgenerales\metodosrogercodeController;
 use App\Models\shopping\shopping_enlistment;
 use App\Models\shopping\shopping_enlistment_details;
 
-class alistamientorogercodeController extends Controller
+class alistamientoController extends Controller
 {
     /**
      * Display a listing of the resource.

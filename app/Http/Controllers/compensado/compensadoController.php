@@ -17,7 +17,7 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\metodosgenerales\metodosrogercodeController;
 
-class compensadorogercodeController extends Controller
+class compensadoController extends Controller
 {
     /**
      * Display a listing of the resource.

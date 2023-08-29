@@ -17,7 +17,7 @@ use Illuminate\Support\Facades\Auth;
 use Yajra\Datatables\Datatables;
 use Carbon\Carbon;
 
-class beneficioavesrogercodeController extends Controller
+class beneficioavesController extends Controller
 {
     /**
      * Display a listing of the resource.

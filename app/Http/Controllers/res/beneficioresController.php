@@ -15,7 +15,7 @@ use App\Models\Beneficiore;
 use NumberFormatter;
 use DateTime;
 
-class beneficioresrogercodeController extends Controller
+class beneficioresController extends Controller
 {
     /**
      * Display a listing of the resource.
