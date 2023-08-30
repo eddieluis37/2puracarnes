@@ -47,7 +47,6 @@ function initializeDataTable() {
         ajax: {
             url: "/showinventory",
             type: "GET",
-            
         },
         columns: [
             { data: "namecategoria", name: "namecategoria" },
@@ -123,21 +122,21 @@ $(document).ready(function () {
 
 function filterByCentroCosto(centrocostoId) {
     $.ajax({
-      url: "/showinventory",
-      type: "POST",
-      contentType: "application/json",
-      headers: {
-        "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
-      },
-      data: JSON.stringify({ centrocostoId: centrocostoId }),
-      success: function (data) {
-        data.draw = 1; // Set draw value to 1
-       /*  dataTable.clear().draw();*/
-        dataTable.rows.add(data).draw(); 
-        console.log(data);
-      },
-      error: function (xhr, status, error) {
-        console.error("Error:", xhr.status);
-      },
+        url: "/showinventory",
+        type: "POST",
+        contentType: "application/json",
+        headers: {
+            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+        },
+        data: JSON.stringify({ centrocostoId: centrocostoId }),
+        success: function (data) {
+            //   data.draw = 1; // Set draw value to 1
+            /*  dataTable.clear().draw();*/
+            dataTable.rows.add(data).draw();
+            console.log(data);
+        },
+        error: function (xhr, status, error) {
+            console.error("Error:", xhr.status);
+        },
     });
-  }
+}

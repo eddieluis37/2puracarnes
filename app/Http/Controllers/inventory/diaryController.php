@@ -60,9 +60,9 @@ class diaryController extends Controller
      */
     public function show(Request $request)
     {
-        $centrocosto_id = $request->input('centrocosto');
+        //   $centrocosto_id = $request->input('centrocosto');
 
-        //    $centrocostoId = $request->input('centrocostoId');
+        //$centrocostoId = $request->input('centrocostoId');
         $centrocostoId = 1;
 
         //  var_dump($centrocostoId);

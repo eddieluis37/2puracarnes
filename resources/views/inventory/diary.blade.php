@@ -121,7 +121,7 @@
     </div>
   </div>
 </div>
-<form action="/inventory/diario" method="GET">
+<!-- <form action="/showinventory" method="GET">
     @csrf
     <select class="form-control form-control-sm input" name="centrocosto" id="centrocosto" required>
         <option value="">Seleccione el centro de costo</option>
@@ -129,8 +129,8 @@
             <option value="{{ $option['id'] }}">{{ $option['name'] }}</option>
         @endforeach
     </select>
-    <button type="submit">Submit</button>
-</form>
+    <button type="submit">Aceptar</button>
+</form> -->
 @endsection
 @section('script')
 <script src="{{asset('code/js/inventory/code-index.js')}}"></script>
