@@ -42,6 +42,15 @@ class UserSeeder extends Seeder
             'status' => 'Active',
             'password' => bcrypt('3016032085')
         ]);
+        User::create([
+            'name' => 'directivo',
+            'phone' => '3008755514',
+            'email' => 'directivo@puracarnes.com',
+            //'email' => 'realbenditouno@gmail.com',
+            'profile' => 'Admin',
+            'status' => 'Active',
+            'password' => bcrypt('directivo@puracarnes.com')
+        ]);
 
         // crear role Administrador
         $admin     = Role::create(['name' => 'Admin']);
@@ -99,6 +108,10 @@ class UserSeeder extends Seeder
 
         // asignar role Admin al usuario Eddie Rada
         $uAdmin = User::find(1);
+        $uAdmin->assignRole('Admin');
+
+        // asignar role Admin al usuario directivo
+        $uAdmin = User::find(4);
         $uAdmin->assignRole('Admin');
 
         // asignar role Cajero al usuario Andrea Cabana
