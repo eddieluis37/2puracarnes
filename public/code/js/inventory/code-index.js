@@ -35,9 +35,10 @@ const catego = document.getElementById("categoria");
 
 const categoriaSelect = document.getElementById("categoria");
 
-var dataTable;
+var  dataTable ;
 
-function initializeDataTable() {
+function initializeDataTable(centrocostoId) {
+    
     dataTable = $("#tableInventory").DataTable({
         paging: true,
         pageLength: 5,
@@ -47,7 +48,7 @@ function initializeDataTable() {
         ajax: {
             url: "/showinventory",
             type: "GET",
-            
+            data: { centrocostoId: centrocostoId },
         },
         columns: [
             { data: "namecategoria", name: "namecategoria" },
@@ -113,31 +114,41 @@ function initializeDataTable() {
 }
 
 $(document).ready(function () {
-    initializeDataTable();
+    
+    initializeDataTable("-1");
 
     $("#centrocosto").on("change", function () {
-        var centrocostoId = $(this).val();
-        filterByCentroCosto(centrocostoId);
+        var centrocostoId = $(this).val();        
+        //filterByCentroCosto(centrocostoId);
+        dataTable.destroy();
+        initializeDataTable(centrocostoId);
     });
 });
 
-function filterByCentroCosto(centrocostoId) {
-    $.ajax({
-      url: "/showinventory",
-      type: "POST",
-      contentType: "application/json",
-      headers: {
-        "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
-      },
-      data: JSON.stringify({ centrocostoId: centrocostoId }),
-      success: function (data) {
-        data.draw = 1; // Set draw value to 1
+//function filterByCentroCosto(centrocostoId) {
+  //  $.ajax({
+    //  url: "/showinventory",     
+     // type: "POST",
+      //contentType: "application/json",
+     // headers: {
+     //   "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+    //  },
+      //data: JSON.stringify({ centrocostoId: centrocostoId }),
+     // data: { centrocostoId: centrocostoId },
+     // success: function (data) {
+    
+       // $("#tableInventory").DataTable().ajax.reload();
+        //data.draw = 1; // Set draw value to 1
        /*  dataTable.clear().draw();*/
-        dataTable.rows.add(data).draw(); 
-        console.log(data);
-      },
-      error: function (xhr, status, error) {
-        console.error("Error:", xhr.status);
-      },
-    });
-  }
+           //dataTable.draw();
+       //dataTable.clear().draw();
+      // dataTable.rows.add(data).draw(false); 
+      // dataTable.columns.adjust().draw();
+        
+       // console.log(data);
+     // },
+     // error: function (xhr, status, error) {
+      //  console.error("Error:", xhr.status);
+     // },
+  //  });
+  //}
