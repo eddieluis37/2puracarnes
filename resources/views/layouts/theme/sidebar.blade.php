@@ -22,7 +22,8 @@
             </li>
             @endcan
 
-            @role('Admin')
+
+            @can('Compras_All')
             <li class="menu">
                 <a href="#more" data-active="false" class="menu-toggle">
                     <div class="base-menu">
@@ -42,7 +43,8 @@
             </li>
             @endcan
 
-            @role('Admin')
+
+            @can('Produccion')
             <li class="">
                 <a href="{{url('alistamiento')}}" class="menu-toggle" data-active="false">
                     <div class="base-menu">
@@ -144,7 +146,7 @@
             </li>
             @endcan
 
-            @role('Admin')
+            @can('Inventory')
             <li class="menu">
                 <a href="#app" data-active="false" class="menu-toggle">
                     <div class="base-menu">

@@ -1,43 +1,12 @@
 console.log("Starting");
 
-const btnAddTransfer = document.querySelector("#btnAddTransfer");
-const formTransfer = document.querySelector("#form-transfer");
 const token = document
     .querySelector('meta[name="csrf-token"]')
     .getAttribute("content");
-const btnClose = document.querySelector("#btnModalClose");
-
-/* const selectCategory = document.querySelector("#categoria"); */
-const selectCentrocosto = document.querySelector("#centrocosto");
-const selectCentrocostoDestino = document.querySelector("#centrocostoDestino");
-
-const selectCostcenterOrigin = document.querySelector("#centrocostoorigen");
-const selectCostcenterDest = document.querySelector("#centrocostodestino");
-
-const transfer_id = document.querySelector("#transferId");
-const contentform = document.querySelector("#contentDisable");
-
-const selectCortePadre = document.querySelector("#selectCortePadre");
-
-const stockActualCenterCostOrigin = document.getElementById(
-    "stockActualCenterCostOrigin"
-);
-const stockActualCenterCostDest = document.getElementById(
-    "stockActualCenterCostDest"
-);
-
-const tbodyTable = document.querySelector("#tableInventory tbody");
-const tfootTable = document.querySelector("#tableInventory tfoot");
-
-const btnGetInventory = document.querySelector("#btnGetInventory");
-
-const catego = document.getElementById("categoria");
-
-const categoriaSelect = document.getElementById("categoria");
 
 var dataTable;
 
-function initializeDataTable() {
+function initializeDataTable(centrocostoId = "-1", categoriaId = "-1") {
     dataTable = $("#tableInventory").DataTable({
         paging: true,
         pageLength: 5,
@@ -47,6 +16,10 @@ function initializeDataTable() {
         ajax: {
             url: "/showinventory",
             type: "GET",
+            data: {
+                centrocostoId: centrocostoId,
+                categoriaId: categoriaId,
+            },
         },
         columns: [
             { data: "namecategoria", name: "namecategoria" },
@@ -110,33 +83,14 @@ function initializeDataTable() {
         buttons: ["copy", "csv", "excel", "pdf"],
     });
 }
-
 $(document).ready(function () {
-    initializeDataTable();
+    initializeDataTable("-1");
 
-    $("#centrocosto").on("change", function () {
-        var centrocostoId = $(this).val();
-        filterByCentroCosto(centrocostoId);
+    $("#centrocosto, #categoria").on("change", function () {
+        var centrocostoId = $("#centrocosto").val();
+        var categoriaId = $("#categoria").val();
+
+        dataTable.destroy();
+        initializeDataTable(centrocostoId, categoriaId);
     });
 });
-
-function filterByCentroCosto(centrocostoId) {
-    $.ajax({
-        url: "/showinventory",
-        type: "POST",
-        contentType: "application/json",
-        headers: {
-            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
-        },
-        data: JSON.stringify({ centrocostoId: centrocostoId }),
-        success: function (data) {
-            //   data.draw = 1; // Set draw value to 1
-            /*  dataTable.clear().draw();*/
-            dataTable.rows.add(data).draw();
-            console.log(data);
-        },
-        error: function (xhr, status, error) {
-            console.error("Error:", xhr.status);
-        },
-    });
-}

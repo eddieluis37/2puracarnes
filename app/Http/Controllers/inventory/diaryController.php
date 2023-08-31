@@ -62,16 +62,16 @@ class diaryController extends Controller
     {
         //   $centrocosto_id = $request->input('centrocosto');
 
-        //$centrocostoId = $request->input('centrocostoId');
-        $centrocostoId = 1;
+        $centrocostoId = $request->input('centrocostoId');
+      //  $centrocostoId = 1;
 
         //  var_dump($centrocostoId);
 
 
-        //   $categoriaId = $request->input('categoriaId');
-        $categoriaId = 1;
-        //    var_dump($categoriaId);
-        // print_r($categoriaId);
+       $categoriaId = $request->input('categoriaId');
+       //    $categoriaId = 1;
+       // var_dump($categoriaId);
+        //  print_r($categoriaId);
 
 
         $data = DB::table('products as pro')
