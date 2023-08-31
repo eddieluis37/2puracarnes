@@ -94,7 +94,7 @@
             </li>
             @endcan
 
-            <!-- @role('Admin')
+            @role('Admin')
             <li class="">
                 <a href="{{url('faster')}}" class="menu-toggle" data-active="false">
                     <div class="base-menu">
@@ -105,13 +105,11 @@
                                 <path d="M1 1h4l2.25 7h13.5l2.25-7h4"></path>
                             </svg>
                         </div>
-                        <span>Faster</span>
+                        <span>Prueba</span>
                     </div>
                 </a>
             </li>
-            @endcan -->
-
-
+            @endcan
 
             @can('Product_View')
             <li class="">
@@ -129,7 +127,7 @@
             </li>
             @endcan
 
-            @can('Ventas')
+            @can('Pos_Create')
             <li class="">
                 <a href="{{ url('pos') }}" class="menu-toggle" data-active="false">
                     <div class="base-menu">
