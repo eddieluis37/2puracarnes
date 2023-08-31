@@ -24,7 +24,7 @@ class UserSeeder extends Seeder
             'email' => 'admin@puracarnes.com',
             'profile' => 'Admin',
             'status' => 'Active',
-            'password' => bcrypt('7201880130')
+            'password' => bcrypt('Edd1eLu1s9.')
         ]);
         User::create([
             'name' => 'Jair Rada Rada',
@@ -35,12 +35,28 @@ class UserSeeder extends Seeder
             'password' => bcrypt('3016032085')
         ]);
         User::create([
+            'name' => 'Milagros Peña',
+            'phone' => '3008755514',
+            'email' => 'gerencia.general@puracarnes.com',
+            'profile' => 'Admin',
+            'status' => 'Active',
+            'password' => bcrypt('3044228481')
+        ]);
+        User::create([
+            'name' => 'Jair Rada Rada',
+            'phone' => '3008755514',
+            'email' => 'contabilidad@puracarnes.com',
+            'profile' => 'Admin',
+            'status' => 'Active',
+            'password' => bcrypt('3155352110')
+        ]);
+        User::create([
             'name' => 'directivo',
             'phone' => '3008755514',
             'email' => 'directivo@puracarnes.com',
             'profile' => 'Admin',
             'status' => 'Active',
-            'password' => bcrypt('directivo@puracarnes.com')
+            'password' => bcrypt('3016032085')
         ]);
         User::create([
             'name' => 'compras',
@@ -54,19 +70,34 @@ class UserSeeder extends Seeder
             'name' => 'produccion',
             'phone' => '3008755514',
             'email' => 'produccion@puracarnes.com',
-            'profile' => 'produccion',
+            'profile' => 'Produccion',
             'status' => 'Active',
             'password' => bcrypt('produccion@puracarnes.com')
         ]);
-
-        /* User::create([
-            'name' => 'produccion',
-            'phone' => '301873219',
-            'email' => 'produccion@puracarnes.com',
-            'profile' => 'Alistamiento',
+        User::create([
+            'name' => 'costos',
+            'phone' => '3008755514',
+            'email' => 'costos@puracarnes.com',
+            'profile' => 'Costos',
             'status' => 'Active',
-            'password' => bcrypt('produccion@puracarnes.com')
-        ]); */
+            'password' => bcrypt('costos@puracarnes.com')
+        ]);
+        User::create([
+            'name' => 'ventas',
+            'phone' => '3008755514',
+            'email' => 'tesoreria@puracarnes.com',
+            'profile' => 'Tesoreria',
+            'status' => 'Active',
+            'password' => bcrypt('tesoreria@puracarnes.com')
+        ]);
+        User::create([
+            'name' => 'comercial',
+            'phone' => '3008755514',
+            'email' => 'comercial@puracarnes.com',
+            'profile' => 'Comercial',
+            'status' => 'Active',
+            'password' => bcrypt('comercial@puracarnes.com')
+        ]);
 
         /**********************************************************************/
         /*** Al agregar nuevos roles  se debe agregar el rol en la migracion tabla User
@@ -95,19 +126,23 @@ class UserSeeder extends Seeder
         Permission::create(['name' => 'Product_Update']);
         Permission::create(['name' => 'Product_Destroy']);
 
-        // crear permisos componente Ventas
-        Permission::create(['name' => 'Pos_Create']);
-
-        // crear permisos componente Reportes
+        // crear permisos modulo Reportes
         Permission::create(['name' => 'Report_Create']);
 
-        // crear permisos para usuario comprador
+        // crear permisos para modulo compras
         Permission::create(['name' => 'Compras_All']);
+
+        // crear permisos para modulo Inventario
         Permission::create(['name' => 'Inventory']);
 
-        // crear permisos para usuario produccion
+        // crear permisos para modulo alistamiento
         Permission::create(['name' => 'Produccion']);
-     
+
+        // crear permisos para modulo traslados
+        Permission::create(['name' => 'Traslados']);
+
+        // crear permisos para modulo ventas
+        Permission::create(['name' => 'Ventas']);
 
 
         // crear role Administrador
@@ -116,25 +151,30 @@ class UserSeeder extends Seeder
         // crear role Cajero
         $cajero    = Role::create(['name' => 'Cajero']);
 
-        // crear role Vendedor
-        $vendedor  = Role::create(['name' => 'Vendedor']);
-
         // crear role compras
         $comprador  = Role::create(['name' => 'Comprador']);
 
-         // crear role alistamiento
-         $produccion  = Role::create(['name' => 'Produccion']);
+        // crear role alistamiento
+        $produccion  = Role::create(['name' => 'Produccion']);
+
+        // crear role costos
+        $costos  = Role::create(['name' => 'Costos']);
+
+        // crear role Vendedor
+        $ventas  = Role::create(['name' => 'Tesoreria']);
+
+        // crear role Comercial
+        $comercial  = Role::create(['name' => 'Comercial']);
+
+
 
         // asignar permisos al rol Admin
         $admin->givePermissionTo([
-            'Admin_Menu', 'Compras_All', 'Produccion', 'Inventory', 'Cashout_Create', 'Parametros_Create', 'Category_View', 'Category_Create', 'Category_Search', 'Category_Update', 'Category_Destroy', 'Product_View', 'Product_Create', 'Product_Search', 'Product_Update', 'Product_Destroy', 'Pos_Create', 'Report_Create'
+            'Admin_Menu', 'Compras_All', 'Produccion', 'Traslados', 'Ventas', 'Inventory', 'Cashout_Create', 'Parametros_Create', 'Category_View', 'Category_Create', 'Category_Search', 'Category_Update', 'Category_Destroy', 'Product_View', 'Product_Create', 'Product_Search', 'Product_Update', 'Product_Destroy', 'Report_Create'
         ]);
 
         // asignar permisos al rol Cajero
-        $cajero->givePermissionTo(['Cashout_Create', 'Category_View', 'Category_Search', 'Product_View', 'Product_Search', 'Pos_Create']);
-
-        // asignar permisos al vendedor
-        $vendedor->givePermissionTo(['Cashout_Create', 'Category_View', 'Category_Search', 'Product_View', 'Product_Search']);
+        $cajero->givePermissionTo(['Ventas', 'Cashout_Create', 'Category_View', 'Category_Search', 'Product_View', 'Product_Search']);
 
         // asignar permisos al comprador
         $comprador->givePermissionTo(['Compras_All', 'Inventory']);
@@ -142,27 +182,29 @@ class UserSeeder extends Seeder
         // asignar permisos a produccion
         $produccion->givePermissionTo(['Produccion']);
 
-        // asignar role Admin al usuario Eddie Rada
-        $uAdmin = User::find(1);
-        $uAdmin->assignRole('Admin');
+        // asignar permisos a costos
+        $costos->givePermissionTo(['Traslados', 'Inventory']);
 
-        // asignar role Admin al usuario directivo
-        $uAdmin = User::find(2);
-        $uAdmin->assignRole('Admin');
+        // asignar permisos al vendedor
+        $ventas->givePermissionTo(['Ventas', 'Cashout_Create', 'Category_View', 'Category_Search', 'Product_View', 'Product_Search']);
 
-        // asignar role Cajero al usuario Andrea Cabana
-        $uCajero = User::find(2);
-        $uCajero->assignRole('Cajero');
+        // asignar permisos al usuario comercial
+        $comercial->givePermissionTo(['Inventory']);
 
-        // asignar role Vendedor al usuario Jair Rada
-        $uVendedor = User::find(3);
-        $uVendedor->assignRole('Vendedor');
+        /************************ Asignar role Admin al usuario Eddie Rad */
+        /* $uAdmin = User::find(1);
+        $uAdmin->assignRole('Admin'); */
 
-        // asignar role Compras al usuario compras
-        $uComprador = User::find(4);
-        $uComprador->assignRole('Comprador');
+        User::find(1)->assignRole('Admin');
+        User::find(2)->assignRole('Admin');
+        User::find(3)->assignRole('Admin');
+        User::find(4)->assignRole('Admin');
+        User::find(5)->assignRole('Admin');
+        User::find(6)->assignRole('Comprador');
+        User::find(7)->assignRole('Produccion');
+        User::find(8)->assignRole('Costos');
+        User::find(9)->assignRole('Tesoreria');
+        User::find(10)->assignRole('Comercial');
         
-        $uProduccion = User::find(4);
-        $uProduccion->assignRole('Produccion');
     }
 }

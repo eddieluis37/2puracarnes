@@ -78,7 +78,7 @@
             </li>
             @endcan
 
-            @role('Admin')
+            @can('Traslados')
             <li class="">
                 <a href="{{url('transfer')}}" class="menu-toggle" data-active="false">
                     <div class="base-menu">
@@ -94,7 +94,7 @@
             </li>
             @endcan
 
-            @role('Admin')
+            <!-- @role('Admin')
             <li class="">
                 <a href="{{url('faster')}}" class="menu-toggle" data-active="false">
                     <div class="base-menu">
@@ -109,7 +109,7 @@
                     </div>
                 </a>
             </li>
-            @endcan
+            @endcan -->
 
 
 
@@ -129,7 +129,7 @@
             </li>
             @endcan
 
-            @can('Pos_Create')
+            @can('Ventas')
             <li class="">
                 <a href="{{ url('pos') }}" class="menu-toggle" data-active="false">
                     <div class="base-menu">
