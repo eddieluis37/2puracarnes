@@ -130,7 +130,7 @@ class UserSeeder extends Seeder
         Permission::create(['name' => 'Report_Create']);
 
         // crear permisos para modulo compras
-        Permission::create(['name' => 'Compras_All']);
+        Permission::create(['name' => 'Compras']);
 
         // crear permisos para modulo Inventario
         Permission::create(['name' => 'Inventory']);
@@ -170,14 +170,14 @@ class UserSeeder extends Seeder
 
         // asignar permisos al rol Admin
         $admin->givePermissionTo([
-            'Admin_Menu', 'Compras_All', 'Produccion', 'Traslados', 'Ventas', 'Inventory', 'Cashout_Create', 'Parametros_Create', 'Category_View', 'Category_Create', 'Category_Search', 'Category_Update', 'Category_Destroy', 'Product_View', 'Product_Create', 'Product_Search', 'Product_Update', 'Product_Destroy', 'Report_Create'
+            'Admin_Menu', 'Compras', 'Produccion', 'Traslados', 'Ventas', 'Inventory', 'Cashout_Create', 'Parametros_Create', 'Category_View', 'Category_Create', 'Category_Search', 'Category_Update', 'Category_Destroy', 'Product_View', 'Product_Create', 'Product_Search', 'Product_Update', 'Product_Destroy', 'Report_Create'
         ]);
 
         // asignar permisos al rol Cajero
         $cajero->givePermissionTo(['Ventas', 'Cashout_Create', 'Category_View', 'Category_Search', 'Product_View', 'Product_Search']);
 
         // asignar permisos al comprador
-        $comprador->givePermissionTo(['Compras_All', 'Inventory']);
+        $comprador->givePermissionTo(['Compras', 'Inventory']);
 
         // asignar permisos a produccion
         $produccion->givePermissionTo(['Produccion']);
