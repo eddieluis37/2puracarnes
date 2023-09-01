@@ -22,7 +22,8 @@
             </li>
             @endcan
 
-            @role('Admin')
+
+            @can('Compras_All')
             <li class="menu">
                 <a href="#more" data-active="false" class="menu-toggle">
                     <div class="base-menu">
@@ -42,7 +43,8 @@
             </li>
             @endcan
 
-            @role('Admin')
+
+            @can('Produccion')
             <li class="">
                 <a href="{{url('alistamiento')}}" class="menu-toggle" data-active="false">
                     <div class="base-menu">
@@ -76,7 +78,7 @@
             </li>
             @endcan
 
-            @role('Admin')
+            @can('Traslados')
             <li class="">
                 <a href="{{url('transfer')}}" class="menu-toggle" data-active="false">
                     <div class="base-menu">
@@ -103,13 +105,11 @@
                                 <path d="M1 1h4l2.25 7h13.5l2.25-7h4"></path>
                             </svg>
                         </div>
-                        <span>Faster</span>
+                        <span>Prueba</span>
                     </div>
                 </a>
             </li>
             @endcan
-
-
 
             @can('Product_View')
             <li class="">
@@ -144,7 +144,7 @@
             </li>
             @endcan
 
-            @role('Admin')
+            @can('Inventory')
             <li class="menu">
                 <a href="#app" data-active="false" class="menu-toggle">
                     <div class="base-menu">
