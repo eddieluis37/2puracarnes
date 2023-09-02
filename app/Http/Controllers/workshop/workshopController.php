@@ -63,22 +63,78 @@ class workshopController extends Controller
                 ['ce.centrocosto_id', $dataWorkshop[0]->centrocosto_id],
             ])->get();
         //  dd($cortes);
-
-        $getCostoKilo = DB::table('desposteres')
-            ->join('products as p', 'desposteres.products_id', '=', 'p.id')
-            ->join('centro_costo_products as ce', 'p.id', '=', 'ce.products_id')
-            ->select('p.name', 'desposteres.costo_kilo')
-            ->where([
-                ['desposteres.status', 'VALID'],
-                ['p.level_product_id', 1],
-                ['p.meatcut_id', $dataWorkshop[0]->meatcut_id],
-                ['p.status', 1],
-                ['ce.centrocosto_id', $dataWorkshop[0]->centrocosto_id],
-            ])
-            ->orderBy('desposteres.costo_kilo', 'desc')
-            ->limit(1)
-            ->get();
-        //  dd($getCostoKilo);
+        // dd($dataWorkshop);
+        $cate = $dataWorkshop[0]->categoria_id;
+        switch ($cate) {
+            case 1:
+                $getCostoKilo = DB::table('desposteres')
+                    ->join('products as p', 'desposteres.products_id', '=', 'p.id')
+                    ->join('centro_costo_products as ce', 'p.id', '=', 'ce.products_id')
+                    ->select('p.name', 'desposteres.costo_kilo')
+                    ->where([
+                        ['desposteres.status', 'VALID'],
+                        ['p.level_product_id', 1],
+                        ['p.meatcut_id', $dataWorkshop[0]->meatcut_id],
+                        ['p.status', 1],
+                        ['ce.centrocosto_id', $dataWorkshop[0]->centrocosto_id],
+                    ])
+                    ->orderBy('desposteres.costo_kilo', 'desc')
+                    ->limit(1)
+                    ->get();
+                break;
+            case 2:
+                $getCostoKilo = DB::table('despostecerdos')
+                    ->join('products as p', 'despostecerdos.products_id', '=', 'p.id')
+                    ->join('centro_costo_products as ce', 'p.id', '=', 'ce.products_id')
+                    ->select('p.name', 'despostecerdos.costo_kilo')
+                    ->where([
+                        ['despostecerdos.status', 'VALID'],
+                        ['p.level_product_id', 1],
+                        ['p.meatcut_id', $dataWorkshop[0]->meatcut_id],
+                        ['p.status', 1],
+                        ['ce.centrocosto_id', $dataWorkshop[0]->centrocosto_id],
+                    ])
+                    ->orderBy('despostecerdos.costo_kilo', 'desc')
+                    ->limit(1)
+                    ->get();
+                break;
+            case 3:
+                $getCostoKilo = DB::table('despostepollos')
+                    ->join('products as p', 'despostepollos.products_id', '=', 'p.id')
+                    ->join('centro_costo_products as ce', 'p.id', '=', 'ce.products_id')
+                    ->select('p.name', 'despostepollos.costo_kilo')
+                    ->where([
+                        ['despostepollos.status', 'VALID'],
+                        ['p.level_product_id', 1],
+                        ['p.meatcut_id', $dataWorkshop[0]->meatcut_id],
+                        ['p.status', 1],
+                        ['ce.centrocosto_id', $dataWorkshop[0]->centrocosto_id],
+                    ])
+                    ->orderBy('despostepollos.costo_kilo', 'desc')
+                    ->limit(1)
+                    ->get();
+                break;
+            default:
+                $getCostoKilo = DB::table('desposteres')
+                    ->join('products as p', 'desposteres.products_id', '=', 'p.id')
+                    ->join('centro_costo_products as ce', 'p.id', '=', 'ce.products_id')
+                    ->select('p.name', 'desposteres.costo_kilo')
+                    ->where([
+                        ['desposteres.status', 'VALID'],
+                        ['p.level_product_id', 1],
+                        ['p.meatcut_id', $dataWorkshop[0]->meatcut_id],
+                        ['p.status', 1],
+                        ['ce.centrocosto_id', $dataWorkshop[0]->centrocosto_id],
+                    ])
+                    ->orderBy('desposteres.costo_kilo', 'desc')
+                    ->limit(1)
+                    ->get();
+                break;
+        }
+        if ($getCostoKilo->isEmpty()) {
+            echo "Advertencia: Costo Kilo esta vacio. Favor validar los valores en el Desposte";
+        }
+        // dd($getCostoKilo);
 
         /**************************************** */
         $status = '';
@@ -389,8 +445,8 @@ class workshopController extends Controller
             $details->costo = $costo;
             $details->costo_kilo = $costo_kilo;
             $details->save();
-            
-            $arrayTotales = $this->sumTotales($request->tallerId);     
+
+            $arrayTotales = $this->sumTotales($request->tallerId);
             $arraydetail = $this->getworkshopdetail($request->tallerId, $request->centrocosto);
 
             $merma = $peso_producto_padre - $sumakilosTotal;
@@ -401,7 +457,7 @@ class workshopController extends Controller
             $alist->costo_kilo_padre = $request->input('costo_kilo_padre');
             $alist->merma = $merma;
             //$alist->nuevo_stock_padre = $newStockPadre;
-            $alist->save();            
+            $alist->save();
 
             return response()->json([
                 'status' => 1,
@@ -409,7 +465,6 @@ class workshopController extends Controller
                 'array' => $arraydetail,
                 'arrayTotales' => $arrayTotales,
             ]);
-           
         } catch (\Throwable $th) {
             return response()->json([
                 'status' => 0,
