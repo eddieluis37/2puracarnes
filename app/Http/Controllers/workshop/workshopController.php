@@ -65,6 +65,7 @@ class workshopController extends Controller
         //  dd($cortes);
         // dd($dataWorkshop);
         $cate = $dataWorkshop[0]->categoria_id;
+       // dd($cate);
         switch ($cate) {
             case 1:
                 $getCostoKilo = DB::table('desposteres')
@@ -85,14 +86,14 @@ class workshopController extends Controller
             case 2:
                 $getCostoKilo = DB::table('despostecerdos')
                     ->join('products as p', 'despostecerdos.products_id', '=', 'p.id')
-                    ->join('centro_costo_products as ce', 'p.id', '=', 'ce.products_id')
+                  //  ->join('centro_costo_products as ce', 'p.id', '=', 'ce.products_id')
                     ->select('p.name', 'despostecerdos.costo_kilo')
                     ->where([
                         ['despostecerdos.status', 'VALID'],
                         ['p.level_product_id', 1],
                         ['p.meatcut_id', $dataWorkshop[0]->meatcut_id],
                         ['p.status', 1],
-                        ['ce.centrocosto_id', $dataWorkshop[0]->centrocosto_id],
+                       // ['ce.centrocosto_id', $dataWorkshop[0]->centrocosto_id],
                     ])
                     ->orderBy('despostecerdos.costo_kilo', 'desc')
                     ->limit(1)
@@ -134,7 +135,7 @@ class workshopController extends Controller
         if ($getCostoKilo->isEmpty()) {
             echo "Advertencia: Costo Kilo esta vacio. Favor validar los valores en el Desposte";
         }
-        // dd($getCostoKilo);
+    //  dd($getCostoKilo);
 
         /**************************************** */
         $status = '';

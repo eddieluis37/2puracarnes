@@ -27,6 +27,14 @@ class CategorySeeder extends Seeder
         	'image' => 'https://dummyimage.com/200x150/5c5756/fff'
         ]);
         Category::create([
+        	'name' => 'VISCERAS',
+        	'image' => 'https://dummyimage.com/200x150/5c5756/fff'
+        ]);
+        Category::create([
+            'name' => 'PRODUCTOS PGC',
+            'image' => 'https://dummyimage.com/200x150/5c5756/fff'
+        ]);
+        Category::create([
             'name' => 'CARNICOS',
             'image' => 'https://dummyimage.com/200x150/5c5756/fff'
         ]);

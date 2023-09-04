@@ -24,12 +24,11 @@ class CreateSalesTable extends Migration
             $table->unsignedBigInteger('user_id');           
             $table->foreign('user_id')->references('id')->on('users');
 
-
-
             $table->unsignedBigInteger('third_id')->nullable();           
-            $table->foreign('third_id')->references('id')->on('thirds');       
-
+            $table->foreign('third_id')->references('id')->on('thirds');         
             
+            $table->unsignedBigInteger('centrocosto_id')->nullable();
+            $table->foreign('centrocosto_id')->references('id')->on('centro_costo');            
 
             $table->timestamps();
         });
