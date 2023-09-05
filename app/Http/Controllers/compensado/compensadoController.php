@@ -26,7 +26,7 @@ class compensadoController extends Controller
      */
     public function index()
     {
-        $category = Category::WhereIn('id',[1,2,3])->get();
+        $category = Category::WhereIn('id',[1,2,3,4,5,6,7])->get();
         $providers = Third::Where('status',1)->get();
         $centros = Centrocosto::Where('status',1)->get();
 
