@@ -60,7 +60,7 @@
             </li>
             @endcan
 
-            @role('Admin')
+            @can('Workshop')
             <li class="">
                 <a href="{{url('workshop')}}" class="menu-toggle" data-active="false">
                     <div class="base-menu">
