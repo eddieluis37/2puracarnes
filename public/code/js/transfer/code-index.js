@@ -29,7 +29,7 @@ $(document).ready(initializeDataTable);
     function initializeDataTable() {
         $("#tableTransfer").DataTable({
             paging: true,
-            pageLength: 5,
+            pageLength: 50,
             autoWidth: false,
             processing: true,
             serverSide: true,
