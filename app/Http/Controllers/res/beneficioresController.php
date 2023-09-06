@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Validator;
 use App\Models\Third;
 use App\Models\Sacrificio;
 use App\Models\Beneficiore;
+use App\Models\centros\Centrocosto;
 use NumberFormatter;
 use DateTime;
 
@@ -26,7 +27,8 @@ class beneficioresController extends Controller
     {
         $thirds = Third::orderBy('name', 'asc')->get();
         $sacrificios = Sacrificio::orderBy('name', 'asc')->get();
-        return view('categorias.res.beneficiores.index', compact('thirds','sacrificios'));
+		$centros = Centrocosto::Where('status', 1)->get();		
+        return view('categorias.res.beneficiores.index', compact('thirds','sacrificios','centros'));
     }
 
     /**
@@ -83,6 +85,7 @@ class beneficioresController extends Controller
 			    $current_date->modify('next monday'); // Move to the next Monday
 			    $dateNextMonday = $current_date->format('Y-m-d'); // Output the date in Y-m-d format
 			    $newBeneficiore = new Beneficiore();
+				$newBeneficiore->centrocosto_id = $request->centrocosto_id;
 			    $newBeneficiore->thirds_id = $request->thirds_id;
 			    $newBeneficiore->plantasacrificio_id  = $request->plantasacrificio_id;
 			    $newBeneficiore->cantidadmacho = $this->MoneyToNumber($request->cantidadMacho);
@@ -149,7 +152,8 @@ class beneficioresController extends Controller
 		    }else {
 
 			    $updateBeneficiore = Beneficiore::firstWhere('id', $request->idbeneficio);
-			    $updateBeneficiore->thirds_id = $request->thirds_id;
+				$updateBeneficiore->centrocosto_id = $request->centrocosto_id;
+				$updateBeneficiore->thirds_id = $request->thirds_id;
 			    $updateBeneficiore->plantasacrificio_id  = $request->plantasacrificio_id;
 			    $updateBeneficiore->cantidadmacho = $this->MoneyToNumber($request->cantidadMacho);
 			    $updateBeneficiore->valorunitariomacho = $this->MoneyToNumber($request->valorUnitarioMacho);
@@ -230,7 +234,8 @@ class beneficioresController extends Controller
     {
             $data = DB::table('beneficiores as be')
             ->join('thirds as tird', 'be.thirds_id', '=', 'tird.id')
-            ->select('be.*', 'tird.name as namethird')
+			->join('centro_costo as cc', 'be.centrocosto_id', '=', 'cc.id')
+            ->select('be.*', 'cc.name as namecentrocosto', 'tird.name as namethird')
 			->where('be.status', '=', true)
 			->orderBy('be.id', 'desc')
             ->get();

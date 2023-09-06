@@ -217,9 +217,9 @@ class ProductSeeder extends Seeder
         $product->save();
         $product = new Product(["code" => "RE0101", "barcode" => "1299123556", "name" => "VISCERAS DE RES", "fisico" => "1", "category_id" => "1", "level_product_id" => "1", "meatcut_id" => "29", "unitofmeasure_id" => "1", "cost" => "14000", "price_fama" => "10", "price_insti" => "10", "price_horeca" => "10", "price_hogar" => "10", "iva" => "0", "alerts" => "10", "image" => "noimage.png"]);
         $product->save();
-        $product = new Product(["code" => "CE0001", "barcode" => "1299123557", "name" => " BARRIGA", "fisico" => "1", "category_id" => "1", "level_product_id" => "1", "meatcut_id" => "30", "unitofmeasure_id" => "1", "cost" => "10560", "price_fama" => "10", "price_insti" => "10", "price_horeca" => "10", "price_hogar" => "10", "iva" => "10", "alerts" => "10", "image" => "noimage.png"]);
+        $product = new Product(["code" => "CE0001", "barcode" => "1299123557", "name" => "BARRIGA", "fisico" => "1", "category_id" => "2", "level_product_id" => "1", "meatcut_id" => "30", "unitofmeasure_id" => "1", "cost" => "10560", "price_fama" => "10", "price_insti" => "10", "price_horeca" => "10", "price_hogar" => "10", "iva" => "10", "alerts" => "10", "image" => "noimage.png"]);
         $product->save();
-        $product = new Product(["code" => "CE0002", "barcode" => "1299123558", "name" => "TOCINO BARRIGA", "fisico" => "38", "category_id" => "1", "level_product_id" => "2", "meatcut_id" => "30", "unitofmeasure_id" => "1", "cost" => "14500", "price_fama" => "17000", "price_insti" => "17000", "price_horeca" => "20200", "price_hogar" => "20200", "iva" => "0", "alerts" => "10", "image" => "noimage.png"]);
+        $product = new Product(["code" => "CE0002", "barcode" => "1299123558", "name" => "TOCINO BARRIGA", "fisico" => "38", "category_id" => "2", "level_product_id" => "2", "meatcut_id" => "30", "unitofmeasure_id" => "1", "cost" => "14500", "price_fama" => "17000", "price_insti" => "17000", "price_horeca" => "20200", "price_hogar" => "20200", "iva" => "0", "alerts" => "10", "image" => "noimage.png"]);
         $product->save();
         $product = new Product(["code" => "CE0003", "barcode" => "1299123559", "name" => "BONDIOLA", "fisico" => "26.8", "category_id" => "2", "level_product_id" => "1", "meatcut_id" => "31", "unitofmeasure_id" => "1", "cost" => "13500", "price_fama" => "17000", "price_insti" => "17000", "price_horeca" => "21200", "price_hogar" => "21200", "iva" => "0", "alerts" => "10", "image" => "noimage.png"]);
         $product->save();
@@ -295,9 +295,9 @@ class ProductSeeder extends Seeder
         $product->save();
         $product = new Product(["code" => "CE0039", "barcode" => "1299123596", "name" => "PEZUÑA DE CERDO", "fisico" => "1", "category_id" => "2", "level_product_id" => "2", "meatcut_id" => "45", "unitofmeasure_id" => "1", "cost" => "13500", "price_fama" => "9000", "price_insti" => "9000", "price_horeca" => "10600", "price_hogar" => "10600", "iva" => "0", "alerts" => "10", "image" => "noimage.png"]);
         $product->save();
-        $product = new Product(["code" => "PO0001", "barcode" => "1299123597", "name" => "ALAS CON", "fisico" => "1", "category_id" => "2", "level_product_id" => "1", "meatcut_id" => "46", "unitofmeasure_id" => "1", "cost" => "14000", "price_fama" => "8500", "price_insti" => "8500", "price_horeca" => "8000", "price_hogar" => "8000", "iva" => "0", "alerts" => "10", "image" => "noimage.png"]);
+        $product = new Product(["code" => "PO0001", "barcode" => "1299123597", "name" => "ALAS CON", "fisico" => "1", "category_id" => "3", "level_product_id" => "1", "meatcut_id" => "46", "unitofmeasure_id" => "1", "cost" => "14000", "price_fama" => "8500", "price_insti" => "8500", "price_horeca" => "8000", "price_hogar" => "8000", "iva" => "0", "alerts" => "10", "image" => "noimage.png"]);
         $product->save();
-        $product = new Product(["code" => "PO0002", "barcode" => "1299123598", "name" => "ALAS CON COSTILLAR", "fisico" => "3.6", "category_id" => "2", "level_product_id" => "2", "meatcut_id" => "46", "unitofmeasure_id" => "1", "cost" => "14500", "price_fama" => "8500", "price_insti" => "8500", "price_horeca" => "8000", "price_hogar" => "8000", "iva" => "0", "alerts" => "10", "image" => "noimage.png"]);
+        $product = new Product(["code" => "PO0002", "barcode" => "1299123598", "name" => "ALAS CON COSTILLAR", "fisico" => "3.6", "category_id" => "3", "level_product_id" => "2", "meatcut_id" => "46", "unitofmeasure_id" => "1", "cost" => "14500", "price_fama" => "8500", "price_insti" => "8500", "price_horeca" => "8000", "price_hogar" => "8000", "iva" => "0", "alerts" => "10", "image" => "noimage.png"]);
         $product->save();
         $product = new Product(["code" => "PO0003", "barcode" => "1299123599", "name" => "ALAS SIN", "fisico" => "1", "category_id" => "3", "level_product_id" => "1", "meatcut_id" => "47", "unitofmeasure_id" => "1", "cost" => "10000", "price_fama" => "9500", "price_insti" => "9500", "price_horeca" => "9000", "price_hogar" => "9000", "iva" => "0", "alerts" => "10", "image" => "noimage.png"]);
         $product->save();
@@ -531,6 +531,8 @@ class ProductSeeder extends Seeder
         $product->save();
         $product = new Product(["code" => "OP0002", "barcode" => "1299123714", "name" => "HUEVOS AA CANASTA", "fisico" => "1", "category_id" => "7", "level_product_id" => "1", "meatcut_id" => "72", "unitofmeasure_id" => "2", "cost" => "12000", "price_fama" => "10", "price_insti" => "10", "price_horeca" => "10", "price_hogar" => "18600", "iva" => "0", "alerts" => "10", "image" => "noimage.png"]);
         $product->save();
+
+
 
         //POLLO
 

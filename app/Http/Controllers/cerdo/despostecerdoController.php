@@ -110,7 +110,7 @@ class DespostecerdoController extends Controller
         if($pesoTotalGlobal != 0){
             $costoKiloTotal = number_format($costoTotalGlobal / $pesoTotalGlobal, 2, ',', '.');
         }
-        //dd(count($desposters));
+       // dd(count($despostecs));
         //$beneficior = Beneficiocerdo::Where('id',$id)->get();
         return view('categorias.cerdo.desposte.index', compact(
             'beneficioc',
