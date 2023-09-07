@@ -9,7 +9,7 @@ var dataTable;
 function initializeDataTable(centrocostoId = "-1", categoriaId = "-1") {
     dataTable = $("#tableInventory").DataTable({
         paging: true,
-        pageLength: 5,
+        pageLength: 15,
         autoWidth: false,
         processing: true,
         serverSide: true,

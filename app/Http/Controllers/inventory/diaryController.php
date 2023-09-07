@@ -84,11 +84,14 @@ class diaryController extends Controller
         //   print_r($centrocostoId);
 
         $getCostoKiloPadre = DB::table('desposteres')
+            ->join('beneficiores as be', 'desposteres.beneficiores_id', '=', 'be.id')
             ->join('products as p', 'desposteres.products_id', '=', 'p.id')
             ->join('centro_costo_products as ce', 'p.id', '=', 'ce.products_id')
             ->select('p.name', 'desposteres.costo_kilo', 'desposteres.peso')
             ->where([
                 ['desposteres.status', 'VALID'],
+                ['ce.centrocosto_id', $centrocostoId],
+                ['be.centrocosto_id', $centrocostoId],
                 ['p.status', 1],
             ])
             ->get();
