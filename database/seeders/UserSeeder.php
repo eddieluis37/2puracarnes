@@ -187,7 +187,7 @@ class UserSeeder extends Seeder
         $produccion->givePermissionTo(['Produccion']);
 
         // asignar permisos a costos
-        $costos->givePermissionTo(['Traslados', 'Inventory']);
+        $costos->givePermissionTo(['Compras', 'Product_View', 'Product_Search', 'Traslados', 'Inventory']);
 
         // asignar permisos al vendedor
         $ventas->givePermissionTo(['Pos_Create', 'Cashout_Create', 'Category_View', 'Category_Search', 'Product_View', 'Product_Search']);
