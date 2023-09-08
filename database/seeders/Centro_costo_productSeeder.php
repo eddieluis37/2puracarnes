@@ -538,9 +538,7 @@ class Centro_costo_productSeeder extends Seeder
         $Centro_costo_product->save();
         $Centro_costo_product = new Centro_costo_product(["centrocosto_id" => "1", "products_id" => "262", "stock" => "1", "fisico" => "1"]);
         $Centro_costo_product->save();
-        $Centro_costo_product = new Centro_costo_product(["centrocosto_id" => "1", "products_id" => "263", "stock" => "1", "fisico" => "1"]);
-        $Centro_costo_product->save();
-        $Centro_costo_product = new Centro_costo_product(["centrocosto_id" => "1", "products_id" => "264", "stock" => "10", "fisico" => "1"]);
+        $Centro_costo_product = new Centro_costo_product(["centrocosto_id" => "1", "products_id" => "263", "stock" => "10", "fisico" => "1"]);
         $Centro_costo_product->save();
 
         $Centro_costo_product = new Centro_costo_product(["centrocosto_id" => "2", "products_id" => "1", "stock" => "11.57", "fisico" => "11.57"]);
@@ -1067,9 +1065,7 @@ class Centro_costo_productSeeder extends Seeder
         $Centro_costo_product->save();
         $Centro_costo_product = new Centro_costo_product(["centrocosto_id" => "2", "products_id" => "262", "stock" => "1", "fisico" => "1"]);
         $Centro_costo_product->save();
-        $Centro_costo_product = new Centro_costo_product(["centrocosto_id" => "2", "products_id" => "263", "stock" => "1", "fisico" => "1"]);
-        $Centro_costo_product->save();
-        $Centro_costo_product = new Centro_costo_product(["centrocosto_id" => "2", "products_id" => "264", "stock" => "10", "fisico" => "1"]);
+        $Centro_costo_product = new Centro_costo_product(["centrocosto_id" => "2", "products_id" => "263", "stock" => "10", "fisico" => "1"]);
         $Centro_costo_product->save();
     }
 }

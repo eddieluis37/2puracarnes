@@ -67,6 +67,7 @@ class diaryController extends Controller
         //  var_dump($centrocostoId);
 
         $categoriaId = $request->input('categoriaId');
+
         //    $categoriaId = 1;
         // var_dump($categoriaId);
         //  print_r($categoriaId);
@@ -119,7 +120,8 @@ class diaryController extends Controller
             ])
             ->groupBy('p.name', 'cc.name', 'comp.centrocosto_id')
             ->get();
-
+            
+        $item = null;
         return Datatables::of($data)
             ->addColumn('costo_kilo', function ($row) use ($getCostoKiloPadre, $getCostoKiloHijo) {
                 $costo_kilo = '';

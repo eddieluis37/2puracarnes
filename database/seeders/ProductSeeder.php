@@ -16,7 +16,8 @@ class ProductSeeder extends Seeder
     {
         //RES
 
-        $product = new Product(["code" => "RE0001", "barcode" => "1299123456", "name" => "BOLA DE PIERNA", "fisico" => "1", "category_id" => "1", "level_product_id" => "1", "meatcut_id" => "1", "unitofmeasure_id" => "1", "status" => "9", "cost" => "10000", "price_fama" => "24000", "price_insti" => "24000", "price_horeca" => "28000", "price_hogar" => "28000", "iva" => "0", "alerts" => "10", "image" => "noimage.png"]);
+
+        $product = new Product(["code" => "RE0001", "barcode" => "1299123456", "name" => "BOLA DE PIERNA", "fisico" => "1", "category_id" => "1", "level_product_id" => "1", "meatcut_id" => "1", "unitofmeasure_id" => "1", "status" => "1", "cost" => "10000", "price_fama" => "24000", "price_insti" => "24000", "price_horeca" => "28000", "price_hogar" => "28000", "iva" => "0", "alerts" => "10", "image" => "noimage.png"]);
         $product->save();
         $product = new Product(["code" => "RE0002", "barcode" => "1299123457", "name" => "BRAZO COMPLETO", "fisico" => "1", "category_id" => "1", "level_product_id" => "1", "meatcut_id" => "2", "unitofmeasure_id" => "1", "status" => "1", "cost" => "10500", "price_fama" => "19500", "price_insti" => "10", "price_horeca" => "20500", "price_hogar" => "20500", "iva" => "0", "alerts" => "10", "image" => "noimage.png"]);
         $product->save();
@@ -544,11 +545,9 @@ class ProductSeeder extends Seeder
         $product = new Product(["code" => "EM0029", "barcode" => "1299123712", "name" => "TOCINETA PREMIUM X 500 GR", "fisico" => "0", "category_id" => "6", "level_product_id" => "1", "meatcut_id" => "75", "unitofmeasure_id" => "2", "status" => "1", "cost" => "12000", "price_fama" => "9789.91596638656", "price_insti" => "9789.91596638656", "price_horeca" => "10", "price_hogar" => "9789.91596638656", "iva" => "0", "alerts" => "10", "image" => "noimage.png"]);
         $product->save();
 
-        $product = new Product(["code" => "OP0001", "barcode" => "1299123713", "name" => "HUEVO AA CANASTA", "fisico" => "0", "category_id" => "7", "level_product_id" => "1", "meatcut_id" => "76", "unitofmeasure_id" => "2", "status" => "1", "cost" => "12500", "price_fama" => "10", "price_insti" => "10", "price_horeca" => "10", "price_hogar" => "600", "iva" => "0", "alerts" => "10", "image" => "noimage.png"]);
+        $product = new Product(["code" => "OP0001", "barcode" => "1299123713", "name" => "HUEVO AA CANASTA", "fisico" => "0", "category_id" => "7", "level_product_id" => "1", "meatcut_id" => "76", "unitofmeasure_id" => "2", "status" => "1", "cost" => "12500", "price_fama" => "10", "price_insti" => "10", "price_horeca" => "10", "price_hogar" => "18600", "iva" => "0", "alerts" => "10", "image" => "noimage.png"]);
         $product->save();
         $product = new Product(["code" => "OP0002", "barcode" => "1299123713", "name" => "HUEVO AA UNIDAD", "fisico" => "0", "category_id" => "7", "level_product_id" => "2", "meatcut_id" => "76", "unitofmeasure_id" => "2", "status" => "1", "cost" => "12500", "price_fama" => "10", "price_insti" => "10", "price_horeca" => "10", "price_hogar" => "600", "iva" => "0", "alerts" => "10", "image" => "noimage.png"]);
-        $product->save();
-        $product = new Product(["code" => "OP0003", "barcode" => "1299123714", "name" => "HUEVOS AA CANASTA", "fisico" => "0", "category_id" => "7", "level_product_id" => "2", "meatcut_id" => "76", "unitofmeasure_id" => "2", "status" => "1", "cost" => "12000", "price_fama" => "10", "price_insti" => "10", "price_horeca" => "10", "price_hogar" => "18600", "iva" => "0", "alerts" => "10", "image" => "noimage.png"]);
         $product->save();
 
         //POLLO
