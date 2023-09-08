@@ -50,6 +50,7 @@ class desposteresController extends Controller
         //  dd(count($this->consulta));
         if (count($this->consulta) === 0) {
             $prod = Product::Where([
+                ['status', 1],
                 ['category_id', 1],
                 ['level_product_id', 1],
             ])->orderBy('name', 'asc')->get();
@@ -242,6 +243,7 @@ class desposteresController extends Controller
                 ->where([
                     ['d.beneficiores_id', $request->beneficioId],
                     ['d.status', 'VALID'],
+                    ['p.status', 1],
                 ])
                 ->orderBy('p.name', 'asc')
                 ->get();

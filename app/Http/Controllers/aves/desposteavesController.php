@@ -46,6 +46,7 @@ class desposteavesController extends Controller
 
         if (count($this->consulta) === 0) {
             $prod = Product::Where([
+                ['status', 1],
                 ['category_id', 3],
                 ['level_product_id', 1],
             ])->orderBy('name', 'asc')->get();
@@ -218,6 +219,7 @@ class desposteavesController extends Controller
                 ->where([
                     ['d.beneficiopollos_id', $request->beneficioId],
                     ['d.status', 'VALID'],
+                    ['p.status', 1],
                 ])
                 ->orderBy('p.name', 'asc')
                 ->get();
