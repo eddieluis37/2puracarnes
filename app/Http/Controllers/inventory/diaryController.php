@@ -79,6 +79,7 @@ class diaryController extends Controller
             ->select('cat.name as namecategoria', 'pro.name as nameproducto', 'ccp.fisico as namefisico')
             ->where('ccp.centrocosto_id', $centrocostoId)
             ->where('pro.category_id', $categoriaId)
+            ->where('pro.status', 1)
             ->get();
 
         //   return response()->json($data);
@@ -115,12 +116,13 @@ class diaryController extends Controller
             ->select('p.name', 'cc.name', 'comp.centrocosto_id', DB::raw('SUM(comdet.peso) as total_weight'))
             ->where([
                 ['comp.status', 'VALID'],
+                ['cc.id', $centrocostoId],
                 ['p.status', 1],
                 ['cc.id', 1],
             ])
             ->groupBy('p.name', 'cc.name', 'comp.centrocosto_id')
             ->get();
-            
+
         $item = null;
         return Datatables::of($data)
             ->addColumn('costo_kilo', function ($row) use ($getCostoKiloPadre, $getCostoKiloHijo) {
