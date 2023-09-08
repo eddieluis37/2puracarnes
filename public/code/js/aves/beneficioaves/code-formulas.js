@@ -136,10 +136,10 @@
    });
  
    /**********************************************************/
-   valorMacho.change(function () { CalculateTotalMacho(); });
-   cantidadMacho.change(function () { CalculateTotalMacho(); });
-   valorHembra.change(function () { CalculateTotalHembra(); });
-   cantidadHembra.change(function () { CalculateTotalHembra(); });
+  /*  valorMacho.change(function () { CalculateTotalMacho(); }); */
+ /*   cantidadMacho.change(function () { CalculateTotalMacho(); }); */
+  /*  valorHembra.change(function () { CalculateTotalHembra(); }); */
+  /*  cantidadHembra.change(function () { CalculateTotalHembra(); }); */
    /**********************************************************/
 
    function calculatotales() {
