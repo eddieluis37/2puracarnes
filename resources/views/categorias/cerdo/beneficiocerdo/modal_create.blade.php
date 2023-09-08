@@ -7,7 +7,7 @@
 						<div>
 							<input type="hidden" value="0" name="idbeneficio" id="idbeneficio">
 						</div>
-						<div class="col-sm-12 col-md-3">
+						<div class="col-sm-12 col-md-4">
 							<div class="task-header">
 								<div class="form-group">
 									<label>Centro de costo</label>
@@ -23,7 +23,7 @@
 								</div>
 							</div>
 						</div>
-						<div class="col-sm-12 col-md-3">
+						<div class="col-sm-12 col-md-4">
 							<div class="task-header">
 								<div class="form-group">
 									<label>Proveedor</label>
@@ -36,22 +36,8 @@
 									@error('thirdsid') <span class="text-danger er">{{ $message}}</span>@enderror
 								</div>
 							</div>
-						</div>
-						<div class="col-sm-12 col-md-3">
-							<div class="task-header">
-								<div class="form-group">
-									<label>Cliente Pielees</label>
-									<select class="form-control selectPieles" name="clientpieles_id" id="clientpieles_id" required="">
-										<option value="">Buscar un Cliente Piel</option>
-										@foreach ($thirds as $p)
-										<option value="{{$p->id}}">{{$p->name}}</option>
-										@endforeach
-									</select>
-									@error('clientpielesid') <span class="text-danger er">{{ $message}}</span>@enderror
-								</div>
-							</div>
-						</div>
-						<div class="col-sm-12 col-md-3">
+						</div>					
+						<div class="col-sm-12 col-md-4">
 							<div class="task-header">
 								<div class="form-group">
 									<label>Cliente visceras</label>

@@ -24,10 +24,7 @@ class CreateBeneficiocerdosTable extends Migration
 
             $table->unsignedBigInteger('plantasacrificiocerdo_id')->nullable();
             $table->foreign('plantasacrificiocerdo_id')->references('id')->on('sacrificiocerdos');         
-                     
-            $table->unsignedBigInteger('clientpieles_id')->nullable();
-            $table->foreign('clientpieles_id')->references('id')->on('thirds');
-
+    
             $table->unsignedBigInteger('clientvisceras_id')->nullable();
             $table->foreign('clientvisceras_id')->references('id')->on('thirds');                   
             

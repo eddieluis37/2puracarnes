@@ -100,7 +100,6 @@ class beneficiocerdoController extends Controller
 			    $newBeneficiocerdo->fecha_beneficio = $currentDateFormat;
 			    $newBeneficiocerdo->fecha_cierre = $dateNextMonday;
 			    $newBeneficiocerdo->factura = $request->factura;
-			    $newBeneficiocerdo->clientpieles_id = $request->clientpieles_id;
 			    $newBeneficiocerdo->clientvisceras_id = $request->clientvisceras_id;
 			    $newBeneficiocerdo->lote = $newLote;//$request->lote;
 			    $newBeneficiocerdo->finca = $request->finca;
@@ -166,7 +165,6 @@ class beneficiocerdoController extends Controller
 			    $updateBeneficiocerdo->cantidad = $request->cantidadMacho + $request->cantidadHembra;
 			    //$updateBeneficiocerdo->fecha_beneficio = $request->fecha_beneficio;
 			    $updateBeneficiocerdo->factura = $request->factura;
-			    $updateBeneficiocerdo->clientpieles_id = $request->clientpieles_id;
 			    $updateBeneficiocerdo->clientvisceras_id = $request->clientvisceras_id;
 			    //$updateBeneficiocerdo->lote = $request->lote;
 			    $updateBeneficiocerdo->finca = $request->finca;
