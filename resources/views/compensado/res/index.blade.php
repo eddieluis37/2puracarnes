@@ -10,7 +10,7 @@
 				</h4>
 				<ul class="tabs tab-pills">
 					<li>
-						<a href="javascript:void(0)" onclick="showModalcreate()" class="tabmenu bg-dark" data-toggle="modal" data-target="#modal-create-compensado" title="Nuevo Beneficio">Agregar</a>
+						<a href="javascript:void(0)" onclick="showModalcreate()" class="tabmenu bg-dark" data-toggle="modal" data-target="#modal-create-compensado" title="Nuevo Compra">Agregar</a>
 					</li>
 				</ul>
 			</div>
@@ -20,8 +20,7 @@
 					<table id="tableCompensado" class="table table-striped mt-1">
 						<thead class="text-white" style="background: #3B3F5C">
 							<tr>
-								<th class="table-th text-white">#</th>
-								<th class="table-th text-white">Categoria</th>
+								<th class="table-th text-white">#</th>								
 								<th class="table-th text-white">Proveedor</th>
 								<th class="table-th text-white ">Centro de costo</th>
 								<th class="table-th text-white">Factura</th>
