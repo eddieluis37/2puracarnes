@@ -42,6 +42,7 @@ use App\Http\Controllers\inventory\inventoryController;
 use App\Http\Controllers\inventory\diaryController;
 use App\Http\Controllers\inventory\mensualController;
 
+use App\Http\Controllers\FormapagoController;
 /************************************************* */
 
 Route::group(['middleware' => ['auth', 'admin']], function () {
@@ -302,4 +303,12 @@ Route::post('fasterdown', [fasterController::class,'destroy'])->name('faster.dow
 Route::post('fasterById', [fasterController::class,'editFaster'])->name('faster.edit');
 Route::post('getproductospadre', [fasterController::class,'getProductsCategoryPadre'])->name('faster.getproductospadre');
 Route::post('/downmmainfaster', [fasterController::class, 'destroyFaster'])->name('faster.downAlistamiento');
-Route::post('fasterAddShoping', [fasterController::class,'add_shopping'])->name('faster.addShopping');
+Route::post('fasterAddShoping', [fasterController::class,'add_shopping'])->name('faster.addShopping');/***** FASTER ******** */
+
+/***** FORMAS DE PAGO ******** */
+ 
+Route::get('formapago', [FormapagoController::class, 'index'])->name('formapago.index');
+Route::post('formapagosave', [FormapagoController::class,'store'])->name('formapago.save');
+Route::get('formapago{formapagoId}/delete', [FormapagoController::class, 'delete'])->name('formapago.delete');
+Route::get('formapago{formapagoId}/edit', [FormapagoController::class, 'edit'])->name('formapago.edit');
+Route::post('formapago/{formapagoId}', [FormapagoController::class, 'update'])->name('formapago.update');
