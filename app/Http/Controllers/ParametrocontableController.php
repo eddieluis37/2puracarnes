@@ -4,82 +4,83 @@ namespace App\Http\Controllers;
 
 use App\Models\Parametrocontable;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
+use App\Http\Controllers\Controller;
 
 class ParametrocontableController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    
     public function index()
     {
-        //
+        $parametrocontables = Parametrocontable::get();      
+        
+        return view('parametrocontable.index',compact('parametrocontables'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
         //
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+   
     public function store(Request $request)
     {
-        //
+        $pc = new Parametrocontable();
+     
+        $pc->codigo = $request->codigo;
+        $pc->nombre = $request->nombre;
+        $pc->tipoparametro = $request->tipoparametro;
+        $pc->cuenta = $request->cuenta;
+
+        $validated = $request->validate([
+            'codigo' => 'unique:parametrocontables',   
+        ], $messages = [
+            'unique' => 'El :attribute ya existe',
+        ]);
+
+
+        $pc->save();
+
+        return redirect()->back();
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Parametrocontable  $parametrocontable
-     * @return \Illuminate\Http\Response
-     */
+    
     public function show(Parametrocontable $parametrocontable)
     {
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Parametrocontable  $parametrocontable
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Parametrocontable $parametrocontable)
+   
+    public function edit($pcId)
     {
-        //
+        $pc = Parametrocontable::find($pcId);
+        return response()->json([
+            'data' => $pc,
+            'dataurl' => "/parametrocontable/$pcId"
+          ]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Parametrocontable  $parametrocontable
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Parametrocontable $parametrocontable)
+  
+    public function update(Request $request, $pcId)
     {
-        //
+        $pc = ParametroContable::find($pcId);
+
+        $pc->codigo = $request->codigo;
+        $pc->nombre = $request->nombre;
+        $pc->tipoparametro = $request->tipoparametro;
+        $pc->cuenta = $request->cuenta;
+
+        
+        $pc->save();
+
+       return redirect()->back();
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Parametrocontable  $parametrocontable
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Parametrocontable $parametrocontable)
+    
+    public function delete(Request $request, $pcId)
     {
-        //
+        $pc = ParametroContable::find($pcId);
+        $pc->delete();
+        return redirect()->back();
     }
 }

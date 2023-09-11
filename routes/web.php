@@ -43,6 +43,7 @@ use App\Http\Controllers\inventory\diaryController;
 use App\Http\Controllers\inventory\mensualController;
 
 use App\Http\Controllers\FormapagoController;
+use App\Http\Controllers\ParametrocontableController;
 /************************************************* */
 
 Route::group(['middleware' => ['auth', 'admin']], function () {
@@ -312,3 +313,12 @@ Route::post('formapagosave', [FormapagoController::class,'store'])->name('formap
 Route::get('formapago{formapagoId}/delete', [FormapagoController::class, 'delete'])->name('formapago.delete');
 Route::get('formapago{formapagoId}/edit', [FormapagoController::class, 'edit'])->name('formapago.edit');
 Route::post('formapago/{formapagoId}', [FormapagoController::class, 'update'])->name('formapago.update');
+
+
+/***** PARAMETROS CONTABLES******** */
+ 
+Route::get('parametrocontable', [ParametrocontableController::class, 'index'])->name('parametrocontable.index');
+Route::post('parametrocontablesave', [ParametrocontableController::class,'store'])->name('parametrocontable.save');
+Route::get('parametrocontable{parametrocontableId}/delete', [ParametrocontableController::class, 'delete'])->name('parametrocontable.delete');
+Route::get('parametrocontable{parametrocontableId}/edit', [ParametrocontableController::class, 'edit'])->name('parametrocontable.edit');
+Route::post('parametrocontable/{parametrocontableId}', [ParametrocontableController::class, 'update'])->name('parametrocontable.update');

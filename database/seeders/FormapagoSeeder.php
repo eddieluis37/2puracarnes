@@ -15,11 +15,11 @@ class FormapagoSeeder extends Seeder
     public function run()
     {
         $formapago = new Formapago([
-            "codigo"=> "CONTADO", "nombre" => "COMPRA DE CONTADO", "tipoformapago" => "COMPRA", "cuenta" => "220501"
+            "codigo"=> "EFECTIVO", "nombre" => "EFECTIVO ", "tipoformapago" => "COMPRA", "cuenta" => "11050501"
         ]); $formapago->save();
         
         $formapago = new Formapago([
-            "codigo"=> "CREDITO", "nombre" => "CCOMPRA A CREDITO", "tipoformapago" => "COMPRA", "cuenta" => "220501"
+            "codigo"=> "CREDITO", "nombre" => "CREDITO PROV NACIONALES", "tipoformapago" => "COMPRA", "cuenta" => "22050501"
         ]); $formapago->save();       
       
     }

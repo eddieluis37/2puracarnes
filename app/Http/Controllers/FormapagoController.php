@@ -39,9 +39,6 @@ class FormapagoController extends Controller
             'unique' => 'El :attribute ya existe',
         ]);
 
-   
-        // Retrieve the validated input...
-        $validated = $validator->validated();
 
         $fp->save();
 
