@@ -23,7 +23,7 @@
             @endcan
 
 
-            @can('Compras_All')
+            @can('Compras')
             <li class="menu">
                 <a href="#more" data-active="false" class="menu-toggle">
                     <div class="base-menu">
@@ -60,7 +60,7 @@
             </li>
             @endcan
 
-            @role('Admin')
+            @can('Workshop')
             <li class="">
                 <a href="{{url('workshop')}}" class="menu-toggle" data-active="false">
                     <div class="base-menu">
@@ -78,7 +78,7 @@
             </li>
             @endcan
 
-            @can('Traslados')
+            @role('Admin')
             <li class="">
                 <a href="{{url('transfer')}}" class="menu-toggle" data-active="false">
                     <div class="base-menu">
@@ -105,11 +105,13 @@
                                 <path d="M1 1h4l2.25 7h13.5l2.25-7h4"></path>
                             </svg>
                         </div>
-                        <span>Prueba</span>
+                        <span>Faster</span>
                     </div>
                 </a>
             </li>
             @endcan
+
+
 
             @can('Product_View')
             <li class="">

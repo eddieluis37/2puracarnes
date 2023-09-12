@@ -110,10 +110,10 @@
               <td>0.00</td>
               <td>0.00</td>
               <td>0.00</td>
-              <td>323.89</td>
-              <td>323.89</td>
-              <td>323.89</td>
-              <td>26.95</td>
+              <td>0.00</td>
+              <td>0.009</td>
+              <td>0.00</td>
+              <td>0.00</td>
             </tr>
           </tfoot>
         </table>
@@ -121,16 +121,6 @@
     </div>
   </div>
 </div>
-<!-- <form action="/showinventory" method="GET">
-    @csrf
-    <select class="form-control form-control-sm input" name="centrocosto" id="centrocosto" required>
-        <option value="">Seleccione el centro de costo</option>
-        @foreach($centros as $option)
-            <option value="{{ $option['id'] }}">{{ $option['name'] }}</option>
-        @endforeach
-    </select>
-    <button type="submit">Aceptar</button>
-</form> -->
 @endsection
 @section('script')
 <script src="{{asset('code/js/inventory/code-index.js')}}"></script>

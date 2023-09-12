@@ -25,7 +25,7 @@ class transferController extends Controller
 {
     public function index() // Alimenta el modal_create.blade para posterior store
     {
-        $category = Category::WhereIn('id', [1, 2, 3])->get();
+        $category = Category::WhereIn('id', [1, 2, 3, 4, 5, 6, 7])->get();
         $costcenter = Centrocosto::Where('status', 1)->get();
         $centros = Centrocosto::Where('status', 1)->get();
         $centroCostoProductos = Centro_costo_product::all();

@@ -127,5 +127,5 @@
 </div>
 @endsection
 @section('script')
-<script src="{{asset('rogercode/js/aves/desposteaves/rogercode-desposteaves-index.js')}}" type="module"></script>
+<script src="{{asset('code/js/aves/desposteaves/code-desposteaves-index.js')}}" type="module"></script>
 @endsection

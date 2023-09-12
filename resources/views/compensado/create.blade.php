@@ -29,14 +29,7 @@
 									</div>
 								</div>
 							</div>
-							<div class="col-md-2">
-								<div class="task-header">
-									<div class="form-group">
-                                        <label for="" class="form-label">Categoria</label>
-										<p>{{$datacompensado[0]->namecategoria}}</p>
-									</div>
-								</div>
-							</div>
+							
 							<div class="col-md-4">
 								<div class="task-header">
 									<div class="form-group">

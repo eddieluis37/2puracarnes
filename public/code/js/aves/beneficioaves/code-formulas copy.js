@@ -64,7 +64,7 @@
   function calculatotales() {
 
     var cantidad = $('#cantidad').val();
-    var pesopie1 = $('#pesopie1').val();
+    var pesopie1 = formatMoneyNumber($('#pesopie1').val());
     var pesopie2 = $('#pesopie2').val();
     var pesopie3 = $('#pesopie3').val();
     var pieleskg = $('#pieleskg').val();

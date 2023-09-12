@@ -26,11 +26,11 @@ class compensadoController extends Controller
      */
     public function index()
     {
-        $category = Category::WhereIn('id',[1,2,3])->get();
+      /*   $category = Category::WhereIn('id',[1,2,3,4,5,6,7])->get(); */
         $providers = Third::Where('status',1)->get();
         $centros = Centrocosto::Where('status',1)->get();
 
-        return view('compensado.res.index', compact('category','providers','centros'));
+        return view('compensado.res.index', compact('providers','centros'));
     }
 
     /**
@@ -44,17 +44,20 @@ class compensadoController extends Controller
         //$providers = Third::Where('status',1)->get();
         //$centros = Centrocosto::Where('status',1)->get();
         $datacompensado = DB::table('compensadores as comp')
-        ->join('categories as cat', 'comp.categoria_id', '=', 'cat.id')
+     /*    ->join('categories as cat', 'comp.categoria_id', '=', 'cat.id') */
         ->join('thirds as tird', 'comp.thirds_id', '=', 'tird.id')
         ->join('centro_costo as centro', 'comp.centrocosto_id', '=', 'centro.id')
-        ->select('comp.*', 'cat.name as namecategoria', 'tird.name as namethird','centro.name as namecentrocosto',)
+        ->select('comp.*', 'tird.name as namethird','centro.name as namecentrocosto',)
         ->where('comp.id', $id)
         ->get();
 
         $prod = Product::Where([
-            ['category_id',$datacompensado[0]->categoria_id],
+           /*  ['category_id',$datacompensado[0]->categoria_id], */
             ['status',1]
-        ])->get();
+        ])
+        ->orderBy('category_id', 'asc')
+        ->orderBy('name', 'asc')
+        ->get();
 
         /**************************************** */
         $status = '';
@@ -97,7 +100,7 @@ class compensadoController extends Controller
     public function getproducts(Request $request)
     {
         $prod = Product::Where([
-            ['category_id',$request->categoriaId],
+          /*   ['category_id',$request->categoriaId], */
             ['status',1]
         ])->get();
         return response()->json(['products' => $prod]);
@@ -207,15 +210,13 @@ class compensadoController extends Controller
         try {
 
             $rules = [
-                'compensadoId' => 'required',
-                'categoria' => 'required',
+                'compensadoId' => 'required',                
                 'provider' => 'required',
                 'centrocosto' => 'required',
                 'factura' => 'required',
             ];
             $messages = [
-                'compensadoId.required' => 'El compensadoId es requerido',
-                'categoria.required' => 'La categoria es requerida',
+                'compensadoId.required' => 'El compensadoId es requerido',  
                 'provider.required' => 'El proveedor es requerido',
                 'centrocosto.required' => 'El centro de costo es requerido',
                 'factura.required' => 'La factura es requerida',
@@ -242,7 +243,7 @@ class compensadoController extends Controller
 
                 $comp = new Compensadores();
                 $comp->users_id = $id_user;
-                $comp->categoria_id = $request->categoria;
+            /*     $comp->categoria_id = $request->categoria; */
                 $comp->thirds_id = $request->provider;
                 $comp->centrocosto_id = $request->centrocosto;
                 $comp->fecha_compensado = $currentDateFormat;
@@ -255,8 +256,7 @@ class compensadoController extends Controller
 					"registroId" => $comp->id
                 ]);
             }else{
-                $getReg = Compensadores::firstWhere('id', $request->compensadoId);
-                $getReg->categoria_id = $request->categoria;
+                $getReg = Compensadores::firstWhere('id', $request->compensadoId);               
                 $getReg->thirds_id = $request->provider;
                 $getReg->centrocosto_id = $request->centrocosto;
                 $getReg->factura = $request->factura;
@@ -287,10 +287,10 @@ class compensadoController extends Controller
     public function show()
     {
             $data = DB::table('compensadores as comp')
-            ->join('categories as cat', 'comp.categoria_id', '=', 'cat.id')
+          /*   ->join('categories as cat', 'comp.categoria_id', '=', 'cat.id') */
             ->join('thirds as tird', 'comp.thirds_id', '=', 'tird.id')
             ->join('centro_costo as centro', 'comp.centrocosto_id', '=', 'centro.id')
-            ->select('comp.*', 'cat.name as namecategoria', 'tird.name as namethird','centro.name as namecentrocosto')
+            ->select('comp.*','tird.name as namethird','centro.name as namecentrocosto')
             ->where('comp.status', 1)
             ->get();
             //$data = Compensadores::orderBy('id','desc');
@@ -313,13 +313,13 @@ class compensadoController extends Controller
                     if (Carbon::parse($currentDateTime->format('Y-m-d'))->gt(Carbon::parse($data->fecha_cierre))) {
                         $btn = '
                         <div class="text-center">
-					    <a href="compensado/create/'.$data->id.'" class="btn btn-dark" title="Despostar" >
+					    <a href="compensado/create/'.$data->id.'" class="btn btn-dark" title="Detalles" >
 						    <i class="fas fa-directions"></i>
 					    </a>
-					    <button class="btn btn-dark" title="Borrar Beneficio" onclick="showDataForm('.$data->id.')">
+					    <button class="btn btn-dark" title="Borrar Compensado" onclick="showDataForm('.$data->id.')">
 						    <i class="fas fa-eye"></i>
 					    </button>
-					    <button class="btn btn-dark" title="Borrar Beneficio" disabled>
+					    <button class="btn btn-dark" title="Borrar Compensado" disabled>
 						    <i class="fas fa-trash"></i>
 					    </button>
                         </div>
@@ -327,13 +327,13 @@ class compensadoController extends Controller
                     }elseif (Carbon::parse($currentDateTime->format('Y-m-d'))->lt(Carbon::parse($data->fecha_cierre))) {
                         $btn = '
                         <div class="text-center">
-					    <a href="compensado/create/'.$data->id.'" class="btn btn-dark" title="Despostar" >
+					    <a href="compensado/create/'.$data->id.'" class="btn btn-dark" title="Detalles" >
 						    <i class="fas fa-directions"></i>
 					    </a>
-					    <button class="btn btn-dark" title="Borrar Beneficio" onclick="editCompensado('.$data->id.');">
+					    <button class="btn btn-dark" title="Borrar Compensado" onclick="editCompensado('.$data->id.');">
 						    <i class="fas fa-edit"></i>
 					    </button>
-					    <button class="btn btn-dark" title="Borrar Beneficio" onclick="downCompensado('.$data->id.');">
+					    <button class="btn btn-dark" title="Borrar Compensado" onclick="downCompensado('.$data->id.');">
 						    <i class="fas fa-trash"></i>
 					    </button>
                         </div>
@@ -341,13 +341,13 @@ class compensadoController extends Controller
                     }else{
                         $btn = '
                         <div class="text-center">
-					    <a href="compensado/create/'.$data->id.'" class="btn btn-dark" title="Despostar" >
+					    <a href="compensado/create/'.$data->id.'" class="btn btn-dark" title="Detalles" >
 						    <i class="fas fa-directions"></i>
 					    </a>
-					    <button class="btn btn-dark" title="Borrar Beneficio" >
+					    <button class="btn btn-dark" title="Borrar Compensado" >
 						    <i class="fas fa-eye"></i>
 					    </button>
-					    <button class="btn btn-dark" title="Borrar Beneficio" disabled>
+					    <button class="btn btn-dark" title="Borrar Compensado" disabled>
 						    <i class="fas fa-trash"></i>
 					    </button>
                         </div>

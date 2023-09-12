@@ -20,7 +20,7 @@ class diaryController extends Controller
      */
     public function index()
     {
-        $category = Category::WhereIn('id', [1, 2, 3])->get();
+        $category = Category::WhereIn('id', [1, 2, 3, 4, 5, 6, 7])->get();
         $costcenter = Centrocosto::Where('status', 1)->get();
         $centros = Centrocosto::Where('status', 1)->get();
         $centroCostoProductos = Centro_costo_product::all();
@@ -60,38 +60,40 @@ class diaryController extends Controller
      */
     public function show(Request $request)
     {
-        //   $centrocosto_id = $request->input('centrocosto');
 
         $centrocostoId = $request->input('centrocostoId');
-      //  $centrocostoId = 1;
+        //  $centrocostoId = 1;
 
         //  var_dump($centrocostoId);
 
+        $categoriaId = $request->input('categoriaId');
 
-       $categoriaId = $request->input('categoriaId');
-       //    $categoriaId = 1;
-       // var_dump($categoriaId);
+        //    $categoriaId = 1;
+        // var_dump($categoriaId);
         //  print_r($categoriaId);
 
 
-        $data = DB::table('products as pro')
+        $data = DB::table('centro_costo_products as ccp')
+            ->join('products as pro', 'pro.id', '=', 'ccp.products_id')
             ->join('categories as cat', 'pro.category_id', '=', 'cat.id')
-            ->join('centro_costo_products as ccp', 'pro.id', '=', 'ccp.id')
             ->select('cat.name as namecategoria', 'pro.name as nameproducto', 'ccp.fisico as namefisico')
             ->where('ccp.centrocosto_id', $centrocostoId)
             ->where('pro.category_id', $categoriaId)
+            ->where('pro.status', 1)
             ->get();
 
-        // return response()->json($data);
-
+        //   return response()->json($data);
         //   print_r($centrocostoId);
 
         $getCostoKiloPadre = DB::table('desposteres')
+            ->join('beneficiores as be', 'desposteres.beneficiores_id', '=', 'be.id')
             ->join('products as p', 'desposteres.products_id', '=', 'p.id')
             ->join('centro_costo_products as ce', 'p.id', '=', 'ce.products_id')
             ->select('p.name', 'desposteres.costo_kilo', 'desposteres.peso')
             ->where([
                 ['desposteres.status', 'VALID'],
+                ['ce.centrocosto_id', $centrocostoId],
+                ['be.centrocosto_id', $centrocostoId],
                 ['p.status', 1],
             ])
             ->get();
@@ -114,12 +116,14 @@ class diaryController extends Controller
             ->select('p.name', 'cc.name', 'comp.centrocosto_id', DB::raw('SUM(comdet.peso) as total_weight'))
             ->where([
                 ['comp.status', 'VALID'],
+                ['cc.id', $centrocostoId],
                 ['p.status', 1],
                 ['cc.id', 1],
             ])
             ->groupBy('p.name', 'cc.name', 'comp.centrocosto_id')
             ->get();
 
+        $item = null;
         return Datatables::of($data)
             ->addColumn('costo_kilo', function ($row) use ($getCostoKiloPadre, $getCostoKiloHijo) {
                 $costo_kilo = '';

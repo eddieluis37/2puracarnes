@@ -16,15 +16,15 @@ class CreateBeneficiocerdosTable extends Migration
         Schema::create('beneficiocerdos', function (Blueprint $table) {
             $table->id();
 
+            $table->unsignedBigInteger('centrocosto_id')->nullable();
+            $table->foreign('centrocosto_id')->references('id')->on('centro_costo');
+
             $table->unsignedBigInteger('thirds_id')->nullable();
             $table->foreign('thirds_id')->references('id')->on('thirds');
 
             $table->unsignedBigInteger('plantasacrificiocerdo_id')->nullable();
             $table->foreign('plantasacrificiocerdo_id')->references('id')->on('sacrificiocerdos');         
-                     
-            $table->unsignedBigInteger('clientpieles_id')->nullable();
-            $table->foreign('clientpieles_id')->references('id')->on('thirds');
-
+    
             $table->unsignedBigInteger('clientvisceras_id')->nullable();
             $table->foreign('clientvisceras_id')->references('id')->on('thirds');                   
             

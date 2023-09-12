@@ -3,22 +3,8 @@
 		<div>
 			<input type="hidden" value="0" name="compensadoId" id="compensadoId" >
 		</div>
-		<div class="row g-3">
-			<div class="col-md-6">
-				<div class="task-header">
-					<div class="form-group">
-                        <label for="" class="form-label">Categoria</label>
-					    <select class="form-control form-control-sm input " name="categoria" id="categoria" required>
-						    <option value="">Seleccione la categoria</option>
-							@foreach($category as $option)
-							<option value="{{ $option['id'] }}" data="{{$option}}">{{ $option['name'] }}</option>
-							@endforeach
-					    </select>
-						<span class="text-danger error-message"></span>
-					</div>
-				</div>
-			</div>
-			<div class="col-md-6">
+		<div class="row g-3">			
+			<div class="col-md-4">
 				<div class="task-header">
 					<div class="form-group">
                         <label for="" class="form-label">Proveedor</label>
@@ -32,7 +18,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="col-md-6">
+			<div class="col-md-4">
 				<div class="task-header">
 					<div class="form-group">
                         <label for="" class="form-label">Centro de costo</label>
@@ -46,7 +32,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="col-md-6">
+			<div class="col-md-4">
 				<div class="task-header">
 					<div class="form-group">
                         <label for="" class="form-label">Factura</label>
