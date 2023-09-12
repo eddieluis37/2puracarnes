@@ -91,6 +91,16 @@
 														</div>
 													</div>
 
+													<!--div class="col-sm-12 col-md-4">
+														<div class="task-header">
+															<div class="form-group">
+																<label>Fecha</label>
+																<input type="date" value="<?php echo date('Y-m-d'); ?>" class="form-control" name="fecha_beneficio" id="fecha_beneficio" placeholder="ej: dd/dd/aaaa">
+																@error('fecha_beneficio') <span class="text-danger er">{{ $message}}</span>@enderror
+															</div>
+														</div>
+													</div>-->
+
 													<div class="col-sm-12 col-md-3">
 														<label for="sacrificio">Sacrificio</label>
 														<div class="input-group flex-nowrap">
@@ -98,6 +108,50 @@
 															<input type="text" name="sacrificio" id="sacrificio" class="form-control" aria-describedby="helpId" step="0.01" readonly>
 														</div>
 													</div>
+
+													<!--div class="col-sm-12 col-md-4">
+														<div class="task-header">
+															<div class="form-group">
+																<label>Lote</label>
+																<input type="text" class="form-control" name="lote" id="lote" placeholder="ej: PCD789" required="">
+																@error('lote') <span class="text-danger er">{{ $message}}</span>@enderror
+															</div>
+														</div>
+													</div>-->
+													<!--div class="invisible">
+
+
+														<div class="form-group col-md-12">
+
+															<div class="form-row">
+
+																<div class="form-group col-md-2">
+																	<label for="sacrificio">Sacrificio</label>
+																	<input type="text" name="sacrificio" id="sacrificio" class="form-control" aria-describedby="helpId" step="0.01" readonly>
+																</div>
+																<div class="form-group col-md-2">
+																	<label for="fomento">Fomento</label>
+																	<input type="text" name="fomento" id="fomento" class="form-control" aria-describedby="helpId" readonly step="0.01">
+																</div>
+																<div class="form-group col-md-2">
+																	<label for="deguello">Deguello</label>
+																	<input type="text" name="deguello" id="deguello" class="form-control" aria-describedby="helpId" readonly step="0.01">
+																</div>
+
+																<div class="form-group col-md-2">
+																	<label for="bascula">Báscula</label>
+																	<input type="text" name="bascula" id="bascula" class="form-control" aria-describedby="helpId" readonly step="0.01">
+																</div>
+
+																<div class="form-group col-md-2">
+																	<label for="transporte">Transporte</label>
+																	<input type="text" name="transporte" id="transporte" class="form-control" aria-describedby="helpId" step="0.01" readonly>
+																</div>
+
+															</div>
+
+														</div>
+													</div>-->
 
 												</div>
 											</div>
@@ -119,7 +173,7 @@
 																		<div class="col">
 																			<label for="sell_price1">Peso pie 1</label>
 																			<div class="input-group flex-nowrap">
-																				<input type="text" name="pesopie1" id="pesopie1" class="form-control" aria-describedby="helpId" placeholder="000.000" step="0.01" required="">
+																				<input type="text" name="pesopie1" id="pesopie1" class="form-control" aria-describedby="helpId" placeholder="0" required="">
 																				<span class="input-group-text" id="addon-wrapping">KG</span>
 																			</div>
 																		</div>
@@ -127,7 +181,7 @@
 																			<label for="sell_price">Costo Animal 1</label>
 																			<div class="input-group flex-nowrap">
 																				<span class="input-group-text" id="addon-wrapping">$</span>
-																				<input type="text" name="costoanimal1" id="costoanimal1" class="form-control" aria-describedby="helpId" placeholder="000.000" step="0.01" required>
+																				<input type="text" name="costoanimal1" id="costoanimal1" class="form-control" aria-describedby="helpId" placeholder="0" required>
 																			</div>
 																		</div>
 																	</div>
@@ -210,25 +264,25 @@
 
 															<div class="form-row mt-3">
 																<div class="col-md-2">
-																	<label for="canalfria">Canal fria</label>
+																	<label for="canalfria">% Canal fria</label>
 																	<div class="input-group flex-nowrap">
-																		<input type="text" name="canalfria" id="canalfria" class="form-control" aria-describedby="helpId" step="0.01" required>
+																		<input type="text" name="canalfria" id="canalfria" class="form-control" aria-describedby="helpId" step="0.01">
 																		<span class="input-group-text" id="addon-wrapping">KG</span>
 																	</div>
 																</div>
-																<div class="form-group col-md-2">
-																	<!--label for="canalcaliente">Canal caliente</label>
-																	<input type="number" name="canalcaliente" id="canalcaliente" class="form-control" aria-describedby="helpId" step="0.01"-->
+																<div class="form-group col-md-2 invisible">
+																	<label for="canalcaliente">Canal caliente</label>
+																	<input type="number" name="canalcaliente" id="canalcaliente" class="form-control" aria-describedby="helpId" step="0.01">
 																</div>
 
-																<div class="form-group col-md-2">
-																	<!--label for="sell_price">Canal planta</label>
-																	<input type="number" name="canalplanta" id="canalplanta" class="form-control" aria-describedby="helpId" step="0.01"-->
+																<div class="form-group col-md-2 invisible">
+																	<label for="sell_price">Canal planta</label>
+																	<input type="number" name="canalplanta" id="canalplanta" class="form-control" aria-describedby="helpId" step="0.01">
 																</div>
 																<div class="col-md-2">
 																	<label for="pieleskg">Kg Menudencias</label>
 																	<div class="input-group flex-nowrap">
-																		<input type="text" name="pieleskg" id="pieleskg" class="form-control" aria-describedby="helpId" step="0.01" required>
+																		<input type="text" name="pieleskg" id="pieleskg" class="form-control" aria-describedby="helpId" step="0.01">
 																		<span class="input-group-text" id="addon-wrapping">KG</span>
 																	</div>
 																</div>
@@ -237,14 +291,14 @@
 																	<label for="pielescosto">Piel Costo</label>
 																	<div class="input-group flex-nowrap">
 																		<span class="input-group-text" id="addon-wrapping">$</span>
-																		<input type="text" name="pielescosto" id="pielescosto" class="form-control" aria-describedby="helpId" step="0.01" required>
+																		<input type="text" name="pielescosto" id="pielescosto" class="form-control" aria-describedby="helpId" step="0.01">
 																	</div>
 																</div>
 																<div class="col-md-2">
 																	<label for="visceras">Visceras Costo</label>
 																	<div class="input-group flex-nowrap">
 																		<span class="input-group-text" id="addon-wrapping">$</span>
-																		<input type="text" name="visceras" id="visceras" class="form-control" aria-describedby="helpId" step="0.01" required>
+																		<input type="text" name="visceras" id="visceras" class="form-control" aria-describedby="helpId" step="0.01">
 																	</div>
 																</div>
 															</div>
@@ -290,7 +344,7 @@
 																		<input type="text" name="tsacrificio" id="tsacrificio" class="form-control " aria-describedby="helpId" readonly >
 																	</div>
 																</div>
-																<!--div class="col-md-4">
+																<div class="col-md-4">
 																	<label for="tfomento">Fomento</label>
 																	<div class="input-group flex-nowrap">
 																		<span class="input-group-text" id="addon-wrapping">$</span>
@@ -318,7 +372,7 @@
 																		<span class="input-group-text" id="addon-wrapping">$</span>
 																		<input type="text" name="ttransporte" id="ttransporte" class="form-control" aria-describedby="helpId" readonly step="0.01">
 																	</div>
-																</div>-->
+																</div>
 																<div class="col-md-4">
 																	<label for="tpieles">Pieles</label>
 																	<div class="input-group flex-nowrap">
@@ -388,7 +442,7 @@
 																		<span class="input-group-text" id="addon-wrapping">KG</span>
 																	</div>
 																</div>
-																<!--div class="col-md-4">
+																<div class="col-md-4">
 																	<label for="rtcanalcaliente">Canal Caliente</label>
 																	<div class="input-group flex-nowrap">
 																		<input type="text" name="rtcanalcaliente" id="rtcanalcaliente" class="form-control" aria-describedby="helpId" readonly step="0.01">
@@ -401,7 +455,7 @@
 																		<input type="text" name="rtcanalplanta" id="rtcanalplanta" class="form-control" aria-describedby="helpId" readonly step="0.01">
 																		<span class="input-group-text" id="addon-wrapping">KG</span>
 																	</div>
-																</div>-->
+																</div>
 
 																<div class="col-md-4">
 																	<label for="rtcanalfria">Canal Fría</label>
@@ -410,7 +464,7 @@
 																		<span class="input-group-text" id="addon-wrapping">KG</span>
 																	</div>
 																</div>
-																<!--div class="col-md-4">
+																<div class="col-md-4">
 																	<label for="rendcaliente">Rend.Caliente</label>
 																	<div class="input-group flex-nowrap">
 																		<input type="text" name="rendcaliente" id="rendcaliente" class="form-control" aria-describedby="helpId" readonly step="0.01">
@@ -423,7 +477,7 @@
 																		<input type="text" name="rendplanta" id="rendplanta" class="form-control" aria-describedby="helpId" readonly step="0.01">
 																		<span class="input-group-text" id="addon-wrapping">KG</span>
 																	</div>
-																</div>-->
+																</div>
 																<div class="col-md-4">
 																	<label for="rendfrio">Rend.Frio</label>
 																	<div class="input-group flex-nowrap">
@@ -441,6 +495,11 @@
 
 									</div>
 
+
+									<!--div class="modal-footer justify-content-between">
+										<button type="button" class="btn btn-outline-light" data-dismiss="modal">Close</button>
+										<button type="submit" class="btn btn-outline-primary">Guardar</button>
+									</div>-->
 								</div>
 							</div>
 						</div>

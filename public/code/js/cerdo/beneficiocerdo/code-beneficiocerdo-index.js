@@ -14,6 +14,7 @@ $(document).ready(function () {
             },
             columns: [
                 { data: "id", name: "id" },
+                { data: "namecentrocosto", name: "namecentrocosto" },
                 { data: "namethird", name: "namethird" },
                 { data: "date", name: "date" },
                 { data: "factura", name: "factura" },
@@ -76,6 +77,7 @@ const idBeneficio = document.querySelector("#idbeneficio");
 const formBeneficiocerdos = document.querySelector("#formBeneficiocerdos");
 const contentform = document.querySelector("#contentDisable");
 
+inputplantasacrificiocerdo_id = document.querySelector("#plantasacrificiocerdo_id")
 inputvalortotalhembra = document.querySelector("#valorTotalHembra");
 inputvalortotalmacho = document.querySelector("#valorTotalMacho");
 
@@ -176,7 +178,7 @@ const showForm = (data) => {
 
     //inputfecha_beneficio.value = resp.fecha_beneficio;
     inputfactura.value = resp.factura;
-    inputclientpieles_id.value = resp.clientpieles_id;
+    inputplantasacrificiocerdo_id.value = resp.plantasacrificiocerdo_id;
     inputclientvisceras_id.value = resp.clientvisceras_id;
     inputfinca.value = resp.finca;
     //inputlote.value = resp.lote;

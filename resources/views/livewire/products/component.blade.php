@@ -27,7 +27,10 @@
 								<th class="table-th text-white text-center">CODE</th>
 								<th class="table-th text-white text-center">BARCODE</th>
 								<th class="table-th text-white text-center">CATEGORÍA</th>
-								<th class="table-th text-white text-center">PRECIO</th>
+								<th class="table-th text-white text-center">PRECIO_F</th>
+								<th class="table-th text-white text-center">PRECIO_I</th>
+								<th class="table-th text-white text-center">PRECIO_H</th>
+								<th class="table-th text-white text-center">PRECIO_C</th>
 								<th class="table-th text-white text-center">IVA</th>
 								<th class="table-th text-white text-center">STOCK</th>
 								<th class="table-th text-white text-center">INV.MIN</th>
@@ -51,7 +54,16 @@
 									<h6 class="text-center">{{$product->category}}</h6>
 								</td>
 								<td>
-									<h6 class="text-center">${{number_format($product->price,0)}}</h6>
+									<h6 class="text-center">${{number_format($product->price_fama,0)}}</h6>
+								</td>
+								<td>
+									<h6 class="text-center">${{number_format($product->price_insti,0)}}</h6>
+								</td>
+								<td>
+									<h6 class="text-center">${{number_format($product->price_horeca,0)}}</h6>
+								</td>
+								<td>
+									<h6 class="text-center">${{number_format($product->price_hogar,0)}}</h6>
 								</td>
 								<td>
 									<h6 class="text-center">{{number_format($product->iva)}}%</h6>

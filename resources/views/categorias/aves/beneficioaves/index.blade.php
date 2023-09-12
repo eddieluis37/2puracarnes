@@ -64,7 +64,7 @@
 </div>
 @endsection
 @section('script')
-<script src="{{asset('rogercode/js/aves/beneficioaves/rogercode-beneficioaves-index.js')}}"></script>
-<script src="{{asset('rogercode/js/aves/beneficioaves/rogercode-formulas.js')}}"></script>
-<script src="{{asset('rogercode/js/aves/beneficioaves/rogercode-create.js')}}" type="module"></script>
+<script src="{{asset('code/js/aves/beneficioaves/code-beneficioaves-index.js')}}"></script>
+<script src="{{asset('code/js/aves/beneficioaves/code-formulas.js')}}"></script>
+<script src="{{asset('code/js/aves/beneficioaves/code-create.js')}}" type="module"></script>
 @endsection

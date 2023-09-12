@@ -12,7 +12,7 @@
 			<div class="row">
 				<div class="col-sm-5">
 					<h4 class="">
-						<b> Alistamiento / Categoria </b>
+						<b> Alistamiento | Categoria </b>
 					</h4>
 				</div>
 			</div>
@@ -185,7 +185,7 @@
 											<th> {{number_format($arrayTotales['newTotalStock'], 2, ',', '.')}} KG</th>
 											<th class="text-center">
 												@if($dataAlistamiento[0]->inventario == 'pending')
-												<button class="btn btn-success btn-sm" id="addShopping">Cargar al inventario</button>
+												<button class="btn btn-success btn-sm" id="addShopping"> al inventario</button>
 												@endif
 											</th>
 										</tr>

@@ -25,9 +25,9 @@ class ProductsController extends Component
 		$this->emit('global-msg', "SE AGREGÓ EL PRODUCTO AL CARRITO");
 	}
 
-	public $name, $code, $barcode, $cost, $price, $stock, $alerts, $categoryid, $search, $image, $selected_id, $pageTitle, $componentName;
-	
-	private $pagination = 5;
+	public $name, $code, $barcode, $cost, $price_fama, $price_insti, $price_horeca, $price_hogar, $stock, $alerts, $categoryid, $search, $image, $selected_id, $pageTitle, $componentName;
+
+	private $pagination = 10;
 
 
 	public function paginationView()
@@ -41,14 +41,13 @@ class ProductsController extends Component
 		$this->pageTitle = 'Listado';
 		$this->componentName = 'Productos';
 		$this->categoryid = 'Elegir';
-	
 	}
 
 
 
 	public function render()
 	{
-		if (strlen($this->search) > 0)
+		if (strlen($this->search) > 0) {
 			$products = Product::join('categories as c', 'c.id', 'products.category_id')
 				->select('products.*', 'c.name as category')
 				->where('products.name', 'like', '%' . $this->search . '%')
@@ -57,19 +56,14 @@ class ProductsController extends Component
 				->orWhere('c.name', 'like', '%' . $this->search . '%')
 				->orderBy('products.name', 'asc')
 				->paginate($this->pagination);
-		else
+		} else {
 			$products = Product::join('categories as c', 'c.id', 'products.category_id')
-								->leftJoin('precio_agreements as pa', 'pa.id', 'products.id')	
-				->select('products.*', 'c.name as category',
-						'products.*', 'pa.precio as price'
-															)
-				->where('pa.precio', '>', 0)
-
+				->leftJoin('precio_agreements as pa', 'pa.id', 'products.id')
+				->select('products.*', 'c.name as category', 'products.price_fama as price_fama')
+				->where('products.price_fama', '>', 0)
 				->orderBy('products.id', 'asc')
 				->paginate($this->pagination);
-
-
-
+		}
 
 		return view('livewire.products.component', [
 			'data' => $products,
@@ -79,13 +73,12 @@ class ProductsController extends Component
 			->section('content');
 	}
 
-
 	public function Store()
 	{
 		$rules  = [
 			'name' => 'required|unique:products|min:3',
-			'cost' => 'required',			
-			'price' => 'required',
+			'cost' => 'required',
+			'price_fama' => 'required',
 			'stock' => 'required',
 			'alerts' => 'required',
 			'categoryid' => 'required|not_in:Elegir'
@@ -96,7 +89,7 @@ class ProductsController extends Component
 			'name.unique' => 'Ya existe el nombre del producto',
 			'name.min' => 'El nombre del producto debe tener al menos 3 caracteres',
 			'cost.required' => 'El costo es requerido',
-			'price.required' => 'El precio es requerido',
+			'price_fama.required' => 'El precio es requerido',
 			'stock.required' => 'El stock es requerido',
 			'alerts.required' => 'Ingresa el valor mínimo en existencias',
 			'categoryid.not_in' => 'Elige un nombre de categoría diferente de Elegir',
@@ -109,11 +102,15 @@ class ProductsController extends Component
 			'name' => $this->name,
 			'code' => $this->code,
 			'cost' => $this->cost,
-			'price' => $this->price,
+			'price_fama' => $this->price_fama,
+			'price_insti' => $this->price_insti,
+			'price_horeca' => $this->price_horeca,
+			'price_hogar' => $this->price_hogar,
 			'barcode' => $this->barcode,
 			'stock' => $this->stock,
 			'alerts' => $this->alerts,
-			'category_id' => $this->categoryid
+			'category_id' => $this->categoryid,
+			'meatcut_id' => $this->categoryid
 		]);
 
 		if ($this->image) {
@@ -135,7 +132,10 @@ class ProductsController extends Component
 		$this->code = $product->code;
 		$this->barcode = $product->barcode;
 		$this->cost = $product->cost;
-		$this->price = $product->price;
+		$this->price_fama = $product->price_fama;
+		$this->price_insti = $product->price_insti;
+		$this->price_horeca = $product->price_horeca;
+		$this->price_hogar = $product->price_hogar;
 		$this->stock = $product->stock;
 		$this->alerts = $product->alerts;
 		$this->categoryid = $product->category_id;
@@ -149,7 +149,7 @@ class ProductsController extends Component
 		$rules  = [
 			'name' => "required|min:3|unique:products,name,{$this->selected_id}",
 			'cost' => 'required',
-			'price' => 'required',
+			'price_fama' => 'required',
 			'stock' => 'required',
 			'alerts' => 'required',
 			'categoryid' => 'required|not_in:Elegir'
@@ -160,7 +160,7 @@ class ProductsController extends Component
 			'name.unique' => 'Ya existe el nombre del producto',
 			'name.min' => 'El nombre del producto debe tener al menos 3 caracteres',
 			'cost.required' => 'El costo es requerido',
-			'price.required' => 'El precio es requerido',
+			'price_fama.required' => 'El precio es requerido',
 			'stock.required' => 'El stock es requerido',
 			'alerts.required' => 'Ingresa el valor mínimo en existencias',
 			'categoryid.not_in' => 'Elige un nombre de categoría diferente de Elegir',
@@ -174,7 +174,10 @@ class ProductsController extends Component
 			'name' => $this->name,
 			'code' => $this->code,
 			'cost' => $this->cost,
-			'price' => $this->price,
+			'price_fama' => $this->price_fama,
+			'price_insti' => $this->price_insti,
+			'price_horeca' => $this->price_horeca,
+			'price_hogar' => $this->price_hogar,
 			'barcode' => $this->barcode,
 			'stock' => $this->stock,
 			'alerts' => $this->alerts,
@@ -206,7 +209,10 @@ class ProductsController extends Component
 		$this->code = '';
 		$this->barcode = '';
 		$this->cost = '';
-		$this->price = '';
+		$this->price_fama = '';
+		$this->price_insti = '';
+		$this->price_horeca = '';
+		$this->price_hogar = '';
 		$this->stock = '';
 		$this->alerts = '';
 		$this->search = '';

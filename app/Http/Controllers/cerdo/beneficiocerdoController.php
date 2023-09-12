@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Validator;
 use App\Models\Third;
 use App\Models\Sacrificio;
 use App\Models\Sacrificiocerdo;
-use App\Models\Beneficiore;
+use App\Models\centros\Centrocosto;
 use NumberFormatter;
 use DateTime;
 
@@ -28,8 +28,9 @@ class beneficiocerdoController extends Controller
     {
         $thirds = Third::orderBy('name', 'asc')->get();
         $sacrificios = Sacrificiocerdo::orderBy('name', 'asc')->get();
+		$centros = Centrocosto::Where('status', 1)->get();	
 		//dd($sacrificios);
-        return view('categorias.cerdo.beneficiocerdo.index', compact('thirds','sacrificios'));
+        return view('categorias.cerdo.beneficiocerdo.index', compact('thirds','sacrificios','centros'));
     }
 
     /**
@@ -86,6 +87,7 @@ class beneficiocerdoController extends Controller
 			    $current_date->modify('next monday'); // Move to the next Monday
 			    $dateNextMonday = $current_date->format('Y-m-d'); // Output the date in Y-m-d format
 			    $newBeneficiocerdo = new Beneficiocerdo();
+				$newBeneficiocerdo->centrocosto_id = $request->centrocosto_id;
 			    $newBeneficiocerdo->thirds_id = $request->thirds_id;
 			    $newBeneficiocerdo->plantasacrificiocerdo_id  = $request->plantasacrificiocerdo_id;
 			    $newBeneficiocerdo->cantidadmacho = $this->MoneyToNumber($request->cantidadMacho);
@@ -98,7 +100,6 @@ class beneficiocerdoController extends Controller
 			    $newBeneficiocerdo->fecha_beneficio = $currentDateFormat;
 			    $newBeneficiocerdo->fecha_cierre = $dateNextMonday;
 			    $newBeneficiocerdo->factura = $request->factura;
-			    $newBeneficiocerdo->clientpieles_id = $request->clientpieles_id;
 			    $newBeneficiocerdo->clientvisceras_id = $request->clientvisceras_id;
 			    $newBeneficiocerdo->lote = $newLote;//$request->lote;
 			    $newBeneficiocerdo->finca = $request->finca;
@@ -152,7 +153,8 @@ class beneficiocerdoController extends Controller
 		    }else {
 
 			    $updateBeneficiocerdo = Beneficiocerdo::firstWhere('id', $request->idbeneficio);
-			    $updateBeneficiocerdo->thirds_id = $request->thirds_id;
+				$updateBeneficiocerdo->centrocosto_id = $request->centrocosto_id;
+				$updateBeneficiocerdo->thirds_id = $request->thirds_id;
 			    $updateBeneficiocerdo->plantasacrificiocerdo_id  = $request->plantasacrificiocerdo_id;
 			    $updateBeneficiocerdo->cantidadmacho = $this->MoneyToNumber($request->cantidadMacho);
 			    $updateBeneficiocerdo->valorunitariomacho = $this->MoneyToNumber($request->valorUnitarioMacho);
@@ -163,7 +165,6 @@ class beneficiocerdoController extends Controller
 			    $updateBeneficiocerdo->cantidad = $request->cantidadMacho + $request->cantidadHembra;
 			    //$updateBeneficiocerdo->fecha_beneficio = $request->fecha_beneficio;
 			    $updateBeneficiocerdo->factura = $request->factura;
-			    $updateBeneficiocerdo->clientpieles_id = $request->clientpieles_id;
 			    $updateBeneficiocerdo->clientvisceras_id = $request->clientvisceras_id;
 			    //$updateBeneficiocerdo->lote = $request->lote;
 			    $updateBeneficiocerdo->finca = $request->finca;
@@ -233,7 +234,8 @@ class beneficiocerdoController extends Controller
     {
             $data = DB::table('beneficiocerdos as be')
             ->join('thirds as tird', 'be.thirds_id', '=', 'tird.id')
-            ->select('be.*', 'tird.name as namethird')
+			->join('centro_costo as cc', 'be.centrocosto_id', '=', 'cc.id')
+            ->select('be.*', 'cc.name as namecentrocosto', 'tird.name as namethird')
 			->where('be.status', '=', true)
 			->orderBy('be.id', 'desc')
             ->get();
