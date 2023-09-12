@@ -9,6 +9,7 @@ use App\Models\Beneficiore;
 use App\Models\Despostere;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use Yajra\Datatables\Datatables;
 use DateTime;
 use Carbon\Carbon;
 
@@ -268,12 +269,24 @@ class desposteresController extends Controller
         }
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+    public function cargarInventario(Request $request)
+    {
+        $beneficioId = $request->input('beneficioId');
+
+        $currentDateTime = Carbon::now();
+        $formattedDate = $currentDateTime->format('Y-m-d');
+
+        $beneficio = Beneficiore::find($beneficioId);
+        $beneficio->fecha_cierre = $formattedDate;
+        $beneficio->save();
+
+        return response()->json([
+            'status' => 1,
+            'message' => 'Cargado al inventario exitosamente'
+        ]);
+    }
+
+
     public function destroy(Request $request)
     {
         try {

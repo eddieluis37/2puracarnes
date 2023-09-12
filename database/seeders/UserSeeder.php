@@ -24,7 +24,7 @@ class UserSeeder extends Seeder
             'email' => 'admin@puracarnes.com',
             'profile' => 'Admin',
             'status' => 'Active',
-            'password' => bcrypt('Edd1eLu1s9.')
+            'password' => bcrypt('ab$')
         ]);
         User::create([
             'name' => 'Jair Rada Rada',

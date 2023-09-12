@@ -189,6 +189,7 @@ Route::post('showinventory', [diaryController::class,'show'])->name('inventory.s
 Route::get('inventory/mensual', [mensualController::class, 'index'])->name('inventory.mensual');
 
 
+
 /*****************************BENEFICIO-RES*******************************************/
 Route::get('beneficiores', [beneficioresController::class,'index'])->name('beneficiores.index');
 Route::get('showbeneficiores', [beneficioresController::class,'show'])->name('beneficiores.showlist');
@@ -197,11 +198,15 @@ Route::post('savebeneficiores', [beneficioresController::class, 'store'])->name(
 Route::get('/edit/{id}', [beneficioresController::class, 'edit'])->name('beneficiores.edit');
 Route::get('downbeneficiores/{id}', [beneficioresController::class, 'destroy'])->name('beneficiores.destroy');
 
+
+
 /*****************************DESPOSTE-RES******************************************/
 Route::get('desposteres', [desposteresController::class, 'index'])->name('desposteres.index');
 Route::get('desposteres/{id}', [desposteresController::class, 'create']);
 Route::post('/desposteresUpdate', [desposteresController::class, 'update']);
 Route::post('/downdesposter', [desposteresController::class, 'destroy']);
+
+Route::post('cargarInventario', [desposteresController::class,'cargarInventario'])->name('desposteres.show');
 
 /*****************************DESPOSTE-CERDO******************************************/
 Route::get('despostecerdo', [despostecerdoController::class, 'index'])->name('despostecerdo.index');

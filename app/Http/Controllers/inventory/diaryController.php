@@ -92,6 +92,7 @@ class diaryController extends Controller
             ->select('p.name', 'desposteres.costo_kilo', 'desposteres.peso')
             ->where([
                 ['desposteres.status', 'VALID'],
+                ['be.status', '1'],
                 ['ce.centrocosto_id', $centrocostoId],
                 ['be.centrocosto_id', $centrocostoId],
                 ['p.status', 1],
