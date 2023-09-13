@@ -132,7 +132,14 @@ const showDataTable = (data) => {
                         loadingEnd(element, "success", "Cargar al inventario");
                         element.disabled = true;
                         alert("Se ha cargado correctamente el inventario")
-                        window.location.href = `/beneficiores`;
+                        window.location.href = `/beneficiores/`;
+                        //$('#formapagodata').attr("action",data.dataurl); 	
+                        //$('#formapagodata').attr("method","POST"); 	
+                        //$('#formapagodata').attr("enctype","multipart/form-data"); 		
+                
+                         //$('#editfp_modal').modal('show'); 		     
+                         //$('#codigo').val(data.data.codigo);
+                        
                     }
                     if (result.status == 0) {
                         loadingEnd(element, "success", "Cargar al inventario");
