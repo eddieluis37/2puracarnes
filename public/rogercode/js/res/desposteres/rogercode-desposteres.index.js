@@ -158,7 +158,7 @@ const showDataTable = (data) => {
                     if (result.status == 1) {
                         loadingEnd(element, "success", "Cargar al inventario");
                         element.disabled = true;
-                        return showConfirmationAlert(element);
+                        window.location.href = `/alistamiento`;
                     }
                     if (result.status == 0) {
                         loadingEnd(element, "success", "Cargar al inventario");
