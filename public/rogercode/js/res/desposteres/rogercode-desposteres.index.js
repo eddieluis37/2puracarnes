@@ -131,7 +131,8 @@ const showDataTable = (data) => {
                     if (result.status == 1) {
                         loadingEnd(element, "success", "Cargar al inventario");
                         element.disabled = true;
-                        window.location.href = `/alistamiento`;
+                        alert("Se ha cargado correctamente el inventario")
+                        window.location.href = `/beneficiores`;
                     }
                     if (result.status == 0) {
                         loadingEnd(element, "success", "Cargar al inventario");
