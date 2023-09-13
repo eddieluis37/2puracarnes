@@ -1,6 +1,12 @@
 import { sendData } from "../../exportModule/core/rogercode-core.js";
-import { successToastMessage, errorMessage } from '../../exportModule/message/rogercode-message.js';
-import { loadingStart, loadingEnd } from '../../exportModule/core/rogercode-core.js';
+import {
+    successToastMessage,
+    errorMessage,
+} from "../../exportModule/message/rogercode-message.js";
+import {
+    loadingStart,
+    loadingEnd,
+} from "../../exportModule/core/rogercode-core.js";
 const table = document.querySelector("#tableDespostere");
 const token = document
     .querySelector('meta[name="csrf-token"]')
@@ -113,32 +119,57 @@ const showDataTable = (data) => {
 			</td>
 		</tr>
   `;
+    // Función para mostrar el SweetAlert de confirmación
+    function showConfirmationAlert(element) {
+        return swal({
+            title: "CONFIRMAR",
+            text: "¿Está seguro de cargar al inventario?",
+            icon: "warning",
+            buttons: {
+                cancel: {
+                    text: "Cerrar",
+                    value: null,
+                    visible: true,
+                    closeModal: true,
+                },
+                confirm: {
+                    text: "Aceptar",
+                    value: true,
+                    visible: true,
+                    closeModal: false,
+                },
+            },
+        });
+    }
 
+    // Evento click del botón "cargarInventarioBtn"
     tableTfoot.addEventListener("click", (e) => {
         e.preventDefault();
         let element = e.target;
         console.log(element);
         if (element.id === "cargarInventarioBtn") {
-            //added to inventory
             console.log("click");
             loadingStart(element);
             const dataform = new FormData();
             dataform.append("beneficioId", Number(beneficioId.value));
-
-            sendData("/cargarInventario", dataform, token).then(
-                (result) => {
+            sendData("/cargarInventario", dataform, token)
+                .then((result) => {
                     console.log(result);
                     if (result.status == 1) {
                         loadingEnd(element, "success", "Cargar al inventario");
                         element.disabled = true;
-                        window.location.href = `/alistamiento`;
+                        return showConfirmationAlert(element);
                     }
                     if (result.status == 0) {
                         loadingEnd(element, "success", "Cargar al inventario");
                         errorMessage(result.message);
                     }
-                }
-            );
+                })
+                .then((result) => {
+                    if (result && result.value) {
+                        window.location.href = "/beneficiores";
+                    }
+                });
         }
     });
 
@@ -234,7 +265,7 @@ document
         cargarInventario(beneficioId);
     });
 
-function cargarInventario(beneficioId) {
+/* function cargarInventario(beneficioId) {
     $.ajax({
         url: "/cargarInventario", // Reemplaza con la URL correcta de tu controlador
         method: "POST",
@@ -248,7 +279,7 @@ function cargarInventario(beneficioId) {
             console.error("Error:", error);
         },
     });
-}
+} */
 document
     .querySelector("#tableDespostere tbody")
     .addEventListener("click", (e) => {
