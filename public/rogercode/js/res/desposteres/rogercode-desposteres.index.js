@@ -131,7 +131,7 @@ const showDataTable = (data) => {
                     if (result.status == 1) {
                         loadingEnd(element, "success", "Cargar al inventario");
                         element.disabled = true;
-                        window.location.href = `/desposteres`;
+                        window.location.href = `/alistamiento`;
                     }
                     if (result.status == 0) {
                         loadingEnd(element, "success", "Cargar al inventario");

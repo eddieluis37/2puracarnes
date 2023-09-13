@@ -280,10 +280,15 @@ class desposteresController extends Controller
         $beneficio->fecha_cierre = $formattedDate;
         $beneficio->save();
 
+        $beneficior = Beneficiore::where('id', $beneficioId)->get();
+
         return response()->json([
             'status' => 1,
-            'message' => 'Cargado al inventario exitosamente'
+            'message' => 'Cargado al inventario exitosamente',
+            'beneficior' => $beneficior
         ]);
+
+       // return view('categorias.res.desposte.index', ['beneficio' => $beneficio]);
     }
 
 

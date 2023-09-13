@@ -185,7 +185,7 @@
 											<th> {{number_format($arrayTotales['newTotalStock'], 2, ',', '.')}} KG</th>
 											<th class="text-center">
 												@if($dataAlistamiento[0]->inventario == 'pending')
-												<button class="btn btn-success btn-sm" id="addShopping"> al inventario</button>
+												<button class="btn btn-success btn-sm" id="addShopping">Cargar al inventario</button>
 												@endif
 											</th>
 										</tr>

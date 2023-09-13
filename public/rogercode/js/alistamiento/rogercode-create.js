@@ -129,7 +129,7 @@ const showData = (data) => {
 		    <th>${formatCantidad(arrayTotales.kgTotalRequeridos)} KG</td>
 		    <th>${formatCantidad(arrayTotales.newTotalStock)} KG</th>
 		    <td class="text-center">
-                <button class="btn btn-success btn-sm" id="addShopping">Cargar js</button>
+                <button class="btn btn-success btn-sm" id="addShopping">Cargar al inventario</button>
             </td>
 	    </tr>
     `;
