@@ -119,6 +119,7 @@ const showDataTable = (data) => {
 			</td>
 		</tr>
   `;
+
     // Función para mostrar el SweetAlert de confirmación
     function showConfirmationAlert(element) {
         return swal({
@@ -158,7 +159,7 @@ const showDataTable = (data) => {
                     if (result.status == 1) {
                         loadingEnd(element, "success", "Cargar al inventario");
                         element.disabled = true;
-                        window.location.href = `/alistamiento`;
+                        return showConfirmationAlert(element);
                     }
                     if (result.status == 0) {
                         loadingEnd(element, "success", "Cargar al inventario");
