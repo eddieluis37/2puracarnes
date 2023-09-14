@@ -53,6 +53,7 @@ class alistamientoController extends Controller
         ->select('p.*', 'ce.stock','ce.fisico','p.id as productopadreId')
             ->where([
                 ['p.level_product_id',1],
+                ['ce.tipoinventario',"inicial"],
                 ['p.meatcut_id',$dataAlistamiento[0]->meatcut_id],
                 ['p.status',1],
                 ['ce.centrocosto_id',$dataAlistamiento[0]->centrocosto_id],
@@ -282,6 +283,7 @@ class alistamientoController extends Controller
             ->where([
                 ['p.id',$request->producto],
                 ['ce.centrocosto_id',$request->centrocosto],
+                ['ce.tipoinventario',"inicial"],
                 ['p.status',1],
                 
             ])->get();
@@ -329,6 +331,7 @@ class alistamientoController extends Controller
         ->select('en.*', 'pro.name as nameprod','pro.code','ce.stock','ce.fisico')
         ->where([
             ['ce.centrocosto_id',$centrocostoId],
+            ['ce.tipoinventario',"inicial"],
             ['en.enlistments_id',$alistamientoId],
             ['en.status',1]
         ])->get();
@@ -360,6 +363,7 @@ class alistamientoController extends Controller
             ->where([
                 ['p.id',$request->productoId],
                 ['ce.centrocosto_id',$request->centrocosto],
+                ['ce.tipoinventario',"inicial"],
                 ['p.status',1],
                 
             ])->get();
