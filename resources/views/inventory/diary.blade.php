@@ -72,11 +72,11 @@
               <th class="table-th text-white">CAT</th>
               <th class="table-th text-white">PRODUCTO</th>
               <th class="table-th text-white">INV INICIAL</th>
-              <th class="table-th text-white">COSTO UNIT INV INI</th>
-              <th class="table-th text-white">TOTAL INV INI</th>
               <th class="table-th text-white">COMPRA LOTE</th>
-              <th class="table-th text-white">COSTO UNI LOTE</th>
-              <th class="table-th text-white">TOTAL LOTE</th>
+              <th class="table-th text-white">ALISTAMIENTO</th>
+              <!-- <th class="table-th text-white">TOTAL INV INI</th>
+              <th class="table-th text-white">COMPRA LOTE</th>
+              <th class="table-th text-white">COSTO UNI LOTE</th>            
               <th class="table-th text-white">COMPENSADOS</th>
               <th class="table-th text-white">TOTAL COMP</th>
               <th class="table-th text-white">TRASLADO INGRESO</th>
@@ -98,7 +98,7 @@
               <th class="table-th text-white">MERMA</th>
               <th class="table-th text-white">% MERMA</th>
               <th class="table-th text-white">UTILIDAD</th>
-              <th class="table-th text-white">% MERMA</th>
+              <th class="table-th text-white">% MERMA</th> -->
             </tr>
           </thead>
           <tbody>

@@ -24,10 +24,40 @@ function initializeDataTable(centrocostoId = "-1", categoriaId = "-1") {
         columns: [
             { data: "namecategoria", name: "namecategoria" },
             { data: "nameproducto", name: "nameproducto" },
-            { data: "namefisico", name: "namefisico" }, 
+            { data: "namefisico", name: "namefisico" },
+            {
+                data: "costo_kilo",
+                name: "costo_kilo",
+                render: function (data, type, row) {
+                    return "$ " + formatCantidadSinCero(data);
+                },
+            },
+            {
+                data: "total_inv_ini",
+                name: "total_inv_ini",
+                render: function (data, type, row) {
+                    return "$ " + formatCantidadSinCero(data);
+                },
+            },
             { data: "compraLote", name: "compraLote" },
-            { data: "alistamiento", name: "alistamiento" }        
-           
+            {
+                data: "costo_uni_lote",
+                name: "costo_uni_lote",
+                render: function (data, type, row) {
+                    return "$ " + formatCantidadSinCero(data);
+                },
+            },
+            {
+                data: null,
+                name: "total_lote",
+                render: function (data, type, row) {
+                    var compraLote = parseFloat(row.compraLote);
+                    var costoUniLote = parseFloat(row.costo_uni_lote);
+                    var totalLote = compraLote * costoUniLote;
+                    return "$" + formatCantidadSinCero(totalLote);
+                },
+            },
+            { data: "total_weight", name: "total_weight" },
         ],
         order: [[0, "DESC"]],
         language: {
