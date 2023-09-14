@@ -122,24 +122,14 @@ const showDataTable = (data) => {
 
     // Función para mostrar el SweetAlert de confirmación
     function showConfirmationAlert(element) {
-        return swal({
+        return swal.fire({
             title: "CONFIRMAR",
-            text: "Estas seguro de cargar inventario",
+            text: "Estas seguro que desea cargar el inventario ?",
             icon: "warning",
-            buttons: {
-                cancel: {
-                    text: "Cancelar",
-                    value: null,
-                    visible: true,
-                    closeModal: true,
-                },
-                confirm: {
-                    text: "Aceptar",
-                    value: true,
-                    visible: true,
-                    closeModal: false,
-                },
-            },
+            showDenyButton: true,
+            showCancelButton: true,
+            confirmButtonText: "Acpetar",
+            denyButtonText: `Cancelar`,
         });
     }
 
@@ -150,26 +140,39 @@ const showDataTable = (data) => {
         console.log(element);
         if (element.id === "cargarInventarioBtn") {
             console.log("click");
-            loadingStart(element);
-            const dataform = new FormData();
-            dataform.append("beneficioId", Number(beneficioId.value));
-            sendData("/cargarInventario", dataform, token)
+            showConfirmationAlert(element)
                 .then((result) => {
-                    console.log(result);
-                    if (result.status == 1) {
-                        loadingEnd(element, "success", "Cargar al inventario");
-                        element.disabled = true;
-                        return showConfirmationAlert(element);
-                    }
-                    if (result.status == 0) {
-                        loadingEnd(element, "success", "Cargar al inventario");
-                        errorMessage(result.message);
+                    if (result && result.value) {
+                        loadingStart(element);
+                        const dataform = new FormData();
+                        dataform.append(
+                            "beneficioId",
+                            Number(beneficioId.value)
+                        );
+                        return sendData("/cargarInventario", dataform, token);
                     }
                 })
                 .then((result) => {
-                    if (result && result.value) {
-                        window.location.href = "/beneficiores";
+                    console.log(result);
+                    if (result && result.status == 1) {
+                        loadingEnd(element, "success", "Load to inventory");
+                        element.disabled = true;
+                        return swal(
+                            "EXITO",
+                            "Inventario Cargado Exitosamente",
+                            "success"
+                        );
                     }
+                    if (result && result.status == 0) {
+                        loadingEnd(element, "success", "Load to inventory");
+                        errorMessage(result.message);
+                    }
+                })
+                .then(() => {
+                    window.location.href = "/beneficiores";
+                })
+                .catch((error) => {
+                    console.error(error);
                 });
         }
     });
