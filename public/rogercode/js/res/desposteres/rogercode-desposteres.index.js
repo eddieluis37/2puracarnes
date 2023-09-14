@@ -124,11 +124,11 @@ const showDataTable = (data) => {
     function showConfirmationAlert(element) {
         return swal({
             title: "CONFIRMAR",
-            text: "¿Está seguro de cargar al inventario?",
+            text: "Estas seguro de cargar inventario",
             icon: "warning",
             buttons: {
                 cancel: {
-                    text: "Cerrar",
+                    text: "Cancelar",
                     value: null,
                     visible: true,
                     closeModal: true,
@@ -150,26 +150,39 @@ const showDataTable = (data) => {
         console.log(element);
         if (element.id === "cargarInventarioBtn") {
             console.log("click");
-            loadingStart(element);
-            const dataform = new FormData();
-            dataform.append("beneficioId", Number(beneficioId.value));
-            sendData("/cargarInventario", dataform, token)
+            showConfirmationAlert(element)
                 .then((result) => {
-                    console.log(result);
-                    if (result.status == 1) {
-                        loadingEnd(element, "success", "Cargar al inventario");
-                        element.disabled = true;
-                        return showConfirmationAlert(element);
-                    }
-                    if (result.status == 0) {
-                        loadingEnd(element, "success", "Cargar al inventario");
-                        errorMessage(result.message);
+                    if (result && result.value) {
+                        loadingStart(element);
+                        const dataform = new FormData();
+                        dataform.append(
+                            "beneficioId",
+                            Number(beneficioId.value)
+                        );
+                        return sendData("/cargarInventario", dataform, token);
                     }
                 })
                 .then((result) => {
-                    if (result && result.value) {
-                        window.location.href = "/beneficiores";
+                    console.log(result);
+                    if (result && result.status == 1) {
+                        loadingEnd(element, "success", "Cargar inventorio");
+                        element.disabled = true;
+                        return swal(
+                            "SUCCESS",
+                            "Inventorio cargado completamente",
+                            "success"
+                        );
                     }
+                    if (result && result.status == 0) {
+                        loadingEnd(element, "success", "Cargar inventorio");
+                        errorMessage(result.message);
+                    }
+                })
+                .then(() => {
+                    window.location.href = "/beneficiores";
+                })
+                .catch((error) => {
+                    console.error(error);
                 });
         }
     });
