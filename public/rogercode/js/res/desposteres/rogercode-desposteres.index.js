@@ -88,7 +88,7 @@ const showDataTable = (data) => {
 				<td>$ ${formatCantidadSinCero(element.precio)}</td>
 				<td> <input type="text" class="form-control-sm" id="${element.id}" value="${
             element.peso
-        }" placeholder="0" size="4"></td>
+        }" size="4"></td>
 				<td>$ ${formatCantidadSinCero(element.totalventa)}</td>
 				<td>${element.porcventa} %</td>
 				<td>$ ${formatCantidadSinCero(element.costo)} </td>
@@ -155,7 +155,7 @@ const showDataTable = (data) => {
                 .then((result) => {
                     console.log(result);
                     if (result && result.status == 1) {
-                        loadingEnd(element, "success", "Load to inventory");
+                        loadingEnd(element, "success", "Cargando al inventorio");
                         element.disabled = true;
                         return swal(
                             "EXITO",
@@ -164,7 +164,7 @@ const showDataTable = (data) => {
                         );
                     }
                     if (result && result.status == 0) {
-                        loadingEnd(element, "success", "Load to inventory");
+                        loadingEnd(element, "success", "Cargando al inventorio");
                         errorMessage(result.message);
                     }
                 })
@@ -269,21 +269,6 @@ document
         cargarInventario(beneficioId);
     });
 
-/* function cargarInventario(beneficioId) {
-    $.ajax({
-        url: "/cargarInventario", // Reemplaza con la URL correcta de tu controlador
-        method: "POST",
-        data: { beneficioId },
-        success: function (response) {
-            // Maneja la respuesta del controlador
-            console.log(response);
-        },
-        error: function (xhr, status, error) {
-            // Maneja cualquier error que ocurra durante la solicitud AJAX
-            console.error("Error:", error);
-        },
-    });
-} */
 document
     .querySelector("#tableDespostere tbody")
     .addEventListener("click", (e) => {

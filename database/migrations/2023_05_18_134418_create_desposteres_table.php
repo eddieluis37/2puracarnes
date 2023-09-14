@@ -44,6 +44,8 @@ class CreateDesposteresTable extends Migration
             $table->string('porcutilidad', 18, 2)->nullable();
             $table->decimal('peso_acomulado', 18, 2)->nullable();
             $table->enum('status',['VALID','CANCELED'])->default('VALID');
+            $table->enum('inventario', ['pending', 'added'])->nullable()->default('pending');
+       
 
             $table->timestamps();
         });

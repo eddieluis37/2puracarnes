@@ -113,7 +113,7 @@
 										<td>$ {{ number_format($item->precio, 0, ',', '.')}}</td>
 										<td>
 											@if($status == 'true')
-											<input type="text" class="form-control-sm" id="{{$item->id}}" value="{{$item->peso}}" placeholder="00" size="5">
+											<input type="text" class="form-control-sm" id="{{$item->id}}" value="{{$item->peso}}" size="4">
 											@else
 											<p>{{$item->peso}}</p>
 											@endif
@@ -148,7 +148,9 @@
 										<td>$ {{ number_format($costoTotalGlobal, 0, ',', '.')}}</td>
 										<td>{{$costoKiloTotal}}</td>
 										<td class="text-center">
+										
 											<button id="cargarInventarioBtn" class="btn btn-success btn-sm">Cargar al inventario</button>
+											
 										</td>
 									</tr>
 
