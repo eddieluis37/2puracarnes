@@ -122,26 +122,16 @@ const showDataTable = (data) => {
 
     // Función para mostrar el SweetAlert de confirmación
     function showConfirmationAlert(element) {
-        return swal({
-          title: "CONFIRMAR",
-          text: "Estas seguro que desea cargar el inventario ?",
-          icon: "warning",
-          buttons: {
-            cancel: {
-              text: "Cancelar",
-              value: null,
-              visible: true,
-              closeModal: true,
-            },
-            confirm: {
-              text: "Aceptar",
-              value: true,
-              visible: true,
-              closeModal: false,
-            },
-          },
+        return swal.fire({
+            title: "CONFIRMAR",
+            text: "Estas seguro que desea cargar el inventario ?",
+            icon: "warning",
+            showDenyButton: true,
+            showCancelButton: true,
+            confirmButtonText: "Acpetar",
+            denyButtonText: `Cancelar`,
         });
-      }
+    }
 
     // Evento click del botón "cargarInventarioBtn"
     tableTfoot.addEventListener("click", (e) => {
@@ -149,37 +139,43 @@ const showDataTable = (data) => {
         let element = e.target;
         console.log(element);
         if (element.id === "cargarInventarioBtn") {
-          console.log("click");
-          showConfirmationAlert(element)
-            .then((result) => {
-              if (result && result.value) {
-                loadingStart(element);
-                const dataform = new FormData();
-                dataform.append("beneficioId", Number(beneficioId.value));
-                return sendData("/cargarInventario", dataform, token);
-              }
-            })
-            .then((result) => {
-              console.log(result);
-              if (result && result.status == 1) {
-                loadingEnd(element, "success", "Load to inventory");
-                element.disabled = true;
-                return swal("SUCCESS", "Inventory loaded successfully", "success");
-              }
-              if (result && result.status == 0) {
-                loadingEnd(element, "success", "Load to inventory");
-                errorMessage(result.message);
-              }
-            })
-            .then(() => {
-              window.location.href = "/beneficiores";
-            })
-            .catch((error) => {
-              console.error(error);
-            });
+            console.log("click");
+            showConfirmationAlert(element)
+                .then((result) => {
+                    if (result && result.value) {
+                        loadingStart(element);
+                        const dataform = new FormData();
+                        dataform.append(
+                            "beneficioId",
+                            Number(beneficioId.value)
+                        );
+                        return sendData("/cargarInventario", dataform, token);
+                    }
+                })
+                .then((result) => {
+                    console.log(result);
+                    if (result && result.status == 1) {
+                        loadingEnd(element, "success", "Load to inventory");
+                        element.disabled = true;
+                        return swal(
+                            "EXITO",
+                            "Inventario Cargado Exitosamente",
+                            "success"
+                        );
+                    }
+                    if (result && result.status == 0) {
+                        loadingEnd(element, "success", "Load to inventory");
+                        errorMessage(result.message);
+                    }
+                })
+                .then(() => {
+                    window.location.href = "/beneficiores";
+                })
+                .catch((error) => {
+                    console.error(error);
+                });
         }
-      });
-
+    });
 
     /******************MERMA****************************** */
     let Peso_total_Desp = dataTotals.pesoTotalGlobal;
