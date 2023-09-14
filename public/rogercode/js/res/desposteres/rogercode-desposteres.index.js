@@ -149,28 +149,32 @@ const showDataTable = (data) => {
         let element = e.target;
         console.log(element);
         if (element.id === "cargarInventarioBtn") {
-            console.log("click");
-            loadingStart(element);
-            const dataform = new FormData();
-            dataform.append("beneficioId", Number(beneficioId.value));
-            sendData("/cargarInventario", dataform, token)
-                .then((result) => {
-                    console.log(result);
-                    if (result.status == 1) {
-                        loadingEnd(element, "success", "Cargar al inventario");
-                        element.disabled = true;
-                        return showConfirmationAlert(element);
-                    }
-                    if (result.status == 0) {
-                        loadingEnd(element, "success", "Cargar al inventario");
-                        errorMessage(result.message);
-                    }
-                })
-                .then((result) => {
-                    if (result && result.value) {
-                        window.location.href = "/beneficiores";
-                    }
-                });
+
+            if (confirm('Esta seguro de registar inventario?')) {              
+                
+                console.log("click");
+                loadingStart(element);
+                const dataform = new FormData();
+                dataform.append("beneficioId", Number(beneficioId.value));
+                sendData("/cargarInventario", dataform, token)
+                    .then((result) => {
+                        console.log(result);
+                        if (result.status == 1) {
+                            loadingEnd(element, "success", "Cargar al inventario");
+                            element.disabled = true;
+                            return showConfirmationAlert(element);
+                        }
+                        if (result.status == 0) {
+                            loadingEnd(element, "success", "Cargar al inventario");
+                            errorMessage(result.message);
+                        }
+                    })
+                    .then((result) => {
+                        if (result && result.value) {
+                            window.location.href = "/beneficiores";
+                        }
+                    });
+            } 
         }
     });
 
