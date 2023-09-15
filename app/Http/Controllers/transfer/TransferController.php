@@ -116,6 +116,7 @@ class transferController extends Controller
                     'p.status', 1
                 ],
                 ['ce.centrocosto_id', $dataTransfer[0]->centrocostoOrigen_id],
+                ['ce.tipoinventario', 'inicial'],
             ])->get();
         // dd($arrayProductsOrigin);
         /**************************************** */
@@ -130,6 +131,7 @@ class transferController extends Controller
                     'p.status', 1
                 ],
                 ['ce.centrocosto_id', $dataTransfer[0]->centrocostoDestino_id],
+                ['ce.tipoinventario', 'inicial'],
             ])->get();
         // dd($arrayProductsDestination);
         /**************************************** */
@@ -178,6 +180,7 @@ class transferController extends Controller
             ->join('centro_costo_products as ce', 'products.id', '=', 'ce.products_id')
             ->where('products.id', $request->productId)
             ->where('ce.centrocosto_id', $centrocostoOrigenId)
+            
             ->first();
 
         if ($producto) {
