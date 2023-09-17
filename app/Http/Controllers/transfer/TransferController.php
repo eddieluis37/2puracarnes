@@ -182,6 +182,7 @@ class transferController extends Controller
             ->join('centro_costo_products as ce', 'products.id', '=', 'ce.products_id')
             ->where('products.id', $request->productId)
             ->where('ce.centrocosto_id', $centrocostoOrigenId)
+           // ->where('ce.tipoinventario', 'inicial')
             
             ->first();
 
@@ -207,6 +208,7 @@ class transferController extends Controller
             ->join('centro_costo_products as ce', 'products.id', '=', 'ce.products_id')
             ->where('products.id', $request->productId)
             ->where('ce.centrocosto_id', $centrocostoDestinoId)
+        //    ->where('ce.tipoinventario', 'inicial')
             ->first();
 
         if ($producto) {
@@ -250,6 +252,7 @@ class transferController extends Controller
                     ['p.id', $request->producto],
                     ['ce.centrocosto_id', $request->centrocostoOrigen],
                     ['p.status', 1],
+                    ['ce.tipoinventario', 'inicial'],
                 ])->get();
 
             $prodDestino = DB::table('products as p')
@@ -259,7 +262,7 @@ class transferController extends Controller
                     ['p.id', $request->producto],
                     ['ce.centrocosto_id', $request->centrocostoDestino],
                     ['p.status', 1],
-
+                    ['ce.tipoinventario', 'inicial'],
                 ])->get();
 
             $formatCantidad = new metodosrogercodeController();
@@ -310,7 +313,8 @@ class transferController extends Controller
             ->where([
                 ['ce.centrocosto_id', $centrocostoDestinoId],
                 ['td.transfers_id', $transferId],
-                ['td.status', 1]
+                ['td.status', 1],
+                ['ce.tipoinventario', 'inicial']
             ])->get();
 
         return $detail;
@@ -422,6 +426,7 @@ class transferController extends Controller
                     ['p.id', $request->producto],
                     ['ce.centrocosto_id', $request->centrocostoOrigen],
                     ['p.status', 1],
+                    ['ce.tipoinventario', 'inicial'],
                 ])->get();
 
             $prodDestino = DB::table('products as p')
@@ -431,6 +436,7 @@ class transferController extends Controller
                     ['p.id', $request->producto],
                     ['ce.centrocosto_id', $request->centrocostoDestino],
                     ['p.status', 1],
+                    ['ce.tipoinventario', 'inicial'],
                 ])->get();
 
 
@@ -543,7 +549,7 @@ class transferController extends Controller
             $shopp->users_id = $id_user;
             $shopp->transfers_id = $request->transferId;
             $shopp->category_id = $request->categoryId;
-            $shopp->productopadre_id = $request->productoPadre;
+          //  $shopp->productopadre_id = $request->productoPadre;
             $shopp->centrocostoOrigen_id = $request->centrocostoOrigen;
             $shopp->stock_actual = $request->stockOrigen;
             $shopp->ultimo_conteo_tangible = $request->pesokg;
@@ -567,6 +573,7 @@ class transferController extends Controller
                 $shoppDetails->conteo_tangible = $key->fisico;
                 $shoppDetails->kgrequeridos = $key->kgrequeridos;
                 $shoppDetails->nuevo_stock_origen = $key->nuevo_stock_origen;
+                $shoppDetails->nuevo_stock_destino = $key->nuevo_stock_destino;
                 $shoppDetails->save();
             }
 
