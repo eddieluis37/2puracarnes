@@ -24,7 +24,7 @@ function initializeDataTable(centrocostoId = "-1", categoriaId = "-1") {
         columns: [
             { data: "namecategoria", name: "namecategoria" },
             { data: "nameproducto", name: "nameproducto" },
-            { data: "namefisico", name: "namefisico" }, 
+            { data: "invinicial", name: "invinicial" }, 
             { data: "compraLote", name: "compraLote" },
             { data: "alistamiento", name: "alistamiento" },
             { data: "compensados", name: "compensados" },
