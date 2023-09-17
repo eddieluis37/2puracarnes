@@ -6,6 +6,7 @@
 	],
 	"service": "laravel.test",
 	"workspaceFolder": "/var/www/html",
+	"settings": {},
 	"customizations": {
 		"vscode": {
 			"extensions": [
@@ -14,8 +15,7 @@
 				// "ryannaddy.laravel-artisan",
 				// "onecentlin.laravel5-snippets",
 				// "onecentlin.laravel-blade"
-			],
-			"settings": {}
+			]
 		}
 	},
 	"remoteUser": "sail",

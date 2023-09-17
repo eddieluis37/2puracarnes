@@ -65,11 +65,14 @@ class diaryController extends Controller
         $data = DB::table('centro_costo_products as ccp')
             ->join('products as pro', 'pro.id', '=', 'ccp.products_id')
             ->join('categories as cat', 'pro.category_id', '=', 'cat.id')
-            ->select('cat.name as namecategoria', 'pro.name as nameproducto', 'ccp.fisico as namefisico', 'ccp.compralote as compraLote', 'ccp.alistamiento')
+            ->select('cat.name as namecategoria', 'pro.name as nameproducto', 'ccp.fisico as namefisico'
+            , 'ccp.compralote as compraLote', 'ccp.alistamiento', 'ccp.compensados as compensados', 'ccp.trasladoing as trasladoing'
+            , 'ccp.trasladosal as trasladosal', 'ccp.venta as venta', 'ccp.stock as stock', 'ccp.fisico as fisico')
             ->where('ccp.centrocosto_id', $centrocostoId)
+            ->where('ccp.tipoinventario', 'inicial')
             ->where('pro.category_id', $categoriaId)
             ->where('pro.status', 1)
-            ->get();
+           ->get();
 
         return datatables()->of($data)
             ->addIndexColumn()

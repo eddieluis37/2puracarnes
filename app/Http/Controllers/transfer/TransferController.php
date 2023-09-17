@@ -117,7 +117,9 @@ class transferController extends Controller
                 ],
                 ['ce.centrocosto_id', $dataTransfer[0]->centrocostoOrigen_id],
                 ['ce.tipoinventario', 'inicial'],
-            ])->get();
+            ])
+            ->orderBy('p.name', 'asc')
+            ->get();
         // dd($arrayProductsOrigin);
         /**************************************** */
         $arrayProductsDestination = DB::table('products as p')

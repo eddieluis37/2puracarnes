@@ -26,10 +26,16 @@ function initializeDataTable(centrocostoId = "-1", categoriaId = "-1") {
             { data: "nameproducto", name: "nameproducto" },
             { data: "namefisico", name: "namefisico" }, 
             { data: "compraLote", name: "compraLote" },
-            { data: "alistamiento", name: "alistamiento" }        
+            { data: "alistamiento", name: "alistamiento" },
+            { data: "compensados", name: "compensados" },
+            { data: "trasladoing", name: "trasladoing" },   
+            { data: "trasladosal", name: "trasladosal" },   
+            { data: "venta", name: "venta" },
+            { data: "stock", name: "stock" },
+            { data: "fisico", name: "fisico" },
            
         ],
-        order: [[0, "DESC"]],
+        order: [[1, "ASC"]],
         language: {
             processing: "Procesando...",
             lengthMenu: "Mostrar _MENU_ registros",
