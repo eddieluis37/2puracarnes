@@ -30,6 +30,9 @@ class CreateUpdatingTransferTable extends Migration
             $table->unsignedBigInteger('centrocostoOrigen_id')->nullable();
             $table->foreign('centrocostoOrigen_id')->references('id')->on('centro_costo');
 
+            $table->unsignedBigInteger('centrocostoDestino_id')->nullable();
+            $table->foreign('centrocostoDestino_id')->references('id')->on('centro_costo');
+
             $table->decimal('stock_actual', 18, 2)->nullable(); // valor de cantidades de unidades sea KG
 
             $table->decimal('ultimo_conteo_tangible', 18, 2)->nullable(); // valor de cantidades de unidades sea KG
