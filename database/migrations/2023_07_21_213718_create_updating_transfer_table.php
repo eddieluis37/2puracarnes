@@ -20,10 +20,7 @@ class CreateUpdatingTransferTable extends Migration
                        
             $table->unsignedBigInteger('transfers_id')->nullable();
             $table->foreign('transfers_id')->references('id')->on('transfers');
-
-            $table->unsignedBigInteger('category_id');           
-            $table->foreign('category_id')->references('id')->on('categories')->onDelete("cascade");
-            
+                      
             $table->unsignedBigInteger('producto_id')->nullable();
             $table->foreign('producto_id')->references('id')->on('products');
 

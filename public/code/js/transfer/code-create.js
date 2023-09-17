@@ -285,7 +285,7 @@ tfootTable.addEventListener("click", (e) => {
      //   dataform.append("productoPadre", Number(productoPadre.value));
         dataform.append("centrocostoOrigen", Number(centrocostoOrigen.value));
         dataform.append("centrocostoDestino_id", Number(centrocostoDestino.value));
-        dataform.append("categoryId", Number(categoryId.value));
+     //   dataform.append("categoryId", Number(categoryId.value));
         sendData("/transferAddShoping", dataform, token).then((result) => {
             console.log(result);
             if (result.status == 1) {

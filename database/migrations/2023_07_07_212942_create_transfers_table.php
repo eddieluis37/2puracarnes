@@ -19,9 +19,6 @@ class CreateTransfersTable extends Migration
             $table->unsignedBigInteger('users_id')->nullable();
             $table->foreign('users_id')->references('id')->on('users');
 
-            $table->unsignedBigInteger('categoria_id')->nullable();
-            $table->foreign('categoria_id')->references('id')->on('categories');
-
             $table->unsignedBigInteger('centrocostoOrigen_id')->nullable();
             $table->foreign('centrocostoOrigen_id')->references('id')->on('centro_costo');
 
