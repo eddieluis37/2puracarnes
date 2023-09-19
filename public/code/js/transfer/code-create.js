@@ -128,8 +128,7 @@ const showData = (data) => {
     showRegTbody.innerHTML = "";
     dataAll.forEach((element, indice) => {
         showRegTbody.innerHTML += `
-    	    <tr>
-      	    <td>${element.id}</td>
+    	    <tr>      	
       	    <td>${element.code}</td>
       	    <td>${element.nameprod}</td>
       	    <td>${formatCantidad(element.stock)} KG</td>
@@ -160,13 +159,12 @@ const showData = (data) => {
     tableFoot.innerHTML += `
 	    <tr>
 		    <td></td>
-		    <td></td>
-		    <th>Totales</th>
-		    <td></td>		   
+		    <td></td>           
+		    <th>Totales</th>		  		   
 		    <th>${formatCantidad(arrayTotales.kgTotalRequeridos)} KG</td>
 		    <th>${formatCantidad(arrayTotales.newTotalStock)} KG</th>
             <td></td>
-		    <td></td>
+            <td></td>	    
 		    <td class="text-center">
                 <button class="btn btn-success btn-sm" id="addShopping">Afectar inventario</button>
             </td>

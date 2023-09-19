@@ -139,7 +139,7 @@
 								<thead class="text-white" style="background: #3B3F5C">
 									<tr>
 										<!--th class="table-th text-white">Item</th>-->
-										<th class="table-th text-white">#</th>
+										<!-- <th class="table-th text-white">#</th> -->
 										<th class="table-th text-white">Cod</th>
 										<th class="table-th text-white">Producto</th>
 										<th class="table-th text-white">Stk act origen</th>
@@ -153,7 +153,7 @@
 								<tbody id="tbodyDetail">
 									@foreach($transfers as $proddetail)
 									<tr>
-										<td>{{$proddetail->id}}</td>
+										<!-- <td>{{$proddetail->id}}</td> -->
 										<td>{{$proddetail->code}}</td>
 										<td>{{$proddetail->nameprod}}</td>
 										<td>{{ number_format($proddetail->stock, 2, ',', '.')}} KG</td>
@@ -184,14 +184,13 @@
 								</tbody>
 								<tfoot id="tabletfoot">
 									<tr>
-										<th></th>
+										<th></th>									
 										<th></th>
 										<th>Totales</th>
-										<th></th>
 										<th> {{number_format($arrayTotales['kgTotalRequeridos'], 2, ',', '.')}} KG</th>
 										<th> {{number_format($arrayTotales['newTotalStock'], 2, ',', '.')}} KG</th>
 										<th></th>
-										<th></th>
+										<th></th>										
 										<th class="text-center">
 											@if($dataTransfer[0]->inventario == 'pending')
 											<button class="btn btn-success btn-sm" id="addShopping">Afectar inventario</button>

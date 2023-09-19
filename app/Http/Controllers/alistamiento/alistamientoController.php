@@ -544,7 +544,7 @@ class alistamientoController extends Controller
             Centro_costo_product::where('products_id', $productopadreId)
                 ->where('centrocosto_id', $centrocostoId)
                 ->where('tipoinventario', 'inicial')
-                ->update(['alistamiento' => abs($request->newStockPadre)]);
+                ->update(['alistamiento' => ($request->newStockPadre)]);
 
 
 
