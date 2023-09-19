@@ -227,6 +227,7 @@ Route::post('compensadodown', [compensadoController::class,'destroy'])->name('co
 Route::post('compensadogetById', [compensadoController::class,'edit'])->name('compensado.ById');
 Route::post('compensadoById', [compensadoController::class,'editCompensado'])->name('compensado.editCompensado');
 Route::post('/downmaincompensado', [compensadoController::class, 'destroyCompensado'])->name('compensado.downCompensado');
+Route::post('compensadoInvres', [compensadoController::class,'cargarInventariocr'])->name('compensado.cargarInventariocr');
 
 
 /**BENEFICIO CERDO */

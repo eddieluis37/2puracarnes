@@ -1,4 +1,12 @@
 import { sendData } from "../exportModule/core/rogercode-core.js";
+import {
+    successToastMessage,
+    errorMessage,
+} from "../exportModule/message/rogercode-message.js";
+import {
+    loadingStart,
+    loadingEnd,
+} from "../exportModule/core/rogercode-core.js";
 const token = document
     .querySelector('meta[name="csrf-token"]')
     .getAttribute("content");
@@ -138,50 +146,45 @@ const showData = (data) => {
         });
     }
 
-    tableTfoot.addEventListener("click", (e) => {
+   
+
+    // Evento click del botón "cargarInventarioBtn"
+    tableFoot.addEventListener("click", (e) => {
         e.preventDefault();
         let element = e.target;
         console.log(element);
-        if (element.id === "cargarInventarioBtn") {
-            console.log("click");
+        if (element.id === "cargarInventarioBtn") {            
+           
             showConfirmationAlert(element)
                 .then((result) => {
-                    if (result && result.value) {
-                        loadingStart(element);
-                        const dataform = new FormData();
-                        dataform.append(
-                            "beneficioId",
-                            Number(beneficioId.value)
-                        );
-                        return sendData("/cargarInventario", dataform, token);
+                   
+                    if (result && result.value) {                        
+                        const dataform = new FormData();                                                     
+                        dataform.append("compensadoId",Number(compensado_id.value));                        
+                        return sendData("/compensadoInvres", dataform, token);
                     }
                 })
                 .then((result) => {
                     console.log(result);
                     if (result && result.status == 1) {
-                        loadingEnd(
-                            element,
-                            "success",
-                            "Cargando al inventorio"
-                        );
+                    
+                        loadingEnd(element, "success", "Cargando al inventorio");
                         element.disabled = true;
+                       
                         return swal(
                             "EXITO",
                             "Inventario Cargado Exitosamente",
                             "success"
                         );
+                        
                     }
                     if (result && result.status == 0) {
-                        loadingEnd(
-                            element,
-                            "success",
-                            "Cargando al inventorio"
-                        );
+                        loadingEnd(element, "success", "Cargando al inventorio");
                         errorMessage(result.message);
                     }
                 })
                 .then(() => {
-                    window.location.href = "/beneficiores";
+                  
                 })
                 .catch((error) => {
                     console.error(error);

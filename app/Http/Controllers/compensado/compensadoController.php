@@ -443,4 +443,42 @@ class compensadoController extends Controller
             ]);
         }
     }
+
+
+    public function cargarInventariocr(Request $request)
+    {
+
+        $compensadoId = $request->input('compensadoId');
+        $compensadores = Compensadores::where('id', $compensadoId)->get();
+    
+
+        DB::update("
+        UPDATE centro_costo_products c
+        JOIN compensadores_details d ON c.products_id = d.products_id
+        JOIN compensadores b ON b.id = d.compensadores_id
+        SET c.compensados =  c.compensados + d.peso,
+            c.cto_compensados =  c.cto_compensados + d.pcompra,
+            c.cto_compensados_total  = c.cto_compensados_total + (d.pcompra * d.peso)
+        WHERE c.tipoinventario = 'inicial' 
+        AND d.compensadores_id = :compensadoresid
+        AND b.centrocosto_id = :cencosid 
+        AND c.centrocosto_id = :cencosid2 " , 
+        [
+            'compensadoresid' => $compensadoId,
+            'cencosid' =>  $compensadores->centrocosto_id ,
+            'cencosid2' => $compensadores->centrocosto_id 
+        ]
+       );
+       return response()->json([
+            'status' => 1,
+            'message' => 'Cargado al inventario exitosamente',
+            'compensadores' => $compensadores
+        ]);
+
+      // $providers = Third::Where('status',1)->get();
+       //$centros = Centrocosto::Where('status',1)->get();
+      // return view('compensado.res.index', compact('providers','centros'));
+       
+    }
+
 }
