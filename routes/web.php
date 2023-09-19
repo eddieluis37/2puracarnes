@@ -33,7 +33,7 @@ use App\Http\Controllers\compensado\compensadoController;
 use App\Http\Controllers\alistamiento\alistamientoController;
 use App\Http\Controllers\aves\beneficioavesController;
 use App\Http\Controllers\aves\desposteavesController;
-
+use App\Http\Controllers\CentroCostoProductController;
 use App\Http\Controllers\faster\fasterController;
 use App\Http\Controllers\transfer\TransferController;
 use App\Http\Controllers\workshop\workshopController;
@@ -189,6 +189,8 @@ Route::get('inventory/consolidado', [inventoryController::class, 'index'])->name
 Route::get('showinventory', [diaryController::class,'show'])->name('inventory.showlist');
 Route::post('showinventory', [diaryController::class,'show'])->name('inventory.showinvent');
 Route::get('inventory/mensual', [mensualController::class, 'index'])->name('inventory.mensual');
+
+Route::resource('centro_costo_products', 'CentroCostoProductController');
 
 
 
