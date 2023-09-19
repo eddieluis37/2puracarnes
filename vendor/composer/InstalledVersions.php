@@ -30,7 +30,7 @@ private static $installed = array (
     'aliases' => 
     array (
     ),
-    'reference' => '17e753c7178e4beaf5f18a8a4eb12f7a787e94bf',
+    'reference' => '7942193764615e89c31490f02e20e728be48378c',
     'name' => 'laravel/laravel',
   ),
   'versions' => 
@@ -514,7 +514,7 @@ private static $installed = array (
       'aliases' => 
       array (
       ),
-      'reference' => '17e753c7178e4beaf5f18a8a4eb12f7a787e94bf',
+      'reference' => '7942193764615e89c31490f02e20e728be48378c',
     ),
     'laravel/sail' => 
     array (
@@ -947,8 +947,8 @@ private static $installed = array (
     array (
       'provided' => 
       array (
-        0 => '1.0|2.0',
-        1 => '1.0.0 || 2.0.0 || 3.0.0',
+        0 => '1.0.0 || 2.0.0 || 3.0.0',
+        1 => '1.0|2.0',
       ),
     ),
     'psr/simple-cache' => 
@@ -969,12 +969,12 @@ private static $installed = array (
     ),
     'psy/psysh' => 
     array (
-      'pretty_version' => 'v0.11.20',
-      'version' => '0.11.20.0',
+      'pretty_version' => 'v0.11.21',
+      'version' => '0.11.21.0',
       'aliases' => 
       array (
       ),
-      'reference' => '0fa27040553d1d280a67a4393194df5228afea5b',
+      'reference' => 'bcb22101107f3bf770523b65630c9d547f60c540',
     ),
     'ralouphie/getallheaders' => 
     array (

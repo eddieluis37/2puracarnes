@@ -36,11 +36,10 @@ const categoryId = document.querySelector("#categoryId");
 var centrocostoOrigenId = document.getElementById("centrocostoOrigen").value;
 var centrocostoDestinoId = document.getElementById("centrocostoDestino").value;
 
-console.log('origen ' + centrocostoOrigenId);
-console.log('destino ' + centrocostoDestinoId);
-console.log('pesokg ' + pesokg);
-console.log('stockOrigen ' + stockOrigen.value);
-
+console.log("origen " + centrocostoOrigenId);
+console.log("destino " + centrocostoDestinoId);
+console.log("pesokg " + pesokg);
+console.log("stockOrigen " + stockOrigen.value);
 
 $(".select2Prod").select2({
     placeholder: "Busca un producto",
@@ -122,61 +121,6 @@ btnAddTrans.addEventListener("click", (e) => {
     /* <tbody id="tbodyDetail"></tbody> insertado con transfersavedetail a la vista create http://2puracarnes.test:8080/transfer/create/4 */
 }
 
-const showData = (data) => {
-    let dataAll = data.array;
-    console.log(dataAll);
-    showRegTbody.innerHTML = "";
-    dataAll.forEach((element, indice) => {
-        showRegTbody.innerHTML += `
-    	    <tr>
-      	    <td>${element.id}</td>
-      	    <td>${element.code}</td>
-      	    <td>${element.nameprod}</td>
-      	    <td>${formatCantidad(element.stock)} KG</td>
-              <td>
-              <input type="text" class="form-control-sm" data-id="${
-                  element.products_id
-              }" id="${element.id}" value="${
-            element.kgrequeridos
-        }" placeholder="Ingresar" size="10">
-              </td>
-      	    <td>${formatCantidad(element.nuevo_stock_origen)} KG</td>
-      	    
-      	    <td>${formatCantidad(element.actual_stock_destino)} KG</td>
-            <td>${formatCantidad(element.nuevo_stock_destino)} KG</td>
-			<td class="text-center">
-				<button class="btn btn-dark fas fa-trash" name="btnDownReg" data-id="${
-                    element.id
-                }" title="Borrar" >
-				</button>
-			</td>
-    	    </tr>
-	    `;
-    });
-
-    let arrayTotales = data.arrayTotales;
-    console.log(arrayTotales);
-    tableFoot.innerHTML = "";
-    tableFoot.innerHTML += `
-	    <tr>
-		    <td></td>
-		    <td></td>
-		    <th>Totales</th>
-		    <td></td>		   
-		    <th>${formatCantidad(arrayTotales.kgTotalRequeridos)} KG</td>
-		    <th>${formatCantidad(arrayTotales.newTotalStock)} KG</th>
-            <td></td>
-		    <td></td>
-		    <td class="text-center">
-                <button class="btn btn-success btn-sm" id="addShopping">Afectar inventario</button>
-            </td>
-	    </tr>
-    `;
-    /*  let newTotalStockPadre = stockOrigen.value - arrayTotales.kgTotalRequeridos;
-    newStockOrigen.value = newTotalStockPadre; */
-    newStockOrigen.value = newTotalStock;
-};
-
 kgrequeridos.addEventListener("change", function () {
     const enteredValue = formatkg(kgrequeridos.value);
     console.log("Entered value: " + enteredValue);
@@ -200,7 +144,7 @@ tableTransfer.addEventListener("keydown", function (event) {
             let productoId = target.getAttribute("data-id");
             console.log("prodDestino test id: " + transferId.value);
             console.log(productoId);
-            console.log('origen' + centrocostoOrigen.value);
+            console.log("origen" + centrocostoOrigen.value);
             console.log(centrocostoDestino.value);
             const trimValue = inputValue.trim();
             const dataform = new FormData();
@@ -267,6 +211,58 @@ tbodyTable.addEventListener("click", (e) => {
 });
 
 /* Accciona el boton Cargar Inventario */
+
+const showData = (data) => {
+    let dataAll = data.array;
+    console.log(dataAll);
+    showRegTbody.innerHTML = "";
+    dataAll.forEach((element, indice) => {
+        showRegTbody.innerHTML += `
+        <tr>
+          <td>${element.id}</td>
+          <td>${element.code}</td>
+          <td>${element.nameprod}</td>
+          <td>${formatCantidad(element.stock)} KG</td>
+          <td>
+            <input type="text" class="form-control-sm" data-id="${
+                element.products_id
+            }" id="${element.id}" value="${
+            element.kgrequeridos
+        }" placeholder="Ingresar" size="10">
+          </td>
+          <td>${formatCantidad(element.nuevo_stock_origen)} KG</td>
+          <td>${formatCantidad(element.actual_stock_destino)} KG</td>
+          <td>${formatCantidad(element.nuevo_stock_destino)} KG</td>
+          <td class="text-center">
+            <button class="btn btn-dark fas fa-trash" name="btnDownReg" data-id="${
+                element.id
+            }" title="Borrar"></button>
+          </td>
+        </tr>
+      `;
+    });
+
+    let arrayTotales = data.arrayTotales;
+    console.log(arrayTotales);
+    tableFoot.innerHTML = "";
+    tableFoot.innerHTML += `
+      <tr>
+        <td></td>
+        <td></td>
+        <th>Totales</th>
+        <td></td>
+        <th>${formatCantidad(arrayTotales.kgTotalRequeridos)} KG</td>
+        <th>${formatCantidad(arrayTotales.newTotalStock)} KG</th>
+        <td></td>
+        <td></td>
+        <td class="text-center">
+          <button class="btn btn-success btn-sm" id="addShopping">Afectar Inv</button>
+        </td>
+      </tr>
+    `;
+};
+
+
 tfootTable.addEventListener("click", (e) => {
     e.preventDefault();
     let element = e.target;
@@ -274,46 +270,55 @@ tfootTable.addEventListener("click", (e) => {
     if (element.id === "addShopping") {
         //added to inventory
         console.log("click");
-        loadingStart(element);
-        const dataform = new FormData();
-        dataform.append("transferId", Number(transferId.value));
-
-     
-       // dataform.append("newStockOrigen", Number(newStockOrigen.value));
-      //  dataform.append("pesokg", Number(pesokg.value));
-        dataform.append("stockOrigen", Number(stockOrigen.value));
-     //   dataform.append("productoPadre", Number(productoPadre.value));
-        dataform.append("centrocostoOrigen", Number(centrocostoOrigen.value));
-        dataform.append("centrocostoDestino", Number(centrocostoDestino.value));
-     //   dataform.append("categoryId", Number(categoryId.value));
-        sendData("/transferAddShoping", dataform, token).then((result) => {
-            console.log(result);
-            if (result.status == 1) {
-                loadingEnd(element, "success", "Cargar al inventario");
-                element.disabled = true;
-                window.location.href = `/transfer`;
-            }
-            if (result.status == 0) {
-                loadingEnd(element, "success", "Cargar al inventario");
-                errorMessage(result.message);
-            }
-        });
+        return swal
+            .fire({
+                title: "Confirmación",
+                text: "¿Desea afectar el inventario?",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Aceptar",
+                cancelButtonText: "Cancelar",
+            })
+            .then((result) => {
+                if (result && result.status == 1) {
+                    loadingStart(element);
+                    const dataform = new FormData();
+                    dataform.append("transferId", Number(transferId.value));
+                    dataform.append("stockOrigen", Number(stockOrigen.value));
+                    dataform.append(
+                        "centrocostoOrigen",
+                        Number(centrocostoOrigen.value)
+                    );
+                    dataform.append(
+                        "centrocostoDestino_id",
+                        Number(centrocostoDestino.value)
+                    );
+                    return sendData("/transferAddShoping", dataform, token);
+                }
+            })
+            .then((result) => {
+                console.log(result);
+                if (result && result.status == 1) {
+                    loadingEnd(element, "success", "Cargar al inventario");
+                    element.disabled = true;
+                    return swal(
+                        "EXITO",
+                        "Inventario Cargado Exitosamente",
+                        "success"
+                    );
+                }
+                if (result && result.status == 0) {
+                    loadingEnd(element, "success", "Cargando al inventorio");
+                    errorMessage(result.message);
+                }
+            })
+            .then(() => {
+                window.location.href = "/transfer";
+            })
+            .catch((error) => {
+                console.error(error);
+            });
     }
 });
-
-document.getElementById('addShopping').addEventListener('click', function() {
-    Swal.fire({
-      title: 'Confirmación',
-      text: '¿Desea afectar el inventario?',
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      confirmButtonText: 'Aceptar',
-      cancelButtonText: 'Cancelar'
-    }).then((result) => {
-      if (result.isConfirmed) {
-        // Affect inventory logic here
-      }
-    });
-  });

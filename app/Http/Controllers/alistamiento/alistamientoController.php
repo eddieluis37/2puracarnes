@@ -526,7 +526,7 @@ class alistamientoController extends Controller
                 $shoppDetails->products_id = $key->products_id;
                 $shoppDetails->stock_actual = $key->stock;
                 $shoppDetails->conteo_fisico = $key->fisico;
-                $shoppDetails->kgrequeridos = $key->kgrequeridos;
+                $shoppDetails->kgrequeridos = abs($key->newstock);
                 $shoppDetails->newstock = $key->newstock;
                 $shoppDetails->save();
 
@@ -534,9 +534,9 @@ class alistamientoController extends Controller
                     ->join('shopping_enlistment', function ($join) use ($key) {
                         $join->on('centro_costo_products.centrocosto_id', '=', 'shopping_enlistment.centrocosto_id')
                             ->where('centro_costo_products.products_id', $key->products_id)
-                            ->where('centro_costo_products.tipoinventario', 'inicial');                      
+                            ->where('centro_costo_products.tipoinventario', 'inicial');
                     })
-                    ->update(['centro_costo_products.alistamiento' => $key->newstock]);
+                    ->update(['centro_costo_products.alistamiento' => abs($key->newstock)]);
             }
 
             $productopadreId = $shopp->productopadre_id;
@@ -544,7 +544,7 @@ class alistamientoController extends Controller
             Centro_costo_product::where('products_id', $productopadreId)
                 ->where('centrocosto_id', $centrocostoId)
                 ->where('tipoinventario', 'inicial')
-                ->update(['alistamiento' => $request->newStockPadre]);
+                ->update(['alistamiento' => abs($request->newStockPadre)]);
 
 
 

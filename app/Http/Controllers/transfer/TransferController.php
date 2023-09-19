@@ -545,9 +545,10 @@ class transferController extends Controller
             DB::beginTransaction();
             $shopp = new updating_transfer();
             $shopp->users_id = $id_user;
-            $shopp->transfers_id = $request->transferId;           
+            $shopp->transfers_id = $request->transferId;
             //  $shopp->productopadre_id = $request->productoPadre;
             $shopp->centrocostoOrigen_id = $request->centrocostoOrigen;
+            $shopp->centrocostoDestino_id = $request->centrocostoDestino;
             $shopp->stock_actual = $request->stockOrigen;
             $shopp->ultimo_conteo_tangible = $request->pesokg;
             $shopp->nuevo_stock = $request->newStockOrigen;
@@ -572,6 +573,22 @@ class transferController extends Controller
                 $shoppDetails->nuevo_stock_origen = $key->nuevo_stock_origen;
                 $shoppDetails->nuevo_stock_destino = $key->nuevo_stock_destino;
                 $shoppDetails->save();
+
+                DB::table('centro_costo_products')
+                    ->where('centro_costo_products.products_id', $key->products_id)
+                    ->where('centro_costo_products.tipoinventario', 'inicial')
+                    ->join('updating_transfer', 'centro_costo_products.centrocosto_id', '=', 'updating_transfer.centrocostoDestino_id')
+                    ->update([
+                        'centro_costo_products.trasladoing' => $key->kgrequeridos
+                    ]);
+
+                DB::table('centro_costo_products')
+                    ->where('centro_costo_products.products_id', $key->products_id)
+                    ->where('centro_costo_products.tipoinventario', 'inicial')
+                    ->join('updating_transfer', 'centro_costo_products.centrocosto_id', '=', 'updating_transfer.centrocostoOrigen_id')
+                    ->update([
+                        'centro_costo_products.trasladosal' => $key->kgrequeridos
+                    ]);
             }
 
             $invtranf = Transfer::where('id', $request->transferId)->first();

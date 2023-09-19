@@ -128,6 +128,8 @@ const showDataTable = (data) => {
             icon: "warning",
             showDenyButton: true,
             showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
             confirmButtonText: "Acpetar",
             denyButtonText: `Cancelar`,
         });
