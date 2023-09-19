@@ -13,5 +13,10 @@ class Centro_costo_product extends Model
     {
         return $this->belongsTo(Product::class);
     }
+
+    public function centroCosto()
+    {
+        return $this->belongsTo(CentroCosto::class, 'centrocosto_id');
+    }
     
 }

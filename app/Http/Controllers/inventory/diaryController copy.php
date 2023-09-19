@@ -20,7 +20,7 @@ class diaryController extends Controller
      */
     public function index()
     {
-        $category = Category::WhereIn('id', [1, 2, 3, 4, 5, 6, 7])->get();
+        $category = Category::WhereIn('id', [1, 2, 3, 4, 5, 6, 7, 8, 9])->get();
         $costcenter = Centrocosto::Where('status', 1)->get();
         $centros = Centrocosto::Where('status', 1)->get();
         $centroCostoProductos = Centro_costo_product::all();
