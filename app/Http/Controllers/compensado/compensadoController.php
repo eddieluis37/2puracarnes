@@ -449,7 +449,7 @@ class compensadoController extends Controller
     {
 
         $compensadoId = $request->input('compensadoId');
-        $centrocostoid = $request->input('centrocostoid');
+        $centrocostoid = $request->input('centrocostoid'); 
 
         $compensadores = Compensadores::where('id', $compensadoId)->get();
     
