@@ -15,6 +15,7 @@ const btnAdd = document.querySelector("#btnAdd");
 const showRegTbody = document.querySelector("#tbodyDetail");
 let tbodyTable = document.querySelector("#tableDespostere tbody");
 const compensado_id = document.querySelector("#compensadoId");
+const centrocosto_id = document.querySelector("#centrocosto_id");
 const pesokg = document.querySelector("#pesokg");
 const pcompra = document.querySelector("#pcompra");
 const regDetail = document.querySelector("#regdetailId");
@@ -160,7 +161,8 @@ const showData = (data) => {
                    
                     if (result && result.value) {                        
                         const dataform = new FormData();                                                     
-                        dataform.append("compensadoId",Number(compensado_id.value));                        
+                        dataform.append("compensadoId",Number(compensado_id.value));  
+                      //  dataform.append("centrocostoid",1);                      
                         return sendData("/compensadoInvres", dataform, token);
                     }
                 })

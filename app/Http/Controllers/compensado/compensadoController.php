@@ -449,7 +449,11 @@ class compensadoController extends Controller
     {
 
         $compensadoId = $request->input('compensadoId');
+       // $centrocostoid = $request->input('centrocostoid'); 
+
         $compensadores = Compensadores::where('id', $compensadoId)->get();
+
+        $centrocosto_id = $compensadores->first()->centrocosto_id;
     
 
         DB::update("
@@ -465,8 +469,8 @@ class compensadoController extends Controller
         AND c.centrocosto_id = :cencosid2 " , 
         [
             'compensadoresid' => $compensadoId,
-            'cencosid' =>  $compensadores->centrocosto_id ,
-            'cencosid2' => $compensadores->centrocosto_id 
+            'cencosid' => $centrocosto_id ,
+            'cencosid2' => $centrocosto_id
         ]
        );
        return response()->json([
@@ -480,5 +484,6 @@ class compensadoController extends Controller
       // return view('compensado.res.index', compact('providers','centros'));
        
     }
+
 
 }
