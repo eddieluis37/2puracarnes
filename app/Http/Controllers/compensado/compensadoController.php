@@ -449,6 +449,8 @@ class compensadoController extends Controller
     {
 
         $compensadoId = $request->input('compensadoId');
+        $centrocostoid = $request->input('centrocostoid');
+
         $compensadores = Compensadores::where('id', $compensadoId)->get();
     
 
@@ -465,8 +467,8 @@ class compensadoController extends Controller
         AND c.centrocosto_id = :cencosid2 " , 
         [
             'compensadoresid' => $compensadoId,
-            'cencosid' =>  $compensadores->centrocosto_id ,
-            'cencosid2' => $compensadores->centrocosto_id 
+            'cencosid' => $centrocostoid ,
+            'cencosid2' => $centrocostoid
         ]
        );
        return response()->json([
