@@ -29,15 +29,7 @@
 									</div>
 								</div>
 							</div>
-							<div class="col-md-3">
-								<div class="task-header">
-									<div class="form-group">
-										<label for="" class="form-label">Categoria</label>
-										<input type="hidden" id="categoryId" name="categoryId" value="{{$dataTransfer[0]->categoria_id}}">
-										<p>{{$dataTransfer[0]->namecategoria}}</p>
-									</div>
-								</div>
-							</div>
+						
 							<div class="col-md-3">
 								<div class="task-header">
 									<div class="form-group">

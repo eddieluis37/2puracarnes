@@ -6,7 +6,7 @@ const token = document
     .getAttribute("content");
 const btnClose = document.querySelector("#btnModalClose");
 
-const selectCategory = document.querySelector("#categoria");
+//const selectCategory = document.querySelector("#categoria");
 const selectCentrocosto = document.querySelector("#centrocostoOrigen");
 const selectCentrocostoDestino = document.querySelector("#centrocostoDestino");
 
@@ -39,8 +39,7 @@ $(document).ready(initializeDataTable);
             },
             columns: [
                 { data: "id", name: "id" },
-                { data: "date", name: "date" },
-                { data: "namecategoria", name: "namecategoria" },
+                { data: "date", name: "date" },                
                 { data: "namecentrocostoOrigen", name: "namecentrocostoOrigen" },
                 { data: "namecentrocostoDestino", name: "namecentrocostoDestino" },        
                 { data: "inventory", name: "inventory" },             
@@ -113,7 +112,7 @@ const showDataForm = (id) => {
 const showData = (resp) => {
     let register = resp.reg;
     //alistamiento_id.value = register.id;
-    selectCategory.value = register.categoria_id;
+  // selectCategory.value = register.categoria_id;
     selectCentrocosto.value = register.centrocostoOrigen_id;
     selectCentrocostoDestino.value = register.centrocostoDestino_id;
     getCortes(register.categoria_id);

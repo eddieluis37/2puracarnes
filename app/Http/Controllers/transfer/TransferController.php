@@ -25,12 +25,12 @@ class transferController extends Controller
 {
     public function index() // Alimenta el modal_create.blade para posterior store
     {
-        $category = Category::WhereIn('id', [1, 2, 3, 4, 5, 6, 7])->get();
+        // $category = Category::WhereIn('id', [1, 2, 3, 4, 5, 6, 7])->get();
         $costcenter = Centrocosto::Where('status', 1)->get();
         $centros = Centrocosto::Where('status', 1)->get();
         $centroCostoProductos = Centro_costo_product::all();
 
-        return view("transfer.index", compact('category', 'costcenter', 'centros', 'centroCostoProductos'));
+        return view("transfer.index", compact('costcenter', 'centros', 'centroCostoProductos'));
     }
 
     public function store(Request $request) // modal create primer paso del diligenciado y llenado de la tabla transfer.
@@ -39,13 +39,11 @@ class transferController extends Controller
 
             $rules = [
                 'transferId' => 'required',
-                'categoria' => 'required',
                 'centrocostoOrigen' => 'required|different:centrocostoDestino',
                 'centrocostoDestino' => 'required',
             ];
             $messages = [
                 'transferId.required' => 'El transferId es requerido',
-                'categoria.required' => 'La categoria es requerida',
                 'centrocostoOrigen.required' => 'El centro de costo es requerido',
                 'centrocostoOrigen.different' => 'El centro de costo de origen debe ser diferente al centro de costo destino',
                 'centrocostoDestino.required' => 'El centro de costo es requerido',
@@ -72,7 +70,6 @@ class transferController extends Controller
 
                 $tranf = new Transfer();
                 $tranf->users_id = $id_user;
-                $tranf->categoria_id = $request->categoria;
                 $tranf->centrocostoOrigen_id = $request->centrocostoOrigen;
                 $tranf->centrocostoDestino_id = $request->centrocostoDestino;
                 //   $tranf->products_id = 2;
@@ -97,10 +94,10 @@ class transferController extends Controller
     {
         // dd($id);
         $dataTransfer = DB::table('transfers as tra')
-            ->join('categories as cat', 'tra.categoria_id', '=', 'cat.id')
+            //  ->join('categories as cat', 'tra.categoria_id', '=', 'cat.id')
             ->join('centro_costo as centroOrigen', 'tra.centrocostoOrigen_id', '=', 'centroOrigen.id')
             ->join('centro_costo as centroDestino', 'tra.centrocostoDestino_id', '=', 'centroDestino.id')
-            ->select('tra.*', 'cat.name as namecategoria', 'centroOrigen.name as namecentrocostoOrigen', 'centroDestino.name as namecentrocostoDestino')
+            ->select('tra.*', 'centroOrigen.name as namecentrocostoOrigen', 'centroDestino.name as namecentrocostoDestino')
             ->where('tra.id', $id)
             ->get();
         // dd($dataTransfer);
@@ -111,12 +108,16 @@ class transferController extends Controller
             ->where([
                 // ['p.level_product_id', [1,2]],
                 //   ['p.id', $dataTransfer[0]->products_id],
-                ['p.category_id', $dataTransfer[0]->categoria_id],
+                // ['p.category_id', $dataTransfer[0]->categoria_id],
                 [
                     'p.status', 1
                 ],
                 ['ce.centrocosto_id', $dataTransfer[0]->centrocostoOrigen_id],
-            ])->get();
+                ['ce.tipoinventario', 'inicial'],
+            ])
+            ->orderBy('p.category_id', 'asc')
+            ->orderBy('p.name', 'asc')
+            ->get();
         // dd($arrayProductsOrigin);
         /**************************************** */
         $arrayProductsDestination = DB::table('products as p')
@@ -125,11 +126,12 @@ class transferController extends Controller
             ->where([
                 // ['p.level_product_id', [1,2]],
                 //   ['p.id', $dataTransfer[0]->products_id],
-                ['p.category_id', $dataTransfer[0]->categoria_id],
+                //    ['p.category_id', $dataTransfer[0]->categoria_id],
                 [
                     'p.status', 1
                 ],
                 ['ce.centrocosto_id', $dataTransfer[0]->centrocostoDestino_id],
+                ['ce.tipoinventario', 'inicial'],
             ])->get();
         // dd($arrayProductsDestination);
         /**************************************** */
@@ -178,6 +180,8 @@ class transferController extends Controller
             ->join('centro_costo_products as ce', 'products.id', '=', 'ce.products_id')
             ->where('products.id', $request->productId)
             ->where('ce.centrocosto_id', $centrocostoOrigenId)
+            // ->where('ce.tipoinventario', 'inicial')
+
             ->first();
 
         if ($producto) {
@@ -202,6 +206,7 @@ class transferController extends Controller
             ->join('centro_costo_products as ce', 'products.id', '=', 'ce.products_id')
             ->where('products.id', $request->productId)
             ->where('ce.centrocosto_id', $centrocostoDestinoId)
+            //    ->where('ce.tipoinventario', 'inicial')
             ->first();
 
         if ($producto) {
@@ -245,6 +250,7 @@ class transferController extends Controller
                     ['p.id', $request->producto],
                     ['ce.centrocosto_id', $request->centrocostoOrigen],
                     ['p.status', 1],
+                    ['ce.tipoinventario', 'inicial'],
                 ])->get();
 
             $prodDestino = DB::table('products as p')
@@ -254,7 +260,7 @@ class transferController extends Controller
                     ['p.id', $request->producto],
                     ['ce.centrocosto_id', $request->centrocostoDestino],
                     ['p.status', 1],
-
+                    ['ce.tipoinventario', 'inicial'],
                 ])->get();
 
             $formatCantidad = new metodosrogercodeController();
@@ -305,7 +311,8 @@ class transferController extends Controller
             ->where([
                 ['ce.centrocosto_id', $centrocostoDestinoId],
                 ['td.transfers_id', $transferId],
-                ['td.status', 1]
+                ['td.status', 1],
+                ['ce.tipoinventario', 'inicial']
             ])->get();
 
         return $detail;
@@ -328,11 +335,11 @@ class transferController extends Controller
     public function show() // http://2puracarnes.test:8080/transfer  Datatable Traslado | listado
     {
         $data = DB::table('transfers as tra')
-            ->join('categories as cat', 'tra.categoria_id', '=', 'cat.id')
+            //  ->join('categories as cat', 'tra.categoria_id', '=', 'cat.id')
             //   ->join('products as cut', 'tra.products_id', '=', 'cut.id')
             ->join('centro_costo as centroOrigen', 'tra.centrocostoOrigen_id', '=', 'centroOrigen.id')
             ->join('centro_costo as centroDestino', 'tra.centrocostoDestino_id', '=', 'centroDestino.id')
-            ->select('tra.*', 'cat.name as namecategoria', 'centroOrigen.name as namecentrocostoOrigen', 'centroDestino.name as namecentrocostoDestino')
+            ->select('tra.*', 'centroOrigen.name as namecentrocostoOrigen', 'centroDestino.name as namecentrocostoDestino')
             ->where('tra.status', 1)
             ->get();
         //$data = Compensadores::orderBy('id','desc');
@@ -417,6 +424,7 @@ class transferController extends Controller
                     ['p.id', $request->producto],
                     ['ce.centrocosto_id', $request->centrocostoOrigen],
                     ['p.status', 1],
+                    ['ce.tipoinventario', 'inicial'],
                 ])->get();
 
             $prodDestino = DB::table('products as p')
@@ -426,6 +434,7 @@ class transferController extends Controller
                     ['p.id', $request->producto],
                     ['ce.centrocosto_id', $request->centrocostoDestino],
                     ['p.status', 1],
+                    ['ce.tipoinventario', 'inicial'],
                 ])->get();
 
 
@@ -536,9 +545,8 @@ class transferController extends Controller
             DB::beginTransaction();
             $shopp = new updating_transfer();
             $shopp->users_id = $id_user;
-            $shopp->transfers_id = $request->transferId;
-            $shopp->category_id = $request->categoryId;
-            $shopp->productopadre_id = $request->productoPadre;
+            $shopp->transfers_id = $request->transferId;           
+            //  $shopp->productopadre_id = $request->productoPadre;
             $shopp->centrocostoOrigen_id = $request->centrocostoOrigen;
             $shopp->stock_actual = $request->stockOrigen;
             $shopp->ultimo_conteo_tangible = $request->pesokg;
@@ -562,6 +570,7 @@ class transferController extends Controller
                 $shoppDetails->conteo_tangible = $key->fisico;
                 $shoppDetails->kgrequeridos = $key->kgrequeridos;
                 $shoppDetails->nuevo_stock_origen = $key->nuevo_stock_origen;
+                $shoppDetails->nuevo_stock_destino = $key->nuevo_stock_destino;
                 $shoppDetails->save();
             }
 

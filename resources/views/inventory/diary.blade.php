@@ -1,13 +1,19 @@
 @extends('layouts.theme.app')
 @section('content')
 <style>
-  .table-totales{
+  .table-totales {
     /*border: 2px solid red;*/
   }
-  .table-totales, th, td {
+
+  .table-totales,
+  th,
+  td {
     border: 1px solid #DCDCDC;
   }
-  .table-inventario, th, td {
+
+  .table-inventario,
+  th,
+  td {
     border: 1px solid #DCDCDC;
   }
 </style>
@@ -53,7 +59,7 @@
             </div>
           </div>
         </div>
-        <div class="col-md-4">
+     <!--    <div class="col-md-4">
           <label for="date1" class="form-label">Responsable</label>
           <select class="form-control form-control-sm " name="responsable" id="responsable" required="">
             <option value="">Seleccione el responsable</option>
@@ -63,7 +69,7 @@
           <div style="margin-top:28px;" clas="">
             <button type="submit" id="btnAddTransfer" class="btn btn-primary btn-lg">Aceptar</button>
           </div>
-        </div>
+        </div> -->
       </div>
       <div class="table-responsive mt-3">
         <table id="tableInventory" class="table table-striped mt-1">
@@ -74,24 +80,30 @@
               <th class="table-th text-white">INV INICIAL</th>
               <th class="table-th text-white">COMPRA LOTE</th>
               <th class="table-th text-white">ALISTAMIENTO</th>
+              <th class="table-th text-white">COMPENSADOS</th>
+              <th class="table-th text-white">TRASLADO INGRESO</th>
+              <th class="table-th text-white">TRASLADO SALIDA</th>
+              <th class="table-th text-white">VENTA</th>
+              <th class="table-th text-white">STOCK IDEAL</th>
+              <th class="table-th text-white">INVENTARIO FINAL</th>
+
               <!-- <th class="table-th text-white">TOTAL INV INI</th>
               <th class="table-th text-white">COMPRA LOTE</th>
               <th class="table-th text-white">COSTO UNI LOTE</th>            
-              <th class="table-th text-white">COMPENSADOS</th>
+             
               <th class="table-th text-white">TOTAL COMP</th>
-              <th class="table-th text-white">TRASLADO INGRESO</th>
+             
               <th class="table-th text-white">COSTO UNI TRAS ING</th>
               <th class="table-th text-white">TOTAL ING</th>
-              <th class="table-th text-white">VENTA</th>
+             
               <th class="table-th text-white">TOTAL VENTA</th>
               <th class="table-th text-white">PRECIO VENTA PROD</th>
               <th class="table-th text-white">PRECIO VENTA MIN</th>
               <th class="table-th text-white">DIF</th>
               <th class="table-th text-white">TRAS SALIDA</th>
               <th class="table-th text-white">COSTO UNI TRAS SALIDA</th>
-              <th class="table-th text-white">TOTAL TRAS SALIDA</th>
-              <th class="table-th text-white">STOCK IDEAL</th>
-              <th class="table-th text-white">INVENTARIO FINAL</th>
+             
+             
               <th class="table-th text-white">COSTO UNIT INV INI</th>
               <th class="table-th text-white">TOTAL INV INV</th>
               <th class="table-th text-white">DISPONIBLE</th>

@@ -21,8 +21,7 @@
 						<thead class="text-white" style="background: #3B3F5C">
 							<tr>
 								<th class="table-th text-white">#</th>
-								<th class="table-th text-white">Fecha</th>
-								<th class="table-th text-white">Categoria</th>
+								<th class="table-th text-white">Fecha</th>								
 								<th class="table-th text-white ">Centro origen</th>
 								<th class="table-th text-white ">Centro destino</th>								
 								<th class="table-th text-white ">Inventario</th>							
