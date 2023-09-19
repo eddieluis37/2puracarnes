@@ -162,7 +162,7 @@ const showData = (data) => {
                     if (result && result.value) {                        
                         const dataform = new FormData();                                                     
                         dataform.append("compensadoId",Number(compensado_id.value));  
-                        dataform.append("centrocostoid",Number(centrocosto_id.value));                      
+                      //  dataform.append("centrocostoid",1);                      
                         return sendData("/compensadoInvres", dataform, token);
                     }
                 })
