@@ -29,7 +29,7 @@
 
   pieleskg.change(function () { calculatotales(); });
   pielescosto.change(function () { calculatotales(); });
-  visceras.change(function () { calculatotales(); });
+ /*  visceras.change(function () { calculatotales(); }); */
 
   pesopie1.change(function () { calculatotales(); });
   pesopie2.change(function () { calculatotales(); });
@@ -170,7 +170,7 @@
 
     //SACRIFICIO / FOMENTO / DEGUELLO / BASCULA / TRANSPORTE
     var sacrificio = formatMoneyNumber($('#sacrificio').val()); $('#tsacrificio').val(formatCantidadSinCero(cantidad * sacrificio)); var tsacrif = Number(cantidad * sacrificio);
-    var fomento = formatMoneyNumber($('#fomento').val()); $('#tfomento').val(formatCantidadSinCero(cantidad * fomento * -1)); var tfomen = Number(cantidad * fomento * -1);
+  /*   var fomento = formatMoneyNumber($('#fomento').val()); $('#tfomento').val(formatCantidadSinCero(cantidad * fomento * -1)); var tfomen = Number(cantidad * fomento * -1); */
     var deguello = formatMoneyNumber($('#deguello').val()); $('#tdeguello').val(formatCantidadSinCero(cantidad * deguello)); var tdgue = Number(cantidad * deguello);
     var bascula = formatMoneyNumber($('#bascula').val()); $('#tbascula').val(formatCantidadSinCero(cantidad * bascula * -1)); var tbascu = Number(cantidad * bascula * -1);
     var transporte = formatMoneyNumber($('#transporte').val()); $('#ttransporte').val(formatCantidadSinCero(cantidad * transporte)); var ttrans = Number(cantidad * transporte);
