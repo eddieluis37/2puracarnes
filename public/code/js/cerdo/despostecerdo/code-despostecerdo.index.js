@@ -1,4 +1,12 @@
 import  {sendData} from '../../exportModule/core/rogercode-core.js';
+import {
+  successToastMessage,
+  errorMessage,
+} from "../../exportModule/message/rogercode-message.js";
+import {
+  loadingStart,
+  loadingEnd,
+} from "../../exportModule/core/rogercode-core.js";
 
 const table = document.querySelector("#tableDespostece");
 const token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
@@ -90,10 +98,69 @@ const showDataTable = (data) => {
 			<td>$ ${formatCantidadSinCero(dataTotals.costoTotalGlobal)}</td>
 			<td>${dataTotals.costoKiloTotal}</td>
 			<td class="text-center">
-				<button class="btn btn-success btn-sm">Cargar al inventario</button>
+      <button id="cargarInventarioBtn" class="btn btn-success btn-sm">inventario</button>
 			</td>
 		</tr>
   `;
+
+    tableTfoot.addEventListener("click", (e) => {
+      e.preventDefault();
+      let element = e.target;
+      console.log(element);
+      if (element.id === "cargarInventarioBtn") {
+          console.log("click");
+          showConfirmationAlert(element)
+              .then((result) => {
+                  if (result && result.value) {
+                      loadingStart(element);
+                      const dataform = new FormData();
+                      dataform.append(
+                          "beneficioId",
+                          Number(beneficioId.value)
+                      );
+                      return sendData("/cargarInventarioc", dataform, token);
+                  }
+              })
+              .then((result) => {
+                  console.log(result);
+                  if (result && result.status == 1) {
+                      loadingEnd(element, "success", "Cargando al inventorio");
+                      element.disabled = true;
+                      return swal(
+                          "EXITO",
+                          "Inventario Cargado Exitosamente",
+                          "success"
+                      );
+                  }
+                  if (result && result.status == 0) {
+                      loadingEnd(element, "success", "Cargando al inventorio");
+                      errorMessage(result.message);
+                  }
+              })
+              .then(() => {
+                  window.location.href = "/beneficiocerdo";
+              })
+              .catch((error) => {
+                  console.error(error);
+              });
+        }
+    });
+
+    function showConfirmationAlert(element) {
+      return swal.fire({
+          title: "CONFIRMAR",
+          text: "Estas seguro que desea cargar el inventario ?",
+          icon: "warning",
+          showDenyButton: true,
+          showCancelButton: true,
+          confirmButtonColor: "#3085d6",
+          cancelButtonColor: "#d33",
+          confirmButtonText: "Acpetar",
+          denyButtonText: `Cancelar`,
+      });
+    }
+
+
   /******************MERMA****************************** */
   let Peso_total_Desp = dataTotals.pesoTotalGlobal;
   mermaPesoTotal.innerHTML = "";

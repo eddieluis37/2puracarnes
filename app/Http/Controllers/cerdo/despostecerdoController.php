@@ -334,4 +334,46 @@ class DespostecerdoController extends Controller
             ]);
         }
     }
+
+    public function cargarInventariocerdo(Request $request)
+    {
+        $beneficioId = $request->input('beneficioId');
+
+        $currentDateTime = Carbon::now();
+        $formattedDate = $currentDateTime->format('Y-m-d');
+
+        $beneficio = Beneficiocerdo::find($beneficioId);
+        $beneficio->fecha_cierre = $formattedDate;
+        $beneficio->save();
+
+        $beneficioc = Beneficiocerdo::where('id', $beneficioId)->get();
+
+        DB::update("
+        UPDATE centro_costo_products c
+        JOIN despostecerdos d ON c.products_id = d.products_id
+        JOIN beneficiocerdos b ON b.id = d.beneficiocerdos_id
+        SET c.compralote =  c.compralote + d.peso,
+            c.cto_compralote =  c.cto_compralote + d.costo_kilo,
+            c.cto_compralote_total  = c.cto_compralote_total + (d.costo_kilo * d.peso)
+        WHERE c.tipoinventario = 'inicial'
+        AND d.beneficiocerdos_id = :beneficioid
+        AND b.centrocosto_id = :cencosid 
+        AND c.centrocosto_id = :cencosid2 " , 
+        [
+            'beneficioid' => $beneficioId,
+            'cencosid' =>  $beneficio->centrocosto_id ,
+            'cencosid2' =>  $beneficio->centrocosto_id 
+        ]
+         );
+
+
+
+        return response()->json([
+            'status' => 1,
+            'message' => 'Cargado al inventario exitosamente',
+            'beneficioc' => $beneficioc
+        ]);
+
+       // return view('categorias.res.desposte.index', ['beneficio' => $beneficio]);
+    }
 }

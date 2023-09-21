@@ -217,6 +217,7 @@ Route::get('despostecerdo', [despostecerdoController::class, 'index'])->name('de
 Route::get('despostecerdo/{id}', [despostecerdoController::class, 'create']);
 Route::post('/despostecerdoUpdate', [despostecerdoController::class, 'update']);
 Route::post('/downdespostec', [despostecerdoController::class, 'destroy']);
+Route::post('cargarInventarioc', [despostecerdoController::class,'cargarInventariocerdo'])->name('despostecerdo.show');
 
 /*****************************COMPRAS-COMPENSADOS****************************************** */
 Route::get('compensado', [compensadoController::class,'index'])->name('compensado.index');
