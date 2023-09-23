@@ -50,11 +50,11 @@ class desposteresController extends Controller
         ])->get();
         //  dd(count($this->consulta));
         if (count($this->consulta) === 0) {
-            $prod = Product::Where([
+            $prod = Product::where([
                 ['status', 1],
                 ['category_id', 1],
                 ['level_product_id', 1],
-            ])->orderBy('name', 'asc')->get();
+            ])->whereNotIn('id', [99, 100, 101, 104 ])->orderBy('name', 'asc')->get();
             foreach ($prod as $key) {
                 $despost = new Despostere(); //Se crea una instancia del modelo
                 $despost->users_id = $id_user; //Se establecen los valores para cada columna de la tabla
@@ -282,7 +282,8 @@ class desposteresController extends Controller
 
         $beneficior = Beneficiore::where('id', $beneficioId)->get();
 
-        DB::update("
+        DB::update(
+            "
         UPDATE centro_costo_products c
         JOIN desposteres d ON c.products_id = d.products_id
         JOIN beneficiores b ON b.id = d.beneficiores_id
@@ -292,13 +293,13 @@ class desposteresController extends Controller
         WHERE c.tipoinventario = 'inicial' 
         AND d.beneficiores_id = :beneficioid
         AND b.centrocosto_id = :cencosid 
-        AND c.centrocosto_id = :cencosid2 " , 
-        [
-            'beneficioid' => $beneficioId,
-            'cencosid' =>  $beneficio->centrocosto_id ,
-            'cencosid2' =>  $beneficio->centrocosto_id 
-        ]
-         );
+        AND c.centrocosto_id = :cencosid2 ",
+            [
+                'beneficioid' => $beneficioId,
+                'cencosid' =>  $beneficio->centrocosto_id,
+                'cencosid2' =>  $beneficio->centrocosto_id
+            ]
+        );
 
 
 
@@ -308,7 +309,7 @@ class desposteresController extends Controller
             'beneficior' => $beneficior
         ]);
 
-       // return view('categorias.res.desposte.index', ['beneficio' => $beneficio]);
+        // return view('categorias.res.desposte.index', ['beneficio' => $beneficio]);
     }
 
 

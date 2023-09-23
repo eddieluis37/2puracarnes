@@ -187,12 +187,11 @@ Route::get('select2', Select2::class);
 Route::get('inventory/diary', [diaryController::class, 'index'])->name('inventory.diary');
 Route::get('inventory/consolidado', [inventoryController::class, 'index'])->name('inventory.consolidado');
 Route::get('showinventory', [diaryController::class,'show'])->name('inventory.showlist');
-Route::post('showinventory', [diaryController::class,'show'])->name('inventory.showinvent');
+//Route::post('showinventory', [diaryController::class,'show'])->name('inventory.showinvent');
 Route::get('inventory/mensual', [mensualController::class, 'index'])->name('inventory.mensual');
 
-Route::get('inventory/centro_costo_products', [CentroCostoProductController::class,'show'])->name('inventory.showccp');
-
-
+Route::get('inventory/centro_costo_products', [CentroCostoProductController::class,'index'])->name('inventory.showccp');
+Route::get('showCcpInventory', [CentroCostoProductController::class,'show'])->name('inventory.show-ccp');
 
 /*****************************BENEFICIO-RES*******************************************/
 Route::get('beneficiores', [beneficioresController::class,'index'])->name('beneficiores.index');
