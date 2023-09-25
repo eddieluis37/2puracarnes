@@ -23,11 +23,10 @@ class CentroCostoProductController extends Controller
     public function index()
     {
         $category = Category::whereIn('id', [1, 2, 3, 4, 5, 6, 7, 8, 9])->orderBy('name', 'asc')->get();
-        $costcenter = Centrocosto::Where('status', 1)->get();
         $centros = Centrocosto::Where('status', 1)->get();
         $centroCostoProductos = Centro_costo_product::all();
 
-        return view("inventory.centro_costo_products", compact('category', 'costcenter', 'centros', 'centroCostoProductos'));
+        return view("inventory.centro_costo_products", compact('category', 'centros', 'centroCostoProductos'));
 
         // return view('hola');
         //  return view('inventory.diary');
@@ -60,7 +59,7 @@ class CentroCostoProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Request $request)
+    /* public function show(Request $request)
     {
         $centrocostoId = $request->input('centrocostoId');
         $categoriaId = $request->input('categoriaId');
@@ -83,7 +82,7 @@ class CentroCostoProductController extends Controller
         return datatables()->of($data)
             ->addIndexColumn()
             ->make(true);
-    }
+    } */
 
     /**
      * Show the form for editing the specified resource.
@@ -103,19 +102,42 @@ class CentroCostoProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function show(Request $request)
     {
-        //
+        $centrocostoId = $request->input('centrocostoId');
+        $categoriaId = $request->input('categoriaId');
+
+        $data = DB::table('centro_costo_products as ccp')
+            ->join('products as pro', 'pro.id', '=', 'ccp.products_id')
+            ->join('categories as cat', 'pro.category_id', '=', 'cat.id')
+            ->select(
+                'cat.name as namecategoria',
+                'pro.name as nameproducto',
+                'ccp.invinicial as invinicial',
+                'ccp.fisico as fisico'
+            )
+            ->where('ccp.centrocosto_id', $centrocostoId)
+            ->where('ccp.tipoinventario', 'inicial')
+            ->where('pro.category_id', $categoriaId)
+            ->where('pro.status', 1)
+            ->get();
+
+        return response()->json(['data' => $data]);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
+    public function updateCcpInventory(Request $request)
     {
-        //
+        if ($request->ajax()) {
+            foreach ($request->input('data') as $item) {
+                $productId = $item['productId'];
+                $fisico = $item['fisico'];
+
+                DB::table('centro_costo_products')
+                    ->where('products_id', $productId)
+                    ->update(['fisico' => $fisico]);
+            }
+        }
+
+        return response()->json(['success' => true]);
     }
 }

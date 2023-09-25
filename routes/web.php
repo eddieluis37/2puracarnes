@@ -193,6 +193,10 @@ Route::get('inventory/mensual', [mensualController::class, 'index'])->name('inve
 Route::get('inventory/centro_costo_products', [CentroCostoProductController::class,'index'])->name('inventory.showccp');
 Route::get('showCcpInventory', [CentroCostoProductController::class,'show'])->name('inventory.show-ccp');
 
+Route::post('/updateCcpInventory', [CentroCostoProductController::class,'updateCcpInventory'])->name('inventory.updateCcpInventory');
+
+//Route::post('/updateCcpInventory', 'CentroCostoProductController@updateCcpInventory')->name('updateCcpInventory');
+
 /*****************************BENEFICIO-RES*******************************************/
 Route::get('beneficiores', [beneficioresController::class,'index'])->name('beneficiores.index');
 Route::get('showbeneficiores', [beneficioresController::class,'show'])->name('beneficiores.showlist');
@@ -210,6 +214,7 @@ Route::post('/desposteresUpdate', [desposteresController::class, 'update']);
 Route::post('/downdesposter', [desposteresController::class, 'destroy']);
 
 Route::post('cargarInventario', [desposteresController::class,'cargarInventario'])->name('desposteres.show');
+
 
 /*****************************DESPOSTE-CERDO******************************************/
 Route::get('despostecerdo', [despostecerdoController::class, 'index'])->name('despostecerdo.index');
