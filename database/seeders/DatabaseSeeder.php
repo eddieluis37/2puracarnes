@@ -41,5 +41,7 @@ class DatabaseSeeder extends Seeder
     $this->call(Nicho_mercadoSeeder::class);
    // $this->call(Nicho_mercado_centro_costo_productSeeder::class);
     $this->call(Nicho_mercado_productSeeder::class);
+    $this->call(FormapagoSeeder::class);
+    $this->call(ParametrocontableSeeder::class);
   }
 }

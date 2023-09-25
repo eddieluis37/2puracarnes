@@ -29,6 +29,9 @@ use App\Http\Controllers\res\beneficioresController;
 use App\Http\Controllers\cerdo\despostecerdoController;
 use App\Http\Controllers\cerdo\beneficiocerdoController;
 
+use App\Http\Controllers\FormapagoController;
+use App\Http\Controllers\ParametrocontableController;
+
 use App\Http\Controllers\compensado\compensadoController;
 use App\Http\Controllers\alistamiento\alistamientoController;
 use App\Http\Controllers\aves\beneficioavesController;
@@ -318,3 +321,17 @@ Route::post('fasterAddShoping', [fasterController::class,'add_shopping'])->name(
 Route::get('costo', [costoController::class,'index'])->name('costo.index');
 Route::get('showcosto', [costoController::class,'show'])->name('costo.showlist');
 Route::get('costo/create/{id}', [costoController::class,'create'])->name('costo.create');
+
+/*****************************FORMAS PAGO*******************************************/
+Route::get('formapago', [FormapagoController::class,'index'])->name('formapago.index');
+Route::get('showformapago', [FormapagoController::class,'show'])->name('formapago.showlist');
+Route::post('saveformapago', [FormapagoController::class, 'store'])->name('formapago.save');
+Route::get('/edit/{id}', [FormapagoController::class, 'edit'])->name('formapago.edit');
+Route::get('formapago/{id}', [FormapagoController::class, 'delete'])->name('formapago.delete');
+
+/*****************************PARAMETROS CONTABLES*******************************************/
+Route::get('parametrocontable', [ParametrocontableController::class,'index'])->name('parametrocontable.index');
+Route::get('showparametrocontable', [ParametrocontableController::class,'show'])->name('parametrocontable.showlist');
+Route::post('saveparametrocontable', [ParametrocontableController::class, 'store'])->name('parametrocontable.save');
+Route::get('/edit/{id}', [ParametrocontableController::class, 'edit'])->name('parametrocontable.edit');
+Route::get('parametrocontable/{id}', [ParametrocontableController::class, 'delete'])->name('parametrocontable.delete');
