@@ -54,7 +54,7 @@ class FormapagoController extends Controller
   
     public function edit( $fpId)
     {
-        $fp = Formapago::find(1);
+        $fp = Formapago::find($fpId);
         return response()->json([
             'data' => $fp,
             'dataurl' => "/formapago/$fpId"
