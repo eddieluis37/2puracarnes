@@ -29,6 +29,9 @@ use App\Http\Controllers\res\beneficioresController;
 use App\Http\Controllers\cerdo\despostecerdoController;
 use App\Http\Controllers\cerdo\beneficiocerdoController;
 
+use App\Http\Controllers\FormapagoController;
+use App\Http\Controllers\ParametrocontableController;
+
 use App\Http\Controllers\compensado\compensadoController;
 use App\Http\Controllers\alistamiento\alistamientoController;
 use App\Http\Controllers\aves\beneficioavesController;
@@ -323,3 +326,21 @@ Route::post('fasterAddShoping', [fasterController::class,'add_shopping'])->name(
 Route::get('costo', [costoController::class,'index'])->name('costo.index');
 Route::get('showcosto', [costoController::class,'show'])->name('costo.showlist');
 Route::get('costo/create/{id}', [costoController::class,'create'])->name('costo.create');
+
+
+/***** FORMAS DE PAGO ******** */
+ 
+Route::get('formapago', [FormapagoController::class, 'index'])->name('formapago.index');
+Route::post('formapagosave', [FormapagoController::class,'store'])->name('formapago.save');
+Route::get('formapago{formapagoId}/delete', [FormapagoController::class, 'delete'])->name('formapago.delete');
+Route::get('formapago{formapagoId}/edit', [FormapagoController::class, 'edit'])->name('formapago.edit');
+Route::post('formapago/{formapagoId}', [FormapagoController::class, 'update'])->name('formapago.update');
+
+
+/***** PARAMETROS CONTABLES******** */
+ 
+Route::get('parametrocontable', [ParametrocontableController::class, 'index'])->name('parametrocontable.index');
+Route::post('parametrocontablesave', [ParametrocontableController::class,'store'])->name('parametrocontable.save');
+Route::get('parametrocontable{parametrocontableId}/delete', [ParametrocontableController::class, 'delete'])->name('parametrocontable.delete');
+Route::get('parametrocontable{parametrocontableId}/edit', [ParametrocontableController::class, 'edit'])->name('parametrocontable.edit');
+Route::post('parametrocontable/{parametrocontableId}', [ParametrocontableController::class, 'update'])->name('parametrocontable.update');
