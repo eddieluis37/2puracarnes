@@ -40,10 +40,11 @@ function initializeDataTable(centrocostoId = "-1", categoriaId = "-1") {
                 render: function (data, type, row) {
                     var invinicial = parseInt(row.invinicial);
                     var compraLote = parseInt(row.compraLote);
+                    var alistamiento = parseInt(row.alistamiento);
                     var compensados = parseInt(row.compensados);
                     var trasladoing = parseInt(row.trasladoing);
                     var disponible =
-                        invinicial + compraLote + compensados + trasladoing;
+                        invinicial + compraLote + alistamiento + compensados + trasladoing;
                     return disponible;
                 },
             },
@@ -64,11 +65,12 @@ function initializeDataTable(centrocostoId = "-1", categoriaId = "-1") {
                     var merma = row.fisico - row.stock;
                     var invinicial = parseInt(row.invinicial);
                     var compraLote = parseInt(row.compraLote);
+                    var alistamiento = parseInt(row.alistamiento);
                     var compensados = parseInt(row.compensados);
                     var trasladoing = parseInt(row.trasladoing);
                     var disponible =
-                        invinicial + compraLote + compensados + trasladoing;
-
+                    invinicial + compraLote + alistamiento + compensados + trasladoing;
+                    
                     var pmerma = (merma / disponible) * 100;
                     if (isNaN(pmerma) || !isFinite(pmerma)) {
                         pmerma = 0;
