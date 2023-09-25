@@ -79,13 +79,16 @@
               <th class="table-th text-white">PRODUCTO</th>
               <th class="table-th text-white">INV INICIAL</th>
               <th class="table-th text-white">COMPRA LOTE</th>
-              <th class="table-th text-white">ALISTAMIENTO</th>
-              <th class="table-th text-white">COMPENSADOS</th>
-              <th class="table-th text-white">TRASLADO INGRESO</th>
-              <th class="table-th text-white">TRASLADO SALIDA</th>
+              <th class="table-th text-white">ALIST</th>
+              <th class="table-th text-white">COMPEN</th>
+              <th class="table-th text-white">TRAS ING</th>
+              <th class="table-th text-white">TRAS SAL</th>
               <th class="table-th text-white">VENTA</th>
               <th class="table-th text-white">STOCK IDEAL</th>
-              <th class="table-th text-white">INVENTARIO FINAL</th>
+              <th class="table-th text-white">INV FINAL</th>             
+              <th class="table-th text-white">DISPO</th>
+              <th class="table-th text-white">MERMA</th>
+              <th class="table-th text-white">%MERMA</th>
 
               <!-- <th class="table-th text-white">TOTAL INV INI</th>
               <th class="table-th text-white">COMPRA LOTE</th>
@@ -123,7 +126,7 @@
               <td>0.00</td>
               <td>0.00</td>
               <td>0.00</td>
-              <td>0.009</td>
+              <td>0.00</td>
               <td>0.00</td>
               <td>0.00</td>
             </tr>

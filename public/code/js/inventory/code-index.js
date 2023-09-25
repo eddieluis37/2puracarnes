@@ -24,16 +24,59 @@ function initializeDataTable(centrocostoId = "-1", categoriaId = "-1") {
         columns: [
             { data: "namecategoria", name: "namecategoria" },
             { data: "nameproducto", name: "nameproducto" },
-            { data: "invinicial", name: "invinicial" }, 
+            { data: "invinicial", name: "invinicial" },
             { data: "compraLote", name: "compraLote" },
             { data: "alistamiento", name: "alistamiento" },
             { data: "compensados", name: "compensados" },
-            { data: "trasladoing", name: "trasladoing" },   
-            { data: "trasladosal", name: "trasladosal" },   
+            { data: "trasladoing", name: "trasladoing" },
+            { data: "trasladosal", name: "trasladosal" },
             { data: "venta", name: "venta" },
             { data: "stock", name: "stock" },
             { data: "fisico", name: "fisico" },
-           
+
+            {
+                data: null,
+                name: "disponible",
+                render: function (data, type, row) {
+                    var invinicial = parseInt(row.invinicial);
+                    var compraLote = parseInt(row.compraLote);
+                    var compensados = parseInt(row.compensados);
+                    var trasladoing = parseInt(row.trasladoing);
+                    var disponible =
+                        invinicial + compraLote + compensados + trasladoing;
+                    return disponible;
+                },
+            },
+
+            {
+                data: null,
+                name: "merma",
+                render: function (data, type, row) {
+                    var merma = row.fisico - row.stock;
+                    return merma.toFixed(2);
+                },
+            },
+
+            {
+                data: null,
+                name: "pmerma",
+                render: function (data, type, row) {
+                    var merma = row.fisico - row.stock;
+                    var invinicial = parseInt(row.invinicial);
+                    var compraLote = parseInt(row.compraLote);
+                    var compensados = parseInt(row.compensados);
+                    var trasladoing = parseInt(row.trasladoing);
+                    var disponible =
+                        invinicial + compraLote + compensados + trasladoing;
+
+                    var pmerma = (merma / disponible) * 100;
+                    if (isNaN(pmerma) || !isFinite(pmerma)) {
+                        pmerma = 0;
+                    }
+
+                    return pmerma.toFixed(2) + "%";
+                },
+            },
         ],
         order: [[1, "ASC"]],
         language: {
