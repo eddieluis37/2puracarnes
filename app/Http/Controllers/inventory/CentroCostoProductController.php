@@ -113,6 +113,7 @@ class CentroCostoProductController extends Controller
             ->select(
                 'cat.name as namecategoria',
                 'pro.name as nameproducto',
+                'pro.id as productId',
                 'ccp.invinicial as invinicial',
                 'ccp.fisico as fisico'
             )

@@ -19,7 +19,7 @@ $(document).ready(function () {
                 type: "GET",
                 data: {
                     centrocostoId: centrocostoId,
-                    categoriaId: categoriaId,
+                    categoriaId: categoriaId,                   
                 },
                 dataSrc: function (response) {
                     // Modificar los datos antes de que se procesen en la tabla
@@ -39,10 +39,11 @@ $(document).ready(function () {
             },
             columns: [
                 { data: "namecategoria", name: "namecategoria" },
+                { data: "productId", name: "productId" },
                 { data: "nameproducto", name: "nameproducto" },
                 { data: "fisico", name: "fisico" },
             ],
-            order: [[1, "ASC"]],
+            order: [[2, "ASC"]],
             language: {
                 processing: "Procesando...",
                 lengthMenu: "Mostrar _MENU_ registros",
@@ -100,7 +101,8 @@ $(document).ready(function () {
             if (event.which === 13) {
                 event.preventDefault();
                 var fisico = $(this).val();
-                var productId = $(this).closest("tr").find(".productId").val();
+              // var productId = $(this).closest("tr").find(".productId").val();
+                var productId = $(this).val();
 
                 console.log("Enter key pressed");
                 console.log("fisico value:", fisico);
