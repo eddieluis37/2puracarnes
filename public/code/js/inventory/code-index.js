@@ -38,14 +38,18 @@ function initializeDataTable(centrocostoId = "-1", categoriaId = "-1") {
                 data: null,
                 name: "disponible",
                 render: function (data, type, row) {
-                    var invinicial = parseInt(row.invinicial);
-                    var compraLote = parseInt(row.compraLote);
-                    var alistamiento = parseInt(row.alistamiento);
-                    var compensados = parseInt(row.compensados);
-                    var trasladoing = parseInt(row.trasladoing);
+                    var invinicial = parseFloat(row.invinicial);
+                    var compraLote = parseFloat(row.compraLote);
+                    var alistamiento = parseFloat(row.alistamiento);
+                    var compensados = parseFloat(row.compensados);
+                    var trasladoing = parseFloat(row.trasladoing);
                     var disponible =
-                        invinicial + compraLote + alistamiento + compensados + trasladoing;
-                    return disponible;
+                        invinicial +
+                        compraLote +
+                        alistamiento +
+                        compensados +
+                        trasladoing;
+                    return disponible.toFixed(2);
                 },
             },
 
@@ -63,14 +67,18 @@ function initializeDataTable(centrocostoId = "-1", categoriaId = "-1") {
                 name: "pmerma",
                 render: function (data, type, row) {
                     var merma = row.fisico - row.stock;
-                    var invinicial = parseInt(row.invinicial);
-                    var compraLote = parseInt(row.compraLote);
-                    var alistamiento = parseInt(row.alistamiento);
-                    var compensados = parseInt(row.compensados);
-                    var trasladoing = parseInt(row.trasladoing);
+                    var invinicial = parseFloat(row.invinicial);
+                    var compraLote = parseFloat(row.compraLote);
+                    var alistamiento = parseFloat(row.alistamiento);
+                    var compensados = parseFloat(row.compensados);
+                    var trasladoing = parseFloat(row.trasladoing);
                     var disponible =
-                    invinicial + compraLote + alistamiento + compensados + trasladoing;
-                    
+                        invinicial +
+                        compraLote +
+                        alistamiento +
+                        compensados +
+                        trasladoing;
+
                     var pmerma = (merma / disponible) * 100;
                     if (isNaN(pmerma) || !isFinite(pmerma)) {
                         pmerma = 0;
@@ -110,74 +118,91 @@ function initializeDataTable(centrocostoId = "-1", categoriaId = "-1") {
                 .column("invinicial:name", { search: "applied" })
                 .data()
                 .reduce(function (a, b) {
-                    return parseInt(a) + parseInt(b);
-                }, 0);
+                    return parseFloat(a) + parseFloat(b);
+                }, 0)
+                .toFixed(2);
 
             // Totalizar la columna "compraLote"
             var totalCompraLote = api
                 .column("compraLote:name", { search: "applied" })
                 .data()
                 .reduce(function (a, b) {
-                    return parseInt(a) + parseInt(b);
-                }, 0);
+                    return parseFloat(a) + parseFloat(b);
+                }, 0)
+                .toFixed(2);
 
-                // Totalizar la columna "alistamiento"
+            // Totalizar la columna "alistamiento"
             var totalAlistamiento = api
-            .column("alistamiento:name", { search: "applied" })
-            .data()
-            .reduce(function (a, b) {
-                return parseInt(a) + parseInt(b);
-            }, 0);
+                .column("alistamiento:name", { search: "applied" })
+                .data()
+                .reduce(function (a, b) {
+                    return parseFloat(a) + parseFloat(b);
+                }, 0)
+                .toFixed(2);
 
-             // Totalizar la columna "compensados"
-             var totalCompensados = api
-             .column("compensados:name", { search: "applied" })
-             .data()
-             .reduce(function (a, b) {
-                 return parseInt(a) + parseInt(b);
-             }, 0);
+            // Totalizar la columna "compensados"
+            var totalCompensados = api
+                .column("compensados:name", { search: "applied" })
+                .data()
+                .reduce(function (a, b) {
+                    return parseFloat(a) + parseFloat(b);
+                }, 0)
+                .toFixed(2);
 
-             // Totalizar la columna "trasladoing"
-             var totalTrasladoing = api
-             .column("trasladoing:name", { search: "applied" })
-             .data()
-             .reduce(function (a, b) {
-                 return parseInt(a) + parseInt(b);
-             }, 0);
+            // Totalizar la columna "trasladoing"
+            var totalTrasladoing = api
+                .column("trasladoing:name", { search: "applied" })
+                .data()
+                .reduce(function (a, b) {
+                    return parseFloat(a) + parseFloat(b);
+                }, 0)
+                .toFixed(2);
 
-             // Totalizar la columna "trasladosal"
-             var totalTrasladosal = api
-             .column("trasladosal:name", { search: "applied" })
-             .data()
-             .reduce(function (a, b) {
-                 return parseInt(a) + parseInt(b);
-             }, 0);
+            // Totalizar la columna "trasladosal"
+            var totalTrasladosal = api
+                .column("trasladosal:name", { search: "applied" })
+                .data()
+                .reduce(function (a, b) {
+                    return parseFloat(a) + parseFloat(b);
+                }, 0)
+                .toFixed(2);
 
-             // Totalizar la columna "venta"
-             var totalVenta = api
-             .column("venta:name", { search: "applied" })
-             .data()
-             .reduce(function (a, b) {
-                 return parseInt(a) + parseInt(b);
-             }, 0);
+            // Totalizar la columna "venta"
+            var totalVenta = api
+                .column("venta:name", { search: "applied" })
+                .data()
+                .reduce(function (a, b) {
+                    return parseFloat(a) + parseFloat(b);
+                }, 0)
+                .toFixed(2);
 
-             
-             // Totalizar la columna "stock"
-             var totalStock = api
-             .column("stock:name", { search: "applied" })
-             .data()
-             .reduce(function (a, b) {
-                 return parseInt(a) + parseInt(b);
-             }, 0);
+            // Totalizar la columna "stock"
+            var totalStock = api
+                .column("stock:name", { search: "applied" })
+                .data()
+                .reduce(function (a, b) {
+                    return parseFloat(a) + parseFloat(b);
+                }, 0)
+                .toFixed(2);
 
-               
-             // Totalizar la columna "fisico"
-             var totalFisico= api
-             .column("fisico:name", { search: "applied" })
-             .data()
-             .reduce(function (a, b) {
-                 return parseInt(a) + parseInt(b);
-             }, 0);
+            // Totalizar la columna "fisico"
+            var totalFisico = api
+                .column("fisico:name", { search: "applied" })
+                .data()
+                .reduce(function (a, b) {
+                    return parseFloat(a) + parseFloat(b);
+                }, 0)
+                .toFixed(2);
+
+            // Totalizar la columna "disponible"
+            var totalDisponible = api
+                .column("disponible:name", { search: "applied" })
+                .data()
+                .reduce(function (a, b) {
+                    var value = parseFloat(b);
+                    return isNaN(value) ? a : a + value;
+                }, 0)
+                .toFixed(2);
 
             // Agregar los valores totales en el footer
             $(api.column("invinicial:name").footer()).html(totalInvinicial);
@@ -189,7 +214,7 @@ function initializeDataTable(centrocostoId = "-1", categoriaId = "-1") {
             $(api.column("venta:name").footer()).html(totalVenta);
             $(api.column("stock:name").footer()).html(totalStock);
             $(api.column("fisico:name").footer()).html(totalFisico);
-            
+            $(api.column("disponible:name").footer()).html(totalDisponible);
         },
     });
 }
