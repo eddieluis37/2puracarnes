@@ -121,9 +121,75 @@ function initializeDataTable(centrocostoId = "-1", categoriaId = "-1") {
                     return parseInt(a) + parseInt(b);
                 }, 0);
 
+                // Totalizar la columna "alistamiento"
+            var totalAlistamiento = api
+            .column("alistamiento:name", { search: "applied" })
+            .data()
+            .reduce(function (a, b) {
+                return parseInt(a) + parseInt(b);
+            }, 0);
+
+             // Totalizar la columna "compensados"
+             var totalCompensados = api
+             .column("compensados:name", { search: "applied" })
+             .data()
+             .reduce(function (a, b) {
+                 return parseInt(a) + parseInt(b);
+             }, 0);
+
+             // Totalizar la columna "trasladoing"
+             var totalTrasladoing = api
+             .column("trasladoing:name", { search: "applied" })
+             .data()
+             .reduce(function (a, b) {
+                 return parseInt(a) + parseInt(b);
+             }, 0);
+
+             // Totalizar la columna "trasladosal"
+             var totalTrasladosal = api
+             .column("trasladosal:name", { search: "applied" })
+             .data()
+             .reduce(function (a, b) {
+                 return parseInt(a) + parseInt(b);
+             }, 0);
+
+             // Totalizar la columna "venta"
+             var totalVenta = api
+             .column("venta:name", { search: "applied" })
+             .data()
+             .reduce(function (a, b) {
+                 return parseInt(a) + parseInt(b);
+             }, 0);
+
+             
+             // Totalizar la columna "stock"
+             var totalStock = api
+             .column("stock:name", { search: "applied" })
+             .data()
+             .reduce(function (a, b) {
+                 return parseInt(a) + parseInt(b);
+             }, 0);
+
+               
+             // Totalizar la columna "fisico"
+             var totalFisico= api
+             .column("fisico:name", { search: "applied" })
+             .data()
+             .reduce(function (a, b) {
+                 return parseInt(a) + parseInt(b);
+             }, 0);
+
             // Agregar los valores totales en el footer
             $(api.column("invinicial:name").footer()).html(totalInvinicial);
             $(api.column("compraLote:name").footer()).html(totalCompraLote);
+            $(api.column("alistamiento:name").footer()).html(totalAlistamiento);
+            $(api.column("compensados:name").footer()).html(totalCompensados);
+            $(api.column("trasladoing:name").footer()).html(totalTrasladoing);
+            $(api.column("trasladosal:name").footer()).html(totalTrasladosal);
+            $(api.column("venta:name").footer()).html(totalVenta);
+            $(api.column("stock:name").footer()).html(totalStock);
+            $(api.column("fisico:name").footer()).html(totalFisico);
+            
         },
     });
 }
