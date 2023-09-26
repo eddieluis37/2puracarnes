@@ -47,7 +47,16 @@ class CreateThirdsTable extends Migration
             
             $table->string('correo',100)->nullable();
 
-        
+            $table->integer('cliente')->nullable()->default(0);
+            $table->integer('proveedor')->nullable()->default(0);
+            $table->integer('vendedor')->nullable()->default(0);
+            $table->integer('domiciliario')->nullable()->default(0);
+
+            $table->unsignedBigInteger('listaprecio_nichoid')->nullable();
+            //$table->foreign('listaprecio_nichoid')->references('id')->on('listaprecios');
+
+            $table->unsignedBigInteger('listaprecio_genericid')->nullable();
+            //$table->foreign('listaprecio_genericid')->references('id')->on('listaprecios');
 
             $table->timestamps();
         });

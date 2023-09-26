@@ -27,6 +27,12 @@ class CreateSalesTable extends Migration
             $table->unsignedBigInteger('third_id')->nullable();           
             $table->foreign('third_id')->references('id')->on('thirds');         
             
+            $table->unsignedBigInteger('vendedor_id')->nullable();           
+            $table->foreign('vendedor_id')->references('id')->on('thirds'); 
+            
+            $table->unsignedBigInteger('domiciliario_id')->nullable();           
+            $table->foreign('domiciliario_id')->references('id')->on('thirds'); 
+            
             $table->unsignedBigInteger('centrocosto_id')->nullable();
             $table->foreign('centrocosto_id')->references('id')->on('centro_costo');            
 
