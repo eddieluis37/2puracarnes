@@ -26,8 +26,8 @@ class DatabaseSeeder extends Seeder
     $this->call(Type_regimen_ivaSeeder::class);
     $this->call(OfficeSeeder::class);
     $this->call(ProvinceSeeder::class);
-    $this->call(AgreementSeeder::class);
-      $this->call(ThirdSeeder::class);
+    $this->call(AgreementSeeder::class); 
+    $this->call(ThirdSeeder::class);
     $this->call(Precio_agreementSeeder::class);
     $this->call(SacrificioSeeder::class);
       
@@ -43,5 +43,6 @@ class DatabaseSeeder extends Seeder
     $this->call(Nicho_mercado_productSeeder::class);
     $this->call(FormapagoSeeder::class);
     $this->call(ParametrocontableSeeder::class);
+    $this->call(ListaprecioSeeder::class);
   }
 }
