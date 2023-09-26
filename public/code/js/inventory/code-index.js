@@ -102,6 +102,29 @@ function initializeDataTable(centrocostoId = "-1", categoriaId = "-1") {
         },
         dom: "Bfrtip",
         buttons: ["copy", "csv", "excel", "pdf"],
+        footerCallback: function (row, data, start, end, display) {
+            var api = this.api();
+
+            // Totalizar la columna "invinicial"
+            var totalInvinicial = api
+                .column("invinicial:name", { search: "applied" })
+                .data()
+                .reduce(function (a, b) {
+                    return parseInt(a) + parseInt(b);
+                }, 0);
+
+            // Totalizar la columna "compraLote"
+            var totalCompraLote = api
+                .column("compraLote:name", { search: "applied" })
+                .data()
+                .reduce(function (a, b) {
+                    return parseInt(a) + parseInt(b);
+                }, 0);
+
+            // Agregar los valores totales en el footer
+            $(api.column("invinicial:name").footer()).html(totalInvinicial);
+            $(api.column("compraLote:name").footer()).html(totalCompraLote);
+        },
     });
 }
 $(document).ready(function () {
