@@ -26,11 +26,11 @@ class compensadoController extends Controller
      */
     public function index()
     {
-      /*   $category = Category::WhereIn('id',[1,2,3,4,5,6,7])->get(); */
-        $providers = Third::Where('status',1)->get();
-        $centros = Centrocosto::Where('status',1)->get();
+        /*   $category = Category::WhereIn('id',[1,2,3,4,5,6,7])->get(); */
+        $providers = Third::Where('status', 1)->get();
+        $centros = Centrocosto::Where('status', 1)->get();
 
-        return view('compensado.res.index', compact('providers','centros'));
+        return view('compensado.res.index', compact('providers', 'centros'));
     }
 
     /**
@@ -44,26 +44,26 @@ class compensadoController extends Controller
         //$providers = Third::Where('status',1)->get();
         //$centros = Centrocosto::Where('status',1)->get();
         $datacompensado = DB::table('compensadores as comp')
-     /*    ->join('categories as cat', 'comp.categoria_id', '=', 'cat.id') */
-        ->join('thirds as tird', 'comp.thirds_id', '=', 'tird.id')
-        ->join('centro_costo as centro', 'comp.centrocosto_id', '=', 'centro.id')
-        ->select('comp.*', 'tird.name as namethird','centro.name as namecentrocosto',)
-        ->where('comp.id', $id)
-        ->get();
+            /*    ->join('categories as cat', 'comp.categoria_id', '=', 'cat.id') */
+            ->join('thirds as tird', 'comp.thirds_id', '=', 'tird.id')
+            ->join('centro_costo as centro', 'comp.centrocosto_id', '=', 'centro.id')
+            ->select('comp.*', 'tird.name as namethird', 'centro.name as namecentrocosto',)
+            ->where('comp.id', $id)
+            ->get();
 
         $prod = Product::Where([
-           /*  ['category_id',$datacompensado[0]->categoria_id], */
-            ['status',1]
+            /*  ['category_id',$datacompensado[0]->categoria_id], */
+            ['status', 1]
         ])
-        ->orderBy('category_id', 'asc')
-        ->orderBy('name', 'asc')
-        ->get();
+            ->orderBy('category_id', 'asc')
+            ->orderBy('name', 'asc')
+            ->get();
 
         /**************************************** */
         $status = '';
         $fechaCompensadoCierre = Carbon::parse($datacompensado[0]->fecha_cierre);
         $date = Carbon::now();
-		$currentDate = Carbon::parse($date->format('Y-m-d'));
+        $currentDate = Carbon::parse($date->format('Y-m-d'));
         if ($currentDate->gt($fechaCompensadoCierre)) {
             //'Date 1 is greater than Date 2';
             $status = 'false';
@@ -80,19 +80,19 @@ class compensadoController extends Controller
 
         $arrayTotales = $this->sumTotales($id);
         //dd($arrayTotales);
-        return view('compensado.create', compact('datacompensado','prod','id','detail','arrayTotales','status'));
+        return view('compensado.create', compact('datacompensado', 'prod', 'id', 'detail', 'arrayTotales', 'status'));
     }
 
     public function getcompensadoresdetail($compensadoId)
     {
 
         $detail = DB::table('compensadores_details as de')
-        ->join('products as pro', 'de.products_id', '=', 'pro.id')
-        ->select('de.*', 'pro.name as nameprod','pro.code')
-        ->where([
-            ['de.compensadores_id',$compensadoId],
-            ['de.status',1]
-        ])->get();
+            ->join('products as pro', 'de.products_id', '=', 'pro.id')
+            ->select('de.*', 'pro.name as nameprod', 'pro.code')
+            ->where([
+                ['de.compensadores_id', $compensadoId],
+                ['de.status', 1]
+            ])->get();
 
         return $detail;
     }
@@ -100,12 +100,12 @@ class compensadoController extends Controller
     public function getproducts(Request $request)
     {
         $prod = Product::Where([
-          /*   ['category_id',$request->categoriaId], */
-            ['status',1]
+            /*   ['category_id',$request->categoriaId], */
+            ['status', 1]
         ])->get();
         return response()->json(['products' => $prod]);
     }
-    
+
 
     public function savedetail(Request $request)
     {
@@ -124,7 +124,7 @@ class compensadoController extends Controller
             ];
 
             $validator = Validator::make($request->all(), $rules, $messages);
-            if ($validator->fails()) {  
+            if ($validator->fails()) {
                 return response()->json([
                     'status' => 0,
                     'errors' => $validator->errors()
@@ -139,7 +139,7 @@ class compensadoController extends Controller
 
             $getReg = Compensadores_detail::firstWhere('id', $request->regdetailId);
 
-            if($getReg == null) {
+            if ($getReg == null) {
                 //$subtotal = $request->pcompra * $request->pesokg;
                 $detail = new Compensadores_detail();
                 $detail->compensadores_id = $request->compensadoId;
@@ -149,7 +149,7 @@ class compensadoController extends Controller
                 $detail->iva = 0;
                 $detail->subtotal = $subtotal;
                 $detail->save();
-            }else {
+            } else {
                 $updateReg = Compensadores_detail::firstWhere('id', $request->regdetailId);
                 //$subtotal = $request->pcompra * $request->pesokg;
                 $updateReg->products_id = $request->producto;
@@ -184,8 +184,8 @@ class compensadoController extends Controller
         //$TotalDesposte = (float)Compensadores_detail::Where([['compensadores_id',$id],['status',1]])->sum('porcdesposte');
         //$TotalVenta = (float)Compensadores_detail::Where([['compensadores_id',$id],['status',1]])->sum('totalventa');
         //$porcVentaTotal = (float)Compensadores_detail::Where([['compensadores_id',$id],['status',1]])->sum('porcventa');
-        $pesoTotalGlobal = (float)Compensadores_detail::Where([['compensadores_id',$id],['status',1]])->sum('peso');
-        $totalGlobal = (float)Compensadores_detail::Where([['compensadores_id',$id],['status',1]])->sum('subtotal');
+        $pesoTotalGlobal = (float)Compensadores_detail::Where([['compensadores_id', $id], ['status', 1]])->sum('peso');
+        $totalGlobal = (float)Compensadores_detail::Where([['compensadores_id', $id], ['status', 1]])->sum('subtotal');
         //$costoKiloTotal = number_format($costoTotalGlobal / $pesoTotalGlobal, 2, ',', '.');
 
         $array = [
@@ -210,20 +210,20 @@ class compensadoController extends Controller
         try {
 
             $rules = [
-                'compensadoId' => 'required',                
+                'compensadoId' => 'required',
                 'provider' => 'required',
                 'centrocosto' => 'required',
                 'factura' => 'required',
             ];
             $messages = [
-                'compensadoId.required' => 'El compensadoId es requerido',  
+                'compensadoId.required' => 'El compensadoId es requerido',
                 'provider.required' => 'El proveedor es requerido',
                 'centrocosto.required' => 'El centro de costo es requerido',
                 'factura.required' => 'La factura es requerida',
             ];
 
             $validator = Validator::make($request->all(), $rules, $messages);
-            if ($validator->fails()) {  
+            if ($validator->fails()) {
                 return response()->json([
                     'status' => 0,
                     'errors' => $validator->errors()
@@ -232,18 +232,18 @@ class compensadoController extends Controller
 
             $getReg = Compensadores::firstWhere('id', $request->compensadoId);
 
-            if($getReg == null) {
+            if ($getReg == null) {
                 $currentDateTime = Carbon::now();
                 $currentDateFormat = Carbon::parse($currentDateTime->format('Y-m-d'));
                 $current_date = Carbon::parse($currentDateTime->format('Y-m-d'));
-			    $current_date->modify('next monday'); // Move to the next Monday
-			    $dateNextMonday = $current_date->format('Y-m-d'); // Output the date in Y-m-d format
+                $current_date->modify('next monday'); // Move to the next Monday
+                $dateNextMonday = $current_date->format('Y-m-d'); // Output the date in Y-m-d format
 
-                $id_user= Auth::user()->id;
+                $id_user = Auth::user()->id;
 
                 $comp = new Compensadores();
                 $comp->users_id = $id_user;
-            /*     $comp->categoria_id = $request->categoria; */
+                /*     $comp->categoria_id = $request->categoria; */
                 $comp->thirds_id = $request->provider;
                 $comp->centrocosto_id = $request->centrocosto;
                 $comp->fecha_compensado = $currentDateFormat;
@@ -253,10 +253,10 @@ class compensadoController extends Controller
                 return response()->json([
                     'status' => 1,
                     'message' => 'Guardado correctamente',
-					"registroId" => $comp->id
+                    "registroId" => $comp->id
                 ]);
-            }else{
-                $getReg = Compensadores::firstWhere('id', $request->compensadoId);               
+            } else {
+                $getReg = Compensadores::firstWhere('id', $request->compensadoId);
                 $getReg->thirds_id = $request->provider;
                 $getReg->centrocosto_id = $request->centrocosto;
                 $getReg->factura = $request->factura;
@@ -265,11 +265,9 @@ class compensadoController extends Controller
                 return response()->json([
                     'status' => 1,
                     'message' => 'Guardado correctamente',
-					"registroId" => 0
+                    "registroId" => 0
                 ]);
             }
-
-
         } catch (\Throwable $th) {
             return response()->json([
                 'status' => 0,
@@ -286,16 +284,16 @@ class compensadoController extends Controller
      */
     public function show()
     {
-            $data = DB::table('compensadores as comp')
-          /*   ->join('categories as cat', 'comp.categoria_id', '=', 'cat.id') */
+        $data = DB::table('compensadores as comp')
+            /*   ->join('categories as cat', 'comp.categoria_id', '=', 'cat.id') */
             ->join('thirds as tird', 'comp.thirds_id', '=', 'tird.id')
             ->join('centro_costo as centro', 'comp.centrocosto_id', '=', 'centro.id')
-            ->select('comp.*','tird.name as namethird','centro.name as namecentrocosto')
+            ->select('comp.*', 'tird.name as namethird', 'centro.name as namecentrocosto')
             ->where('comp.status', 1)
             ->get();
-            //$data = Compensadores::orderBy('id','desc');
-            return Datatables::of($data)->addIndexColumn()
-                /*->addColumn('status', function($data){
+        //$data = Compensadores::orderBy('id','desc');
+        return Datatables::of($data)->addIndexColumn()
+            /*->addColumn('status', function($data){
                     if ($data->estado == 1) {
                         $status = '<span class="badge bg-success">Activo</span>';
                     }else{
@@ -303,20 +301,20 @@ class compensadoController extends Controller
                     }
                     return $status;
                 })*/
-                ->addColumn('date', function($data){
-                    $date = Carbon::parse($data->created_at);
-                     $onlyDate = $date->toDateString();
-                    return $onlyDate;
-                })
-                ->addColumn('action', function($data){
-                    $currentDateTime = Carbon::now();
-                    if (Carbon::parse($currentDateTime->format('Y-m-d'))->gt(Carbon::parse($data->fecha_cierre))) {
-                        $btn = '
+            ->addColumn('date', function ($data) {
+                $date = Carbon::parse($data->created_at);
+                $onlyDate = $date->toDateString();
+                return $onlyDate;
+            })
+            ->addColumn('action', function ($data) {
+                $currentDateTime = Carbon::now();
+                if (Carbon::parse($currentDateTime->format('Y-m-d'))->gt(Carbon::parse($data->fecha_cierre))) {
+                    $btn = '
                         <div class="text-center">
-					    <a href="compensado/create/'.$data->id.'" class="btn btn-dark" title="Detalles" >
+					    <a href="compensado/create/' . $data->id . '" class="btn btn-dark" title="Detalles" >
 						    <i class="fas fa-directions"></i>
 					    </a>
-					    <button class="btn btn-dark" title="Borrar Compensado" onclick="showDataForm('.$data->id.')">
+					    <button class="btn btn-dark" title="Borrar Compensado" onclick="showDataForm(' . $data->id . ')">
 						    <i class="fas fa-eye"></i>
 					    </button>
 					    <button class="btn btn-dark" title="Borrar Compensado" disabled>
@@ -324,24 +322,24 @@ class compensadoController extends Controller
 					    </button>
                         </div>
                         ';
-                    }elseif (Carbon::parse($currentDateTime->format('Y-m-d'))->lt(Carbon::parse($data->fecha_cierre))) {
-                        $btn = '
+                } elseif (Carbon::parse($currentDateTime->format('Y-m-d'))->lt(Carbon::parse($data->fecha_cierre))) {
+                    $btn = '
                         <div class="text-center">
-					    <a href="compensado/create/'.$data->id.'" class="btn btn-dark" title="Detalles" >
+					    <a href="compensado/create/' . $data->id . '" class="btn btn-dark" title="Detalles" >
 						    <i class="fas fa-directions"></i>
 					    </a>
-					    <button class="btn btn-dark" title="Borrar Compensado" onclick="editCompensado('.$data->id.');">
+					    <button class="btn btn-dark" title="Borrar Compensado" onclick="editCompensado(' . $data->id . ');">
 						    <i class="fas fa-edit"></i>
 					    </button>
-					    <button class="btn btn-dark" title="Borrar Compensado" onclick="downCompensado('.$data->id.');">
+					    <button class="btn btn-dark" title="Borrar Compensado" onclick="downCompensado(' . $data->id . ');">
 						    <i class="fas fa-trash"></i>
 					    </button>
                         </div>
                         ';
-                    }else{
-                        $btn = '
+                } else {
+                    $btn = '
                         <div class="text-center">
-					    <a href="compensado/create/'.$data->id.'" class="btn btn-dark" title="Detalles" >
+					    <a href="compensado/create/' . $data->id . '" class="btn btn-dark" title="Detalles" >
 						    <i class="fas fa-directions"></i>
 					    </a>
 					    <button class="btn btn-dark" title="Borrar Compensado" >
@@ -352,11 +350,11 @@ class compensadoController extends Controller
 					    </button>
                         </div>
                         ';
-                    }
-                    return $btn;
-                })
-                ->rawColumns(['date','action'])
-                ->make(true);
+                }
+                return $btn;
+            })
+            ->rawColumns(['date', 'action'])
+            ->make(true);
     }
 
     /**
@@ -367,7 +365,7 @@ class compensadoController extends Controller
      */
     public function edit(Request $request)
     {
-        
+
         $reg = Compensadores_detail::where('id', $request->id)->first();
         return response()->json([
             'status' => 1,
@@ -447,16 +445,23 @@ class compensadoController extends Controller
 
     public function cargarInventariocr(Request $request)
     {
+        $currentDateTime = Carbon::now();
+        $formattedDate = $currentDateTime->format('Y-m-d');
 
         $compensadoId = $request->input('compensadoId');
-       // $centrocostoid = $request->input('centrocostoid'); 
+        // $centrocostoid = $request->input('centrocostoid'); 
+
+        $compensadores = Compensadores::find($compensadoId);
+
+        $compensadores->fecha_cierre = $formattedDate;
+        $compensadores->save();
 
         $compensadores = Compensadores::where('id', $compensadoId)->get();
-
         $centrocosto_id = $compensadores->first()->centrocosto_id;
-    
 
-        DB::update("
+
+        DB::update(
+            "
         UPDATE centro_costo_products c
         JOIN compensadores_details d ON c.products_id = d.products_id
         JOIN compensadores b ON b.id = d.compensadores_id
@@ -466,24 +471,22 @@ class compensadoController extends Controller
         WHERE c.tipoinventario = 'inicial' 
         AND d.compensadores_id = :compensadoresid
         AND b.centrocosto_id = :cencosid 
-        AND c.centrocosto_id = :cencosid2 " , 
-        [
-            'compensadoresid' => $compensadoId,
-            'cencosid' => $centrocosto_id ,
-            'cencosid2' => $centrocosto_id
-        ]
-       );
-       return response()->json([
+        AND c.centrocosto_id = :cencosid2 ",
+            [
+                'compensadoresid' => $compensadoId,
+                'cencosid' => $centrocosto_id,
+                'cencosid2' => $centrocosto_id
+            ]
+        );
+        return response()->json([
             'status' => 1,
             'message' => 'Cargado al inventario exitosamente',
             'compensadores' => $compensadores
         ]);
 
-      // $providers = Third::Where('status',1)->get();
-       //$centros = Centrocosto::Where('status',1)->get();
-      // return view('compensado.res.index', compact('providers','centros'));
-       
+        // $providers = Third::Where('status',1)->get();
+        //$centros = Centrocosto::Where('status',1)->get();
+        // return view('compensado.res.index', compact('providers','centros'));
+
     }
-
-
 }

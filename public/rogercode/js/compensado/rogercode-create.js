@@ -147,38 +147,34 @@ const showData = (data) => {
         });
     }
 
-   
-
     // Evento click del botón "cargarInventarioBtn"
     tableFoot.addEventListener("click", (e) => {
         e.preventDefault();
         let element = e.target;
         console.log(element);
-        if (element.id === "cargarInventarioBtn") {            
-           
+        if (element.id === "cargarInventarioBtn") {
             showConfirmationAlert(element)
                 .then((result) => {
-                   
-                    if (result && result.value) {                        
-                        const dataform = new FormData();                                                     
-                        dataform.append("compensadoId",Number(compensado_id.value));  
-                      //  dataform.append("centrocostoid",1);                      
+                    if (result && result.value) {
+                        loadingStart(element);
+                        const dataform = new FormData();
+                        dataform.append(
+                            "compensadoId",
+                            Number(compensado_id.value)
+                        );
                         return sendData("/compensadoInvres", dataform, token);
                     }
                 })
                 .then((result) => {
                     console.log(result);
                     if (result && result.status == 1) {
-                    
                         loadingEnd(element, "success", "Cargando al inventorio");
                         element.disabled = true;
-                       
                         return swal(
                             "EXITO",
                             "Inventario Cargado Exitosamente",
                             "success"
                         );
-                        
                     }
                     if (result && result.status == 0) {
                         loadingEnd(element, "success", "Cargando al inventorio");
@@ -186,7 +182,7 @@ const showData = (data) => {
                     }
                 })
                 .then(() => {
-                  
+                    window.location.href = "/compensado";
                 })
                 .catch((error) => {
                     console.error(error);
