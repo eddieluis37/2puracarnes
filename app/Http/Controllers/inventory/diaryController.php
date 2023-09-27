@@ -86,7 +86,7 @@ class diaryController extends Controller
 
         // Calculo de la stock ideal
         foreach ($data as $item) {
-            $stock = $item->invinicial + $item->compraLote + $item->alistamiento + $item->compensados + $item->trasladoing -($item->venta - $item->trasladosal);
+            $stock = ($item->invinicial + $item->compraLote + $item->alistamiento + $item->compensados + $item->trasladoing) - ($item->venta + $item->trasladosal);
             $item->stock = round($stock, 2);
         }
 
