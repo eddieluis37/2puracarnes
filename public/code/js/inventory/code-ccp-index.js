@@ -67,7 +67,9 @@ $(document).ready(function () {
     }
 
     function updateCcpInventory(productId, fisico,centrocostoId) {
-     
+        console.log("productId:", productId);
+        console.log("fisico:", fisico);
+        console.log("centrocostoId:", centrocostoId);
         $.ajax({
             url: "/updateCcpInventory",
             type: "POST",
