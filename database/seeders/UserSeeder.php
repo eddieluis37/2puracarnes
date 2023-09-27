@@ -72,7 +72,7 @@ class UserSeeder extends Seeder
             'email' => 'produccion@puracarnes.com',
             'profile' => 'Produccion',
             'status' => 'Active',
-            'password' => bcrypt('produccion@puracarnes.com')
+            'password' => bcrypt('Produccion2023.')
         ]);
         User::create([
             'name' => 'costos',

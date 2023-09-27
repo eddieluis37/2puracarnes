@@ -101,8 +101,8 @@ $(document).ready(function () {
             if (event.which === 13) {
                 event.preventDefault();
                 var fisico = $(this).val();
-              // var productId = $(this).closest("tr").find(".productId").val();
-                var productId = $(this).val();
+                 var productId = $(this).closest("tr").find(".productId").val();
+                //var productId = $(this).val();
 
                 console.log("Enter key pressed");
                 console.log("fisico value:", fisico);

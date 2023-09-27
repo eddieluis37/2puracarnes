@@ -47,7 +47,7 @@ class CategorySeeder extends Seeder
             'image' => 'https://dummyimage.com/200x150/5c5756/fff'
         ]);
         Category::create([
-            'name' => 'CARNICOS',
+            'name' => 'SUBPRODUCTOS',
             'image' => 'https://dummyimage.com/200x150/5c5756/fff'
         ]);
     }
