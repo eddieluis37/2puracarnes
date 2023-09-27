@@ -58,7 +58,16 @@ function initializeDataTable(centrocostoId = "-1", categoriaId = "-1") {
                 name: "merma",
                 render: function (data, type, row) {
                     var merma = row.fisico - row.stock;
-                    return merma.toFixed(2);
+                    var mermaFormatted = merma.toFixed(2);
+                    if (merma < 0) {
+                        return (
+                            '<span style="color: red;">' +
+                            mermaFormatted +
+                            "</span>"
+                        );
+                    } else {
+                        return mermaFormatted;
+                    }
                 },
             },
 
@@ -78,13 +87,20 @@ function initializeDataTable(centrocostoId = "-1", categoriaId = "-1") {
                         alistamiento +
                         compensados +
                         trasladoing;
-
                     var pmerma = (merma / disponible) * 100;
                     if (isNaN(pmerma) || !isFinite(pmerma)) {
                         pmerma = 0;
                     }
-
-                    return pmerma.toFixed(2) + "%";
+                    var pmermaFormatted = pmerma.toFixed(2) + "%";
+                    if (pmerma < 0) {
+                        return (
+                            '<span style="color: red;">' +
+                            pmermaFormatted +
+                            "</span>"
+                        );
+                    } else {
+                        return pmermaFormatted;
+                    }
                 },
             },
         ],
