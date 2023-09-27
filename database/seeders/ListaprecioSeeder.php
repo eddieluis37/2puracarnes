@@ -44,8 +44,8 @@ class ListaprecioSeeder extends Seeder
         $lp = new Listaprecio([
             "id"=> "5", 
             "centrocosto_id" => "1", 
-            "nombre" => "GENERICA", 
-            "tipo" => "GENERICA"
+            "nombre" => "GENERAL", 
+            "tipo" => "GENERAL"
         ]); $lp->save();
     }
 }

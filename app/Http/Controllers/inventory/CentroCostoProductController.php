@@ -132,9 +132,11 @@ class CentroCostoProductController extends Controller
             foreach ($request->input('data') as $item) {
                 $productId = $item['productId'];
                 $fisico = $item['fisico'];
+                $centrocostoId = $item['centrocostoId'];
 
                 DB::table('centro_costo_products')
                     ->where('products_id', $productId)
+                    ->where('centrocostoId', $centrocostoId)
                     ->update(['fisico' => $fisico]);
             }
         }

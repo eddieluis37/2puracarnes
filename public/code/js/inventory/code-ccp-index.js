@@ -66,16 +66,15 @@ $(document).ready(function () {
         });
     }
 
-    function updateCcpInventory(productId, fisico) {
-        console.log("Updating inventory with productId:", productId);
-        console.log("New fisico value:", fisico);
-
+    function updateCcpInventory(productId, fisico,centrocostoId) {
+     
         $.ajax({
             url: "/updateCcpInventory",
             type: "POST",
             data: {
                 productId: productId,
                 fisico: fisico,
+                centrocostoId: centrocostoId,
             },
             success: function (response) {
                 console.log("Update successful");
@@ -101,14 +100,10 @@ $(document).ready(function () {
             if (event.which === 13) {
                 event.preventDefault();
                 var fisico = $(this).val();
-                 var productId = $(this).closest("tr").find(".productId").val();
-                //var productId = $(this).val();
-
-                console.log("Enter key pressed");
-                console.log("fisico value:", fisico);
-                console.log("productId:", productId);
-
-                updateCcpInventory(productId, fisico);
+                 var productId = $(this).closest('tr').find('td:eq(1)').text();                
+                 var centrocostoId = $("#centrocosto").val();
+                  
+                updateCcpInventory(productId, fisico,centrocostoId);
             }
         });
     });
