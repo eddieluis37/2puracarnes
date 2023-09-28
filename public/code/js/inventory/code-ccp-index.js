@@ -28,7 +28,8 @@ $(document).ready(function () {
                             fisico:
                                 '<input type="text" class="edit-fisico" value="' +
                                 item.fisico +
-                                '" />',
+                                '" size="4" />',
+
                             productId: item.productId,
                         };
                     });
@@ -69,16 +70,18 @@ $(document).ready(function () {
         console.log("fisico:", fisico);
         console.log("centrocostoId:", centrocostoId);
         $.ajax({
-            headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
+            headers: {
+                "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+            },
             url: "/updateCcpInventory",
             type: "POST",
             data: {
                 productId: productId,
                 fisico: fisico,
-                centrocostoId: centrocostoId,                
-              },
-              success: function (response) {
-                console.log("Update successful");                
+                centrocostoId: centrocostoId,
+            },
+            success: function (response) {
+                console.log("Update successful");
             },
             error: function (xhr, status, error) {
                 console.error("Error updating");
