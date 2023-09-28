@@ -107,20 +107,31 @@ $(document).ready(function () {
             initializeDataTable(centrocostoId, categoriaId);
         });
 
-        $(document).on("keypress", ".edit-fisico", function (event) {
+        $(document).on("keydown", ".edit-fisico", function (event) {
             if (event.which === 13 || event.which === 9) {
                 event.preventDefault();
-                var fisico = $(this).val();
+                var fisico = $(this).val().replace(",", ".");
 
-                // Replace comma with dot
-                fisico = fisico.replace(",", ".");
+                // Expresion Regular para validar que solo acepte numeros enteros y decimales
+                var regex = /^[0-9]+(\.[0-9]{1,2})?$/;
 
-                var productId = $(this).closest("tr").find("td:eq(1)").text();
-                var centrocostoId = $("#centrocosto").val();
+                if (regex.test(fisico)) {
+                    var productId = $(this)
+                        .closest("tr")
+                        .find("td:eq(1)")
+                        .text();
+                    var centrocostoId = $("#centrocosto").val();
+                    updateCcpInventory(productId, fisico, centrocostoId);
 
-                updateCcpInventory(productId, fisico, centrocostoId);
-
-                $(this).closest("tr").next().find(".edit-fisico").focus();
+                    $(this).closest("tr").next().find(".edit-fisico").focus().select();
+                } else {
+                    Swal.fire({
+                        icon: "error",
+                        title: "Número incorrecto",
+                        text: "Solo acepta Números enteros con decimales de (2) dos cifras, separados por . o por ,",
+                    });
+                    console.error("Solo acepta numero enteros y decimales");
+                }
             }
         });
     });
