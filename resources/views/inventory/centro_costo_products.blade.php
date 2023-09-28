@@ -41,7 +41,7 @@
             </div>
           </div>
         </div>
-        
+
         <div class="col-md-4">
           <div class="task-header">
             <div class="form-group">
@@ -56,39 +56,30 @@
             </div>
           </div>
         </div>
-     <!--    <div class="col-md-4">
-          <label for="date1" class="form-label">Responsable</label>
-          <select class="form-control form-control-sm " name="responsable" id="responsable" required="">
-            <option value="">Seleccione el responsable</option>
-          </select>
-        </div>
-        <div class="col-md-4">
-          <div style="margin-top:28px;" clas="">
-            <button type="submit" id="btnAddTransfer" class="btn btn-primary btn-lg">Aceptar</button>
-          </div>
-        </div> -->
       </div>
       <div class="table-responsive mt-3">
-        <table id="tableInventory" class="table table-striped mt-1">
-          <thead class="text-white" style="background: #3B3F5C">
-            <tr>
-              <th class="table-th text-white">CAT</th>
-              <th class="table-th text-white">ID</th>
-              <th class="table-th text-white">PRODUCTO</th>
-              <th class="table-th text-white">STOCK FISICO</th>              
-            </tr>
-          </thead>
-          <tbody>
-          </tbody>
-          <tfoot>
-            <tr>
-              <th>Totales</th>
-              <td></td>
-              <td>0.00</td>
-              
-            </tr>
-          </tfoot>
-        </table>
+        <form method="POST" action="/updateCcpInventory">
+          @csrf
+          <table id="tableInventory" class="table table-striped mt-1">
+            <thead class="text-white" style="background: #3B3F5C">
+              <tr>
+                <th class="table-th text-white">CAT</th>
+                <th class="table-th text-white">ID</th>
+                <th class="table-th text-white">PRODUCTO</th>
+                <th class="table-th text-white">STOCK FISICO</th>
+              </tr>
+            </thead>
+            <tbody>
+            </tbody>
+            <tfoot>
+              <tr>
+                <th>Totales</th>
+                <td></td>
+                <td>0.00</td>
+              </tr>
+            </tfoot>
+          </table>
+        </form>
       </div>
     </div>
   </div>

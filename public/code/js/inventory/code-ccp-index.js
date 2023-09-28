@@ -1,9 +1,7 @@
 console.log("Starting");
-
 const token = document
     .querySelector('meta[name="csrf-token"]')
     .getAttribute("content");
-
 $(document).ready(function () {
     var dataTable;
 
@@ -19,7 +17,7 @@ $(document).ready(function () {
                 type: "GET",
                 data: {
                     centrocostoId: centrocostoId,
-                    categoriaId: categoriaId,                   
+                    categoriaId: categoriaId,
                 },
                 dataSrc: function (response) {
                     // Modificar los datos antes de que se procesen en la tabla
@@ -66,20 +64,21 @@ $(document).ready(function () {
         });
     }
 
-    function updateCcpInventory(productId, fisico,centrocostoId) {
+    function updateCcpInventory(productId, fisico, centrocostoId) {
         console.log("productId:", productId);
         console.log("fisico:", fisico);
         console.log("centrocostoId:", centrocostoId);
         $.ajax({
+            headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
             url: "/updateCcpInventory",
             type: "POST",
             data: {
                 productId: productId,
                 fisico: fisico,
-                centrocostoId: centrocostoId,
-            },
-            success: function (response) {
-                console.log("Update successful");
+                centrocostoId: centrocostoId,                
+              },
+              success: function (response) {
+                console.log("Update successful");                
             },
             error: function (xhr, status, error) {
                 console.error("Error updating");
@@ -102,10 +101,10 @@ $(document).ready(function () {
             if (event.which === 13) {
                 event.preventDefault();
                 var fisico = $(this).val();
-                 var productId = $(this).closest('tr').find('td:eq(1)').text();                
-                 var centrocostoId = $("#centrocosto").val();
-                  
-                updateCcpInventory(productId, fisico,centrocostoId);
+                var productId = $(this).closest("tr").find("td:eq(1)").text();
+                var centrocostoId = $("#centrocosto").val();
+
+                updateCcpInventory(productId, fisico, centrocostoId);
             }
         });
     });

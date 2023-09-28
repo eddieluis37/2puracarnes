@@ -9,6 +9,7 @@ use App\Models\Category;
 use App\Models\centros\Centrocosto;
 use App\Models\Centro_costo_product;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Crypt;
 use Yajra\Datatables\Datatables;
 use Carbon\Carbon;
 
@@ -25,6 +26,8 @@ class CentroCostoProductController extends Controller
         $category = Category::whereIn('id', [1, 2, 3, 4, 5, 6, 7, 8, 9])->orderBy('name', 'asc')->get();
         $centros = Centrocosto::Where('status', 1)->get();
         $centroCostoProductos = Centro_costo_product::all();
+
+        $newToken = Crypt::encrypt(csrf_token());
 
         return view("inventory.centro_costo_products", compact('category', 'centros', 'centroCostoProductos'));
 
@@ -126,21 +129,17 @@ class CentroCostoProductController extends Controller
         return response()->json(['data' => $data]);
     }
 
-    public function updateCcpInventory(Request $request)
+    public function updateCcpInventory()
     {
-        if ($request->ajax()) {
-            foreach ($request->input('data') as $item) {
-                $productId = $item['productId'];
-                $fisico = $item['fisico'];
-                $centrocostoId = $item['centrocostoId'];
+        $productId = request('productId');
+        $centrocostoId = request('centrocostoId');
+        $fisico = request('fisico');
 
-                DB::table('centro_costo_products')
-                    ->where('products_id', $productId)
-                    ->where('centrocostoId', $centrocostoId)
-                    ->update(['fisico' => $fisico]);
-            }
-        }
+        DB::table('centro_costo_products')
+            ->where('products_id', $productId)
+            ->where('centrocosto_id', $centrocostoId)
+            ->update(['fisico' => $fisico]);
 
-        return response()->json(['success' => true]);
+        return response()->json(['success' => 'true']);
     }
 }
