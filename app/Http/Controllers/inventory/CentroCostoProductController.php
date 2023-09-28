@@ -126,7 +126,10 @@ class CentroCostoProductController extends Controller
             ->where('pro.status', 1)
             ->get();
 
-        return response()->json(['data' => $data]);
+       // return response()->json(['data' => $data]);
+       return datatables()->of($data)
+            ->addIndexColumn()
+            ->make(true);
     }
 
     public function updateCcpInventory()

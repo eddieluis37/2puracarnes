@@ -1,7 +1,8 @@
-console.log("Starting");
+console.log("Comenzando");
 const token = document
     .querySelector('meta[name="csrf-token"]')
     .getAttribute("content");
+
 $(document).ready(function () {
     var dataTable;
 
@@ -12,6 +13,10 @@ $(document).ready(function () {
             autoWidth: false,
             processing: true,
             serverSide: true,
+            lengthMenu: [
+                [10, 15, 25, 50, -1],
+                [10, 15, 25, 50, "Todos"],
+            ],
             ajax: {
                 url: "/showCcpInventory",
                 type: "GET",
@@ -48,11 +53,13 @@ $(document).ready(function () {
                 lengthMenu: "Mostrar _MENU_ registros",
                 zeroRecords: "No se encontraron resultados",
                 emptyTable: "Ningún dato disponible en esta tabla",
-                info: "Mostrando del _START_ al _END_ de un total de _TOTAL_ registros",
+                sInfo: "Mostrando del _START_ al _END_ de total _TOTAL_ registros",
                 infoEmpty:
                     "Mostrando registros del 0 al 0 de un total de 0 registros",
                 infoFiltered: "(filtrado de un total de _MAX_ registros)",
                 search: "Buscar:",
+                infoThousands: ",",
+                loadingRecords: "Cargando...",
                 paginate: {
                     first: "Primero",
                     last: "Último",
@@ -60,8 +67,8 @@ $(document).ready(function () {
                     previous: "Anterior",
                 },
             },
-            dom: "Bfrtip",
-            buttons: ["copy", "csv", "excel", "pdf"],
+            /*  dom: "Bfrtip",
+            buttons: ["copy", "csv", "excel", "pdf"], */
         });
     }
 
@@ -101,13 +108,19 @@ $(document).ready(function () {
         });
 
         $(document).on("keypress", ".edit-fisico", function (event) {
-            if (event.which === 13) {
+            if (event.which === 13 || event.which === 9) {
                 event.preventDefault();
                 var fisico = $(this).val();
+
+                // Replace comma with dot
+                fisico = fisico.replace(",", ".");
+
                 var productId = $(this).closest("tr").find("td:eq(1)").text();
                 var centrocostoId = $("#centrocosto").val();
 
                 updateCcpInventory(productId, fisico, centrocostoId);
+
+                $(this).closest("tr").next().find(".edit-fisico").focus();
             }
         });
     });
