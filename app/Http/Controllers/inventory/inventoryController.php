@@ -4,6 +4,8 @@ namespace App\Http\Controllers\inventory;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\Category;
+use App\Models\centros\Centrocosto;
 
 class inventoryController extends Controller
 
@@ -17,7 +19,14 @@ class inventoryController extends Controller
     {
         $startDate = '2023-05-01';
         $endDate = '2023-05-08';
-        return view('inventory.consolidado', compact('startDate', 'endDate'));
+
+        $category = Category::whereIn('id', [1, 2, 3, 4, 5, 6, 7, 8, 9])->orderBy('name', 'asc')->get();
+     
+        $centros = Centrocosto::Where('status', 1)->get();
+       
+        return view('inventory.consolidado', compact('category', 'centros', 'startDate', 'endDate'));
+
+
     }
 
     /**

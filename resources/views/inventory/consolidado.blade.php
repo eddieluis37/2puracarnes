@@ -1,13 +1,19 @@
 @extends('layouts.theme.app')
 @section('content')
 <style>
-  .table-totales{
+  .table-totales {
     /*border: 2px solid red;*/
   }
-  .table-totales, th, td {
+
+  .table-totales,
+  th,
+  td {
     border: 1px solid #DCDCDC;
   }
-  .table-inventario, th, td {
+
+  .table-inventario,
+  th,
+  td {
     border: 1px solid #DCDCDC;
   }
 </style>
@@ -17,36 +23,44 @@
     <div class="widget widget-chart-one">
       <div class="card text-center" style="background: #3B3F5C">
         <div class="m-2">
-          <h4 style="color:white;"><strong>Inventario semanal</strong></h3>
+          <h4 style="color:white;"><strong>Cierre de Inventario</strong></h3>
         </div>
       </div>
       <div class="row g-3 mt-3">
         <div class="col-md-4">
-          <label for="" class="form-label">Seccion</label>
-					<select class="form-control form-control-sm " name="" id="" required="">
-						<option value="">Seleccione la seccion</option>
-					</select>
+          <label for="" class="form-label">Categoria</label>
+          <select class="form-control form-control-sm input" name="categoria" id="categoria" required>
+            <option value="">Seleccione la categoria</option>
+            @foreach($category as $option)
+            <option value="{{ $option['id'] }}" data="{{ $option }}">{{ $option['name'] }}</option>
+            @endforeach
+          </select>
+          <span class="text-danger error-message"></span>
         </div>
-        <div class="col-md-4">
+       <!--  <div class="col-md-4">
           <label for="date1" class="form-label">Fecha inicio</label>
-          <input type="date" class="form-control" value="{{$startDate}}" placeholder="Last name" >
-        </div>
+          <input type="date" class="form-control" value="{{$startDate}}" placeholder="Last name">
+        </div> -->
         <div class="col-md-4">
-          <label for="date1" class="form-label">Fecha fin</label>
-          <input type="date" class="form-control" value="{{$endDate}}" placeholder="Last name" >
+          <label for="date1" class="form-label">Fecha de Cierre</label>
+          <input type="date" class="form-control" value="{{$endDate}}" placeholder="Last name">
         </div>
         <div class="col-md-4">
           <label for="" class="form-label">Centro de costo</label>
-					<select class="form-control form-control-sm " name="" id="" required="">
-						<option value="">Seleccione el centro de costo</option>
-					</select>
+          <select class="form-control form-control-sm input" name="centrocosto" id="centrocosto" required>
+            <option value="">Seleccione el centro de costo</option>
+            @foreach($centros as $option)
+            <option value="{{ $option['id'] }}" data="{{ $option }}">{{ $option['name'] }}</option>
+            @endforeach
+          </select>
+          <span class="text-danger error-message"></span>
         </div>
-        <div class="col-md-4">
+        <!--  <div class="col-md-4">
           <label for="date1" class="form-label">Responsable</label>
 					<select class="form-control form-control-sm " name="" id="" required="">
 						<option value="">Seleccione el responsable</option>
 					</select>
-        </div>
+        </div> -->
         <div class="col-md-4">
           <div style="margin-top:28px;" clas="">
             <button class="btn btn-primary btn-lg" type="button">Aceptar</button>
@@ -203,7 +217,7 @@
               <td colspan="4" class="">Inventario</td>
             </tr>
             <tr>
-              <td colspan="2" >Totales</td>
+              <td colspan="2">Totales</td>
               <td class="">0.00</td>
               <td class="">460.00</td>
               <td class="">0.00</td>
