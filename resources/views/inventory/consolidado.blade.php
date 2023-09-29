@@ -78,34 +78,34 @@
               <span>Total conteo fisico</span>
             </div>
             <div class="col-3 mb-1 bg-success">
-              <span>234567</span><br>
-              <span>234567</span><br>
               <span>{{ $totalStock }}</span><br>
-              <span>234567</span>
+              <span>{{ $totalStock }}</span><br>
+           
+              <span>{{ $totalStock }}</span>
             </div>
             <div class="col-3 mb-1 bg-primary text-center">
               <span>Diferencia en kilos</span><br>
-              <span>40.09</span>
+              <span>{{ $totalStock }}</span>
             </div>
             <div class="col-3 mb-1 bg-warning text-center">
               <span>Dif. En kilos permitida</span><br>
-              <span>143</span>
+              <span>{{ $totalStock }}</span>
             </div>
             <div class="col-3 mb-1 bg-info text-center">
               <span>Merma</span><br>
-              <span>0.26%</span>
+              <span>{{ $totalStock }}%</span>
             </div>
             <div class="col-3 mb-1 bg-warning text-center">
               <span>Merma permitida</span><br>
-              <span>1.26%</span>
+              <span>{{ $totalStock }}</span>
             </div>
             <div class="col-3 mb-1 bg-info text-center">
               <span>Dif. en kilos</span><br>
-              <span>1.26%</span>
+              <span>{{ $totalStock }}</span>
             </div>
             <div class="col-3 mb-1 bg-success text-center">
               <span>Dif. en %</span><br>
-              <span>1.26%</span>
+              <span>{{ $totalStock }}</span>
             </div>
           </div>
 
@@ -122,16 +122,16 @@
             </tr>
             <tr>
               <td colspan="2">Totales</td>
-              <td class="">0.00</td>
-              <td class="">460.00</td>
-              <td class="">0.00</td>
-              <td class="">0.00</td>
-              <td class="">323.89</td>
-              <td class="">26.95</td>
-              <td class="">109.68</td>
-              <td class="">151.88</td>
-              <td class="">41.97</td>
-              <td class="">0.00</td>
+              <td class="">{{ $totalStock }}</td>
+              <td class="">{{ $totalStock }}</td>
+              <td class="">{{ $totalStock }}</td>
+              <td class="">{{ $totalStock }}</td>
+              <td class="">{{ $totalStock }}</td>
+              <td class="">{{ $totalStock }}</td>
+              <td class="">{{ $totalStock }}</td>
+              <td class="">{{ $totalStock }}</td>
+              <td class="">{{ $totalStock }}</td>
+              <td class="">{{ $totalStock }}</td>
             </tr>
 
           </thead>

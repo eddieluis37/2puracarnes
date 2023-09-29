@@ -26,10 +26,9 @@ class inventoryController extends Controller
         $centros = Centrocosto::Where('status', 1)->get();
 
         // llama al metodo para calcular el stock
-        $this->totales(request());
-
-        // Obtener el stock desde el objeto request
-        $totalStock = request()->input('totalStock');
+        //   $this->totales(request());
+        $response = $this->totales(request()); // Call the totales method
+        $totalStock = $response->getData()->totalStock; // Retrieve the totalStock value from the response
 
         return view('inventory.consolidado', compact('category', 'centros', 'startDate', 'endDate', 'totalStock'));
     }
@@ -105,11 +104,6 @@ class inventoryController extends Controller
             $item->stock = round($stock, 2);
             $totalStock += $stock;
         }
-
-        // Pasar el valor de stock al objeto request
-        
-        //$request->merge(['totalStock' => $totalStock]);
-        //return $totalStock;
 
         return response()->json(['totalStock' => $totalStock]);
     }
