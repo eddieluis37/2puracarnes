@@ -64,7 +64,7 @@ class inventoryController extends Controller
 
         foreach ($data as $item) {
             $stock = ($item->invinicial + $item->compraLote + $item->alistamiento + $item->compensados + $item->trasladoing) - ($item->venta + $item->trasladosal);
-            $item->stock = round($stock, 2);         
+            $item->stock = round($stock, 2);
         }
 
         return datatables()->of($data)
@@ -98,16 +98,20 @@ class inventoryController extends Controller
             ->where('pro.status', 1)
             ->get();
 
-        $totalStock = $centrocostoId;
+        $totalStock = 0;
 
         foreach ($data as $item) {
             $stock = ($item->invinicial + $item->compraLote + $item->alistamiento + $item->compensados + $item->trasladoing) - ($item->venta + $item->trasladosal);
             $item->stock = round($stock, 2);
-            $totalStock += $stock;        }
+            $totalStock += $stock;
+        }
 
         // Pasar el valor de stock al objeto request
-          return $totalStock;
-     //   $request->merge(['totalStock' => $totalStock]);
+        
+        //$request->merge(['totalStock' => $totalStock]);
+        //return $totalStock;
+
+        return response()->json(['totalStock' => $totalStock]);
     }
 
 

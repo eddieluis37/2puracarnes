@@ -245,7 +245,13 @@ function cargarTotales(centrocostoId = "-1", categoriaId = "-1") {
         },
         dataType: "JSON",
         success: function(respu){
-            alert(respu);
+           
+
+           $totalStock = respu.totalStock;
+           
+
+           console.log(respu);
+
         }
     });
 }
