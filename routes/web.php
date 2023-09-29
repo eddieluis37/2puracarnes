@@ -195,6 +195,7 @@ Route::get('inventory/mensual', [mensualController::class, 'index'])->name('inve
 
 Route::get('inventory/centro_costo_products', [CentroCostoProductController::class,'index'])->name('inventory.showccp');
 Route::get('showCcpInventory', [CentroCostoProductController::class,'show'])->name('inventory.show-ccp');
+Route::get('showConsolidadoInventory', [inventoryController::class,'show'])->name('inventory.showConsol');
 
 Route::post('/updateCcpInventory', [CentroCostoProductController::class,'updateCcpInventory'])->name('inventory.updateCcpInventory999');
 

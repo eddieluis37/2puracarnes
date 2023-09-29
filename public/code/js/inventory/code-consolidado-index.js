@@ -14,7 +14,7 @@ function initializeDataTable(centrocostoId = "-1", categoriaId = "-1") {
         processing: true,
         serverSide: true,
         ajax: {
-            url: "/showinventory",
+            url: "/showConsolidadoInventory",
             type: "GET",
             data: {
                 centrocostoId: centrocostoId,
