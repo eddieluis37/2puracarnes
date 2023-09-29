@@ -172,5 +172,7 @@ class MeatcutSeeder extends Seeder
 		$meatcut->save();
 		$meatcut = new Meatcut(["category_id" => "7", "name" => "OTRAS PROTEINAS", "description" => "no existe aun ", "status" => "1"]);
 		$meatcut->save();
+		$meatcut = new Meatcut(["category_id" => "8", "name" => "PESCADOS", "description" => "no existe aun ", "status" => "1"]);
+		$meatcut->save();
 	}
 }

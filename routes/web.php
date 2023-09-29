@@ -24,6 +24,7 @@ use App\Http\Livewire\UsersController;
 use Illuminate\Support\Facades\Route;
 
 /*************** SIN LIVWWIRE **********************/
+
 use App\Http\Controllers\res\desposteresController;
 use App\Http\Controllers\res\beneficioresController;
 use App\Http\Controllers\cerdo\despostecerdoController;
@@ -57,11 +58,11 @@ Route::group(['middleware' => ['auth', 'admin']], function () {
 Route::get('/post/{post}', [HomeController::class, 'post'])->name('post');
 
 //Route::get('/admin/posts', 'Admin\PostsController@index')->name('admin.posts.index');
-  Route::get('/admin/posts', [App\Http\Controllers\Admin\PostsController::class, 'index'])->name('admin.posts.index');
+Route::get('/admin/posts', [App\Http\Controllers\Admin\PostsController::class, 'index'])->name('admin.posts.index');
 
 //Route::post('/admin/posts/store', 'Admin\PostsController@store')->name('admin.posts.store');
 Route::post('/admin/posts/store', [App\Http\Controllers\Admin\PostsController::class, 'store'])->name('admin.posts.store');
-  
+
 
 //Route::post('/admin/posts/{postId}/update', 'Admin\PostsController@update')->name('admin.posts.update');
 Route::post('/admin/posts{postId}/update', [App\Http\Controllers\Admin\PostsController::class, 'update'])->name('admin.posts.update');
@@ -81,7 +82,6 @@ Route::get('prueba', function () {
 
 Auth::routes(['register' => false]); // deshabilitamos el registro de nuevos users
 
-//Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/home', Dash::class);
 
 
@@ -93,14 +93,10 @@ Route::get('/libros', function () {
 Route::resource('books', BooksController::class);
 //Route::resource('beneficiocerdos', BeneficiocerdosController::class);
 
-Route::group(['middleware'=> [('auth')]], function () {
+Route::group(['middleware' => [('auth')]], function () {
 
-   //Route::get('categories', CategoriesController::class)->middleware('role:Cajero');
-   //Route::get('categories', CategoriesController::class)->middleware('role:Admin');
-
-
-	Route::get('categories', CategoriesController::class)->name('categories');
-	Route::get('users', UsersController::class);       
+    Route::get('categories', CategoriesController::class)->name('categories');
+    Route::get('users', UsersController::class);
     Route::get('roles', RolesController::class);
     Route::get('permisos', PermisosController::class);
     Route::get('asignar', AsignarController::class);
@@ -108,7 +104,7 @@ Route::group(['middleware'=> [('auth')]], function () {
     Route::get('pos', PosController::class);
     Route::get('coins', CoinsController::class);
     Route::get('reports', ReportsController::class);
-    Route::get('cashout', CashoutController::class); 
+    Route::get('cashout', CashoutController::class);
     Route::get('dash', Dash::class)->name('dash');
     Route::get('thirds', ThirdsController::class);
     Route::get('precio_agreements', PrecioAgreementsController::class);
@@ -131,14 +127,7 @@ Route::group(['middleware'=> [('auth')]], function () {
 
     //reportes EXCEL
     Route::get('report/excel/{user}/{type}/{f1}/{f2}', [ExportController::class, 'reporteExcel']);
-    Route::get('report/excel/{user}/{type}', [ExportController::class, 'reporteExcel']);
-
-    /************ Beneficiores **************/
-    //Route::get('get_plantasacrificio_by_id', [BeneficioresController::class, 'get_plantasacrificio_by_id'])->name('get_plantasacrificio_by_id');
-    //Route::post('store', [BeneficioresController::class, 'store'])->name('store');
-    //Route::get('/edit/{id}', [BeneficioresController::class, 'edit'])->name('edit');
-
-    //Route::get('get_plantasacrificiopollo_by_id', [BeneficiopollosController::class, 'get_plantasacrificiopollo_by_id'])->name('get_plantasacrificiopollo_by_id');
+    Route::get('report/excel/{user}/{type}', [ExportController::class, 'reporteExcel']); 
 
 
     Route::post('storepollo', [BeneficiopollosController::class, 'storepollo'])->name('storepollo');
@@ -148,202 +137,184 @@ Route::group(['middleware'=> [('auth')]], function () {
 
 
     //Route::post('citywithstatecountry', [CityController::class, 'citywithstatecountry'])->name('citywithstatecountry');
-  
-    
-    Route::get('todos', TodosController::class . '@index')->name('todos'); 
+
+
+    Route::get('todos', TodosController::class . '@index')->name('todos');
 
     Route::post('todos', TodosController::class . '@store');
 
-    Route::get('/todos/{id}', [TodosController::class , 'show'])->name('todos-edit');
+    Route::get('/todos/{id}', [TodosController::class, 'show'])->name('todos-edit');
 
-    Route::patch('/todos/{id}', [TodosController::class , 'update'])->name('todos-update');
+    Route::patch('/todos/{id}', [TodosController::class, 'update'])->name('todos-update');
 
-    Route::delete('/todos/{id}', [TodosController::class , 'destroy'])->name('todos-destroy');
-    
+    Route::delete('/todos/{id}', [TodosController::class, 'destroy'])->name('todos-destroy');
+
+    /************************* RUTAS SIN LIVEWIRE ********************************** */
+
+    /*****************************INVENTORY****************************************** */
+    Route::get('inventory/diary', [diaryController::class, 'index'])->name('inventory.diary');
+    Route::get('inventory/consolidado', [inventoryController::class, 'index'])->name('inventory.consolidado');
+    Route::get('showinventory', [diaryController::class, 'show'])->name('inventory.showlist');
+    //Route::post('showinventory', [diaryController::class,'show'])->name('inventory.showinvent');
+    Route::get('inventory/mensual', [mensualController::class, 'index'])->name('inventory.mensual');
+
+    Route::get('inventory/centro_costo_products', [CentroCostoProductController::class, 'index'])->name('inventory.showccp');
+    Route::get('showCcpInventory', [CentroCostoProductController::class, 'show'])->name('inventory.show-ccp');
+    Route::get('showConsolidadoInventory', [inventoryController::class, 'show'])->name('inventory.showConsol');
+
+    Route::get('totales', [inventoryController::class, 'totales'])->name('inventory.totales');
+
+    Route::post('/updateCcpInventory', [CentroCostoProductController::class, 'updateCcpInventory'])->name('inventory.updateCcpInventory999');
+
+    //Route::post('/updateCcpInventory', 'CentroCostoProductController@updateCcpInventory')->name('updateCcpInventory');
+
+    /*****************************BENEFICIO-RES*******************************************/
+    Route::get('beneficiores', [beneficioresController::class, 'index'])->name('beneficiores.index');
+    Route::get('showbeneficiores', [beneficioresController::class, 'show'])->name('beneficiores.showlist');
+    Route::get('get_plantasacrificio_by_id', [beneficioresController::class, 'get_plantasacrificio_by_id'])->name('get_plantasacrificio_by_id');
+    Route::post('savebeneficiores', [beneficioresController::class, 'store'])->name('beneficiores.save');
+    Route::get('/edit/{id}', [beneficioresController::class, 'edit'])->name('beneficiores.edit');
+    Route::get('downbeneficiores/{id}', [beneficioresController::class, 'destroy'])->name('beneficiores.destroy');
+
+
+
+    /*****************************DESPOSTE-RES******************************************/
+    Route::get('desposteres', [desposteresController::class, 'index'])->name('desposteres.index');
+    Route::get('desposteres/{id}', [desposteresController::class, 'create']);
+    Route::post('/desposteresUpdate', [desposteresController::class, 'update']);
+    Route::post('/downdesposter', [desposteresController::class, 'destroy']);
+    Route::post('cargarInventario', [desposteresController::class, 'cargarInventario'])->name('desposteres.show');
+
+    /*****************************DESPOSTE-CERDO******************************************/
+    Route::get('despostecerdo', [despostecerdoController::class, 'index'])->name('despostecerdo.index');
+    Route::get('despostecerdo/{id}', [despostecerdoController::class, 'create']);
+    Route::post('/despostecerdoUpdate', [despostecerdoController::class, 'update']);
+    Route::post('/downdespostec', [despostecerdoController::class, 'destroy']);
+    Route::post('cargarInventarioc', [despostecerdoController::class, 'cargarInventariocerdo'])->name('despostecerdo.show');
+
+    /*****************************COMPRAS-COMPENSADOS****************************************** */
+    Route::get('compensado', [compensadoController::class, 'index'])->name('compensado.index');
+    Route::get('compensado/create/{id}', [compensadoController::class, 'create'])->name('compensado.create');
+    Route::get('showlistcompensado', [compensadoController::class, 'show'])->name('compensado.showlist');
+    Route::post('getproductos', [compensadoController::class, 'getproducts'])->name('compensado.getproductos');
+    Route::post('compensadosave', [compensadoController::class, 'store'])->name('compensado.save');
+    Route::post('compensadosavedetail', [compensadoController::class, 'savedetail'])->name('compensado.savedetail');
+    Route::post('compensadodown', [compensadoController::class, 'destroy'])->name('compensado.down');
+    Route::post('compensadogetById', [compensadoController::class, 'edit'])->name('compensado.ById');
+    Route::post('compensadoById', [compensadoController::class, 'editCompensado'])->name('compensado.editCompensado');
+    Route::post('/downmaincompensado', [compensadoController::class, 'destroyCompensado'])->name('compensado.downCompensado');
+    Route::post('compensadoInvres', [compensadoController::class, 'cargarInventariocr'])->name('compensado.cargarInventariocr');
+
+    /**BENEFICIO CERDO */
+    Route::get('beneficiocerdo', [beneficiocerdoController::class, 'index'])->name('beneficiocerdo.index');
+    Route::get('showbeneficiocerdo', [beneficiocerdoController::class, 'show'])->name('beneficiocerdo.showlist');
+    Route::get('get_plantasacrificiocerdo_by_id', [beneficiocerdoController::class, 'get_plantasacrificiocerdo_by_id'])->name('get_plantasacrificiocerdo_by_id');
+    Route::post('savebeneficiocerdo', [beneficiocerdoController::class, 'store'])->name('beneficiocerdo.save');
+    Route::get('/beneficiocerdoedit/{id}', [beneficiocerdoController::class, 'edit'])->name('beneficiocerdo.edit');
+    Route::get('downbeneficiocerdo/{id}', [beneficiocerdoController::class, 'destroy'])->name('beneficiocerdo.destroy');
+
+    /***** BENEFICIO AVES******** */
+    Route::get('beneficioaves', [beneficioavesController::class, 'index'])->name('beneficioaves.index');
+    Route::get('get_plantasacrificiopollo_by_id', [beneficioavesController::class, 'get_plantasacrificiopollo_by_id'])->name('get_plantasacrificiopollo_by_id');
+    Route::post('savebeneficioaves', [beneficioavesController::class, 'store'])->name('beneficioaves.save');
+    Route::get('showbeneficioaves', [beneficioavesController::class, 'show'])->name('beneficioaves.showlist');
+    Route::get('/beneficioavesedit/{id}', [beneficioavesController::class, 'edit'])->name('beneficioaves.edit');
+
+    Route::get('desposteaves/{id}', [desposteavesController::class, 'create'])->name('desposteaves.create');
+    Route::post('/desposteavesUpdate', [desposteavesController::class, 'update'])->name('desposteaves.update');
+    Route::post('/downdesposteave', [desposteavesController::class, 'destroy'])->name('desposteaves.destroy');
+
+    /**ALISTAMIENTO*/
+    Route::get('alistamiento', [alistamientoController::class, 'index'])->name('alistamiento.index');
+    Route::post('alistamientosave', [alistamientoController::class, 'store'])->name('alistamiento.save');
+    Route::get('showalistamiento', [alistamientoController::class, 'show'])->name('alistamiento.showlist');
+    Route::get('alistamiento/create/{id}', [alistamientoController::class, 'create'])->name('alistamiento.create');
+    Route::post('getproductos', [alistamientoController::class, 'getproducts'])->name('alistamiento.getproductos');
+    Route::post('alistamientosavedetail', [alistamientoController::class, 'savedetail'])->name('alistamiento.savedetail');
+    Route::post('/alistamientoUpdate', [alistamientoController::class, 'updatedetail'])->name('alistamiento.update');
+    Route::post('alistamientodown', [alistamientoController::class, 'destroy'])->name('alistamiento.down');
+    Route::post('alistamientoById', [alistamientoController::class, 'editAlistamiento'])->name('alistamiento.edit');
+    Route::post('getproductospadre', [alistamientoController::class, 'getProductsCategoryPadre'])->name('alistamiento.getproductospadre');
+    Route::post('/downmmainalistamiento', [alistamientoController::class, 'destroyAlistamiento'])->name('alistamiento.downAlistamiento');
+    Route::post('/downmmainalistamiento', [alistamientoController::class, 'destroyAlistamiento'])->name('alistamiento.downAlistamiento');
+    Route::post('alistamientoAddShoping', [alistamientoController::class, 'add_shopping'])->name('alistamiento.addShopping');
+
+    /** TALLER ***/
+    Route::get('workshop', [workshopController::class, 'index'])->name('workshop.index');
+    Route::post('workshopsave', [workshopController::class, 'store'])->name('workshop.save');
+    Route::get('showworkshop', [workshopController::class, 'show'])->name('workshop.showlist');
+    Route::get('workshop/create/{id}', [workshopController::class, 'create'])->name('workshop.create');
+    Route::post('getproductos', [workshopController::class, 'getproducts'])->name('workshop.getproductos');
+    Route::post('workshopsavedetail', [workshopController::class, 'savedetail'])->name('workshop.savedetail');
+    Route::post('/workshopUpdate', [workshopController::class, 'updatedetail'])->name('workshop.update');
+    Route::post('workshopdown', [workshopController::class, 'destroy'])->name('workshop.down');
+    Route::post('workshopById', [workshopController::class, 'editWorkshop'])->name('workshop.edit');
+    Route::post('getproductospadre', [workshopController::class, 'getProductsCategoryPadre'])->name('workshop.getproductospadre');
+    Route::post('/downmmainworkshop', [workshopController::class, 'destroyWorkshop'])->name('workshop.downAlistamiento');
+    Route::post('workshopAddShoping', [workshopController::class, 'add_shopping'])->name('workshop.addShopping');
+
+    /***** TRANSFER ******** */
+    Route::get('transfer', [transferController::class, 'index'])->name('transfer.index');
+    Route::post('transfersave', [transferController::class, 'store'])->name('transfer.save');
+    Route::get('showtransfer', [transferController::class, 'show'])->name('transfer.showlist');
+    Route::get('transfer/create/{id}', [transferController::class, 'create'])->name('transfer.create');
+    Route::post('getproductos', [transferController::class, 'getproducts'])->name('transfer.getproductos');
+    Route::post('productsbycostcenterdest', [transferController::class, 'ProductsByCostcenterDest'])->name('transfer.productsbycostcenterdest');
+    Route::post('getproductsbycostcenterorigin', [transferController::class, 'getProductsByCostcenterOrigin'])->name('transfer.getproductsbycostcenterorigin');
+
+    Route::get('/obtener-valores-producto', [transferController::class, 'obtenerValoresProducto'])->name('transfer.obtener-valores-producto');
+    Route::get('/obtener-valores-producto-destino', [transferController::class, 'obtenerValoresProductoDestino'])->name('transfer.obtener-valores-producto-destino');
+
+    Route::post('transfersavedetail', [transferController::class, 'savedetail'])->name('transfer.savedetail');
+    Route::post('/transferUpdate', [transferController::class, 'updatedetail'])->name('transfer.update');
+    Route::post('transferdown', [transferController::class, 'destroy'])->name('transfer.down');
+    Route::post('transferById', [transferController::class, 'editTransfer'])->name('transfer.edit');
+    Route::post('productospadre', [transferController::class, 'getProductsCategoryPadre'])->name('transfer.productospadre');
+    Route::post('/downmmaintransfer', [transferController::class, 'destroyTransfer'])->name('transfer.downAlistamiento');
+    Route::post('transferAddShoping', [transferController::class, 'add_shopping'])->name('transfer.addShopping');
+
+    /***** FASTER ******** */
+    Route::get('faster', [fasterController::class, 'index'])->name('faster.index');
+    Route::post('fastersave', [fasterController::class, 'store'])->name('faster.save');
+    Route::get('showfaster', [fasterController::class, 'show'])->name('faster.showlist');
+    Route::get('faster/create/{id}', [fasterController::class, 'create'])->name('faster.create');
+    Route::post('getproductos', [fasterController::class, 'getproducts'])->name('faster.getproductos');
+    Route::post('fastersavedetail', [fasterController::class, 'savedetail'])->name('faster.savedetail');
+    Route::post('/fasterUpdate', [fasterController::class, 'updatedetail'])->name('faster.update');
+    Route::post('fasterdown', [fasterController::class, 'destroy'])->name('faster.down');
+    Route::post('fasterById', [fasterController::class, 'editFaster'])->name('faster.edit');
+    Route::post('getproductospadre', [fasterController::class, 'getProductsCategoryPadre'])->name('faster.getproductospadre');
+    Route::post('/downmmainfaster', [fasterController::class, 'destroyFaster'])->name('faster.downAlistamiento');
+    Route::post('fasterAddShoping', [fasterController::class, 'add_shopping'])->name('faster.addShopping');
+
+    /**COSTO*/
+    Route::get('costo', [costoController::class, 'index'])->name('costo.index');
+    Route::get('showcosto', [costoController::class, 'show'])->name('costo.showlist');
+    Route::get('costo/create/{id}', [costoController::class, 'create'])->name('costo.create');
+
+
+    /***** FORMAS DE PAGO ******** */
+    Route::get('formapago', [FormapagoController::class, 'index'])->name('formapago.index');
+    Route::post('formapagosave', [FormapagoController::class, 'store'])->name('formapago.save');
+    Route::get('formapago{formapagoId}/delete', [FormapagoController::class, 'delete'])->name('formapago.delete');
+    Route::get('formapago{formapagoId}/edit', [FormapagoController::class, 'edit'])->name('formapago.edit');
+    Route::post('formapago/{formapagoId}', [FormapagoController::class, 'update'])->name('formapago.update');
+
+
+    /***** PARAMETROS CONTABLES*********/
+    Route::get('parametrocontable', [ParametrocontableController::class, 'index'])->name('parametrocontable.index');
+    Route::post('parametrocontablesave', [ParametrocontableController::class, 'store'])->name('parametrocontable.save');
+    Route::get('parametrocontable{parametrocontableId}/delete', [ParametrocontableController::class, 'delete'])->name('parametrocontable.delete');
+    Route::get('parametrocontable{parametrocontableId}/edit', [ParametrocontableController::class, 'edit'])->name('parametrocontable.edit');
+    Route::post('parametrocontable/{parametrocontableId}', [ParametrocontableController::class, 'update'])->name('parametrocontable.update');
 });
 
-//Route::get('/tareas', function () {
-  //  return view('todos.index');     })->name('todos');
-      
-
-
-
-
 require __DIR__ . '/admin.php';
-
-
 
 Route::get('conte', Component1::class);
 Route::get('conte2', function () {
     return view('contenedor');
 });
 
-
-
 //rutas utils
 Route::get('select2', Select2::class);
-
-
-/************************* RUTAS SIN LIVEWIRE ********************************** */
-
-/*****************************INVENTORY****************************************** */
-Route::get('inventory/diary', [diaryController::class, 'index'])->name('inventory.diary');
-Route::get('inventory/consolidado', [inventoryController::class, 'index'])->name('inventory.consolidado');
-Route::get('showinventory', [diaryController::class,'show'])->name('inventory.showlist');
-//Route::post('showinventory', [diaryController::class,'show'])->name('inventory.showinvent');
-Route::get('inventory/mensual', [mensualController::class, 'index'])->name('inventory.mensual');
-
-Route::get('inventory/centro_costo_products', [CentroCostoProductController::class,'index'])->name('inventory.showccp');
-Route::get('showCcpInventory', [CentroCostoProductController::class,'show'])->name('inventory.show-ccp');
-Route::get('showConsolidadoInventory', [inventoryController::class,'show'])->name('inventory.showConsol');
-
-Route::get('totales', [inventoryController::class,'totales'])->name('inventory.totales');
-
-Route::post('/updateCcpInventory', [CentroCostoProductController::class,'updateCcpInventory'])->name('inventory.updateCcpInventory999');
-
-//Route::post('/updateCcpInventory', 'CentroCostoProductController@updateCcpInventory')->name('updateCcpInventory');
-
-/*****************************BENEFICIO-RES*******************************************/
-Route::get('beneficiores', [beneficioresController::class,'index'])->name('beneficiores.index');
-Route::get('showbeneficiores', [beneficioresController::class,'show'])->name('beneficiores.showlist');
-Route::get('get_plantasacrificio_by_id', [beneficioresController::class, 'get_plantasacrificio_by_id'])->name('get_plantasacrificio_by_id');
-Route::post('savebeneficiores', [beneficioresController::class, 'store'])->name('beneficiores.save');
-Route::get('/edit/{id}', [beneficioresController::class, 'edit'])->name('beneficiores.edit');
-Route::get('downbeneficiores/{id}', [beneficioresController::class, 'destroy'])->name('beneficiores.destroy');
-
-
-
-/*****************************DESPOSTE-RES******************************************/
-Route::get('desposteres', [desposteresController::class, 'index'])->name('desposteres.index');
-Route::get('desposteres/{id}', [desposteresController::class, 'create']);
-Route::post('/desposteresUpdate', [desposteresController::class, 'update']);
-Route::post('/downdesposter', [desposteresController::class, 'destroy']);
-
-Route::post('cargarInventario', [desposteresController::class,'cargarInventario'])->name('desposteres.show');
-
-
-/*****************************DESPOSTE-CERDO******************************************/
-Route::get('despostecerdo', [despostecerdoController::class, 'index'])->name('despostecerdo.index');
-Route::get('despostecerdo/{id}', [despostecerdoController::class, 'create']);
-Route::post('/despostecerdoUpdate', [despostecerdoController::class, 'update']);
-Route::post('/downdespostec', [despostecerdoController::class, 'destroy']);
-Route::post('cargarInventarioc', [despostecerdoController::class,'cargarInventariocerdo'])->name('despostecerdo.show');
-
-/*****************************COMPRAS-COMPENSADOS****************************************** */
-Route::get('compensado', [compensadoController::class,'index'])->name('compensado.index');
-Route::get('compensado/create/{id}', [compensadoController::class,'create'])->name('compensado.create');
-Route::get('showlistcompensado', [compensadoController::class,'show'])->name('compensado.showlist');
-Route::post('getproductos', [compensadoController::class,'getproducts'])->name('compensado.getproductos');
-Route::post('compensadosave', [compensadoController::class,'store'])->name('compensado.save');
-Route::post('compensadosavedetail', [compensadoController::class,'savedetail'])->name('compensado.savedetail');
-Route::post('compensadodown', [compensadoController::class,'destroy'])->name('compensado.down');
-Route::post('compensadogetById', [compensadoController::class,'edit'])->name('compensado.ById');
-Route::post('compensadoById', [compensadoController::class,'editCompensado'])->name('compensado.editCompensado');
-Route::post('/downmaincompensado', [compensadoController::class, 'destroyCompensado'])->name('compensado.downCompensado');
-Route::post('compensadoInvres', [compensadoController::class,'cargarInventariocr'])->name('compensado.cargarInventariocr');
-
-
-/**BENEFICIO CERDO */
-Route::get('beneficiocerdo', [beneficiocerdoController::class,'index'])->name('beneficiocerdo.index');
-Route::get('showbeneficiocerdo', [beneficiocerdoController::class,'show'])->name('beneficiocerdo.showlist');
-Route::get('get_plantasacrificiocerdo_by_id', [beneficiocerdoController::class, 'get_plantasacrificiocerdo_by_id'])->name('get_plantasacrificiocerdo_by_id');
-Route::post('savebeneficiocerdo', [beneficiocerdoController::class, 'store'])->name('beneficiocerdo.save');
-Route::get('/beneficiocerdoedit/{id}', [beneficiocerdoController::class, 'edit'])->name('beneficiocerdo.edit');
-Route::get('downbeneficiocerdo/{id}', [beneficiocerdoController::class, 'destroy'])->name('beneficiocerdo.destroy');
-
-/***** BENEFICIO AVES******** */
-Route::get('beneficioaves', [beneficioavesController::class,'index'])->name('beneficioaves.index');
-Route::get('get_plantasacrificiopollo_by_id', [beneficioavesController::class, 'get_plantasacrificiopollo_by_id'])->name('get_plantasacrificiopollo_by_id');
-Route::post('savebeneficioaves', [beneficioavesController::class, 'store'])->name('beneficioaves.save');
-Route::get('showbeneficioaves', [beneficioavesController::class,'show'])->name('beneficioaves.showlist');
-Route::get('/beneficioavesedit/{id}', [beneficioavesController::class, 'edit'])->name('beneficioaves.edit');
-
-Route::get('desposteaves/{id}', [desposteavesController::class, 'create'])->name('desposteaves.create');
-Route::post('/desposteavesUpdate', [desposteavesController::class, 'update'])->name('desposteaves.update');
-Route::post('/downdesposteave', [desposteavesController::class, 'destroy'])->name('desposteaves.destroy');
-
-/**ALISTAMIENTO*/
-Route::get('alistamiento', [alistamientoController::class,'index'])->name('alistamiento.index');
-Route::post('alistamientosave', [alistamientoController::class,'store'])->name('alistamiento.save');
-Route::get('showalistamiento', [alistamientoController::class,'show'])->name('alistamiento.showlist');
-Route::get('alistamiento/create/{id}', [alistamientoController::class,'create'])->name('alistamiento.create');
-Route::post('getproductos', [alistamientoController::class,'getproducts'])->name('alistamiento.getproductos');
-Route::post('alistamientosavedetail', [alistamientoController::class,'savedetail'])->name('alistamiento.savedetail');
-Route::post('/alistamientoUpdate', [alistamientoController::class, 'updatedetail'])->name('alistamiento.update');
-Route::post('alistamientodown', [alistamientoController::class,'destroy'])->name('alistamiento.down');
-Route::post('alistamientoById', [alistamientoController::class,'editAlistamiento'])->name('alistamiento.edit');
-Route::post('getproductospadre', [alistamientoController::class,'getProductsCategoryPadre'])->name('alistamiento.getproductospadre');
-Route::post('/downmmainalistamiento', [alistamientoController::class, 'destroyAlistamiento'])->name('alistamiento.downAlistamiento');
-Route::post('/downmmainalistamiento', [alistamientoController::class, 'destroyAlistamiento'])->name('alistamiento.downAlistamiento');
-Route::post('alistamientoAddShoping', [alistamientoController::class,'add_shopping'])->name('alistamiento.addShopping');
-
-/** TALLER ***/
-Route::get('workshop', [workshopController::class,'index'])->name('workshop.index');
-Route::post('workshopsave', [workshopController::class,'store'])->name('workshop.save');
-Route::get('showworkshop', [workshopController::class,'show'])->name('workshop.showlist');
-Route::get('workshop/create/{id}', [workshopController::class,'create'])->name('workshop.create');
-Route::post('getproductos', [workshopController::class,'getproducts'])->name('workshop.getproductos');
-Route::post('workshopsavedetail', [workshopController::class,'savedetail'])->name('workshop.savedetail');
-Route::post('/workshopUpdate', [workshopController::class, 'updatedetail'])->name('workshop.update');
-Route::post('workshopdown', [workshopController::class,'destroy'])->name('workshop.down');
-Route::post('workshopById', [workshopController::class,'editWorkshop'])->name('workshop.edit');
-Route::post('getproductospadre', [workshopController::class,'getProductsCategoryPadre'])->name('workshop.getproductospadre');
-Route::post('/downmmainworkshop', [workshopController::class, 'destroyWorkshop'])->name('workshop.downAlistamiento');
-Route::post('workshopAddShoping', [workshopController::class,'add_shopping'])->name('workshop.addShopping');
-
-/***** TRANSFER ******** */
-Route::get('transfer', [transferController::class, 'index'])->name('transfer.index');
-Route::post('transfersave', [transferController::class,'store'])->name('transfer.save');
-Route::get('showtransfer', [transferController::class,'show'])->name('transfer.showlist');
-Route::get('transfer/create/{id}', [transferController::class,'create'])->name('transfer.create');
-Route::post('getproductos', [transferController::class,'getproducts'])->name('transfer.getproductos');
-Route::post('productsbycostcenterdest', [transferController::class,'ProductsByCostcenterDest'])->name('transfer.productsbycostcenterdest');
-Route::post('getproductsbycostcenterorigin', [transferController::class,'getProductsByCostcenterOrigin'])->name('transfer.getproductsbycostcenterorigin');
-
-Route::get('/obtener-valores-producto', [transferController::class,'obtenerValoresProducto'])->name('transfer.obtener-valores-producto');
-Route::get('/obtener-valores-producto-destino', [transferController::class,'obtenerValoresProductoDestino'])->name('transfer.obtener-valores-producto-destino');
-
-Route::post('transfersavedetail', [transferController::class,'savedetail'])->name('transfer.savedetail');
-Route::post('/transferUpdate', [transferController::class, 'updatedetail'])->name('transfer.update');
-Route::post('transferdown', [transferController::class,'destroy'])->name('transfer.down');
-Route::post('transferById', [transferController::class,'editTransfer'])->name('transfer.edit');
-Route::post('productospadre', [transferController::class,'getProductsCategoryPadre'])->name('transfer.productospadre');
-Route::post('/downmmaintransfer', [transferController::class, 'destroyTransfer'])->name('transfer.downAlistamiento');
-Route::post('transferAddShoping', [transferController::class,'add_shopping'])->name('transfer.addShopping');
-
-/***** FASTER ******** */
-Route::get('faster', [fasterController::class, 'index'])->name('faster.index');
-Route::post('fastersave', [fasterController::class,'store'])->name('faster.save');
-Route::get('showfaster', [fasterController::class,'show'])->name('faster.showlist');
-Route::get('faster/create/{id}', [fasterController::class,'create'])->name('faster.create');
-Route::post('getproductos', [fasterController::class,'getproducts'])->name('faster.getproductos');
-Route::post('fastersavedetail', [fasterController::class,'savedetail'])->name('faster.savedetail');
-Route::post('/fasterUpdate', [fasterController::class, 'updatedetail'])->name('faster.update');
-Route::post('fasterdown', [fasterController::class,'destroy'])->name('faster.down');
-Route::post('fasterById', [fasterController::class,'editFaster'])->name('faster.edit');
-Route::post('getproductospadre', [fasterController::class,'getProductsCategoryPadre'])->name('faster.getproductospadre');
-Route::post('/downmmainfaster', [fasterController::class, 'destroyFaster'])->name('faster.downAlistamiento');
-Route::post('fasterAddShoping', [fasterController::class,'add_shopping'])->name('faster.addShopping');
-
-/**COSTO*/
-Route::get('costo', [costoController::class,'index'])->name('costo.index');
-Route::get('showcosto', [costoController::class,'show'])->name('costo.showlist');
-Route::get('costo/create/{id}', [costoController::class,'create'])->name('costo.create');
-
-
-/***** FORMAS DE PAGO ******** */
- 
-Route::get('formapago', [FormapagoController::class, 'index'])->name('formapago.index');
-Route::post('formapagosave', [FormapagoController::class,'store'])->name('formapago.save');
-Route::get('formapago{formapagoId}/delete', [FormapagoController::class, 'delete'])->name('formapago.delete');
-Route::get('formapago{formapagoId}/edit', [FormapagoController::class, 'edit'])->name('formapago.edit');
-Route::post('formapago/{formapagoId}', [FormapagoController::class, 'update'])->name('formapago.update');
-
-
-/***** PARAMETROS CONTABLES******** */
- 
-Route::get('parametrocontable', [ParametrocontableController::class, 'index'])->name('parametrocontable.index');
-Route::post('parametrocontablesave', [ParametrocontableController::class,'store'])->name('parametrocontable.save');
-Route::get('parametrocontable{parametrocontableId}/delete', [ParametrocontableController::class, 'delete'])->name('parametrocontable.delete');
-Route::get('parametrocontable{parametrocontableId}/edit', [ParametrocontableController::class, 'edit'])->name('parametrocontable.edit');
-Route::post('parametrocontable/{parametrocontableId}', [ParametrocontableController::class, 'update'])->name('parametrocontable.update');
