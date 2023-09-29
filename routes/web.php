@@ -197,6 +197,8 @@ Route::get('inventory/centro_costo_products', [CentroCostoProductController::cla
 Route::get('showCcpInventory', [CentroCostoProductController::class,'show'])->name('inventory.show-ccp');
 Route::get('showConsolidadoInventory', [inventoryController::class,'show'])->name('inventory.showConsol');
 
+Route::get('totales', [inventoryController::class,'totales'])->name('inventory.totales');
+
 Route::post('/updateCcpInventory', [CentroCostoProductController::class,'updateCcpInventory'])->name('inventory.updateCcpInventory999');
 
 //Route::post('/updateCcpInventory', 'CentroCostoProductController@updateCcpInventory')->name('updateCcpInventory');

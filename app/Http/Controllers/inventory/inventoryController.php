@@ -98,7 +98,7 @@ class inventoryController extends Controller
             ->where('pro.status', 1)
             ->get();
 
-        $totalStock = 0;
+        $totalStock = $centrocostoId;
 
         foreach ($data as $item) {
             $stock = ($item->invinicial + $item->compraLote + $item->alistamiento + $item->compensados + $item->trasladoing) - ($item->venta + $item->trasladosal);
@@ -106,8 +106,8 @@ class inventoryController extends Controller
             $totalStock += $stock;        }
 
         // Pasar el valor de stock al objeto request
-     
-        $request->merge(['totalStock' => $totalStock]);
+          return $totalStock;
+     //   $request->merge(['totalStock' => $totalStock]);
     }
 
 
