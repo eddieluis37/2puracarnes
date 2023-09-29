@@ -25,41 +25,15 @@ class inventoryController extends Controller
 
         $centros = Centrocosto::Where('status', 1)->get();
 
+        // llama al metodo para calcular el stock
+        $this->totales(request());
+
         // Obtener el stock desde el objeto request
-        
-        // $totalStock = request()->input('totalStock');
-        $totalStock = request('totalStock');
+        $totalStock = request()->input('totalStock');
 
         return view('inventory.consolidado', compact('category', 'centros', 'startDate', 'endDate', 'totalStock'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function show(Request $request)
     {
         $centrocostoId = $request->input('centrocostoId');
@@ -86,25 +60,57 @@ class inventoryController extends Controller
             ->where('pro.status', 1)
             ->get();
 
-        // Calculo de la stock ideal
-        
-        $totalStock = 0;
+        // Calculo de la stock ideal 
 
         foreach ($data as $item) {
             $stock = ($item->invinicial + $item->compraLote + $item->alistamiento + $item->compensados + $item->trasladoing) - ($item->venta + $item->trasladosal);
-            $item->stock = round($stock, 2);
-
-            $totalStock += $stock;
+            $item->stock = round($stock, 2);         
         }
-
-            // Pasar el valor de stock al objeto request
-            $request->merge(['totalStock' => $totalStock]);
-       
 
         return datatables()->of($data)
             ->addIndexColumn()
             ->make(true);
     }
+
+    public function totales(Request $request)
+    {
+        $centrocostoId = $request->input('centrocostoId');
+        $categoriaId = $request->input('categoriaId');
+        $data = DB::table('centro_costo_product_hists as ccp')
+            ->join('products as pro', 'pro.id', '=', 'ccp.products_id')
+            ->join('categories as cat', 'pro.category_id', '=', 'cat.id')
+            ->select(
+                'cat.name as namecategoria',
+                'pro.name as nameproducto',
+                'ccp.invinicial as invinicial',
+                'ccp.compralote as compraLote',
+                'ccp.alistamiento',
+                'ccp.compensados as compensados',
+                'ccp.trasladoing as trasladoing',
+                'ccp.trasladosal as trasladosal',
+                'ccp.venta as venta',
+                'ccp.stock as stock',
+                'ccp.fisico as fisico'
+            )
+            ->where('ccp.centrocosto_id', $centrocostoId)
+            ->where('ccp.tipoinventario', 'inicial')
+            ->where('pro.category_id', $categoriaId)
+            ->where('pro.status', 1)
+            ->get();
+
+        $totalStock = 0;
+
+        foreach ($data as $item) {
+            $stock = ($item->invinicial + $item->compraLote + $item->alistamiento + $item->compensados + $item->trasladoing) - ($item->venta + $item->trasladosal);
+            $item->stock = round($stock, 2);
+            $totalStock += $stock;        }
+
+        // Pasar el valor de stock al objeto request
+     
+        $request->merge(['totalStock' => $totalStock]);
+    }
+
+
 
     /**
      * Show the form for editing the specified resource.
