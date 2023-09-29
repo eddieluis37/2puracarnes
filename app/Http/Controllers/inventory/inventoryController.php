@@ -76,7 +76,8 @@ class inventoryController extends Controller
     {
         $centrocostoId = $request->input('centrocostoId');
         $categoriaId = $request->input('categoriaId');
-        $data = DB::table('centro_costo_product_hists as ccp')
+      
+        $data = DB::table('centro_costo_products as ccp')
             ->join('products as pro', 'pro.id', '=', 'ccp.products_id')
             ->join('categories as cat', 'pro.category_id', '=', 'cat.id')
             ->select(
@@ -98,7 +99,7 @@ class inventoryController extends Controller
             ->where('pro.status', 1)
             ->get();
 
-        $totalStock = 0;
+        $totalStock = $centrocostoId;
 
         foreach ($data as $item) {
             $stock = ($item->invinicial + $item->compraLote + $item->alistamiento + $item->compensados + $item->trasladoing) - ($item->venta + $item->trasladosal);
@@ -106,8 +107,8 @@ class inventoryController extends Controller
             $totalStock += $stock;        }
 
         // Pasar el valor de stock al objeto request
-     
-        $request->merge(['totalStock' => $totalStock]);
+          return $totalStock;
+     //   $request->merge(['totalStock' => $totalStock]);
     }
 
 

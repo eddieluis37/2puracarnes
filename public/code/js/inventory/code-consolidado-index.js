@@ -234,6 +234,22 @@ function initializeDataTable(centrocostoId = "-1", categoriaId = "-1") {
         },
     });
 }
+
+function cargarTotales(centrocostoId = "-1", categoriaId = "-1") {
+    $.ajax({
+        type: "GET",
+        url: "/totales",
+        data: {
+            centrocostoId: centrocostoId,
+            categoriaId: categoriaId
+        },
+        dataType: "JSON",
+        success: function(respu){
+            alert(respu);
+        }
+    });
+}
+
 $(document).ready(function () {
     initializeDataTable("-1");
 
@@ -243,5 +259,6 @@ $(document).ready(function () {
 
         dataTable.destroy();
         initializeDataTable(centrocostoId, categoriaId);
+        cargarTotales(centrocostoId, categoriaId);
     });
 });
