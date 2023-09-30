@@ -81,7 +81,7 @@
               <span>{{ $totalStock }}</span><br>
               <span>{{ $totalStock }}</span><br>
            
-              <span>{{ $totalStock }}</span>
+              <div id ="totalstock">0,00</div>
             </div>
             <div class="col-3 mb-1 bg-primary text-center">
               <span>Diferencia en kilos</span><br>

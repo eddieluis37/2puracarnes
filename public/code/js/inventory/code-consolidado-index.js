@@ -244,14 +244,10 @@ function cargarTotales(centrocostoId = "-1", categoriaId = "-1") {
             categoriaId: categoriaId
         },
         dataType: "JSON",
-        success: function(respu){
-           
-
-           $totalStock = respu.totalStock;
-           
-
-           console.log(respu);
-
+        success: function(data){                 
+                       
+            $("#totalstock").html(data.totalStock);
+      
         }
     });
 }

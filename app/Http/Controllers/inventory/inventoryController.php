@@ -105,7 +105,12 @@ class inventoryController extends Controller
             $totalStock += $stock;
         }
 
-        return response()->json(['totalStock' => $totalStock]);
+        return response()->json(
+            [
+                'totalStock' => number_format($totalStock,2),       
+            ]
+        );	
+       
     }
 
 
