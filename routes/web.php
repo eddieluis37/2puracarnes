@@ -163,7 +163,8 @@ Route::group(['middleware' => [('auth')]], function () {
     Route::get('showConsolidadoInventory', [inventoryController::class, 'show'])->name('inventory.showConsol');
 
     Route::get('totales', [inventoryController::class, 'totales'])->name('inventory.totales');
-
+    
+    Route::post('cargarInventariohist', [inventoryController::class, 'cargarInventariohist'])->name('cargarInventariohist');
     Route::post('/updateCcpInventory', [CentroCostoProductController::class, 'updateCcpInventory'])->name('inventory.updateCcpInventory999');
 
     //Route::post('/updateCcpInventory', 'CentroCostoProductController@updateCcpInventory')->name('updateCcpInventory');

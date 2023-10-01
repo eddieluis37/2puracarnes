@@ -41,7 +41,7 @@
           <label for="date1" class="form-label">Fecha inicio</label>
           <input type="date" class="form-control" value="{{$startDate}}" placeholder="Last name">
         </div> -->
-        <div class="col-md-3">
+        <div class="col-md-3" style ="display:none">
           <label for="date1" class="form-label">Fecha de Cierre</label>
           <input type="date" class="form-control" value="{{$endDate}}" placeholder="Last name">
         </div>
@@ -63,7 +63,7 @@
         </div> -->
         <div class="col-md-3 text-right ml-auto">
           <div style="margin-top:28px;" clas="">
-            <button class="btn btn-success btn-lg" type="button">Cerrar Inventario</button>
+            <button class="btn btn-success btn-lg" type="button" id="cargarInventarioBtn">Cerrar Inventario</button>
           </div>
         </div>
       </div>
@@ -211,5 +211,5 @@
 </div>
 @endsection
 @section('script')
-<script src="{{asset('code/js/inventory/code-consolidado-index.js')}}"></script>
+<script src="{{asset('code/js/inventory/code-consolidado-index.js')}} " type="module"></script>
 @endsection

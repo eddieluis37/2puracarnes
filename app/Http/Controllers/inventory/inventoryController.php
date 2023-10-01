@@ -138,7 +138,143 @@ class inventoryController extends Controller
         );
     }
 
+    public function cargarInventariohist(Request $request)
+    {
+        $v_centrocostoId = $request->input('centrocostoId');
+        //$v_categoriaId = $request->input('categoriaId');
+                          
+        // PASO 1 VOLCADO EN LA TABLA DE HISTORICO 
 
+        DB::update("
+        INSERT INTO centro_costo_product_hists  
+        (
+          centrocosto_id
+         ,products_id
+         ,consecutivo
+         ,fecha
+         ,tipoinventario 
+         ,invinicial
+         ,compralote
+         ,alistamiento
+         ,compensados
+         ,trasladoing
+         ,trasladosal
+         ,venta
+         ,stock 
+         ,fisico 
+         ,price_fama 
+         ,cto_invinicial
+         ,cto_compralote
+         ,cto_alistamiento
+         ,cto_compensados
+         ,cto_trasladoing
+         ,cto_trasladosal
+         ,cto_invfisico 
+         ,cto_invinicial_total
+         ,cto_compralote_total
+         ,cto_alistamiento_total
+         ,cto_compensados_total
+         ,cto_trasladoing_total
+         ,cto_trasladosal_total
+         ,cto_invfisico_total
+         ,cto_venta_total 
+         ,precioventa_min
+        )
+        
+        SELECT c.centrocosto_id
+         ,c.products_id
+         ,(SELECT COALESCE(MAX(consecutivo)+1,1)FROM centro_costo_product_hists)
+         ,CURDATE()
+         ,'Final'
+         ,c.invinicial
+         ,c.compralote
+         ,c.alistamiento
+         ,c.compensados
+         ,c.trasladoing
+         ,c.trasladosal
+         ,c.venta
+         ,c.stock 
+         ,c.fisico 
+         ,c.price_fama 
+         ,c.cto_invinicial
+         ,c.cto_compralote
+         ,c.cto_alistamiento
+         ,c.cto_compensados
+         ,c.cto_trasladoing
+         ,c.cto_trasladosal
+         ,c.cto_invfisico 
+         ,c.cto_invinicial_total
+         ,c.cto_compralote_total
+         ,c.cto_alistamiento_total
+         ,c.cto_compensados_total
+         ,c.cto_trasladoing_total
+         ,c.cto_trasladosal_total
+         ,c.cto_invfisico_total
+         ,c.cto_venta_total 
+         ,c.precioventa_min
+        
+        FROM centro_costo_products c
+        WHERE centrocosto_id = :centrocostoId
+        AND tipoinventario = 'Inicial' " , 
+        [
+            'centrocostoId' => $v_centrocostoId
+        ]
+         );
+         
+         // PASO 2 ACTUALIZAR INVENTARIO INICIAL DESDE EL FISICO 
+         
+         DB::update("
+         UPDATE centro_costo_products SET invinicial = fisico
+         WHERE centrocosto_id = :centrocostoId
+         AND tipoinventario = 'Inicial' ",
+        [
+            'centrocostoId' => $v_centrocostoId
+        ]
+         );
+
+      // PASO 3 COLOCAR LOS DATOS EN CERO 
+         
+        DB::update("
+        UPDATE centro_costo_products c
+        SET
+         c.compralote = 0
+         ,c.alistamiento = 0
+         ,c.compensados = 0
+         ,c.trasladoing = 0
+         ,c.trasladosal = 0
+         ,c.venta = 0
+         ,c.stock  = 0
+         ,c.fisico  = 0
+         ,c.price_fama = 0
+         ,c.cto_invinicial = 0
+         ,c.cto_compralote = 0
+         ,c.cto_alistamiento = 0
+         ,c.cto_compensados = 0
+         ,c.cto_trasladoing = 0
+         ,c.cto_trasladosal = 0
+         ,c.cto_invfisico  = 0
+         ,c.cto_invinicial_total = 0
+         ,c.cto_compralote_total = 0
+         ,c.cto_alistamiento_total = 0
+         ,c.cto_compensados_total = 0
+         ,c.cto_trasladoing_total = 0
+         ,c.cto_trasladosal_total = 0
+         ,c.cto_invfisico_total = 0
+         ,c.cto_venta_total = 0
+         ,c.precioventa_min = 0
+         WHERE centrocosto_id = :centrocostoId
+         AND tipoinventario = 'Inicial' ",
+        [
+            'centrocostoId' => $v_centrocostoId
+        ]
+        );
+
+        return response()->json([
+            'status' => 1,
+            'message' => 'Cargado al inventario exitosamente',
+            
+        ]);
+    }
 
     /**
      * Show the form for editing the specified resource.
