@@ -241,14 +241,21 @@ function cargarTotales(centrocostoId = "-1", categoriaId = "-1") {
         url: "/totales",
         data: {
             centrocostoId: centrocostoId,
-            categoriaId: categoriaId
+            categoriaId: categoriaId,
         },
         dataType: "JSON",
-        success: function(data){                 
-                       
+        success: function (data) {
             $("#totalstock").html(data.totalStock);
-            $("#totalInvInicial").html(data.totalInvInicial);      
-        }
+            $("#totalInvInicial").html(data.totalInvInicial);
+
+            $("#totalCompraLote").html(data.totalCompraLote);
+            $("#totalAlistamiento").html(data.totalAlistamiento);
+            $("#totalCompensados").html(data.totalCompensados);
+            $("#totalTrasladoing").html(data.totalTrasladoing);
+
+            $("#totalVenta").html(data.totalVenta);
+            $("#totalTrasladoSal").html(data.totalTrasladoSal);
+        },
     });
 }
 

@@ -99,19 +99,41 @@ class inventoryController extends Controller
 
         $totalStock = 0;
         $totalInvInicial = 0;
+        $totalCompraLote = 0;
+        $totalAlistamiento = 0;
+        $totalCompensados = 0;
+        $totalTrasladoIng = 0;
+        $totalVenta = 0;
+        $totalTrasladoSal = 0;
 
         foreach ($data as $item) {
 
             $stock = ($item->invinicial + $item->compraLote + $item->alistamiento + $item->compensados + $item->trasladoing) - ($item->venta + $item->trasladosal);
-            $item->stock = round($stock, 2);            
+            $item->stock = round($stock, 2);
             $totalStock += $stock;
+
             $totalInvInicial += $item->invinicial;
+            $totalCompraLote += $item->compraLote;
+            $totalAlistamiento += $item->alistamiento;
+            $totalCompensados += $item->compensados;
+            $totalTrasladoIng += $item->trasladoing;
+            $totalVenta += $item->venta;
+            $totalTrasladoSal += $item->trasladosal;
         }
 
         return response()->json(
             [
                 'totalStock' => number_format($totalStock, 2),
                 'totalInvInicial' => number_format($totalInvInicial, 2),
+
+                'totalCompraLote' => number_format($totalCompraLote, 2),
+                'totalAlistamiento' => number_format($totalAlistamiento, 2),
+                'totalCompensados' => number_format($totalCompensados, 2),
+                'totalTrasladoing' => number_format($totalTrasladoIng, 2),
+
+                'totalVenta' => number_format($totalVenta, 2),
+                'totalTrasladoSal' => number_format($totalTrasladoSal, 2),
+
             ]
         );
     }
