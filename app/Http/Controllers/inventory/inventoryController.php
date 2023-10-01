@@ -98,19 +98,22 @@ class inventoryController extends Controller
             ->get();
 
         $totalStock = 0;
+        $totalInvInicial = 0;
 
         foreach ($data as $item) {
+
             $stock = ($item->invinicial + $item->compraLote + $item->alistamiento + $item->compensados + $item->trasladoing) - ($item->venta + $item->trasladosal);
-            $item->stock = round($stock, 2);
+            $item->stock = round($stock, 2);            
             $totalStock += $stock;
+            $totalInvInicial += $item->invinicial;
         }
 
         return response()->json(
             [
-                'totalStock' => number_format($totalStock,2),       
+                'totalStock' => number_format($totalStock, 2),
+                'totalInvInicial' => number_format($totalInvInicial, 2),
             ]
-        );	
-       
+        );
     }
 
 

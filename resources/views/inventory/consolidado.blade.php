@@ -80,12 +80,12 @@
             <div class="col-3 mb-1 bg-success">
               <span>{{ $totalStock }}</span><br>
               <span>{{ $totalStock }}</span><br>
-           
-              <div id ="totalstock">0,00</div>
+
+               <div id ="totalstock">0,00</div>
             </div>
             <div class="col-3 mb-1 bg-primary text-center">
               <span>Diferencia en kilos</span><br>
-              <span>{{ $totalStock }}</span>
+              <!--           <div id ="totalstock">0,00</div> -->
             </div>
             <div class="col-3 mb-1 bg-warning text-center">
               <span>Dif. En kilos permitida</span><br>
@@ -120,10 +120,26 @@
               <td colspan="2" class="">Salidas</td>
               <td colspan="4" class="">Inventario</td>
             </tr>
+             <tr>
+              <td colspan="2">Total</td>
+              <!--   <div id ="totalstock">0,00</div> -->
+              <td colspan="2">InvIni</td>
+              <td class="">{{ $totalStock }}</td>
+              <td class="">{{ $totalStock }}</td>
+              <td class="">{{ $totalStock }}</td>
+              <td class="">{{ $totalStock }}</td>
+              <td class="">{{ $totalStock }}</td>
+              <td class="">{{ $totalStock }}</td>
+              <td class="">{{ $totalStock }}</td>
+              <td class="">{{ $totalStock }}</td>
+            </tr>
+
             <tr>
-              <td colspan="2">Totales</td>
-              <td class="">{{ $totalStock }}</td>
-              <td class="">{{ $totalStock }}</td>
+              <td colspan="2">KG Totales</td>
+              <!--   <div id ="totalstock">0,00</div> -->
+              <td>
+                <div id="totalInvInicial">0,00</div>
+              </td>
               <td class="">{{ $totalStock }}</td>
               <td class="">{{ $totalStock }}</td>
               <td class="">{{ $totalStock }}</td>

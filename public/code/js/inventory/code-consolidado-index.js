@@ -247,7 +247,7 @@ function cargarTotales(centrocostoId = "-1", categoriaId = "-1") {
         success: function(data){                 
                        
             $("#totalstock").html(data.totalStock);
-      
+            $("#totalInvInicial").html(data.totalInvInicial);      
         }
     });
 }
