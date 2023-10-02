@@ -41,7 +41,7 @@
           <label for="date1" class="form-label">Fecha inicio</label>
           <input type="date" class="form-control" value="{{$startDate}}" placeholder="Last name">
         </div> -->
-        <div class="col-md-3" style ="display:none">
+        <div class="col-md-3" style="display:none">
           <label for="date1" class="form-label">Fecha de Cierre</label>
           <input type="date" class="form-control" value="{{$endDate}}" placeholder="Last name">
         </div>
@@ -115,58 +115,54 @@
         <table class="table table-sm table-inventario">
           <thead class="text-white" style="background: #3B3F5C">
             <tr>
-              <td colspan="5" class="text-center">Ingresos</td>
-              <td colspan="1" class="">Salidas</td>
-              <td colspan="1" class="">Inventario</td>
+              <td colspan="5" class="text-center" style="background: green">Ingresos</td>
+              <td colspan="2" class="text-center" style="background: red">Salidas</td>
+              <td colspan="4" class="text-center" style="background: orange">Inventario</td>
             </tr>
             <tr>
-              <td>
+              <td style="background: green">
                 InvIni
                 <div id="totalInvInicial">0,00</div>
               </td>
-              <td>
+              <td style="background: green">
                 ComLot
                 <div id="totalCompraLote">0,00</div>
               </td>
-              <td>
+              <td style="background: green">
                 Alist
                 <div id="totalAlistamiento">0,00</div>
               </td>
-              <td>
+              <td style="background: green">
                 Compen
                 <div id="totalCompensados">0,00</div>
               </td>
-              <td>
+              <td style="background: green">
                 TrasIn
                 <div id="totalTrasladoing">0,00</div>
               </td>
-              <td>
+              <td style="background: red">
                 TotVent
                 <div id="totalVenta">0,00</div>
               </td>
-              <td>
+              <td style="background: red">
                 TotTrS
                 <div id="totalTrasladosal">0,00</div>
               </td>
-              <td>
+              <td style="background: orange">
                 StocIde
                 <div id="StocIde">0,00</div>
               </td>
-              <td>
-               ContFis
+              <td style="background: orange">
+                ContFis
                 <div id="contFis">0,00</div>
               </td>
-              <td>
-               DifeKg
+              <td style="background: orange">
+                DifeKg
                 <div id="totalInvInicial">0,00</div>
               </td>
-              <td>
-               Decomi
+              <td style="background: orange">
+                Decomi
                 <div id="decomisos">0,00</div>
-              </td>
-              <td>
-               DeBaja
-                <div id="totalInvInicial">0,00</div>
               </td>
             </tr>
           </thead>
@@ -178,7 +174,6 @@
           </tfoot>
         </table>
       </div>
-
       <div class="table-responsive mt-3">
         <table id="tableInventory" class="table table-striped mt-1">
           <thead class="text-white" style="background: #3B3F5C">
