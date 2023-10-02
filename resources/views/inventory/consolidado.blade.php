@@ -81,7 +81,7 @@
               <span>{{ $totalStock }}</span><br>
               <span>{{ $totalStock }}</span><br>
 
-               <div id ="totalstock">0,00</div>
+              <div id="totalstock">0,00</div>
             </div>
             <div class="col-3 mb-1 bg-primary text-center">
               <span>Diferencia en kilos</span><br>
@@ -115,48 +115,65 @@
         <table class="table table-sm table-inventario">
           <thead class="text-white" style="background: #3B3F5C">
             <tr>
-              <td colspan="2" class=""></td>
-              <td colspan="4" class="">Ingresos</td>
-              <td colspan="2" class="">Salidas</td>
-              <td colspan="4" class="">Inventario</td>
+              <td colspan="5" class="text-center">Ingresos</td>
+              <td colspan="1" class="">Salidas</td>
+              <td colspan="1" class="">Inventario</td>
             </tr>
-             <tr>
-              <td colspan="2">Total</td>
-              <!--   <div id ="totalstock">0,00</div> -->
-              <td colspan="2">InvIni</td>
-              <td class="">{{ $totalStock }}</td>
-              <td class="">{{ $totalStock }}</td>
-              <td class="">{{ $totalStock }}</td>
-              <td class="">{{ $totalStock }}</td>
-              <td class="">{{ $totalStock }}</td>
-              <td class="">{{ $totalStock }}</td>
-              <td class="">{{ $totalStock }}</td>
-              <td class="">{{ $totalStock }}</td>
-            </tr>
-
             <tr>
-              <td colspan="2">KG Totales</td>
-              <!--   <div id ="totalstock">0,00</div> -->
               <td>
+                InvIni
                 <div id="totalInvInicial">0,00</div>
               </td>
-              <td class="">{{ $totalStock }}</td>
-              <td class="">{{ $totalStock }}</td>
-              <td class="">{{ $totalStock }}</td>
-              <td class="">{{ $totalStock }}</td>
-              <td class="">{{ $totalStock }}</td>
-              <td class="">{{ $totalStock }}</td>
-              <td class="">{{ $totalStock }}</td>
-              <td class="">{{ $totalStock }}</td>
+              <td>
+                ComLot
+                <div id="totalCompraLote">0,00</div>
+              </td>
+              <td>
+                Alist
+                <div id="totalAlistamiento">0,00</div>
+              </td>
+              <td>
+                Compen
+                <div id="totalCompensados">0,00</div>
+              </td>
+              <td>
+                TrasIn
+                <div id="totalTrasladoing">0,00</div>
+              </td>
+              <td>
+                TotVent
+                <div id="totalVenta">0,00</div>
+              </td>
+              <td>
+                TotTrS
+                <div id="totalTrasladosal">0,00</div>
+              </td>
+              <td>
+                StocIde
+                <div id="StocIde">0,00</div>
+              </td>
+              <td>
+               ContFis
+                <div id="contFis">0,00</div>
+              </td>
+              <td>
+               DifeKg
+                <div id="totalInvInicial">0,00</div>
+              </td>
+              <td>
+               Decomi
+                <div id="decomisos">0,00</div>
+              </td>
+              <td>
+               DeBaja
+                <div id="totalInvInicial">0,00</div>
+              </td>
             </tr>
-
           </thead>
           <tbody>
-
           </tbody>
           <tfoot>
             <tr>
-
             </tr>
           </tfoot>
         </table>
