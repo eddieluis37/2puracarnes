@@ -1,14 +1,3 @@
-import  {sendData} from '../exportModule/core/rogercode-core.js' ;
-import {
-  successToastMessage,
-  errorMessage,
-} from "../exportModule/message/rogercode-message.js";
-import {
-  loadingStart,
-  loadingEnd,
-} from "../exportModule/core/rogercode-core.js";
-
-console.log("Starting");
 
 const token = document
     .querySelector('meta[name="csrf-token"]')
@@ -24,7 +13,7 @@ function initializeDataTable(centrocostoId = "-1", categoriaId = "-1") {
         processing: true,
         serverSide: true,
         ajax: {
-            url: "/showConsolidadoInventory",
+            url: "showhistorico",
             type: "GET",
             data: {
                 centrocostoId: centrocostoId,
@@ -248,7 +237,7 @@ function initializeDataTable(centrocostoId = "-1", categoriaId = "-1") {
 function cargarTotales(centrocostoId = "-1", categoriaId = "-1") {
     $.ajax({
         type: "GET",
-        url: "/totales",
+        url: "/totaleshist",
         data: {
             centrocostoId: centrocostoId,
             categoriaId: categoriaId,
@@ -282,61 +271,4 @@ $(document).ready(function () {
     });
 });
 
-document
-.getElementById("cargarInventarioBtn")
-.addEventListener("click", (e) => {
-    e.preventDefault();
-    let element = e.target;
-    showConfirmationAlert(element)
-    .then((result) => {
-        if (result && result.value) {
-            loadingStart(element);
-            const dataform = new FormData();
-         
-            const var_centrocostoId = document.querySelector("#centrocosto");
-            const var_categoriaId = document.querySelector("#categoria");
-         
-            dataform.append("centrocostoId", Number(var_centrocostoId.value));
-            dataform.append("categoriaId", Number(var_categoriaId.value));          
-          
-            return sendData("/cargarInventariohist", dataform, token);
-        }
-    })
-    .then((result) => {
-        console.log(result);
-        if (result && result.status == 1) {
-            loadingEnd(element, "success", "Cargando al inventorio");
-            element.disabled = true;
-            return swal(
-                "EXITO",
-                "Inventario Cargado Exitosamente",
-                "success"
-            );
-        }
-        if (result && result.status == 0) {
-            loadingEnd(element, "success", "Cargando al inventorio");
-            errorMessage(result.message);
-        }
-    })
-    .then(() => {
-        window.location.href = "/inventory/consolidado";
-    })
-    .catch((error) => {
-        console.error(error);
-    });
-});
-
-function showConfirmationAlert(element) {
-    return swal.fire({
-        title: "CONFIRMAR",
-        text: "Estas seguro que desea cargar el inventario ?",
-        icon: "warning",
-        showDenyButton: true,
-        showCancelButton: true,
-        confirmButtonColor: "#3085d6",
-        cancelButtonColor: "#d33",
-        confirmButtonText: "Acpetar",
-        denyButtonText: `Cancelar`,
-    });
-  }
 
