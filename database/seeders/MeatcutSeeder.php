@@ -34,11 +34,11 @@ class MeatcutSeeder extends Seeder
 		$meatcut->save();
 		$meatcut = new Meatcut(["category_id" => "1", "name" => "CREADILLA", "description" => "no existe aun ", "status" => "1"]);
 		$meatcut->save();
-		$meatcut = new Meatcut(["category_id" => "1", "name" => "DECOMISO DE RES", "description" => "no existe aun ", "status" => "1"]);
+		$meatcut = new Meatcut(["category_id" => "1", "name" => "DECOMISOS DE RES", "description" => "no existe aun ", "status" => "1"]);
 		$meatcut->save();
 		$meatcut = new Meatcut(["category_id" => "1", "name" => "DESCARGUE COMPLETO", "description" => "no existe aun ", "status" => "1"]);
 		$meatcut->save();
-		$meatcut = new Meatcut(["category_id" => "1", "name" => "GORDO- GRASA DE PECHO", "description" => "no existe aun ", "status" => "1"]);
+		$meatcut = new Meatcut(["category_id" => "1", "name" => "GRASA DE PECHO", "description" => "no existe aun ", "status" => "1"]);
 		$meatcut->save();
 		$meatcut = new Meatcut(["category_id" => "1", "name" => "HUESO CARNUDO", "description" => "no existe aun ", "status" => "1"]);
 		$meatcut->save();
@@ -60,17 +60,17 @@ class MeatcutSeeder extends Seeder
 		$meatcut->save();
 		$meatcut = new Meatcut(["category_id" => "1", "name" => "PECHO", "description" => "no existe aun ", "status" => "1"]);
 		$meatcut->save();
-		$meatcut = new Meatcut(["category_id" => "1", "name" => "PIEL DE RES", "description" => "no existe aun ", "status" => "1"]);
-		$meatcut->save();
-		$meatcut = new Meatcut(["category_id" => "1", "name" => "RES EN CANAL", "description" => "no existe aun ", "status" => "1"]);
-		$meatcut->save();
-		$meatcut = new Meatcut(["category_id" => "1", "name" => "RES EN PIE", "description" => "no existe aun ", "status" => "1"]);
-		$meatcut->save();
 		$meatcut = new Meatcut(["category_id" => "1", "name" => "SEBO", "description" => "no existe aun ", "status" => "1"]);
+		$meatcut->save();
+		$meatcut = new Meatcut(["category_id" => "1", "name" => "T BONE", "description" => "no existe aun ", "status" => "1"]);
+		$meatcut->save();
+		$meatcut = new Meatcut(["category_id" => "1", "name" => "TOMAHAWK", "description" => "no existe aun ", "status" => "1"]);
 		$meatcut->save();
 		$meatcut = new Meatcut(["category_id" => "1", "name" => "VIRIL", "description" => "no existe aun ", "status" => "1"]);
 		$meatcut->save();
-		$meatcut = new Meatcut(["category_id" => "1", "name" => "VISCERAS DE RES", "description" => "no existe aun ", "status" => "1"]);
+		$meatcut = new Meatcut(["category_id" => "1", "name" => "RESERVADO 1", "description" => "no existe aun ", "status" => "0"]);
+		$meatcut->save();
+		$meatcut = new Meatcut(["category_id" => "1", "name" => "RESERVADO 2", "description" => "no existe aun ", "status" => "0"]);
 		$meatcut->save();
 
 		$meatcut = new Meatcut(["category_id" => "2", "name" => "BARRIGA", "description" => "no existe aun ", "status" => "1"]);
@@ -113,7 +113,7 @@ class MeatcutSeeder extends Seeder
 		$meatcut->save();
 		$meatcut = new Meatcut(["category_id" => "2", "name" => "RESERVADO 3", "description" => "no existe aun ", "status" => "0"]);
 		$meatcut->save();
-		$meatcut = new Meatcut(["category_id" => "2", "name" => "RESERVADO 4", "description" => "no existe aun ", "status" => "1"]);
+		$meatcut = new Meatcut(["category_id" => "2", "name" => "RESERVADO 4", "description" => "no existe aun ", "status" => "0"]);
 		$meatcut->save();
 
 		$meatcut = new Meatcut(["category_id" => "3", "name" => "ALAS CON COSTILLAR", "description" => "no existe aun ", "status" => "1"]);
@@ -134,7 +134,7 @@ class MeatcutSeeder extends Seeder
 		$meatcut->save();
 		$meatcut = new Meatcut(["category_id" => "3", "name" => "POLLO MARINADO", "description" => "no existe aun ", "status" => "1"]);
 		$meatcut->save();
-		$meatcut = new Meatcut(["category_id" => "3", "name" => "VISCERAS DE POLLO", "description" => "no existe aun ", "status" => "1"]);
+		$meatcut = new Meatcut(["category_id" => "3", "name" => "RESERVADO 1", "description" => "no existe aun ", "status" => "1"]);
 		$meatcut->save();
 
 		$meatcut = new Meatcut(["category_id" => "4", "name" => "BOFE", "description" => "no existe aun ", "status" => "1"]);
@@ -173,6 +173,23 @@ class MeatcutSeeder extends Seeder
 		$meatcut = new Meatcut(["category_id" => "7", "name" => "OTRAS PROTEINAS", "description" => "no existe aun ", "status" => "1"]);
 		$meatcut->save();
 		$meatcut = new Meatcut(["category_id" => "8", "name" => "PESCADOS", "description" => "no existe aun ", "status" => "1"]);
+		$meatcut->save();
+
+		$meatcut = new Meatcut(["category_id" => "1", "name" => "PIEL DE RES", "description" => "no existe aun ", "status" => "1"]);
+		$meatcut->save();
+		$meatcut = new Meatcut(["category_id" => "1", "name" => "RES EN CANAL", "description" => "no existe aun ", "status" => "1"]);
+		$meatcut->save();
+		$meatcut = new Meatcut(["category_id" => "1", "name" => "RES EN PIE", "description" => "no existe aun ", "status" => "1"]);
+		$meatcut->save();
+		$meatcut = new Meatcut(["category_id" => "1", "name" => "VISCERAS DE RES", "description" => "no existe aun ", "status" => "1"]);
+		$meatcut->save();
+		$meatcut = new Meatcut(["category_id" => "1", "name" => "VISCERAS DE POLLO", "description" => "no existe aun ", "status" => "1"]);
+		$meatcut->save();
+		$meatcut = new Meatcut(["category_id" => "1", "name" => "CORAZON DE POLLO", "description" => "no existe aun ", "status" => "1"]);
+		$meatcut->save();
+		$meatcut = new Meatcut(["category_id" => "1", "name" => "MENUDENCIA DE POLLO", "description" => "no existe aun ", "status" => "1"]);
+		$meatcut->save();
+		$meatcut = new Meatcut(["category_id" => "1", "name" => "MOLLEJA POLLO", "description" => "no existe aun ", "status" => "1"]);
 		$meatcut->save();
 	}
 }
