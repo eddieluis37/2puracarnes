@@ -142,7 +142,7 @@ class inventoryController extends Controller
     public function cargarInventariohist(Request $request)
     {
         $v_centrocostoId = $request->input('centrocostoId');
-        //$v_categoriaId = $request->input('categoriaId');
+        $v_categoriaId = $request->input('categoriaId');
                           
         // PASO 1 VOLCADO EN LA TABLA DE HISTORICO 
 
@@ -214,29 +214,34 @@ class inventoryController extends Controller
          ,c.cto_venta_total 
          ,c.precioventa_min
         
-        FROM centro_costo_products c
-        WHERE centrocosto_id = :centrocostoId
-        AND tipoinventario = 'Inicial' " , 
+        FROM centro_costo_products c INNER JOIN products p ON p.id = c.products_id
+        WHERE c.centrocosto_id = :centrocostoId
+        AND p.category_id = :categoriaId
+        AND c.tipoinventario = 'Inicial' " , 
         [
-            'centrocostoId' => $v_centrocostoId
+            'centrocostoId' => $v_centrocostoId,
+            'categoriaId' => $v_categoriaId            
         ]
          );
          
          // PASO 2 ACTUALIZAR INVENTARIO INICIAL DESDE EL FISICO 
          
          DB::update("
-         UPDATE centro_costo_products SET invinicial = fisico
-         WHERE centrocosto_id = :centrocostoId
-         AND tipoinventario = 'Inicial' ",
+         UPDATE centro_costo_products c INNER JOIN products p ON p.id = c.products_id
+         SET c.invinicial = c.fisico       
+         WHERE c.centrocosto_id = :centrocostoId
+         AND p.category_id = :categoriaId
+         AND c.tipoinventario = 'Inicial' ",
         [
-            'centrocostoId' => $v_centrocostoId
+            'centrocostoId' => $v_centrocostoId,
+            'categoriaId' => $v_categoriaId            
         ]
          );
 
       // PASO 3 COLOCAR LOS DATOS EN CERO 
          
         DB::update("
-        UPDATE centro_costo_products c
+        UPDATE centro_costo_products c INNER JOIN products p ON p.id = c.products_id
         SET
          c.compralote = 0
          ,c.alistamiento = 0
@@ -262,11 +267,13 @@ class inventoryController extends Controller
          ,c.cto_trasladosal_total = 0
          ,c.cto_invfisico_total = 0
          ,c.cto_venta_total = 0
-         ,c.precioventa_min = 0
-         WHERE centrocosto_id = :centrocostoId
+         ,c.precioventa_min = 0       
+         WHERE c.centrocosto_id = :centrocostoId
+         AND p.category_id = :categoriaId
          AND tipoinventario = 'Inicial' ",
         [
-            'centrocostoId' => $v_centrocostoId
+            'centrocostoId' => $v_centrocostoId,
+            'categoriaId' => $v_categoriaId            
         ]
         );
 
