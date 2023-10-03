@@ -304,15 +304,18 @@ class inventoryController extends Controller
     {
         $centrocostoId = $request->input('centrocostoId');
         $categoriaId = $request->input('categoriaId');
+        $fechai = $request->input('fechai');
+        $fechaf = $request->input('fechaf');
+
         $data = DB::table('centro_costo_product_hists as ccp')
             ->join('products as pro', 'pro.id', '=', 'ccp.products_id')
             ->join('categories as cat', 'pro.category_id', '=', 'cat.id')
             ->select(
                 'cat.name as namecategoria',
                 'pro.name as nameproducto',
-                'ccp.invinicial as invinicial',
+                'fecha',
                 'ccp.consecutivo',
-                'ccp.fecha',
+                'ccp.invinicial as invinicial',
                 'ccp.compralote as compraLote',
                 'ccp.alistamiento',
                 'ccp.compensados as compensados',
@@ -325,6 +328,7 @@ class inventoryController extends Controller
             ->where('ccp.centrocosto_id', $centrocostoId)         
             ->where('pro.category_id', $categoriaId)
             ->where('pro.status', 1)
+            ->whereBetween('fecha', [$fechai, $fechaf])
             ->get();
 
         // Calculo de la stock ideal 
@@ -343,6 +347,9 @@ class inventoryController extends Controller
     {
         $centrocostoId = $request->input('centrocostoId');
         $categoriaId = $request->input('categoriaId');
+        $fechai = $request->input('fechai');
+        $fechaf = $request->input('fechaf');
+
         $data = DB::table('centro_costo_product_hists as ccp')
             ->join('products as pro', 'pro.id', '=', 'ccp.products_id')
             ->join('categories as cat', 'pro.category_id', '=', 'cat.id')
@@ -359,10 +366,10 @@ class inventoryController extends Controller
                 'ccp.stock as stock',
                 'ccp.fisico as fisico'
             )
-            ->where('ccp.centrocosto_id', $centrocostoId)
-            ->where('ccp.tipoinventario', 'inicial')
+            ->where('ccp.centrocosto_id', $centrocostoId)   
             ->where('pro.category_id', $categoriaId)
             ->where('pro.status', 1)
+            ->whereBetween('fecha', [$fechai, $fechaf])
             ->get();
 
         $totalStock = 0;

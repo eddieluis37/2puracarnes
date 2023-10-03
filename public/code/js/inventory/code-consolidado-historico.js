@@ -5,24 +5,29 @@ const token = document
 
 var dataTable;
 
-function initializeDataTable(centrocostoId = "-1", categoriaId = "-1") {
+function initializeDataTable(centrocostoId = "-1", categoriaId = "-1",fechai="2000-01-01", fechaf="2000-01-01") {
     dataTable = $("#tableInventory").DataTable({
         paging: true,
         pageLength: 150,
         autoWidth: false,
         processing: true,
         serverSide: true,
+        scrollX: true,
         ajax: {
             url: "showhistorico",
             type: "GET",
             data: {
                 centrocostoId: centrocostoId,
                 categoriaId: categoriaId,
+                fechai: fechai,
+                fechaf: fechaf,
             },
         },
         columns: [
             { data: "namecategoria", name: "namecategoria" },
             { data: "nameproducto", name: "nameproducto" },
+            { data: "fecha", name: "fecha" },
+            { data: "consecutivo", name: "consecutivo" },
             { data: "invinicial", name: "invinicial" },
             { data: "compraLote", name: "compraLote" },
             { data: "alistamiento", name: "alistamiento" },
@@ -234,13 +239,15 @@ function initializeDataTable(centrocostoId = "-1", categoriaId = "-1") {
     });
 }
 
-function cargarTotales(centrocostoId = "-1", categoriaId = "-1") {
+function cargarTotales(centrocostoId = "-1", categoriaId = "-1",fechai="2000-01-01", fechaf="2000-01-01") {
     $.ajax({
         type: "GET",
         url: "/totaleshist",
         data: {
             centrocostoId: centrocostoId,
             categoriaId: categoriaId,
+            fechai: fechai,
+            fechaf: fechaf,
         },
         dataType: "JSON",
         success: function (data) {
@@ -261,13 +268,15 @@ function cargarTotales(centrocostoId = "-1", categoriaId = "-1") {
 $(document).ready(function () {
     initializeDataTable("-1");
 
-    $("#centrocosto, #categoria").on("change", function () {
+    $("#centrocosto, #categoria,#fechainicial,#fechafinal").on("change", function () {
         var centrocostoId = $("#centrocosto").val();
         var categoriaId = $("#categoria").val();
+        var fechainicial = $("#fechainicial").val();
+        var fechafinal = $("#fechafinal").val();
 
         dataTable.destroy();
-        initializeDataTable(centrocostoId, categoriaId);
-        cargarTotales(centrocostoId, categoriaId);
+        initializeDataTable(centrocostoId, categoriaId,fechainicial,fechafinal);
+        cargarTotales(centrocostoId, categoriaId,fechainicial,fechafinal);
     });
 });
 
