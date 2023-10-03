@@ -42,9 +42,15 @@
           <input type="date" class="form-control" value="{{$startDate}}" placeholder="Last name">
         </div> -->
         <div class="col-md-3" >
-          <label for="date1" class="form-label">Fecha de Cierre</label>
-          <input type="date" class="form-control" value="{{$endDate}}" placeholder="Last name">
+          <label for="date1" class="form-label">Fecha Inicial</label>
+          <input type="date" class="form-control" name="fechainicial" id="fechainicial">
         </div>
+
+        <div class="col-md-3" >
+          <label for="date1" class="form-label">Fecha Final</label>
+          <input type="date" class="form-control" vname="fechafinal" id="fechafinal">
+        </div>
+
         <div class="col-md-3">
           <label for="" class="form-label">Centro de costo</label>
           <select class="form-control form-control-sm input" name="centrocosto" id="centrocosto" required>
@@ -164,6 +170,8 @@
             <tr>
               <th class="table-th text-white">CAT</th>
               <th class="table-th text-white">PRODUCTO</th>
+              <th class="table-th text-white">FECHA</th>
+              <th class="table-th text-white">Nro</th>
               <th class="table-th text-white">INV INICIAL</th>
               <th class="table-th text-white">COMPRA LOTE</th>
               <th class="table-th text-white">ALIST</th>
@@ -183,6 +191,8 @@
           <tfoot>
             <tr>
               <th>Totales</th>
+              <td></td>
+              <td></td>
               <td></td>
               <td>0.00</td>
               <td>0.00</td>

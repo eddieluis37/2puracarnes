@@ -142,7 +142,7 @@ class inventoryController extends Controller
     public function cargarInventariohist(Request $request)
     {
         $v_centrocostoId = $request->input('centrocostoId');
-        //$v_categoriaId = $request->input('categoriaId');
+        $v_categoriaId = $request->input('categoriaId');
                           
         // PASO 1 VOLCADO EN LA TABLA DE HISTORICO 
 
@@ -214,29 +214,34 @@ class inventoryController extends Controller
          ,c.cto_venta_total 
          ,c.precioventa_min
         
-        FROM centro_costo_products c
-        WHERE centrocosto_id = :centrocostoId
-        AND tipoinventario = 'Inicial' " , 
+        FROM centro_costo_products c INNER JOIN products p ON p.id = c.products_id
+        WHERE c.centrocosto_id = :centrocostoId
+        AND p.category_id = :categoriaId
+        AND c.tipoinventario = 'Inicial' " , 
         [
-            'centrocostoId' => $v_centrocostoId
+            'centrocostoId' => $v_centrocostoId,
+            'categoriaId' => $v_categoriaId            
         ]
          );
          
          // PASO 2 ACTUALIZAR INVENTARIO INICIAL DESDE EL FISICO 
          
          DB::update("
-         UPDATE centro_costo_products SET invinicial = fisico
-         WHERE centrocosto_id = :centrocostoId
-         AND tipoinventario = 'Inicial' ",
+         UPDATE centro_costo_products c INNER JOIN products p ON p.id = c.products_id
+         SET c.invinicial = c.fisico       
+         WHERE c.centrocosto_id = :centrocostoId
+         AND p.category_id = :categoriaId
+         AND c.tipoinventario = 'Inicial' ",
         [
-            'centrocostoId' => $v_centrocostoId
+            'centrocostoId' => $v_centrocostoId,
+            'categoriaId' => $v_categoriaId            
         ]
          );
 
       // PASO 3 COLOCAR LOS DATOS EN CERO 
          
         DB::update("
-        UPDATE centro_costo_products c
+        UPDATE centro_costo_products c INNER JOIN products p ON p.id = c.products_id
         SET
          c.compralote = 0
          ,c.alistamiento = 0
@@ -262,11 +267,13 @@ class inventoryController extends Controller
          ,c.cto_trasladosal_total = 0
          ,c.cto_invfisico_total = 0
          ,c.cto_venta_total = 0
-         ,c.precioventa_min = 0
-         WHERE centrocosto_id = :centrocostoId
+         ,c.precioventa_min = 0       
+         WHERE c.centrocosto_id = :centrocostoId
+         AND p.category_id = :categoriaId
          AND tipoinventario = 'Inicial' ",
         [
-            'centrocostoId' => $v_centrocostoId
+            'centrocostoId' => $v_centrocostoId,
+            'categoriaId' => $v_categoriaId            
         ]
         );
 
@@ -297,15 +304,18 @@ class inventoryController extends Controller
     {
         $centrocostoId = $request->input('centrocostoId');
         $categoriaId = $request->input('categoriaId');
+        $fechai = $request->input('fechai');
+        $fechaf = $request->input('fechaf');
+
         $data = DB::table('centro_costo_product_hists as ccp')
             ->join('products as pro', 'pro.id', '=', 'ccp.products_id')
             ->join('categories as cat', 'pro.category_id', '=', 'cat.id')
             ->select(
                 'cat.name as namecategoria',
                 'pro.name as nameproducto',
-                'ccp.invinicial as invinicial',
+                'fecha',
                 'ccp.consecutivo',
-                'ccp.fecha',
+                'ccp.invinicial as invinicial',
                 'ccp.compralote as compraLote',
                 'ccp.alistamiento',
                 'ccp.compensados as compensados',
@@ -318,6 +328,7 @@ class inventoryController extends Controller
             ->where('ccp.centrocosto_id', $centrocostoId)         
             ->where('pro.category_id', $categoriaId)
             ->where('pro.status', 1)
+            ->whereBetween('fecha', [$fechai, $fechaf])
             ->get();
 
         // Calculo de la stock ideal 
@@ -336,6 +347,9 @@ class inventoryController extends Controller
     {
         $centrocostoId = $request->input('centrocostoId');
         $categoriaId = $request->input('categoriaId');
+        $fechai = $request->input('fechai');
+        $fechaf = $request->input('fechaf');
+
         $data = DB::table('centro_costo_product_hists as ccp')
             ->join('products as pro', 'pro.id', '=', 'ccp.products_id')
             ->join('categories as cat', 'pro.category_id', '=', 'cat.id')
@@ -352,10 +366,10 @@ class inventoryController extends Controller
                 'ccp.stock as stock',
                 'ccp.fisico as fisico'
             )
-            ->where('ccp.centrocosto_id', $centrocostoId)
-            ->where('ccp.tipoinventario', 'inicial')
+            ->where('ccp.centrocosto_id', $centrocostoId)   
             ->where('pro.category_id', $categoriaId)
             ->where('pro.status', 1)
+            ->whereBetween('fecha', [$fechai, $fechaf])
             ->get();
 
         $totalStock = 0;
