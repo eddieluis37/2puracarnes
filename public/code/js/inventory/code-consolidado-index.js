@@ -265,6 +265,8 @@ function cargarTotales(centrocostoId = "-1", categoriaId = "-1") {
 
             $("#totalVenta").html(data.totalVenta);
             $("#totalTrasladoSal").html(data.totalTrasladoSal);
+
+            $("#totalIngresos").html(data.totalIngresos);
         },
     });
 }

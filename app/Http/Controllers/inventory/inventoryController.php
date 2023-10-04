@@ -106,12 +106,17 @@ class inventoryController extends Controller
         $totalTrasladoIng = 0;
         $totalVenta = 0;
         $totalTrasladoSal = 0;
+        $totalIngresos = 0;
 
         foreach ($data as $item) {
 
             $stock = ($item->invinicial + $item->compraLote + $item->alistamiento + $item->compensados + $item->trasladoing) - ($item->venta + $item->trasladosal);
             $item->stock = round($stock, 2);
             $totalStock += $stock;
+
+            $ingresos = ($item->invinicial + $item->compraLote + $item->alistamiento + $item->compensados + $item->trasladoing);
+            $item->ingresos = round($ingresos, 2);
+            $totalIngresos += $ingresos;
 
             $totalInvInicial += $item->invinicial;
             $totalCompraLote += $item->compraLote;
@@ -125,8 +130,8 @@ class inventoryController extends Controller
         return response()->json(
             [
                 'totalStock' => number_format($totalStock, 2),
-                'totalInvInicial' => number_format($totalInvInicial, 2),
 
+                'totalInvInicial' => number_format($totalInvInicial, 2),
                 'totalCompraLote' => number_format($totalCompraLote, 2),
                 'totalAlistamiento' => number_format($totalAlistamiento, 2),
                 'totalCompensados' => number_format($totalCompensados, 2),
@@ -134,6 +139,8 @@ class inventoryController extends Controller
 
                 'totalVenta' => number_format($totalVenta, 2),
                 'totalTrasladoSal' => number_format($totalTrasladoSal, 2),
+
+                'totalIngresos' => number_format($totalIngresos, 2),
 
             ]
         );

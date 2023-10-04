@@ -78,7 +78,7 @@
               <span>Total conteo fisico</span>
             </div>
             <div class="col-3 mb-1 bg-success">
-              <span>{{ $totalStock }}</span><br>
+            <div id="totalIngresos">0,00</div><br>          
               <span>{{ $totalStock }}</span><br>
 
               <div id="totalstock">0,00</div>
