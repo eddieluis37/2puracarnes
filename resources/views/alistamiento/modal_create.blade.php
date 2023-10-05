@@ -8,7 +8,7 @@
 				<div class="task-header">
 					<div class="form-group">
 						<label for="date1" class="form-label">Fecha</label>
-						<input type="date" class="form-control" name="fecha" id="fecha" placeholder="Last name" aria-label="Last name" value="{{date('Y-m-d')}}">
+						<input type="date" class="form-control" name="fecha" id="fecha" placeholder="Last name" aria-label="Last name" >
 					</div>
 				</div>
 			</div>
