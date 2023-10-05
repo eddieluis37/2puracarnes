@@ -136,7 +136,7 @@ class alistamientoController extends Controller
                 $current_date = Carbon::parse($currentDateTime->format('Y-m-d'));
                 $current_date->modify('next monday'); // Move to the next Monday
                 $dateNextMonday = $current_date->format('Y-m-d'); // Output the date in Y-m-d format
-
+                $fechaalistamiento = $request->fecha;
                 $id_user = Auth::user()->id;
 
                 $alist = new Alistamiento();
@@ -144,7 +144,8 @@ class alistamientoController extends Controller
                 $alist->categoria_id = $request->categoria;
                 $alist->centrocosto_id = $request->centrocosto;
                 $alist->meatcut_id = $request->selectCortePadre;
-                $alist->fecha_alistamiento = $currentDateFormat;
+                //$alist->fecha_alistamiento = $currentDateFormat;
+                $alist->fecha_alistamiento = $fechaalistamiento;
                 $alist->fecha_cierre = $dateNextMonday;
                 $alist->save();
                 return response()->json([
@@ -178,9 +179,9 @@ class alistamientoController extends Controller
             ->get();
         //$data = Compensadores::orderBy('id','desc');
         return Datatables::of($data)->addIndexColumn()
-            ->addColumn('date', function ($data) {
-                $date = Carbon::parse($data->fecha_alistamiento);
-                $onlyDate = $date->toDateString();
+            ->addColumn('fecha', function ($data) {
+                $fecha = Carbon::parse($data->fecha_alistamiento);
+                $onlyDate = $fecha->toDateString();
                 return $onlyDate;
             })
             ->addColumn('inventory', function ($data) {
@@ -242,7 +243,7 @@ class alistamientoController extends Controller
                 }
                 return $btn;
             })
-            ->rawColumns(['date', 'inventory', 'action'])
+            ->rawColumns(['fecha', 'inventory', 'action'])
             ->make(true);
     }
 

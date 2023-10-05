@@ -9,7 +9,7 @@ const selectCentrocosto = document.querySelector("#centrocosto");
 const alistamiento_id = document.querySelector("#alistamientoId");
 const contentform = document.querySelector("#contentDisable");
 const selectCortePadre = document.querySelector("#selectCortePadre");
-
+const fechaalistamiento = document.querySelector("#fecha");
 
 $(document).ready(function () {
     $(function() {
@@ -30,7 +30,7 @@ $(document).ready(function () {
                 { data: 'namecut', name: 'namecut' },
                 { data: 'nuevo_stock_padre', name: 'nuevo_stock_padre' },
                 { data: 'inventory', name: 'inventory' },
-                { data: 'date', name: 'date' },
+                { data: 'fecha', name: 'fecha' },
                 {data: 'action', name:'action'}
             ],
             order: [[0, 'DESC']],
@@ -110,6 +110,7 @@ const showData = (resp) => {
     //alistamiento_id.value = register.id;
     selectCategory.value = register.categoria_id;
     selectCentrocosto.value = register.centrocosto_id;
+    fechaalistamiento.value = register.fecha_alistamiento;
     getCortes(register.categoria_id);
     
     const modal = new bootstrap.Modal(document.getElementById('modal-create-alistamiento'));
