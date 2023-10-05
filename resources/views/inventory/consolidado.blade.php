@@ -146,23 +146,23 @@
               </td>
               <td style="background: red">
                 TotTrS
-                <div id="totalTrasladosal">0,00</div>
+                <div id="totalTrasladoSal">0,00</div>
               </td>
               <td style="background: orange">
-                StocIde
-                <div id="StocIde">0,00</div>
+               <!--  StocIde
+                <div id="StocIde">0,00</div> -->
               </td>
               <td style="background: orange">
-                ContFis
+               <!--  ContFis
                 <div id="contFis">0,00</div>
+              </td> -->
+              <td style="background: orange">
+                <!-- DifeKg
+                <div id="totalInvInicial">0,00</div> -->
               </td>
               <td style="background: orange">
-                DifeKg
-                <div id="totalInvInicial">0,00</div>
-              </td>
-              <td style="background: orange">
-                Decomi
-                <div id="decomisos">0,00</div>
+                <!-- Decomi
+                <div id="decomisos">0,00</div> -->
               </td>
             </tr>
           </thead>
