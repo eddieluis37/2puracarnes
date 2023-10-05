@@ -270,7 +270,14 @@ function cargarTotales(centrocostoId = "-1", categoriaId = "-1") {
             $("#totalSalidas").html(data.totalSalidas);
 
             $("#totalConteoFisico").html(data.totalConteoFisico);
+            
+            $("#diferenciaKilos").html(data.diferenciaKilos);
+            $("#difKilosPermitidos").html(data.difKilosPermitidos);
+            $("#porcMerma").html(data.porcMerma);
+            $("#porcMermaPermitida").html(data.porcMermaPermitida);
             $("#difKilos").html(data.difKilos);
+            $("#difPorcentajeMerma").html(data.difPorcentajeMerma);
+
         },
     });
 }

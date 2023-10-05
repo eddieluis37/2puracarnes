@@ -140,16 +140,18 @@ class inventoryController extends Controller
             $totalTrasladoSal += $item->trasladosal;
 
             $totalConteoFisico += $item->fisico;
-
             $diferenciaKilos = $totalConteoFisico - $totalStock;
+            $porcMerma = $diferenciaKilos / $totalIngresos;
+        }
 
+            
+             
             $porcMermaPermitida = 0.005;
             $difKilosPermitidos = -1 * ($totalIngresos * $porcMermaPermitida);
             $difKilos = $diferenciaKilos - $difKilosPermitidos;
             
-            $porcMerma = $diferenciaKilos / $totalIngresos;
+           
             $difPorcentajeMerma = $porcMerma + $porcMermaPermitida;
-        }
 
         return response()->json(
             [
@@ -171,10 +173,10 @@ class inventoryController extends Controller
                 
                 'diferenciaKilos' => number_format($diferenciaKilos, 2),                
                 'difKilosPermitidos' => number_format($difKilosPermitidos, 2),
-                'porcMerma' => number_format($porcMerma, 2),
-                'porcMermaPermitida' => number_format($porcMermaPermitida, 2),
+                'porcMerma' => number_format($porcMerma*100, 2),
+                'porcMermaPermitida' => number_format($porcMermaPermitida*100, 2),
                 'difKilos' => number_format($difKilos, 2),
-                'difPorcentajeMerma' => number_format($difPorcentajeMerma, 2),
+                'difPorcentajeMerma' => number_format($difPorcentajeMerma*100, 2),
 
             ]
         );
