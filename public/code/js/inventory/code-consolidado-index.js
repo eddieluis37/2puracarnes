@@ -270,6 +270,7 @@ function cargarTotales(centrocostoId = "-1", categoriaId = "-1") {
             $("#totalSalidas").html(data.totalSalidas);
 
             $("#totalConteoFisico").html(data.totalConteoFisico);
+            $("#difKilos").html(data.difKilos);
         },
     });
 }

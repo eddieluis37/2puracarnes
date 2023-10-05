@@ -85,27 +85,27 @@
             </div>
             <div class="col-3 mb-1 bg-primary text-center">
               <span>Diferencia en kilos</span><br>
-              <!--           <div id ="totalstock">0,00</div> -->
+              <div id="diferenciaKilos">0,00</div>
             </div>
             <div class="col-3 mb-1 bg-warning text-center">
               <span>Dif. En kilos permitida</span><br>
-              <span>{{ $totalStock }}</span>
+              <div id="difKilosPermitidos">0,00</div>
             </div>
             <div class="col-3 mb-1 bg-info text-center">
-              <span>Merma</span><br>
-              <span>{{ $totalStock }}%</span>
+              <span>% Merma</span><br>
+              <div id="porcMerma">0,00</div>
             </div>
             <div class="col-3 mb-1 bg-warning text-center">
-              <span>Merma permitida</span><br>
-              <span>{{ $totalStock }}</span>
+              <span>% Merma permitida</span><br>
+              <div id="porcMermaPermitida">0,00</div>
             </div>
             <div class="col-3 mb-1 bg-info text-center">
-              <span>Dif. en kilos</span><br>
-              <span>{{ $totalStock }}</span>
+              <span>Dif en kilos</span><br>
+              <div id="difKilos">0,00</div>
             </div>
             <div class="col-3 mb-1 bg-success text-center">
               <span>Dif. en %</span><br>
-              <span>{{ $totalStock }}</span>
+              <div id="difPorcentajeMerma">0,00</div>
             </div>
           </div>
 

@@ -109,7 +109,13 @@ class inventoryController extends Controller
         $totalIngresos = 0;
         $totalSalidas = 0;
         $totalConteoFisico = 0;
+        
+        $diferenciaKilos = 0;
+        $porcMermaPermitida = 0;
+        $difKilosPermitidos = 0;
         $difKilos = 0;
+        $porcMerma = 0;
+        $difPorcentajeMerma = 0;
 
         foreach ($data as $item) {
 
@@ -135,9 +141,14 @@ class inventoryController extends Controller
 
             $totalConteoFisico += $item->fisico;
 
-            $difKilos = $totalConteoFisico - $totalStock;
+            $diferenciaKilos = $totalConteoFisico - $totalStock;
 
+            $porcMermaPermitida = 0.005;
+            $difKilosPermitidos = -1 * ($totalIngresos * $porcMermaPermitida);
+            $difKilos = $diferenciaKilos - $difKilosPermitidos;
             
+            $porcMerma = $diferenciaKilos / $totalIngresos;
+            $difPorcentajeMerma = $porcMerma + $porcMermaPermitida;
         }
 
         return response()->json(
@@ -157,7 +168,13 @@ class inventoryController extends Controller
                 'totalSalidas' => number_format($totalSalidas, 2),
 
                 'totalConteoFisico' => number_format($totalConteoFisico, 2),
-                'difKilos' => number_format($difKilos, 2),                
+                
+                'diferenciaKilos' => number_format($diferenciaKilos, 2),                
+                'difKilosPermitidos' => number_format($difKilosPermitidos, 2),
+                'porcMerma' => number_format($porcMerma, 2),
+                'porcMermaPermitida' => number_format($porcMermaPermitida, 2),
+                'difKilos' => number_format($difKilos, 2),
+                'difPorcentajeMerma' => number_format($difPorcentajeMerma, 2),
 
             ]
         );
