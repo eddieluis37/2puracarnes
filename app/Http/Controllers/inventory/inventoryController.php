@@ -109,6 +109,7 @@ class inventoryController extends Controller
         $totalIngresos = 0;
         $totalSalidas = 0;
         $totalConteoFisico = 0;
+        $difKilos = 0;
 
         foreach ($data as $item) {
 
@@ -133,6 +134,10 @@ class inventoryController extends Controller
             $totalTrasladoSal += $item->trasladosal;
 
             $totalConteoFisico += $item->fisico;
+
+            $difKilos = $totalConteoFisico - $totalStock;
+
+            
         }
 
         return response()->json(
@@ -152,8 +157,7 @@ class inventoryController extends Controller
                 'totalSalidas' => number_format($totalSalidas, 2),
 
                 'totalConteoFisico' => number_format($totalConteoFisico, 2),
-
-                
+                'difKilos' => number_format($difKilos, 2),                
 
             ]
         );
