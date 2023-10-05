@@ -78,10 +78,10 @@
               <span>Total conteo fisico</span>
             </div>
             <div class="col-3 mb-1 bg-success">
-            <div id="totalIngresos">0,00</div><br>          
-              <span>{{ $totalStock }}</span><br>
-
-              <div id="totalstock">0,00</div>
+              <div id="totalIngresos">0,00</div>
+              <div id="totalSalidas">0,00</div>
+              <div id="totalStock">0,00</div>
+              <div id="totalConteoFisico">0,00</div>
             </div>
             <div class="col-3 mb-1 bg-primary text-center">
               <span>Diferencia en kilos</span><br>

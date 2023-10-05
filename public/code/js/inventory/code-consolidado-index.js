@@ -255,7 +255,7 @@ function cargarTotales(centrocostoId = "-1", categoriaId = "-1") {
         },
         dataType: "JSON",
         success: function (data) {
-            $("#totalstock").html(data.totalStock);
+            $("#totalStock").html(data.totalStock);
             $("#totalInvInicial").html(data.totalInvInicial);
 
             $("#totalCompraLote").html(data.totalCompraLote);
@@ -267,6 +267,9 @@ function cargarTotales(centrocostoId = "-1", categoriaId = "-1") {
             $("#totalTrasladoSal").html(data.totalTrasladoSal);
 
             $("#totalIngresos").html(data.totalIngresos);
+            $("#totalSalidas").html(data.totalSalidas);
+
+            $("#totalConteoFisico").html(data.totalConteoFisico);
         },
     });
 }
