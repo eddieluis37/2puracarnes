@@ -32,7 +32,6 @@ class inventoryController extends Controller
 
         return view('inventory.consolidado', compact('category', 'centros', 'startDate', 'endDate', 'totalStock'));
     }
-
     public function show(Request $request)
     {
         $centrocostoId = $request->input('centrocostoId');
@@ -51,26 +50,28 @@ class inventoryController extends Controller
                 'ccp.trasladosal as trasladosal',
                 'ccp.venta as venta',
                 'ccp.stock as stock',
-                'ccp.fisico as fisico'
+                'ccp.fisico as fisico',
+                'ccp.products_id as products_id'
             )
             ->where('ccp.centrocosto_id', $centrocostoId)
             ->where('ccp.tipoinventario', 'inicial')
             ->where('pro.category_id', $categoriaId)
             ->where('pro.status', 1)
             ->get();
-
         // Calculo de la stock ideal 
-
         foreach ($data as $item) {
             $stock = ($item->invinicial + $item->compraLote + $item->alistamiento + $item->compensados + $item->trasladoing) - ($item->venta + $item->trasladosal);
             $item->stock = round($stock, 2);
+            // Actualizar el stock 
+            DB::table('centro_costo_products')
+                ->where('centrocosto_id', $centrocostoId)
+                ->where('products_id', $item->products_id)
+                ->update(['stock' => $item->stock]);
         }
-
         return datatables()->of($data)
             ->addIndexColumn()
             ->make(true);
     }
-
 
     public function totales(Request $request)
     {
@@ -109,7 +110,7 @@ class inventoryController extends Controller
         $totalIngresos = 0;
         $totalSalidas = 0;
         $totalConteoFisico = 0;
-        
+
         $diferenciaKilos = 0;
         $porcMermaPermitida = 0;
         $difKilosPermitidos = 0;
@@ -129,7 +130,7 @@ class inventoryController extends Controller
 
             $salidas = ($item->venta + $item->trasladosal);
             $item->salidas = round($salidas, 2);
-            $totalSalidas += $salidas;           
+            $totalSalidas += $salidas;
 
             $totalInvInicial += $item->invinicial;
             $totalCompraLote += $item->compraLote;
@@ -144,14 +145,14 @@ class inventoryController extends Controller
             $porcMerma = $diferenciaKilos / $totalIngresos;
         }
 
-            
-             
-            $porcMermaPermitida = 0.005;
-            $difKilosPermitidos = -1 * ($totalIngresos * $porcMermaPermitida);
-            $difKilos = $diferenciaKilos - $difKilosPermitidos;
-            
-           
-            $difPorcentajeMerma = $porcMerma + $porcMermaPermitida;
+
+
+        $porcMermaPermitida = 0.005;
+        $difKilosPermitidos = -1 * ($totalIngresos * $porcMermaPermitida);
+        $difKilos = $diferenciaKilos - $difKilosPermitidos;
+
+
+        $difPorcentajeMerma = $porcMerma + $porcMermaPermitida;
 
         return response()->json(
             [
@@ -170,13 +171,13 @@ class inventoryController extends Controller
                 'totalSalidas' => number_format($totalSalidas, 2),
 
                 'totalConteoFisico' => number_format($totalConteoFisico, 2),
-                
-                'diferenciaKilos' => number_format($diferenciaKilos, 2),                
+
+                'diferenciaKilos' => number_format($diferenciaKilos, 2),
                 'difKilosPermitidos' => number_format($difKilosPermitidos, 2),
-                'porcMerma' => number_format($porcMerma*100, 2),
-                'porcMermaPermitida' => number_format($porcMermaPermitida*100, 2),
+                'porcMerma' => number_format($porcMerma * 100, 2),
+                'porcMermaPermitida' => number_format($porcMermaPermitida * 100, 2),
                 'difKilos' => number_format($difKilos, 2),
-                'difPorcentajeMerma' => number_format($difPorcentajeMerma*100, 2),
+                'difPorcentajeMerma' => number_format($difPorcentajeMerma * 100, 2),
 
             ]
         );
@@ -186,10 +187,11 @@ class inventoryController extends Controller
     {
         $v_centrocostoId = $request->input('centrocostoId');
         $v_categoriaId = $request->input('categoriaId');
-                          
+
         // PASO 1 VOLCADO EN LA TABLA DE HISTORICO 
 
-        DB::update("
+        DB::update(
+            "
         INSERT INTO centro_costo_product_hists  
         (
           centrocosto_id
@@ -260,30 +262,32 @@ class inventoryController extends Controller
         FROM centro_costo_products c INNER JOIN products p ON p.id = c.products_id
         WHERE c.centrocosto_id = :centrocostoId
         AND p.category_id = :categoriaId
-        AND c.tipoinventario = 'Inicial' " , 
-        [
-            'centrocostoId' => $v_centrocostoId,
-            'categoriaId' => $v_categoriaId            
-        ]
-         );
-         
-         // PASO 2 ACTUALIZAR INVENTARIO INICIAL DESDE EL FISICO 
-         
-         DB::update("
+        AND c.tipoinventario = 'Inicial' ",
+            [
+                'centrocostoId' => $v_centrocostoId,
+                'categoriaId' => $v_categoriaId
+            ]
+        );
+
+        // PASO 2 ACTUALIZAR INVENTARIO INICIAL DESDE EL FISICO 
+
+        DB::update(
+            "
          UPDATE centro_costo_products c INNER JOIN products p ON p.id = c.products_id
          SET c.invinicial = c.fisico       
          WHERE c.centrocosto_id = :centrocostoId
          AND p.category_id = :categoriaId
          AND c.tipoinventario = 'Inicial' ",
-        [
-            'centrocostoId' => $v_centrocostoId,
-            'categoriaId' => $v_categoriaId            
-        ]
-         );
+            [
+                'centrocostoId' => $v_centrocostoId,
+                'categoriaId' => $v_categoriaId
+            ]
+        );
 
-      // PASO 3 COLOCAR LOS DATOS EN CERO 
-         
-        DB::update("
+        // PASO 3 COLOCAR LOS DATOS EN CERO 
+
+        DB::update(
+            "
         UPDATE centro_costo_products c INNER JOIN products p ON p.id = c.products_id
         SET
          c.compralote = 0
@@ -314,16 +318,16 @@ class inventoryController extends Controller
          WHERE c.centrocosto_id = :centrocostoId
          AND p.category_id = :categoriaId
          AND tipoinventario = 'Inicial' ",
-        [
-            'centrocostoId' => $v_centrocostoId,
-            'categoriaId' => $v_categoriaId            
-        ]
+            [
+                'centrocostoId' => $v_centrocostoId,
+                'categoriaId' => $v_categoriaId
+            ]
         );
 
         return response()->json([
             'status' => 1,
             'message' => 'Cargado al inventario exitosamente',
-            
+
         ]);
     }
 
@@ -368,7 +372,7 @@ class inventoryController extends Controller
                 'ccp.stock as stock',
                 'ccp.fisico as fisico'
             )
-            ->where('ccp.centrocosto_id', $centrocostoId)         
+            ->where('ccp.centrocosto_id', $centrocostoId)
             ->where('pro.category_id', $categoriaId)
             ->where('pro.status', 1)
             ->whereBetween('fecha', [$fechai, $fechaf])
@@ -409,7 +413,7 @@ class inventoryController extends Controller
                 'ccp.stock as stock',
                 'ccp.fisico as fisico'
             )
-            ->where('ccp.centrocosto_id', $centrocostoId)   
+            ->where('ccp.centrocosto_id', $centrocostoId)
             ->where('pro.category_id', $categoriaId)
             ->where('pro.status', 1)
             ->whereBetween('fecha', [$fechai, $fechaf])
