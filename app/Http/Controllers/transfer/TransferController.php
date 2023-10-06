@@ -173,24 +173,18 @@ class transferController extends Controller
 
     public function obtenerValoresProducto(Request $request)
     {
-        // $productId = $request->input('productId');
-        // Obtén los valores de stock y conteo_tangible para el producto seleccionado
         $centrocostoOrigenId = $request->input('centrocostoOrigen');
-        $producto = DB::table('products')
-            ->join('centro_costo_products as ce', 'products.id', '=', 'ce.products_id')
-            ->where('products.id', $request->productId)
-            ->where('ce.centrocosto_id', $centrocostoOrigenId)
-            // ->where('ce.tipoinventario', 'inicial')
-
+        $producto = DB::table('centro_costo_products')
+            ->where('products_id', $request->productId)
+            ->where('centrocosto_id', $centrocostoOrigenId)
             ->first();
-
         if ($producto) {
             return response()->json([
                 'stock' => $producto->stock,
                 'fisico' => $producto->fisico
             ]);
         } else {
-            // Handle the case when $producto is null
+            // En caso de que el producto no sea encontrado
             return response()->json([
                 'error' => 'Product not found'
             ], 404);
@@ -202,11 +196,9 @@ class transferController extends Controller
         // $productId = $request->input('productId');
         // Obtén los valores de stock y fisico para el producto seleccionado
         $centrocostoDestinoId = $request->input('centrocostoDestino');
-        $producto = DB::table('products')
-            ->join('centro_costo_products as ce', 'products.id', '=', 'ce.products_id')
-            ->where('products.id', $request->productId)
-            ->where('ce.centrocosto_id', $centrocostoDestinoId)
-            //    ->where('ce.tipoinventario', 'inicial')
+        $producto = DB::table('centro_costo_products')        
+            ->where('products_id', $request->productId)
+            ->where('centrocosto_id', $centrocostoDestinoId)          
             ->first();
 
         if ($producto) {
