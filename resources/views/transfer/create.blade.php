@@ -76,7 +76,7 @@
 								<div class="col-md-3">
 									<label for="" class="form-label">KG a trasladar</label>
 									<div class="input-group flex-nowrap">
-										<input type="text" id="kgrequeridos" name="kgrequeridos" class="form-control input" placeholder="EJ: 10,00">
+										<input type="text" id="kgrequeridos" name="kgrequeridos" class="form-control input" placeholder="EJ: 10,00 Acepta Coma">
 										<span class="input-group-text" id="addon-wrapping">KG</span>
 									</div>
 								</div>
