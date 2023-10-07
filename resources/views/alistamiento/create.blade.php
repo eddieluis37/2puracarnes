@@ -106,7 +106,7 @@
 							<div class="col-md-4">
 								<label for="" class="form-label">Stock actual</label>
 								<div class="input-group flex-nowrap">
-								<input type="text" id="stockCortePadre" name="stockCortePadre" value="{{$cortes[0]->stock}}" class="form-control-sm form-control" placeholder="10,00 kg" readonly>
+								<input type="text" id="stockCortePadre" name="stockCortePadre" value="{{$cortes[0]->stockPadre}}" class="form-control-sm form-control" placeholder="10,00 kg" readonly>
 									<span class="input-group-text" id="addon-wrapping">KG</span>
 								</div>
 							</div>
@@ -152,7 +152,7 @@
 											<td>{{$proddetail->id}}</td>
 											<td>{{$proddetail->code}}</td>
 											<td>{{$proddetail->nameprod}}</td>
-											<td>{{ number_format($proddetail->stock, 2, ',', '.')}} KG</td>
+											<td>{{ number_format($proddetail->stockHijo, 2, ',', '.')}} KG</td>
 											<td>{{ number_format($proddetail->fisico, 2, ',', '.')}} KG</td>
 											<td>
 												@if($status == 'true' && $statusInventory == 'false')

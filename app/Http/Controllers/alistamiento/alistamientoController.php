@@ -52,6 +52,8 @@ class alistamientoController extends Controller
         $cortes = DB::table('products as p')
             ->join('centro_costo_products as ce', 'p.id', '=', 'ce.products_id')
             ->select('p.*', 'ce.stock', 'ce.fisico', 'p.id as productopadreId')
+            ->selectRaw('ce.invinicial + ce.compraLote + ce.alistamiento +
+            ce.compensados + ce.trasladoing - (ce.venta + ce.trasladosal) stockPadre')
             ->where([
                 ['p.level_product_id', 1],
                 ['ce.tipoinventario', "inicial"],
@@ -331,6 +333,8 @@ class alistamientoController extends Controller
             ->join('products as pro', 'en.products_id', '=', 'pro.id')
             ->join('centro_costo_products as ce', 'pro.id', '=', 'ce.products_id')
             ->select('en.*', 'pro.name as nameprod', 'pro.code', 'ce.stock', 'ce.fisico')
+            ->selectRaw('ce.invinicial + ce.compraLote + ce.alistamiento +
+            ce.compensados + ce.trasladoing - (ce.venta + ce.trasladosal) stockHijo')
             ->where([
                 ['ce.centrocosto_id', $centrocostoId],
                 ['ce.tipoinventario', "inicial"],
@@ -521,6 +525,7 @@ class alistamientoController extends Controller
                     'message' => 'No tiene productos agregados'
                 ]);
             }
+            $stockalistpadre = 0; 
             foreach ($regProd as $key) {
                 $shoppDetails = new shopping_enlistment_details();
                 $shoppDetails->shopping_enlistment_id = $shopp->id;
@@ -531,22 +536,34 @@ class alistamientoController extends Controller
                 $shoppDetails->newstock = $key->newstock;
                 $shoppDetails->save();
 
-                DB::table('centro_costo_products')
-                    ->join('shopping_enlistment', function ($join) use ($key) {
-                        $join->on('centro_costo_products.centrocosto_id', '=', 'shopping_enlistment.centrocosto_id')
-                            ->where('centro_costo_products.products_id', $key->products_id)
-                            ->where('centro_costo_products.tipoinventario', 'inicial');
-                    })
-                    ->update(['centro_costo_products.alistamiento' => abs($key->newstock)]);
+                $stockalistpadre = $stockalistpadre + $key->kgrequeridos;                
+
+                    DB::update("
+                     UPDATE centro_costo_products c 
+                     SET c.alistamiento = c.alistamiento + :krequeridos        
+                     WHERE c.products_id = :vproducts_id                     
+                     AND c.tipoinventario = 'Inicial' ",
+                        [
+                            'vproducts_id' => $key->products_id,
+                            'krequeridos' => $key->kgrequeridos
+                        ]
+                    );           
+
             }
 
             $productopadreId = $shopp->productopadre_id;
             $centrocostoId = $shopp->centrocosto_id;
-            Centro_costo_product::where('products_id', $productopadreId)
-                ->where('centrocosto_id', $centrocostoId)
-                ->where('tipoinventario', 'inicial')
-                ->update(['alistamiento' => ($request->newStockPadre)]);
 
+            DB::update("
+                     UPDATE centro_costo_products c 
+                     SET c.alistamiento = c.alistamiento + :krequeridos        
+                     WHERE c.products_id = :vproducts_id                     
+                     AND c.tipoinventario = 'Inicial' ",
+                        [
+                            'vproducts_id' => $productopadreId,
+                            'krequeridos' => $stockalistpadre * -1
+                        ]
+                    );            
 
 
             $invalist = Alistamiento::where('id', $request->alistamientoId)->first();
