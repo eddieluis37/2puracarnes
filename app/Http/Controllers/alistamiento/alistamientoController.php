@@ -541,11 +541,13 @@ class alistamientoController extends Controller
                     DB::update("
                      UPDATE centro_costo_products c 
                      SET c.alistamiento = c.alistamiento + :krequeridos        
-                     WHERE c.products_id = :vproducts_id                     
+                     WHERE c.products_id = :vproducts_id 
+                     AND c.centrocosto_id = :vcentrocosto                    
                      AND c.tipoinventario = 'Inicial' ",
                         [
                             'vproducts_id' => $key->products_id,
-                            'krequeridos' => $key->kgrequeridos
+                            'krequeridos' => $key->kgrequeridos,
+                            'vcentrocosto' => $request->centrocosto                            
                         ]
                     );           
 
@@ -557,11 +559,13 @@ class alistamientoController extends Controller
             DB::update("
                      UPDATE centro_costo_products c 
                      SET c.alistamiento = c.alistamiento + :krequeridos        
-                     WHERE c.products_id = :vproducts_id                     
+                     WHERE c.products_id = :vproducts_id  
+                     AND c.centrocosto_id = :vcentrocosto                                       
                      AND c.tipoinventario = 'Inicial' ",
                         [
                             'vproducts_id' => $productopadreId,
-                            'krequeridos' => $stockalistpadre * -1
+                            'krequeridos' => $stockalistpadre * -1,
+                            'vcentrocosto' => $centrocostoId
                         ]
                     );            
 
