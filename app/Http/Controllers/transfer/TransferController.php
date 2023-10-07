@@ -568,18 +568,18 @@ class transferController extends Controller
 
                 DB::table('centro_costo_products')
                     ->where('centro_costo_products.products_id', $key->products_id)
-                    ->where('centro_costo_products.tipoinventario', 'inicial')
+                    ->where('centro_costo_products.centrocosto_id', $request->centrocostoDestino)
                     ->join('updating_transfer', 'centro_costo_products.centrocosto_id', '=', 'updating_transfer.centrocostoDestino_id')
                     ->update([
-                        'centro_costo_products.trasladoing' => $key->kgrequeridos
+                        'centro_costo_products.trasladoing' => DB::raw('centro_costo_products.trasladoing + ' . $key->kgrequeridos)
                     ]);
 
                 DB::table('centro_costo_products')
                     ->where('centro_costo_products.products_id', $key->products_id)
-                    ->where('centro_costo_products.tipoinventario', 'inicial')
+                    ->where('centro_costo_products.centrocosto_id', $request->centrocostoOrigen)
                     ->join('updating_transfer', 'centro_costo_products.centrocosto_id', '=', 'updating_transfer.centrocostoOrigen_id')
                     ->update([
-                        'centro_costo_products.trasladosal' => $key->kgrequeridos
+                        'centro_costo_products.trasladosal' => DB::raw('centro_costo_products.trasladosal + ' . $key->kgrequeridos)
                     ]);
             }
 
