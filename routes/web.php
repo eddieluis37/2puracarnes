@@ -32,6 +32,7 @@ use App\Http\Controllers\cerdo\beneficiocerdoController;
 
 use App\Http\Controllers\FormapagoController;
 use App\Http\Controllers\ParametrocontableController;
+use App\Http\Controllers\SaleController;
 
 use App\Http\Controllers\compensado\compensadoController;
 use App\Http\Controllers\alistamiento\alistamientoController;
@@ -311,6 +312,11 @@ Route::group(['middleware' => [('auth')]], function () {
     Route::get('parametrocontable{parametrocontableId}/delete', [ParametrocontableController::class, 'delete'])->name('parametrocontable.delete');
     Route::get('parametrocontable{parametrocontableId}/edit', [ParametrocontableController::class, 'edit'])->name('parametrocontable.edit');
     Route::post('parametrocontable/{parametrocontableId}', [ParametrocontableController::class, 'update'])->name('parametrocontable.update');
+
+    /*****************************VENTAS******************************************/
+   
+    Route::get('sales', [SaleController::class, 'index'])->name('sale.index');
+    
 });
 
 require __DIR__ . '/admin.php';
