@@ -196,9 +196,9 @@ class transferController extends Controller
         // $productId = $request->input('productId');
         // Obtén los valores de stock y fisico para el producto seleccionado
         $centrocostoDestinoId = $request->input('centrocostoDestino');
-        $producto = DB::table('centro_costo_products')        
+        $producto = DB::table('centro_costo_products')
             ->where('products_id', $request->productId)
-            ->where('centrocosto_id', $centrocostoDestinoId)          
+            ->where('centrocosto_id', $centrocostoDestinoId)
             ->first();
 
         if ($producto) {
@@ -571,7 +571,9 @@ class transferController extends Controller
                     ->where('centro_costo_products.centrocosto_id', $request->centrocostoDestino)
                     ->join('updating_transfer', 'centro_costo_products.centrocosto_id', '=', 'updating_transfer.centrocostoDestino_id')
                     ->update([
-                        'centro_costo_products.trasladoing' => DB::raw('centro_costo_products.trasladoing + ' . $key->kgrequeridos)
+                        'centro_costo_products.trasladoing' => DB::raw('centro_costo_products.trasladoing + ' . $key->kgrequeridos),
+                        'centro_costo_products.stock' => DB::raw('centro_costo_products.invinicial + centro_costo_products.compralote + centro_costo_products.alistamiento
+                         + centro_costo_products.compensados + centro_costo_products.trasladoing - (centro_costo_products.venta + centro_costo_products.trasladosal)')
                     ]);
 
                 DB::table('centro_costo_products')
@@ -579,7 +581,9 @@ class transferController extends Controller
                     ->where('centro_costo_products.centrocosto_id', $request->centrocostoOrigen)
                     ->join('updating_transfer', 'centro_costo_products.centrocosto_id', '=', 'updating_transfer.centrocostoOrigen_id')
                     ->update([
-                        'centro_costo_products.trasladosal' => DB::raw('centro_costo_products.trasladosal + ' . $key->kgrequeridos)
+                        'centro_costo_products.trasladosal' => DB::raw('centro_costo_products.trasladosal + ' . $key->kgrequeridos),
+                        'centro_costo_products.stock' => DB::raw('centro_costo_products.invinicial + centro_costo_products.compralote + centro_costo_products.alistamiento
+                        + centro_costo_products.compensados + centro_costo_products.trasladoing - (centro_costo_products.venta + centro_costo_products.trasladosal)')
                     ]);
             }
 
