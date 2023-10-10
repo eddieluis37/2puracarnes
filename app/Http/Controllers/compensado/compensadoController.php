@@ -16,6 +16,8 @@ use Yajra\Datatables\Datatables;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\metodosgenerales\metodosrogercodeController;
+use App\Models\Centro_costo_product;
+
 
 class compensadoController extends Controller
 {
@@ -447,46 +449,50 @@ class compensadoController extends Controller
     {
         $currentDateTime = Carbon::now();
         $formattedDate = $currentDateTime->format('Y-m-d');
-
         $compensadoId = $request->input('compensadoId');
-        // $centrocostoid = $request->input('centrocostoid'); 
-
         $compensadores = Compensadores::find($compensadoId);
-
         $compensadores->fecha_cierre = $formattedDate;
         $compensadores->save();
-
         $compensadores = Compensadores::where('id', $compensadoId)->get();
         $centrocosto_id = $compensadores->first()->centrocosto_id;
 
-
         DB::update(
             "
-        UPDATE centro_costo_products c
-        JOIN compensadores_details d ON c.products_id = d.products_id
-        JOIN compensadores b ON b.id = d.compensadores_id
-        SET c.compensados =  c.compensados + d.peso,
-            c.cto_compensados =  c.cto_compensados + d.pcompra,
-            c.cto_compensados_total  = c.cto_compensados_total + (d.pcompra * d.peso)
-        WHERE c.tipoinventario = 'inicial' 
-        AND d.compensadores_id = :compensadoresid
-        AND b.centrocosto_id = :cencosid 
-        AND c.centrocosto_id = :cencosid2 ",
+            UPDATE centro_costo_products c
+            JOIN compensadores_details d ON c.products_id = d.products_id
+            JOIN compensadores b ON b.id = d.compensadores_id
+            SET c.compensados =  c.compensados + d.peso,
+                c.cto_compensados =  c.cto_compensados + d.pcompra,
+                c.cto_compensados_total  = c.cto_compensados_total + (d.pcompra * d.peso)
+            WHERE c.tipoinventario = 'inicial' 
+            AND d.compensadores_id = :compensadoresid
+            AND b.centrocosto_id = :cencosid 
+            AND c.centrocosto_id = :cencosid2 ",
             [
                 'compensadoresid' => $compensadoId,
                 'cencosid' => $centrocosto_id,
                 'cencosid2' => $centrocosto_id
             ]
         );
+
+    // Calcular el peso acumulado del producto
+        $centroCostoProducts = Centro_costo_product::where('tipoinventario', 'inicial')
+            ->where('centrocosto_id', $centrocosto_id)
+            ->get();
+
+        foreach ($centroCostoProducts as $centroCostoProduct) {
+            $accumulatedWeight = Compensadores_detail::where('compensadores_id', '<=', $compensadoId)
+                ->where('products_id', $centroCostoProduct->products_id)
+                ->sum('peso');
+
+            $centroCostoProduct->compensados = $accumulatedWeight;
+            $centroCostoProduct->save();
+        }
+
         return response()->json([
             'status' => 1,
             'message' => 'Cargado al inventario exitosamente',
             'compensadores' => $compensadores
         ]);
-
-        // $providers = Third::Where('status',1)->get();
-        //$centros = Centrocosto::Where('status',1)->get();
-        // return view('compensado.res.index', compact('providers','centros'));
-
     }
 }
