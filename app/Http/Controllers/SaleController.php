@@ -30,7 +30,24 @@ class SaleController extends Controller
     
     public function store(Request $request)
     {
+        $venta = new Sale();
      
+        $venta->fecha = $request->fecha;
+        $venta->centrocosto_id = $request->centrocosto;
+        $venta->third_id = $request->cliente;
+        $venta->vendedor_id = $request->vendedor;
+        $venta->domiciliario_id = $request->domiciliario;
+        $venta->user_id = $request->user()->id;
+        
+        $venta->total = 0;
+        $venta->items = 0;
+        $venta->cash = 0;
+        $venta->change = 0;
+        $venta->status = 0;
+        
+        $venta->save();
+
+        return redirect()->back();
     }
 
     

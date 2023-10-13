@@ -316,6 +316,7 @@ Route::group(['middleware' => [('auth')]], function () {
     /*****************************VENTAS******************************************/
    
     Route::get('sales', [SaleController::class, 'index'])->name('sale.index');
+    Route::post('salesave', [SaleController::class, 'store'])->name('sale.save');
     
 });
 
