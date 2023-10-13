@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Sale;
+use App\Models\Third;
+use App\Models\centros\Centrocosto;
+
 use Illuminate\Http\Request;
 
 class SaleController extends Controller
@@ -10,8 +13,12 @@ class SaleController extends Controller
     
     public function index()
     {
-        $ventas = Sale::get();              
-        return view('sale.index',compact('ventas'));
+        $centros = Centrocosto::Where('status', 1)->get();
+        $clientes = Third::Where('cliente', 1)->get();
+        $vendedores = Third::Where('vendedor', 1)->get();
+        $domiciliarios = Third::Where('domiciliario', 1)->get();
+
+        return view('sale.index',compact('centros','clientes','vendedores','domiciliarios'));
     }
 
     
