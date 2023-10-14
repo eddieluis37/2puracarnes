@@ -75,7 +75,7 @@ class ListaPrecioController extends Controller
     }
 
 
-    public function destroy(Request $request, $lpId)
+    public function delete(Request $request, $lpId)
     {
         $lp = Listaprecio::find($lpId);
         $lp->delete();
