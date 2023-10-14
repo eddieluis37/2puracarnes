@@ -317,6 +317,7 @@ Route::group(['middleware' => [('auth')]], function () {
    
     Route::get('sales', [SaleController::class, 'index'])->name('sale.index');
     Route::post('salesave', [SaleController::class, 'store'])->name('sale.save');
+    Route::get('sale{saleId}/delete', [SaleController::class, 'delete'])->name('sale.delete');
     
 });
 

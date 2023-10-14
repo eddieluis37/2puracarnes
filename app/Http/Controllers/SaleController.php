@@ -13,12 +13,13 @@ class SaleController extends Controller
     
     public function index()
     {
+        $ventas = Sale::get();
         $centros = Centrocosto::Where('status', 1)->get();
         $clientes = Third::Where('cliente', 1)->get();
         $vendedores = Third::Where('vendedor', 1)->get();
         $domiciliarios = Third::Where('domiciliario', 1)->get();
 
-        return view('sale.index',compact('centros','clientes','vendedores','domiciliarios'));
+        return view('sale.index',compact('centros','clientes','vendedores','domiciliarios','ventas'));
     }
 
     
@@ -68,8 +69,10 @@ class SaleController extends Controller
     
     }
     
-    public function destroy(Pago $pago)
+    public function delete(Request $request, $ventaId)
     {
-        //
+        $venta = Sale::find($ventaId);
+        $venta->delete();
+        return redirect()->back();
     }
 }

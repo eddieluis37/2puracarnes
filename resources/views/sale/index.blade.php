@@ -22,16 +22,40 @@
 						<thead class="text-white" style="background: #3B3F5C">
 							<tr>
 								<th class="table-th text-white">#</th>
-								<th class="table-th text-white">Categoria</th>
-								<th class="table-th text-white ">Centro de costo</th>
-								<th class="table-th text-white ">Corte de padre</th>
-								<th class="table-th text-white ">Nuevo stock</th>
-								<th class="table-th text-white ">Inventario</th>
 								<th class="table-th text-white">Fecha</th>
+								<th class="table-th text-white">Consecutivo</th>
+								<th class="table-th text-white ">Centro Costo</th>
+								<th class="table-th text-white ">Cliente</th>
+								<th class="table-th text-white ">Total</th>
+								<th class="table-th text-white ">Estado</th>								
 								<th class="table-th text-white text-center">Acciones</th>
 							</tr>
 						</thead>
-						<tbody>
+						<tbody>							
+							@foreach ($ventas as $venta)                        
+							<tr>
+							    <td>{{ $venta->id }}</td>                                                       
+								<td>{{ $venta->fecha }}</td>
+								<td>{{ $venta->consecutivo }}</td>
+								<td>{{ $venta->centrocosto->name }}</td>
+								<td>{{ $venta->third->name }}</td>
+								<td>{{ $venta->total }}</td>
+								<td>{{ $venta->status }}</td>
+								<td>
+								    <div class="text-center">
+										<a href="" id="editparametrocontable" data-toggle="modal"  class="btn btn-dark "
+										data-target='#editpc_modal' data-id="{{$venta->id}}">
+											<i class="fas fa-edit"></i>
+										</a>
+										
+										<a href ="{{route('sale.delete', $venta->id)}}"  class="btn btn-dark " onclick="return confirm('Desea eliminar el registro?')" >
+										   <i class="fas fa-trash"></i>
+										</a>	
+									
+									</div>
+								</td>
+							</tr> 						                 
+							@endforeach
 						</tbody>
 					</table>
 				</div>
@@ -70,3 +94,25 @@
 @section('script')
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script> 
 @endsection
+
+
+
+<script>
+
+$(document).ready(initializeDataTable);
+ function initializeDataTable() {
+	new DataTable('#tableVenta', {
+		columns: [
+			{ title: '#' },
+			{ title: 'Fecha' },
+			{ title: 'Consecutivo' },
+			{ title: 'Centro Costo' },
+			{ title: 'Cliente' },
+			{ title: 'Total' },
+			{ title: 'Estado' },
+			{ title: 'Acciones' }
+		],
+		
+	});
+}
+</script>

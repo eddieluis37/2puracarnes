@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\centros\Centrocosto;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -17,6 +18,17 @@ class Sale extends Model
         return $this->belongsTo(User::class);
     }
 
+    public function centrocosto()
+	{
+		return $this->belongsTo(Centrocosto::class);
+    }
+
+    public function third()
+	{
+		return $this->belongsTo(Third::class);
+    }
+
+    
     // MUTATORS
     /*
     public function setTotalAttribute($value)

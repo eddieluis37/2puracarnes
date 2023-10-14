@@ -7,7 +7,7 @@
 					<form id="parametrocontabledata">
 					{{ csrf_field() }}
 						<div class="modal-header">
-							<h4 class="modal-title">Editar Parámetro Cotable</h4>
+							<h4 class="modal-title">Editar Parámetro Contable</h4>
 							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 								<span aria-hidden="true">&times;</span></button>
 						</div>
