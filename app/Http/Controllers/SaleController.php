@@ -58,16 +58,31 @@ class SaleController extends Controller
     }
 
     
-    public function edit(Pago $pago)
+    public function edit($ventaId)
     {
-    
+        $venta = Sale::find($ventaId);
+        return response()->json([
+            'data' => $venta,
+            'dataurl' => "/sale/$ventaId"
+          ]);
     }
 
-    
-    public function update(Request $request, Pago $pago)
+  
+    public function update(Request $request, $ventaId)
     {
-    
+        $venta = Sale::find($ventaId);
+
+        $venta->fecha = $request->fecha2;
+        $venta->centrocosto_id = $request->centrocosto2;
+        $venta->third_id = $request->cliente2;
+        $venta->vendedor_id = $request->vendedor2;
+        $venta->domiciliario_id = $request->domiciliario2;
+        
+        $venta->save();
+
+       return redirect()->back();
     }
+
     
     public function delete(Request $request, $ventaId)
     {

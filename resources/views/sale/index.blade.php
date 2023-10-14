@@ -22,12 +22,12 @@
 						<thead class="text-white" style="background: #3B3F5C">
 							<tr>
 								<th class="table-th text-white">#</th>
-								<th class="table-th text-white">Fecha</th>
-								<th class="table-th text-white">Consecutivo</th>
-								<th class="table-th text-white ">Centro Costo</th>
-								<th class="table-th text-white ">Cliente</th>
-								<th class="table-th text-white ">Total</th>
-								<th class="table-th text-white ">Estado</th>								
+								<th class="table-th text-white">1</th>
+								<th class="table-th text-white">2</th>
+								<th class="table-th text-white ">3</th>
+								<th class="table-th text-white ">4</th>
+								<th class="table-th text-white ">5</th>
+								<th class="table-th text-white ">6</th>								
 								<th class="table-th text-white text-center">Acciones</th>
 							</tr>
 						</thead>
@@ -43,8 +43,8 @@
 								<td>{{ $venta->status }}</td>
 								<td>
 								    <div class="text-center">
-										<a href="" id="editparametrocontable" data-toggle="modal"  class="btn btn-dark "
-										data-target='#editpc_modal' data-id="{{$venta->id}}">
+										<a href="" id="editventa" data-toggle="modal"  class="btn btn-dark "
+										data-target='#editventa_modal' data-id="{{$venta->id}}">
 											<i class="fas fa-edit"></i>
 										</a>
 										
@@ -58,6 +58,7 @@
 							@endforeach
 						</tbody>
 					</table>
+					
 				</div>
 			</div>
 		</div>
@@ -89,12 +90,39 @@
 		<!-- /.modal-dialog -->
 	</div>
 	<!-- /.modal -->
+
+
+	<!-- modal -->
+	<div class="modal fade" id="modal-update-venta" aria-hidden="true" data-keyboard="false" data-backdrop="static" >
+		<div class="modal-dialog modal-xl" role="document">
+			<div class="modal-content bg-default">
+				<fieldset id="contentDisable">
+					<form id="saledata">
+					   {{ csrf_field() }}
+						<div class="modal-header">
+							<h4 class="modal-title">Editar Ventas</h4>
+							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+								<span aria-hidden="true">&times;</span></button>
+						</div>
+				 		<div class="modal-body">
+							@include('sale.modal_update')
+						</div>
+						<div class="modal-footer">
+							<button type="button" id="btnModalClose" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+							<button type="submit" id="btnAddventa" class="btn btn-primary">Aceptar</button>
+						</div>
+					</form>
+				</fieldset>
+			</div>
+			<!-- /.modal-content -->
+		</div>
+		<!-- /.modal-dialog -->
+	</div>
+	<!-- /.modal -->
 </div>
 @endsection
-@section('script')
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script> 
-@endsection
 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script> 
 
 
 <script>
@@ -115,4 +143,27 @@ $(document).ready(initializeDataTable);
 		
 	});
 }
+</script>
+
+<script>
+
+$(document).ready(function () {
+$('body').on('click', '#editventa', function (event) {
+    event.preventDefault();
+    var id = $(this).data('id');
+	$.get('sale' + id + '/edit', function (data) {  
+		
+		$('#saledata').attr("action",data.dataurl); 	
+		$('#saledata').attr("method","POST"); 	
+		$('#saledata').attr("enctype","multipart/form-data"); 		
+
+         $('#modal-update-venta').modal('show'); 		     
+         $('#fecha2').val(data.data.fecha);
+		 $('#centrocosto2').val(data.data.centrocosto_id);
+		 $('#cliente2').val(data.data.third_id);
+		 $('#vendedor2').val(data.data.vendedor_id);
+		 $('#domiciliario2').val(data.data.domiciliario_id);
+     })
+});
+}); 
 </script>
