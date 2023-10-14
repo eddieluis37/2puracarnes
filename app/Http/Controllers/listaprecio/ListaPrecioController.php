@@ -38,7 +38,7 @@ class ListaPrecioController extends Controller
     }
 
     
-    public function edit($lpId)
+    public function edit( $lpId)
     {
         $lp = Listaprecio::find($lpId);
         $centrocostos = Centrocosto::all();

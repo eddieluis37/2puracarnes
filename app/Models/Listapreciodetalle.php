@@ -8,4 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class Listapreciodetalle extends Model
 {
     use HasFactory;
+
+    protected $fillable = ['listaprecio_id', 'product_id', 'precio', 'porciva', 'iva'];
 }

@@ -18,7 +18,13 @@
 									<div class="task-header">
 										<div class="form-group">
 											<label for="" class="form-label">Centro costo</label>
-											
+											<select name="centro_costo_id" class="form-control">
+												@foreach($centros as $centrocosto)
+												<option value="{{ $centrocosto->id }}" {{ $lp->centrocosto->id == $centrocosto->id ? 'selected' : '' }}>
+													{{ $centrocosto->name }}
+												</option>
+												@endforeach
+											</select>
 											<span class="text-danger error-message"></span>
 										</div>
 									</div>
