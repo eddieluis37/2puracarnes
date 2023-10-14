@@ -16,29 +16,38 @@ class ListaPrecioController extends Controller
         $listaprecios = Listaprecio::with('centrocosto')->get();
         $centros = Centrocosto::Where('status', 1)->get();
 
-       // dd($listaprecios);
+        // dd($listaprecios);
 
         return view('listadeprecio.index', compact('listaprecios', 'centros'));
     }
 
-   
+
     public function create()
     {
     }
 
-    
+
     public function store(Request $request)
     {
+        $lp = new Listaprecio();
+
+        $lp->centrocosto_id = $request->centrocosto_id;
+        $lp->nombre = $request->nombre;
+        $lp->tipo = $request->tipo;
+
+        $lp->save();
+
+        return redirect()->back();
     }
 
-   
+
     public function show(Listaprecio $listaprecio)
     {
         //
     }
 
-    
-    public function edit( $lpId)
+
+    public function edit($lpId)
     {
         $lp = Listaprecio::find($lpId);
         $centrocostos = Centrocosto::all();
@@ -51,12 +60,11 @@ class ListaPrecioController extends Controller
             : view('listadeprecio.modal_update', compact('lp', 'centrocostos'));
     }
 
-    
+
     public function update(Request $request, $lpId)
     {
         $lp = Listaprecio::find($lpId);
-
-
+      
         $lp->centrocosto_id = $request->centrocosto_id;
         $lp->nombre = $request->nombre;
         $lp->tipo = $request->tipo;
@@ -67,8 +75,10 @@ class ListaPrecioController extends Controller
     }
 
 
-    public function destroy(Listaprecio $listaprecio)
+    public function destroy(Request $request, $lpId)
     {
-        //
+        $lp = Listaprecio::find($lpId);
+        $lp->delete();
+        return redirect()->back();
     }
 }

@@ -1,4 +1,6 @@
-<script src="{{ asset('assets/js/libs/jquery-3.1.1.min.js') }}"></script>
+<!-- <script src="{{ asset('assets/js/libs/jquery-3.1.1.min.js') }}"></script> -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://code.jquery.com/ui/1.13.0/jquery-ui.min.js"></script>
 <script src="{{ asset('bootstrap/js/popper.min.js') }}"></script>
 <script src="{{ asset('bootstrap/js/bootstrap.min.js') }}"></script>
 <script src="{{ asset('plugins/perfect-scrollbar/perfect-scrollbar.min.js')}}"></script>

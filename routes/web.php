@@ -44,6 +44,7 @@ use App\Http\Controllers\transfer\TransferController;
 use App\Http\Controllers\workshop\workshopController;
 
 use App\Http\Controllers\costo\costoController;
+use App\Http\Controllers\DragDropController;
 use App\Http\Controllers\inventory\inventoryController;
 use App\Http\Controllers\inventory\diaryController;
 use App\Http\Controllers\inventory\mensualController;
@@ -330,6 +331,9 @@ Route::group(['middleware' => [('auth')]], function () {
      Route::get('lista_de_precio{lista_de_precioId}/delete', [ListaPrecioController::class, 'delete'])->name('lista_de_precio.delete');
      Route::get('lista_de_precio{lista_de_precioId}/edit', [ListaPrecioController::class, 'edit'])->name('lista_de_precio.edit');
      Route::post('lista_de_precio/{lista_de_precioId}', [ListaPrecioController::class, 'update'])->name('lista_de_precio.update');
+
+     Route::post('/drag-drop', [DragDropController::class, 'handleDragDrop'])->name('drag-drop.handleDragDrop');
+     Route::get('/drag', [DragDropController::class, 'showDragView'])->name('drag.showDragView');
 
 });
 
