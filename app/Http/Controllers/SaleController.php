@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Sale;
 use App\Models\Third;
 use App\Models\centros\Centrocosto;
+use Illuminate\Support\Facades\DB;
 
 use Illuminate\Http\Request;
 
@@ -23,16 +24,18 @@ class SaleController extends Controller
     }
 
     
-    public function create()
+    public function create($id)
     {
-    
+        $venta = Sale::find($id);
+        return view('sale.create',compact('venta'));
     }
 
     
     public function store(Request $request)
     {
         $venta = new Sale();
-     
+        $idcc = $request->centrocosto;
+
         $venta->fecha = $request->fecha;
         $venta->centrocosto_id = $request->centrocosto;
         $venta->third_id = $request->cliente;
@@ -48,7 +51,26 @@ class SaleController extends Controller
         
         $venta->save();
 
-        return redirect()->back();
+        //ACTUALIZA CONSECUTIVO 
+        DB::update("
+        UPDATE sales a,    
+        (
+            SELECT @numeroConsecutivo:= (SELECT (COALESCE (max(consecutivo),0) ) FROM sales where centrocosto_id = :vcentrocosto1 ),
+            @documento:= (SELECT MAX(prefijo) FROM centro_costo where id = :vcentrocosto2 )
+        ) as tabla
+        SET a.consecutivo = 
+        CONCAT(
+            @documento,  
+            LPAD( (@numeroConsecutivo:=@numeroConsecutivo + 1),5,'0' ) 
+            )
+        WHERE a.consecutivo is null",
+           [               
+               'vcentrocosto1' => $idcc,
+               'vcentrocosto2' => $idcc
+           ]
+       );
+
+       return view('sale.create',compact('venta'));
     }
 
     

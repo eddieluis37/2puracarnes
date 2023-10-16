@@ -323,6 +323,7 @@ Route::group(['middleware' => [('auth')]], function () {
     Route::get('sale{saleId}/delete', [SaleController::class, 'delete'])->name('sale.delete');
     Route::get('sale{ventaId}/edit', [SaleController::class, 'edit'])->name('sale.edit');
     Route::post('sale/{ventaId}', [SaleController::class, 'update'])->name('sale.update');
+    Route::get('sale/{ventaId}', [SaleController::class, 'create'])->name('sale.create');
 
      /*****************************LISTA_DE_PRECIO******************************************/
    
