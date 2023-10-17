@@ -69,6 +69,7 @@
         </div> -->
 
       </div>
+
       <div class="card border-0">
         <div class="m-3">
 
@@ -80,34 +81,34 @@
               <span>Total conteo fisico</span>
             </div>
             <div class="col-3 mb-1 bg-success">
-              <span>{{ $totalStock }}</span><br>
-              <span>{{ $totalStock }}</span><br>
-
-              <div id="totalstock">0,00</div>
+              <div id="totalIngresos">0,00</div>
+              <div id="totalSalidas">0,00</div>
+              <div id="totalStock">0,00</div>
+              <div id="totalConteoFisico">0,00</div>
             </div>
             <div class="col-3 mb-1 bg-primary text-center">
               <span>Diferencia en kilos</span><br>
-              <!--           <div id ="totalstock">0,00</div> -->
+              <div id="diferenciaKilos">0,00</div>
             </div>
             <div class="col-3 mb-1 bg-warning text-center">
               <span>Dif. En kilos permitida</span><br>
-              <span>{{ $totalStock }}</span>
+              <div id="difKilosPermitidos">0,00</div>
             </div>
             <div class="col-3 mb-1 bg-info text-center">
-              <span>Merma</span><br>
-              <span>{{ $totalStock }}%</span>
+              <span>% Merma</span><br>
+              <div id="porcMerma">0,00</div>
             </div>
             <div class="col-3 mb-1 bg-warning text-center">
-              <span>Merma permitida</span><br>
-              <span>{{ $totalStock }}</span>
+              <span>% Merma permitida</span><br>
+              <div id="porcMermaPermitida">0,00</div>
             </div>
             <div class="col-3 mb-1 bg-info text-center">
-              <span>Dif. en kilos</span><br>
-              <span>{{ $totalStock }}</span>
+              <span>Dif en kilos</span><br>
+              <div id="difKilos">0,00</div>
             </div>
             <div class="col-3 mb-1 bg-success text-center">
               <span>Dif. en %</span><br>
-              <span>{{ $totalStock }}</span>
+              <div id="difPorcentajeMerma">0,00</div>
             </div>
           </div>
 
@@ -148,23 +149,23 @@
               </td>
               <td style="background: red">
                 TotTrS
-                <div id="totalTrasladosal">0,00</div>
+                <div id="totalTrasladoSal">0,00</div>
               </td>
               <td style="background: orange">
-                StocIde
-                <div id="StocIde">0,00</div>
+               <!--  StocIde
+                <div id="StocIde">0,00</div> -->
               </td>
               <td style="background: orange">
-                ContFis
+               <!--  ContFis
                 <div id="contFis">0,00</div>
+              </td> -->
+              <td style="background: orange">
+                <!-- DifeKg
+                <div id="totalInvInicial">0,00</div> -->
               </td>
               <td style="background: orange">
-                DifeKg
-                <div id="totalInvInicial">0,00</div>
-              </td>
-              <td style="background: orange">
-                Decomi
-                <div id="decomisos">0,00</div>
+                <!-- Decomi
+                <div id="decomisos">0,00</div> -->
               </td>
             </tr>
           </thead>
@@ -175,7 +176,7 @@
             </tr>
           </tfoot>
         </table>
-      </div>
+      </div>  
 
       <div class="table-responsive mt-3">
         <table id="tableInventory" class="table table-striped mt-1">
@@ -231,4 +232,5 @@
 @endsection
 @section('script')
 <script src="{{asset('code/js/inventory/code-consolidado-historico.js')}} " type="module"></script>
+<script src="{{asset('code/js/inventory/code-consolidado-index.js')}} " type="module"></script>
 @endsection

@@ -142,10 +142,13 @@ class inventoryController extends Controller
 
             $totalConteoFisico += $item->fisico;
             $diferenciaKilos = $totalConteoFisico - $totalStock;
-            $porcMerma = $diferenciaKilos / $totalIngresos;
+        }
+        
+        if ($totalIngresos <= 0) {
+            $totalIngresos = 1;
         }
 
-
+        $porcMerma = $diferenciaKilos / $totalIngresos;
 
         $porcMermaPermitida = 0.005;
         $difKilosPermitidos = -1 * ($totalIngresos * $porcMermaPermitida);
