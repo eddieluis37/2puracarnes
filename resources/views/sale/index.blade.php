@@ -41,10 +41,16 @@
 								<td>{{ $venta->third->name }}</td>
 								<td>{{ $venta->total }}</td>
 								<td>{{ $venta->status }}</td>
-								<td>
+								<td>								
+
 								    <div class="text-center">
+									
+										<a href ="{{route('sale.create', $venta->id)}}"  class="btn btn-dark " >
+										   <i class="fas fa-eye"></i>
+										</a>	
+
 										<a href="" id="editventa" data-toggle="modal"  class="btn btn-dark "
-										data-target='#editventa_modal' data-id="{{$venta->id}}">
+											data-target='#editventa_modal' data-id="{{$venta->id}}">
 											<i class="fas fa-edit"></i>
 										</a>
 										

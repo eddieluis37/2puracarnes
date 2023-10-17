@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Sale;
+use App\Models\SaleDetail;
 use App\Models\Third;
 use App\Models\centros\Centrocosto;
+use Illuminate\Support\Facades\DB;
 
 use Illuminate\Http\Request;
 
@@ -23,16 +25,21 @@ class SaleController extends Controller
     }
 
     
-    public function create()
+    public function create($id)
     {
-    
+        $venta = Sale::find($id);
+        $ventasdetalle = $this->getventasdetalle($id,$venta->centrocosto_id);
+        $arrayTotales = $this->sumTotales($id);
+
+        return view('sale.create',compact('venta','ventasdetalle','arrayTotales'));
     }
 
     
     public function store(Request $request)
     {
         $venta = new Sale();
-     
+        $idcc = $request->centrocosto;
+
         $venta->fecha = $request->fecha;
         $venta->centrocosto_id = $request->centrocosto;
         $venta->third_id = $request->cliente;
@@ -48,7 +55,26 @@ class SaleController extends Controller
         
         $venta->save();
 
-        return redirect()->back();
+        //ACTUALIZA CONSECUTIVO 
+        DB::update("
+        UPDATE sales a,    
+        (
+            SELECT @numeroConsecutivo:= (SELECT (COALESCE (max(consecutivo),0) ) FROM sales where centrocosto_id = :vcentrocosto1 ),
+            @documento:= (SELECT MAX(prefijo) FROM centro_costo where id = :vcentrocosto2 )
+        ) as tabla
+        SET a.consecutivo = 
+        CONCAT(
+            @documento,  
+            LPAD( (@numeroConsecutivo:=@numeroConsecutivo + 1),5,'0' ) 
+            )
+        WHERE a.consecutivo is null",
+           [               
+               'vcentrocosto1' => $idcc,
+               'vcentrocosto2' => $idcc
+           ]
+       );
+
+       return view('sale.create',compact('venta'));
     }
 
     
@@ -90,4 +116,34 @@ class SaleController extends Controller
         $venta->delete();
         return redirect()->back();
     }
+
+    public function getventasdetalle($ventaId, $centrocostoId)
+    {
+        $detail = DB::table('sale_details as dv')
+            ->join('products as pro', 'dv.product_id', '=', 'pro.id')
+            ->join('centro_costo_products as ce', 'pro.id', '=', 'ce.products_id')
+            ->select('dv.*', 'pro.name as nameprod', 'pro.code',  'ce.fisico')
+            ->selectRaw('ce.invinicial + ce.compraLote + ce.alistamiento +
+            ce.compensados + ce.trasladoing - (ce.venta + ce.trasladosal) stock')
+            ->where([
+                ['ce.centrocosto_id', $centrocostoId],                
+                ['dv.sale_id', $ventaId],                
+            ])->get();
+
+        return $detail;
+    }
+
+    public function sumTotales($id)
+    {
+
+        $kgTotalventa = (float)SaleDetail::Where([['sale_id', $id]])->sum('total');        
+
+        $array = [
+            'kgTotalventa' => $kgTotalventa,            
+        ];
+
+        return $array;
+    }
+
+
 }
