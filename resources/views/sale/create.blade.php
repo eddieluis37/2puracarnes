@@ -53,28 +53,10 @@
 			<div class="widget-content mt-3" >
 				<div class="card">
 					<div class="card-body">
-						<form id="form-detail">
-						<input type="hidden" id="alistamientoId" name="alistamientoId" value="{{$dataAlistamiento[0]->id}}">
-						<div class="row g-3">
-							<div class="col-md-4">
-								<div class="task-header">
-									<div class="form-group">
-                                        <label for="" class="form-label">Buscar corte padre</label>
-										<input type="hidden" id="meatcutId" name="meatcutId" value="{{$dataAlistamiento[0]->meatcut_id}}">
-										<input type="hidden" id="productopadreId" name="productopadreId" value="{{$cortes[0]->productopadreId}}">
-										<input type="hidden" id="centrocosto" name="centrocosto" value="{{$dataAlistamiento[0]->centrocosto_id}}">
-										<input type="text" id="productoCorte" name="productoCorte"value="{{$cortes[0]->name}}" class="form-control input" readonly >
-					                    <!--select class="form-control form-control-sm select2Prod" name="productoCorte" id="productoCorte" required="">
-											<option value="">Seleccione el producto</option>
-											@foreach ($cortes as $p)
-											<option data-stock="{{$p->stock}}" value="{{$p->id}}">{{$p->name}}</option>
-											@endforeach
-					                    </select>-->
-									</div>
-								</div>
-							</div>
+						<form id="form-detail">						
+						<div class="row g-3">							
 							<div class="col-md-3">
-								<label for="" class="form-label">Seleccionar hijo </label>
+								<label for="" class="form-label">Seleccionar producto </label>
 					                <select class="form-control form-control-sm select2ProdHijos" name="producto" id="producto" required="">
 					                </select>
 							</div>
@@ -98,35 +80,7 @@
 				</div>
             </div>
 			
-            <div class="widget-content mt-3">
-				<div class="card">
-					<div class="card-body">
-						<div class="row">
-							<div class="col-md-4">
-								<label for="" class="form-label">Stock actual</label>
-								<div class="input-group flex-nowrap">
-								<input type="text" id="stockCortePadre" name="stockCortePadre" value="{{$cortes[0]->stockPadre}}" class="form-control-sm form-control" placeholder="10,00 kg" readonly>
-									<span class="input-group-text" id="addon-wrapping">KG</span>
-								</div>
-							</div>
-							<div class="col-md-4">
-								<label for="" class="form-label">Ultimo conteo fisico</label>
-								<div class="input-group flex-nowrap">
-								<input type="text" id="pesokg" name="pesokg" value="{{$cortes[0]->fisico}}" class="form-control-sm form-control" placeholder="180.40 kg" readonly>
-									<span class="input-group-text" id="addon-wrapping">KG</span>
-								</div>
-							</div>
-							<div class="col-md-4">
-								<label for="" class="form-label">Nuevo stock</label>
-								<div class="input-group flex-nowrap">
-								<input type="text" id="newStockPadre" name="newStockPadre" value="{{$dataAlistamiento[0]->nuevo_stock_padre}}" class="form-control-sm form-control" placeholder="30,00 kg" readonly>
-									<span class="input-group-text" id="addon-wrapping">KG</span>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
+            
             <div class="widget-content mt-3">
                 <div class="card">
                     <div class="card-body">
@@ -135,18 +89,15 @@
 									<thead class="text-white" style="background: #3B3F5C">
 										<tr>
 											<!--th class="table-th text-white">Item</th>-->
-											<th class="table-th text-white">#</th>
-											<th class="table-th text-white">Codigo</th>
-											<th class="table-th text-white">Producto hijo</th>
-											<th class="table-th text-white">Stock actual</th>
-											<th class="table-th text-white">Fisico</th>
-											<th class="table-th text-white">kg requeridos</th>
-											<th class="table-th text-white">New stock hijo</th>
+											<th class="table-th text-white">#</th>											
+											<th class="table-th text-white">Producto</th>
+											<th class="table-th text-white">Stock actual</th>											
+											<th class="table-th text-white">kg requeridos</th>											
 											<th class="table-th text-white text-center">Acciones</th>
 										</tr>
 									</thead>
 									<tbody id="tbodyDetail">
-										@foreach($enlistments as $proddetail)
+										@foreach($ventasdetalle as $proddetail)
 										<tr>
 											<td>{{$proddetail->id}}</td>
 											<td>{{$proddetail->code}}</td>
@@ -180,12 +131,11 @@
 											<th>Totales</th>
 											<th></th>
 											<th></th>
-											<th> {{number_format($arrayTotales['kgTotalRequeridos'], 2, ',', '.')}} KG</th>
-											<th> {{number_format($arrayTotales['newTotalStock'], 2, ',', '.')}} KG</th>
+											<th> {{number_format($arrayTotales['kgTotalventa'], 2, ',', '.')}} </th>											
 											<th class="text-center">
-												@if($dataAlistamiento[0]->inventario == 'pending')
-												<button class="btn btn-success btn-sm" id="addShopping">Cargar al inventario</button>
-												@endif
+												
+												<button class="btn btn-success btn-sm" id="addShopping">Facturar</button>
+												
 											</th>
 										</tr>
 									</tfoot>

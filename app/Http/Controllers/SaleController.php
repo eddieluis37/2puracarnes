@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Sale;
+use App\Models\SaleDetail;
 use App\Models\Third;
 use App\Models\centros\Centrocosto;
 use Illuminate\Support\Facades\DB;
@@ -27,7 +28,10 @@ class SaleController extends Controller
     public function create($id)
     {
         $venta = Sale::find($id);
-        return view('sale.create',compact('venta'));
+        $ventasdetalle = $this->getventasdetalle($id,$venta->centrocosto_id);
+        $arrayTotales = $this->sumTotales($id);
+
+        return view('sale.create',compact('venta','ventasdetalle','arrayTotales'));
     }
 
     
@@ -112,4 +116,34 @@ class SaleController extends Controller
         $venta->delete();
         return redirect()->back();
     }
+
+    public function getventasdetalle($ventaId, $centrocostoId)
+    {
+        $detail = DB::table('sale_details as dv')
+            ->join('products as pro', 'dv.product_id', '=', 'pro.id')
+            ->join('centro_costo_products as ce', 'pro.id', '=', 'ce.products_id')
+            ->select('dv.*', 'pro.name as nameprod', 'pro.code',  'ce.fisico')
+            ->selectRaw('ce.invinicial + ce.compraLote + ce.alistamiento +
+            ce.compensados + ce.trasladoing - (ce.venta + ce.trasladosal) stock')
+            ->where([
+                ['ce.centrocosto_id', $centrocostoId],                
+                ['dv.sale_id', $ventaId],                
+            ])->get();
+
+        return $detail;
+    }
+
+    public function sumTotales($id)
+    {
+
+        $kgTotalventa = (float)SaleDetail::Where([['sale_id', $id]])->sum('total');        
+
+        $array = [
+            'kgTotalventa' => $kgTotalventa,            
+        ];
+
+        return $array;
+    }
+
+
 }
