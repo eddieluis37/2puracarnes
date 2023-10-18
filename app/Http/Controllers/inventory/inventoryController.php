@@ -143,7 +143,7 @@ class inventoryController extends Controller
             $totalConteoFisico += $item->fisico;
             $diferenciaKilos = $totalConteoFisico - $totalStock;
         }
-        
+
         if ($totalIngresos <= 0) {
             $totalIngresos = 1;
         }
@@ -430,12 +430,30 @@ class inventoryController extends Controller
         $totalTrasladoIng = 0;
         $totalVenta = 0;
         $totalTrasladoSal = 0;
+        $totalIngresos = 0;
+        $totalSalidas = 0;
+        $totalConteoFisico = 0;
+
+        $diferenciaKilos = 0;
+        $porcMermaPermitida = 0;
+        $difKilosPermitidos = 0;
+        $difKilos = 0;
+        $porcMerma = 0;
+        $difPorcentajeMerma = 0;
 
         foreach ($data as $item) {
 
             $stock = ($item->invinicial + $item->compraLote + $item->alistamiento + $item->compensados + $item->trasladoing) - ($item->venta + $item->trasladosal);
             $item->stock = round($stock, 2);
             $totalStock += $stock;
+
+            $ingresos = ($item->invinicial + $item->compraLote + $item->alistamiento + $item->compensados + $item->trasladoing);
+            $item->ingresos = round($ingresos, 2);
+            $totalIngresos += $ingresos;
+
+            $salidas = ($item->venta + $item->trasladosal);
+            $item->salidas = round($salidas, 2);
+            $totalSalidas += $salidas;
 
             $totalInvInicial += $item->invinicial;
             $totalCompraLote += $item->compraLote;
@@ -444,13 +462,30 @@ class inventoryController extends Controller
             $totalTrasladoIng += $item->trasladoing;
             $totalVenta += $item->venta;
             $totalTrasladoSal += $item->trasladosal;
+
+            $totalConteoFisico += $item->fisico;
+            $diferenciaKilos = $totalConteoFisico - $totalStock;
         }
+
+        if ($totalIngresos <= 0) {
+            $totalIngresos = 1;
+        }
+
+        $porcMerma = $diferenciaKilos / $totalIngresos;
+
+        $porcMermaPermitida = 0.005;
+        $difKilosPermitidos = -1 * ($totalIngresos * $porcMermaPermitida);
+        $difKilos = $diferenciaKilos - $difKilosPermitidos;
+
+
+        $difPorcentajeMerma = $porcMerma + $porcMermaPermitida;
+
 
         return response()->json(
             [
                 'totalStock' => number_format($totalStock, 2),
-                'totalInvInicial' => number_format($totalInvInicial, 2),
 
+                'totalInvInicial' => number_format($totalInvInicial, 2),
                 'totalCompraLote' => number_format($totalCompraLote, 2),
                 'totalAlistamiento' => number_format($totalAlistamiento, 2),
                 'totalCompensados' => number_format($totalCompensados, 2),
@@ -458,6 +493,18 @@ class inventoryController extends Controller
 
                 'totalVenta' => number_format($totalVenta, 2),
                 'totalTrasladoSal' => number_format($totalTrasladoSal, 2),
+
+                'totalIngresos' => number_format($totalIngresos, 2),
+                'totalSalidas' => number_format($totalSalidas, 2),
+
+                'totalConteoFisico' => number_format($totalConteoFisico, 2),
+
+                'diferenciaKilos' => number_format($diferenciaKilos, 2),
+                'difKilosPermitidos' => number_format($difKilosPermitidos, 2),
+                'porcMerma' => number_format($porcMerma * 100, 2),
+                'porcMermaPermitida' => number_format($porcMermaPermitida * 100, 2),
+                'difKilos' => number_format($difKilos, 2),
+                'difPorcentajeMerma' => number_format($difPorcentajeMerma * 100, 2),
 
             ]
         );

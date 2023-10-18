@@ -251,7 +251,7 @@ function cargarTotales(centrocostoId = "-1", categoriaId = "-1",fechai="2000-01-
         },
         dataType: "JSON",
         success: function (data) {
-            $("#totalstock").html(data.totalStock);
+            $("#totalStock").html(data.totalStock);
             $("#totalInvInicial").html(data.totalInvInicial);
 
             $("#totalCompraLote").html(data.totalCompraLote);
@@ -261,6 +261,18 @@ function cargarTotales(centrocostoId = "-1", categoriaId = "-1",fechai="2000-01-
 
             $("#totalVenta").html(data.totalVenta);
             $("#totalTrasladoSal").html(data.totalTrasladoSal);
+
+            $("#totalIngresos").html(data.totalIngresos);
+            $("#totalSalidas").html(data.totalSalidas);
+
+            $("#totalConteoFisico").html(data.totalConteoFisico);
+            
+            $("#diferenciaKilos").html(data.diferenciaKilos);
+            $("#difKilosPermitidos").html(data.difKilosPermitidos);
+            $("#porcMerma").html(data.porcMerma);
+            $("#porcMermaPermitida").html(data.porcMermaPermitida);
+            $("#difKilos").html(data.difKilos);
+            $("#difPorcentajeMerma").html(data.difPorcentajeMerma);
         },
     });
 }
