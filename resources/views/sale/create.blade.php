@@ -56,8 +56,8 @@
 											<!--th class="table-th text-white">Item</th>-->
 											<th class="table-th text-white">#</th>											
 											<th class="table-th text-white">Producto</th>
-											<th class="table-th text-white">Stock actual</th>											
-											<th class="table-th text-white">kg requeridos</th>											
+											<th class="table-th text-white">Cantidad Kg</th>											
+                                            <th class="table-th text-white">Precio</th>
 											<th class="table-th text-white text-center">Acciones</th>
 										</tr>
 									</thead>
@@ -102,17 +102,8 @@
 
     <div class="col-sm-5">
         <div class="widget widget-chart-one">
-            PRODUCTOS FACTURADOS Y TOTALES
-        </div>
-    </div>
-
-</div> 
-
-
-	<div class="col-sm-12">
-		<div class="widget widget-chart-one">
-			
-			<div class="widget-content mt-3">
+        
+        	<div class="widget-content mt-3">
 				<div class="card">
 					<div class="card-body">
 						<div class="row g-3">
@@ -143,15 +134,16 @@
 						</div>
 					</div>
 				</div>
-            </div>
-
-			
-            
-            
+            </div>	         
         </div>
-
     </div>
-</div>
+        
+
+</div> 
+
+
+	
+
 @endsection
 @section('script')
 <script src="{{asset('rogercode/js/alistamiento/rogercode-create.js')}}" type="module"></script>
