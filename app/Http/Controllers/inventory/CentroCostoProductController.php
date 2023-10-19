@@ -121,7 +121,6 @@ class CentroCostoProductController extends Controller
                 'ccp.fisico as fisico'
             )
             ->where('ccp.centrocosto_id', $centrocostoId)
-            ->where('ccp.tipoinventario', 'inicial')
             ->where('pro.category_id', $categoriaId)
             ->where('pro.status', 1)
             ->get();

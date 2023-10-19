@@ -112,8 +112,7 @@ class transferController extends Controller
                 [
                     'p.status', 1
                 ],
-                ['ce.centrocosto_id', $dataTransfer[0]->centrocostoOrigen_id],
-                ['ce.tipoinventario', 'inicial'],
+                ['ce.centrocosto_id', $dataTransfer[0]->centrocostoOrigen_id],                
             ])
             ->orderBy('p.category_id', 'asc')
             ->orderBy('p.name', 'asc')
@@ -130,8 +129,7 @@ class transferController extends Controller
                 [
                     'p.status', 1
                 ],
-                ['ce.centrocosto_id', $dataTransfer[0]->centrocostoDestino_id],
-                ['ce.tipoinventario', 'inicial'],
+                ['ce.centrocosto_id', $dataTransfer[0]->centrocostoDestino_id],          
             ])->get();
         // dd($arrayProductsDestination);
         /**************************************** */
@@ -241,8 +239,7 @@ class transferController extends Controller
                 ->where([
                     ['p.id', $request->producto],
                     ['ce.centrocosto_id', $request->centrocostoOrigen],
-                    ['p.status', 1],
-                    ['ce.tipoinventario', 'inicial'],
+                    ['p.status', 1],                  
                 ])->get();
 
             $prodDestino = DB::table('products as p')
@@ -251,8 +248,7 @@ class transferController extends Controller
                 ->where([
                     ['p.id', $request->producto],
                     ['ce.centrocosto_id', $request->centrocostoDestino],
-                    ['p.status', 1],
-                    ['ce.tipoinventario', 'inicial'],
+                    ['p.status', 1],                 
                 ])->get();
 
             $formatCantidad = new metodosrogercodeController();
@@ -303,8 +299,7 @@ class transferController extends Controller
             ->where([
                 ['ce.centrocosto_id', $centrocostoDestinoId],
                 ['td.transfers_id', $transferId],
-                ['td.status', 1],
-                ['ce.tipoinventario', 'inicial']
+                ['td.status', 1],        
             ])->get();
 
         return $detail;
@@ -415,8 +410,7 @@ class transferController extends Controller
                 ->where([
                     ['p.id', $request->producto],
                     ['ce.centrocosto_id', $request->centrocostoOrigen],
-                    ['p.status', 1],
-                    ['ce.tipoinventario', 'inicial'],
+                    ['p.status', 1],          
                 ])->get();
 
             $prodDestino = DB::table('products as p')
@@ -425,8 +419,7 @@ class transferController extends Controller
                 ->where([
                     ['p.id', $request->producto],
                     ['ce.centrocosto_id', $request->centrocostoDestino],
-                    ['p.status', 1],
-                    ['ce.tipoinventario', 'inicial'],
+                    ['p.status', 1],             
                 ])->get();
 
 

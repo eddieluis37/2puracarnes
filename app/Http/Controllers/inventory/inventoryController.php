@@ -275,7 +275,7 @@ class inventoryController extends Controller
         WHERE c.centrocosto_id = :centrocostoId
         AND p.category_id = :categoriaId
         AND c.tipoinventario = 'cerrado'
-        OR c.tipoinventario = 'inicial' ",
+        OR c.tipoinventario = 'inicial' ",       
             [
                 'centrocostoId' => $v_centrocostoId,
                 'categoriaId' => $v_categoriaId
@@ -363,7 +363,7 @@ class inventoryController extends Controller
 
         return view('inventory.consolidado_historico', compact('category', 'centros', 'startDate', 'endDate', 'totalStock'));
     }
-
+    
     public function showhistorico(Request $request)
     {
         $centrocostoId = $request->input('centrocostoId');
@@ -523,4 +523,5 @@ class inventoryController extends Controller
             ]
         );
     }
+    
 }

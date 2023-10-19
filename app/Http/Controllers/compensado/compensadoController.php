@@ -455,7 +455,7 @@ class compensadoController extends Controller
         $compensadores->save();
         $compensadores = Compensadores::where('id', $compensadoId)->get();
         $centrocosto_id = $compensadores->first()->centrocosto_id;
-
+        
         DB::update(
             "
             UPDATE centro_costo_products c
@@ -465,8 +465,7 @@ class compensadoController extends Controller
                 c.cto_compensados =  c.cto_compensados + d.pcompra,
                 c.cto_compensados_total  = c.cto_compensados_total + (d.pcompra * d.peso),
                 c.tipoinventario = 'cerrado'
-            WHERE c.tipoinventario = 'inicial' 
-            AND d.compensadores_id = :compensadoresid
+            WHERE d.compensadores_id = :compensadoresid
             AND b.centrocosto_id = :cencosid 
             AND c.centrocosto_id = :cencosid2 ",
             [
