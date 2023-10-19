@@ -232,5 +232,4 @@
 @endsection
 @section('script')
 <script src="{{asset('code/js/inventory/code-consolidado-historico.js')}} " type="module"></script>
-<script src="{{asset('code/js/inventory/code-consolidado-index.js')}} " type="module"></script>
 @endsection
