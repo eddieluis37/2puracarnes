@@ -20,7 +20,8 @@ class diaryController extends Controller
      */
     public function index()
     {
-        $category = Category::whereIn('id', [1, 2, 3, 4, 5, 6, 7, 8, 9])->orderBy('name', 'asc')->get();
+       /*  $category = Category::whereIn('id', [1, 2, 3, 4, 5, 6, 7, 8, 9])->orderBy('name', 'asc')->get(); */
+        $category = Category::orderBy('name', 'asc')->get();
         $costcenter = Centrocosto::Where('status', 1)->get();
         $centros = Centrocosto::Where('status', 1)->get();
         $centroCostoProductos = Centro_costo_product::all();

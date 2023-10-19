@@ -21,8 +21,9 @@ class inventoryController extends Controller
         $startDate = '2023-05-01';
         $endDate = '2023-05-08';
 
-        $category = Category::whereIn('id', [1, 2, 3, 4, 5, 6, 7, 8, 9])->orderBy('name', 'asc')->get();
-
+        /*  $category = Category::whereIn('id', [1, 2, 3, 4, 5, 6, 7, 8, 9])->orderBy('name', 'asc')->get();
+ */
+        $category = Category::orderBy('name', 'asc')->get();
         $centros = Centrocosto::Where('status', 1)->get();
 
         // llama al metodo para calcular el stock
@@ -275,7 +276,7 @@ class inventoryController extends Controller
         WHERE c.centrocosto_id = :centrocostoId
         AND p.category_id = :categoriaId
         AND c.tipoinventario = 'cerrado'
-        OR c.tipoinventario = 'inicial' ",       
+        OR c.tipoinventario = 'inicial' ",
             [
                 'centrocostoId' => $v_centrocostoId,
                 'categoriaId' => $v_categoriaId
@@ -352,8 +353,9 @@ class inventoryController extends Controller
         $startDate = '2023-05-01';
         $endDate = '2023-05-08';
 
-        $category = Category::whereIn('id', [1, 2, 3, 4, 5, 6, 7, 8, 9])->orderBy('name', 'asc')->get();
+     /* $category = Category::whereIn('id', [1, 2, 3, 4, 5, 6, 7, 8, 9])->orderBy('name', 'asc')->get(); */
 
+        $category = Category::orderBy('name', 'asc')->get();
         $centros = Centrocosto::Where('status', 1)->get();
 
         // llama al metodo para calcular el stock
@@ -363,7 +365,7 @@ class inventoryController extends Controller
 
         return view('inventory.consolidado_historico', compact('category', 'centros', 'startDate', 'endDate', 'totalStock'));
     }
-    
+
     public function showhistorico(Request $request)
     {
         $centrocostoId = $request->input('centrocostoId');
@@ -523,5 +525,4 @@ class inventoryController extends Controller
             ]
         );
     }
-    
 }
