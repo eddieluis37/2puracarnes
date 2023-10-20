@@ -10,6 +10,7 @@ use Livewire\Component;
 use Livewire\WithFileUploads;
 use Livewire\WithPagination;
 use App\Traits\CartTrait;
+use App\Models\Products\Meatcut;
 
 class ProductsController extends Component
 {
@@ -25,7 +26,7 @@ class ProductsController extends Component
 		$this->emit('global-msg', "SE AGREGÓ EL PRODUCTO AL CARRITO");
 	}
 
-	public $name, $code, $barcode, $cost, $price_fama, $price_insti, $price_horeca, $price_hogar, $stock, $alerts, $categoryid, $search, $image, $selected_id, $pageTitle, $componentName;
+	public $name, $code, $barcode, $cost, $price_fama, $price_insti, $price_horeca, $price_hogar, $stock, $alerts, $categoryid, $meatcutid, $search, $image, $selected_id, $pageTitle, $componentName;
 
 	private $pagination = 10;
 
@@ -41,6 +42,7 @@ class ProductsController extends Component
 		$this->pageTitle = 'Listado';
 		$this->componentName = 'Productos';
 		$this->categoryid = 'Elegir';
+		$this->meatcutid = 'Elegir';
 	}
 
 
@@ -67,7 +69,8 @@ class ProductsController extends Component
 
 		return view('livewire.products.component', [
 			'data' => $products,
-			'categories' => Category::orderBy('name', 'asc')->get()
+			'categories' => Category::orderBy('name', 'asc')->get(),
+			'cortes' => Meatcut::orderBy('name', 'asc')->get()
 		])
 			->extends('layouts.theme.app')
 			->section('content');
@@ -81,7 +84,8 @@ class ProductsController extends Component
 			'price_fama' => 'required',
 			'stock' => 'required',
 			'alerts' => 'required',
-			'categoryid' => 'required|not_in:Elegir'
+			'categoryid' => 'required|not_in:Elegir',
+			'meatcutid' => 'required|not_in:Elegir'
 		];
 
 		$messages = [
@@ -93,6 +97,7 @@ class ProductsController extends Component
 			'stock.required' => 'El stock es requerido',
 			'alerts.required' => 'Ingresa el valor mínimo en existencias',
 			'categoryid.not_in' => 'Elige un nombre de categoría diferente de Elegir',
+			'meatcutid.not_in' => 'Elige un nombre de corte de carne diferente de Elegir',
 		];
 
 		$this->validate($rules, $messages);
@@ -110,7 +115,7 @@ class ProductsController extends Component
 			'stock' => $this->stock,
 			'alerts' => $this->alerts,
 			'category_id' => $this->categoryid,
-			'meatcut_id' => $this->categoryid
+			'meatcut_id' => $this->meatcutid
 		]);
 
 		if ($this->image) {
@@ -139,6 +144,7 @@ class ProductsController extends Component
 		$this->stock = $product->stock;
 		$this->alerts = $product->alerts;
 		$this->categoryid = $product->category_id;
+		$this->meatcutid = $product->meatcut_id;
 		$this->image = null;
 
 		$this->emit('modal-show', 'Show modal');
@@ -152,7 +158,8 @@ class ProductsController extends Component
 			'price_fama' => 'required',
 			'stock' => 'required',
 			'alerts' => 'required',
-			'categoryid' => 'required|not_in:Elegir'
+			'categoryid' => 'required|not_in:Elegir',
+			'meatcutid' => 'required|not_in:Elegir'
 		];
 
 		$messages = [
@@ -164,6 +171,7 @@ class ProductsController extends Component
 			'stock.required' => 'El stock es requerido',
 			'alerts.required' => 'Ingresa el valor mínimo en existencias',
 			'categoryid.not_in' => 'Elige un nombre de categoría diferente de Elegir',
+			'meatcutid.not_in' => 'Elige un nombre de corte de carne diferente de Elegir',
 		];
 
 		$this->validate($rules, $messages);
@@ -181,7 +189,8 @@ class ProductsController extends Component
 			'barcode' => $this->barcode,
 			'stock' => $this->stock,
 			'alerts' => $this->alerts,
-			'category_id' => $this->categoryid
+			'category_id' => $this->categoryid,
+			'meatcut_id' => $this->meatcutid
 		]);
 
 		if ($this->image) {
@@ -217,6 +226,7 @@ class ProductsController extends Component
 		$this->alerts = '';
 		$this->search = '';
 		$this->categoryid = 'Elegir';
+		$this->meatcutid = 'Elegir';
 		$this->image = null;
 		$this->selected_id = 0;
 		$this->resetValidation();
