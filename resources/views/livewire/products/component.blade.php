@@ -20,7 +20,7 @@
 			<div class="widget-content">
 
 				<div class="table-responsive">
-					<table class="table table-bordered table striped mt-1">
+					<table class="table table-striped mt-1">
 						<thead class="text-white" style="background: #3B3F5C;">
 							<tr>
 								<th class="table-th text-white">DESCRIPCIÓN</th>
@@ -115,7 +115,6 @@
 
 	@include('livewire.products.form')
 </div>
-@include('layouts.theme.footer')
 
 <script>
 	document.addEventListener('DOMContentLoaded', function() {

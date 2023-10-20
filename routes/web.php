@@ -16,6 +16,7 @@ use App\Http\Livewire\PermisosController;
 use App\Http\Livewire\PosController;
 use App\Http\Livewire\PrecioAgreementsController;
 use App\Http\Livewire\ProductsController;
+use App\Http\Livewire\MeatcutsController;
 use App\Http\Livewire\ReportsController;
 use App\Http\Livewire\RolesController;
 use App\Http\Livewire\Select2;
@@ -105,6 +106,7 @@ Route::group(['middleware' => [('auth')]], function () {
     Route::get('permisos', PermisosController::class);
     Route::get('asignar', AsignarController::class);
     Route::get('products', ProductsController::class);
+    Route::get('meatcuts', MeatcutsController::class);
     Route::get('pos', PosController::class);
     Route::get('coins', CoinsController::class);
     Route::get('reports', ReportsController::class);
