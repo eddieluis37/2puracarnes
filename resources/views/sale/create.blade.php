@@ -5,6 +5,7 @@
   height: 38px;
 }
 </style>
+
 <meta name="csrf-token" content="{{ csrf_token() }}">
 <div class="row sales layout-top-spacing">
     <div class="col-sm-7">        
@@ -29,7 +30,7 @@
                                 </div>
                                 <div class="col-md-7">
                                     <label for="" class="form-label">Seleccionar producto </label>
-                                        <select class="form-control form-control-sm select2ProdHijos" name="producto" id="producto" required="">
+                                        <select class="form-control form-control-sm selectPrroducto" name="producto" id="producto" required="">
                                         </select>
                                 </div>
                             </div>
@@ -71,16 +72,16 @@
                 <div class="card">
                     <div class="card-body">
 							<div class="table-responsive mt-3">
-								<table id="tableAlistamiento" class="table table-sm table-striped table-bordered">
+								<table id="tableVentasDet" class="table table-sm table-striped table-bordered">
 									<thead class="text-white" style="background: #3B3F5C">
 										<tr>
 											<!--th class="table-th text-white">Item</th>-->
-											<th class="table-th text-white">#</th>											
-											<th class="table-th text-white">Producto</th>
-											<th class="table-th text-white">Cant Kg</th>											
-                                            <th class="table-th text-white">Precio</th>
-                                            <th class="table-th text-white">Iva</th>
-                                            <th class="table-th text-white">Total</th>											
+											<th class="table-th text-white">1</th>											
+											<th class="table-th text-white">2</th>
+											<th class="table-th text-white">3</th>											
+                                            <th class="table-th text-white">4</th>
+                                            <th class="table-th text-white">5</th>
+                                            <th class="table-th text-white">6</th>											
 										</tr>
 									</thead>
 									<tbody id="tbodyDetail">
@@ -104,11 +105,7 @@
 											<th></th>
 											<th></th>
 											<th> {{number_format($arrayTotales['kgTotalventa'], 2, ',', '.')}} </th>											
-											<th class="text-center">
-												
-												
-												
-											</th>
+											
 										</tr>
 									</tfoot>
 								</table>
@@ -166,47 +163,75 @@
 
 
 @endsection
-@section('script')
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script> 
-<script src="{{asset('rogercode/js/alistamiento/rogercode-create.js')}}" type="module"></script>
-@endsection
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js">
+
+
+</script> 
+
 
 <script>
 
 $(document).ready(initializeDataTable);
  function initializeDataTable() {
-	new DataTable('#tableAlistamiento', {
+	new DataTable('#tableVentasDet', {
+        "bFilter": false,
+        "bLengthChange": false,        
 		columns: [
 			{ title: '#' },
 			{ title: 'Producto' },
 			{ title: 'Cant Kg' },
 			{ title: 'Precio' },
-			{ title: 'Iva' },			
-		],
-		
-	});
+            { title: 'Iva' },
+			{ title: 'Total' },
+		],		
+	});    
+
+    const selectCategoria = document.querySelector("#categoria");
+    const token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+
+    selectCategoria.addEventListener("change", function() {       
+        const selectedValue = this.value;        
+        getProductos(selectedValue);
+        
+    });
+
+    getProductos = (categoryId) => {
+        const dataform = new FormData();
+        dataform.append("categoriaId", Number(categoryId));
+        send(dataform,'/getproductosv').then((result) => {        
+            let prod = result.products;
+                    
+            producto.innerHTML = "";
+            producto.innerHTML += `<option value="">Seleccione el producto</option>`;
+            
+            prod.forEach(option => {
+            const optionElement = document.createElement("option");
+            optionElement.value = option.id;
+            optionElement.text = option.name;
+            producto.appendChild(optionElement);
+            });
+        });
+
+    }
+    
+    const send = async (dataform,ruta) => {
+        let response = await fetch(ruta, {
+        headers: {
+            'X-CSRF-TOKEN': token
+        },
+        method: 'POST',
+        body: dataform
+        });
+        let data = await response.json();
+        //console.log(data);
+        return data;
+    }
+
+
 }
 
 
-$('.producto').select2({
-	placeholder: 'Busca un producto',
-	width: '100%',
-	theme: "bootstrap-5",
-	allowClear: true,
-});
-const dataform = new FormData();
-const categoryId = document.querySelector("#categoryId");
-dataform.append("categoriaId", Number(categoryId.value));
-sendData("/getproductos",dataform,token).then((result) => {
-    
-    let prod = result.products;    
-    selectProducto.innerHTML = "";
-    selectProducto.innerHTML += `<option value="">Seleccione el producto</option>`;
-    prod.forEach(option => {
-    const optionElement = document.createElement("option");
-    optionElement.value = option.id;
-    optionElement.text = option.name;
-    selectProducto.appendChild(optionElement);
-    });
-});
+
+ 
 </script>

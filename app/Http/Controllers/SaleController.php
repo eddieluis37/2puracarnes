@@ -6,6 +6,7 @@ use App\Models\Sale;
 use App\Models\SaleDetail;
 use App\Models\Third;
 use App\Models\Category;
+use App\Models\Product;
 use App\Models\centros\Centrocosto;
 use Illuminate\Support\Facades\DB;
 
@@ -148,5 +149,13 @@ class SaleController extends Controller
         return $array;
     }
 
+    public function getproducts(Request $request)
+    {
+        $prod = Product::Where([
+            ['category_id', $request->categoriaId],
+            ['status', 1],            
+        ])->get();
+        return response()->json(['products' => $prod]);
+    }
 
 }
