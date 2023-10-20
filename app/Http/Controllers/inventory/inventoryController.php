@@ -21,8 +21,9 @@ class inventoryController extends Controller
         $startDate = '2023-05-01';
         $endDate = '2023-05-08';
 
-        $category = Category::whereIn('id', [1, 2, 3, 4, 5, 6, 7, 8, 9])->orderBy('name', 'asc')->get();
-
+        /*  $category = Category::whereIn('id', [1, 2, 3, 4, 5, 6, 7, 8, 9])->orderBy('name', 'asc')->get();
+ */
+        $category = Category::orderBy('name', 'asc')->get();
         $centros = Centrocosto::Where('status', 1)->get();
 
         // llama al metodo para calcular el stock
@@ -36,6 +37,7 @@ class inventoryController extends Controller
     {
         $centrocostoId = $request->input('centrocostoId');
         $categoriaId = $request->input('categoriaId');
+
         $data = DB::table('centro_costo_products as ccp')
             ->join('products as pro', 'pro.id', '=', 'ccp.products_id')
             ->join('categories as cat', 'pro.category_id', '=', 'cat.id')
@@ -54,10 +56,14 @@ class inventoryController extends Controller
                 'ccp.products_id as products_id'
             )
             ->where('ccp.centrocosto_id', $centrocostoId)
-            ->where('ccp.tipoinventario', 'inicial')
+            ->where(function ($query) {
+                $query->where('ccp.tipoinventario', 'cerrado')
+                    ->orWhere('ccp.tipoinventario', 'inicial');
+            })
             ->where('pro.category_id', $categoriaId)
             ->where('pro.status', 1)
             ->get();
+
         // Calculo de la stock ideal 
         foreach ($data as $item) {
             $stock = ($item->invinicial + $item->compraLote + $item->alistamiento + $item->compensados + $item->trasladoing) - ($item->venta + $item->trasladosal);
@@ -77,6 +83,7 @@ class inventoryController extends Controller
     {
         $centrocostoId = $request->input('centrocostoId');
         $categoriaId = $request->input('categoriaId');
+
         $data = DB::table('centro_costo_products as ccp')
             ->join('products as pro', 'pro.id', '=', 'ccp.products_id')
             ->join('categories as cat', 'pro.category_id', '=', 'cat.id')
@@ -94,7 +101,10 @@ class inventoryController extends Controller
                 'ccp.fisico as fisico'
             )
             ->where('ccp.centrocosto_id', $centrocostoId)
-            ->where('ccp.tipoinventario', 'inicial')
+            ->where(function ($query) {
+                $query->where('ccp.tipoinventario', 'cerrado')
+                    ->orWhere('ccp.tipoinventario', 'inicial');
+            })
             ->where('pro.category_id', $categoriaId)
             ->where('pro.status', 1)
             ->get();
@@ -265,7 +275,8 @@ class inventoryController extends Controller
         FROM centro_costo_products c INNER JOIN products p ON p.id = c.products_id
         WHERE c.centrocosto_id = :centrocostoId
         AND p.category_id = :categoriaId
-        AND c.tipoinventario = 'Inicial' ",
+        AND c.tipoinventario = 'cerrado'
+        OR c.tipoinventario = 'inicial' ",
             [
                 'centrocostoId' => $v_centrocostoId,
                 'categoriaId' => $v_categoriaId
@@ -279,8 +290,9 @@ class inventoryController extends Controller
          UPDATE centro_costo_products c INNER JOIN products p ON p.id = c.products_id
          SET c.invinicial = c.fisico       
          WHERE c.centrocosto_id = :centrocostoId
-         AND p.category_id = :categoriaId
-         AND c.tipoinventario = 'Inicial' ",
+         AND p.category_id = :categoriaId   
+         AND c.tipoinventario = 'cerrado'
+         OR c.tipoinventario = 'inicial' ",
             [
                 'centrocostoId' => $v_centrocostoId,
                 'categoriaId' => $v_categoriaId
@@ -293,7 +305,8 @@ class inventoryController extends Controller
             "
         UPDATE centro_costo_products c INNER JOIN products p ON p.id = c.products_id
         SET
-         c.compralote = 0
+          c.tipoinventario = 'inicial'
+         ,c.compralote = 0
          ,c.alistamiento = 0
          ,c.compensados = 0
          ,c.trasladoing = 0
@@ -320,7 +333,8 @@ class inventoryController extends Controller
          ,c.precioventa_min = 0       
          WHERE c.centrocosto_id = :centrocostoId
          AND p.category_id = :categoriaId
-         AND tipoinventario = 'Inicial' ",
+         AND tipoinventario = 'cerrado'
+         OR tipoinventario = 'inicial' ",
             [
                 'centrocostoId' => $v_centrocostoId,
                 'categoriaId' => $v_categoriaId
@@ -339,8 +353,9 @@ class inventoryController extends Controller
         $startDate = '2023-05-01';
         $endDate = '2023-05-08';
 
-        $category = Category::whereIn('id', [1, 2, 3, 4, 5, 6, 7, 8, 9])->orderBy('name', 'asc')->get();
+     /* $category = Category::whereIn('id', [1, 2, 3, 4, 5, 6, 7, 8, 9])->orderBy('name', 'asc')->get(); */
 
+        $category = Category::orderBy('name', 'asc')->get();
         $centros = Centrocosto::Where('status', 1)->get();
 
         // llama al metodo para calcular el stock
@@ -350,6 +365,7 @@ class inventoryController extends Controller
 
         return view('inventory.consolidado_historico', compact('category', 'centros', 'startDate', 'endDate', 'totalStock'));
     }
+
     public function showhistorico(Request $request)
     {
         $centrocostoId = $request->input('centrocostoId');
@@ -508,40 +524,5 @@ class inventoryController extends Controller
 
             ]
         );
-    }
-
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
     }
 }

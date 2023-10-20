@@ -455,7 +455,7 @@ class compensadoController extends Controller
         $compensadores->save();
         $compensadores = Compensadores::where('id', $compensadoId)->get();
         $centrocosto_id = $compensadores->first()->centrocosto_id;
-
+        
         DB::update(
             "
             UPDATE centro_costo_products c
@@ -463,9 +463,9 @@ class compensadoController extends Controller
             JOIN compensadores b ON b.id = d.compensadores_id
             SET c.compensados =  c.compensados + d.peso,
                 c.cto_compensados =  c.cto_compensados + d.pcompra,
-                c.cto_compensados_total  = c.cto_compensados_total + (d.pcompra * d.peso)
-            WHERE c.tipoinventario = 'inicial' 
-            AND d.compensadores_id = :compensadoresid
+                c.cto_compensados_total  = c.cto_compensados_total + (d.pcompra * d.peso),
+                c.tipoinventario = 'cerrado'
+            WHERE d.compensadores_id = :compensadoresid
             AND b.centrocosto_id = :cencosid 
             AND c.centrocosto_id = :cencosid2 ",
             [
@@ -476,7 +476,7 @@ class compensadoController extends Controller
         );
 
     // Calcular el peso acumulado del producto
-        $centroCostoProducts = Centro_costo_product::where('tipoinventario', 'inicial')
+        $centroCostoProducts = Centro_costo_product::where('tipoinventario', 'cerrado')
             ->where('centrocosto_id', $centrocosto_id)
             ->get();
 

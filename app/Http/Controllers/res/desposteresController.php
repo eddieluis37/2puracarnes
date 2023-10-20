@@ -290,8 +290,7 @@ class desposteresController extends Controller
         SET c.compralote =  c.compralote + d.peso,
             c.cto_compralote =  c.cto_compralote + d.costo_kilo,
             c.cto_compralote_total  = c.cto_compralote_total + (d.costo_kilo * d.peso)
-        WHERE c.tipoinventario = 'inicial' 
-        AND d.beneficiores_id = :beneficioid
+        WHERE d.beneficiores_id = :beneficioid
         AND b.centrocosto_id = :cencosid 
         AND c.centrocosto_id = :cencosid2 ",
             [
@@ -300,8 +299,6 @@ class desposteresController extends Controller
                 'cencosid2' =>  $beneficio->centrocosto_id
             ]
         );
-
-
 
         return response()->json([
             'status' => 1,

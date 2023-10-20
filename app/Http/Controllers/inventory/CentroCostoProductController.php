@@ -23,7 +23,8 @@ class CentroCostoProductController extends Controller
      */
     public function index()
     {
-        $category = Category::whereIn('id', [1, 2, 3, 4, 5, 6, 7, 8, 9])->orderBy('name', 'asc')->get();
+        /* $category = Category::whereIn('id', [1, 2, 3, 4, 5, 6, 7, 8, 9])->orderBy('name', 'asc')->get(); */
+        $category = Category::orderBy('name', 'asc')->get();
         $centros = Centrocosto::Where('status', 1)->get();
         $centroCostoProductos = Centro_costo_product::all();
 
@@ -121,7 +122,6 @@ class CentroCostoProductController extends Controller
                 'ccp.fisico as fisico'
             )
             ->where('ccp.centrocosto_id', $centrocostoId)
-            ->where('ccp.tipoinventario', 'inicial')
             ->where('pro.category_id', $categoriaId)
             ->where('pro.status', 1)
             ->get();

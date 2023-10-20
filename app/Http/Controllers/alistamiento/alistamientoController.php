@@ -55,8 +55,7 @@ class alistamientoController extends Controller
             ->selectRaw('ce.invinicial + ce.compraLote + ce.alistamiento +
             ce.compensados + ce.trasladoing - (ce.venta + ce.trasladosal) stockPadre')
             ->where([
-                ['p.level_product_id', 1],
-                ['ce.tipoinventario', "inicial"],
+                ['p.level_product_id', 1],             
                 ['p.meatcut_id', $dataAlistamiento[0]->meatcut_id],
                 ['p.status', 1],
                 ['ce.centrocosto_id', $dataAlistamiento[0]->centrocosto_id],
@@ -286,8 +285,7 @@ class alistamientoController extends Controller
                 ->select('ce.stock', 'ce.fisico')
                 ->where([
                     ['p.id', $request->producto],
-                    ['ce.centrocosto_id', $request->centrocosto],
-                    ['ce.tipoinventario', "inicial"],
+                    ['ce.centrocosto_id', $request->centrocosto],             
                     ['p.status', 1],
 
                 ])->get();
@@ -336,8 +334,7 @@ class alistamientoController extends Controller
             ->selectRaw('ce.invinicial + ce.compraLote + ce.alistamiento +
             ce.compensados + ce.trasladoing - (ce.venta + ce.trasladosal) stockHijo')
             ->where([
-                ['ce.centrocosto_id', $centrocostoId],
-                ['ce.tipoinventario', "inicial"],
+                ['ce.centrocosto_id', $centrocostoId],       
                 ['en.enlistments_id', $alistamientoId],
                 ['en.status', 1]
             ])->get();
@@ -368,8 +365,7 @@ class alistamientoController extends Controller
                 ->select('ce.stock', 'ce.fisico')
                 ->where([
                     ['p.id', $request->productoId],
-                    ['ce.centrocosto_id', $request->centrocosto],
-                    ['ce.tipoinventario', "inicial"],
+                    ['ce.centrocosto_id', $request->centrocosto],              
                     ['p.status', 1],
 
                 ])->get();
@@ -542,8 +538,7 @@ class alistamientoController extends Controller
                      UPDATE centro_costo_products c 
                      SET c.alistamiento = c.alistamiento + :krequeridos        
                      WHERE c.products_id = :vproducts_id 
-                     AND c.centrocosto_id = :vcentrocosto                    
-                     AND c.tipoinventario = 'Inicial' ",
+                     AND c.centrocosto_id = :vcentrocosto,",
                         [
                             'vproducts_id' => $key->products_id,
                             'krequeridos' => $key->kgrequeridos,
@@ -560,8 +555,7 @@ class alistamientoController extends Controller
                      UPDATE centro_costo_products c 
                      SET c.alistamiento = c.alistamiento + :krequeridos        
                      WHERE c.products_id = :vproducts_id  
-                     AND c.centrocosto_id = :vcentrocosto                                       
-                     AND c.tipoinventario = 'Inicial' ",
+                     AND c.centrocosto_id = :vcentrocosto,",
                         [
                             'vproducts_id' => $productopadreId,
                             'krequeridos' => $stockalistpadre * -1,
