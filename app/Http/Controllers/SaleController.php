@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Sale;
 use App\Models\SaleDetail;
 use App\Models\Third;
+use App\Models\Category;
 use App\Models\centros\Centrocosto;
 use Illuminate\Support\Facades\DB;
 
@@ -28,10 +29,12 @@ class SaleController extends Controller
     public function create($id)
     {
         $venta = Sale::find($id);
+        $category = Category::get();
         $ventasdetalle = $this->getventasdetalle($id,$venta->centrocosto_id);
         $arrayTotales = $this->sumTotales($id);
+        
 
-        return view('sale.create',compact('venta','ventasdetalle','arrayTotales'));
+        return view('sale.create',compact('venta','ventasdetalle','arrayTotales','category'));
     }
 
     
@@ -59,22 +62,22 @@ class SaleController extends Controller
         DB::update("
         UPDATE sales a,    
         (
-            SELECT @numeroConsecutivo:= (SELECT (COALESCE (max(consecutivo),0) ) FROM sales where centrocosto_id = :vcentrocosto1 ),
+            SELECT @numeroConsecutivo:= (SELECT (COALESCE (max(consec),0) ) FROM sales where centrocosto_id = :vcentrocosto1 ),
             @documento:= (SELECT MAX(prefijo) FROM centro_costo where id = :vcentrocosto2 )
         ) as tabla
-        SET a.consecutivo = 
-        CONCAT(
-            @documento,  
-            LPAD( (@numeroConsecutivo:=@numeroConsecutivo + 1),5,'0' ) 
-            )
+        SET a.consecutivo =  CONCAT( @documento,  LPAD( (@numeroConsecutivo:=@numeroConsecutivo + 1),5,'0' ) ),
+            a.consec = @numeroConsecutivo
         WHERE a.consecutivo is null",
            [               
                'vcentrocosto1' => $idcc,
                'vcentrocosto2' => $idcc
            ]
        );
+       
+       $ventasdetalle = $this->getventasdetalle($venta->id,$venta->centrocosto_id);
+       $arrayTotales = $this->sumTotales($venta->id);
 
-       return view('sale.create',compact('venta'));
+       return view('sale.create',compact('venta','ventasdetalle','arrayTotales'));
     }
 
     
