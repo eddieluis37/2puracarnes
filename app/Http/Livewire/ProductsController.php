@@ -72,7 +72,7 @@ class ProductsController extends Component
 		return view('livewire.products.component', [
 			'data' => $products,
 			'categories' => Category::orderBy('name', 'asc')->get(),
-			'cortes' => Meatcut::orderBy('name', 'asc')->get()
+			'cortes' => Meatcut::where('status', 1)->orderBy('name', 'asc')->get()
 		])
 			->extends('layouts.theme.app')
 			->section('content');

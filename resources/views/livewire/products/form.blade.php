@@ -2,7 +2,20 @@
 
 <div class="row">
 
-	<div class="col-sm-12 col-md-8">
+	<div class="col-sm-12 col-md-4">
+		<div class="form-group">
+			<label>Corte principal</label>
+			<select wire:model='meatcutid' class="form-control" id="meatcutid">
+				<option value="Elegir" disabled>Elegir</option>
+				@foreach($cortes as $corte)
+				<option value="{{$corte->id}}">{{$corte->name}}</option>
+				@endforeach
+			</select>
+			@error('meatcutid') <span class="text-danger er">{{ $message}}</span>@enderror
+		</div>
+	</div>
+
+	<div class="col-sm-12 col-md-4">
 		<div class="form-group">
 			<label>Nombre</label>
 			<input type="text" wire:model.lazy="name" class="form-control product-name" placeholder="ej: Nombre del producto" autofocus>
@@ -103,18 +116,7 @@
 		</div>
 	</div>
 
-	<div class="col-sm-12 col-md-4">
-		<div class="form-group">
-			<label>Corte principal</label>
-			<select wire:model='meatcutid' class="form-control" id="meatcutid">
-				<option value="Elegir" disabled>Elegir</option>
-				@foreach($cortes as $corte)
-				<option value="{{$corte->id}}">{{$corte->name}}</option>
-				@endforeach
-			</select>
-			@error('meatcutid') <span class="text-danger er">{{ $message}}</span>@enderror
-		</div>
-	</div>
+
 
 </div>
 
