@@ -22,9 +22,9 @@
 					<table class="table table-striped mt-1">
 						<thead class="text-white" style="background: #3B3F5C;">
 							<tr>
-								<th class="table-th text-white">CORTE</th>								
+								<th class="table-th text-white">CORTE</th>
 								<th class="table-th text-white text-center">CATEGORÍA</th>
-								<th class="table-th text-white text-center"></th>
+								<th class="table-th text-white text-center">ESTADO</th>
 								<th class="table-th text-white text-center">ACCIONES</th>
 							</tr>
 						</thead>
@@ -34,12 +34,14 @@
 								<td>
 									<h6 class="text-left">{{$meatcut->name}}</h6>
 								</td>
-								
+
 								<td>
 									<h6 class="text-center">{{$meatcut->category}}</h6>
 								</td>
+
 								<td>
-						
+									<h6 class="text-center">{{$meatcut->status}}</h6>
+								</td>
 
 								<td class="text-center">
 									@can('Product_Update')
@@ -53,7 +55,7 @@
 										<i class="fas fa-trash"></i>
 									</a>
 									@endcan
-								
+
 								</td>
 							</tr>
 							@endforeach
@@ -92,7 +94,7 @@
 			$('#theModal').modal('hide')
 		});
 		window.livewire.on('hidden.bs.modal', msg => {
-			$('.er').css('display', 'none')			
+			$('.er').css('display', 'none')
 		});
 		$('#theModal').on('hidden.bs.modal', function(e) {
 			$('.er').css('display', 'none')
