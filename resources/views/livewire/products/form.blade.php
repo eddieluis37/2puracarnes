@@ -106,7 +106,7 @@
 	<div class="col-sm-12 col-md-4">
 		<div class="form-group">
 			<label>Corte principal</label>
-			<select wire:model='meatcutid' class="form-control">
+			<select wire:model='meatcutid' class="form-control" id="meatcutid">
 				<option value="Elegir" disabled>Elegir</option>
 				@foreach($cortes as $corte)
 				<option value="{{$corte->id}}">{{$corte->name}}</option>
@@ -117,6 +117,19 @@
 	</div>
 
 </div>
+
+@section('script')
+<script>
+	document.addEventListener("livewire:load", function() {
+		$('#meatcut--id').select2();
+
+		Livewire.hook('message.processed', (message, component) => {
+			$('#meatcut--id').select2();
+		});
+	});
+</script>
+@endsection
+
 
 
 @include('common.modalFooter')

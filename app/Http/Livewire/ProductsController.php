@@ -43,6 +43,8 @@ class ProductsController extends Component
 		$this->componentName = 'Productos';
 		$this->categoryid = 'Elegir';
 		$this->meatcutid = 'Elegir';
+
+		$this->dispatchBrowserEvent('refreshSelect2');
 	}
 
 
@@ -233,11 +235,19 @@ class ProductsController extends Component
 	}
 
 	protected $listeners = [
+		'refreshSelect2',
 		'deleteRow' => 'Destroy'
 	];
 
+	public function refreshSelect2()
+	{
+		$this->dispatchBrowserEvent('refreshSelect2');
+	}
 
-
+	public function updatedMeatcutid()
+	{
+		$this->emit('refreshSelect2');
+	}
 
 	public function Destroy(Product $product)
 	{

@@ -23,6 +23,27 @@
             @endcan
 
 
+            @can('Product_View')
+            <li class="menu">
+                <a href="#products" data-active="false" class="menu-toggle">
+                    <div class="base-menu">
+                        <div class="base-icons">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-tag">
+                                <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path>
+                                <line x1="7" y1="7" x2="7.01" y2="7"></line>
+                            </svg>
+                        </div>
+                        <span>Productos</span>
+                    </div>
+                </a>
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-left">
+                    <polyline points="15 18 9 12 15 6"></polyline>
+                </svg>
+            </li>
+            @endcan
+
+
+
             @can('Compras')
             <li class="menu">
                 <a href="#more" data-active="false" class="menu-toggle">
@@ -94,7 +115,7 @@
             </li>
             @endcan
 
-            @role('Admin')
+            <!--   @role('Admin')
             <li class="">
                 <a href="{{url('faster')}}" class="menu-toggle" data-active="false">
                     <div class="base-menu">
@@ -109,25 +130,7 @@
                     </div>
                 </a>
             </li>
-            @endcan
-
-
-
-            @can('Product_View')
-            <li class="">
-                <a href="{{ url('products') }}" class="menu-toggle" data-active="false">
-                    <div class="base-menu">
-                        <div class="base-icons">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-tag">
-                                <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path>
-                                <line x1="7" y1="7" x2="7.01" y2="7"></line>
-                            </svg>
-                        </div>
-                        <span>Productos</span>
-                    </div>
-                </a>
-            </li>
-            @endcan
+            @endcan        -->
 
             @can('Pos_Create')
             <li class="">
@@ -202,7 +205,7 @@
                                 <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
                             </svg>
                         </div>
-                        <span>Adminstración</span>
+                        <span>Administración</span>
                     </div>
                 </a>
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-left">
@@ -265,7 +268,6 @@
                 </svg>
             </li>
             @endcan
-
         </ul>
     </nav>
 
@@ -310,14 +312,14 @@
                             <path d="M22 4v16H6"></path>
                         </svg> Cierre de Inv</a>
                 </li>
-                 <li>
+                <li>
                     <a href="{{ url('inventory/consolidado_historico') }}"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-calendar">
                             <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
                             <line x1="16" y1="2" x2="16" y2="6"></line>
                             <line x1="8" y1="2" x2="8" y2="6"></line>
                             <line x1="3" y1="10" x2="21" y2="10"></line>
                         </svg> Históricos</a>
-                </li> 
+                </li>
                 <li>
                     <a href="{{ url('transfer') }}"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-truck">
                             <rect x="1" y="3" width="15" height="13"></rect>
@@ -661,55 +663,57 @@
             </ul>
         </div>
 
-        <div class="submenu" id="users">
-            <ul class="submenu-list" data-parent-element="#users">
-                <li>
-                    <a href="{{ url('roles') }}"><span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-circle">
-                                <circle cx="12" cy="12" r="10"></circle>
-                            </svg></span> Roles </a>
-                </li>
-                <li>
-                    <a href="{{ url('users') }}"><span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-circle">
-                                <circle cx="12" cy="12" r="10"></circle>
-                            </svg></span> Usuarios </a>
-                </li>
-                <li>
-                    <a href="{{ url('permisos') }}"><span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-circle">
-                                <circle cx="12" cy="12" r="10"></circle>
-                            </svg></span> Permisos </a>
-                </li>
-                <li>
-                    <a href="{{ url('asignar') }}"><span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-circle">
-                                <circle cx="12" cy="12" r="10"></circle>
-                            </svg></span> Asignar Permisos </a>
-                </li>
-                <li>
-                    <a href="{{url('coins')}}"><span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-circle">
-                                <circle cx="12" cy="12" r="10"></circle>
-                            </svg></span> Denominaciones </a>
-                </li>
-                <li>
-                    <a href="{{url('thirds')}}"><span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-circle">
-                                <circle cx="12" cy="12" r="10"></circle>
-                            </svg></span> Terceros </a>
-                </li>
-                <li>
-                    <a href="{{url('precio_agreements')}}"><span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-circle">
-                                <circle cx="12" cy="12" r="10"></circle>
-                            </svg></span> Precios Acuerdos </a>
-                </li>
-                <li>
-                    <a href="{{url('formapago')}}"><span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-circle">
-                                <circle cx="12" cy="12" r="10"></circle>
-                            </svg></span> Formas de Pago </a>
-                </li>
-                <li>
-                    <a href="{{url('parametrocontable')}}"><span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-circle">
-                                <circle cx="12" cy="12" r="10"></circle>
-                            </svg></span> Parámetros Contables </a>
-                </li>
-            </ul>
+        <div class=" submenu" id="users">
+                                <ul class="submenu-list" data-parent-element="#users">
+                                    <li>
+                                        <a href="{{ url('roles') }}"><span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-circle">
+                                                    <circle cx="12" cy="12" r="10"></circle>
+                                                </svg></span> Roles </a>
+                                    </li>
+                                    <li>
+                                        <a href="{{ url('users') }}"><span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-circle">
+                                                    <circle cx="12" cy="12" r="10"></circle>
+                                                </svg></span> Usuarios </a>
+                                    </li>
+                                    <li>
+                                        <a href="{{ url('permisos') }}"><span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-circle">
+                                                    <circle cx="12" cy="12" r="10"></circle>
+                                                </svg></span> Permisos </a>
+                                    </li>
+                                    <li>
+                                        <a href="{{ url('asignar') }}"><span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-circle">
+                                                    <circle cx="12" cy="12" r="10"></circle>
+                                                </svg></span> Asignar Permisos </a>
+                                    </li>
+                                    <li>
+                                        <a href="{{url('coins')}}"><span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-circle">
+                                                    <circle cx="12" cy="12" r="10"></circle>
+                                                </svg></span> Denominaciones </a>
+                                    </li>
+                                    <li>
+                                        <a href="{{url('thirds')}}"><span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-circle">
+                                                    <circle cx="12" cy="12" r="10"></circle>
+                                                </svg></span> Terceros </a>
+                                    </li>
+                                    <li>
+                                        <a href="{{url('precio_agreements')}}"><span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-circle">
+                                                    <circle cx="12" cy="12" r="10"></circle>
+                                                </svg></span> Precios Acuerdos </a>
+                                    </li>
+                                    <li>
+                                        <a href="{{url('formapago')}}"><span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-circle">
+                                                    <circle cx="12" cy="12" r="10"></circle>
+                                                </svg></span> Formas de Pago </a>
+                                    </li>
+                                    <li>
+                                        <a href="{{url('parametrocontable')}}"><span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-circle">
+                                                    <circle cx="12" cy="12" r="10"></circle>
+                                                </svg></span> Parámetros Contables </a>
+                                    </li>
+                                </ul>
         </div>
+
+
 
         <div class="submenu" id="pages">
             <ul class="submenu-list" data-parent-element="#pages">
@@ -734,6 +738,25 @@
                     </ul>
                 </li>
             </ul>
+        </div>
+
+        <div class=" submenu" id="products">
+            <ul class="submenu-list" data-parent-element="#products">
+                <li>
+                    <a href="{{ url('meatcuts') }}"><span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-circle">
+                                <circle cx="12" cy="12" r="10"></circle>
+                            </svg></span> Principales </a>
+                </li>
+                <li>
+                    <a href="{{ url('products') }}"><span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-circle">
+                                <circle cx="12" cy="12" r="10"></circle>
+                            </svg></span> Secundarios </a>
+                </li>
+                <li>
+                    <a href="{{ url('permisos') }}"><span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-circle">
+                                <circle cx="12" cy="12" r="10"></circle>
+                            </svg></span> Por centros de costo </a>
+                </li>
         </div>
 
         <div class="submenu" id="more">

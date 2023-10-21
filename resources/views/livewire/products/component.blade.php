@@ -49,7 +49,7 @@
 								</td>
 								<td>
 									<h6 class="text-center">{{$product->barcode}}</h6>
-								</td>								
+								</td>
 								<td>
 									<h6 class="text-center">{{$product->category}}</h6>
 								</td>
@@ -116,6 +116,8 @@
 	@include('livewire.products.form')
 </div>
 
+
+
 <script>
 	document.addEventListener('DOMContentLoaded', function() {
 
@@ -135,7 +137,7 @@
 			$('#theModal').modal('hide')
 		});
 		window.livewire.on('hidden.bs.modal', msg => {
-			$('.er').css('display', 'none')			
+			$('.er').css('display', 'none')
 		});
 		$('#theModal').on('hidden.bs.modal', function(e) {
 			$('.er').css('display', 'none')
@@ -143,8 +145,6 @@
 		$('#theModal').on('shown.bs.modal', function(e) {
 			$('.product-name').focus()
 		})
-
-
 
 	});
 
