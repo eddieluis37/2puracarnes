@@ -4,6 +4,20 @@
 
 	<div class="col-sm-12 col-md-4">
 		<div class="form-group">
+			<label>Categoría</label>
+			<select wire:model='categoryid' class="form-control">
+				<option value="Elegir" disabled>Elegir</option>
+				@foreach($categories as $category)
+				<option value="{{$category->id}}">{{$category->name}}</option>
+				@endforeach
+			</select>
+			@error('categoryid') <span class="text-danger er">{{ $message}}</span>@enderror
+		</div>
+	</div>
+
+
+	<div class="col-sm-12 col-md-4">
+		<div class="form-group">
 			<label>Corte principal</label>
 			<select wire:model='meatcutid' class="form-control" id="meatcutid">
 				<option value="Elegir" disabled>Elegir</option>
@@ -41,21 +55,21 @@
 
 	<div class="col-sm-12 col-md-4">
 		<div class="form-group">
-			<label>Costo</label>
-			<input type="text" wire:model.lazy="cost" class="form-control" placeholder="ej: 0.00">
-			@error('cost') <span class="text-danger er">{{ $message}}</span>@enderror
-		</div>
-	</div>
-
-	<div class="col-sm-12 col-md-4">
-		<div class="form-group">
-			<label>Precio</label>
+			<label>Precio mínino</label>
 			<input type="text" wire:model.lazy="price_fama" class="form-control" placeholder="ej: 0.00">
 			@error('price_fama') <span class="text-danger er">{{ $message}}</span>@enderror
 		</div>
 	</div>
 
 	<div class="col-sm-12 col-md-4">
+		<div class="form-group">
+			<label>Iva</label>
+			<input type="text" wire:model.lazy="iva" class="form-control" placeholder="ej: 19.00 %">
+			@error('iva') <span class="text-danger er">{{ $message}}</span>@enderror
+		</div>
+	</div>
+
+	<!-- 	<div class="col-sm-12 col-md-4">
 		<div class="form-group">
 			<label>Precio ins</label>
 			<input type="text" wire:model.lazy="price_insti" class="form-control" placeholder="ej: 0.00">
@@ -77,36 +91,24 @@
 			<input type="text" wire:model.lazy="price_hogar" class="form-control" placeholder="ej: 0.00">
 			@error('price_hogar') <span class="text-danger er">{{ $message}}</span>@enderror
 		</div>
-	</div>
+	</div> -->
 
-	<div class="col-sm-12 col-md-4">
+	<!-- <div class="col-sm-12 col-md-4">
 		<div class="form-group">
 			<label>Stock</label>
 			<input type="number" wire:model.lazy="stock" class="form-control" placeholder="ej: 1000">
 			@error('stock') <span class="text-danger er">{{ $message}}</span>@enderror
 		</div>
-	</div>
+	</div> -->
 
 	<div class="col-sm-12 col-md-4">
 		<div class="form-group">
-			<label>Alertas</label>
+			<label>Stock Alertas</label>
 			<input type="number" wire:model.lazy="alerts" class="form-control" placeholder="ej: 10">
 			@error('alerts') <span class="text-danger er">{{ $message}}</span>@enderror
 		</div>
 	</div>
 
-	<div class="col-sm-12 col-md-4">
-		<div class="form-group">
-			<label>Categoría</label>
-			<select wire:model='categoryid' class="form-control">
-				<option value="Elegir" disabled>Elegir</option>
-				@foreach($categories as $category)
-				<option value="{{$category->id}}">{{$category->name}}</option>
-				@endforeach
-			</select>
-			@error('categoryid') <span class="text-danger er">{{ $message}}</span>@enderror
-		</div>
-	</div>
 
 	<div class="col-sm-12 col-md-8">
 		<div class="form-group custom-file">

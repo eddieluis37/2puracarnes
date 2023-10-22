@@ -40,6 +40,7 @@ use App\Http\Controllers\alistamiento\alistamientoController;
 use App\Http\Controllers\aves\beneficioavesController;
 use App\Http\Controllers\aves\desposteavesController;
 use App\Http\Controllers\inventory\CentroCostoProductController;
+use App\Http\Controllers\CentroCostoProdController;
 use App\Http\Controllers\faster\fasterController;
 use App\Http\Controllers\transfer\TransferController;
 use App\Http\Controllers\workshop\workshopController;
@@ -156,6 +157,7 @@ Route::group(['middleware' => [('auth')]], function () {
     Route::delete('/todos/{id}', [TodosController::class, 'destroy'])->name('todos-destroy');
 
     /************************* RUTAS SIN LIVEWIRE ********************************** */
+    Route::get('centro_costo_prod', [CentroCostoProdController::class, 'index'])->name('showccp');
 
     /*****************************INVENTORY****************************************** */
     Route::get('inventory/diary', [diaryController::class, 'index'])->name('inventory.diary');

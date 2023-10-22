@@ -26,7 +26,7 @@ class ProductsController extends Component
 		$this->emit('global-msg', "SE AGREGÓ EL PRODUCTO AL CARRITO");
 	}
 
-	public $name, $code, $barcode, $cost, $price_fama, $price_insti, $price_horeca, $price_hogar, $stock, $alerts, $categoryid, $meatcutid, $search, $image, $selected_id, $pageTitle, $componentName;
+	public $name, $code, $barcode, $iva, $price_fama, $price_insti, $price_horeca, $price_hogar, $stock, $alerts, $categoryid, $meatcutid, $search, $image, $selected_id, $pageTitle, $componentName;
 
 	private $pagination = 10;
 
@@ -81,43 +81,40 @@ class ProductsController extends Component
 	public function Store()
 	{
 		$rules  = [
-			'name' => 'required|unique:products|min:3',
-			'cost' => 'required',
-			'price_fama' => 'required',
-			'stock' => 'required',
-			'alerts' => 'required',
 			'categoryid' => 'required|not_in:Elegir',
-			'meatcutid' => 'required|not_in:Elegir'
+			'meatcutid' => 'required|not_in:Elegir',
+			'name' => 'required|unique:products|min:3',
+			'code' => 'required',
+			'price_fama' => 'required',		
+			'alerts' => 'required',
+			
 		];
 
 		$messages = [
+			'categoryid.not_in' => 'Elige un nombre de categoría diferente de Elegir',
+			'meatcutid.not_in' => 'Elige un nombre de corte de carne diferente de Elegir',
 			'name.required' => 'Nombre del producto requerido',
 			'name.unique' => 'Ya existe el nombre del producto',
 			'name.min' => 'El nombre del producto debe tener al menos 3 caracteres',
-			'cost.required' => 'El costo es requerido',
-			'price_fama.required' => 'El precio es requerido',
-			'stock.required' => 'El stock es requerido',
+			'code.required' => 'El codigo es requerido',
+			'price_fama.required' => 'El precio mínimo es requerido',
+			'iva.required' => 'El I es requerido',
 			'alerts.required' => 'Ingresa el valor mínimo en existencias',
-			'categoryid.not_in' => 'Elige un nombre de categoría diferente de Elegir',
-			'meatcutid.not_in' => 'Elige un nombre de corte de carne diferente de Elegir',
+			
 		];
 
 		$this->validate($rules, $messages);
 
 
 		$product = Product::create([
+			'category_id' => $this->categoryid,
+			'meatcut_id' => $this->meatcutid,
 			'name' => $this->name,
 			'code' => $this->code,
-			'cost' => $this->cost,
-			'price_fama' => $this->price_fama,
-			'price_insti' => $this->price_insti,
-			'price_horeca' => $this->price_horeca,
-			'price_hogar' => $this->price_hogar,
 			'barcode' => $this->barcode,
-			'stock' => $this->stock,
-			'alerts' => $this->alerts,
-			'category_id' => $this->categoryid,
-			'meatcut_id' => $this->meatcutid
+			'price_fama' => $this->price_fama,
+			'iva' => $this->iva,							
+			'alerts' => $this->alerts,			
 		]);
 
 		if ($this->image) {
@@ -138,12 +135,8 @@ class ProductsController extends Component
 		$this->name = $product->name;
 		$this->code = $product->code;
 		$this->barcode = $product->barcode;
-		$this->cost = $product->cost;
-		$this->price_fama = $product->price_fama;
-		$this->price_insti = $product->price_insti;
-		$this->price_horeca = $product->price_horeca;
-		$this->price_hogar = $product->price_hogar;
-		$this->stock = $product->stock;
+		$this->iva = $product->iva;
+		$this->price_fama = $product->price_fama;	
 		$this->alerts = $product->alerts;
 		$this->categoryid = $product->category_id;
 		$this->meatcutid = $product->meatcut_id;
@@ -156,9 +149,8 @@ class ProductsController extends Component
 	{
 		$rules  = [
 			'name' => "required|min:3|unique:products,name,{$this->selected_id}",
-			'cost' => 'required',
-			'price_fama' => 'required',
-			'stock' => 'required',
+			'iva' => 'required',
+			'price_fama' => 'required',			
 			'alerts' => 'required',
 			'categoryid' => 'required|not_in:Elegir',
 			'meatcutid' => 'required|not_in:Elegir'
@@ -168,9 +160,8 @@ class ProductsController extends Component
 			'name.required' => 'Nombre del producto requerido',
 			'name.unique' => 'Ya existe el nombre del producto',
 			'name.min' => 'El nombre del producto debe tener al menos 3 caracteres',
-			'cost.required' => 'El costo es requerido',
-			'price_fama.required' => 'El precio es requerido',
-			'stock.required' => 'El stock es requerido',
+			'iva.required' => 'El iva es requerido',
+			'price_fama.required' => 'El precio es requerido',			
 			'alerts.required' => 'Ingresa el valor mínimo en existencias',
 			'categoryid.not_in' => 'Elige un nombre de categoría diferente de Elegir',
 			'meatcutid.not_in' => 'Elige un nombre de corte de carne diferente de Elegir',
@@ -183,13 +174,9 @@ class ProductsController extends Component
 		$product->update([
 			'name' => $this->name,
 			'code' => $this->code,
-			'cost' => $this->cost,
-			'price_fama' => $this->price_fama,
-			'price_insti' => $this->price_insti,
-			'price_horeca' => $this->price_horeca,
-			'price_hogar' => $this->price_hogar,
-			'barcode' => $this->barcode,
-			'stock' => $this->stock,
+			'iva' => $this->iva,
+			'price_fama' => $this->price_fama,			
+			'barcode' => $this->barcode,		
 			'alerts' => $this->alerts,
 			'category_id' => $this->categoryid,
 			'meatcut_id' => $this->meatcutid
@@ -219,12 +206,8 @@ class ProductsController extends Component
 		$this->name = '';
 		$this->code = '';
 		$this->barcode = '';
-		$this->cost = '';
-		$this->price_fama = '';
-		$this->price_insti = '';
-		$this->price_horeca = '';
-		$this->price_hogar = '';
-		$this->stock = '';
+		$this->iva = '';
+		$this->price_fama = '';		
 		$this->alerts = '';
 		$this->search = '';
 		$this->categoryid = 'Elegir';

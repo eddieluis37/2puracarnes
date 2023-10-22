@@ -23,14 +23,11 @@
 					<table class="table table-striped mt-1">
 						<thead class="text-white" style="background: #3B3F5C;">
 							<tr>
-								<th class="table-th text-white">DESCRIPCIÓN</th>
+								<th class="table-th text-white">NOMBRE</th>
 								<th class="table-th text-white text-center">CODE</th>
 								<th class="table-th text-white text-center">BARCODE</th>
 								<th class="table-th text-white text-center">CATEGORÍA</th>
-								<th class="table-th text-white text-center">PRECIO_F</th>
-								<th class="table-th text-white text-center">PRECIO_I</th>
-								<th class="table-th text-white text-center">PRECIO_H</th>
-								<th class="table-th text-white text-center">PRECIO_C</th>
+								<th class="table-th text-white text-center">PRECIO_M</th>								
 								<th class="table-th text-white text-center">IVA</th>
 								<th class="table-th text-white text-center">STOCK</th>
 								<th class="table-th text-white text-center">INV.MIN</th>
@@ -55,16 +52,7 @@
 								</td>
 								<td>
 									<h6 class="text-center">${{number_format($product->price_fama,0)}}</h6>
-								</td>
-								<td>
-									<h6 class="text-center">${{number_format($product->price_insti,0)}}</h6>
-								</td>
-								<td>
-									<h6 class="text-center">${{number_format($product->price_horeca,0)}}</h6>
-								</td>
-								<td>
-									<h6 class="text-center">${{number_format($product->price_hogar,0)}}</h6>
-								</td>
+								</td>								
 								<td>
 									<h6 class="text-center">{{number_format($product->iva)}}%</h6>
 								</td>
