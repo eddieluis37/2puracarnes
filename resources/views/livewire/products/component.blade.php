@@ -23,11 +23,12 @@
 					<table class="table table-striped mt-1">
 						<thead class="text-white" style="background: #3B3F5C;">
 							<tr>
+								<th class="table-th text-white text-center">CATEGORÍA</th>
+								<th class="table-th text-white">BASICO</th>
 								<th class="table-th text-white">NOMBRE</th>
 								<th class="table-th text-white text-center">CODE</th>
 								<th class="table-th text-white text-center">BARCODE</th>
-								<th class="table-th text-white text-center">CATEGORÍA</th>
-								<th class="table-th text-white text-center">PRECIO_M</th>								
+								<th class="table-th text-white text-center">PRECIO_M</th>
 								<th class="table-th text-white text-center">IVA</th>
 								<th class="table-th text-white text-center">STOCK</th>
 								<th class="table-th text-white text-center">INV.MIN</th>
@@ -39,6 +40,12 @@
 							@foreach($data as $product)
 							<tr>
 								<td>
+									<h6 class="text-center">{{$product->category}}</h6>
+								</td>
+								<td>
+									<h6 class="text-left">{{$product->meacuty}}</h6>
+								</td>
+								<td>
 									<h6 class="text-left">{{$product->name}}</h6>
 								</td>
 								<td>
@@ -47,12 +54,10 @@
 								<td>
 									<h6 class="text-center">{{$product->barcode}}</h6>
 								</td>
-								<td>
-									<h6 class="text-center">{{$product->category}}</h6>
-								</td>
+
 								<td>
 									<h6 class="text-center">${{number_format($product->price_fama,0)}}</h6>
-								</td>								
+								</td>
 								<td>
 									<h6 class="text-center">{{number_format($product->iva)}}%</h6>
 								</td>

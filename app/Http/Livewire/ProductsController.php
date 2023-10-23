@@ -5,6 +5,8 @@ namespace App\Http\Livewire;
 
 use App\Http\Livewire\Scaner;
 use App\Models\Category;
+use App\Models\Centro_costo_product;
+use App\Models\Levels_products;
 use App\Models\Product;
 use Livewire\Component;
 use Livewire\WithFileUploads;
@@ -26,7 +28,7 @@ class ProductsController extends Component
 		$this->emit('global-msg', "SE AGREGÓ EL PRODUCTO AL CARRITO");
 	}
 
-	public $name, $code, $barcode, $iva, $price_fama, $price_insti, $price_horeca, $price_hogar, $stock, $alerts, $categoryid, $meatcutid, $search, $image, $selected_id, $pageTitle, $componentName;
+	public $name, $code, $barcode, $iva, $price_fama, $levelproductid, $alerts, $categoryid, $centrocosto_id, $products_id, $meatcutid, $search, $image, $selected_id, $pageTitle, $componentName;
 
 	private $pagination = 10;
 
@@ -43,6 +45,7 @@ class ProductsController extends Component
 		$this->componentName = 'Productos';
 		$this->categoryid = 'Elegir';
 		$this->meatcutid = 'Elegir';
+		$this->levelproductid = 'Elegir';
 
 		$this->dispatchBrowserEvent('refreshSelect2');
 	}
@@ -53,7 +56,8 @@ class ProductsController extends Component
 	{
 		if (strlen($this->search) > 0) {
 			$products = Product::join('categories as c', 'c.id', 'products.category_id')
-				->select('products.*', 'c.name as category')
+				->join('meatcuts as m', 'm.id', 'products.meatcut_id')
+				->select('products.*', 'c.name as category', 'm.name as meacuty')
 				->where('products.name', 'like', '%' . $this->search . '%')
 				->orWhere('products.code', 'like', '%' . $this->search . '%')
 				->orWhere('products.barcode', 'like', '%' . $this->search . '%')
@@ -63,7 +67,8 @@ class ProductsController extends Component
 		} else {
 			$products = Product::join('categories as c', 'c.id', 'products.category_id')
 				->leftJoin('precio_agreements as pa', 'pa.id', 'products.id')
-				->select('products.*', 'c.name as category', 'products.price_fama as price_fama')
+				->join('meatcuts as m', 'm.id', 'products.meatcut_id')
+				->select('products.*', 'c.name as category', 'pa.precio as price_fama', 'm.name as meacuty')
 				->where('products.price_fama', '>', 0)
 				->orderBy('products.id', 'asc')
 				->paginate($this->pagination);
@@ -72,7 +77,8 @@ class ProductsController extends Component
 		return view('livewire.products.component', [
 			'data' => $products,
 			'categories' => Category::orderBy('name', 'asc')->get(),
-			'cortes' => Meatcut::where('status', 1)->orderBy('name', 'asc')->get()
+			'cortes' => Meatcut::where('status', 1)->orderBy('name', 'asc')->get(),
+			'niveles' => Levels_products::orderBy('name', 'ASC')->get(),
 		])
 			->extends('layouts.theme.app')
 			->section('content');
@@ -84,6 +90,7 @@ class ProductsController extends Component
 			'categoryid' => 'required|not_in:Elegir',
 			'meatcutid' => 'required|not_in:Elegir',
 			'name' => 'required|unique:products|min:3',
+			'levelproductid' => 'required|not_in:Elegir',
 			'code' => 'required',
 			'price_fama' => 'required',		
 			'alerts' => 'required',
@@ -94,6 +101,7 @@ class ProductsController extends Component
 			'categoryid.not_in' => 'Elige un nombre de categoría diferente de Elegir',
 			'meatcutid.not_in' => 'Elige un nombre de corte de carne diferente de Elegir',
 			'name.required' => 'Nombre del producto requerido',
+			'levelproductid.not_in' => 'Elige nivel diferente de Elegir',
 			'name.unique' => 'Ya existe el nombre del producto',
 			'name.min' => 'El nombre del producto debe tener al menos 3 caracteres',
 			'code.required' => 'El codigo es requerido',
@@ -110,6 +118,7 @@ class ProductsController extends Component
 			'category_id' => $this->categoryid,
 			'meatcut_id' => $this->meatcutid,
 			'name' => $this->name,
+			'level_product_id' => $this->levelproductid,
 			'code' => $this->code,
 			'barcode' => $this->barcode,
 			'price_fama' => $this->price_fama,
@@ -126,6 +135,20 @@ class ProductsController extends Component
 
 		$this->resetUI();
 		$this->emit('product-added', 'Producto Registrado');
+		$this->CrearProductoEnCentroCosto();
+	}
+
+	public function CrearProductoEnCentroCosto()
+	{
+		$ultimoId = Product::latest('id')->first()->id;
+
+		$centrocostoproduct = Centro_costo_product::create([
+			'centrocosto_id' => 1,
+			'products_id' => $ultimoId,
+			'tipoinventario' => 'inicial',
+		]);
+
+		$centrocostoproduct->save();
 	}
 
 
@@ -133,6 +156,7 @@ class ProductsController extends Component
 	{
 		$this->selected_id = $product->id;
 		$this->name = $product->name;
+		$this->levelproductid = $product->level_product_id;
 		$this->code = $product->code;
 		$this->barcode = $product->barcode;
 		$this->iva = $product->iva;
@@ -149,6 +173,7 @@ class ProductsController extends Component
 	{
 		$rules  = [
 			'name' => "required|min:3|unique:products,name,{$this->selected_id}",
+			'levelproductid' => 'required|not_in:Elegir',
 			'iva' => 'required',
 			'price_fama' => 'required',			
 			'alerts' => 'required',
@@ -160,6 +185,7 @@ class ProductsController extends Component
 			'name.required' => 'Nombre del producto requerido',
 			'name.unique' => 'Ya existe el nombre del producto',
 			'name.min' => 'El nombre del producto debe tener al menos 3 caracteres',
+			'levelproductid.not_in' => 'Elige nivel diferente de Elegir',
 			'iva.required' => 'El iva es requerido',
 			'price_fama.required' => 'El precio es requerido',			
 			'alerts.required' => 'Ingresa el valor mínimo en existencias',
@@ -173,6 +199,7 @@ class ProductsController extends Component
 
 		$product->update([
 			'name' => $this->name,
+			'level_product_id' => $this->levelproductid,
 			'code' => $this->code,
 			'iva' => $this->iva,
 			'price_fama' => $this->price_fama,			
@@ -204,6 +231,7 @@ class ProductsController extends Component
 	public function resetUI()
 	{
 		$this->name = '';
+		$this->levelproductid = 'Elegir';
 		$this->code = '';
 		$this->barcode = '';
 		$this->iva = '';

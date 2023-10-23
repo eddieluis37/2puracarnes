@@ -745,17 +745,22 @@
                 <li>
                     <a href="{{ url('meatcuts') }}"><span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-circle">
                                 <circle cx="12" cy="12" r="10"></circle>
-                            </svg></span> Principales </a>
+                            </svg></span> Productos Basicos </a>
                 </li>
                 <li>
                     <a href="{{ url('products') }}"><span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-circle">
                                 <circle cx="12" cy="12" r="10"></circle>
-                            </svg></span> Secundarios </a>
+                            </svg></span> Creación de productos </a>
                 </li>
                 <li>
                     <a href="{{ url('centro_costo_prod') }}"><span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-circle">
                                 <circle cx="12" cy="12" r="10"></circle>
-                            </svg></span> Por centros de costo </a>
+                            </svg></span> Asociar a centros de costo </a>
+                </li>
+                <li>
+                    <a href="{{ url('centro_costo_prod') }}"><span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-circle">
+                                <circle cx="12" cy="12" r="10"></circle>
+                            </svg></span> Productos lote y taller </a>
                 </li>
         </div>
 

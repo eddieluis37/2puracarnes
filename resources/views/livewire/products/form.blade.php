@@ -39,6 +39,18 @@
 
 	<div class="col-sm-12 col-md-4">
 		<div class="form-group">
+			<label>Nivel</label>
+			<select wire:model='levelproductid' class="form-control" id="levelproductid">
+				<option value="Elegir" disabled>Elegir</option>
+				@foreach($niveles as $nivel)
+				<option value="{{$nivel->id}}">{{$nivel->name}}</option>
+				@endforeach
+			</select>
+		</div>
+	</div>
+
+	<div class="col-sm-12 col-md-4">
+		<div class="form-group">
 			<label>Código</label>
 			<input type="text" wire:model.lazy="code" class="form-control" placeholder="ej: PC001">
 			@error('code') <span class="text-danger er">{{ $message}}</span>@enderror
