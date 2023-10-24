@@ -538,7 +538,7 @@ class alistamientoController extends Controller
                      UPDATE centro_costo_products c 
                      SET c.alistamiento = c.alistamiento + :krequeridos        
                      WHERE c.products_id = :vproducts_id 
-                     AND c.centrocosto_id = :vcentrocosto,",
+                     AND c.centrocosto_id = :vcentrocosto",
                         [
                             'vproducts_id' => $key->products_id,
                             'krequeridos' => $key->kgrequeridos,
@@ -555,7 +555,7 @@ class alistamientoController extends Controller
                      UPDATE centro_costo_products c 
                      SET c.alistamiento = c.alistamiento + :krequeridos        
                      WHERE c.products_id = :vproducts_id  
-                     AND c.centrocosto_id = :vcentrocosto,",
+                     AND c.centrocosto_id = :vcentrocosto",
                         [
                             'vproducts_id' => $productopadreId,
                             'krequeridos' => $stockalistpadre * -1,
