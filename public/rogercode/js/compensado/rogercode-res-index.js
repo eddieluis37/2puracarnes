@@ -16,7 +16,7 @@ $(document).ready(function () {
     $(function() {
         $('#tableCompensado').DataTable({
             "paging": true,
-            "pageLength": 5,
+            "pageLength": 50,
             /*"lengthChange": false,*/
             "autoWidth": false,
             processing: true,
