@@ -330,10 +330,10 @@ class compensadoController extends Controller
 					    <a href="compensado/create/' . $data->id . '" class="btn btn-dark" title="Detalles" >
 						    <i class="fas fa-directions"></i>
 					    </a>
-					    <button class="btn btn-dark" title="Borrar Compensado" onclick="editCompensado(' . $data->id . ');">
+					    <button class="btn btn-dark" title="Compensado" onclick="editCompensado(' . $data->id . ');">
 						    <i class="fas fa-edit"></i>
 					    </button>
-					    <button class="btn btn-dark" title="Borrar Compensado" onclick="downCompensado(' . $data->id . ');">
+					    <button class="btn btn-dark" title="Compensado" onclick="downCompensado(' . $data->id . ');">
 						    <i class="fas fa-trash"></i>
 					    </button>
                         </div>
@@ -344,7 +344,7 @@ class compensadoController extends Controller
 					    <a href="compensado/create/' . $data->id . '" class="btn btn-dark" title="Detalles" >
 						    <i class="fas fa-directions"></i>
 					    </a>
-					    <button class="btn btn-dark" title="Borrar Compensado" >
+					    <button class="btn btn-dark" title="Compensado" >
 						    <i class="fas fa-eye"></i>
 					    </button>
 					    <button class="btn btn-dark" title="Borrar Compensado" disabled>
@@ -455,7 +455,7 @@ class compensadoController extends Controller
         $compensadores->save();
         $compensadores = Compensadores::where('id', $compensadoId)->get();
         $centrocosto_id = $compensadores->first()->centrocosto_id;
-        
+
         DB::update(
             "
             UPDATE centro_costo_products c
@@ -475,16 +475,16 @@ class compensadoController extends Controller
             ]
         );
 
-    // Calcular el peso acumulado del producto
+        // Calcular el peso acumulado del producto
         $centroCostoProducts = Centro_costo_product::where('tipoinventario', 'cerrado')
             ->where('centrocosto_id', $centrocosto_id)
             ->get();
 
         foreach ($centroCostoProducts as $centroCostoProduct) {
-            $accumulatedWeight = Compensadores_detail::where('compensadores_id', '<=', $compensadoId)
-                ->where('products_id', $centroCostoProduct->products_id)
-                ->sum('peso');
-
+            $accumulatedWeight = Compensadores_detail::join('compensadores', 'compensadores.id', '=', 'compensadores_detail.compensadores_id')
+                ->where('compensadores.id', '<=', $compensadoId)
+                ->where('compensadores_detail.products_id', $centroCostoProduct->products_id)
+                ->sum('compensadores_detail.peso');
             $centroCostoProduct->compensados = $accumulatedWeight;
             $centroCostoProduct->save();
         }
