@@ -461,8 +461,7 @@ class compensadoController extends Controller
             UPDATE centro_costo_products c
             JOIN compensadores_details d ON c.products_id = d.products_id
             JOIN compensadores b ON b.id = d.compensadores_id
-            SET c.compensados =  c.compensados + d.peso,
-                c.cto_compensados =  c.cto_compensados + d.pcompra,
+            SET c.cto_compensados =  c.cto_compensados + d.pcompra,
                 c.cto_compensados_total  = c.cto_compensados_total + (d.pcompra * d.peso),
                 c.tipoinventario = 'cerrado'
             WHERE d.compensadores_id = :compensadoresid
@@ -474,19 +473,36 @@ class compensadoController extends Controller
                 'cencosid2' => $centrocosto_id
             ]
         );
-
-        // Calcular el peso acumulado del producto
+        // Calcular el peso acumulado del producto 
         $centroCostoProducts = Centro_costo_product::where('tipoinventario', 'cerrado')
             ->where('centrocosto_id', $centrocosto_id)
             ->get();
 
         foreach ($centroCostoProducts as $centroCostoProduct) {
-            $accumulatedWeight = Compensadores_detail::join('compensadores', 'compensadores.id', '=', 'compensadores_detail.compensadores_id')
-                ->where('compensadores.id', '<=', $compensadoId)
-                ->where('compensadores_detail.products_id', $centroCostoProduct->products_id)
-                ->sum('compensadores_detail.peso');
-            $centroCostoProduct->compensados = $accumulatedWeight;
-            $centroCostoProduct->save();
+            $accumulatedWeight = Compensadores_detail::where('compensadores_id', '=', $compensadoId)
+                ->where('products_id', $centroCostoProduct->products_id)
+                ->sum('peso');
+
+            // Almacenar el peso acomulado en la tabla temporal
+            DB::table('temporary_accumulatedWeights')->insert([
+                'product_id' => $centroCostoProduct->products_id,
+                'accumulated_weight' => $accumulatedWeight
+            ]);
+        }
+
+        // Recuperar los registros de la tabla temporary_accumulatedWeights
+        $accumulatedWeights = DB::table('temporary_accumulatedWeights')->get();
+
+        foreach ($accumulatedWeights as $accumulatedWeight) {
+            $centroCostoProduct = Centro_costo_product::find($accumulatedWeight->product_id);
+
+            // Sumar el valor de accumulatedWeight al campo compensados
+            $centroCostoProduct->compensados += $accumulatedWeight->accumulated_weight;
+            $centroCostoProduct->save();            
+            
+            // Limpiar la tabla temporary_accumulatedWeights
+            DB::table('temporary_accumulatedWeights')->truncate();
+
         }
 
         return response()->json([
