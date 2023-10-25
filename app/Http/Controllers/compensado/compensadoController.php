@@ -333,9 +333,7 @@ class compensadoController extends Controller
 					    <button class="btn btn-dark" title="Compensado" onclick="editCompensado(' . $data->id . ');">
 						    <i class="fas fa-edit"></i>
 					    </button>
-					    <button class="btn btn-dark" title="Compensado" onclick="downCompensado(' . $data->id . ');">
-						    <i class="fas fa-trash"></i>
-					    </button>
+					  
                         </div>
                         ';
                 } else {
@@ -344,12 +342,10 @@ class compensadoController extends Controller
 					    <a href="compensado/create/' . $data->id . '" class="btn btn-dark" title="Detalles" >
 						    <i class="fas fa-directions"></i>
 					    </a>
-					    <button class="btn btn-dark" title="Compensado" >
+					    <button class="btn btn-dark" title="Compensado" disabled>
 						    <i class="fas fa-eye"></i>
 					    </button>
-					    <button class="btn btn-dark" title="Borrar Compensado" disabled>
-						    <i class="fas fa-trash"></i>
-					    </button>
+					  
                         </div>
                         ';
                 }
