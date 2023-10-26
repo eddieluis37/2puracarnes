@@ -15,8 +15,8 @@
                 
                 <div class="card">                           
                     <div class="card-body">
-                        <form id="form-detail">						
-                            
+                        <form id="form-detail" >						
+                          <input type="hidden" id="saleId" name="saleId" value="{{$venta->id}}">
                             <div class="row">
                                 <div class="col-md-5"  style="display:none">
                                     <label for="" class="form-label">Seleccionar categoría </label>
@@ -89,10 +89,10 @@
 										<tr>
 											<td>{{$proddetail->id}}</td>											
 											<td>{{$proddetail->nameprod}}</td>
-											<td>{{ number_format($proddetail->quantity, 2, ',', '.')}} KG</td>																							
-											<td>{{number_format($proddetail->price, 2, ',', '.')}} $</td>
-                                            <td>{{number_format($proddetail->iva, 2, ',', '.')}} $</td>
-                                            <td>{{number_format($proddetail->total, 2, ',', '.')}} $</td>											
+											<td>{{ number_format($proddetail->quantity, 2, ',', '.')}} KG</td>
+											<td>${{number_format($proddetail->price, 2, ',', '.')}} </td>
+                                            <td>${{number_format($proddetail->iva, 2, ',', '.')}} </td>
+                                            <td>${{number_format($proddetail->total, 2, ',', '.')}} </td>											
 											
 										</tr>
 										@endforeach
@@ -175,9 +175,10 @@
 
 $(document).ready(initializeDataTable);
  function initializeDataTable() {
-	new DataTable('#tableVentasDet', {
+	const table = new DataTable('#tableVentasDet', {
         "bFilter": false,
-        "bLengthChange": false,        
+        "bLengthChange": false, 
+        "order":[[0,'DESC']] ,      
 		columns: [
 			{ title: '#' },
 			{ title: 'Producto' },
@@ -187,6 +188,8 @@ $(document).ready(initializeDataTable);
 			{ title: 'Total' },
 		],		
 	});    
+
+    
 
     /***** SE QUITA EL FILTRO DE CATEGORÍA A LOS PRODUCTOS DESDE EL CONTROLADOR ******** */
    
@@ -205,6 +208,24 @@ $(document).ready(initializeDataTable);
         //console.log(data);
         return data;
     }
+
+    const saveForm = async (url,form,token) => {
+    try {       
+        const dataform = new FormData(form);
+        let response = await fetch(url, {
+        headers: {
+            'X-CSRF-TOKEN': token
+        },
+        method: 'POST',
+        body: dataform
+        });
+        let data = await response.json();
+        return data;
+    } catch (error) {
+        console.log(error);
+    }
+        
+}
     
     
     getProductos(0);
@@ -227,31 +248,38 @@ $(document).ready(initializeDataTable);
             });
         });
     }   
-    
-}
-
-
-/***** GUARDAR DETALLE ******** */
+ 
+    /***** GUARDAR DETALLE ******** */
         
 const btnAdd = document.querySelector("#btnAdd");
 
 btnAdd.addEventListener("click", (e) => {
         e.preventDefault();
-        const formDetail = document.querySelector("#form-detail");
-        const dataformd = new FormData(formDetail);
+        const formDetail = document.querySelector("#form-detail");       
         
-        send(dataformd,'/salesavedetail').then((result) => {        
-            if (result.status === 1) {
-                alert('good');
-                $("#producto").val("").trigger("change");
-                //formDetail.reset();
-                //showData(result);
+        saveForm('/salesavedetail',formDetail,token).then((result) => {        
+            if (result.status === 1) {               
+                 table.row
+                .add([
+                    result.sale_id,
+                    result.product_id,                                                            
+                     result.quantity.toLocaleString('co-CO') + ' KG' ,
+                    '$' + result.price.toLocaleString('co-CO'),
+                    '$' + result.iva.toLocaleString('co-CO'),
+                    '$' + result.total.toLocaleString('co-CO')
+					
+                ])
+                .draw(false);                   
             }
+
             if (result.status === 0) {
                 Swal("Error!", "Tiene campos vacios!", "error");
             }
         });
     });
+
+
+}
 
 
 

@@ -327,7 +327,7 @@ Route::group(['middleware' => [('auth')]], function () {
     Route::get('sale{saleId}/delete', [SaleController::class, 'delete'])->name('sale.delete');
     Route::get('sale{ventaId}/edit', [SaleController::class, 'edit'])->name('sale.edit');
     Route::post('sale/{ventaId}', [SaleController::class, 'update'])->name('sale.update');
-    Route::get('sale/{ventaId}', [SaleController::class, 'create'])->name('sale.create');
+    Route::get('sale/create/{id}', [SaleController::class, 'create'])->name('sale.create');    
     Route::post('getproductosv', [SaleController::class, 'getproducts'])->name('sale.getproductos');
     Route::post('salesavedetail', [SaleController::class, 'savedetail'])->name('sale.savedetail');
 

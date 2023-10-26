@@ -132,7 +132,7 @@ class SaleController extends Controller
             ->where([
                 ['ce.centrocosto_id', $centrocostoId],                
                 ['dv.sale_id', $ventaId],                
-            ])->get();
+            ])->orderBy('dv.id','DESC')->get();
 
         return $detail;
     }
@@ -159,14 +159,38 @@ class SaleController extends Controller
 
     public function savedetail(Request $request)
     {
-        $detail = new SaleDetail();
-        $detail->sale_id = 1;
-        $detail->products_id =  1;
-        $detail->price = 11;
-        $detail->quantity = 12;
-        $detail->iva = 22;
-        $detail->total = 222;
-        $detail->save();
+        try {            
+            $detail = new SaleDetail();
+            
+            $total = $request->kgrequeridos * $request->precioventa; 
+            $preciov = $request->precioventa * 1.0; 
+
+            $detail->sale_id = $request->saleId;
+            $detail->product_id =  $request->producto;
+            $detail->price = $preciov;
+            $detail->quantity = $request->kgrequeridos;
+            $detail->porciva = 0;
+            $detail->iva = 0;            
+            $detail->total = $total ;
+            $detail->save();
+
+            return response()->json([
+                'status' => 1,
+                'message' => "Agregado correctamente",
+                'sale_id' => $detail->id,
+                'product_id' => $detail->product->name,
+                'price' => $preciov,
+                'quantity' => $detail->quantity,
+                'iva' => 0,
+                'total' => $total,
+            ]);
+
+        } catch (\Throwable $th) {
+            return response()->json([
+                'status' => 0,
+                'message' => (array) $th
+            ]);
+        }
     }
     
 
