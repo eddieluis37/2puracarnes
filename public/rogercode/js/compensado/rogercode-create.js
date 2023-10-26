@@ -20,6 +20,7 @@ const pesokg = document.querySelector("#pesokg");
 const pcompra = document.querySelector("#pcompra");
 const regDetail = document.querySelector("#regdetailId");
 const tableFoot = document.querySelector("#tabletfoot");
+const cargarInventarioBtn = document.getElementById('cargarInventarioBtn');
 
 $(".select2Prod").select2({
     placeholder: "Busca un producto",
@@ -145,7 +146,7 @@ const showData = (data) => {
             confirmButtonText: "Aceptar",
             denyButtonText: `Cancelar`,
         });
-    }
+    } 
 
     // Evento click del botón "cargarInventarioBtn"
     tableFoot.addEventListener("click", (e) => {
@@ -168,7 +169,11 @@ const showData = (data) => {
                 .then((result) => {
                     console.log(result);
                     if (result && result.status == 1) {
-                        loadingEnd(element, "success", "Cargando al inventorio");
+                        loadingEnd(
+                            element,
+                            "success",
+                            "Cargando al inventorio"
+                        );
                         element.disabled = true;
                         return swal(
                             "EXITO",
@@ -177,7 +182,11 @@ const showData = (data) => {
                         );
                     }
                     if (result && result.status == 0) {
-                        loadingEnd(element, "success", "Cargando al inventorio");
+                        loadingEnd(
+                            element,
+                            "success",
+                            "Cargando al inventorio"
+                        );
                         errorMessage(result.message);
                     }
                 })
