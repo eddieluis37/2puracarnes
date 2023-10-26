@@ -151,11 +151,23 @@ class SaleController extends Controller
 
     public function getproducts(Request $request)
     {
-        $prod = Product::Where([
-            ['category_id', $request->categoriaId],
+        $prod = Product::Where([        
             ['status', 1],            
         ])->get();
         return response()->json(['products' => $prod]);
     }
+
+    public function savedetail(Request $request)
+    {
+        $detail = new SaleDetail();
+        $detail->sale_id = 1;
+        $detail->products_id =  1;
+        $detail->price = 11;
+        $detail->quantity = 12;
+        $detail->iva = 22;
+        $detail->total = 222;
+        $detail->save();
+    }
+    
 
 }

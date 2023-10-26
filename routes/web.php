@@ -329,6 +329,7 @@ Route::group(['middleware' => [('auth')]], function () {
     Route::post('sale/{ventaId}', [SaleController::class, 'update'])->name('sale.update');
     Route::get('sale/{ventaId}', [SaleController::class, 'create'])->name('sale.create');
     Route::post('getproductosv', [SaleController::class, 'getproducts'])->name('sale.getproductos');
+    Route::post('salesavedetail', [SaleController::class, 'savedetail'])->name('sale.savedetail');
 
      /*****************************LISTA_DE_PRECIO******************************************/
    
