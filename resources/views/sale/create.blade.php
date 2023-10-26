@@ -18,7 +18,7 @@
                         <form id="form-detail">						
                             
                             <div class="row">
-                                <div class="col-md-5">
+                                <div class="col-md-5"  style="display:none">
                                     <label for="" class="form-label">Seleccionar categoría </label>
                                         <select class="form-control form-control-sm selectcategoria" name="categoria" id="categoria" required="">
                                              <option value="">Seleccione la categoria</option>
@@ -28,7 +28,7 @@
                                         </select>
                                     
                                 </div>
-                                <div class="col-md-7">
+                                <div class="col-md-8">
                                     <label for="" class="form-label">Seleccionar producto </label>
                                         <select class="form-control form-control-sm selectPrroducto" name="producto" id="producto" required="">
                                         </select>
@@ -53,7 +53,7 @@
                                 <div class="col-md-2 text-center">
                                     <div class="" style="margin-top:30px;">
                                     <div class="d-grid gap-2">
-                                        <button id="btnAddAlistamiento" class="btn btn-primary">Aceptar</button>
+                                        <button id="btnAdd" class="btn btn-primary">Aceptar</button>
                                     </div>
                                     </div>
                                 </div>
@@ -172,6 +172,7 @@
 
 <script>
 
+
 $(document).ready(initializeDataTable);
  function initializeDataTable() {
 	new DataTable('#tableVentasDet', {
@@ -187,16 +188,29 @@ $(document).ready(initializeDataTable);
 		],		
 	});    
 
-    const selectCategoria = document.querySelector("#categoria");
+    /***** SE QUITA EL FILTRO DE CATEGORÍA A LOS PRODUCTOS DESDE EL CONTROLADOR ******** */
+   
     const token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
 
-    selectCategoria.addEventListener("change", function() {       
-        const selectedValue = this.value;        
-        getProductos(selectedValue);
+    const send = async (dataform,ruta) => {
         
-    });
-
-    getProductos = (categoryId) => {
+        let response = await fetch(ruta, {
+        headers: {
+            'X-CSRF-TOKEN': token
+        },
+        method: 'POST',
+        body: dataform
+        });
+        let data = await response.json();
+        //console.log(data);
+        return data;
+    }
+    
+    
+    getProductos(0);
+   
+    function getProductos (categoryId)  {
+        
         const dataform = new FormData();
         dataform.append("categoriaId", Number(categoryId));
         send(dataform,'/getproductosv').then((result) => {        
@@ -212,24 +226,32 @@ $(document).ready(initializeDataTable);
             producto.appendChild(optionElement);
             });
         });
-
-    }
+    }   
     
-    const send = async (dataform,ruta) => {
-        let response = await fetch(ruta, {
-        headers: {
-            'X-CSRF-TOKEN': token
-        },
-        method: 'POST',
-        body: dataform
-        });
-        let data = await response.json();
-        //console.log(data);
-        return data;
-    }
-
-
 }
+
+
+/***** GUARDAR DETALLE ******** */
+        
+const btnAdd = document.querySelector("#btnAdd");
+
+btnAdd.addEventListener("click", (e) => {
+        e.preventDefault();
+        const formDetail = document.querySelector("#form-detail");
+        const dataformd = new FormData(formDetail);
+        
+        send(dataformd,'/salesavedetail').then((result) => {        
+            if (result.status === 1) {
+                alert('good');
+                $("#producto").val("").trigger("change");
+                //formDetail.reset();
+                //showData(result);
+            }
+            if (result.status === 0) {
+                Swal("Error!", "Tiene campos vacios!", "error");
+            }
+        });
+    });
 
 
 
