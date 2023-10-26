@@ -15,12 +15,7 @@ class CreateSalesTable extends Migration
     {
         Schema::create('sales', function (Blueprint $table) {
             $table->id();
-            $table->decimal('total',10,2);
-            $table->decimal('items',10,2);
-            $table->decimal('cash',10,2);
-            $table->decimal('change',10,2);    
-            $table->enum('status',['EFECTIVO','DATAFONO','WONPI','CREDITO','CONTRAENTREGA','TC'])->default('EFECTIVO');
-            
+              
             $table->unsignedBigInteger('user_id');           
             $table->foreign('user_id')->references('id')->on('users');
 
@@ -34,7 +29,18 @@ class CreateSalesTable extends Migration
             $table->foreign('domiciliario_id')->references('id')->on('thirds'); 
             
             $table->unsignedBigInteger('centrocosto_id')->nullable();
-            $table->foreign('centrocosto_id')->references('id')->on('centro_costo');            
+            $table->foreign('centrocosto_id')->references('id')->on('centro_costo');      
+
+            $table->decimal('total',10,2);
+            $table->decimal('items',10,2);
+            $table->decimal('cash',10,2);
+            $table->decimal('change',10,2);    
+            $table->enum('status',['0','1','2','3','4','5'])->default('0');
+
+            $table->date('fecha')->nullable();
+            $table->string('consecutivo', 50, 0)->nullable();
+            $table->bigInteger('consec')->length(50)->nullable();
+                
 
             $table->timestamps();
         });

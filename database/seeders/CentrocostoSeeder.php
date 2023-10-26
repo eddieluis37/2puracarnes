@@ -18,9 +18,11 @@ class CentrocostoSeeder extends Seeder
     {
         Centrocosto::create([
         'name' => 'GUADALUPE',
+        'prefijo' => 'GUA',
         ]);
         Centrocosto::create([
         'name' => 'MINUTO DE DIOS',
+        'prefijo' => 'MIN',
         ]);       
     }
 }
