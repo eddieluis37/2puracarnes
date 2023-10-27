@@ -157,7 +157,9 @@ Route::group(['middleware' => [('auth')]], function () {
     Route::delete('/todos/{id}', [TodosController::class, 'destroy'])->name('todos-destroy');
 
     /************************* RUTAS SIN LIVEWIRE ********************************** */
-    Route::get('centro_costo_prod', [CentroCostoProdController::class, 'index'])->name('showccp');
+    Route::get('centro_costo_prod', [CentroCostoProdController::class, 'index'])->name('ccpShow');
+    Route::get('showCcpSwitch', [CentroCostoProdController::class, 'show'])->name('showCcpSwitch');
+    Route::post('/updateCcpSwitch', [CentroCostoProdController::class, 'updateCcpSwitch'])->name('updateCcpSwitch');
 
     /*****************************INVENTORY****************************************** */
     Route::get('inventory/diary', [diaryController::class, 'index'])->name('inventory.diary');
