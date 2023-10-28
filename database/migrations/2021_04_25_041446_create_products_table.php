@@ -23,10 +23,10 @@ class CreateProductsTable extends Migration
             $table->string('code', 20)->unique()->nullable();
             $table->string('barcode',25)->nullable();
             $table->decimal('cost',10,2)->default(0);
-            $table->decimal('price_fama',10,2)->default(1)->nullable(); // precio en la linea de las famas
-            $table->decimal('price_insti',10,2)->default(1)->nullable(); // precio en la linea de las institucional
-            $table->decimal('price_horeca',10,2)->default(1)->nullable(); // precio en la linea de las Horeca
-            $table->decimal('price_hogar',10,2)->default(1)->nullable(); // precio en la linea de las Hogar
+            $table->decimal('price_fama',10,0)->default(1)->nullable(); // precio en la linea de las famas
+            $table->decimal('price_insti',10,0)->default(1)->nullable(); // precio en la linea de las institucional
+            $table->decimal('price_horeca',10,0)->default(1)->nullable(); // precio en la linea de las Horeca
+            $table->decimal('price_hogar',10,0)->default(1)->nullable(); // precio en la linea de las Hogar
             $table->decimal('iva',10)->default(0);
             $table->decimal('stock', 18, 2)->nullable(); // valor de cantidades de unidades sea KG
             $table->decimal('fisico', 18, 2)->nullable(); // valor de cantidades en inventario tangible real           
