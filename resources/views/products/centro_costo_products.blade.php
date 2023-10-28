@@ -25,7 +25,7 @@
     <div class="widget widget-chart-one">
       <div class="card text-center" style="background: #3B3F5C">
         <div class="m-2">
-          <h4 style="color:white;"><strong>Encender o apagar productos en Lotes & </s> taller</strong></h3>
+          <h4 style="color:white;"><strong>Productos padres en Lotes & </s> t</strong></h3>
         </div>
       </div>
       <div class="row g-3 mt-3">

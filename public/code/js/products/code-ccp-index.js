@@ -1,7 +1,6 @@
 console.log("Comenzando");
-const token = document
-    .querySelector('meta[name="csrf-token"]')
-    .getAttribute("content");
+
+const token = document.querySelector('meta[name="csrf-token"]').getAttribute("content");
 
 $(document).ready(function () {
     var dataTable;
@@ -27,13 +26,12 @@ $(document).ready(function () {
                 dataSrc: function (response) {
                     // Modificar los datos antes de que se procesen en la tabla
                     var modifiedData = response.data.map(function (item) {
-                        var statusButton = item.status ? '<button class="btn btn-success">Activo</button>' : '<button class="btn btn-danger">Inactivo</button>';
-                
+                        var statusButton = getStatusButton(item.status, item.productId);
                         return {
                             namecategoria: item.namecategoria,
                             nameproducto: item.nameproducto,
                             status: '<div class="text-center">' + statusButton + '</div>',
-                            price_fama: '<input type="text" class="edit-price_fama" value="' + new Intl.NumberFormat('es-CO', { style: 'currency', currency: 'COP', minimumFractionDigits: 0 }).format(item.price_fama) + '" size="8" />',
+                            price_fama: getPriceInput(item.price_fama),
                             productId: item.productId,
                         };
                     });
@@ -54,8 +52,7 @@ $(document).ready(function () {
                 zeroRecords: "No se encontraron resultados",
                 emptyTable: "Ningún dato disponible en esta tabla",
                 sInfo: "Mostrando del _START_ al _END_ de total _TOTAL_ registros",
-                infoEmpty:
-                    "Mostrando registros del 0 al 0 de un total de 0 registros",
+                infoEmpty: "Mostrando registros del 0 al 0 de un total de 0 registros",
                 infoFiltered: "(filtrado de un total de _MAX_ registros)",
                 search: "Buscar:",
                 infoThousands: ",",
@@ -67,9 +64,17 @@ $(document).ready(function () {
                     previous: "Anterior",
                 },
             },
-            /*  dom: "Bfrtip",
-            buttons: ["copy", "csv", "excel", "pdf"], */
         });
+    }
+
+    function getStatusButton(status, productId) {
+        var buttonClass = status ? "btn-success" : "btn-danger";
+        var buttonText = status ? "Activo" : "Inactivo";
+        return '<button class="btn ' + buttonClass + ' status-button" data-product-id="' + productId + '">' + buttonText + '</button>';
+    }
+
+    function getPriceInput(price_fama) {
+        return '<input type="text" class="edit-price_fama" value="' + new Intl.NumberFormat("es-CO", { style: "currency", currency: "COP", minimumFractionDigits: 0 }).format(price_fama) + '" size="8" />';
     }
 
     function updateCcpSwitch(productId, price_fama, centrocostoId, status) {
@@ -97,42 +102,45 @@ $(document).ready(function () {
         });
     }
 
-    $(document).ready(function () {
-        initializeDataTable("-1");
-
-        $("#centrocosto, #categoria").on("change", function () {
-            var centrocostoId = $("#centrocosto").val();
-            var categoriaId = $("#categoria").val();
-
-            dataTable.destroy();
-            initializeDataTable(centrocostoId, categoriaId);
-        });
-
-        $(document).on("keydown", ".edit-price_fama", function (event) {
-            if (event.which === 13 || event.which === 9) {
-                event.preventDefault();
-                var price_fama = $(this).val().replace(/[$\s.,]/g, '');
-               
-                var regex = /^(?:\d{1,3}(?:,\d{3})*(?:\.\d{2})?|\d{1,6})$/;
-                
-                if (regex.test(price_fama)) {
-                    var productId = $(this)
-                        .closest("tr")
-                        .find("td:eq(1)")
-                        .text();
-                    var centrocostoId = $("#centrocosto").val();
-                    updateCcpSwitch(productId, price_fama, centrocostoId);
-
-                    $(this).closest("tr").next().find(".edit-price_fama").focus().select();
-                } else {
-                    Swal.fire({
-                        icon: "error",
-                        title: "Número incorrecto",
-                        text: "Solo acepta Números enteros hasta el 100.000",
-                    });
-                    console.error("Solo acepta numero enteros y decimales");
-                }
+    function handlePriceFamaInput(event) {
+        if (event.which === 13 || event.which === 9) {
+            event.preventDefault();
+            var price_fama = $(this).val().replace(/[$\s.,]/g, "");
+            var regex = /^(?:\d{1,2}(?:,\d{3})*(?:\.\d{2})?|\d{1,5}(?:\.\d{2})?)$/;
+            if (regex.test(price_fama)) {
+                var productId = $(this).closest("tr").find("td:eq(1)").text();
+                var centrocostoId = $("#centrocosto").val();
+                updateCcpSwitch(productId, price_fama, centrocostoId);
+                $(this).closest("tr").next().find(".edit-price_fama").focus().select();
+            } else {
+                Swal.fire({
+                    icon: "error",
+                    title: "Precio mínimo incorrecto",
+                    text: "Solo acepta valores, menores a $ 99.999",
+                });
+                console.error("Solo acepta numero enteros y decimales");
             }
-        });
+        }
+    }
+
+    function handleStatusButtonClick() {
+        var productId = $(this).data("product-id");
+        var centrocostoId = $("#centrocosto").val();
+        var status = $(this).hasClass("btn-success") ? 1 : 0;
+        updateCcpSwitch(productId, null, centrocostoId, status);
+        dataTable.ajax.reload();
+    }
+
+    initializeDataTable("-1");
+
+    $("#centrocosto, #categoria").on("change", function () {
+        var centrocostoId = $("#centrocosto").val();
+        var categoriaId = $("#categoria").val();
+        dataTable.destroy();
+        initializeDataTable(centrocostoId, categoriaId);
     });
+
+    $(document).on("keydown", ".edit-price_fama", handlePriceFamaInput);
+
+    $(document).on("click", ".status-button", handleStatusButtonClick);
 });
