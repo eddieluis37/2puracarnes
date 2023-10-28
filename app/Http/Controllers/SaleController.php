@@ -77,8 +77,8 @@ class SaleController extends Controller
        
        $ventasdetalle = $this->getventasdetalle($venta->id,$venta->centrocosto_id);
        $arrayTotales = $this->sumTotales($venta->id);
-
-       return view('sale.create',compact('venta','ventasdetalle','arrayTotales'));
+       $category = Category::get();
+       return view('sale.create',compact('venta','ventasdetalle','arrayTotales','category'));
     }
 
     
@@ -172,7 +172,19 @@ class SaleController extends Controller
             $detail->porciva = 0;
             $detail->iva = 0;            
             $detail->total = $total ;
-            $detail->save();
+            $detail->save();            
+            
+             //ACTUALIZA VENTA 
+                DB::update("
+                UPDATE sales SET total = total + :totaldet
+                WHERE id = :idventa",
+                [               
+                    'idventa' => $request->saleId,
+                    'totaldet' =>  $total
+                ]
+            );
+
+            $venta = Sale::find($request->saleId);            
 
             return response()->json([
                 'status' => 1,
@@ -183,6 +195,7 @@ class SaleController extends Controller
                 'quantity' => $detail->quantity,
                 'iva' => 0,
                 'total' => $total,
+                'totalsale' => $venta->total,
             ]);
 
         } catch (\Throwable $th) {
