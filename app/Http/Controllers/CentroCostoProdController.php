@@ -50,7 +50,7 @@ class CentroCostoProdController extends Controller
                 'cat.name as namecategoria',
                 'pro.name as nameproducto',
                 'pro.id as productId' ,             
-                'pro.fisico as fisico',
+                'pro.price_fama as price_fama',
                 'pro.status as status'
             )
             ->where('ccp.centrocosto_id', $centrocostoId)
@@ -68,13 +68,13 @@ class CentroCostoProdController extends Controller
     public function updateCcpSwitch()
     {
         $productId = request('productId');      
-        $fisico = request('fisico');
+        $price_fama = request('price_fama');
         $status = request('status');
 
         DB::table('products')
             ->where('id', $productId)                   
             ->update(
-                ['fisico' => $fisico],
+                ['price_fama' => $price_fama],
                 ['status' => $status]            
             );
 

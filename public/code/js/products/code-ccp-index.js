@@ -33,7 +33,7 @@ $(document).ready(function () {
                             namecategoria: item.namecategoria,
                             nameproducto: item.nameproducto,
                             status: '<div class="text-center">' + statusButton + '</div>',
-                            fisico: '<input type="text" class="edit-fisico" value="' + item.fisico + '" size="4" />',
+                            price_fama: '<input type="text" class="edit-price_fama" value="' + new Intl.NumberFormat('es-CO', { style: 'currency', currency: 'COP', minimumFractionDigits: 0 }).format(item.price_fama) + '" size="8" />',
                             productId: item.productId,
                         };
                     });
@@ -44,7 +44,7 @@ $(document).ready(function () {
                 { data: "namecategoria", name: "namecategoria" },
                 { data: "productId", name: "productId" },
                 { data: "nameproducto", name: "nameproducto" },
-                { data: "fisico", name: "fisico" },
+                { data: "price_fama", name: "price_fama" },
                 { data: "status", name: "status" },
             ],
             order: [[2, "ASC"]],
@@ -72,9 +72,9 @@ $(document).ready(function () {
         });
     }
 
-    function updateCcpSwitch(productId, fisico, centrocostoId, status) {
+    function updateCcpSwitch(productId, price_fama, centrocostoId, status) {
         console.log("productId:", productId);
-        console.log("fisico:", fisico);
+        console.log("price_fama:", price_fama);
         console.log("centrocostoId:", centrocostoId);
         $.ajax({
             headers: {
@@ -84,7 +84,7 @@ $(document).ready(function () {
             type: "POST",
             data: {
                 productId: productId,
-                fisico: fisico,
+                price_fama: price_fama,
                 status: status,
                 centrocostoId: centrocostoId,
             },
@@ -108,28 +108,27 @@ $(document).ready(function () {
             initializeDataTable(centrocostoId, categoriaId);
         });
 
-        $(document).on("keydown", ".edit-fisico", function (event) {
+        $(document).on("keydown", ".edit-price_fama", function (event) {
             if (event.which === 13 || event.which === 9) {
                 event.preventDefault();
-                var fisico = $(this).val().replace(",", ".");
-
-                // Expresion Regular para validar que solo acepte numeros enteros y decimales
-                var regex = /^[0-9]+(\.[0-9]{1,2})?$/;
-
-                if (regex.test(fisico)) {
+                var price_fama = $(this).val().replace(/[$\s.,]/g, '');
+               
+                var regex = /^(?:\d{1,3}(?:,\d{3})*(?:\.\d{2})?|\d{1,6})$/;
+                
+                if (regex.test(price_fama)) {
                     var productId = $(this)
                         .closest("tr")
                         .find("td:eq(1)")
                         .text();
                     var centrocostoId = $("#centrocosto").val();
-                    updateCcpSwitch(productId, fisico, centrocostoId);
+                    updateCcpSwitch(productId, price_fama, centrocostoId);
 
-                    $(this).closest("tr").next().find(".edit-fisico").focus().select();
+                    $(this).closest("tr").next().find(".edit-price_fama").focus().select();
                 } else {
                     Swal.fire({
                         icon: "error",
                         title: "Número incorrecto",
-                        text: "Solo acepta Números enteros con decimales de (2) dos cifras, separados por . o por ,",
+                        text: "Solo acepta Números enteros hasta el 100.000",
                     });
                     console.error("Solo acepta numero enteros y decimales");
                 }
