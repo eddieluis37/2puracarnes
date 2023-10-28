@@ -104,7 +104,7 @@
 											<th>Totales</th>
 											<th></th>
 											<th></th>
-											<th> {{number_format($arrayTotales['kgTotalventa'], 2, ',', '.')}} </th>											
+											<th><div id="totalfooter"> {{number_format($arrayTotales['kgTotalventa'], 2, ',', '.')}} </div></th>											
 											
 										</tr>
 									</tfoot>
@@ -253,12 +253,14 @@ $(document).ready(initializeDataTable);
         
 const btnAdd = document.querySelector("#btnAdd");
 
+
 btnAdd.addEventListener("click", (e) => {
         e.preventDefault();
         const formDetail = document.querySelector("#form-detail");       
         
         saveForm('/salesavedetail',formDetail,token).then((result) => {        
-            if (result.status === 1) {               
+            if (result.status === 1) { 
+                const totalfooter = document.querySelector("#totalfooter");                 
                  table.row
                 .add([
                     result.sale_id,
@@ -266,10 +268,11 @@ btnAdd.addEventListener("click", (e) => {
                      result.quantity.toLocaleString('co-CO') + ' KG' ,
                     '$' + result.price.toLocaleString('co-CO'),
                     '$' + result.iva.toLocaleString('co-CO'),
-                    '$' + result.total.toLocaleString('co-CO')
-					
+                    '$' + result.total.toLocaleString('co-CO')					
                 ])
-                .draw(false);                   
+                .draw(false);  
+                totalfooter.html(result.totalsale.toLocaleString('co-CO'));                 
+                
             }
 
             if (result.status === 0) {
