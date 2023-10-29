@@ -1,7 +1,5 @@
 console.log("Comenzando");
-
 const token = document.querySelector('meta[name="csrf-token"]').getAttribute("content");
-
 $(document).ready(function () {
     var dataTable;
 
@@ -26,11 +24,10 @@ $(document).ready(function () {
                 dataSrc: function (response) {
                     // Modificar los datos antes de que se procesen en la tabla
                     var modifiedData = response.data.map(function (item) {
-                        var statusButton = getStatusButton(item.status, item.productId);
                         return {
                             namecategoria: item.namecategoria,
                             nameproducto: item.nameproducto,
-                            status: '<div class="text-center">' + statusButton + '</div>',
+                            status: getStatusCheckbox(item.status, item.productId),
                             price_fama: getPriceInput(item.price_fama),
                             productId: item.productId,
                         };
@@ -67,10 +64,9 @@ $(document).ready(function () {
         });
     }
 
-    function getStatusButton(status, productId) {
-        var buttonClass = status ? "btn-success" : "btn-danger";
-        var buttonText = status ? "Activo" : "Inactivo";
-        return '<button class="btn ' + buttonClass + ' status-button" data-product-id="' + productId + '">' + buttonText + '</button>';
+    function getStatusCheckbox(status, productId) {
+        var checkboxChecked = status ? "checked" : "";
+        return '<input type="checkbox" class="edit-status" data-product-id="' + productId + '" ' + checkboxChecked + ' />';
     }
 
     function getPriceInput(price_fama) {
@@ -110,29 +106,28 @@ $(document).ready(function () {
             if (regex.test(price_fama)) {
                 var productId = $(this).closest("tr").find("td:eq(1)").text();
                 var centrocostoId = $("#centrocosto").val();
-                updateCcpSwitch(productId, price_fama, centrocostoId);
+                updateCcpSwitch(productId, price_fama, centrocostoId, null);
                 $(this).closest("tr").next().find(".edit-price_fama").focus().select();
             } else {
                 Swal.fire({
                     icon: "error",
                     title: "Precio mínimo incorrecto",
-                    text: "Solo acepta valores, menores a $ 99.999",
+                    text: "Solo acepta valores menores a $ 99.999",
                 });
-                console.error("Solo acepta numero enteros y decimales");
+                console.error("Solo acepta números enteros y decimales");
             }
         }
     }
 
-    function handleStatusButtonClick() {
+    function handleStatusChange() {
         var productId = $(this).data("product-id");
         var centrocostoId = $("#centrocosto").val();
-        var status = $(this).hasClass("btn-success") ? 1 : 0;
+        var status = $(this).is(":checked") ? 1 : 0;
         updateCcpSwitch(productId, null, centrocostoId, status);
-        dataTable.ajax.reload();
+        /* dataTable.ajax.reload(); */
     }
 
     initializeDataTable("-1");
-
     $("#centrocosto, #categoria").on("change", function () {
         var centrocostoId = $("#centrocosto").val();
         var categoriaId = $("#categoria").val();
@@ -141,6 +136,5 @@ $(document).ready(function () {
     });
 
     $(document).on("keydown", ".edit-price_fama", handlePriceFamaInput);
-
-    $(document).on("click", ".status-button", handleStatusButtonClick);
+    $(document).on("change", ".edit-status", handleStatusChange);
 });

@@ -70,14 +70,19 @@ class CentroCostoProdController extends Controller
         $productId = request('productId');      
         $price_fama = request('price_fama');
         $status = request('status');
-
-        DB::table('products')
-            ->where('id', $productId)                   
-            ->update(
-                ['price_fama' => $price_fama],
-                ['status' => $status]            
-            );
-
-        return response()->json(['success' => 'true']);
+    
+        if (!is_null($price_fama)) {
+            DB::table('products')
+                ->where('id', $productId)                   
+                ->update(['price_fama' => $price_fama]);
+        }
+    
+        if (!is_null($status)) {
+            DB::table('products')
+                ->where('id', $productId)                   
+                ->update(['status' => $status]);
+        }
+    
+        return response()->json(['success' => true]);
     }
 }
