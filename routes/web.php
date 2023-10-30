@@ -50,7 +50,7 @@ use App\Http\Controllers\DragDropController;
 use App\Http\Controllers\inventory\inventoryController;
 use App\Http\Controllers\inventory\diaryController;
 use App\Http\Controllers\inventory\mensualController;
-use App\Http\Controllers\listaprecio\ListaPrecioController;
+use App\Http\Controllers\listaprecio\listaPrecioController;
 
 
 
@@ -335,11 +335,13 @@ Route::group(['middleware' => [('auth')]], function () {
 
      /*****************************LISTA_DE_PRECIO******************************************/
    
-     Route::get('lista_de_precio', [ListaPrecioController::class, 'index'])->name('lista_de_precio.index');
-     Route::post('lista_de_preciosave', [ListaPrecioController::class, 'store'])->name('lista_de_precio.save');
-     Route::get('lista_de_precio{lista_de_precioId}/delete', [ListaPrecioController::class, 'delete'])->name('lista_de_precio.delete');
-     Route::get('lista_de_precio{lista_de_precioId}/edit', [ListaPrecioController::class, 'edit'])->name('lista_de_precio.edit');
-     Route::post('lista_de_precio/{lista_de_precioId}', [ListaPrecioController::class, 'update'])->name('lista_de_precio.update');
+     Route::get('lista_de_precio', [listaPrecioController::class, 'index'])->name('lista_de_precio.index');
+     Route::get('showListaPrecio', [listaPrecioController::class, 'show'])->name('lista_de_precio.showListaPrecio');
+   
+     Route::post('lista_de_preciosave', [listaPrecioController::class, 'store'])->name('lista_de_precio.save');
+     Route::get('lista_de_precio{lista_de_precioId}/delete', [listaPrecioController::class, 'delete'])->name('lista_de_precio.delete');
+     Route::get('lista_de_precio{lista_de_precioId}/edit', [listaPrecioController::class, 'edit'])->name('lista_de_precio.edit');
+     Route::post('lista_de_precio/{lista_de_precioId}', [listaPrecioController::class, 'update'])->name('lista_de_precio.update');
 
      Route::post('/drag-drop', [DragDropController::class, 'handleDragDrop'])->name('drag-drop.handleDragDrop');
      Route::get('/drag', [DragDropController::class, 'showDragView'])->name('drag.showDragView');

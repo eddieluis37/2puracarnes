@@ -19,6 +19,11 @@ class CreateListapreciosTable extends Migration
             $table->foreign('centrocosto_id')->references('id')->on('centro_costo'); 
             $table->string('nombre')->unique();
             $table->enum('tipo',['NICHO','GENERAL'])->default('NICHO');
+            $table->enum('status_dos', ['PENDIENTE', 'APROBADO'])->default('PENDIENTE');
+            $table->date('fecha_listado')->nullable();
+            $table->date('fecha_cierre')->nullable();
+
+            $table->boolean('status')->parent_select()->default(true)->nullable();
             $table->timestamps();
         });
     }
