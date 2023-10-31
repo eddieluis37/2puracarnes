@@ -12,7 +12,7 @@ class Third extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'type_identification_id', 'identification', 'digito_verificacion', 'office_id', 'agreement_id', 'type_regimen_iva_id', 'direccion', 'province_id', 'celular', 'nombre_contacto', 'status', 'correo'];
+    protected $fillable = ['name', 'type_identification_id', 'identification', 'digito_verificacion', 'office_id', 'agreement_id', 'type_regimen_iva_id', 'direccion', 'province_id', 'celular', 'nombre_contacto', 'status', 'correo', 'cliente', 'proveedor', 'vendedor', 'domiciliario', 'listaprecio_nichoid', 'listaprecio_genericid'];
 
 
 

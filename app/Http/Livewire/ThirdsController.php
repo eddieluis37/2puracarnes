@@ -3,6 +3,7 @@
 namespace App\Http\Livewire;
 
 use App\Models\Agreement;
+use App\Models\Listaprecio;
 use App\Models\Office;
 use App\Models\Province;
 use App\Models\Third;
@@ -21,7 +22,7 @@ class ThirdsController extends Component
 	use WithPagination;
    
 
-	public $name, $type_identificationid, $identification, $digito_verificacion, $officeid, $agreementid, $type_regimen_ivaid, $direccion, $search, $provinceid, $celular, $nombre_contacto, $status, $correo, $selected_id, $pageTitle, $componentName;
+	public $name, $type_identificationid, $identification, $digito_verificacion, $officeid, $agreementid, $type_regimen_ivaid, $direccion, $search, $provinceid, $celular, $nombre_contacto, $status, $is_client, $is_provider, $is_seller, $is_courier, $correo, $selected_id, $listaprecio_genericId, $listaprecio_nichoId, $pageTitle, $componentName;
 	
 	private $pagination = 5;
 
@@ -78,7 +79,9 @@ class ThirdsController extends Component
 				'offices' => Office::orderBy('name', 'asc')->get(),
 				'agreements' => Agreement::orderBy('id', 'asc')->get(),
 				'type_regimen_ivas' => Type_regimen_iva::orderBy('name', 'asc')->get(),
-				'provinces' => Province::orderBy('name', 'asc')->get()
+				'provinces' => Province::orderBy('name', 'asc')->get(),
+				'listapreciosG' => Listaprecio::where('tipo', 'GENERAL')->orderBy('nombre', 'asc')->get(),
+				'listapreciosN' => Listaprecio::where('tipo', 'NICHO')->orderBy('nombre', 'asc')->get(),
 
 
 			])
@@ -137,18 +140,20 @@ class ThirdsController extends Component
 			'province_id' => $this->provinceid,
 			'celular' => $this->celular,
 			'nombre_contacto' => $this->nombre_contacto,
-			'correo' => $this->correo
-			
+			'correo' => $this->correo,
+			'cliente' => $this->is_client,
+			'proveedor' => $this->is_provider,
+			'vendedor' => $this->is_seller,
+			'domiciliario' => $this->is_courier,
+			'listaprecio_nichoid' => $this->listaprecio_nichoId,			
+			'listaprecio_genericid' => $this->listaprecio_genericId
 		]);
 
-
-			$third->save();
-		
+			$third->save();		
 
 		$this->resetUI();
 		$this->emit('third-added', 'Tercero Registrado');
 	}
-
 
 	public function Edit(Third $third)
 	{		
@@ -165,7 +170,12 @@ class ThirdsController extends Component
 		$this->celular = $third->celular;
 		$this->nombre_contacto = $third->nombre_contacto;
 		$this->correo = $third->correo;
-
+		$this->is_client = $third->cliente;
+		$this->is_provider = $third->proveedor;
+		$this->is_seller = $third->vendedor;
+		$this->is_courier = $third->domiciliario;
+		$this->listaprecio_nichoId = $third->listaprecio_nichoid;
+		$this->listaprecio_genericId = $third->listaprecio_genericid;
 		$this->emit('show-modal', 'show modal!');
 	}
 
@@ -184,7 +194,6 @@ class ThirdsController extends Component
 			'celular' => 'required',
 			'nombre_contacto' => 'required',
 			'correo' => "required|email|unique:thirds,correo,{$this->selected_id}"
-
 		];
 
 		$messages = [
@@ -203,8 +212,7 @@ class ThirdsController extends Component
 			'direccion.required' => 'La dirección es requerida',
 			'correo.required' => 'Ingresa el correo ',
 		    'correo.email' => 'Ingresa un correo válido',
-		    'correo.unique' => 'El email ya existe en sistema'	
-			
+		    'correo.unique' => 'El email ya existe en sistema'			
 		];
 
 		$this->validate($rules, $messages);
@@ -223,14 +231,18 @@ class ThirdsController extends Component
 			'province_id' => $this->provinceid,
 			'celular' => $this->celular,
 			'nombre_contacto' => $this->nombre_contacto,
-			'correo' => $this->correo		
-
+			'correo' => $this->correo,
+			'cliente' => $this->is_client,
+			'proveedor' => $this->is_provider,
+			'vendedor' => $this->is_seller,
+			'domiciliario' => $this->is_courier,
+			'listaprecio_nichoid' => $this->listaprecio_nichoId,
+			'listaprecio_genericid' => $this->listaprecio_genericId			
 		]);
 
 		$this->resetUI();
 		$this->emit('third-updated','Tercero Actualizado');
 	}		
-
 
 	public function resetUI()
 	{
@@ -248,6 +260,12 @@ class ThirdsController extends Component
 		$this->correo = '';
 		$this->search = '';		
 		$this->selected_id = 0;
+		$this->is_client = '';
+		$this->is_provider = '';
+		$this->is_seller = '';
+		$this->is_courier = '';
+		$this->listaprecio_nichoId = 'Elegir';
+		$this->listaprecio_genericId = 'Elegir';
 		$this->resetValidation();
 	}
 
@@ -255,14 +273,9 @@ class ThirdsController extends Component
 		'deleteRow' => 'Destroy'
 	];
 
-
-
-
 	public function Destroy(Third $third)
-	{
-		
+	{		
 		$third->delete();
-
 		
 		$this->resetUI();
 		$this->emit('third-deleted', 'Tercero Eliminado');
