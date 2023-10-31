@@ -80,7 +80,7 @@ class ThirdsController extends Component
 				'agreements' => Agreement::orderBy('id', 'asc')->get(),
 				'type_regimen_ivas' => Type_regimen_iva::orderBy('name', 'asc')->get(),
 				'provinces' => Province::orderBy('name', 'asc')->get(),
-				'listapreciosG' => Listaprecio::where('tipo', 'GENERAL')->orderBy('nombre', 'asc')->get(),
+				'listapreciosG' => Listaprecio::orderBy('tipo', 'asc')->get(),
 				'listapreciosN' => Listaprecio::where('tipo', 'NICHO')->orderBy('nombre', 'asc')->get(),
 
 
