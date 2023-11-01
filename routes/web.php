@@ -134,7 +134,7 @@ Route::group(['middleware' => [('auth')]], function () {
 
     //reportes EXCEL
     Route::get('report/excel/{user}/{type}/{f1}/{f2}', [ExportController::class, 'reporteExcel']);
-    Route::get('report/excel/{user}/{type}', [ExportController::class, 'reporteExcel']); 
+    Route::get('report/excel/{user}/{type}', [ExportController::class, 'reporteExcel']);
 
 
     Route::post('storepollo', [BeneficiopollosController::class, 'storepollo'])->name('storepollo');
@@ -160,6 +160,11 @@ Route::group(['middleware' => [('auth')]], function () {
     Route::get('centro_costo_prod', [CentroCostoProdController::class, 'index'])->name('ccpShow');
     Route::get('showCcpSwitch', [CentroCostoProdController::class, 'show'])->name('showCcpSwitch');
     Route::post('/updateCcpSwitch', [CentroCostoProdController::class, 'updateCcpSwitch'])->name('updateCcpSwitch');
+   
+    /************************* RUTAS ASIGNAR PRECIOS A PRODUCTOS ********************************** */
+    Route::get('asignar_precios_prod', [AsignarPreciosProdController::class, 'index'])->name('APPShow');
+    Route::get('showAPPSwitch', [AsignarPreciosProdController::class, 'show'])->name('showAPPSwitch');
+    Route::post('/updateAPPSwitch', [AsignarPreciosProdController::class, 'updateAPPSwitch'])->name('updateAPPSwitch');
 
     /*****************************INVENTORY****************************************** */
     Route::get('inventory/diary', [diaryController::class, 'index'])->name('inventory.diary');
@@ -173,7 +178,7 @@ Route::group(['middleware' => [('auth')]], function () {
     Route::get('showConsolidadoInventory', [inventoryController::class, 'show'])->name('inventory.showConsol');
 
     Route::get('totales', [inventoryController::class, 'totales'])->name('inventory.totales');
-    
+
     Route::post('cargarInventariohist', [inventoryController::class, 'cargarInventariohist'])->name('cargarInventariohist');
     Route::post('/updateCcpInventory', [CentroCostoProductController::class, 'updateCcpInventory'])->name('inventory.updateCcpInventory999');
 
@@ -323,30 +328,29 @@ Route::group(['middleware' => [('auth')]], function () {
     Route::post('parametrocontable/{parametrocontableId}', [ParametrocontableController::class, 'update'])->name('parametrocontable.update');
 
     /*****************************VENTAS******************************************/
-   
+
     Route::get('sales', [SaleController::class, 'index'])->name('sale.index');
     Route::post('salesave', [SaleController::class, 'store'])->name('sale.save');
     Route::get('sale{saleId}/delete', [SaleController::class, 'delete'])->name('sale.delete');
     Route::get('sale{ventaId}/edit', [SaleController::class, 'edit'])->name('sale.edit');
     Route::post('sale/{ventaId}', [SaleController::class, 'update'])->name('sale.update');
-    Route::get('sale/create/{id}', [SaleController::class, 'create'])->name('sale.create');    
+    Route::get('sale/create/{id}', [SaleController::class, 'create'])->name('sale.create');
     Route::post('getproductosv', [SaleController::class, 'getproducts'])->name('sale.getproductos');
     Route::post('salesavedetail', [SaleController::class, 'savedetail'])->name('sale.savedetail');
 
-     /*****************************LISTA_DE_PRECIO******************************************/
-   
-     Route::get('lista_de_precio', [listaPrecioController::class, 'index'])->name('lista_de_precio.index');
-     Route::get('showListaPrecio', [listaPrecioController::class, 'show'])->name('lista_de_precio.showListaPrecio');
-   
-     Route::post('lista_de_preciosave', [listaPrecioController::class, 'store'])->name('lista_de_precio.save');
-     Route::get('lista_de_precio/create/{id}', [listaPrecioController::class, 'create'])->name('lista_de_precio.create');
-     Route::get('lista_de_precio{lista_de_precioId}/delete', [listaPrecioController::class, 'delete'])->name('lista_de_precio.delete');
-     Route::get('lista_de_precio{lista_de_precioId}/edit', [listaPrecioController::class, 'edit'])->name('lista_de_precio.edit');
-     Route::post('lista_de_precio/{lista_de_precioId}', [listaPrecioController::class, 'update'])->name('lista_de_precio.update');
+    /*****************************LISTA_DE_PRECIO******************************************/
 
-     Route::post('/drag-drop', [DragDropController::class, 'handleDragDrop'])->name('drag-drop.handleDragDrop');
-     Route::get('/drag', [DragDropController::class, 'showDragView'])->name('drag.showDragView');
+    Route::get('lista_de_precio', [listaPrecioController::class, 'index'])->name('lista_de_precio.index');
+    Route::get('showListaPrecio', [listaPrecioController::class, 'show'])->name('lista_de_precio.showListaPrecio');
 
+    Route::post('lista_de_preciosave', [listaPrecioController::class, 'store'])->name('lista_de_precio.save');
+    Route::get('lista_de_precio/create/{id}', [listaPrecioController::class, 'create'])->name('lista_de_precio.create');
+    Route::get('lista_de_precio{lista_de_precioId}/delete', [listaPrecioController::class, 'delete'])->name('lista_de_precio.delete');
+    Route::get('lista_de_precio{lista_de_precioId}/edit', [listaPrecioController::class, 'edit'])->name('lista_de_precio.edit');
+    Route::post('lista_de_precio/{lista_de_precioId}', [listaPrecioController::class, 'update'])->name('lista_de_precio.update');
+
+    Route::post('/drag-drop', [DragDropController::class, 'handleDragDrop'])->name('drag-drop.handleDragDrop');
+    Route::get('/drag', [DragDropController::class, 'showDragView'])->name('drag.showDragView');
 });
 
 require __DIR__ . '/admin.php';
