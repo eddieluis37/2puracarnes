@@ -339,6 +339,7 @@ Route::group(['middleware' => [('auth')]], function () {
      Route::get('showListaPrecio', [listaPrecioController::class, 'show'])->name('lista_de_precio.showListaPrecio');
    
      Route::post('lista_de_preciosave', [listaPrecioController::class, 'store'])->name('lista_de_precio.save');
+     Route::get('lista_de_precio/create/{id}', [listaPrecioController::class, 'create'])->name('lista_de_precio.create');
      Route::get('lista_de_precio{lista_de_precioId}/delete', [listaPrecioController::class, 'delete'])->name('lista_de_precio.delete');
      Route::get('lista_de_precio{lista_de_precioId}/edit', [listaPrecioController::class, 'edit'])->name('lista_de_precio.edit');
      Route::post('lista_de_precio/{lista_de_precioId}', [listaPrecioController::class, 'update'])->name('lista_de_precio.update');
