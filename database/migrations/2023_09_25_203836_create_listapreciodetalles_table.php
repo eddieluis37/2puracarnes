@@ -19,9 +19,10 @@ class CreateListapreciodetallesTable extends Migration
             $table->foreign('listaprecio_id')->references('id')->on('listaprecios'); 
             $table->unsignedBigInteger('product_id');    
             $table->foreign('product_id')->references('id')->on('products'); 
-            $table->decimal('precio',10,2);
+            $table->decimal('precio',10,0);
             $table->decimal('porciva',10,2);
-            $table->decimal('iva',10,2);            
+            $table->decimal('iva',10,2);
+            $table->boolean('status')->parent_select()->default(true)->nullable();           
             $table->timestamps();
         });
     }

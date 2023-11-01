@@ -29,24 +29,13 @@ class listaPrecioController extends Controller
     public function create($id)
     {
        // dd($id);
-        $dataListaPrecio = DB::table('listaprecios as lp')
-            ->join('categories as cat', 'lp.categoria_id', '=', 'cat.id')
+        $dataListaPrecio = DB::table('listaprecios as lp')          
             ->join('centro_costo as centro', 'lp.centrocosto_id', '=', 'centro.id')
-            ->select('lp.*', 'cat.name as namecategoria', 'centro.name as namecentrocosto')
+            ->select('lp.*', 'centro.name as namecentrocosto')
             ->where('lp.id', $id)
             ->get();
 
-        $cortes = DB::table('products as p')
-            ->join('centro_costo_products as ce', 'p.id', '=', 'ce.products_id')
-            ->select('p.*', 'ce.stock', 'ce.fisico', 'p.id as productopadreId')
-            ->selectRaw('ce.invinicial + ce.compraLote + ce.alistamiento +
-            ce.compensados + ce.trasladoing - (ce.venta + ce.trasladosal) stockPadre')
-            ->where([
-                ['p.level_product_id', 1],             
-                ['p.meatcut_id', $dataListaPrecio[0]->meatcut_id],
-                ['p.status', 1],
-                ['ce.centrocosto_id', $dataListaPrecio[0]->centrocosto_id],
-            ])->get();
+      
 
         /**************************************** */
         $status = '';
@@ -78,11 +67,11 @@ class listaPrecioController extends Controller
             $display = "display:none;";
         }
 
-        $listaprecios = $this->getalistamientodetail($id, $dataListaPrecio[0]->centrocosto_id);
+      /*   $listaprecios = $this->getalistamientodetail($id, $dataListaPrecio[0]->centrocosto_id);
+ */
+       /*  $arrayTotales = $this->sumTotales($id); */
 
-        $arrayTotales = $this->sumTotales($id);
-
-        return view('alistamiento.create', compact('dataListaPrecio', 'cortes', 'listaprecios', 'arrayTotales', 'status', 'statusInventory', 'display'));
+        return view('listadeprecio.create', compact('dataListaPrecio', 'status', 'statusInventory', 'display'));
     }
  
 
