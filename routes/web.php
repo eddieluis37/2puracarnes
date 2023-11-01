@@ -41,6 +41,7 @@ use App\Http\Controllers\aves\beneficioavesController;
 use App\Http\Controllers\aves\desposteavesController;
 use App\Http\Controllers\inventory\CentroCostoProductController;
 use App\Http\Controllers\CentroCostoProdController;
+use App\Http\Controllers\AsignarPreciosProdController;
 use App\Http\Controllers\faster\fasterController;
 use App\Http\Controllers\transfer\TransferController;
 use App\Http\Controllers\workshop\workshopController;
@@ -51,8 +52,6 @@ use App\Http\Controllers\inventory\inventoryController;
 use App\Http\Controllers\inventory\diaryController;
 use App\Http\Controllers\inventory\mensualController;
 use App\Http\Controllers\listaprecio\listaPrecioController;
-
-
 
 /************************************************* */
 
