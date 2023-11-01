@@ -7,7 +7,7 @@ const btnClose = document.querySelector("#btnModalClose");
 
 const selectCategory = document.querySelector("#categoria");
 const selectCentrocosto = document.querySelector("#centrocosto");
-const alistamiento_id = document.querySelector("#alistamientoId");
+const listaprecio_id = document.querySelector("#listaPrecioId");
 const contentform = document.querySelector("#contentDisable");
 const selectCortePadre = document.querySelector("#selectCortePadre");
 const fechaalistamiento = document.querySelector("#fecha");
@@ -64,14 +64,9 @@ $(document).ready(function () {
 }); 
 
 const showModalcreate = () => {
-    if(contentform.hasAttribute('disabled')){
-        contentform.removeAttribute('disabled');
-        $('.select2corte').prop('disabled', false);
-    }
-    $('.select2corte').val('').trigger('change');
-    selectCortePadre.innerHTML = "";
+     
     formListaPrecio.reset();
-    alistamiento_id.value = 0;
+  /*   listaprecio_id.value = 0; */
 }
 
 
@@ -92,7 +87,7 @@ const showDataForm = (id) => {
 }
 const showData = (resp) => {
     let register = resp.reg;
-    //alistamiento_id.value = register.id;
+    //listaprecio_id.value = register.id;
     selectCategory.value = register.categoria_id;
     selectCentrocosto.value = register.centrocosto_id;
     fechaalistamiento.value = register.fecha_alistamiento;

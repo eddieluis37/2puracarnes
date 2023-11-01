@@ -15,6 +15,10 @@ class CreateListapreciosTable extends Migration
     {
         Schema::create('listaprecios', function (Blueprint $table) {
             $table->id();
+            
+            $table->unsignedBigInteger('users_id')->nullable();
+            $table->foreign('users_id')->references('id')->on('users');
+
             $table->unsignedBigInteger('centrocosto_id')->nullable();
             $table->foreign('centrocosto_id')->references('id')->on('centro_costo'); 
             $table->string('nombre')->unique();

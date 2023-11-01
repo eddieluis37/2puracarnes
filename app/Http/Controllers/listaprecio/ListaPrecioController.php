@@ -8,8 +8,10 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\centros\Centrocosto;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 use Yajra\Datatables\Datatables;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Validator;
 
 class listaPrecioController extends Controller
 {
@@ -30,6 +32,8 @@ class listaPrecioController extends Controller
     }
 
 
+
+/* 
     public function store(Request $request)
     {
         $lp = new Listaprecio();
@@ -41,6 +45,65 @@ class listaPrecioController extends Controller
         $lp->save();
 
         return redirect()->back();
+    } */
+
+    public function store(Request $request) // Llenado del modal_create.blade
+    {
+        try {
+
+            $rules = [
+                'listaPrecioId' => 'required',
+                'centrocosto' => 'required',
+                'nombre' => 'required',
+                'tipo' => 'required',
+            ];
+            $messages = [
+                'listaPrecioId.required' => 'El lista precio es requerido',
+                'centrocosto.required' => 'El centro de costo es requerido',
+                'nombre.required' => 'La nombre es requerida',               
+                'tipo.required' => 'El tipo es requerido',
+            ];
+
+            $validator = Validator::make($request->all(), $rules, $messages);
+            if ($validator->fails()) {
+                return response()->json([
+                    'status' => 0,
+                    'errors' => $validator->errors()
+                ], 422);
+            }
+
+            $getReg = Listaprecio::firstWhere('id', $request->listaPrecioId);
+
+            if ($getReg == null) {
+                $currentDateTime = Carbon::now();
+                $currentDateFormat = Carbon::parse($currentDateTime->format('Y-m-d'));
+                $current_date = Carbon::parse($currentDateTime->format('Y-m-d'));
+                $current_date->modify('next monday'); // Move to the next Monday
+                $dateNextMonday = $current_date->format('Y-m-d'); // Output the date in Y-m-d format
+                $fechalistado = $request->fecha;
+                $id_user = Auth::user()->id;
+
+                $list = new Listaprecio();
+                $list->users_id = $id_user;              
+                $list->centrocosto_id = $request->centrocosto;               
+                $list->nombre = $request->nombre;
+                $list->tipo = $request->tipo;
+                //$list->fecha_listado = $currentDateFormat;
+                $list->fecha_listado = $fechalistado;
+                $list->fecha_cierre = $dateNextMonday;
+                $list->save();
+                return response()->json([
+                    'status' => 1,
+                    'message' => 'Guardado correctamente',
+                    "registroId" => $list->id
+                ]);
+            }
+        } catch (\Throwable $th) {
+            return response()->json([
+                'status' => 0,
+                'array' => (array) $th
+            ]);
+        }
     }
 
 
