@@ -273,13 +273,12 @@ class inventoryController extends Controller
          ,c.precioventa_min
         
         FROM centro_costo_products c INNER JOIN products p ON p.id = c.products_id
-        WHERE c.centrocosto_id = :centrocostoId
-        AND p.category_id = :categoriaId
+        WHERE c.centrocosto_id = :centrocostoId       
         AND c.tipoinventario = 'cerrado'
         OR c.tipoinventario = 'inicial' ",
             [
                 'centrocostoId' => $v_centrocostoId,
-                'categoriaId' => $v_categoriaId
+                
             ]
         );
 
@@ -289,13 +288,12 @@ class inventoryController extends Controller
             "
          UPDATE centro_costo_products c INNER JOIN products p ON p.id = c.products_id
          SET c.invinicial = c.fisico       
-         WHERE c.centrocosto_id = :centrocostoId
-         AND p.category_id = :categoriaId   
+         WHERE c.centrocosto_id = :centrocostoId       
          AND c.tipoinventario = 'cerrado'
          OR c.tipoinventario = 'inicial' ",
             [
                 'centrocostoId' => $v_centrocostoId,
-                'categoriaId' => $v_categoriaId
+              
             ]
         );
 
@@ -331,19 +329,18 @@ class inventoryController extends Controller
          ,c.cto_invfisico_total = 0
          ,c.cto_venta_total = 0
          ,c.precioventa_min = 0       
-         WHERE c.centrocosto_id = :centrocostoId
-         AND p.category_id = :categoriaId
+         WHERE c.centrocosto_id = :centrocostoId        
          AND tipoinventario = 'cerrado'
          OR tipoinventario = 'inicial' ",
             [
                 'centrocostoId' => $v_centrocostoId,
-                'categoriaId' => $v_categoriaId
+               
             ]
         );
 
         return response()->json([
             'status' => 1,
-            'message' => 'Cargado al inventario exitosamente',
+            'message' => 'Todas las categorias cargadas al inventario exitosamente',
 
         ]);
     }
