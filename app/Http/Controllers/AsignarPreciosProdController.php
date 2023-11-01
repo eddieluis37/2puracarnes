@@ -36,26 +36,26 @@ class AsignarPreciosProdController extends Controller
         $centrocostoId = $request->input('centrocostoId');
         $categoriaId = $request->input('categoriaId');
 
-        $data = DB::table('centro_costo_products as ccp')
-            ->join('products as pro', 'pro.id', '=', 'ccp.products_id')
+        $data = DB::table('listapreciodetalles as lpd')
+            ->join('listaprecios as lp', 'lp.id', '=', 'lpd.listaprecio_id')
+            ->join('products as pro', 'pro.id', '=', 'lpd.product_id')
             ->join('categories as cat', 'pro.category_id', '=', 'cat.id')
             ->select(
                 'cat.name as namecategoria',
                 'pro.name as nameproducto',
-                'pro.id as productId' ,             
-                'pro.price_fama as price_fama',
-                'pro.status as status'
+                'pro.id as productId',
+                'lpd.precio as price_fama',
+                'lpd.status as status'
             )
-            ->where('ccp.centrocosto_id', $centrocostoId)
+            ->where('lp.centrocosto_id', $centrocostoId)
             ->where('pro.category_id', $categoriaId)
-      /*       ->where('pro.status', 1) */
+            /*       ->where('pro.status', 1) */
             ->where('pro.level_product_id', 1)
             ->get();
 
-       // return response()->json(['data' => $data]);
-       return datatables()->of($data)
+        // return response()->json(['data' => $data]);
+        return datatables()->of($data)
             ->addIndexColumn()
             ->make(true);
     }
-
 }
