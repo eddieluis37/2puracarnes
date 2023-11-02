@@ -1,10 +1,17 @@
 @extends('layouts.theme.app')
 @section('content')
-<style>
+
+<STYLE>
+
 .input {
   height: 38px;
 }
+
+
 </style>
+
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
 <meta name="csrf-token" content="{{ csrf_token() }}">
 <div class="row sales layout-top-spacing">
@@ -18,21 +25,20 @@
                         <form id="form-detail" >						
                           <input type="hidden" id="saleId" name="saleId" value="{{$venta->id}}">
                             <div class="row">
-                                <div class="col-md-5"  style="display:none">
-                                    <label for="" class="form-label">Seleccionar categoría </label>
-                                        <select class="form-control form-control-sm selectcategoria" name="categoria" id="categoria" required="">
-                                             <option value="">Seleccione la categoria</option>
-                                                @foreach($category as $option)
+                                                        
+                                <div class="col-md-8" >
+                                   
+                                        <select class="form-control form-control-sm "
+                                                name="producto" id="producto" required="">
+                                                <option value="">PRODUCTO</option>
+                                                @foreach($producto as $option)
                                                     <option value="{{ $option['id'] }}" data="{{$option}}">{{ $option['name'] }}</option>
                                                 @endforeach
                                         </select>
-                                    
+
                                 </div>
-                                <div class="col-md-8">
-                                    <label for="" class="form-label">Seleccionar producto </label>
-                                        <select class="form-control form-control-sm selectPrroducto" name="producto" id="producto" required="">
-                                        </select>
-                                </div>
+   
+ 
                             </div>
 
                             <div class="row g-3">							
@@ -169,7 +175,6 @@
 
 </script> 
 
-
 <script>
 
 
@@ -190,9 +195,6 @@ $(document).ready(initializeDataTable);
 	});    
 
     
-
-    /***** SE QUITA EL FILTRO DE CATEGORÍA A LOS PRODUCTOS DESDE EL CONTROLADOR ******** */
-   
     const token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
 
     const send = async (dataform,ruta) => {
@@ -221,40 +223,22 @@ $(document).ready(initializeDataTable);
         });
         let data = await response.json();
         return data;
-    } catch (error) {
-        console.log(error);
+        } catch (error) {
+            console.log(error);
+        }
+        
     }
-        
-}
     
-    
-    getProductos(0);
-   
-    function getProductos (categoryId)  {
         
-        const dataform = new FormData();
-        dataform.append("categoriaId", Number(categoryId));
-        send(dataform,'/getproductosv').then((result) => {        
-            let prod = result.products;
-                    
-            producto.innerHTML = "";
-            producto.innerHTML += `<option value="">Seleccione el producto</option>`;
-            
-            prod.forEach(option => {
-            const optionElement = document.createElement("option");
-            optionElement.value = option.id;
-            optionElement.text = option.name;
-            producto.appendChild(optionElement);
-            });
-        });
-    }   
- 
+
+        $("#producto").select2();    
+
     /***** GUARDAR DETALLE ******** */
         
-const btnAdd = document.querySelector("#btnAdd");
+    const btnAdd = document.querySelector("#btnAdd");
 
 
-btnAdd.addEventListener("click", (e) => {
+    btnAdd.addEventListener("click", (e) => {
         e.preventDefault();
         const formDetail = document.querySelector("#form-detail");       
         
@@ -281,10 +265,6 @@ btnAdd.addEventListener("click", (e) => {
         });
     });
 
-
 }
 
-
-
- 
 </script>
