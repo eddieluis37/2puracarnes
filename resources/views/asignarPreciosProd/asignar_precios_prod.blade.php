@@ -59,7 +59,7 @@
           </div>
         </div>
 
-        <div class="col-md-4">
+        <!--     <div class="col-md-4">
           <div class="task-header">
             <div class="form-group">
               <label for="centrocosto" class="form-label">Centro de costo</label>
@@ -74,7 +74,7 @@
           </div>
         </div>
 
-
+ -->
       </div>
       <div class="table-responsive mt-3">
         <form method="POST" action="/updateCcpSwitch">
@@ -85,8 +85,13 @@
                 <th class="table-th text-white text-center">CAT</th>
                 <th class="table-th text-white text-center">ID</th>
                 <th class="table-th text-white text-center">PRODUCTO</th>
+                <th class="table-th text-white text-center">COSTO</th>
+                <th class="table-th text-white text-center">%.U.P</th>
+                <th class="table-th text-white text-center">$.PROYE</th>
                 <th class="table-th text-white text-center">PRECIO</th>
                 <th class="table-th text-white text-center">%IVA</th>
+                <th class="table-th text-white text-center">UTILIDAD</th>
+                <th class="table-th text-white text-center">%.UT</th>
                 <th class="table-th text-white text-center">ESTADO</th>
               </tr>
             </thead>

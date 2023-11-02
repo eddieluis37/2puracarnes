@@ -44,14 +44,19 @@ class AsignarPreciosProdController extends Controller
                 'cat.name as namecategoria',
                 'pro.name as nameproducto',
                 'pro.id as productId',
-                'lpd.precio as price_fama',
-                'lpd.status as status',
-                'lpd.porciva as porciva'
+                'lpd.costo as costo',
+                'lpd.porc_util_proyectada as porc_util_proyectada',
+                'lpd.precio_proyectado as precio_proyectado',
+                'lpd.precio as price',
+                'lpd.porc_iva as porc_iva',
+                'lpd.utilidad as utilidad',
+                'lpd.porc_utilidad as porc_utilidad',                
+                'lpd.status as status',                
             )
             ->where('lp.centrocosto_id', $centrocostoId)
             ->where('pro.category_id', $categoriaId)
             /*       ->where('pro.status', 1) */
-            ->where('pro.level_product_id', 1)
+          /*   ->where('pro.level_product_id', 1) */
             ->get();
 
         // return response()->json(['data' => $data]);

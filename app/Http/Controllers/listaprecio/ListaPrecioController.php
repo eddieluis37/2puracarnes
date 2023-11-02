@@ -33,9 +33,7 @@ class listaPrecioController extends Controller
             ->join('centro_costo as centro', 'lp.centrocosto_id', '=', 'centro.id')
             ->select('lp.*', 'centro.name as namecentrocosto')
             ->where('lp.id', $id)
-            ->get();
-
-      
+            ->get();      
 
         /**************************************** */
         $status = '';
