@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\Sale;
 use App\Models\SaleDetail;
 use App\Models\Third;
-use App\Models\Category;
 use App\Models\Product;
 use App\Models\centros\Centrocosto;
 use Illuminate\Support\Facades\DB;
@@ -30,12 +29,12 @@ class SaleController extends Controller
     public function create($id)
     {
         $venta = Sale::find($id);
-        $category = Category::get();
+        $producto = Product::get();
         $ventasdetalle = $this->getventasdetalle($id,$venta->centrocosto_id);
         $arrayTotales = $this->sumTotales($id);
         
 
-        return view('sale.create',compact('venta','ventasdetalle','arrayTotales','category'));
+        return view('sale.create',compact('venta','ventasdetalle','arrayTotales','producto'));
     }
 
     
@@ -77,8 +76,8 @@ class SaleController extends Controller
        
        $ventasdetalle = $this->getventasdetalle($venta->id,$venta->centrocosto_id);
        $arrayTotales = $this->sumTotales($venta->id);
-       $category = Category::get();
-       return view('sale.create',compact('venta','ventasdetalle','arrayTotales','category'));
+       $producto = Product::get();
+       return view('sale.create',compact('venta','ventasdetalle','arrayTotales','producto'));
     }
 
     
