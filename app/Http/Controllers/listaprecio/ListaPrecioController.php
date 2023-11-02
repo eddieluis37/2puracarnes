@@ -26,11 +26,54 @@ class listaPrecioController extends Controller
         return view('listadeprecio.index', compact('listaprecios', 'centros'));
     }
 
-
-    public function create()
+    public function create($id)
     {
-    }
+       // dd($id);
+        $dataListaPrecio = DB::table('listaprecios as lp')          
+            ->join('centro_costo as centro', 'lp.centrocosto_id', '=', 'centro.id')
+            ->select('lp.*', 'centro.name as namecentrocosto')
+            ->where('lp.id', $id)
+            ->get();
 
+      
+
+        /**************************************** */
+        $status = '';
+        $fechaListaPrecioCierre = Carbon::parse($dataListaPrecio[0]->fecha_cierre);
+        $date = Carbon::now();
+        $currentDate = Carbon::parse($date->format('Y-m-d'));
+        if ($currentDate->gt($fechaListaPrecioCierre)) {
+            //'Date 1 is greater than Date 2';
+            $status = 'false';
+        } elseif ($currentDate->lt($fechaListaPrecioCierre)) {
+            //'Date 1 is less than Date 2';
+            $status = 'true';
+        } else {
+            //'Date 1 and Date 2 are equal';
+            $status = 'false';
+        }
+        /**************************************** */
+        $statusInventory = "";
+        if ($dataListaPrecio[0]->status_dos == "AGREGADO") {
+            $statusInventory = "true";
+        } else {
+            $statusInventory = "false";
+        }
+        /**************************************** */
+        //dd($tt = [$status, $statusInventory]);
+
+        $display = "";
+        if ($status == "false" || $statusInventory == "true") {
+            $display = "display:none;";
+        }
+
+      /*   $listaprecios = $this->getalistamientodetail($id, $dataListaPrecio[0]->centrocosto_id);
+ */
+       /*  $arrayTotales = $this->sumTotales($id); */
+
+        return view('listadeprecio.create', compact('dataListaPrecio', 'status', 'statusInventory', 'display'));
+    }
+ 
 
 
 /* 
@@ -52,13 +95,13 @@ class listaPrecioController extends Controller
         try {
 
             $rules = [
-                'listaPrecioId' => 'required',
+              /*   'listaPrecioId' => 'required', */
                 'centrocosto' => 'required',
                 'nombre' => 'required',
                 'tipo' => 'required',
             ];
             $messages = [
-                'listaPrecioId.required' => 'El lista precio es requerido',
+             /*    'listaPrecioId.required' => 'El lista precio es requerido', */
                 'centrocosto.required' => 'El centro de costo es requerido',
                 'nombre.required' => 'La nombre es requerida',               
                 'tipo.required' => 'El tipo es requerido',

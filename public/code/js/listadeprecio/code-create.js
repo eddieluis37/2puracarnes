@@ -7,6 +7,7 @@ const btnClose = document.querySelector("#btnModalClose");
 const selectCategory = document.querySelector("#categoria");
 const selectCentrocosto = document.querySelector("#centrocosto");
 const alistamiento_id = document.querySelector("#alistamientoId");
+const listaprecio_id = document.querySelector("#listaPrecioId");
 const contentform = document.querySelector("#contentDisable");
 const selectCortePadre = document.querySelector("#selectCortePadre");
 const fechaalistamiento = document.querySelector("#fecha");

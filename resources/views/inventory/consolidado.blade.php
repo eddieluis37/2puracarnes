@@ -63,7 +63,7 @@
         </div> -->
         <div class="col-md-3 text-right ml-auto">
           <div style="margin-top:28px;" clas="">
-            <button class="btn btn-success btn-lg" type="button" id="cargarInventarioBtn">Cerrar Inventario</button>
+            <button class="btn btn-success btn-lg" type="button" id="cargarInventarioBtn" disabled>Cerrar Inventario</button>
           </div>
         </div>
       </div>
@@ -149,11 +149,11 @@
                 <div id="totalTrasladoSal">0,00</div>
               </td>
               <td style="background: orange">
-               <!--  StocIde
+                <!--  StocIde
                 <div id="StocIde">0,00</div> -->
               </td>
               <td style="background: orange">
-               <!--  ContFis
+                <!--  ContFis
                 <div id="contFis">0,00</div>
               </td> -->
               <td style="background: orange">
