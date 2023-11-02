@@ -28,6 +28,22 @@
         </div>
       </div>
       <div class="row g-3 mt-3">
+
+        <div class="col-md-4">
+          <div class="task-header">
+            <div class="form-group">
+              <label for="centrocosto" class="form-label">Lista precios</label>
+              <select class="form-control form-control-sm input" name="centrocosto" id="centrocosto" required>
+                <option value="">Seleccione lista precio</option>
+                @foreach($listaPrecio as $option)
+                <option value="{{ $option['id'] }}" data="{{ $option }}">{{ $option['nombre'] }}</option>
+                @endforeach
+              </select>
+              <span class="text-danger error-message"></span>
+            </div>
+          </div>
+        </div>
+
         <div class="col-md-4">
           <div class="task-header">
             <div class="form-group">
@@ -58,20 +74,6 @@
           </div>
         </div>
 
-        <div class="col-md-4">
-          <div class="task-header">
-            <div class="form-group">
-              <label for="centrocosto" class="form-label">Lista precios</label>
-              <select class="form-control form-control-sm input" name="centrocosto" id="centrocosto" required>
-                <option value="">Seleccione lista precio</option>
-                @foreach($listaPrecio as $option)
-                <option value="{{ $option['id'] }}" data="{{ $option }}">{{ $option['nombre'] }}</option>
-                @endforeach
-              </select>
-              <span class="text-danger error-message"></span>
-            </div>
-          </div>
-        </div>
 
       </div>
       <div class="table-responsive mt-3">
@@ -84,7 +86,8 @@
                 <th class="table-th text-white text-center">ID</th>
                 <th class="table-th text-white text-center">PRODUCTO</th>
                 <th class="table-th text-white text-center">PRECIO</th>
-                <th class="table-th text-white text-center">CONTROL</th>
+                <th class="table-th text-white text-center">%IVA</th>
+                <th class="table-th text-white text-center">ESTADO</th>
               </tr>
             </thead>
             <tbody>

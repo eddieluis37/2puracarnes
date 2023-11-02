@@ -45,7 +45,8 @@ class AsignarPreciosProdController extends Controller
                 'pro.name as nameproducto',
                 'pro.id as productId',
                 'lpd.precio as price_fama',
-                'lpd.status as status'
+                'lpd.status as status',
+                'lpd.porciva as porciva'
             )
             ->where('lp.centrocosto_id', $centrocostoId)
             ->where('pro.category_id', $categoriaId)

@@ -29,6 +29,7 @@ $(document).ready(function () {
                             nameproducto: item.nameproducto,
                             status: getStatusCheckbox(item.status, item.productId),
                             price_fama: getPriceInput(item.price_fama),
+                            porciva: item.porciva,
                             productId: item.productId,
                         };
                     });
@@ -40,7 +41,8 @@ $(document).ready(function () {
                 { data: "productId", name: "productId" },
                 { data: "nameproducto", name: "nameproducto" },
                 { data: "price_fama", name: "price_fama" },
-                { data: "status", name: "status" },
+                { data: "porciva", name: "porciva" },
+                { data: "status", name: "status" },                
             ],
             order: [[2, "ASC"]],
             language: {
