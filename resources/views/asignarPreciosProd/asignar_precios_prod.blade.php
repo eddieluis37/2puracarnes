@@ -32,8 +32,8 @@
         <div class="col-md-4">
           <div class="task-header">
             <div class="form-group">
-              <label for="centrocosto" class="form-label">Lista precios</label>
-              <select class="form-control form-control-sm input" name="centrocosto" id="centrocosto" required>
+              <label for="listaprecio" class="form-label">Lista precios</label>
+              <select class="form-control form-control-sm input" name="listaprecio" id="listaprecio" required>
                 <option value="">Seleccione lista precio</option>
                 @foreach($listaPrecio as $option)
                 <option value="{{ $option['id'] }}" data="{{ $option }}">{{ $option['nombre'] }}</option>

@@ -8,6 +8,8 @@ use App\Models\Category;
 use App\Models\centros\Centrocosto;
 use Illuminate\Support\Facades\DB;
 
+
+
 class inventoryController extends Controller
 
 {

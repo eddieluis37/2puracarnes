@@ -25,8 +25,8 @@ class CreateListapreciodetallesTable extends Migration
             $table->decimal('precio',10,0);
             $table->decimal('porc_iva',10,2);
             $table->decimal('iva',10,2);
-            $table->decimal('utilidad',10,2)->nullable();
-            $table->decimal('porc_utilidad', 10, 2)->default(2.00)->nullable();
+            $table->decimal('utilidad',10,2)->default(2350)->nullable();
+            $table->decimal('porc_utilidad', 10, 2)->default(16.79)->nullable();
             $table->boolean('status')->parent_select()->default(true)->nullable();           
             $table->timestamps();
         });

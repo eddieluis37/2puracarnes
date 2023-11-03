@@ -3,7 +3,7 @@ const token = document.querySelector('meta[name="csrf-token"]').getAttribute("co
 $(document).ready(function () {
     var dataTable;
 
-    function initializeDataTable(centrocostoId = "-1", categoriaId = "-1") {
+    function initializeDataTable(listaprecioId = "-1", categoriaId = "-1") {
         dataTable = $("#tableInventory").DataTable({
             paging: true,
             pageLength: 15,
@@ -18,7 +18,7 @@ $(document).ready(function () {
                 url: "/showAPPSwitch",
                 type: "GET",
                 data: {
-                    centrocostoId: centrocostoId,
+                    listaprecioId: listaprecioId,
                     categoriaId: categoriaId,
                 },
                 dataSrc: function (response) {
@@ -30,7 +30,7 @@ $(document).ready(function () {
                             costo: item.costo,
                             porc_util_proyectada: item.porc_util_proyectada,
                             precio_proyectado: item.precio_proyectado,                        
-                            price: getPriceInput(item.price),
+                            precio: getPriceInput(item.precio),
                             porc_iva: item.porc_iva,
                             utilidad: item.utilidad,
                             porc_utilidad: item.porc_utilidad,
@@ -48,7 +48,7 @@ $(document).ready(function () {
                 { data: "costo", name: "costo" },
                 { data: "porc_util_proyectada", name: "porc_util_proyectada" },
                 { data: "precio_proyectado", name: "precio_proyectado" },
-                { data: "price", name: "price" },
+                { data: "precio", name: "precio" },
                 { data: "porc_iva", name: "porc_iva" },
                 { data: "utilidad", name: "utilidad" },
                 { data: "porc_utilidad", name: "porc_utilidad" },
@@ -81,25 +81,25 @@ $(document).ready(function () {
         return '<input type="checkbox" class="edit-status" data-product-id="' + productId + '" ' + checkboxChecked + ' />';
     }
 
-    function getPriceInput(price_fama) {
-        return '<input type="text" class="edit-price_fama" value="' + new Intl.NumberFormat("es-CO", { style: "currency", currency: "COP", minimumFractionDigits: 0 }).format(price_fama) + '" size="8" />';
+    function getPriceInput(precio) {
+        return '<input type="text" class="edit-precio" value="' + new Intl.NumberFormat("es-CO", { style: "currency", currency: "COP", minimumFractionDigits: 0 }).format(precio) + '" size="8" />';
     }
 
-    function updateCcpSwitch(productId, price_fama, centrocostoId, status) {
+    function updateAPPSwitch(productId, precio, listaprecioId, status) {
         console.log("productId:", productId);
-        console.log("price_fama:", price_fama);
-        console.log("centrocostoId:", centrocostoId);
+        console.log("precio", precio);
+        console.log("listaprecioId:", listaprecioId);
         $.ajax({
             headers: {
                 "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
             },
-            url: "/updateCcpSwitch",
+            url: "/updateAPPSwitch",
             type: "POST",
             data: {
                 productId: productId,
-                price_fama: price_fama,
+                precio: precio,
                 status: status,
-                centrocostoId: centrocostoId,
+                listaprecioId: listaprecioId,
             },
             success: function (response) {
                 console.log("Update successful");
@@ -113,13 +113,13 @@ $(document).ready(function () {
     function handlePriceFamaInput(event) {
         if (event.which === 13 || event.which === 9) {
             event.preventDefault();
-            var price_fama = $(this).val().replace(/[$\s.,]/g, "");
+            var precio = $(this).val().replace(/[$\s.,]/g, "");
             var regex = /^(?:\d{1,2}(?:,\d{3})*(?:\.\d{2})?|\d{1,5}(?:\.\d{2})?)$/;
-            if (regex.test(price_fama)) {
+            if (regex.test(precio)) {
                 var productId = $(this).closest("tr").find("td:eq(1)").text();
-                var centrocostoId = $("#centrocosto").val();
-                updateCcpSwitch(productId, price_fama, centrocostoId, null);
-                $(this).closest("tr").next().find(".edit-price_fama").focus().select();
+                var listaprecioId = $("#listaprecio").val();
+                updateAPPSwitch(productId, precio, listaprecioId, null);
+                $(this).closest("tr").next().find(".edit-precio").focus().select();
             } else {
                 Swal.fire({
                     icon: "error",
@@ -133,20 +133,20 @@ $(document).ready(function () {
 
     function handleStatusChange() {
         var productId = $(this).data("product-id");
-        var centrocostoId = $("#centrocosto").val();
+        var listaprecioId = $("#listaprecio").val();
         var status = $(this).is(":checked") ? 1 : 0;
-        updateCcpSwitch(productId, null, centrocostoId, status);
+        updateAPPSwitch(productId, null, listaprecioId, status);
         /* dataTable.ajax.reload(); */
     }
 
     initializeDataTable("-1");
-    $("#centrocosto, #categoria").on("change", function () {
-        var centrocostoId = $("#centrocosto").val();
+    $("#listaprecio, #categoria").on("change", function () {
+        var listaprecioId = $("#listaprecio").val();
         var categoriaId = $("#categoria").val();
         dataTable.destroy();
-        initializeDataTable(centrocostoId, categoriaId);
+        initializeDataTable(listaprecioId, categoriaId);
     });
 
-    $(document).on("keydown", ".edit-price_fama", handlePriceFamaInput);
+    $(document).on("keydown", ".edit-precio", handlePriceFamaInput);
     $(document).on("change", ".edit-status", handleStatusChange);
 });

@@ -44,5 +44,6 @@ class DatabaseSeeder extends Seeder
     $this->call(FormapagoSeeder::class);
     $this->call(ParametrocontableSeeder::class);
     $this->call(ListaprecioSeeder::class);
+    $this->call(ListapreciodetalleSeeder::class);
   }
 }
