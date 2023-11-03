@@ -28,12 +28,12 @@ class listaPrecioController extends Controller
 
     public function create($id)
     {
-       // dd($id);
-        $dataListaPrecio = DB::table('listaprecios as lp')          
+        // dd($id);
+        $dataListaPrecio = DB::table('listaprecios as lp')
             ->join('centro_costo as centro', 'lp.centrocosto_id', '=', 'centro.id')
             ->select('lp.*', 'centro.name as namecentrocosto')
             ->where('lp.id', $id)
-            ->get();      
+            ->get();
 
         /**************************************** */
         $status = '';
@@ -65,16 +65,22 @@ class listaPrecioController extends Controller
             $display = "display:none;";
         }
 
-      /*   $listaprecios = $this->getalistamientodetail($id, $dataListaPrecio[0]->centrocosto_id);
+        /*   $listaprecios = $this->getalistamientodetail($id, $dataListaPrecio[0]->centrocosto_id);
  */
-       /*  $arrayTotales = $this->sumTotales($id); */
+        /*  $arrayTotales = $this->sumTotales($id); */
 
-        return view('listadeprecio.create', compact('dataListaPrecio', 'status', 'statusInventory', 'display'));
+        /*    return view('listadeprecio.create', compact('dataListaPrecio', 'status', 'statusInventory', 'display')); */
+
+
+
+        return redirect()->back();
     }
- 
 
 
-/* 
+
+
+
+    /* 
     public function store(Request $request)
     {
         $lp = new Listaprecio();
@@ -93,15 +99,15 @@ class listaPrecioController extends Controller
         try {
 
             $rules = [
-              /*   'listaPrecioId' => 'required', */
+                /*   'listaPrecioId' => 'required', */
                 'centrocosto' => 'required',
                 'nombre' => 'required',
                 'tipo' => 'required',
             ];
             $messages = [
-             /*    'listaPrecioId.required' => 'El lista precio es requerido', */
+                /*    'listaPrecioId.required' => 'El lista precio es requerido', */
                 'centrocosto.required' => 'El centro de costo es requerido',
-                'nombre.required' => 'La nombre es requerida',               
+                'nombre.required' => 'La nombre es requerida',
                 'tipo.required' => 'El tipo es requerido',
             ];
 
@@ -125,14 +131,19 @@ class listaPrecioController extends Controller
                 $id_user = Auth::user()->id;
 
                 $list = new Listaprecio();
-                $list->users_id = $id_user;              
-                $list->centrocosto_id = $request->centrocosto;               
+                $list->users_id = $id_user;
+                $list->centrocosto_id = $request->centrocosto;
                 $list->nombre = $request->nombre;
                 $list->tipo = $request->tipo;
                 //$list->fecha_listado = $currentDateFormat;
                 $list->fecha_listado = $fechalistado;
                 $list->fecha_cierre = $dateNextMonday;
                 $list->save();
+
+                //  centro de costo ID in console
+                $centroCostoId = $list->centrocosto_id;
+              //  echo "Centro de costo ID: " . $centroCostoId;
+
                 return response()->json([
                     'status' => 1,
                     'message' => 'Guardado correctamente',
