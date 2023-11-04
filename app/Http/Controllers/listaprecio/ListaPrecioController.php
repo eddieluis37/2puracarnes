@@ -7,11 +7,13 @@ use App\Models\Listapreciodetalle;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\centros\Centrocosto;
+use App\Models\Product;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Yajra\Datatables\Datatables;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Validator;
+
 
 class listaPrecioController extends Controller
 {
@@ -94,33 +96,32 @@ class listaPrecioController extends Controller
         return redirect()->back();
     } */
 
-    public function store(Request $request) // Llenado del modal_create.blade
+    // Llenado del modal_create.blade
+    public function store(Request $request)
     {
         try {
-
             $rules = [
-                /*   'listaPrecioId' => 'required', */
+                /* 'listaPrecioId' => 'required', */
                 'centrocosto' => 'required',
-                'nombre' => 'required',
+                'nombre' => 'required|unique:listaprecios',
                 'tipo' => 'required',
             ];
             $messages = [
-                /*    'listaPrecioId.required' => 'El lista precio es requerido', */
+                /* 'listaPrecioId.required' => 'El lista precio es requerido', */
                 'centrocosto.required' => 'El centro de costo es requerido',
                 'nombre.required' => 'La nombre es requerida',
+                'nombre.unique' => 'Este nombre de lista ya existe',
                 'tipo.required' => 'El tipo es requerido',
             ];
-
             $validator = Validator::make($request->all(), $rules, $messages);
             if ($validator->fails()) {
                 return response()->json([
                     'status' => 0,
-                    'errors' => $validator->errors()
+                    'errors' => $validator->errors(),
+                    'message' => 'Error in form data. Please check the fields.'
                 ], 422);
             }
-
             $getReg = Listaprecio::firstWhere('id', $request->listaPrecioId);
-
             if ($getReg == null) {
                 $currentDateTime = Carbon::now();
                 $currentDateFormat = Carbon::parse($currentDateTime->format('Y-m-d'));
@@ -129,21 +130,27 @@ class listaPrecioController extends Controller
                 $dateNextMonday = $current_date->format('Y-m-d'); // Output the date in Y-m-d format
                 $fechalistado = $request->fecha;
                 $id_user = Auth::user()->id;
-
                 $list = new Listaprecio();
                 $list->users_id = $id_user;
                 $list->centrocosto_id = $request->centrocosto;
-                $list->nombre = $request->nombre;
+                $list->nombre = $request->centrocosto . ' - ' . $request->nombre;
                 $list->tipo = $request->tipo;
                 //$list->fecha_listado = $currentDateFormat;
                 $list->fecha_listado = $fechalistado;
                 $list->fecha_cierre = $dateNextMonday;
                 $list->save();
-
-                //  centro de costo ID in console
+                // centro de costo ID in console
                 $centroCostoId = $list->centrocosto_id;
-              //  echo "Centro de costo ID: " . $centroCostoId;
-
+                // echo "Centro de costo ID: " . $centroCostoId;
+                // Crea instancia "listapreciodetalles" con todos los productos que existen al momento.
+                $products = Product::all();
+                foreach ($products as $product) {
+                    $listaprecioDetalle = new Listapreciodetalle();
+                    $listaprecioDetalle->listaprecio_id = $list->id;
+                    $listaprecioDetalle->product_id = $product->id;
+                    // Set other attributes as needed
+                    $listaprecioDetalle->save();
+                }
                 return response()->json([
                     'status' => 1,
                     'message' => 'Guardado correctamente',
@@ -153,11 +160,11 @@ class listaPrecioController extends Controller
         } catch (\Throwable $th) {
             return response()->json([
                 'status' => 0,
-                'array' => (array) $th
+                'array' => (array) $th,
+                'message' => 'A ocurrido un fallo en la data. Verifique nuevamente'
             ]);
         }
     }
-
 
     public function show()
     {
