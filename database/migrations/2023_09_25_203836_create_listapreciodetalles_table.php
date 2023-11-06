@@ -19,12 +19,12 @@ class CreateListapreciodetallesTable extends Migration
             $table->foreign('listaprecio_id')->references('id')->on('listaprecios'); 
             $table->unsignedBigInteger('product_id');    
             $table->foreign('product_id')->references('id')->on('products');
-            $table->decimal('costo',10,0)->nullable();
+            $table->decimal('costo',10,0)->default(0)->nullable();
             $table->decimal('porc_util_proyectada',10,0)->default(18.00)->nullable();
             $table->decimal('precio_proyectado',10,0)->nullable();
-            $table->decimal('precio',10,0);
-            $table->decimal('porc_iva',10,2);
-            $table->decimal('iva',10,2);
+            $table->decimal('precio',10,0)->default(0)->nullable();
+            $table->decimal('porc_iva',10,2)->default(0)->nullable();
+            $table->decimal('iva',10,2)->default(0)->nullable();
             $table->decimal('utilidad',10,2)->default(2350)->nullable();
             $table->decimal('porc_utilidad', 10, 2)->default(16.79)->nullable();
             $table->boolean('status')->parent_select()->default(true)->nullable();           
