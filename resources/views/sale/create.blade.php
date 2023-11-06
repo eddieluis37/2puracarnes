@@ -26,7 +26,7 @@
                           <input type="hidden" id="saleId" name="saleId" value="{{$venta->id}}">
                             <div class="row">
                                                         
-                                <div class="col-md-8" >
+                                <div class="col-md-6" >
                                    
                                         <select class="form-control form-control-sm "
                                                 name="producto" id="producto" required="">
@@ -36,6 +36,18 @@
                                                 @endforeach
                                         </select>
 
+                                </div>
+
+                                <div class="col-md-3">                                    
+                                    <div class="input-group flex-nowrap">
+                                        <input type="text" id="codproducto" name="codproducto" class="form-control input" >                                        
+                                    </div>
+                                </div>
+
+                                <div class="col-md-3">                                    
+                                    <div class="input-group flex-nowrap">
+                                        <input type="text" id="codbarras" name="codbarras" class="form-control input" >                                        
+                                    </div>
                                 </div>
    
  
@@ -228,15 +240,11 @@ $(document).ready(initializeDataTable);
         }
         
     }
-    
-        
-
-        $("#producto").select2();    
+       
 
     /***** GUARDAR DETALLE ******** */
         
-    const btnAdd = document.querySelector("#btnAdd");
-
+    const btnAdd = document.querySelector("#btnAdd");    
 
     btnAdd.addEventListener("click", (e) => {
         e.preventDefault();
@@ -265,6 +273,20 @@ $(document).ready(initializeDataTable);
         });
     });
 
+    var producto = $("#producto");
+    producto.select2();    
+    
+    producto.on("change", (e) => {
+        e.preventDefault();
+        const formDetail2 = document.querySelector("#form-detail");       
+
+        send(formDetail2,'/getproductosv').then((result) => {   
+            alert(result.id);
+        });     
+    });
+
+    
+    
 }
 
 </script>
