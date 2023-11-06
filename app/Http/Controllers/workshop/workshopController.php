@@ -5,7 +5,7 @@ namespace App\Http\Controllers\workshop;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-
+use Illuminate\Support\Facades\Session;
 use App\Models\centros\Centrocosto;
 use App\Models\alistamiento\Alistamiento;
 use App\Models\alistamiento\enlistment_details;
@@ -65,7 +65,7 @@ class workshopController extends Controller
         //  dd($cortes);
         // dd($dataWorkshop);
         $cate = $dataWorkshop[0]->categoria_id;
-       // dd($cate);
+        // dd($cate);
         switch ($cate) {
             case 1:
                 $getCostoKilo = DB::table('desposteres')
@@ -86,14 +86,14 @@ class workshopController extends Controller
             case 2:
                 $getCostoKilo = DB::table('despostecerdos')
                     ->join('products as p', 'despostecerdos.products_id', '=', 'p.id')
-                  //  ->join('centro_costo_products as ce', 'p.id', '=', 'ce.products_id')
+                    //  ->join('centro_costo_products as ce', 'p.id', '=', 'ce.products_id')
                     ->select('p.name', 'despostecerdos.costo_kilo')
                     ->where([
                         ['despostecerdos.status', 'VALID'],
                         ['p.level_product_id', 1],
                         ['p.meatcut_id', $dataWorkshop[0]->meatcut_id],
                         ['p.status', 1],
-                       // ['ce.centrocosto_id', $dataWorkshop[0]->centrocosto_id],
+                        // ['ce.centrocosto_id', $dataWorkshop[0]->centrocosto_id],
                     ])
                     ->orderBy('despostecerdos.costo_kilo', 'desc')
                     ->limit(1)
@@ -135,7 +135,7 @@ class workshopController extends Controller
         if ($getCostoKilo->isEmpty()) {
             echo "Advertencia: Costo Kilo esta vacio. Favor validar los valores en el Desposte";
         }
-    //  dd($getCostoKilo);
+        //  dd($getCostoKilo);
 
         /**************************************** */
         $status = '';
@@ -171,7 +171,22 @@ class workshopController extends Controller
 
         $arrayTotales = $this->sumTotales($id);
 
+
+        $costo_kilo_padre = $getCostoKilo[0]->costo_kilo;
+        $workshop = Workshop::firstWhere('id', $id);
+        $workshop->costo_kilo_padre = $costo_kilo_padre;
+        $workshop->save();
+
+        $total_valor_padre = $workshop->peso_producto_padre * $costo_kilo_padre;
+        $workshop->total_valor_padre = $total_valor_padre;
+
+        $workshop->save();
+
+        Session::flash('refresh', true);
+
         return view('workshop.create', compact('dataWorkshop', 'cortes', 'getCostoKilo', 'workshops', 'arrayTotales', 'status', 'statusInventory', 'display'));
+
+        /*     return redirect(url()->current()); */
     }
 
     /**
@@ -223,15 +238,21 @@ class workshopController extends Controller
 
                 $id_user = Auth::user()->id;
 
+                $costo_kilo_padre = $request->input('costoKiloPadre');
+                $peso_producto_padre = $request->peso_producto_padre;
+                $total_valor_padre = $costo_kilo_padre * $peso_producto_padre;
+
                 $alist = new Workshop();
                 $alist->users_id = $id_user;
                 $alist->categoria_id = $request->categoria;
                 $alist->centrocosto_id = $request->centrocosto;
                 $alist->meatcut_id = $request->selectCortePadre;
                 $alist->peso_producto_padre = $request->peso_producto_padre;
+                $alist->total_valor_padre = $total_valor_padre;
                 $alist->fecha_workshop = $currentDateFormat;
                 $alist->fecha_cierre = $dateNextMonday;
                 $alist->save();
+
                 return response()->json([
                     'status' => 1,
                     'message' => 'Guardado correctamente',
@@ -331,14 +352,19 @@ class workshopController extends Controller
             ->make(true);
     }
 
-    public function getproducts(Request $request)
+    public function getProducts(Request $request)
     {
-        $prod = Product::Where([
+
+
+        $products = Product::where([
             ['meatcut_id', $request->categoriaId],
             ['status', 1],
             ['level_product_id', 2]
         ])->get();
-        return response()->json(['products' => $prod]);
+
+        Session::flash('refresh', true);
+
+        return response()->json(['products' => $products]);
     }
 
     public function savedetail(Request $request)
@@ -456,7 +482,7 @@ class workshopController extends Controller
             $alist = Workshop::firstWhere('id', $request->tallerId);
             $alist->total_peso_producto_hijo =  $arrayTotales['totalPesoProductoHijo'];
             $alist->costo_kilo_padre = $request->input('costo_kilo_padre');
-            $alist->merma = $merma;
+            $alist->merma = 99;
             //$alist->nuevo_stock_padre = $newStockPadre;
             $alist->save();
 
@@ -491,17 +517,33 @@ class workshopController extends Controller
 
     public function sumTotales($id)
     {
+        
 
         $totalPesoProductoHijo = (float)workshop_detail::Where([['workshops_id', $id], ['status', 1]])->sum('peso_producto_hijo');
         $totalPrecioVenta = (float)workshop_detail::Where([['workshops_id', $id], ['status', 1]])->sum('total');
         $porcVentaTotal = (float)workshop_detail::Where([['workshops_id', $id], ['status', 'VALID']])->sum('porcventa');
         $newTotalStock = (float)workshop_detail::Where([['workshops_id', $id], ['status', 1]])->sum('newstock');
 
+        $workshop = workshop::find($id);
+        $peso_producto_padre = $workshop->peso_producto_padre;
+        $total_valor_padre = $workshop->total_valor_padre;
+
+        $totalMerma = $totalPrecioVenta - $peso_producto_padre;
+        $totalUtilidad = $total_valor_padre - $totalPesoProductoHijo;
+        
+        $porcUtilidad = 0;
+        if ($totalPesoProductoHijo != 0) {
+            $porcUtilidad = $totalUtilidad / $totalPesoProductoHijo;
+        }
+
         $array = [
             'totalPesoProductoHijo' => $totalPesoProductoHijo,
             'totalPrecioVenta' => $totalPrecioVenta,
             'porcVentaTotal' => $porcVentaTotal,
             'newTotalStock' => $newTotalStock,
+            'totalMerma' => $totalMerma,
+            'totalUtilidad' => $totalUtilidad,
+            'porcUtilidad' => $porcUtilidad,
         ];
 
         return $array;
@@ -589,7 +631,7 @@ class workshopController extends Controller
             $newStockPadre = $request->stockPadre - $arrayTotales['totalPesoProductoHijo'];
             $alist = Workshop::firstWhere('id', $request->tallerId);
             $alist->nuevo_stock_padre = $newStockPadre;
-            $alist->merma = $merma;
+            $alist->merma = 789;
             $alist->save();
 
             return response()->json([

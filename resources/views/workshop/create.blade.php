@@ -105,38 +105,45 @@
 					<div class="card-body">
 						<div class="row">
 
-						<div class="col-md-3">
-								<label for="" class="form-label">Costo Kilo padre</label>
-								<div class="input-group flex-nowrap">									
-								<input type="text" id="costoKiloPadre" name="costoKiloPadre" value="{{ '$ ' . number_format($getCostoKilo[0]->costo_kilo, 0) }}" data-id="{{ $getCostoKilo[0]->costo_kilo }}" class="form-control-sm form-control" placeholder="10,00 kg" readonly>
-								</div>
-							</div>
-
-							<div class="col-md-3">
+							<div class="col-md-2">
 								<label for="" class="form-label">Stock actual</label>
 								<div class="input-group flex-nowrap">
 									<input type="text" id="stockCortePadre" name="stockCortePadre" value="{{$cortes[0]->stock}}" class="form-control-sm form-control" placeholder="10,00 kg" readonly>
 									<span class="input-group-text" id="addon-wrapping">KG</span>
 								</div>
 							</div>
-							
-							<div class="col-md-3">
-								<label for="" class="form-label">Peso producto padre</label>
+
+							<div class="col-md-2">
+								<label for="" class="form-label">Costo KG padre</label>
+								<div class="input-group flex-nowrap">
+									<input type="text" id="costoKiloPadre" name="costoKiloPadre" value="{{ '$ ' . number_format($getCostoKilo[0]->costo_kilo, 0) }}" data-id="{{ $getCostoKilo[0]->costo_kilo }}" class="form-control-sm form-control" placeholder="10,00 kg" readonly>
+								</div>
+							</div>
+
+							<div class="col-md-2">
+								<label for="" class="form-label">Peso prod padre</label>
 								<div class="input-group flex-nowrap">
 									<input type="text" id="pesoProductoPadre" name="pesoProductoPadre" value="{{$dataWorkshop[0]->peso_producto_padre}}" class="form-control-sm form-control" placeholder="30,00 kg" readonly>
 									<span class="input-group-text" id="addon-wrapping">KG</span>
 								</div>
 							</div>
 
+							<div class="col-md-2">
+								<label for="" class="form-label">Costo padre</label>
+								<div class="input-group flex-nowrap">
+								<input type="text" id="totalValorPadre" name="totalValorPadre" value="{{ '$ ' . number_format($dataWorkshop[0]->total_valor_padre, 0) }}" class="form-control-sm form-control" placeholder="10,00 kg" readonly>
+									<!-- <input type="text" id="totalValorPadre" name="totalValorPadre" value="{{$dataWorkshop[0]->total_valor_padre}}" class="form-control-sm form-control" placeholder="30,00 kg" readonly> -->
+									<span class="input-group-text" id="addon-wrapping">KG</span>
+								</div>
+							</div>
 
-
-							<div class="col-md-3">
+						<!-- 	<div class="col-md-2">
 								<label for="" class="form-label">Merma</label>
 								<div class="input-group flex-nowrap">
 									<input type="text" id="merma" name="merma" value="{{$dataWorkshop[0]->merma}}" class="form-control-sm form-control" placeholder="180.40 kg" readonly>
 									<span class="input-group-text" id="addon-wrapping">KG</span>
 								</div>
-							</div>
+							</div> -->
 
 						</div>
 					</div>
@@ -152,7 +159,7 @@
 										<!--th class="table-th text-white">Item</th>-->
 										<th class="table-th text-white">Codigo</th>
 										<th class="table-th text-white">Producto hijo</th>
-										<th class="table-th text-white">Precio venta</th>
+										<th class="table-th text-white">Precio_M</th>
 										<th class="table-th text-white">Peso-KG hijo</th>
 										<th class="table-th text-white">Total</th>
 										<th class="table-th text-white">% Venta</th>
@@ -192,13 +199,13 @@
 								</tbody>
 								<tfoot id="tabletfoot">
 									<tr>
-										<th></th>
-										<th>Totales</th>
+										<th>Merma</th>										
+										<th>$ {{number_format($arrayTotales['totalMerma'], 0, ',', '.')}} </th>
 										<th></th>
 										<th> {{number_format($arrayTotales['totalPesoProductoHijo'], 2, ',', '.')}} KG</th>
 										<th>$ {{number_format($arrayTotales['totalPrecioVenta'], 0, ',', '.')}} </th>
-										<th></th>
-										<th></th>
+										<th>U.$ {{number_format($arrayTotales['totalUtilidad'], 0, ',', '.')}} </th>
+										<th> {{number_format($arrayTotales['porcUtilidad'], 0, ',', '.')}} %.U</th>
 
 									</tr>
 								</tfoot>
@@ -211,6 +218,26 @@
 
 	</div>
 </div>
+
+
+@if(Session::has('refresh'))
+    <script>
+        $(document).ready(function() {
+            location.reload();
+        });
+    </script>
+@endif
+
+
+<!-- @if(Session::has('refresh'))
+    <script>
+        if (!sessionStorage.getItem('refreshed')) {
+            sessionStorage.setItem('refreshed', 'true');
+            location.reload();
+        }
+    </script>
+@endif
+ -->
 @endsection
 @section('script')
 <script src="{{asset('code/js/workshop/code-create.js')}}" type="module"></script>

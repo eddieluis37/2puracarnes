@@ -157,8 +157,8 @@ const showData = (data) => {
     tableFoot.innerHTML = "";
     tableFoot.innerHTML += `
 	    <tr>
-		    <td></td>
-		    <th>Totales</th>
+		    <th>Merma</th>
+            <th>$ ${formatCantidadSinCero(arrayTotales.totalMerma)}</th>		
 		    <td></td>		
 		    <th>${formatCantidad(arrayTotales.totalPesoProductoHijo)} KG</td>
 		    <th>$ ${formatCantidadSinCero(arrayTotales.totalPrecioVenta)}</th>		   
@@ -273,6 +273,22 @@ tfootTable.addEventListener("click", (e) => {
         });
     }
 });
+
+
+if (!sessionStorage.getItem('pageLoaded')) {
+    sessionStorage.setItem('pageLoaded', 'true');
+    location.reload();
+}
+
+/* window.onload = function() {
+    location.reload();
+} */
+
+/* if (!document.cookie.includes('pageLoaded=true')) {
+    document.cookie = 'pageLoaded=true; expires=Fri, 31 Dec 9999 23:59:59 GMT';
+    location.reload();
+} */
+
 
 //if (addShopping) {
 /*addShopping.addEventListener('click', (e) => {
