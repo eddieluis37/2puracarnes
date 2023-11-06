@@ -151,7 +151,7 @@ class SaleController extends Controller
     public function getproducts(Request $request)
     {
         $prod = Product::Where([        
-            ['status', 1],            
+            ['id', '1'],            
         ])->get();
         return response()->json(['products' => $prod]);
     }
