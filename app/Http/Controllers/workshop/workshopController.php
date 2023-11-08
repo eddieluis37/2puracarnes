@@ -128,7 +128,7 @@ class workshopController extends Controller
                         ['p.status', 1],
                         ['ce.centrocosto_id', $dataWorkshop[0]->centrocosto_id],
                     ])
-                     ->orderBy('desposteres.created_at', 'desc')
+                    ->orderBy('desposteres.created_at', 'desc')
                     ->orderBy('desposteres.costo_kilo', 'desc')
                     ->limit(1)
                     ->get();
@@ -405,14 +405,7 @@ class workshopController extends Controller
 
 
             $formatCantidad = new metodosrogercodeController();
-            //$prod = Product::firstWhere('id', $request->producto);
-            //  $nuevoPesoProductoHijo = $registro->peso_producto_hijo;
 
-            /* 
-            $registros = Workshop_detail::Where([
-                ['workshops_id', $request->workshopId]
-            ])->get();                   
- */
             $sumakilosTotal = (float)Workshop_detail::Where([['workshops_id', $request->workshopId], ['status', 'VALID']])->sum('peso');
             //  $porc = (float)number_format($key->peso / $sumakilosTotal,4);
             //   $porcentajeDesposte = (float)number_format($porc * 100,2);
@@ -474,7 +467,7 @@ class workshopController extends Controller
             $details->costo = $costo;
             $details->costo_kilo = $costo_kilo;
             $details->save();
-
+          
             $arrayTotales = $this->sumTotales($request->tallerId);
             $arraydetail = $this->getworkshopdetail($request->tallerId, $request->centrocosto);
 
@@ -487,19 +480,21 @@ class workshopController extends Controller
             $alist->merma = 99;
             //$alist->nuevo_stock_padre = $newStockPadre;
             $alist->save();
-
+            
+           
             return response()->json([
                 'status' => 1,
                 'message' => "Agregado correctamente",
                 'array' => $arraydetail,
                 'arrayTotales' => $arrayTotales,
             ]);
+           
         } catch (\Throwable $th) {
             return response()->json([
                 'status' => 0,
                 'array' => (array) $th
             ]);
-        }
+        }       
     }
 
     public function getworkshopdetail($tallerId, $centrocostoId)
@@ -518,7 +513,7 @@ class workshopController extends Controller
     }
 
     public function sumTotales($id)
-    {     
+    {
         $totalPesoProductoHijo = (float)workshop_detail::Where([['workshops_id', $id], ['status', 1]])->sum('peso_producto_hijo');
         $totalPrecioVenta = (float)workshop_detail::Where([['workshops_id', $id], ['status', 1]])->sum('total');
         $porcVentaTotal = (float)workshop_detail::Where([['workshops_id', $id], ['status', 'VALID']])->sum('porcventa');
@@ -530,7 +525,7 @@ class workshopController extends Controller
 
         $totalMerma = $totalPesoProductoHijo - $peso_producto_padre;
         $totalUtilidad = $totalPrecioVenta - $total_valor_padre;
-        
+
         $porcUtilidad = 0;
         if ($totalPesoProductoHijo != 0) {
             $porcUtilidad = ($totalUtilidad / $totalPrecioVenta) * 100;
@@ -666,28 +661,7 @@ class workshopController extends Controller
         return response()->json(['products' => $cortes]);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
 
     /**
      * Remove the specified resource from storage.
