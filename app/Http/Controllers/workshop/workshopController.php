@@ -79,6 +79,7 @@ class workshopController extends Controller
                         ['p.status', 1],
                         ['ce.centrocosto_id', $dataWorkshop[0]->centrocosto_id],
                     ])
+                    ->orderBy('desposteres.created_at', 'desc')
                     ->orderBy('desposteres.costo_kilo', 'desc')
                     ->limit(1)
                     ->get();
@@ -127,6 +128,7 @@ class workshopController extends Controller
                         ['p.status', 1],
                         ['ce.centrocosto_id', $dataWorkshop[0]->centrocosto_id],
                     ])
+                     ->orderBy('desposteres.created_at', 'desc')
                     ->orderBy('desposteres.costo_kilo', 'desc')
                     ->limit(1)
                     ->get();
@@ -516,9 +518,7 @@ class workshopController extends Controller
     }
 
     public function sumTotales($id)
-    {
-        
-
+    {     
         $totalPesoProductoHijo = (float)workshop_detail::Where([['workshops_id', $id], ['status', 1]])->sum('peso_producto_hijo');
         $totalPrecioVenta = (float)workshop_detail::Where([['workshops_id', $id], ['status', 1]])->sum('total');
         $porcVentaTotal = (float)workshop_detail::Where([['workshops_id', $id], ['status', 'VALID']])->sum('porcventa');
@@ -528,12 +528,12 @@ class workshopController extends Controller
         $peso_producto_padre = $workshop->peso_producto_padre;
         $total_valor_padre = $workshop->total_valor_padre;
 
-        $totalMerma = $totalPrecioVenta - $peso_producto_padre;
-        $totalUtilidad = $total_valor_padre - $totalPesoProductoHijo;
+        $totalMerma = $totalPesoProductoHijo - $peso_producto_padre;
+        $totalUtilidad = $totalPrecioVenta - $total_valor_padre;
         
         $porcUtilidad = 0;
         if ($totalPesoProductoHijo != 0) {
-            $porcUtilidad = $totalUtilidad / $totalPesoProductoHijo;
+            $porcUtilidad = ($totalUtilidad / $totalPrecioVenta) * 100;
         }
 
         $array = [

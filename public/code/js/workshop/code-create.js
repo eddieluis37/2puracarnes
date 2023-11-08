@@ -39,7 +39,7 @@ var costoKiloPadre = document
     .getElementById("costoKiloPadre")
     .getAttribute("data-id");
 
-    console.log('costoKiloPadre ' + costoKiloPadre)
+    console.log('costoKiloPadre = ' + costoKiloPadre)
 /* $porcventa = 0; */
 
 $(".select2Prod").select2({
@@ -161,7 +161,9 @@ const showData = (data) => {
             <th>$ ${formatCantidadSinCero(arrayTotales.totalMerma)}</th>		
 		    <td></td>		
 		    <th>${formatCantidad(arrayTotales.totalPesoProductoHijo)} KG</td>
-		    <th>$ ${formatCantidadSinCero(arrayTotales.totalPrecioVenta)}</th>		   
+		    <th>$ ${formatCantidadSinCero(arrayTotales.totalPrecioVenta)}</th>
+            <th>U.$ ${formatCantidadSinCero(arrayTotales.totalUtilidad)}</th>
+            <th>${formatCantidad(arrayTotales.porcUtilidad)} %.U</td>	   
 	    </tr>
     `;
     let newTotalStockPadre =

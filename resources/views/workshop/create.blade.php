@@ -205,7 +205,7 @@
 										<th> {{number_format($arrayTotales['totalPesoProductoHijo'], 2, ',', '.')}} KG</th>
 										<th>$ {{number_format($arrayTotales['totalPrecioVenta'], 0, ',', '.')}} </th>
 										<th>U.$ {{number_format($arrayTotales['totalUtilidad'], 0, ',', '.')}} </th>
-										<th> {{number_format($arrayTotales['porcUtilidad'], 0, ',', '.')}} %.U</th>
+										<th> {{number_format($arrayTotales['porcUtilidad'], 1, ',', '.')}} %.U</th>
 
 									</tr>
 								</tfoot>
