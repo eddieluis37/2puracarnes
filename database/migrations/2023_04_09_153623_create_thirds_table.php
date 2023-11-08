@@ -47,10 +47,10 @@ class CreateThirdsTable extends Migration
             
             $table->string('correo',100)->nullable();
 
-            $table->boolean('cliente')->parent_select()->default(true);
-            $table->boolean('proveedor')->parent_select()->default(false);
-            $table->boolean('vendedor')->parent_select()->default(false);
-            $table->boolean('domiciliario')->parent_select()->default(false);
+            $table->boolean('cliente')->parent_select()->default(true)->nullable();
+            $table->boolean('proveedor')->parent_select()->default(false)->nullable();        
+            $table->boolean('vendedor')->parent_select()->default(false)->nullable();
+            $table->boolean('domiciliario')->parent_select()->default(false)->nullable();
            
 
             $table->unsignedBigInteger('listaprecio_nichoid')->nullable();
