@@ -23,8 +23,8 @@ class CentroCostoProdController extends Controller
      */
     public function index()
     {
-        $category = Category::whereIn('id', [1, 2, 3, 4])->orderBy('id', 'asc')->get();
-        /* $category = Category::orderBy('name', 'asc')->get(); */
+     /*    $category = Category::whereIn('id', [1, 2, 3, 4])->orderBy('id', 'asc')->get(); */
+        $category = Category::orderBy('name', 'asc')->get();
         $centros = Centrocosto::Where('status', 1)->get();
         $centroCostoProductos = Centro_costo_product::all();
 
@@ -49,14 +49,15 @@ class CentroCostoProdController extends Controller
             ->select(
                 'cat.name as namecategoria',
                 'pro.name as nameproducto',
-                'pro.id as productId' ,             
+                'pro.id as productId',
+                'pro.level_product_id as level_product_id',           
                 'pro.price_fama as price_fama',
                 'pro.status as status'
             )
             ->where('ccp.centrocosto_id', $centrocostoId)
             ->where('pro.category_id', $categoriaId)
       /*       ->where('pro.status', 1) */
-            ->where('pro.level_product_id', 1)
+         /*    ->where('pro.level_product_id', 1) */
             ->get();
 
        // return response()->json(['data' => $data]);

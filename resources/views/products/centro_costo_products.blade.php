@@ -25,7 +25,7 @@
     <div class="widget widget-chart-one">
       <div class="card text-center" style="background: #3B3F5C">
         <div class="m-2">
-          <h4 style="color:white;"><strong>Productos padres en Lotes & </s> t</strong></h3>
+          <h4 style="color:white;"><strong>Asignar Precio Minimo a Productos</s> Taller  & Lote</strong></h3>
         </div>
       </div>
       <div class="row g-3 mt-3">
@@ -68,6 +68,7 @@
                 <th class="table-th text-white text-center">CAT</th>
                 <th class="table-th text-white text-center">ID</th>
                 <th class="table-th text-white text-center">PRODUCTO</th>
+                <th class="table-th text-white text-center">NIV</th>
                 <th class="table-th text-white text-center">PRECIO_MIN</th>
                 <th class="table-th text-white text-center">CONTROL</th>
               </tr>

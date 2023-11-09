@@ -28,6 +28,7 @@ $(document).ready(function () {
                             namecategoria: item.namecategoria,
                             nameproducto: item.nameproducto,
                             status: getStatusCheckbox(item.status, item.productId),
+                            level_product_id: item.level_product_id,
                             price_fama: getPriceInput(item.price_fama),
                             productId: item.productId,
                         };
@@ -39,6 +40,7 @@ $(document).ready(function () {
                 { data: "namecategoria", name: "namecategoria" },
                 { data: "productId", name: "productId" },
                 { data: "nameproducto", name: "nameproducto" },
+                { data: "level_product_id", name: "level_product_id" },
                 { data: "price_fama", name: "price_fama" },
                 { data: "status", name: "status" },
             ],
