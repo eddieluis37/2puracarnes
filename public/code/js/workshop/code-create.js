@@ -158,7 +158,7 @@ const showData = (data) => {
     tableFoot.innerHTML += `
 	    <tr>
 		    <th>Merma</th>
-            <th>$ ${formatCantidadSinCero(arrayTotales.totalMerma)}</th>		
+            <th>${formatCantidad(arrayTotales.totalMerma)}</th>		
 		    <td></td>		
 		    <th>${formatCantidad(arrayTotales.totalPesoProductoHijo)} KG</td>
 		    <th>$ ${formatCantidadSinCero(arrayTotales.totalPrecioVenta)}</th>

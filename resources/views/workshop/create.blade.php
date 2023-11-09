@@ -200,7 +200,7 @@
 								<tfoot id="tabletfoot">
 									<tr>
 										<th>Merma</th>										
-										<th>$ {{number_format($arrayTotales['totalMerma'], 0, ',', '.')}} </th>
+										<th> {{number_format($arrayTotales['totalMerma'], 2, ',', '.')}} </th>
 										<th></th>
 										<th> {{number_format($arrayTotales['totalPesoProductoHijo'], 2, ',', '.')}} KG</th>
 										<th>$ {{number_format($arrayTotales['totalPrecioVenta'], 0, ',', '.')}} </th>
