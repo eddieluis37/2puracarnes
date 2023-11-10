@@ -174,6 +174,7 @@ class MeatcutSeeder extends Seeder
 		$meatcut->save();
 		$meatcut = new Meatcut(["category_id" => "8", "name" => "PESCADOS", "description" => "no existe aun ", "status" => "1"]);
 		$meatcut->save();
+		
 
 		$meatcut = new Meatcut(["category_id" => "1", "name" => "PIEL DE RES", "description" => "no existe aun ", "status" => "1"]);
 		$meatcut->save();
@@ -191,5 +192,12 @@ class MeatcutSeeder extends Seeder
 		$meatcut->save();
 		$meatcut = new Meatcut(["category_id" => "1", "name" => "MOLLEJA POLLO", "description" => "no existe aun ", "status" => "1"]);
 		$meatcut->save();
+
+		$meatcut = new Meatcut(["category_id" => "9", "name" => "SUBPRODUCTOS", "description" => "no existe aun ", "status" => "1"]);
+		$meatcut->save();		
+		
+		$meatcut = new Meatcut(["category_id" => "10", "name" => "TERNERA", "description" => "no existe aun ", "status" => "1"]);
+		$meatcut->save();
+
 	}
 }
