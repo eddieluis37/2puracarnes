@@ -18,7 +18,7 @@ $(document).ready(function () {
                 [10, 15, 25, 50, "Todos"],
             ],
             ajax: {
-                url: "/showCcpInventory",
+                url: "/showCargarVentasInv",
                 type: "GET",
                 data: {
                     centrocostoId: centrocostoId,

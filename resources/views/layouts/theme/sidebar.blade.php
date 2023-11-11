@@ -345,6 +345,17 @@
                         </svg> Producto de baja</a>
                 </li>
                 <li>
+                    <a href="{{ url('inventory/cargar_ventas') }}">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-shopping-cart">
+                            <circle cx="9" cy="21" r="1"></circle>
+                            <circle cx="20" cy="21" r="1"></circle>
+                            <path d="M1 1h4l2.25 6h13.5l2.25-6h4"></path>
+                            <path d="M15 17H5.2l-.4-2H15v2zm-4 4h10v-2H11v2zM8 17h2v-3H8v3zm4 0h2v-3h-2v3z"></path>
+                        </svg>
+                        Cargar Ventas
+                    </a>
+                </li>
+                <li>
                     <a href="{{ url('inventory/centro_costo_products') }}"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-plus">
                             <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
                             <polyline points="14 2 14 8 20 8"></polyline>
