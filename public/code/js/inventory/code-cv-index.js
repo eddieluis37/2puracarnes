@@ -30,9 +30,9 @@ $(document).ready(function () {
                         return {
                             namecategoria: item.namecategoria,
                             nameproducto: item.nameproducto,
-                            fisico:
-                                '<input type="text" class="edit-fisico text-right" value="' +
-                                item.fisico +
+                            venta:
+                                '<input type="text" class="edit-venta text-right" value="' +
+                                item.venta +
                                 '" size="4" />',
 
                             productId: item.productId,
@@ -45,7 +45,7 @@ $(document).ready(function () {
                 { data: "namecategoria", name: "namecategoria" },
                 { data: "productId", name: "productId" },
                 { data: "nameproducto", name: "nameproducto" },
-                { data: "fisico", name: "fisico" },
+                { data: "venta", name: "venta" },
             ],
             order: [[2, "ASC"]],
             language: {
@@ -72,19 +72,19 @@ $(document).ready(function () {
         });
     }
 
-    function updateCcpInventory(productId, fisico, centrocostoId) {
+    function updateCcpInventory(productId, venta, centrocostoId) {
         console.log("productId:", productId);
-        console.log("fisico:", fisico);
+        console.log("venta:", venta);
         console.log("centrocostoId:", centrocostoId);
         $.ajax({
             headers: {
                 "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
             },
-            url: "/updateCcpInventory",
+            url: "/updateCVInv",
             type: "POST",
             data: {
                 productId: productId,
-                fisico: fisico,
+                venta: venta,
                 centrocostoId: centrocostoId,
             },
             success: function (response) {
@@ -107,23 +107,23 @@ $(document).ready(function () {
             initializeDataTable(centrocostoId, categoriaId);
         });
 
-        $(document).on("keydown", ".edit-fisico", function (event) {
+        $(document).on("keydown", ".edit-venta", function (event) {
             if (event.which === 13 || event.which === 9) {
                 event.preventDefault();
-                var fisico = $(this).val().replace(",", ".");
+                var venta = $(this).val().replace(",", ".");
 
                 // Expresion Regular para validar que solo acepte numeros enteros y decimales
                 var regex = /^[0-9]+(\.[0-9]{1,2})?$/;
 
-                if (regex.test(fisico)) {
+                if (regex.test(venta)) {
                     var productId = $(this)
                         .closest("tr")
                         .find("td:eq(1)")
                         .text();
                     var centrocostoId = $("#centrocosto").val();
-                    updateCcpInventory(productId, fisico, centrocostoId);
+                    updateCcpInventory(productId, venta, centrocostoId);
 
-                    $(this).closest("tr").next().find(".edit-fisico").focus().select();
+                    $(this).closest("tr").next().find(".edit-venta").focus().select();
                 } else {
                     Swal.fire({
                         icon: "error",

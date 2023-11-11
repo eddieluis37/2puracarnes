@@ -43,7 +43,7 @@ class CargarVentasController extends Controller
                 'cat.name as namecategoria',
                 'pro.name as nameproducto',
                 'pro.id as productId',
-                'ccp.invinicial as invinicial',
+                'ccp.venta as venta',
                 'ccp.fisico as fisico'
             )
             ->where('ccp.centrocosto_id', $centrocostoId)
@@ -55,5 +55,19 @@ class CargarVentasController extends Controller
         return datatables()->of($data)
             ->addIndexColumn()
             ->make(true);
+    }
+
+    public function updateCVInv()
+    {
+        $productId = request('productId');
+        $centrocostoId = request('centrocostoId');
+        $venta = request('venta');
+
+        DB::table('centro_costo_products')
+            ->where('products_id', $productId)
+            ->where('centrocosto_id', $centrocostoId)
+            ->update(['venta' => $venta]);
+
+        return response()->json(['success' => 'true']);
     }
 }

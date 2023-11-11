@@ -23,7 +23,7 @@
     <div class="widget widget-chart-one">
       <div class="card text-center" style="background: #3B3F5C">
         <div class="m-2">
-          <h4 style="color:white;"><strong>Cargar</s> Ventas</strong></h3>
+          <h4 style="color:white;"><strong>Cargar</s> ventas diarias </strong></h3>
         </div>
       </div>
       <div class="row g-3 mt-3">
@@ -70,12 +70,16 @@
               </tr>
             </thead>
             <tbody>
+              <th></th>
+              <td></td>
+              <td class="text-right"></td>
+              <td class="text-right"></td>
             </tbody>
             <tfoot>
               <tr>
-                <th>Totales</th>
+                <th></th>
                 <td></td>
-                <td class="text-right">0.00</td>
+                <td class="text-center"></td>
               </tr>
             </tfoot>
           </table>
