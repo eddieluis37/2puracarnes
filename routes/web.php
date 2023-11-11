@@ -160,7 +160,7 @@ Route::group(['middleware' => [('auth')]], function () {
     Route::get('centro_costo_prod', [CentroCostoProdController::class, 'index'])->name('ccpShow');
     Route::get('showCcpSwitch', [CentroCostoProdController::class, 'show'])->name('showCcpSwitch');
     Route::post('/updateCcpSwitch', [CentroCostoProdController::class, 'updateCcpSwitch'])->name('updateCcpSwitch');
-
+   
     /************************* RUTAS ASIGNAR PRECIOS A PRODUCTOS ********************************** */
     Route::get('asignar_precios_prod', [AsignarPreciosProdController::class, 'index'])->name('APPShow');
     Route::get('showAPPSwitch', [AsignarPreciosProdController::class, 'show'])->name('showAPPSwitch');
@@ -174,9 +174,9 @@ Route::group(['middleware' => [('auth')]], function () {
     Route::get('inventory/mensual', [mensualController::class, 'index'])->name('inventory.mensual');
 
     Route::get('inventory/centro_costo_products', [CentroCostoProductController::class, 'index'])->name('inventory.showccp');
-
-    Route::get('inventory/cargar_ventas', [CargarVentasController::class, 'index'])->name('inventory.showcvc');
-    Route::get('showCargarVentasInv', [CentroCostoProductController::class, 'show'])->name('inventory.showCargarVentasInv');
+   
+    Route::get('showCcpInventory', [CentroCostoProductController::class, 'show'])->name('inventory.show-ccp');
+    Route::get('showConsolidadoInventory', [inventoryController::class, 'show'])->name('inventory.showConsol');
 
     Route::get('totales', [inventoryController::class, 'totales'])->name('inventory.totales');
 
@@ -188,11 +188,11 @@ Route::group(['middleware' => [('auth')]], function () {
     Route::get('totaleshist', [inventoryController::class, 'totaleshist'])->name('inventory.totaleshist');
     //Route::post('/updateCcpInventory', 'CentroCostoProductController@updateCcpInventory')->name('updateCcpInventory');
 
-    /* **************************************CARGAR-VENTAS************************************************** */
-    Route::get('showCcpInventory', [CentroCostoProductController::class, 'show'])->name('inventory.show-ccp');
-    Route::get('showConsolidadoInventory', [inventoryController::class, 'show'])->name('inventory.showConsol');
+    /*****************************CARGAR-VENTAS*******************************************/
+    Route::get('inventory/cargar_ventas', [CargarVentasController::class, 'index'])->name('inventory.showcvc');
+    Route::get('showCargarVentasInv', [CargarVentasController::class, 'show'])->name('inventory.showCargarVentas');
+    Route::post('/updateCVInv', [CargarVentasController::class, 'updateCVInv'])->name('inventory.updateCVInv');
     
-
 
     /*****************************BENEFICIO-RES*******************************************/
     Route::get('beneficiores', [beneficioresController::class, 'index'])->name('beneficiores.index');
