@@ -54,6 +54,9 @@ use App\Http\Controllers\inventory\diaryController;
 use App\Http\Controllers\inventory\mensualController;
 use App\Http\Controllers\listaprecio\listaPrecioController;
 
+use App\Http\Controllers\ReportController;
+
+
 /************************************************* */
 
 Route::group(['middleware' => ['auth', 'admin']], function () {
@@ -358,6 +361,12 @@ Route::group(['middleware' => [('auth')]], function () {
 
     Route::post('/drag-drop', [DragDropController::class, 'handleDragDrop'])->name('drag-drop.handleDragDrop');
     Route::get('/drag', [DragDropController::class, 'showDragView'])->name('drag.showDragView');
+
+   // Route::get('/descargar-reporte', 'App\Http\Controllers\ReportController@downloadExcel');
+    Route::get('/descargar-reporte', [ReportController::class, 'downloadExcel'])->name('descargar-reporte');
+
+
+
 });
 
 require __DIR__ . '/admin.php';
