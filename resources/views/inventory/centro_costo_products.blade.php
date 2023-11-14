@@ -56,6 +56,18 @@
             </div>
           </div>
         </div>
+
+        <div class="table-responsive mt-1">
+        <form method="GET" action="/descargar-reporte">
+          @csrf
+         
+          <!-- Botón de descarga de reporte en Excel -->
+          <div class="text-center mt-3">
+            <button type="submit" class="btn btn-primary">Descargar Reporte en Excel</button>
+          </div>
+        </form>
+      </div>
+
       </div>
       <div class="table-responsive mt-3">
         <form method="POST" action="/updateCcpInventory">
