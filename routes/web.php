@@ -56,6 +56,8 @@ use App\Http\Controllers\listaprecio\listaPrecioController;
 
 use App\Http\Controllers\ReportController;
 
+use App\Http\Controllers\ImportStockFisicoController;
+
 
 /************************************************* */
 
@@ -365,7 +367,7 @@ Route::group(['middleware' => [('auth')]], function () {
    // Route::get('/descargar-reporte', 'App\Http\Controllers\ReportController@downloadExcel');
     Route::get('/descargar-reporte', [ReportController::class, 'downloadExcel'])->name('descargar-reporte');
 
-
+    Route::get('/import', [ImportStockFisicoController::class, 'import'])->name('import');
 
 });
 
