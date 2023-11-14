@@ -10,6 +10,6 @@ class ReportController extends Controller
 {
     public function downloadExcel()
     {
-        return Excel::download(new ReportExport, 'reporte.xlsx');
+        return Excel::download(new ReportExport, 'REPORTE-STOCK-FISICO.xlsx');
     }
 }
