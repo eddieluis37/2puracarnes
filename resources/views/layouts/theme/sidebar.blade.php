@@ -22,6 +22,55 @@
             </li>
             @endcan
 
+<!--             @can('Pos_Create')
+            <li class="">
+                <a href="{{ url('sale/create/3') }}" class="menu-toggle" data-active="false">
+                    <div class="base-menu">
+                        <div class="base-icons">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-refresh-cw">
+                                <path d="M23 4v6h-6"></path>
+                                <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path>
+                            </svg>
+                        </div>
+                        <span>Ventas M</span>
+                    </div>
+                </a>
+            </li>
+            @endcan -->
+
+            @can('Pos_Create')
+            <li class="">
+                <a href="{{ url('sale/create/3') }}" class="menu-toggle" data-active="false">
+                    <div class="base-menu">
+                        <div class="base-icons">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-shopping-bag">
+                                <path d="M3 6l2.5 15h13L21 6"></path>
+                                <path d="M16 10a4 4 0 0 1-8 0"></path>
+                            </svg>
+                        </div>
+                        <span>Ventas M</span>
+                    </div>
+                </a>
+            </li>
+            @endcan
+
+            @can('Pos_Create')
+            <li class="">
+                <a href="{{ url('sales') }}" class="menu-toggle" data-active="false">
+                    <div class="base-menu">
+                        <div class="base-icons">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-shopping-cart">
+                                <circle cx="9" cy="21" r="1"></circle>
+                                <circle cx="20" cy="21" r="1"></circle>
+                                <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+                            </svg>
+                        </div>
+                        <span>Ventas D</span>
+                    </div>
+                </a>
+            </li>
+            @endcan
+
 
             @can('Product_View')
             <li class="menu">
@@ -81,39 +130,9 @@
             </li>
             @endcan
 
-            @can('Workshop')
-            <li class="">
-                <a href="{{url('workshop')}}" class="menu-toggle" data-active="false">
-                    <div class="base-menu">
-                        <div class="base-icons">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-tools">
-                                <path d="M21 13v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-8m2 0V5a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v8m-6 0h4"></path>
-                                <line x1="8" y1="3" x2="8" y2="3"></line>
-                                <line x1="12" y1="3" x2="12" y2="3"></line>
-                                <line x1="16" y1="3" x2="16" y2="3"></line>
-                            </svg>
-                        </div>
-                        <span>Taller</span>
-                    </div>
-                </a>
-            </li>
-            @endcan
 
-            @role('Admin')
-            <li class="">
-                <a href="{{url('transfer')}}" class="menu-toggle" data-active="false">
-                    <div class="base-menu">
-                        <div class="base-icons">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-dollar-sign">
-                                <line x1="12" y1="1" x2="12" y2="23"></line>
-                                <path d="M19 12h2M3 12h2M18 4.06l1.06 1.06M5.94 19.94L4.88 18"></path>
-                            </svg>
-                        </div>
-                        <span>Traslado</span>
-                    </div>
-                </a>
-            </li>
-            @endcan
+
+
 
             <!--   @role('Admin')
             <li class="">
@@ -132,22 +151,6 @@
             </li>
             @endcan        -->
 
-            @can('Pos_Create')
-            <li class="">
-                <a href="{{ url('sales') }}" class="menu-toggle" data-active="false">
-                    <div class="base-menu">
-                        <div class="base-icons">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-shopping-cart">
-                                <circle cx="9" cy="21" r="1"></circle>
-                                <circle cx="20" cy="21" r="1"></circle>
-                                <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
-                            </svg>
-                        </div>
-                        <span>Ventas</span>
-                    </div>
-                </a>
-            </li>
-            @endcan
 
             @can('Inventory')
             <li class="menu">
@@ -225,6 +228,40 @@
                             </svg>
                         </div>
                         <span>Reportes</span>
+                    </div>
+                </a>
+            </li>
+            @endcan
+
+            @role('Admin')
+            <li class="">
+                <a href="{{url('transfer')}}" class="menu-toggle" data-active="false">
+                    <div class="base-menu">
+                        <div class="base-icons">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-dollar-sign">
+                                <line x1="12" y1="1" x2="12" y2="23"></line>
+                                <path d="M19 12h2M3 12h2M18 4.06l1.06 1.06M5.94 19.94L4.88 18"></path>
+                            </svg>
+                        </div>
+                        <span>Traslado</span>
+                    </div>
+                </a>
+            </li>
+            @endcan
+
+            @can('Workshop')
+            <li class="">
+                <a href="{{url('workshop')}}" class="menu-toggle" data-active="false">
+                    <div class="base-menu">
+                        <div class="base-icons">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-tools">
+                                <path d="M21 13v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-8m2 0V5a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v8m-6 0h4"></path>
+                                <line x1="8" y1="3" x2="8" y2="3"></line>
+                                <line x1="12" y1="3" x2="12" y2="3"></line>
+                                <line x1="16" y1="3" x2="16" y2="3"></line>
+                            </svg>
+                        </div>
+                        <span>Taller</span>
                     </div>
                 </a>
             </li>
