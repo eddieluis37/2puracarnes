@@ -98,13 +98,12 @@ const showData = (data) => {
     showRegTbody.innerHTML = "";
     dataAll.forEach((element, indice) => {
         showRegTbody.innerHTML += `
-            <tr>               
-                <td>${element.code}</td>
+            <tr>                              
                 <td>${element.nameprod}</td>
-                <td>$ ${formatCantidadSinCero(element.price)}</td>
                 <td>${formatCantidad(element.quantity)} KG</td>
-                <td>$ ${formatCantidadSinCero(element.subtotal)}</td>
-                <td>${element.iva}</td>
+                <td>$ ${formatCantidadSinCero(element.price)}</td>  
+                <td>${element.iva}</td>              
+                <td>$ ${formatCantidadSinCero(element.total)}</td>             
                 <td class="text-center">
                     <button class="btn btn-dark fas fa-edit" data-id="${
                         element.id
@@ -122,12 +121,10 @@ const showData = (data) => {
     tableFoot.innerHTML = "";
     tableFoot.innerHTML += `
         <tr>
-            <th>Totales</th>
-            <td></td>
-            <td></td>
-            <td></td>
+            <th>Totales</th>         
             <th>${formatCantidad(arrayTotales.pesoTotalGlobal)} KG</td>
             <th>$ ${formatCantidadSinCero(arrayTotales.totalGlobal)}</th>
+            <td></td>
             <td></td>
             <td class="text-center">
             <button id="cargarInventarioBtn" class="btn btn-success btn-sm">inventario</button>

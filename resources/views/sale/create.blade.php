@@ -113,26 +113,24 @@
 							<table id="tableDespostere" class="table table-sm table-striped table-bordered">
 								<thead class="text-white" style="background: #3B3F5C">
 									<tr>
-										<!--th class="table-th text-white">Item</th>-->										
-										<th class="table-th text-white">Codigo</th>
-										<th class="table-th text-white">Productos</th>
-										<th class="table-th text-white">Precio compra</th>
-										<th class="table-th text-white">Peso KG</th>
-										<th class="table-th text-white">Sub Total</th>
-										<th class="table-th text-white">IVA $</th>
+										<!--th class="table-th text-white">Item</th>-->																			
+										<th class="table-th text-white">Producto</th>
+										<th class="table-th text-white">Cant</th>
+										<th class="table-th text-white">Precio</th>	
+										<th class="table-th text-white">IVA</th>								
+										<th class="table-th text-white">Total</th>									
 										<th class="table-th text-white text-center">Acciones</th>
 									</tr>
 								</thead>
 								<tbody id="tbodyDetail">
 									@foreach($detail as $proddetail)
 									<tr>
-										<!--td>{{$proddetail->id}}</td-->										
-										<td>{{$proddetail->code}}</td>
+										<!--td>{{$proddetail->id}}</td-->																				
 										<td>{{$proddetail->nameprod}}</td>
-										<td>$ {{ number_format($proddetail->price, 0, ',', '.')}}</td>
 										<td>{{ number_format($proddetail->quantity, 2, ',', '.')}} KG</td>
-										<td>$ {{ number_format($proddetail->total, 0, ',', '.')}}</td>
-										<td>{{$proddetail->iva}}</td>
+										<td>$ {{ number_format($proddetail->price, 0, ',', '.')}}</td>	
+										<td>{{$proddetail->iva}}</td>								
+										<td>$ {{ number_format($proddetail->total, 0, ',', '.')}}</td>									
 										<td class="text-center">
 											@if($status == 'true')
 											<button class="btn btn-dark fas fa-edit" name="btnEdit" data-id="{{$proddetail->id}}" title="Editar">
@@ -151,12 +149,10 @@
 								</tbody>
 								<tfoot id="tabletfoot">
 									<tr>
-										<th>Totales</th>
-										<td></td>
-										<td></td>
-										<td></td>
+										<th>Totales</th>										
 										<th>{{number_format($arrayTotales['pesoTotalGlobal'], 2, ',', '.')}} KG</td>
 										<th>$ {{number_format($arrayTotales['totalGlobal'], 0, ',', '.')}} </th>
+										<td></td>
 										<td></td>
 										<td class="text-center">
 											<button class="btn btn-success" id="cargarInventarioBtn">Cargar al inventario</button>

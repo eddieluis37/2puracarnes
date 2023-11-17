@@ -178,7 +178,7 @@ class saleController extends Controller
                 $detail->quantity = $request->quantity;
                 $detail->porciva = 0;
                 $detail->iva = 0;            
-                $detail->total = $total ;
+                $detail->total = $subtotal ;
                
                 $detail->save();
             } else {
@@ -187,7 +187,7 @@ class saleController extends Controller
                 $updateReg->product_id = $request->producto;
                 $updateReg->price = $formatPcompra;
                 $updateReg->quantity = $formatPesoKg;
-                $updateReg->total = $total;
+                $updateReg->total = $subtotal;
                 $updateReg->save();
             }
 
