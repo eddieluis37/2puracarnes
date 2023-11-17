@@ -37,13 +37,24 @@ class SaleController extends Controller
         return view('sale.create',compact('venta','ventasdetalle','arrayTotales','producto'));
     }
 
+    public function create_reg_pago($id)
+    {
+        $venta = Sale::find($id);
+        $producto = Product::get();
+        $ventasdetalle = $this->getventasdetalle($id,$venta->centrocosto_id);
+        $arrayTotales = $this->sumTotales($id);
+        
+
+        return view('sale.registrar_pago',compact('venta','ventasdetalle','arrayTotales','producto'));
+    }
+
     
     public function store(Request $request)
     {
         $venta = new Sale();
         $idcc = $request->centrocosto;
 
-        $venta->fecha = $request->fecha;
+        $venta->fecha_venta = $request->fecha_venta;
         $venta->centrocosto_id = $request->centrocosto;
         $venta->third_id = $request->cliente;
         $venta->vendedor_id = $request->vendedor;
@@ -101,7 +112,7 @@ class SaleController extends Controller
     {
         $venta = Sale::find($ventaId);
 
-        $venta->fecha = $request->fecha2;
+        $venta->fecha_venta = $request->fecha2;
         $venta->centrocosto_id = $request->centrocosto2;
         $venta->third_id = $request->cliente2;
         $venta->vendedor_id = $request->vendedor2;

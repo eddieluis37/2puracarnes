@@ -33,7 +33,7 @@ use App\Http\Controllers\cerdo\beneficiocerdoController;
 
 use App\Http\Controllers\FormapagoController;
 use App\Http\Controllers\ParametrocontableController;
-use App\Http\Controllers\SaleController;
+use App\Http\Controllers\sale\saleController;
 
 use App\Http\Controllers\compensado\compensadoController;
 use App\Http\Controllers\alistamiento\alistamientoController;
@@ -341,14 +341,22 @@ Route::group(['middleware' => [('auth')]], function () {
 
     /*****************************VENTAS******************************************/
 
-    Route::get('sales', [SaleController::class, 'index'])->name('sale.index');
-    Route::post('salesave', [SaleController::class, 'store'])->name('sale.save');
+   // Route::get('sales', [SaleController::class, 'index'])->name('sale.index');
+ //   Route::post('salesave', [SaleController::class, 'store'])->name('sale.save');
     Route::get('sale{saleId}/delete', [SaleController::class, 'delete'])->name('sale.delete');
     Route::get('sale{ventaId}/edit', [SaleController::class, 'edit'])->name('sale.edit');
     Route::post('sale/{ventaId}', [SaleController::class, 'update'])->name('sale.update');
     Route::get('sale/create/{id}', [SaleController::class, 'create'])->name('sale.create');
     Route::post('getproductosv', [SaleController::class, 'getproducts'])->name('sale.getproductos');
-    Route::post('salesavedetail', [SaleController::class, 'savedetail'])->name('sale.savedetail');
+    //Route::post('salesavedetail', [SaleController::class, 'savedetail'])->name('sale.savedetail');
+
+    Route::get('sale/registrar_pago/{id}', [SaleController::class, 'create_reg_pago'])->name('sale.registrar_pago');
+
+    Route::get('sales', [saleController::class, 'index'])->name('sale.index');
+    Route::get('showlistVentas', [saleController::class, 'show'])->name('sale.showlistVentas');
+    Route::post('ventasave', [saleController::class, 'store'])->name('sale.save');
+    Route::post('salesavedetail', [saleController::class, 'savedetail'])->name('sale.savedetail');
+    Route::post('saleById', [saleController::class, 'editCompensado'])->name('sale.editCompensado');
 
     /*****************************LISTA_DE_PRECIO******************************************/
 

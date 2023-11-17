@@ -1,14 +1,14 @@
 <div class="card">
 	<div class="card-body">
 		<div>
-			<input type="hidden" value="0" name="alistamientoId" id="alistamientoId">
+			<input type="hidden" value="0" name="ventaId" id="ventaId">
 		</div>
 		<div class="row g-3">
 			<div class="col-md-6">
 				<div class="task-header">
 					<div class="form-group">
 						<label for="date1" class="form-label">Fecha</label>
-						<input type="date" class="form-control" name="fecha" id="fecha" placeholder="Last name" aria-label="Last name" >
+						<input type="date" class="form-control" name="fecha_venta" id="fecha_venta" placeholder="Last name" aria-label="Last name" >
 					</div>
 				</div>
 			</div>

@@ -1,292 +1,187 @@
 @extends('layouts.theme.app')
 @section('content')
-
-<STYLE>
-
-.input {
-  height: 38px;
-}
-
-
+<style>
+	.input {
+		height: 38px;
+	}
 </style>
-
-<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
-<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-
 <meta name="csrf-token" content="{{ csrf_token() }}">
 <div class="row sales layout-top-spacing">
-    <div class="col-sm-7">        
-        
-        <div class="widget widget-chart-one">              
-            <div class="widget-content mt-3" >
-                
-                <div class="card">                           
-                    <div class="card-body">
-                        <form id="form-detail" >						
-                          <input type="hidden" id="saleId" name="saleId" value="{{$venta->id}}">
-                            <div class="row">
-                                                        
-                                <div class="col-md-6" >
-                                   
-                                        <select class="form-control form-control-sm "
-                                                name="producto" id="producto" required="">
-                                                <option value="">PRODUCTO</option>
-                                                @foreach($producto as $option)
-                                                    <option value="{{ $option['id'] }}" data="{{$option}}">{{ $option['name'] }}</option>
-                                                @endforeach
-                                        </select>
+	<div class="col-sm-12">
+		<div class="widget widget-chart-one">
+			<div class="row">
+				<div class="col-sm-5">
+					<h4 class="">
+						<b> Ventas </b>
+					</h4>
+				</div>
+			</div>
 
-                                </div>
-
-                                <div class="col-md-3">                                    
-                                    <div class="input-group flex-nowrap">
-                                        <input type="text" id="codproducto" name="codproducto" class="form-control input" >                                        
-                                    </div>
-                                </div>
-
-                                <div class="col-md-3">                                    
-                                    <div class="input-group flex-nowrap">
-                                        <input type="text" id="codbarras" name="codbarras" class="form-control input" >                                        
-                                    </div>
-                                </div>
-   
- 
-                            </div>
-
-                            <div class="row g-3">							
-                                <div class="col-md-5">
-                                    <label for="" class="form-label">Precio Venta</label>
-                                    <div class="input-group flex-nowrap">
-                                        <input type="text" id="precioventa" name="precioventa" class="form-control input" >
-                                        <span class="input-group-text" id="addon-wrapping">$</span>
-                                    </div>
-                                </div>
-                                <div class="col-md-5">
-                                    <label for="" class="form-label">KG requeridos</label>
-                                    <div class="input-group flex-nowrap">
-                                        <input type="text" id="kgrequeridos" name="kgrequeridos" class="form-control input" placeholder="EJ: 10,00">
-                                        <span class="input-group-text" id="addon-wrapping">KG</span>
-                                    </div>
-                                </div>
-                                <div class="col-md-2 text-center">
-                                    <div class="" style="margin-top:30px;">
-                                    <div class="d-grid gap-2">
-                                        <button id="btnAdd" class="btn btn-primary">Aceptar</button>
-                                    </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </form>
-                    </div>                            
-                </div>
-
-            </div>
-        </div>
-    
-        
-        <div class="widget widget-chart-one">
-              
-            <div class="widget-content mt-3">
-                <div class="card">
-                    <div class="card-body">
-							<div class="table-responsive mt-3">
-								<table id="tableVentasDet" class="table table-sm table-striped table-bordered">
-									<thead class="text-white" style="background: #3B3F5C">
-										<tr>
-											<!--th class="table-th text-white">Item</th>-->
-											<th class="table-th text-white">1</th>											
-											<th class="table-th text-white">2</th>
-											<th class="table-th text-white">3</th>											
-                                            <th class="table-th text-white">4</th>
-                                            <th class="table-th text-white">5</th>
-                                            <th class="table-th text-white">6</th>											
-										</tr>
-									</thead>
-									<tbody id="tbodyDetail">
-										@foreach($ventasdetalle as $proddetail)
-										<tr>
-											<td>{{$proddetail->id}}</td>											
-											<td>{{$proddetail->nameprod}}</td>
-											<td>{{ number_format($proddetail->quantity, 2, ',', '.')}} KG</td>
-											<td>${{number_format($proddetail->price, 2, ',', '.')}} </td>
-                                            <td>${{number_format($proddetail->iva, 2, ',', '.')}} </td>
-                                            <td>${{number_format($proddetail->total, 2, ',', '.')}} </td>											
-											
-										</tr>
-										@endforeach
-									</tbody>
-									<tfoot id="tabletfoot" >
-										<tr>
-											<th></th>
-											<th></th>
-											<th>Totales</th>
-											<th></th>
-											<th></th>
-											<th><div id="totalfooter"> {{number_format($arrayTotales['kgTotalventa'], 2, ',', '.')}} </div></th>											
-											
-										</tr>
-									</tfoot>
-								</table>
-							</div>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-    </div> 
-
-
-
-    <div class="col-sm-5">
-        <div class="widget widget-chart-one">
-        
-        	<div class="widget-content mt-3">
+			<div class="widget-content mt-3">
 				<div class="card">
 					<div class="card-body">
 						<div class="row g-3">
-							<div class="col-md-4">
+							<div class="col-md-3">
 								<div class="task-header">
 									<div class="form-group">
-                                        <label for="" class="form-label">Fecha de venta</label>
-										<p>{{$venta->fecha}}</p>
+										<label for="date1" class="form-label">Fecha</label>
+										<input type="date" class="form-control" name="fecha" id="fecha" placeholder="Last name" aria-label="Last name" value="{{date('Y-m-d')}}">
 									</div>
 								</div>
 							</div>
+
 							<div class="col-md-4">
 								<div class="task-header">
 									<div class="form-group">
-                                        <label for="" class="form-label">Tercero</label>										
-										<p>{{$venta->third->nam}}</p>
+										<label for="" class="form-label">Proveedor</label>
+										<p>{{$datacompensado[0]->namethird}}</p>
 									</div>
 								</div>
 							</div>
-							<div class="col-md-4">
+							<div class="col-md-3">
 								<div class="task-header">
 									<div class="form-group">
-                                        <label for="" class="form-label">Centro de costo</label>
-										<p>{{$venta->centrocosto->name}}</p>
+										<label for="" class="form-label">Centro de costo</label>
+										<p>{{$datacompensado[0]->namecentrocosto}}</p>
 									</div>
 								</div>
 							</div>
 						</div>
-                        <button class="btn btn-success" id="addShopping">Facturar</button>
 					</div>
 				</div>
-            </div>	         
-        </div>
-    </div>
-        
+			</div>
 
-</div> 
+			<div class="widget-content mt-3">
+				<div class="card">
+					<div class="card-body">
+						<form id="form-detail">
+							<input type="hidden" id="ventaId" name="ventaId" value="{{$id}}">
+							<input type="hidden" id="regdetailId" name="regdetailId" value="0">
+							<div class="row g-3">
+								<div class="col-md-4">
+									<div class="task-header">
+										<div class="form-group">
+											<label for="" class="form-label">Buscar producto</label>
+											<select class="form-control form-control-sm select2Prod" name="producto" id="producto" required="">
+												<option value="">Seleccione el producto</option>
+												@foreach ($prod as $p)
+												<option value="{{$p->id}}">{{$p->name}}</option>
+												@endforeach
+											</select>
+										</div>
+									</div>
+								</div>
+								<div class="col-md-3">
+									<label for="" class="form-label">Precio de compra</label>
+									<div class="input-group flex-nowrap">
+										<span class="input-group-text" id="addon-wrapping">$</span>
+										<input type="text" id="price" name="price" class="form-control input" placeholder="EJ: 20.500">
+									</div>
+								</div>
+								<div class="col-md-3">
+									<label for="" class="form-label">Peso KG</label>
+									<div class="input-group flex-nowrap">
+										<input type="text" id="quantity" name="quantity" class="form-control input" placeholder="EJ: 10,00">
+										<span class="input-group-text" id="addon-wrapping">KG</span>
+									</div>
+								</div>
+								<!--div class="col-md-2">
+								<div class="task-header">
+									<div class="form-group">
+                                        <label for="" class="form-label">Sub Total</label>
+                                        <input type="text" class="form-control input" placeholder="EJ: 10.00">
+									</div>
+								</div>
+							</div>-->
+								<div class="col-md-2 text-center">
+									<div class="" style="margin-top:30px;">
+										<div class="d-grid gap-2">
+											<button id="btnAdd" class="btn btn-primary">Añadir</button>
+										</div>
+									</div>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
 
+			<div class="widget-content mt-3">
+				<div class="card">
+					<div class="card-body">
+						<div class="table-responsive mt-3">
+							<table id="tableDespostere" class="table table-sm table-striped table-bordered">
+								<thead class="text-white" style="background: #3B3F5C">
+									<tr>
+										<!--th class="table-th text-white">Item</th>-->
+										<th class="table-th text-white">Fecha compra</th>
+										<th class="table-th text-white">Codigo</th>
+										<th class="table-th text-white">Productos</th>
+										<th class="table-th text-white">Precio compra</th>
+										<th class="table-th text-white">Peso KG</th>
+										<th class="table-th text-white">Sub Total</th>
+										<th class="table-th text-white">IVA $</th>
+										<th class="table-th text-white text-center">Acciones</th>
+									</tr>
+								</thead>
+								<tbody id="tbodyDetail">
+									@foreach($detail as $proddetail)
+									<tr>
+										<!--td>{{$proddetail->id}}</td-->
+										<td>{{ date('m-d-Y', strtotime($proddetail->created_at))}}</td>
+										<td>{{$proddetail->code}}</td>
+										<td>{{$proddetail->nameprod}}</td>
+										<td>$ {{ number_format($proddetail->price, 0, ',', '.')}}</td>
+										<td>{{ number_format($proddetail->quantity, 2, ',', '.')}} KG</td>
+										<td>$ {{ number_format($proddetail->total, 0, ',', '.')}}</td>
+										<td>{{$proddetail->iva}}</td>
+										<td class="text-center">
+											@if($status == 'true')
+											<button class="btn btn-dark fas fa-edit" name="btnEdit" data-id="{{$proddetail->id}}" title="Editar">
+											</button>
+											<button class="btn btn-dark fas fa-trash" name="btnDown" data-id="{{$proddetail->id}}" title="Borrar">
+											</button>
+											@else
+											<button class="btn btn-dark fas fa-edit" name="btnEdit" title="Editar" disabled>
+											</button>
+											<button class="btn btn-dark fas fa-trash" name="btnDown" title="Borrar" disabled>
+											</button>
+											@endif
+										</td>
+									</tr>
+									@endforeach
+								</tbody>
+								<tfoot id="tabletfoot">
+									<tr>
+										<th>Totales</th>
+										<td></td>
+										<td></td>
+										<td></td>
+										<th>{{number_format($arrayTotales['pesoTotalGlobal'], 2, ',', '.')}} KG</td>
+										<th>$ {{number_format($arrayTotales['totalGlobal'], 0, ',', '.')}} </th>
+										<td></td>
+										<td class="text-center">
+											<button class="btn btn-success" id="cargarInventarioBtn">Cargar al inventario</button>
+										</td>
+									</tr>
+								</tfoot>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="widget-content mt-3">
+				<div class="card">
+					<div class="card-body">
 
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</div>
+</div>
 @endsection
-
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js">
-
-
-</script> 
-
-<script>
-
-
-$(document).ready(initializeDataTable);
- function initializeDataTable() {
-	const table = new DataTable('#tableVentasDet', {
-        "bFilter": false,
-        "bLengthChange": false, 
-        "order":[[0,'DESC']] ,      
-		columns: [
-			{ title: '#' },
-			{ title: 'Producto' },
-			{ title: 'Cant Kg' },
-			{ title: 'Precio' },
-            { title: 'Iva' },
-			{ title: 'Total' },
-		],		
-	});    
-
-    
-    const token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
-
-    const send = async (dataform,ruta) => {
-        
-        let response = await fetch(ruta, {
-        headers: {
-            'X-CSRF-TOKEN': token
-        },
-        method: 'POST',
-        body: dataform
-        });
-        let data = await response.json();
-        //console.log(data);
-        return data;
-    }
-
-    const saveForm = async (url,form,token) => {
-    try {       
-        const dataform = new FormData(form);
-        let response = await fetch(url, {
-        headers: {
-            'X-CSRF-TOKEN': token
-        },
-        method: 'POST',
-        body: dataform
-        });
-        let data = await response.json();
-        return data;
-        } catch (error) {
-            console.log(error);
-        }
-        
-    }
-       
-
-    /***** GUARDAR DETALLE ******** */
-        
-    const btnAdd = document.querySelector("#btnAdd");    
-
-    btnAdd.addEventListener("click", (e) => {
-        e.preventDefault();
-        const formDetail = document.querySelector("#form-detail");       
-        
-        saveForm('/salesavedetail',formDetail,token).then((result) => {        
-            if (result.status === 1) { 
-                const totalfooter = document.querySelector("#totalfooter");                 
-                 table.row
-                .add([
-                    result.sale_id,
-                    result.product_id,                                                            
-                     result.quantity.toLocaleString('co-CO') + ' KG' ,
-                    '$' + result.price.toLocaleString('co-CO'),
-                    '$' + result.iva.toLocaleString('co-CO'),
-                    '$' + result.total.toLocaleString('co-CO')					
-                ])
-                .draw(false);  
-                totalfooter.html(result.totalsale.toLocaleString('co-CO'));                 
-                
-            }
-
-            if (result.status === 0) {
-                Swal("Error!", "Tiene campos vacios!", "error");
-            }
-        });
-    });
-
-    var producto = $("#producto");
-    producto.select2();    
-    
-    producto.on("change", (e) => {
-        e.preventDefault();
-        const formDetail2 = document.querySelector("#form-detail");       
-
-        send(formDetail2,'/getproductosv').then((result) => {   
-            alert(result.id);
-        });     
-    });
-
-    
-    
-}
-
-</script>
+@section('script')
+<script src="{{asset('rogercode/js/sale/rogercode-create.js')}}" type="module"></script>
+@endsection
