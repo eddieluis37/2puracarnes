@@ -71,7 +71,7 @@ tbodyTable.addEventListener("click", (e) => {
             regDetail.value = editReg.id;
             price.value = formatCantidadSinCero(editReg.price);
             quantity.value = formatCantidad(editReg.quantity);
-            $(".select2Prod").val(editReg.products_id).trigger("change");
+            $(".select2Prod").val(editReg.product_id).trigger("change");
         });
     }
 });
@@ -98,8 +98,7 @@ const showData = (data) => {
     showRegTbody.innerHTML = "";
     dataAll.forEach((element, indice) => {
         showRegTbody.innerHTML += `
-            <tr>
-                <td>${formatDate(element.created_at)}</td>
+            <tr>               
                 <td>${element.code}</td>
                 <td>${element.nameprod}</td>
                 <td>$ ${formatCantidadSinCero(element.price)}</td>
