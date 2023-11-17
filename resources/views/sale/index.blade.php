@@ -21,9 +21,9 @@
 						<thead class="text-white" style="background: #3B3F5C">
 							<tr>
 								<th class="table-th text-white">#</th>								
-								<th class="table-th text-white">Proveedor</th>
-								<th class="table-th text-white ">Centro de costo</th>
-								<th class="table-th text-white">Factura</th>
+								<th class="table-th text-white">CLIENTE</th>
+								<th class="table-th text-white ">CENTRO</th>
+								<th class="table-th text-white">FACTURA</th>
 								<th class="table-th text-white">Fecha</th>
 								<th class="table-th text-white text-center">Acciones</th>
 							</tr>
