@@ -402,7 +402,7 @@ class saleController extends Controller
     public function edit(Request $request)
     {
 
-        $reg = SaleDetail::where('id', $request->id)->first();
+        $reg = Sale::where('id', $request->id)->first();
         return response()->json([
             'status' => 1,
             'reg' => $reg
@@ -411,7 +411,7 @@ class saleController extends Controller
 
     public function editCompensado(Request $request)
     {
-        $reg = Sale::where('id', $request->id)->first();
+        $reg = SaleDetail::where('id', $request->id)->first();
         return response()->json([
             'status' => 1,
             'reg' => $reg
