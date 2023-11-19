@@ -46,10 +46,10 @@ function actualizarValoresProducto(productId) {
         type: "GET",
         data: {
             productId: productId,
-            centrocostoOrigen: $("#centrocosto").val(), // Obtén el valor del campo centrocostoOrigen
+            centrocosto: $("#centrocosto").val(), // Obtén el valor del campo centrocosto
         },
         success: function (response) {
-            // Actualiza los valores en los campos de entrada del centro de costo origen
+            // Actualiza los valores en los campos de entrada del centro de costo
             $("#stockOrigen").val(response.stock);
             $("#pesoKgOrigen").val(response.fisico);
         },
