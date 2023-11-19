@@ -76,7 +76,7 @@
 									<label for="" class="form-label">Precio venta</label>
 									<div class="input-group flex-nowrap">
 										<span class="input-group-text" id="addon-wrapping">$</span>
-										<input type="text" id="price" name="price" class="form-control input" placeholder="EJ: 20.500">
+										<input type="text" id="price" name="price" class="form-control input" readonly placeholder="EJ: 20.500">
 									</div>
 								</div>
 								<div class="col-md-3">
