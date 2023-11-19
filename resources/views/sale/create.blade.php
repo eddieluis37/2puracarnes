@@ -156,7 +156,7 @@
 										<td></td>
 										<td></td>
 										<td class="text-center">
-											<button class="btn btn-success" id="cargarInventarioBtn">Cargar al inventario</button>
+											<button class="btn btn-success" id="cargarInventarioBtn">Facturar</button>
 										</td>
 									</tr>
 								</tfoot>

@@ -480,15 +480,15 @@ class saleController extends Controller
 
     public function obtenerPreciosProducto(Request $request)
     {
-        $centrocostoOrigenId = $request->input('centrocosto');
-        $producto = DB::table('centro_costo_products')
-            ->where('products_id', $request->productId)
-            ->where('centrocosto_id', $centrocostoOrigenId)
+        $centrocostoId = $request->input('centrocosto');
+        $producto = DB::table('listapreciodetalles')
+            ->where('product_id', $request->productId)
+            ->where('listaprecio_id', $centrocostoId)
             ->first();
         if ($producto) {
             return response()->json([
-                'stock' => $producto->stock,
-                'fisico' => $producto->fisico
+                'precio' => $producto->precio,
+                'iva' => $producto->iva
             ]);
         } else {
             // En caso de que el producto no sea encontrado

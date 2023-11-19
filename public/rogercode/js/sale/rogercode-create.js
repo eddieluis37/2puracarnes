@@ -50,7 +50,7 @@ function actualizarValoresProducto(productId) {
         },
         success: function (response) {
             // Actualiza los valores en los campos de entrada del centro de costo
-            $("#stockOrigen").val(response.stock);
+            $("#price").val(response.precio);
             $("#pesoKgOrigen").val(response.fisico);
         },
         error: function (xhr, status, error) {
@@ -158,7 +158,7 @@ const showData = (data) => {
             <td></td>
             <td></td>
             <td class="text-center">
-            <button id="cargarInventarioBtn" class="btn btn-success btn-sm">inventario</button>
+            <button id="cargarInventarioBtn" class="btn btn-success btn-sm">Facturar</button>
             </td>
         </tr>
     `;
@@ -166,7 +166,7 @@ const showData = (data) => {
     function showConfirmationAlert(element) {
         return swal.fire({
             title: "CONFIRMAR",
-            text: "Estas seguro que desea cargar el inventario ?",
+            text: "Estas seguro que desea facturar ?",
             icon: "warning",
             showDenyButton: true,
             showCancelButton: true,
@@ -175,7 +175,7 @@ const showData = (data) => {
         });
     }
 
-    // Evento click del botón "cargarInventarioBtn"
+    // Evento click del botón "facturarBtn"
     tableFoot.addEventListener("click", (e) => {
         e.preventDefault();
         let element = e.target;
