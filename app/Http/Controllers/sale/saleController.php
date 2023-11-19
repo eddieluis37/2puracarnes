@@ -37,7 +37,7 @@ class saleController extends Controller
         $vendedores = Third::Where('vendedor', 1)->get();
         $domiciliarios = Third::Where('domiciliario', 1)->get();
 
-        return view('sale.index',compact('centros','clientes','vendedores','domiciliarios','ventas'));
+        return view('sale.index', compact('centros', 'clientes', 'vendedores', 'domiciliarios', 'ventas'));
     }
 
     /**
@@ -45,69 +45,69 @@ class saleController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-     
-     public function create($id)
-     {
-         //$category = Category::WhereIn('id',[1,2,3])->get();
-         //$providers = Third::Where('status',1)->get();
-         //$centros = Centrocosto::Where('status',1)->get();
-         $datacompensado = DB::table('sales as sa')
-             /*    ->join('categories as cat', 'sa.categoria_id', '=', 'cat.id') */
-             ->join('thirds as tird', 'sa.third_id', '=', 'tird.id')
-             ->join('centro_costo as centro', 'sa.centrocosto_id', '=', 'centro.id')
-             ->select('sa.*', 'tird.name as namethird', 'centro.name as namecentrocosto',)
-             ->where('sa.id', $id)
-             ->get();
- 
-         $prod = Product::Where([
-             /*  ['category_id',$datacompensado[0]->categoria_id], */
-             ['status', 1]
-         ])
-             ->orderBy('category_id', 'asc')
-             ->orderBy('name', 'asc')
-             ->get();
- 
-         /**************************************** */
-         $status = '';
-         $fechaCompensadoCierre = Carbon::parse($datacompensado[0]->fecha_cierre);
-         $date = Carbon::now();
-         $currentDate = Carbon::parse($date->format('Y-m-d'));
-         if ($currentDate->gt($fechaCompensadoCierre)) {
-             //'Date 1 is greater than Date 2';
-             $status = 'false';
-         } elseif ($currentDate->lt($fechaCompensadoCierre)) {
-             //'Date 1 is less than Date 2';
-             $status = 'true';
-         } else {
-             //'Date 1 and Date 2 are equal';
-             $status = 'false';
-         }
-         /**************************************** */
- 
-         $detail = $this->getcompensadoresdetail($id);
- 
-         $arrayTotales = $this->sumTotales($id);
-         //dd($arrayTotales);
-         return view('sale.create', compact('datacompensado', 'prod', 'id', 'detail', 'arrayTotales', 'status'));
-     }
 
-     public function getventasdetalle($ventaId, $centrocostoId)
-     {
-         $detail = DB::table('sale_details as dv')
-             ->join('products as pro', 'dv.product_id', '=', 'pro.id')
-             ->join('centro_costo_products as ce', 'pro.id', '=', 'ce.products_id')
-             ->select('dv.*', 'pro.name as nameprod', 'pro.code',  'ce.fisico')
-             ->selectRaw('ce.invinicial + ce.compraLote + ce.alistamiento +
+    public function create($id)
+    {
+        //$category = Category::WhereIn('id',[1,2,3])->get();
+        //$providers = Third::Where('status',1)->get();
+        //$centros = Centrocosto::Where('status',1)->get();
+        $datacompensado = DB::table('sales as sa')
+            /*    ->join('categories as cat', 'sa.categoria_id', '=', 'cat.id') */
+            ->join('thirds as tird', 'sa.third_id', '=', 'tird.id')
+            ->join('centro_costo as centro', 'sa.centrocosto_id', '=', 'centro.id')
+            ->select('sa.*', 'tird.name as namethird', 'centro.name as namecentrocosto',)
+            ->where('sa.id', $id)
+            ->get();
+
+        $prod = Product::Where([
+            /*  ['category_id',$datacompensado[0]->categoria_id], */
+            ['status', 1]
+        ])
+            ->orderBy('category_id', 'asc')
+            ->orderBy('name', 'asc')
+            ->get();
+
+        /**************************************** */
+        $status = '';
+        $fechaCompensadoCierre = Carbon::parse($datacompensado[0]->fecha_cierre);
+        $date = Carbon::now();
+        $currentDate = Carbon::parse($date->format('Y-m-d'));
+        if ($currentDate->gt($fechaCompensadoCierre)) {
+            //'Date 1 is greater than Date 2';
+            $status = 'false';
+        } elseif ($currentDate->lt($fechaCompensadoCierre)) {
+            //'Date 1 is less than Date 2';
+            $status = 'true';
+        } else {
+            //'Date 1 and Date 2 are equal';
+            $status = 'false';
+        }
+        /**************************************** */
+
+        $detail = $this->getcompensadoresdetail($id);
+
+        $arrayTotales = $this->sumTotales($id);
+        //dd($arrayTotales);
+        return view('sale.create', compact('datacompensado', 'prod', 'id', 'detail', 'arrayTotales', 'status'));
+    }
+
+    public function getventasdetalle($ventaId, $centrocostoId)
+    {
+        $detail = DB::table('sale_details as dv')
+            ->join('products as pro', 'dv.product_id', '=', 'pro.id')
+            ->join('centro_costo_products as ce', 'pro.id', '=', 'ce.products_id')
+            ->select('dv.*', 'pro.name as nameprod', 'pro.code',  'ce.fisico')
+            ->selectRaw('ce.invinicial + ce.compraLote + ce.alistamiento +
              ce.compensados + ce.trasladoing - (ce.venta + ce.trasladosal) stock')
-             ->where([
-                 ['ce.centrocosto_id', $centrocostoId],                
-                 ['dv.sale_id', $ventaId],                
-             ])->orderBy('dv.id','DESC')->get();
- 
-         return $detail;
-     }
- 
- 
+            ->where([
+                ['ce.centrocosto_id', $centrocostoId],
+                ['dv.sale_id', $ventaId],
+            ])->orderBy('dv.id', 'DESC')->get();
+
+        return $detail;
+    }
+
+
 
     public function getcompensadoresdetail($ventaId)
     {
@@ -117,7 +117,7 @@ class saleController extends Controller
             ->select('de.*', 'pro.name as nameprod', 'pro.code')
             ->where([
                 ['de.sale_id', $ventaId],
-              /*   ['de.status', 1] */
+                /*   ['de.status', 1] */
             ])->get();
 
         return $detail;
@@ -159,13 +159,13 @@ class saleController extends Controller
 
             $formatCantidad = new metodosrogercodeController();
             //$yourController->yourFunction($request);
-           
+
             $formatPcompra = $formatCantidad->MoneyToNumber($request->price);
             $formatPesoKg = $formatCantidad->MoneyToNumber($request->quantity);
             $subtotal = $formatPcompra * $formatPesoKg;
 
-            $total = $request->kgrequeridos * $request->precioventa; 
-            $preciov = $request->precioventa * 1.0; 
+            $total = $request->kgrequeridos * $request->precioventa;
+            $preciov = $request->precioventa * 1.0;
 
             $getReg = SaleDetail::firstWhere('id', $request->regdetailId);
 
@@ -177,9 +177,9 @@ class saleController extends Controller
                 $detail->price = $formatPcompra;
                 $detail->quantity = $request->quantity;
                 $detail->porciva = 0;
-                $detail->iva = 0;            
-                $detail->total = $subtotal ;
-               
+                $detail->iva = 0;
+                $detail->total = $subtotal;
+
                 $detail->save();
             } else {
                 $updateReg = SaleDetail::firstWhere('id', $request->regdetailId);
@@ -245,7 +245,7 @@ class saleController extends Controller
                 'ventaId' => 'required',
                 'vendedor' => 'required',
                 'centrocosto' => 'required',
-             
+
             ];
             $messages = [
                 'ventaId.required' => 'El ventaId es requerido',
@@ -271,7 +271,7 @@ class saleController extends Controller
                 $dateNextMonday = $current_date->format('Y-m-d'); // Output the date in Y-m-d format
 
                 $id_user = Auth::user()->id;
-            //    $idcc = $request->centrocosto;
+                //    $idcc = $request->centrocosto;
 
                 $venta = new Sale();
                 $venta->user_id = $id_user;
@@ -279,7 +279,7 @@ class saleController extends Controller
                 $venta->third_id = $request->cliente;
                 $venta->vendedor_id = $request->vendedor;
                 $venta->domiciliario_id = $request->domiciliario;
-              
+
                 $venta->fecha_venta = $currentDateFormat;
                 $venta->fecha_cierre = $dateNextMonday;
 
@@ -287,8 +287,8 @@ class saleController extends Controller
                 $venta->items = 0;
                 $venta->cash = 0;
                 $venta->change = 0;
-       
-               
+
+
                 $venta->save();
                 return response()->json([
                     'status' => 1,
@@ -478,6 +478,26 @@ class saleController extends Controller
         }
     }
 
+    public function obtenerPreciosProducto(Request $request)
+    {
+        $centrocostoOrigenId = $request->input('centrocosto');
+        $producto = DB::table('centro_costo_products')
+            ->where('products_id', $request->productId)
+            ->where('centrocosto_id', $centrocostoOrigenId)
+            ->first();
+        if ($producto) {
+            return response()->json([
+                'stock' => $producto->stock,
+                'fisico' => $producto->fisico
+            ]);
+        } else {
+            // En caso de que el producto no sea encontrado
+            return response()->json([
+                'error' => 'Product not found'
+            ], 404);
+        }
+    }
+
 
     public function cargarInventariocr(Request $request)
     {
@@ -532,11 +552,10 @@ class saleController extends Controller
 
             // Sumar el valor de accumulatedWeight al campo compensados
             $centroCostoProduct->compensados += $accumulatedWeight->accumulated_weight;
-            $centroCostoProduct->save();            
-            
+            $centroCostoProduct->save();
+
             // Limpiar la tabla temporary_accumulatedWeights
             DB::table('temporary_accumulatedWeights')->truncate();
-
         }
 
         return response()->json([

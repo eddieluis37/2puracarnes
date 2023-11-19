@@ -62,6 +62,7 @@
 									<div class="task-header">
 										<div class="form-group">
 											<label for="" class="form-label">Buscar producto</label>
+											<input type="hidden" id="centrocosto" name="centrocosto" value="{{$datacompensado[0]->centrocosto_id}}" data-id="{{$datacompensado[0]->centrocosto_id}}">
 											<select class="form-control form-control-sm select2Prod" name="producto" id="producto" required="">
 												<option value="">Seleccione el producto</option>
 												@foreach ($prod as $p)
@@ -72,7 +73,7 @@
 									</div>
 								</div>
 								<div class="col-md-3">
-									<label for="" class="form-label">Precio de compra</label>
+									<label for="" class="form-label">Precio venta</label>
 									<div class="input-group flex-nowrap">
 										<span class="input-group-text" id="addon-wrapping">$</span>
 										<input type="text" id="price" name="price" class="form-control input" placeholder="EJ: 20.500">

@@ -20,7 +20,10 @@ const quantity = document.querySelector("#quantity");
 const price = document.querySelector("#price");
 const regDetail = document.querySelector("#regdetailId");
 const tableFoot = document.querySelector("#tabletfoot");
-const cargarInventarioBtn = document.getElementById('cargarInventarioBtn');
+const cargarInventarioBtn = document.getElementById("cargarInventarioBtn");
+
+var centrocosto = document.getElementById("centrocosto").value;
+console.log('centro ' + centrocosto);
 
 $(".select2Prod").select2({
     placeholder: "Busca un producto",
@@ -28,6 +31,34 @@ $(".select2Prod").select2({
     theme: "bootstrap-5",
     allowClear: true,
 });
+
+$(document).ready(function () {
+    $("#producto").change(function () {
+        var productId = $(this).val();
+        // Llama a una función para actualizar los valores en función del producto seleccionado
+        actualizarValoresProducto(productId);        
+    });
+});
+
+function actualizarValoresProducto(productId) {
+    $.ajax({
+        url: "/obtener-precios-producto", // Reemplaza con tu ruta o URL para obtener los valores del producto
+        type: "GET",
+        data: {
+            productId: productId,
+            centrocostoOrigen: $("#centrocosto").val(), // Obtén el valor del campo centrocostoOrigen
+        },
+        success: function (response) {
+            // Actualiza los valores en los campos de entrada del centro de costo origen
+            $("#stockOrigen").val(response.stock);
+            $("#pesoKgOrigen").val(response.fisico);
+        },
+        error: function (xhr, status, error) {
+            // Maneja el error si la solicitud AJAX falla
+            console.log(error);
+        },
+    });
+}
 
 tbodyTable.addEventListener("click", (e) => {
     e.preventDefault();
@@ -142,7 +173,7 @@ const showData = (data) => {
             confirmButtonText: "Aceptar",
             denyButtonText: `Cancelar`,
         });
-    } 
+    }
 
     // Evento click del botón "cargarInventarioBtn"
     tableFoot.addEventListener("click", (e) => {
@@ -155,10 +186,7 @@ const showData = (data) => {
                     if (result && result.value) {
                         loadingStart(element);
                         const dataform = new FormData();
-                        dataform.append(
-                            "ventaId",
-                            Number(venta_id.value)
-                        );
+                        dataform.append("ventaId", Number(venta_id.value));
                         return sendData("/compensadoInvres", dataform, token);
                     }
                 })

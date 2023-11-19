@@ -358,6 +358,8 @@ Route::group(['middleware' => [('auth')]], function () {
     Route::post('salesavedetail', [saleController::class, 'savedetail'])->name('sale.savedetail');
     Route::post('saleById', [saleController::class, 'editCompensado'])->name('sale.editCompensado');
 
+    Route::get('/obtener-precios-producto', [saleController::class, 'obtenerPreciosProducto'])->name('sale.obtener-precios-producto');
+
     /*****************************LISTA_DE_PRECIO******************************************/
 
     Route::get('lista_de_precio', [listaPrecioController::class, 'index'])->name('lista_de_precio.index');
