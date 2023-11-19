@@ -357,6 +357,8 @@ Route::group(['middleware' => [('auth')]], function () {
     Route::post('ventasave', [saleController::class, 'store'])->name('sale.save');
     Route::post('salesavedetail', [saleController::class, 'savedetail'])->name('sale.savedetail');
     Route::post('saleById', [saleController::class, 'editCompensado'])->name('sale.editCompensado');
+    Route::post('ventadown', [saleController::class, 'destroy'])->name('sale.down');
+    Route::post('/destroyVenta', [saleController::class, 'destroyVenta'])->name('sale.destroyVenta');
 
     Route::get('/obtener-precios-producto', [saleController::class, 'obtenerPreciosProducto'])->name('sale.obtener-precios-producto');
 

@@ -354,10 +354,10 @@ class saleController extends Controller
 					    <a href="sale/create/' . $data->id . '" class="btn btn-dark" title="Detalles" >
 						    <i class="fas fa-directions"></i>
 					    </a>
-					    <button class="btn btn-dark" title="Borrar Compensado" onclick="showDataForm(' . $data->id . ')">
+					    <button class="btn btn-dark" title="Borrar venta" onclick="showDataForm(' . $data->id . ')">
 						    <i class="fas fa-eye"></i>
 					    </button>
-					    <button class="btn btn-dark" title="Borrar Compensado" disabled>
+					    <button class="btn btn-dark" title="Borrar venta" disabled>
 						    <i class="fas fa-trash"></i>
 					    </button>
                         </div>
@@ -439,7 +439,7 @@ class saleController extends Controller
     public function destroy(Request $request)
     {
         try {
-            $compe = Compensadores_detail::where('id', $request->id)->first();
+            $compe = SaleDetail::where('id', $request->id)->first();
             $compe->status = 0;
             $compe->save();
 
@@ -459,7 +459,7 @@ class saleController extends Controller
         }
     }
 
-    public function destroyCompensado(Request $request)
+    public function destroyVenta(Request $request)
     {
         try {
             $compe = Sale::where('id', $request->id)->first();
