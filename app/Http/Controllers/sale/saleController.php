@@ -19,8 +19,7 @@ use App\Http\Controllers\metodosgenerales\metodosrogercodeController;
 use App\Models\Centro_costo_product;
 use App\Models\Sale;
 use App\Models\SaleDetail;
-
-
+use App\Models\Subcentrocosto;
 
 class saleController extends Controller
 {
@@ -36,8 +35,10 @@ class saleController extends Controller
         $clientes = Third::Where('cliente', 1)->get();
         $vendedores = Third::Where('vendedor', 1)->get();
         $domiciliarios = Third::Where('domiciliario', 1)->get();
+        $subcentrodecostos = Subcentrocosto::get();
 
-        return view('sale.index', compact('centros', 'clientes', 'vendedores', 'domiciliarios', 'ventas'));
+
+        return view('sale.index', compact('centros', 'clientes', 'vendedores', 'domiciliarios', 'ventas', 'subcentrodecostos'));
     }
 
     /**
@@ -279,6 +280,7 @@ class saleController extends Controller
                 $venta->third_id = $request->cliente;
                 $venta->vendedor_id = $request->vendedor;
                 $venta->domiciliario_id = $request->domiciliario;
+                $venta->subcentrocostos_id = $request->subcentrodecosto;
 
                 $venta->fecha_venta = $currentDateFormat;
                 $venta->fecha_cierre = $dateNextMonday;
@@ -299,6 +301,7 @@ class saleController extends Controller
                 $getReg = Sale::firstWhere('id', $request->ventaId);
                 $getReg->third_id = $request->vendedor;
                 $getReg->centrocosto_id = $request->centrocosto;
+                $getReg->subcentrocostos_id = $request->subcentrodecosto;
                 $getReg->factura = $request->factura;
                 $getReg->save();
 
