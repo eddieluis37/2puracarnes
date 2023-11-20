@@ -18,6 +18,7 @@ class CreateFormapagosTable extends Migration
             $table->string('codigo')->unique();
             $table->string('nombre');
             $table->string('tipoformapago');
+            $table->integer('diascredito')->nullable();
             $table->string('cuenta');
             $table->timestamps();
         });

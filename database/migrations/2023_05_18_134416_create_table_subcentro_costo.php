@@ -13,7 +13,7 @@ class CreateTableSubcentroCosto extends Migration
      */
     public function up()
     {
-        Schema::create('subcentro_costo', function (Blueprint $table) {
+        Schema::create('subcentrocostos', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('centrocosto_id')->nullable();
             $table->foreign('centrocosto_id')->references('id')->on('centro_costo');

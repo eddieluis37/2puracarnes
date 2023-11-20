@@ -5,9 +5,9 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Saleformapago extends Model
+class Subcentrocosto extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['codigo','nombre','tipoformapago','diascredito','cuenta'];
+    protected $fillable = ['centrocosto_id','name','status'];
 }

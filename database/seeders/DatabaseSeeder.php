@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Levels_products;
+use App\Models\Subcentrocosto;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -38,11 +39,14 @@ class DatabaseSeeder extends Seeder
     $this->call(CentrocostoSeeder::class);    
       $this->call(BeneficioreSeeder::class);
     $this->call(Centro_costo_productSeeder::class);
+ 
     $this->call(Nicho_mercadoSeeder::class);
    // $this->call(Nicho_mercado_centro_costo_productSeeder::class);
     $this->call(Nicho_mercado_productSeeder::class);
     $this->call(FormapagoSeeder::class);
     $this->call(ParametrocontableSeeder::class);
+    $this->call(SubcentrocostoSeeder::class);
+  // $this->call(SaleFormaPagosSeederSeeder::class);
  //   $this->call(ListaprecioSeeder::class);
  //   $this->call(ListapreciodetalleSeeder::class);
   }

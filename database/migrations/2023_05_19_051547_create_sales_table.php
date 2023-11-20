@@ -26,10 +26,13 @@ class CreateSalesTable extends Migration
             $table->foreign('vendedor_id')->references('id')->on('thirds'); 
             
             $table->unsignedBigInteger('domiciliario_id')->nullable();           
-            $table->foreign('domiciliario_id')->references('id')->on('thirds'); 
-            
+            $table->foreign('domiciliario_id')->references('id')->on('thirds');                   
+                 
             $table->unsignedBigInteger('centrocosto_id')->nullable();
-            $table->foreign('centrocosto_id')->references('id')->on('centro_costo');      
+            $table->foreign('centrocosto_id')->references('id')->on('centro_costo'); 
+
+            $table->unsignedBigInteger('subcentrocostos_id')->nullable();
+            $table->foreign('subcentrocostos_id')->references('id')->on('subcentrocostos');
 
             $table->decimal('total',10,2);
             $table->decimal('items',10,2);
