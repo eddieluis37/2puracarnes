@@ -350,7 +350,7 @@ Route::group(['middleware' => [('auth')]], function () {
     Route::post('getproductosv', [SaleController::class, 'getproducts'])->name('sale.getproductos');
     //Route::post('salesavedetail', [SaleController::class, 'savedetail'])->name('sale.savedetail');
 
-    Route::get('sale/registrar_pago/{id}', [SaleController::class, 'create_reg_pago'])->name('sale.registrar_pago');
+    
 
     Route::get('sales', [saleController::class, 'index'])->name('sale.index');
     Route::get('showlistVentas', [saleController::class, 'show'])->name('sale.showlistVentas');
@@ -361,7 +361,7 @@ Route::group(['middleware' => [('auth')]], function () {
     Route::post('/destroyVenta', [saleController::class, 'destroyVenta'])->name('sale.destroyVenta');
 
     Route::get('/obtener-precios-producto', [saleController::class, 'obtenerPreciosProducto'])->name('sale.obtener-precios-producto');
-
+    Route::get('sale/create/registrar_pago/{id}', [saleController::class, 'create_reg_pago'])->name('sale.registrar_pago');
     /*****************************LISTA_DE_PRECIO******************************************/
 
     Route::get('lista_de_precio', [listaPrecioController::class, 'index'])->name('lista_de_precio.index');

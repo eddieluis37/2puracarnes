@@ -92,6 +92,29 @@ class saleController extends Controller
         return view('sale.create', compact('datacompensado', 'prod', 'id', 'detail', 'arrayTotales', 'status'));
     }
 
+    public function create_reg_pago($id)
+    {
+        $venta = Sale::find($id);
+        $producto = Product::get();
+        $ventasdetalle = $this->getventasdetalle($id, $venta->centrocosto_id);
+        $arrayTotales = $this->sumTotales($id);
+
+
+        return view('sale.registrar_pago', compact('venta', 'ventasdetalle', 'arrayTotales', 'producto'));
+    }
+
+    public function sumTotales($id)
+    {
+
+        $kgTotalventa = (float)SaleDetail::Where([['sale_id', $id]])->sum('total');
+
+        $array = [
+            'kgTotalventa' => $kgTotalventa,
+        ];
+
+        return $array;
+    }
+
     public function getventasdetalle($ventaId, $centrocostoId)
     {
         $detail = DB::table('sale_details as dv')
@@ -211,27 +234,7 @@ class saleController extends Controller
     }
 
 
-    public function sumTotales($id)
-    {
 
-        //$TotalDesposte = (float)Compensadores_detail::Where([['compensadores_id',$id],['status',1]])->sum('porcdesposte');
-        //$TotalVenta = (float)Compensadores_detail::Where([['compensadores_id',$id],['status',1]])->sum('totalventa');
-        //$porcVentaTotal = (float)Compensadores_detail::Where([['compensadores_id',$id],['status',1]])->sum('porcventa');
-        $pesoTotalGlobal = (float)Compensadores_detail::Where([['compensadores_id', $id], ['status', 1]])->sum('peso');
-        $totalGlobal = (float)Compensadores_detail::Where([['compensadores_id', $id], ['status', 1]])->sum('subtotal');
-        //$costoKiloTotal = number_format($costoTotalGlobal / $pesoTotalGlobal, 2, ',', '.');
-
-        $array = [
-            //'TotalDesposte' => $TotalDesposte,
-            //'TotalVenta' => $TotalVenta,
-            //'porcVentaTotal' => $porcVentaTotal,
-            'pesoTotalGlobal' => $pesoTotalGlobal,
-            'totalGlobal' => $totalGlobal,
-            //'costoKiloTotal' => $costoKiloTotal,
-        ];
-
-        return $array;
-    }
     /**
      * Store a newly created resource in storage.
      *

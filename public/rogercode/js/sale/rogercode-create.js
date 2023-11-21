@@ -158,7 +158,7 @@ const showData = (data) => {
             <td></td>
             <td></td>
             <td class="text-center">
-            <button id="cargarInventarioBtn" class="btn btn-success btn-sm">Facturar</button>
+            <button id="cargarInventarioBtn" class="btn btn-success btn-sm">Pagar</button>
             </td>
         </tr>
     `;
