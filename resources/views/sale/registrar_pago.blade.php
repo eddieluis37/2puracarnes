@@ -28,72 +28,150 @@
     <div class="col-sm-7">
 
         <div class="widget widget-chart-one">
-        <div class="card text-center" style="background: #3B3F5C">
+            <div class="card text-center" style="background: #3B3F5C">
                 <div class="m-2">
                     <h4 style="color:white;"><strong>Registrar </s>pagos</strong></h3>
                 </div>
             </div>
             <div class="widget-content mt-3">
-
                 <div class="card">
                     <div class="card-body">
                         <form id="form-detail">
                             <input type="hidden" id="saleId" name="saleId" value="{{$venta->id}}">
-                            <div class="row">
-
-                                <div class="col-md-6">
-
-                                    <select class="form-control form-control-sm " name="producto" id="producto" required="">
-                                        <option value="">PRODUCTO</option>
-                                        @foreach($producto as $option)
-                                        <option value="{{ $option['id'] }}" data="{{$option}}">{{ $option['name'] }}</option>
-                                        @endforeach
-                                    </select>
-
+                            <div class="col-md-8">
+                                <label for="" class="form-label">Valor a pagar en efectivo</label>
+                                <div class="input-group flex-nowrap">
+                                    <span class="input-group-text" id="addon-wrapping">$</span>
+                                    <input class="form-control form-control-sm" type="text" name="valor_pagado" id="valor_pagado" required="">
                                 </div>
-
-                                <div class="col-md-3">
-                                    <div class="input-group flex-nowrap">
-                                        <input type="text" id="codproducto" name="codproducto" class="form-control input">
-                                    </div>
-                                </div>
-
-                                <div class="col-md-3">
-                                    <div class="input-group flex-nowrap">
-                                        <input type="text" id="codbarras" name="codbarras" class="form-control input">
-                                    </div>
-                                </div>
-
-
-                            </div>
-
-                            <div class="row g-3">
-                                <div class="col-md-5">
-                                    <label for="" class="form-label">Precio Venta</label>
-                                    <div class="input-group flex-nowrap">
-                                        <input type="text" id="precioventa" name="precioventa" class="form-control input">
-                                        <span class="input-group-text" id="addon-wrapping">$</span>
-                                    </div>
-                                </div>
-                                <div class="col-md-5">
-                                    <label for="" class="form-label">KG requeridos</label>
-                                    <div class="input-group flex-nowrap">
-                                        <input type="text" id="kgrequeridos" name="kgrequeridos" class="form-control input" placeholder="EJ: 10,00">
-                                        <span class="input-group-text" id="addon-wrapping">KG</span>
-                                    </div>
-                                </div>
-                                <div class="col-md-2 text-center">
-                                    <div class="" style="margin-top:30px;">
-                                        <div class="d-grid gap-2">
-                                            <button id="btnAdd" class="btn btn-primary">Aceptar</button>
-                                        </div>
-                                    </div>
+                                <div><br></div>
+                                <div>
+                                    <label for="" class="form-label">Valores sugeridos</label>
+                                    <div><br></div>
+                                    <button type="button" class="btn btn-primary" onclick="sugerirValor(10000)">10.000</button>
+                                    <button type="button" class="btn btn-primary" onclick="sugerirValor(20000)">20.000</button>
+                                    <button type="button" class="btn btn-primary" onclick="sugerirValor(50000)">50.000</button>
+                                    <button type="button" class="btn btn-primary" onclick="sugerirValor(100000)">100.000</button>
                                 </div>
                             </div>
-                        </form>
+
                     </div>
-                </div>
+                    <div class="row g-3">
+                        <div class="col-md-5">
 
+                        </div>
+                        <div class="col-md-5">
+
+                        </div>
+                        
+                    </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="widget-content mt-3">
+            <div class="card">
+                <div class="card-body">
+                    <form id="form-detail">
+                        <input type="hidden" id="saleId" name="saleId" value="{{$venta->id}}">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <label for="" class="form-label">Tarjetas</label>
+                                <select class="form-control form-control-sm select2Prod" name="producto" id="producto" required="">
+                                    <option value="">Seleccione</option>
+                                    <option value="credito">CREDITO</option>
+                                    <option value="debito">DEBITO</option>
+                                </select>
+                            </div>
+                            <div class="col-md-4">
+                                <label for="" class="form-label">Número de Verificación</label>
+                                <div class="input-group flex-nowrap">
+                                    <span class="input-group-text" id="addon-wrapping">N°</span>
+                                    <input type="text" id="price" name="price" class="form-control input" placeholder="EJ: 369">
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <label for="" class="form-label">Valor</label>
+                                <div class="input-group flex-nowrap">
+                                    <span class="input-group-text" id="addon-wrapping">$</span>
+                                    <input type="text" id="price" name="price" class="form-control input" placeholder="EJ: 20.500">
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="widget-content mt-3">
+            <div class="card">
+                <div class="card-body">
+                    <form id="form-detail">
+                        <input type="hidden" id="saleId" name="saleId" value="{{$venta->id}}">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <label for="" class="form-label">Otros</label>
+                                <select class="form-control form-control-sm select2Prod" name="producto" id="producto" required="">
+                                    <option value="">Seleccione</option>
+                                    <option value="WOMPI">WOMPI</option>
+                                    <option value="NEQUI">NEQUI</option>
+                                </select>
+                            </div>
+                            <div class="col-md-4">
+                                <label for="" class="form-label">Número de transacción</label>
+                                <div class="input-group flex-nowrap">
+                                    <span class="input-group-text" id="addon-wrapping">N°</span>
+                                    <input type="text" id="price" name="price" class="form-control input" placeholder="EJ: 369">
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <label for="" class="form-label">Valor</label>
+                                <div class="input-group flex-nowrap">
+                                    <span class="input-group-text" id="addon-wrapping">$</span>
+                                    <input type="text" id="price" name="price" class="form-control input" placeholder="EJ: 20.500">
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="widget-content mt-3">
+            <div class="card">
+                <div class="card-body">
+                    <form id="form-detail">
+                        <input type="hidden" id="saleId" name="saleId" value="{{$venta->id}}">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <label for="" class="form-label">Credito</label>
+                                <select class="form-control form-control-sm select2Prod" name="producto" id="producto" required="">
+                                    <option value="">Seleccione</option>
+                                    <option value="0">0</option>
+                                    <option value="8">8</option>                                  
+                                    <option value="15">15</option>
+                                    <option value="20">20</option>
+                                    <option value="30">30</option>
+                                    <option value="45">45</option>
+                                </select>
+                            </div>
+                            <div class="col-md-4">
+                                <label for="" class="form-label">Número de credito</label>
+                                <div class="input-group flex-nowrap">
+                                    <span class="input-group-text" id="addon-wrapping">N°</span>
+                                    <input type="text" id="price" name="price" class="form-control input" placeholder="EJ: 369">
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <label for="" class="form-label">Valor</label>
+                                <div class="input-group flex-nowrap">
+                                    <span class="input-group-text" id="addon-wrapping">$</span>
+                                    <input type="text" id="price" name="price" class="form-control input" placeholder="EJ: 20.500">
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
 
@@ -155,7 +233,7 @@
 
     <div class="col-sm-5">
         <div class="widget widget-chart-one">
-        <div class="card text-center" style="background: #3B3F5C">
+            <div class="card text-center" style="background: #3B3F5C">
                 <div class="m-2">
                     <h4 style="color:white;"><strong>Registrar </s>pagos</strong></h3>
                 </div>
@@ -176,7 +254,7 @@
                                 <div class="task-header">
                                     <div class="form-group">
                                         <label for="" class="form-label">Tercero</label>
-                                        <p>{{$venta->third->nam}}</p>
+                                        <p>{{$venta->third->name}}</p>
                                     </div>
                                 </div>
                             </div>
@@ -295,6 +373,6 @@
 </div>
 @endsection
 @section('script')
-<script src="{{asset('code/js/asignarpreciosprod/code-app-index.js')}}"></script>
+<script src="{{asset('rogercode/js/sale/code-app-index.js')}}"></script>
 
 @endsection
