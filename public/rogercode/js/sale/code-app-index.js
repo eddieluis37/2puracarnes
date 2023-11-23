@@ -1,4 +1,6 @@
 console.log("Comenzando");
+
+const valor_a_pagar_efectivo = document.querySelector("#valor_a_pagar_efectivo");
 const token = document.querySelector('meta[name="csrf-token"]').getAttribute("content");
 $(document).ready(function () {
     var dataTable;
@@ -152,5 +154,17 @@ $(document).ready(function () {
 });
 
 function sugerirValor(valor) {
-    document.getElementById("valor_pagado").value = valor;
+    document.getElementById("valor_a_pagar_efectivo").value = valor;
 }
+
+valor_a_pagar_efectivo.addEventListener("change", function () {
+    const enteredValue = formatMoneyNumber(valor_a_pagar_efectivo.value);
+    console.log("Entered value: " + enteredValue);
+    valor_a_pagar_efectivo.value = formatCantidadSinCero(enteredValue);
+});
+
+valor_a_pagar_tarjeta.addEventListener("change", function () {
+    const enteredValue = formatMoneyNumber(valor_a_pagar_tarjeta.value);
+    console.log("Entered value: " + enteredValue);
+    valor_a_pagar_tarjeta.value = formatCantidadSinCero(enteredValue);
+});
