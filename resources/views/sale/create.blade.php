@@ -46,6 +46,14 @@
 									</div>
 								</div>
 							</div>
+							<div class="col-md-2">
+								<div class="task-header">
+									<div class="form-group">
+										<label for="" class="form-label">% Descuento</label>
+										<p>{{$datacompensado[0]->porc_descuento}}</p>
+									</div>
+								</div>
+							</div>
 						</div>
 					</div>
 				</div>
