@@ -22,7 +22,7 @@ class ThirdsController extends Component
 	use WithPagination;
    
 
-	public $name, $type_identificationid, $identification, $digito_verificacion, $officeid, $agreementid, $type_regimen_ivaid, $direccion, $search, $provinceid, $celular, $nombre_contacto, $status, $is_client, $is_provider, $is_seller, $is_courier, $correo, $selected_id, $listaprecio_genericId, $listaprecio_nichoId, $pageTitle, $componentName;
+	public $name, $type_identificationid, $identification, $digito_verificacion, $officeid, $porc_descuento, $type_regimen_ivaid, $direccion, $search, $provinceid, $celular, $nombre_contacto, $status, $is_client, $is_provider, $is_seller, $is_courier, $correo, $selected_id, $listaprecio_genericId, $listaprecio_nichoId, $pageTitle, $componentName;
 	
 	private $pagination = 5;
 
@@ -39,7 +39,7 @@ class ThirdsController extends Component
 		$this->type_identificationid = 'Elegir';
 		$this->digito_verificacion = 0;
 		$this->officeid = 'Elegir';
-		$this->agreementid = 'Elegir';
+		$this->porc_descuento = 'Elegir';
 		$this->type_regimen_ivaid = 'Elegir';
 		$this->provinceid = 'Elegir';
 		$this->status = 1;
@@ -50,11 +50,9 @@ class ThirdsController extends Component
 	{
 		if (strlen($this->search) > 0)
 			$thirds = Third::join('type_identifications as t', 't.id', 'thirds.type_identification_id')
-						   ->join('offices as o', 'o.id', 'thirds.office_id')
-						   ->join('agreements as a', 'a.id', 'thirds.agreement_id')
+						   ->join('offices as o', 'o.id', 'thirds.office_id')				
 				->select('thirds.*', 't.name as type_identification',
-						 'thirds.*', 'o.name as office',
-						 'thirds.*', 'a.name as agreement')
+						 'thirds.*', 'o.name as office')
 				->where('thirds.name', 'like', '%' . $this->search . '%')
 				->orWhere('thirds.identification', 'like', '%' . $this->search . '%')
 				->orWhere('thirds.office_id', 'like', '%' . $this->search . '%')				
@@ -63,12 +61,9 @@ class ThirdsController extends Component
 		else
 
 			$thirds = Third::join('type_identifications as t', 't.id', 'thirds.type_identification_id')
-							->join('offices as o', 'o.id', 'thirds.office_id')
-							->join('agreements as a', 'a.id', 'thirds.agreement_id')
+					 		->join('offices as o', 'o.id', 'thirds.office_id')						
 				->select('thirds.*', 't.name as type_identification',
-						 'thirds.*', 'o.name as office',
-						 'thirds.*', 'a.name as agreement')
-
+						 'thirds.*', 'o.name as office')
 				->orderBy('thirds.name', 'asc')
 				->paginate($this->pagination);
 
@@ -96,8 +91,7 @@ class ThirdsController extends Component
 			'name' => 'required|unique:thirds|min:3',
 			'type_identificationid' => 'required|not_in:Elegir',			
 			'identification' => 'required|unique:thirds|min:3',
-			'officeid' => 'required',
-			'agreementid' => 'required|not_in:Elegir',
+			'officeid' => 'required',			
 			'type_regimen_ivaid' => 'required|not_in:Elegir',
 			'direccion' => 'required',
 			'provinceid' => 'required|not_in:Elegir',
@@ -114,9 +108,8 @@ class ThirdsController extends Component
 			'type_identificationid.required' => 'El tipo de ID es requerido',
 			'identification.required' => 'La ID es requerido',
 			'identification.unique' => 'La ID ya existe',
-			'officeid.required' => 'El centro de costo es requerido',
-			'agreementid.required' => 'El acuerdo es requerido',
-			'agreementid.not_in' => 'Selecciona acuerdo distinto a Elegir',
+			'officeid.required' => 'El centro de costo es requerido',			
+			'porc_descuento.not_in' => 'Selecciona acuerdo distinto a Elegir',
 			'type_regimen_ivaid.required' => 'El tipo de regimen es requerido',
 			'direccion.required' => 'La dirección es requerida',
 			'correo.required' => 'Ingresa el correo ',
@@ -133,8 +126,7 @@ class ThirdsController extends Component
 			'type_identification_id' => $this->type_identificationid,			
 			'identification' => $this->identification,
 			'digito_verificacion' => $this->digito_verificacion,
-			'office_id' => $this->officeid,
-			'agreement_id' => $this->agreementid,
+			'office_id' => $this->officeid,			
 			'type_regimen_iva_id' => $this->type_regimen_ivaid,
 			'direccion' => $this->direccion,
 			'province_id' => $this->provinceid,
@@ -142,6 +134,7 @@ class ThirdsController extends Component
 			'nombre_contacto' => $this->nombre_contacto,
 			'correo' => $this->correo,
 			'cliente' => $this->is_client,
+			'porc_descuento' => $this->porc_descuento,
 			'proveedor' => $this->is_provider,
 			'vendedor' => $this->is_seller,
 			'domiciliario' => $this->is_courier,
@@ -162,14 +155,14 @@ class ThirdsController extends Component
 		$this->type_identificationid = $third->type_identification_id;
 		$this->identification = $third->identification;
 		$this->digito_verificacion = $third->digito_verificacion;
-		$this->officeid = $third->office_id;
-		$this->agreementid = $third->agreement_id;
+		$this->officeid = $third->office_id;	
 		$this->type_regimen_ivaid = $third->type_regimen_iva_id;
 		$this->direccion = $third->direccion;
 		$this->provinceid = $third->province_id;
 		$this->celular = $third->celular;
 		$this->nombre_contacto = $third->nombre_contacto;
 		$this->correo = $third->correo;
+		$this->porc_descuento = $third->porc_descuento;
 		$this->is_client = $third->cliente;
 		$this->is_provider = $third->proveedor;
 		$this->is_seller = $third->vendedor;
@@ -186,8 +179,7 @@ class ThirdsController extends Component
 			'type_identificationid' => 'required|not_in:Elegir',						
 			'identification' => "required|min:3|unique:thirds,identification,{$this->selected_id}",
 			'digito_verificacion' => 'required',
-			'officeid' => 'required',
-			'agreementid' => 'required|not_in:Elegir',
+			'officeid' => 'required',			
 			'type_regimen_ivaid' => 'required|not_in:Elegir',
 			'direccion' => 'required',
 			'provinceid' => 'required|not_in:Elegir',
@@ -205,9 +197,8 @@ class ThirdsController extends Component
 			'identification.required' => 'La ID es requerido',
 			'identification.unique' => 'La ID ya existe',
 			'digito_verificacion.required' => 'La digito verificacion es requerido',
-			'officeid.required' => 'El centro de costo es requerido',
-			'agreementid.required' => 'El acuerdo es requerido',
-			'agreementid.not_in' => 'Selecciona acuerdo distinto a Elegir',
+			'officeid.required' => 'El centro de costo es requerido',		
+			'porc_descuento.not_in' => 'Selecciona acuerdo distinto a Elegir',
 			'type_regimen_ivaid.required' => 'El tipo de regimen es requerido',
 			'direccion.required' => 'La dirección es requerida',
 			'correo.required' => 'Ingresa el correo ',
@@ -224,14 +215,14 @@ class ThirdsController extends Component
 			'type_identification_id' => $this->type_identificationid,			
 			'identification' => $this->identification,
 			'digito_verificacion' => $this->digito_verificacion,
-			'office_id' => $this->officeid,
-			'agreement_id' => $this->agreementid,
+			'office_id' => $this->officeid,			
 			'type_regimen_iva_id' => $this->type_regimen_ivaid,
 			'direccion' => $this->direccion,
 			'province_id' => $this->provinceid,
 			'celular' => $this->celular,
 			'nombre_contacto' => $this->nombre_contacto,
 			'correo' => $this->correo,
+			'porc_descuento' => $this->porc_descuento,
 			'cliente' => $this->is_client,
 			'proveedor' => $this->is_provider,
 			'vendedor' => $this->is_seller,
@@ -250,14 +241,14 @@ class ThirdsController extends Component
 		$this->type_identificationid = 'Elegir';
 		$this->identification = '';
 		$this->digito_verificacion = 'Elegir';
-		$this->officeid = '';
-		$this->agreementid = 'Elegir';
+		$this->officeid = '';	
 		$this->type_regimen_ivaid = 'Elegir';
 		$this->direccion = '';
 		$this->provinceid = 'Elegir';
 		$this->celular = '';
 		$this->nombre_contacto = '';
 		$this->correo = '';
+		$this->porc_descuento = '';
 		$this->search = '';		
 		$this->selected_id = 0;
 		$this->is_client = '';

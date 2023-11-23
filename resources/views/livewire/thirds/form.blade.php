@@ -55,13 +55,16 @@
 
 	<div class="col-sm-12 col-md-4">
 		<div class="form-group">
-			<label>Acuerdo</label>
-			<select wire:model='agreementid' class="form-control">
-				<option value="Elegir" disabled>Elegir</option>
-				@foreach($agreements as $agreement)
-				<option value="{{$agreement->id}}">{{$agreement->name}}</option>
-				@endforeach
+			<label>% Descuento</label>
+			<select wire:model='porc_descuento' class="form-control form-control-sm" name="porc_descuento" id="porc_descuento" required="">
+				<option value="0" selected>0</option>
+				<option value="1">1</option>
+				<option value="2">2</option>
+				<option value="3">3</option>
+				<option value="4">4</option>
+				<option value="5">5</option>
 			</select>
+
 			@error('agreementid') <span class="text-danger er">{{ $message}}</span>@enderror
 		</div>
 	</div>

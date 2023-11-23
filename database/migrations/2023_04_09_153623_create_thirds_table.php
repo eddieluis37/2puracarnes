@@ -15,9 +15,9 @@ class CreateThirdsTable extends Migration
     {
         Schema::create('thirds', function (Blueprint $table) {
             $table->id();
-
+/* 
             $table->unsignedBigInteger('agreement_id')->nullable();
-            $table->foreign('agreement_id')->references('id')->on('agreements');
+            $table->foreign('agreement_id')->references('id')->on('agreements'); */
 
             $table->string('name',250);
                
@@ -51,7 +51,8 @@ class CreateThirdsTable extends Migration
             $table->boolean('proveedor')->parent_select()->default(false)->nullable();        
             $table->boolean('vendedor')->parent_select()->default(false)->nullable();
             $table->boolean('domiciliario')->parent_select()->default(false)->nullable();
-           
+
+            $table->unsignedTinyInteger('porc_descuento')->nullable()->default(0);
 
             $table->unsignedBigInteger('listaprecio_nichoid')->nullable();
             //$table->foreign('listaprecio_nichoid')->references('id')->on('listaprecios');
