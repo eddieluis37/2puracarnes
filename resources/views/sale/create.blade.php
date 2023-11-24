@@ -29,6 +29,14 @@
 									</div>
 								</div>
 							</div>
+							<div class="col-md-3">
+								<div class="task-header">
+									<div class="form-group">
+										<label for="" class="form-label">Centro de costo</label>
+										<p>{{$datacompensado[0]->namecentrocosto}}</p>
+									</div>
+								</div>
+							</div>
 
 							<div class="col-md-4">
 								<div class="task-header">
@@ -38,14 +46,7 @@
 									</div>
 								</div>
 							</div>
-							<div class="col-md-3">
-								<div class="task-header">
-									<div class="form-group">
-										<label for="" class="form-label">Centro de costo</label>
-										<p>{{$datacompensado[0]->namecentrocosto}}</p>
-									</div>
-								</div>
-							</div>
+
 							<div class="col-md-2">
 								<div class="task-header">
 									<div class="form-group">
@@ -126,7 +127,9 @@
 										<th class="table-th text-white">Producto</th>
 										<th class="table-th text-white">Cant</th>
 										<th class="table-th text-white">Precio</th>
+										<th class="table-th text-white">DESC</th>
 										<th class="table-th text-white">IVA</th>
+										<th class="table-th text-white">O.I</th>									
 										<th class="table-th text-white">Total</th>
 										<th class="table-th text-white text-center">Acciones</th>
 									</tr>
@@ -138,6 +141,8 @@
 										<td>{{$proddetail->nameprod}}</td>
 										<td>{{ number_format($proddetail->quantity, 2, ',', '.')}} KG</td>
 										<td>$ {{ number_format($proddetail->price, 0, ',', '.')}}</td>
+										<td>{{$proddetail->iva}}</td>
+										<td>{{$proddetail->iva}}</td>
 										<td>{{$proddetail->iva}}</td>
 										<td>$ {{ number_format($proddetail->total, 0, ',', '.')}}</td>
 										<td class="text-center">
@@ -159,13 +164,15 @@
 								<tfoot id="tabletfoot">
 									<tr>
 										<th>Totales</th>
-										<th>{{number_format($arrayTotales['kgTotalventa'], 2, ',', '.')}} KG</td>
+										<th></td>
+										<th></th>
+										<td></td>
+										<td></td>
+										<td></td>
 										<th>$ {{number_format($arrayTotales['kgTotalventa'], 0, ',', '.')}} </th>
-										<td></td>
-										<td></td>
 										<td class="text-center">
 											<form method="GET" action="registrar_pago/{{$id}}">
-												@csrf											
+												@csrf
 												<div class="text-center mt-3">
 													<button type="submit" class="btn btn-success">Pagar</button>
 												</div>

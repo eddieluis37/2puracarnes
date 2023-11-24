@@ -28,7 +28,7 @@ class ProductsController extends Component
 		$this->emit('global-msg', "SE AGREGÓ EL PRODUCTO AL CARRITO");
 	}
 
-	public $name, $code, $barcode, $iva, $price_fama, $levelproductid, $alerts, $categoryid, $centrocosto_id, $products_id, $meatcutid, $search, $image, $selected_id, $pageTitle, $componentName;
+	public $name, $code, $barcode, $iva, $otro_impuesto, $price_fama, $levelproductid, $alerts, $categoryid, $centrocosto_id, $products_id, $meatcutid, $search, $image, $selected_id, $pageTitle, $componentName;
 
 	private $pagination = 10;
 
@@ -122,7 +122,8 @@ class ProductsController extends Component
 			'code' => $this->code,
 			'barcode' => $this->barcode,
 			'price_fama' => $this->price_fama,
-			'iva' => $this->iva,							
+			'iva' => $this->iva,
+			'otro_impuesto' => $this->otro_impuesto,							
 			'alerts' => $this->alerts,			
 		]);
 
@@ -160,6 +161,7 @@ class ProductsController extends Component
 		$this->code = $product->code;
 		$this->barcode = $product->barcode;
 		$this->iva = $product->iva;
+		$this->otro_impuesto = $product->otro_impuesto;
 		$this->price_fama = $product->price_fama;	
 		$this->alerts = $product->alerts;
 		$this->categoryid = $product->category_id;
@@ -202,6 +204,7 @@ class ProductsController extends Component
 			'level_product_id' => $this->levelproductid,
 			'code' => $this->code,
 			'iva' => $this->iva,
+			'otro_impuesto' => $this->otro_impuesto,
 			'price_fama' => $this->price_fama,			
 			'barcode' => $this->barcode,		
 			'alerts' => $this->alerts,
@@ -235,6 +238,7 @@ class ProductsController extends Component
 		$this->code = '';
 		$this->barcode = '';
 		$this->iva = '';
+		$this->otro_impuesto = '';
 		$this->price_fama = '';		
 		$this->alerts = '';
 		$this->search = '';

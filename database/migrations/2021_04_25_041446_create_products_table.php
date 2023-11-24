@@ -28,6 +28,7 @@ class CreateProductsTable extends Migration
             $table->decimal('price_horeca',10,0)->default(1)->nullable(); // precio en la linea de las Horeca
             $table->decimal('price_hogar',10,0)->default(1)->nullable(); // precio en la linea de las Hogar
             $table->decimal('iva',10)->default(1);
+            $table->decimal('otro_impuesto',10)->default(0)->nullable();
             $table->decimal('stock', 18, 2)->default(1); // valor de cantidades de unidades sea KG
             $table->decimal('fisico', 18, 2)->default(1); // valor de cantidades en inventario tangible real           
             $table->integer('alerts');

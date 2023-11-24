@@ -10,7 +10,7 @@ class Product extends Model
 	use HasFactory;
 
 
-	protected $fillable = ['category_id', 'meatcut_id', 'level_product_id', 'unitofmeasure_id', 'name', 'code', 'barcode', 'status', 'cost', 'price_fama', 'price_insti', 'price_horeca', 'price_hogar', 'iva', 'stock', 'alerts', 'image'];
+	protected $fillable = ['category_id', 'meatcut_id', 'level_product_id', 'unitofmeasure_id', 'name', 'code', 'barcode', 'status', 'cost', 'price_fama', 'price_insti', 'price_horeca', 'price_hogar', 'iva', 'otro_impuesto', 'stock', 'alerts', 'image'];
 
 	protected $table = 'products';
 

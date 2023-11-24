@@ -75,9 +75,23 @@
 
 	<div class="col-sm-12 col-md-4">
 		<div class="form-group">
+			<label>Stock Alertas</label>
+			<input type="number" wire:model.lazy="alerts" class="form-control" placeholder="ej: 10">
+			@error('alerts') <span class="text-danger er">{{ $message}}</span>@enderror
+		</div>
+	</div>
+	<div class="col-sm-12 col-md-2">
+		<div class="form-group">
 			<label>Iva</label>
 			<input type="text" wire:model.lazy="iva" class="form-control" placeholder="ej: 19.00 %">
 			@error('iva') <span class="text-danger er">{{ $message}}</span>@enderror
+		</div>
+	</div>
+	<div class="col-sm-12 col-md-2">
+		<div class="form-group">
+			<label>Otro Imp</label>
+			<input type="text" wire:model.lazy="otro_impuesto" class="form-control" placeholder="ej: 19.00 %">
+			@error('otro_impuesto') <span class="text-danger er">{{ $message}}</span>@enderror
 		</div>
 	</div>
 
@@ -113,13 +127,7 @@
 		</div>
 	</div> -->
 
-	<div class="col-sm-12 col-md-4">
-		<div class="form-group">
-			<label>Stock Alertas</label>
-			<input type="number" wire:model.lazy="alerts" class="form-control" placeholder="ej: 10">
-			@error('alerts') <span class="text-danger er">{{ $message}}</span>@enderror
-		</div>
-	</div>
+
 
 
 	<div class="col-sm-12 col-md-8">
