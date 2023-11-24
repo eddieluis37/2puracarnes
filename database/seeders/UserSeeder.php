@@ -97,7 +97,16 @@ class UserSeeder extends Seeder
             'profile' => 'Comercial',
             'status' => 'Active',
             'password' => bcrypt('comercial@puracarnes.com')
+        ]);       
+        User::create([
+            'name' => 'cajaprincipalpcguadalupe',
+            'phone' => '3008755514',
+            'email' => 'cajaprincipalpcguadalupe@puracarnes.com',
+            'profile' => 'Comercial',
+            'status' => 'Active',
+            'password' => bcrypt('cajaprincipalpcguadalupe@puracarnes.com')
         ]);
+
 
         /**********************************************************************/
         /*** Al agregar nuevos roles  se debe agregar el rol en la migracion tabla User
@@ -209,6 +218,7 @@ class UserSeeder extends Seeder
         User::find(8)->assignRole('Costos');
         User::find(9)->assignRole('Tesoreria');
         User::find(10)->assignRole('Comercial');
+        User::find(11)->assignRole('Comercial');
         
     }
 }
