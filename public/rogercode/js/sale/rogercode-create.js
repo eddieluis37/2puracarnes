@@ -152,7 +152,12 @@ const showData = (data) => {
     tableFoot.innerHTML = "";
     tableFoot.innerHTML += `
         <tr>
-            <th>Totales</th>         
+            <th>Totales</th>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>                     
+            <td></td>
             <th>${formatCantidad(arrayTotales.pesoTotalGlobal)} KG</td>
             <th>$ ${formatCantidadSinCero(arrayTotales.totalGlobal)}</th>
             <td></td>

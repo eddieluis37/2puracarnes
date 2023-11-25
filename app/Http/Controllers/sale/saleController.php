@@ -138,7 +138,7 @@ class saleController extends Controller
 
         $detail = DB::table('sale_details as de')
             ->join('products as pro', 'de.product_id', '=', 'pro.id')
-            ->select('de.*', 'pro.name as nameprod', 'pro.code')
+            ->select('de.*', 'pro.name as nameprod', 'pro.code', 'pro.iva', 'pro.otro_impuesto')
             ->where([
                 ['de.sale_id', $ventaId],
                 /*   ['de.status', 1] */

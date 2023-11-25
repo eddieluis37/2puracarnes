@@ -44,7 +44,7 @@
                                     <span class="input-group-text" id="addon-wrapping">$</span>
                                     <input class="form-control form-control-sm" type="text" name="valor_a_pagar_efectivo" id="valor_a_pagar_efectivo" required="">
                                 </div>
-                               
+
                                 <div class="widget-content mt-3">
                                     <label for="" class="form-label">Valores sugeridos</label>
                                     <div></div>
@@ -102,7 +102,6 @@
                 </div>
             </div>
         </div>
-
         <div class="widget-content mt-2">
             <div class="card">
                 <div class="card-body">
@@ -136,7 +135,6 @@
                 </div>
             </div>
         </div>
-
         <div class="widget-content mt-2">
             <div class="card">
                 <div class="card-body">
@@ -174,12 +172,7 @@
                 </div>
             </div>
         </div>
-
-
-
     </div>
-
-
 
     <div class="col-sm-5">
         <div class="widget widget-chart-one">
@@ -226,6 +219,47 @@
                                 </div>
                             </form>
                         </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="widget widget-chart-one">
+                <div class="widget-content mt-2">
+                    <div class="card">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th scope="col" style="text-align: left; vertical-align: middle;">Cliente</th>
+                                    <th scope="col" style="text-align: left; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{{$venta->third->name}}</th>
+                                    <!--         <th scope="col">Last</th> -->
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <th scope="row" style="text-align: left">Centro</th>
+                                    <td style="text-align: left">
+                                        <p>{{$venta->centrocosto->name}}</p>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" style="text-align: left">Vendedor</th>
+
+                                    <td style="text-align: left">{{$venta->third->name}}</td>
+                                    
+                                </tr>
+                                <tr>
+                                    <th  scope="row" style="text-align: left">TotalBruto</th>
+                                    <td colspan="2"></td>
+                                   
+                                </tr>
+                                <tr>
+                                    <th  scope="row" style="text-align: left">Descuentos</th>
+                                    <td colspan="2">{{$venta->third->name}}</td>
+                                   
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
