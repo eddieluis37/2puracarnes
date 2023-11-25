@@ -288,10 +288,19 @@ class saleController extends Controller
                 $venta->fecha_venta = $currentDateFormat;
                 $venta->fecha_cierre = $dateNextMonday;
 
+                $venta->total_bruto = 0;
+                $venta->descuentos = 0;
+                $venta->subtotal = 0;
                 $venta->total = 0;
+                $venta->total_otros_descuentos = 0;
+                $venta->valor_a_pagar = 0;
+                $venta->valor_pagado = 0;
+                $venta->cambio = 0;
+                
                 $venta->items = 0;
-                $venta->cash = 0;
-                $venta->change = 0;
+              
+                $venta->valor_pagado = 0;
+                $venta->cambio = 0;
 
 
                 $venta->save();

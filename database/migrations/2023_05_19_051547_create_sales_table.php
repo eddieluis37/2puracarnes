@@ -34,10 +34,17 @@ class CreateSalesTable extends Migration
             $table->unsignedBigInteger('subcentrocostos_id')->nullable();
             $table->foreign('subcentrocostos_id')->references('id')->on('subcentrocostos');
 
-            $table->decimal('total',10,2);
             $table->decimal('items',10,2);
-            $table->decimal('cash',10,2);
-            $table->decimal('change',10,2);    
+            
+            $table->decimal('total_bruto',10,2);
+            $table->decimal('descuentos',10,2);
+            $table->decimal('subtotal',10,2);
+            $table->decimal('total',10,2);
+            $table->decimal('total_otros_descuentos',10,2);
+            $table->decimal('valor_a_pagar',10,2);
+            $table->decimal('valor_pagado',10,2);           
+            $table->decimal('cambio',10,2);    
+
             $table->enum('status',['0','1','2','3','4','5'])->default('0');
 
             $table->date('fecha_venta')->nullable();       

@@ -33,7 +33,7 @@
                     <h4 style="color:white;"><strong>Registrar </s>pagos</strong></h3>
                 </div>
             </div>
-            <div class="widget-content mt-2">
+            <div class="widget-content mt-1">
                 <div class="card">
                     <div class="card-body">
                         <form id="form-detail">
@@ -69,7 +69,7 @@
                 </div>
             </div>
         </div>
-        <div class="widget-content mt-2">
+        <div class="widget-content mt-1">
             <div class="card">
                 <div class="card-body">
                     <form id="form-detail">
@@ -102,7 +102,7 @@
                 </div>
             </div>
         </div>
-        <div class="widget-content mt-2">
+        <div class="widget-content mt-1">
             <div class="card">
                 <div class="card-body">
                     <form id="form-detail">
@@ -135,7 +135,7 @@
                 </div>
             </div>
         </div>
-        <div class="widget-content mt-2">
+        <div class="widget-content mt-1">
             <div class="card">
                 <div class="card-body">
                     <form id="form-detail">
@@ -176,141 +176,85 @@
 
     <div class="col-sm-5">
         <div class="widget widget-chart-one">
-            <div class="card text-center" style="background: #3B3F5C">
-                <div class="m-2">
-                    <h4 style="color:white;"><strong>Registrar s </s>pagos</strong></h3>
-                </div>
-            </div>
-            <div class="widget-content mt-2">
+            <div class="widget-content mt-0">
                 <div class="card">
-                    <div class="card-body">
-                        <div class="row g-3">
-                            <div class="col-md-4">
-                                <div class="task-header">
-                                    <div class="form-group">
-                                        <label for="" class="form-label">Fecha de venta</label>
-                                        <p>{{$venta->fecha_venta}}</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="task-header">
-                                    <div class="form-group">
-                                        <label for="" class="form-label">Tercero</label>
-                                        <p>{{$venta->third->name}}</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="task-header">
-                                    <div class="form-group">
-                                        <label for="" class="form-label">Centro de costo</label>
-                                        <p>{{$venta->centrocosto->name}}</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col" style="text-align: left; vertical-align: middle;">Cliente</th>
+                                <th scope="col" style="text-align: left; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{{$venta->third->name}}</th>
+                                <!--         <th scope="col">Last</th> -->
 
-                        <div class="">
-                            <form method="GET" action="/sale/registrar_pago/">
-                                @csrf
-                                <div class="text-center mt-2">
-                                    <button type="submit" class="btn btn-success">Guardar e Imprimir</button>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th scope="row" style="text-align: left">Centro_Costo</th>
+                                <td style="text-align: left">
+                                    <p>{{$venta->centrocosto->name}}</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th scope="row" style="text-align: left">Vendedor</th>
 
-            <div class="widget widget-chart-one">
-                <div class="widget-content mt-2">
-                    <div class="card">
-                        <table class="table">
-                            <thead>
-                                <tr>
-                                    <th scope="col" style="text-align: left; vertical-align: middle;">Cliente</th>
-                                    <th scope="col" style="text-align: left; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{{$venta->third->name}}</th>
-                                    <!--         <th scope="col">Last</th> -->
+                                <td style="text-align: left">{{$venta->third->vendedor}}</td>
 
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <th scope="row" style="text-align: left">Centro</th>
-                                    <td style="text-align: left">
-                                        <p>{{$venta->centrocosto->name}}</p>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th scope="row" style="text-align: left">Vendedor</th>
+                            </tr>
+                            <tr>
+                                <th scope="row" style="text-align: left">Total_Bruto</th>
+                                <td colspan="2"></td>
 
-                                    <td style="text-align: left">{{$venta->third->name}}</td>
-                                    
-                                </tr>
-                                <tr>
-                                    <th  scope="row" style="text-align: left">TotalBruto</th>
-                                    <td colspan="2"></td>
-                                   
-                                </tr>
-                                <tr>
-                                    <th  scope="row" style="text-align: left">Descuentos</th>
-                                    <td colspan="2">{{$venta->third->name}}</td>
-                                   
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
+                            </tr>
+                            <tr>
+                                <th scope="row" style="text-align: left">Descuentos</th>
+                                <td colspan="2"></td>
 
-        <div class="widget widget-chart-one mt-2">
+                            </tr>
+                            <tr>
+                                <th scope="row" style="text-align: left">SubTotal</th>
+                                <td colspan="2"></td>
 
-            <div class="widget-content mt-2">
-                <div class="card">
-                    <div class="card-body">
-                        <div class="table-responsive mt-2">
-                            <table id="tableVentasDet" class="table table-sm table-striped table-bordered">
-                                <thead class="text-white" style="background: #3B3F5C">
-                                    <tr>
-                                        <!--th class="table-th text-white">Item</th>-->
-                                        <th class="table-th text-white"></th>
-                                        <th class="table-th text-white">2</th>
-                                        <th class="table-th text-white">3</th>
-                                        <th class="table-th text-white">4</th>
-                                        <th class="table-th text-white">5</th>
-                                        <th class="table-th text-white">6</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="tbodyDetail">
-                                    @foreach($ventasdetalle as $proddetail)
-                                    <tr>
-                                        <td>{{$proddetail->id}}</td>
-                                        <td>{{$proddetail->nameprod}}</td>
-                                        <td>{{ number_format($proddetail->quantity, 2, ',', '.')}} KG</td>
-                                        <td>${{number_format($proddetail->price, 2, ',', '.')}} </td>
-                                        <td>${{number_format($proddetail->iva, 2, ',', '.')}} </td>
-                                        <td>${{number_format($proddetail->total, 2, ',', '.')}} </td>
+                            </tr>
+                            <tr>
+                                <th scope="row" style="text-align: left">Total_IVA</th>
+                                <td colspan="2"></td>
 
-                                    </tr>
-                                    @endforeach
-                                </tbody>
-                                <tfoot id="tabletfoot">
-                                    <tr>
-                                        <th></th>
-                                        <th></th>
-                                        <th>Totales</th>
-                                        <th></th>
-                                        <th></th>
-                                        <th>
-                                            <div id="totalfooter"> {{number_format($arrayTotales['kgTotalventa'], 2, ',', '.')}} </div>
-                                        </th>
-                                    </tr>
-                                </tfoot>
-                            </table>
-                        </div>
-                    </div>
+                            </tr>
+                            <tr>
+                                <th scope="row" style="text-align: left">TotalOtrosImp</th>
+                                <td colspan="2"></td>
+
+                            </tr>
+                            <tr>
+                                <th scope="row" style="text-align: left">Valor_a_Pagar</th>
+                                <td colspan="2"></td>
+
+                            </tr>
+                            <tr>
+                                <th scope="row" style="text-align: left">Valor_Pagado</th>
+                                <td colspan="2"></td>
+
+                            </tr>
+                            <tr>
+                                <th scope="row" style="text-align: left">Cambio</th>
+                                <td colspan="2"></td>
+
+                            </tr>
+
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <th colspan="2">
+                                    <form method="GET" action="/sale/registrar_pago/">
+                                        @csrf
+                                        <div class="text-center mt-1">
+                                            <button type="submit" class="btn btn-success">Guardar e Imprimir</button>
+                                        </div>
+                                    </form>
+                                </th>
+                            </tr>
+                        </tfoot>
+                    </table>
                 </div>
             </div>
         </div>
