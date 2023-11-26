@@ -30,6 +30,7 @@
 								<th class="table-th text-white text-center">BARCODE</th>
 								<th class="table-th text-white text-center">PRECIO_M</th>
 								<th class="table-th text-white text-center">IVA</th>
+								<th class="table-th text-white text-center">O.I</th>
 								<th class="table-th text-white text-center">STOCK</th>
 								<th class="table-th text-white text-center">INV.MIN</th>
 								<th class="table-th text-white text-center">IMAGEN</th>
@@ -60,6 +61,9 @@
 								</td>
 								<td>
 									<h6 class="text-center">{{number_format($product->iva)}}%</h6>
+								</td>
+								<td>
+									<h6 class="text-center">{{number_format($product->otro_impuesto)}}%</h6>
 								</td>
 								<td>
 									<h6 class="text-center {{$product->stock <= $product->alerts ? 'text-danger' : '' }} ">
