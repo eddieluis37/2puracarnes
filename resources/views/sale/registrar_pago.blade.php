@@ -21,6 +21,12 @@
     .input {
         height: 38px;
     }
+
+    td {
+        text-align: right;
+        font-weight: bold;
+        color: black;
+    }
 </style>
 <meta name="csrf-token" content="{{ csrf_token() }}">
 
@@ -77,7 +83,7 @@
                         <div class="row">
                             <div class="col-md-4">
                                 <label for="" class="form-label">Tarjetas</label>
-                                <select class="form-control form-control-sm select2Prod" name="valor_a_pagar_tarjeta" id="valor_a_pagar_tarjeta" required="">
+                                <select class="form-control form-control-sm select2Prod" name="" id="" required="">
                                     <option value="">Seleccione</option>
                                     <option value="credito" selected>CREDITO</option>
                                     <option value="debito">DEBITO</option>
@@ -87,14 +93,14 @@
                                 <label for="" class="form-label">Número de Verificación</label>
                                 <div class="input-group flex-nowrap">
                                     <span class="input-group-text" id="addon-wrapping">N°</span>
-                                    <input type="text" id="price" name="price" class="form-control input" placeholder="EJ: 369">
+                                    <input type="text" id="price" name="price" class="form-control input" placeholder="">
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <label for="" class="form-label">Valor</label>
                                 <div class="input-group flex-nowrap">
                                     <span class="input-group-text" id="addon-wrapping">$</span>
-                                    <input type="text" id="price" name="price" class="form-control input" placeholder="EJ: 20.500">
+                                    <input class="form-control form-control-sm" type="text" name="valor_a_pagar_tarjeta" id="valor_a_pagar_tarjeta" required="">
                                 </div>
                             </div>
                         </div>
@@ -120,14 +126,14 @@
                                 <label for="" class="form-label">Número de transacción</label>
                                 <div class="input-group flex-nowrap">
                                     <span class="input-group-text" id="addon-wrapping">N°</span>
-                                    <input type="text" id="price" name="price" class="form-control input" placeholder="EJ: 369">
+                                    <input type="text" id="price" name="price" class="form-control input" placeholder="">
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <label for="" class="form-label">Valor</label>
                                 <div class="input-group flex-nowrap">
                                     <span class="input-group-text" id="addon-wrapping">$</span>
-                                    <input type="text" id="price" name="price" class="form-control input" placeholder="EJ: 20.500">
+                                    <input class="form-control form-control-sm" type="text" name="valor_a_pagar_otros" id="valor_a_pagar_otros" required="">
                                 </div>
                             </div>
                         </div>
@@ -157,14 +163,14 @@
                                 <label for="" class="form-label">Número de credito</label>
                                 <div class="input-group flex-nowrap">
                                     <span class="input-group-text" id="addon-wrapping">N°</span>
-                                    <input type="text" id="price" name="price" class="form-control input" placeholder="EJ: 369">
+                                    <input type="text" id="price" name="price" class="form-control input" placeholder="">
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <label for="" class="form-label">Valor</label>
                                 <div class="input-group flex-nowrap">
                                     <span class="input-group-text" id="addon-wrapping">$</span>
-                                    <input type="text" id="price" name="price" class="form-control input" placeholder="EJ: 20.500">
+                                    <input class="form-control form-control-sm" type="text" name="valor_a_pagar_credito" id="valor_a_pagar_credito" required="">
                                 </div>
                             </div>
                         </div>
@@ -197,22 +203,22 @@
                             <tr>
                                 <th scope="row" style="text-align: left">Vendedor</th>
 
-                                <td style="text-align: left">{{$venta->third->vendedor}}</td>
+                                <td style="text-align: left">{{$dataVenta[0]->vendedor_name}}</td>
 
                             </tr>
                             <tr>
                                 <th scope="row" style="text-align: left">Total_Bruto</th>
-                                <td colspan="2"></td>
+                                <td colspan="2">{{number_format($arrayTotales['kgTotalventa'], 0, ',', '.')}}</td>
 
                             </tr>
                             <tr>
                                 <th scope="row" style="text-align: left">Descuentos</th>
-                                <td colspan="2"></td>
+                                <td colspan="2">{{number_format($descuento, 0, ',', '.')}}</td>
 
                             </tr>
                             <tr>
                                 <th scope="row" style="text-align: left">SubTotal</th>
-                                <td colspan="2"></td>
+                                <td colspan="2">{{number_format($subtotal, 0, ',', '.')}}</td>
 
                             </tr>
                             <tr>
@@ -227,12 +233,12 @@
                             </tr>
                             <tr>
                                 <th scope="row" style="text-align: left">Valor_a_Pagar</th>
-                                <td colspan="2"></td>
+                                <td colspan="2"><input type="text" name="valor_a_pagar" id="valor_a_pagar" value="valorA_Pagar"></td>
 
                             </tr>
                             <tr>
                                 <th scope="row" style="text-align: left">Valor_Pagado</th>
-                                <td colspan="2"></td>
+                                <td colspan="2" style="text-align: right"><input type="text" name="valor_pagado" id="valor_pagado" value="valorPagado" disabled style="text-align: right; font-weight: bold; color: black"></td>
 
                             </tr>
                             <tr>
@@ -263,5 +269,5 @@
 @endsection
 @section('script')
 <script src="{{asset('rogercode/js/sale/code-app-index.js')}}"></script>
-
+<script src="{{asset('rogercode/js/sale/code-formulas.js')}}"></script>
 @endsection

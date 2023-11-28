@@ -122,8 +122,7 @@
 						<div class="table-responsive mt-3">
 							<table id="tableDespostere" class="table table-sm table-striped table-bordered">
 								<thead class="text-white" style="background: #3B3F5C">
-									<tr>
-										<!--th class="table-th text-white">Item</th>-->
+									<tr>										
 										<th class="table-th text-white">Producto</th>
 										<th class="table-th text-white">Cant</th>
 										<th class="table-th text-white">Precio</th>									

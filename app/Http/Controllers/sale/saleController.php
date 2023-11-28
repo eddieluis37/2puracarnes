@@ -94,13 +94,28 @@ class saleController extends Controller
 
     public function create_reg_pago($id)
     {
+
+        $dataVenta = DB::table('sales as sa')
+            ->join('thirds as tird', 'sa.third_id', '=', 'tird.id')
+            ->join('centro_costo as centro', 'sa.centrocosto_id', '=', 'centro.id')
+            ->select('sa.*', 'tird.name as namethird', 'centro.name as namecentrocosto', 'tird.porc_descuento', 'sa.vendedor_id')
+            ->where('sa.id', $id)
+            ->get();
+
+        $vendedorId = $dataVenta[0]->vendedor_id;
+        $vendedor = Third::where('id', $vendedorId)->value('name');
+        $dataVenta[0]->vendedor_name = $vendedor;
+
         $venta = Sale::find($id);
         $producto = Product::get();
         $ventasdetalle = $this->getventasdetalle($id, $venta->centrocosto_id);
         $arrayTotales = $this->sumTotales($id);
 
+        $descuento = $dataVenta[0]->porc_descuento / 100 * $arrayTotales['kgTotalventa'];
+        $subtotal = $arrayTotales['kgTotalventa'] - $descuento;
 
-        return view('sale.registrar_pago', compact('venta', 'ventasdetalle', 'arrayTotales', 'producto'));
+
+        return view('sale.registrar_pago', compact('venta', 'ventasdetalle', 'arrayTotales', 'producto', 'dataVenta', 'descuento', 'subtotal'));
     }
 
     public function sumTotales($id)
@@ -267,6 +282,18 @@ class saleController extends Controller
 
             $getReg = Sale::firstWhere('id', $request->ventaId);
 
+            $ventas = Sale::join('thirds', 'sales.third_id', '=', 'thirds.id')
+                ->select('sales.*', 'thirds.porc_descuento')
+                ->where('sales.id', $request->ventaId)
+                ->first();
+
+            /*    $datacompensado = DB::table('sales as sa')              
+              ->join('thirds as tird', 'sa.third_id', '=', 'tird.$request->ventaId')
+              ->join('centro_costo as centro', 'sa.centrocosto_id', '=', 'centro.$request->ventaId')
+              ->select('sa.*', 'tird.name as namethird', 'centro.name as namecentrocosto', 'tird.porc_descuento')
+              ->where('sa.id', $request->ventaId);
+         dd($datacompensado); */
+
             if ($getReg == null) {
                 $currentDateTime = Carbon::now();
                 $currentDateFormat = Carbon::parse($currentDateTime->format('Y-m-d'));
@@ -293,12 +320,15 @@ class saleController extends Controller
                 $venta->subtotal = 0;
                 $venta->total = 0;
                 $venta->total_otros_descuentos = 0;
-                $venta->valor_a_pagar = 0;
+                $venta->valor_a_pagar_efectivo = 0;
+                $venta->valor_a_pagar_tarjeta = 0;
+                $venta->valor_a_pagar_otros = 0;
+                $venta->valor_a_pagar_credito = 0;
                 $venta->valor_pagado = 0;
                 $venta->cambio = 0;
-                
+
                 $venta->items = 0;
-              
+
                 $venta->valor_pagado = 0;
                 $venta->cambio = 0;
 

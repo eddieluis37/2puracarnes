@@ -133,7 +133,8 @@ const showData = (data) => {
                 <td>${element.nameprod}</td>
                 <td>${formatCantidad(element.quantity)} KG</td>
                 <td>$ ${formatCantidadSinCero(element.price)}</td>  
-                <td>${element.iva}</td>              
+                <td>${element.iva}</td> 
+                <td>${element.otro_impuesto}</td>              
                 <td>$ ${formatCantidadSinCero(element.total)}</td>             
                 <td class="text-center">
                     <button class="btn btn-dark fas fa-edit" data-id="${
@@ -155,13 +156,9 @@ const showData = (data) => {
             <th>Totales</th>
             <td></td>
             <td></td>
-            <td></td>
-            <td></td>                     
-            <td></td>
-            <th>${formatCantidad(arrayTotales.pesoTotalGlobal)} KG</td>
-            <th>$ ${formatCantidadSinCero(arrayTotales.totalGlobal)}</th>
-            <td></td>
-            <td></td>
+            <td></td>                             
+            <td></td>        
+            <th>$ ${formatCantidadSinCero(arrayTotales.kgTotalventa)}</th>            
             <td class="text-center">
             <button id="cargarInventarioBtn" class="btn btn-success btn-sm">Pagar</button>
             </td>
@@ -220,7 +217,7 @@ const showData = (data) => {
                     }
                 })
                 .then(() => {
-                    window.location.href = "/compensado";
+                    window.location.href = "/sales";
                 })
                 .catch((error) => {
                     console.error(error);
