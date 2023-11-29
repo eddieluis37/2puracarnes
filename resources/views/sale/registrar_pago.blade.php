@@ -223,7 +223,7 @@
                             </tr>
                             <tr>
                                 <th scope="row" style="text-align: left">Total_IVA</th>
-                                <td colspan="2"></td>
+                               
 
                             </tr>
                             <tr>

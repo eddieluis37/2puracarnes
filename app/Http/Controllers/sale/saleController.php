@@ -17,6 +17,7 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\metodosgenerales\metodosrogercodeController;
 use App\Models\Centro_costo_product;
+use App\Models\Listapreciodetalle;
 use App\Models\Sale;
 use App\Models\SaleDetail;
 use App\Models\Subcentrocosto;
@@ -53,7 +54,6 @@ class saleController extends Controller
         //$providers = Third::Where('status',1)->get();
         //$centros = Centrocosto::Where('status',1)->get();
         $datacompensado = DB::table('sales as sa')
-            /*    ->join('categories as cat', 'sa.categoria_id', '=', 'cat.id') */
             ->join('thirds as tird', 'sa.third_id', '=', 'tird.id')
             ->join('centro_costo as centro', 'sa.centrocosto_id', '=', 'centro.id')
             ->select('sa.*', 'tird.name as namethird', 'centro.name as namecentrocosto', 'tird.porc_descuento')
@@ -85,11 +85,13 @@ class saleController extends Controller
         }
         /**************************************** */
 
-        $detail = $this->getcompensadoresdetail($id);
+        $detalleVenta = $this->getventasdetail($id);
+
+        //     dd($detalleVenta);
 
         $arrayTotales = $this->sumTotales($id);
-        //dd($arrayTotales);
-        return view('sale.create', compact('datacompensado', 'prod', 'id', 'detail', 'arrayTotales', 'status'));
+        //  dd($arrayTotales);
+        return view('sale.create', compact('datacompensado', 'prod', 'id', 'detalleVenta', 'arrayTotales', 'status'));
     }
 
     public function create_reg_pago($id)
@@ -108,14 +110,14 @@ class saleController extends Controller
 
         $venta = Sale::find($id);
         $producto = Product::get();
-        $ventasdetalle = $this->getventasdetalle($id, $venta->centrocosto_id);
+        /*   $ventasdetalle = $this->getventasdetalle($id, $venta->centrocosto_id); */
         $arrayTotales = $this->sumTotales($id);
 
         $descuento = $dataVenta[0]->porc_descuento / 100 * $arrayTotales['kgTotalventa'];
         $subtotal = $arrayTotales['kgTotalventa'] - $descuento;
 
 
-        return view('sale.registrar_pago', compact('venta', 'ventasdetalle', 'arrayTotales', 'producto', 'dataVenta', 'descuento', 'subtotal'));
+        return view('sale.registrar_pago', compact('venta', 'arrayTotales', 'producto', 'dataVenta', 'descuento', 'subtotal'));
     }
 
     public function sumTotales($id)
@@ -130,12 +132,12 @@ class saleController extends Controller
         return $array;
     }
 
-    public function getventasdetalle($ventaId, $centrocostoId)
+    /*  public function getventasdetalle($ventaId, $centrocostoId)
     {
         $detail = DB::table('sale_details as dv')
             ->join('products as pro', 'dv.product_id', '=', 'pro.id')
             ->join('centro_costo_products as ce', 'pro.id', '=', 'ce.products_id')
-            ->select('dv.*', 'pro.name as nameprod', 'pro.code',  'ce.fisico')
+            ->select('dv.*', 'pro.name as nameprod', 'pro.code',  'ce.fisico', 'dv.iva as ')
             ->selectRaw('ce.invinicial + ce.compraLote + ce.alistamiento +
              ce.compensados + ce.trasladoing - (ce.venta + ce.trasladosal) stock')
             ->where([
@@ -144,14 +146,14 @@ class saleController extends Controller
             ])->orderBy('dv.id', 'DESC')->get();
 
         return $detail;
-    }
+    } */
 
 
 
-    public function getcompensadoresdetail($ventaId)
+    public function getventasdetail($ventaId)
     {
 
-        $detail = DB::table('sale_details as de')
+        $detalles = DB::table('sale_details as de')
             ->join('products as pro', 'de.product_id', '=', 'pro.id')
             ->select('de.*', 'pro.name as nameprod', 'pro.code', 'pro.iva', 'pro.otro_impuesto')
             ->where([
@@ -159,7 +161,7 @@ class saleController extends Controller
                 /*   ['de.status', 1] */
             ])->get();
 
-        return $detail;
+        return $detalles;
     }
 
     public function getproducts(Request $request)
@@ -201,36 +203,46 @@ class saleController extends Controller
 
             $formatPcompra = $formatCantidad->MoneyToNumber($request->price);
             $formatPesoKg = $formatCantidad->MoneyToNumber($request->quantity);
+
             $subtotal = $formatPcompra * $formatPesoKg;
+            $total = $subtotal *  $request->iva;
 
             $total = $request->kgrequeridos * $request->precioventa;
             $preciov = $request->precioventa * 1.0;
 
             $getReg = SaleDetail::firstWhere('id', $request->regdetailId);
-
-            if ($getReg == null) {
+            $detalleVenta = $this->getventasdetail($request->regdetailId);  
+            $ivaprod = $detalleVenta[0]->iva;
+            
+            if ($getReg == null) {                
                 //$subtotal = $request->price * $request->quantity;
                 $detail = new SaleDetail();
                 $detail->sale_id = $request->ventaId;
                 $detail->product_id = $request->producto;
                 $detail->price = $formatPcompra;
+                $detail->iva;
+                $detail->porciva = $ivaprod;
                 $detail->quantity = $request->quantity;
-                $detail->porciva = 0;
-                $detail->iva = 0;
-                $detail->total = $subtotal;
+                $detail->total_bruto = $subtotal;
+                $detail->total = $subtotal * $request->iva;
 
                 $detail->save();
             } else {
                 $updateReg = SaleDetail::firstWhere('id', $request->regdetailId);
-                //$subtotal = $request->price * $request->quantity;
+                $detalleVenta = $this->getventasdetail($request->regdetailId);            
+                   //$subtotal = $request->price * $request->quantity;
                 $updateReg->product_id = $request->producto;
                 $updateReg->price = $formatPcompra;
                 $updateReg->quantity = $formatPesoKg;
-                $updateReg->total = $subtotal;
+                $updateReg->iva;
+                $updateReg->porciva = $ivaprod;
+                $updateReg->total_bruto = $subtotal;
+                $updateReg->total = $subtotal * $request->iva;
                 $updateReg->save();
             }
 
-            $arraydetail = $this->getcompensadoresdetail($request->ventaId);
+
+            $arraydetail = $this->getventasdetail($request->ventaId);
 
             $arrayTotales = $this->sumTotales($request->ventaId);
 
@@ -282,10 +294,7 @@ class saleController extends Controller
 
             $getReg = Sale::firstWhere('id', $request->ventaId);
 
-            $ventas = Sale::join('thirds', 'sales.third_id', '=', 'thirds.id')
-                ->select('sales.*', 'thirds.porc_descuento')
-                ->where('sales.id', $request->ventaId)
-                ->first();
+
 
             /*    $datacompensado = DB::table('sales as sa')              
               ->join('thirds as tird', 'sa.third_id', '=', 'tird.$request->ventaId')
@@ -488,7 +497,7 @@ class saleController extends Controller
             $compe->status = 0;
             $compe->save();
 
-            $arraydetail = $this->getcompensadoresdetail($request->ventaId);
+            $arraydetail = $this->getventasdetail($request->ventaId);
 
             $arrayTotales = $this->sumTotales($request->ventaId);
             return response()->json([
@@ -525,10 +534,16 @@ class saleController extends Controller
 
     public function obtenerPreciosProducto(Request $request)
     {
+        /* $producto = DB::table('listapreciodetalles')
+        ->where('product_id', $request->productId)
+        ->where('listaprecio_id', $centrocostoId)
+        ->first();
+         */
+
         $centrocostoId = $request->input('centrocosto');
-        $producto = DB::table('listapreciodetalles')
-            ->where('product_id', $request->productId)
-            ->where('listaprecio_id', $centrocostoId)
+        $producto = Listapreciodetalle::join('products as prod', 'listapreciodetalles.product_id', '=', 'prod.id')
+            ->where('prod.id', $request->productId)
+            ->where('listapreciodetalles.listaprecio_id', $centrocostoId)
             ->first();
         if ($producto) {
             return response()->json([

@@ -18,12 +18,13 @@ const venta_id = document.querySelector("#ventaId");
 const centrocosto_id = document.querySelector("#centrocosto_id");
 const quantity = document.querySelector("#quantity");
 const price = document.querySelector("#price");
+const iva = document.querySelector("#iva");
 const regDetail = document.querySelector("#regdetailId");
 const tableFoot = document.querySelector("#tabletfoot");
 const cargarInventarioBtn = document.getElementById("cargarInventarioBtn");
 
 var centrocosto = document.getElementById("centrocosto").value;
-console.log('centro ' + centrocosto);
+console.log("centro " + centrocosto);
 
 $(".select2Prod").select2({
     placeholder: "Busca un producto",
@@ -36,7 +37,7 @@ $(document).ready(function () {
     $("#producto").change(function () {
         var productId = $(this).val();
         // Llama a una función para actualizar los valores en función del producto seleccionado
-        actualizarValoresProducto(productId);        
+        actualizarValoresProducto(productId);
     });
 });
 
@@ -52,6 +53,7 @@ function actualizarValoresProducto(productId) {
             // Actualiza los valores en los campos de entrada del centro de costo
             $("#price").val(response.precio);
             $("#pesoKgOrigen").val(response.fisico);
+            $("#iva").val(response.iva);
         },
         error: function (xhr, status, error) {
             // Maneja el error si la solicitud AJAX falla
@@ -102,6 +104,7 @@ tbodyTable.addEventListener("click", (e) => {
             regDetail.value = editReg.id;
             price.value = formatCantidadSinCero(editReg.price);
             quantity.value = formatCantidad(editReg.quantity);
+         
             $(".select2Prod").val(editReg.product_id).trigger("change");
         });
     }
@@ -133,9 +136,10 @@ const showData = (data) => {
                 <td>${element.nameprod}</td>
                 <td>${formatCantidad(element.quantity)} KG</td>
                 <td>$ ${formatCantidadSinCero(element.price)}</td>  
-                <td>${element.iva}</td> 
+                <td>$ ${formatCantidad(element.iva)}</td> 
                 <td>${element.otro_impuesto}</td>              
-                <td>$ ${formatCantidadSinCero(element.total)}</td>             
+                <td>$ ${formatCantidadSinCero(element.total_bruto)}</td>    
+                <td>$ ${formatCantidadSinCero(element.total)}</td>        
                 <td class="text-center">
                     <button class="btn btn-dark fas fa-edit" data-id="${
                         element.id
@@ -158,7 +162,9 @@ const showData = (data) => {
             <td></td>
             <td></td>                             
             <td></td>        
-            <th>$ ${formatCantidadSinCero(arrayTotales.kgTotalventa)}</th>            
+            <th>$ ${formatCantidadSinCero(
+                arrayTotales.kgTotalventa
+            )}</th>            
             <td class="text-center">
             <button id="cargarInventarioBtn" class="btn btn-success btn-sm">Pagar</button>
             </td>

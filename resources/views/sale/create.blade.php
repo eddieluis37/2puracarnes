@@ -128,19 +128,22 @@
 										<th class="table-th text-white">Precio</th>									
 										<th class="table-th text-white">IVA</th>
 										<th class="table-th text-white">O.I</th>									
+										<th class="table-th text-white">Total.B</th>
 										<th class="table-th text-white">Total</th>
 										<th class="table-th text-white text-center">Acciones</th>
 									</tr>
 								</thead>
 								<tbody id="tbodyDetail">
-									@foreach($detail as $proddetail)
+									@foreach($detalleVenta as $proddetail)
 									<tr>
 										<!--td>{{$proddetail->id}}</td-->
+
 										<td>{{$proddetail->nameprod}}</td>
 										<td>{{ number_format($proddetail->quantity, 2, ',', '.')}} KG</td>
 										<td>$ {{ number_format($proddetail->price, 0, ',', '.')}}</td>										
 										<td>{{$proddetail->iva}}%</td>
 										<td>{{$proddetail->otro_impuesto}}%</td>
+										<td>$ {{ number_format($proddetail->total_bruto, 0, ',', '.')}}</td>
 										<td>$ {{ number_format($proddetail->total, 0, ',', '.')}}</td>
 										<td class="text-center">
 											@if($status == 'true')
@@ -165,6 +168,7 @@
 										<th></th>
 										<td></td>								
 										<td></td>
+										<th>$ {{number_format($arrayTotales['kgTotalventa'], 0, ',', '.')}} </th>
 										<th>$ {{number_format($arrayTotales['kgTotalventa'], 0, ',', '.')}} </th>
 										<td class="text-center">
 											<form method="GET" action="registrar_pago/{{$id}}">
