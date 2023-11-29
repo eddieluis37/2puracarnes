@@ -201,27 +201,29 @@ class saleController extends Controller
             $formatCantidad = new metodosrogercodeController();
             //$yourController->yourFunction($request);
 
-            $formatPcompra = $formatCantidad->MoneyToNumber($request->price);
+            $formatPrVenta = $formatCantidad->MoneyToNumber($request->price);
             $formatPesoKg = $formatCantidad->MoneyToNumber($request->quantity);
 
-            $subtotal = $formatPcompra * $formatPesoKg;
+            $subtotal = $formatPrVenta * $formatPesoKg;
             $total = $subtotal *  $request->iva;
 
             $total = $request->kgrequeridos * $request->precioventa;
             $preciov = $request->precioventa * 1.0;
 
             $getReg = SaleDetail::firstWhere('id', $request->regdetailId);
-            $detalleVenta = $this->getventasdetail($request->regdetailId);  
-            $ivaprod = $detalleVenta[0]->iva;
+            
+            $iva = $request->get('iva');
+            
             
             if ($getReg == null) {                
                 //$subtotal = $request->price * $request->quantity;
                 $detail = new SaleDetail();
                 $detail->sale_id = $request->ventaId;
                 $detail->product_id = $request->producto;
-                $detail->price = $formatPcompra;
-                $detail->iva;
-                $detail->porciva = $ivaprod;
+                $detail->price = $formatPrVenta;
+                $detail->iva = $iva;
+                $detail->otro_impuesto = $request->otro_impuesto;
+                $detail->porciva = $iva;
                 $detail->quantity = $request->quantity;
                 $detail->total_bruto = $subtotal;
                 $detail->total = $subtotal * $request->iva;
@@ -229,12 +231,14 @@ class saleController extends Controller
                 $detail->save();
             } else {
                 $updateReg = SaleDetail::firstWhere('id', $request->regdetailId);
-                $detalleVenta = $this->getventasdetail($request->regdetailId);            
+                $detalleVenta = $this->getventasdetail($request->ventaId);
+                $ivaprod = $detalleVenta[0]->iva;           
                    //$subtotal = $request->price * $request->quantity;
                 $updateReg->product_id = $request->producto;
-                $updateReg->price = $formatPcompra;
+                $updateReg->price = $formatPrVenta;
                 $updateReg->quantity = $formatPesoKg;
-                $updateReg->iva;
+                $updateReg->$iva;
+                $updateReg->otro_impuesto = $request->otro_impuesto;
                 $updateReg->porciva = $ivaprod;
                 $updateReg->total_bruto = $subtotal;
                 $updateReg->total = $subtotal * $request->iva;
@@ -548,7 +552,8 @@ class saleController extends Controller
         if ($producto) {
             return response()->json([
                 'precio' => $producto->precio,
-                'iva' => $producto->iva
+                'iva' => $producto->iva,
+                'otro_impuesto' => $producto->otro_impuesto
             ]);
         } else {
             // En caso de que el producto no sea encontrado

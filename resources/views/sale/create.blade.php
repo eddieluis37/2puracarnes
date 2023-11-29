@@ -85,28 +85,41 @@
 									<label for="" class="form-label">Precio venta</label>
 									<div class="input-group flex-nowrap">
 										<span class="input-group-text" id="addon-wrapping">$</span>
-										<input type="text" id="price" name="price" class="form-control input" readonly placeholder="EJ: 20.500">
+										<input type="text" id="price" name="price" class="form-control input" readonly placeholder="">
 									</div>
 								</div>
+
 								<div class="col-md-3">
-									<label for="" class="form-label">Peso KG</label>
+									<label for="" class="form-label">IVA</label>
 									<div class="input-group flex-nowrap">
-										<input type="text" id="quantity" name="quantity" class="form-control input" placeholder="EJ: 10,00">
-										<span class="input-group-text" id="addon-wrapping">KG</span>
+
+										<input type="text" id="iva" name="iva" class="form-control input" readonly placeholder="">
+										<span class="input-group-text" id="addon-wrapping">%</span>
 									</div>
 								</div>
-								<!--div class="col-md-2">
-								<div class="task-header">
-									<div class="form-group">
-                                        <label for="" class="form-label">Sub Total</label>
-                                        <input type="text" class="form-control input" placeholder="EJ: 10.00">
+
+								<div class="form-group row" style="margin-top:3px; margin-left:400px">
+									<div class="col-md-3">
+										<label for="" class="form-label">O.I</label>
+										<div class="input-group flex-nowrap">
+
+											<input type="text" id="otro_impuesto" name="otro_impuesto" class="form-control input" readonly placeholder="">
+											<span class="input-group-text" id="addon-wrapping">%</span>
+										</div>
 									</div>
-								</div>
-							</div>-->
-								<div class="col-md-2 text-center">
-									<div class="" style="margin-top:30px;">
-										<div class="d-grid gap-2">
-											<button id="btnAdd" class="btn btn-primary">Añadir</button>
+									<div class="col-md-3">
+										<label for="" class="form-label">Peso KG</label>
+										<div class="input-group flex-nowrap"">
+										<input type=" text" id="quantity" name="quantity" class="form-control input" placeholder="EJ: 10,00">
+											<span class="input-group-text" id="addon-wrapping">KG</span>
+										</div>
+									</div>
+
+									<div class="col-md-3">
+										<div class="" style="margin-top:30px;">
+											<div class="d-grid gap-2">
+												<button id="btnAdd" class="btn btn-primary">Añadir</button>
+											</div>
 										</div>
 									</div>
 								</div>
@@ -115,86 +128,88 @@
 					</div>
 				</div>
 			</div>
+		</div>
 
-			<div class="widget-content mt-3">
-				<div class="card">
-					<div class="card-body">
-						<div class="table-responsive mt-3">
-							<table id="tableDespostere" class="table table-sm table-striped table-bordered">
-								<thead class="text-white" style="background: #3B3F5C">
-									<tr>										
-										<th class="table-th text-white">Producto</th>
-										<th class="table-th text-white">Cant</th>
-										<th class="table-th text-white">Precio</th>									
-										<th class="table-th text-white">IVA</th>
-										<th class="table-th text-white">O.I</th>									
-										<th class="table-th text-white">Total.B</th>
-										<th class="table-th text-white">Total</th>
-										<th class="table-th text-white text-center">Acciones</th>
-									</tr>
-								</thead>
-								<tbody id="tbodyDetail">
-									@foreach($detalleVenta as $proddetail)
-									<tr>
-										<!--td>{{$proddetail->id}}</td-->
+		<div class="widget-content mt-3">
+			<div class="card">
+				<div class="card-body">
+					<div class="table-responsive mt-3">
+						<table id="tableDespostere" class="table table-sm table-striped table-bordered">
+							<thead class="text-white" style="background: #3B3F5C">
+								<tr>
+									<th class="table-th text-white">Producto</th>
+									<th class="table-th text-white">Cant</th>
+									<th class="table-th text-white">Precio</th>
+									<th class="table-th text-white">IVA</th>
+									<th class="table-th text-white">O.I</th>
+									<th class="table-th text-white">Total.B</th>
+									<th class="table-th text-white">Total</th>
+									<th class="table-th text-white text-center">Acciones</th>
+								</tr>
+							</thead>
+							<tbody id="tbodyDetail">
+								@foreach($detalleVenta as $proddetail)
+								<tr>
+									<!--td>{{$proddetail->id}}</td-->
 
-										<td>{{$proddetail->nameprod}}</td>
-										<td>{{ number_format($proddetail->quantity, 2, ',', '.')}} KG</td>
-										<td>$ {{ number_format($proddetail->price, 0, ',', '.')}}</td>										
-										<td>{{$proddetail->iva}}%</td>
-										<td>{{$proddetail->otro_impuesto}}%</td>
-										<td>$ {{ number_format($proddetail->total_bruto, 0, ',', '.')}}</td>
-										<td>$ {{ number_format($proddetail->total, 0, ',', '.')}}</td>
-										<td class="text-center">
-											@if($status == 'true')
-											<button class="btn btn-dark fas fa-edit" name="btnEdit" data-id="{{$proddetail->id}}" title="Editar">
-											</button>
-											<button class="btn btn-dark fas fa-trash" name="btnDown" data-id="{{$proddetail->id}}" title="Borrar">
-											</button>
-											@else
-											<button class="btn btn-dark fas fa-edit" name="btnEdit" title="Editar" disabled>
-											</button>
-											<button class="btn btn-dark fas fa-trash" name="btnDown" title="Borrar" disabled>
-											</button>
-											@endif
+									<td>{{$proddetail->nameprod}}</td>
+									<td>{{ number_format($proddetail->quantity, 2, ',', '.')}} KG</td>
+									<td>$ {{ number_format($proddetail->price, 0, ',', '.')}}</td>
+									<td>{{$proddetail->iva}}%</td>
+									<td>{{$proddetail->otro_impuesto}}%</td>
+									<td>$ {{ number_format($proddetail->total_bruto, 0, ',', '.')}}</td>
+									<td>$ {{ number_format($proddetail->total, 0, ',', '.')}}</td>
+									<td class="text-center">
+										@if($status == 'true')
+										<button class="btn btn-dark fas fa-edit" name="btnEdit" data-id="{{$proddetail->id}}" title="Editar">
+										</button>
+										<button class="btn btn-dark fas fa-trash" name="btnDown" data-id="{{$proddetail->id}}" title="Borrar">
+										</button>
+										@else
+										<button class="btn btn-dark fas fa-edit" name="btnEdit" title="Editar" disabled>
+										</button>
+										<button class="btn btn-dark fas fa-trash" name="btnDown" title="Borrar" disabled>
+										</button>
+										@endif
+									</td>
+								</tr>
+								@endforeach
+							</tbody>
+							<tfoot id="tabletfoot">
+								<tr>
+									<th>Totales</th>
+									<th>
 										</td>
-									</tr>
-									@endforeach
-								</tbody>
-								<tfoot id="tabletfoot">
-									<tr>
-										<th>Totales</th>
-										<th></td>
-										<th></th>
-										<td></td>								
-										<td></td>
-										<th>$ {{number_format($arrayTotales['kgTotalventa'], 0, ',', '.')}} </th>
-										<th>$ {{number_format($arrayTotales['kgTotalventa'], 0, ',', '.')}} </th>
-										<td class="text-center">
-											<form method="GET" action="registrar_pago/{{$id}}">
-												@csrf
-												<div class="text-center mt-3">
-													<button type="submit" class="btn btn-success">Pagar</button>
-												</div>
-											</form>
-										</td>
-									</tr>
-								</tfoot>
-							</table>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="widget-content mt-3">
-				<div class="card">
-					<div class="card-body">
-
+									<th></th>
+									<td></td>
+									<td></td>
+									<th>$ {{number_format($arrayTotales['kgTotalventa'], 0, ',', '.')}} </th>
+									<th>$ {{number_format($arrayTotales['kgTotalventa'], 0, ',', '.')}} </th>
+									<td class="text-center">
+										<form method="GET" action="registrar_pago/{{$id}}">
+											@csrf
+											<div class="text-center mt-3">
+												<button type="submit" class="btn btn-success">Pagar</button>
+											</div>
+										</form>
+									</td>
+								</tr>
+							</tfoot>
+						</table>
 					</div>
 				</div>
 			</div>
 		</div>
+		<div class="widget-content mt-3">
+			<div class="card">
+				<div class="card-body">
 
+				</div>
+			</div>
+		</div>
 	</div>
+
+</div>
 </div>
 @endsection
 @section('script')

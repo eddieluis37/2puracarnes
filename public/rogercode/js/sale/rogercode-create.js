@@ -54,6 +54,7 @@ function actualizarValoresProducto(productId) {
             $("#price").val(response.precio);
             $("#pesoKgOrigen").val(response.fisico);
             $("#iva").val(response.iva);
+            $("#otro_impuesto").val(response.otro_impuesto);
         },
         error: function (xhr, status, error) {
             // Maneja el error si la solicitud AJAX falla
@@ -136,8 +137,8 @@ const showData = (data) => {
                 <td>${element.nameprod}</td>
                 <td>${formatCantidad(element.quantity)} KG</td>
                 <td>$ ${formatCantidadSinCero(element.price)}</td>  
-                <td>$ ${formatCantidad(element.iva)}</td> 
-                <td>${element.otro_impuesto}</td>              
+                <td>${formatCantidad(element.iva)}%</td> 
+                <td>${element.otro_impuesto}%</td>              
                 <td>$ ${formatCantidadSinCero(element.total_bruto)}</td>    
                 <td>$ ${formatCantidadSinCero(element.total)}</td>        
                 <td class="text-center">
