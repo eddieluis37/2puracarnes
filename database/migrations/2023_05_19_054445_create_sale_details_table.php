@@ -19,7 +19,7 @@ class CreateSaleDetailsTable extends Migration
             $table->decimal('price',10,2);
             $table->decimal('quantity',10,2);
             $table->decimal('porciva',10,2)->default(0)->nullable(); 
-            $table->decimal('iva',10,2)->default(0)->nullable();
+            $table->decimal('iva',10,0)->default(0)->nullable();
             $table->decimal('otro_impuesto',10,2)->default(0)->nullable(); 
             $table->decimal('total_bruto',12,0)->default(0)->nullable(); 
             $table->decimal('total',12,0)->default(0)->nullable(); 

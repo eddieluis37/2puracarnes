@@ -208,7 +208,7 @@
                             </tr>
                             <tr>
                                 <th scope="row" style="text-align: left">Total_Bruto</th>
-                                <td colspan="2">{{number_format($arrayTotales['kgTotalventa'], 0, ',', '.')}}</td>
+                                <td colspan="2">{{number_format($arrayTotales['TotalBruto'], 0, ',', '.')}}</td>
 
                             </tr>
                             <tr>
@@ -223,12 +223,13 @@
                             </tr>
                             <tr>
                                 <th scope="row" style="text-align: left">Total_IVA</th>
-                               
+                                <td colspan="2">{{number_format($dataVenta[0]->total_iva, 0, ',', '.')}}</td>
+                         
 
                             </tr>
                             <tr>
                                 <th scope="row" style="text-align: left">TotalOtrosImp</th>
-                                <td colspan="2"></td>
+                                <td>{{$dataVenta[0]->total_iva}}</td>
 
                             </tr>
                             <tr>

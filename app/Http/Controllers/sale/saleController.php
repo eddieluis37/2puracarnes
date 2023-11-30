@@ -100,7 +100,7 @@ class saleController extends Controller
         $dataVenta = DB::table('sales as sa')
             ->join('thirds as tird', 'sa.third_id', '=', 'tird.id')
             ->join('centro_costo as centro', 'sa.centrocosto_id', '=', 'centro.id')
-            ->select('sa.*', 'tird.name as namethird', 'centro.name as namecentrocosto', 'tird.porc_descuento', 'sa.vendedor_id')
+            ->select('sa.*', 'tird.name as namethird', 'centro.name as namecentrocosto', 'tird.porc_descuento', 'sa.total_iva', 'sa.vendedor_id')
             ->where('sa.id', $id)
             ->get();
 
@@ -108,13 +108,17 @@ class saleController extends Controller
         $vendedor = Third::where('id', $vendedorId)->value('name');
         $dataVenta[0]->vendedor_name = $vendedor;
 
+        //  dd($dataVenta);
+
+
+
         $venta = Sale::find($id);
         $producto = Product::get();
         /*   $ventasdetalle = $this->getventasdetalle($id, $venta->centrocosto_id); */
         $arrayTotales = $this->sumTotales($id);
 
-        $descuento = $dataVenta[0]->porc_descuento / 100 * $arrayTotales['kgTotalventa'];
-        $subtotal = $arrayTotales['kgTotalventa'] - $descuento;
+        $descuento = $dataVenta[0]->porc_descuento / 100 * $arrayTotales['TotalFinal'];
+        $subtotal = $arrayTotales['TotalBruto'] - $descuento;
 
 
         return view('sale.registrar_pago', compact('venta', 'arrayTotales', 'producto', 'dataVenta', 'descuento', 'subtotal'));
@@ -122,11 +126,12 @@ class saleController extends Controller
 
     public function sumTotales($id)
     {
-
-        $kgTotalventa = (float)SaleDetail::Where([['sale_id', $id]])->sum('total');
+        $TotalBruto = (float)SaleDetail::Where([['sale_id', $id]])->sum('total_bruto');
+        $TotalFinal = (float)SaleDetail::Where([['sale_id', $id]])->sum('total');
 
         $array = [
-            'kgTotalventa' => $kgTotalventa,
+            'TotalBruto' => $TotalBruto,
+            'TotalFinal' => $TotalFinal,
         ];
 
         return $array;
@@ -197,53 +202,62 @@ class saleController extends Controller
                     'errors' => $validator->errors()
                 ], 422);
             }
+            //$yourController->yourFunction($request);
+            //$total = $request->kgrequeridos * $request->precioventa;
+            //$preciov = $request->precioventa * 1.0;
+            //$subtotal = $request->price * $request->quantity;
 
             $formatCantidad = new metodosrogercodeController();
-            //$yourController->yourFunction($request);
 
             $formatPrVenta = $formatCantidad->MoneyToNumber($request->price);
             $formatPesoKg = $formatCantidad->MoneyToNumber($request->quantity);
 
-            $subtotal = $formatPrVenta * $formatPesoKg;
-            $total = $subtotal *  $request->iva;
+            $totalIndBruto = $formatPrVenta * $formatPesoKg;
+            $total = $totalIndBruto *  $request->iva;
 
-            $total = $request->kgrequeridos * $request->precioventa;
-            $preciov = $request->precioventa * 1.0;
 
             $getReg = SaleDetail::firstWhere('id', $request->regdetailId);
-            
-            $iva = $request->get('iva');
-            
-            
-            if ($getReg == null) {                
-                //$subtotal = $request->price * $request->quantity;
+
+            $Por_Iva = $request->get('iva');
+            $Impuestos = $Por_Iva + $request->otro_impuesto;
+            $TotalImpuestos = $totalIndBruto * ($Impuestos / 100);
+            $TotalFinal = $TotalImpuestos + $totalIndBruto;
+
+            $iva = $totalIndBruto * ($Por_Iva / 100);
+
+
+
+            if ($getReg == null) {
                 $detail = new SaleDetail();
                 $detail->sale_id = $request->ventaId;
                 $detail->product_id = $request->producto;
                 $detail->price = $formatPrVenta;
                 $detail->iva = $iva;
                 $detail->otro_impuesto = $request->otro_impuesto;
-                $detail->porciva = $iva;
+                $detail->porciva = $Por_Iva;
                 $detail->quantity = $request->quantity;
-                $detail->total_bruto = $subtotal;
-                $detail->total = $subtotal * $request->iva;
+                $detail->total_bruto = $totalIndBruto;
+                $detail->total = $TotalFinal;
 
                 $detail->save();
             } else {
                 $updateReg = SaleDetail::firstWhere('id', $request->regdetailId);
                 $detalleVenta = $this->getventasdetail($request->ventaId);
-                $ivaprod = $detalleVenta[0]->iva;           
-                   //$subtotal = $request->price * $request->quantity;
+                $ivaprod = $detalleVenta[0]->iva;
                 $updateReg->product_id = $request->producto;
                 $updateReg->price = $formatPrVenta;
                 $updateReg->quantity = $formatPesoKg;
                 $updateReg->$iva;
                 $updateReg->otro_impuesto = $request->otro_impuesto;
                 $updateReg->porciva = $ivaprod;
-                $updateReg->total_bruto = $subtotal;
-                $updateReg->total = $subtotal * $request->iva;
+                $updateReg->total_bruto = $totalIndBruto;
+                $updateReg->total = $TotalFinal;
                 $updateReg->save();
             }
+
+            $sale = Sale::find($request->ventaId);
+            $sale->total_iva = $iva;
+            $sale->save();
 
 
             $arraydetail = $this->getventasdetail($request->ventaId);
@@ -264,14 +278,6 @@ class saleController extends Controller
         }
     }
 
-
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
         try {
@@ -494,7 +500,7 @@ class saleController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Request $request)
+    public function destroyVenta(Request $request)
     {
         try {
             $compe = SaleDetail::where('id', $request->id)->first();
@@ -517,7 +523,7 @@ class saleController extends Controller
         }
     }
 
-    public function destroyVenta(Request $request)
+    public function destroy(Request $request)
     {
         try {
             $compe = Sale::where('id', $request->id)->first();

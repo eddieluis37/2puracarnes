@@ -67,7 +67,7 @@
 							<input type="hidden" id="ventaId" name="ventaId" value="{{$id}}">
 							<input type="hidden" id="regdetailId" name="regdetailId" value="0">
 							<div class="row g-3">
-								<div class="col-md-4">
+								<div class="col-md-3">
 									<div class="task-header">
 										<div class="form-group">
 											<label for="" class="form-label">Buscar producto</label>
@@ -97,17 +97,18 @@
 										<span class="input-group-text" id="addon-wrapping">%</span>
 									</div>
 								</div>
+								<div class="col-md-3">
+									<label for="" class="form-label">O.I</label>
+									<div class="input-group flex-nowrap">
 
-								<div class="form-group row" style="margin-top:3px; margin-left:400px">
-									<div class="col-md-3">
-										<label for="" class="form-label">O.I</label>
-										<div class="input-group flex-nowrap">
-
-											<input type="text" id="otro_impuesto" name="otro_impuesto" class="form-control input" readonly placeholder="">
-											<span class="input-group-text" id="addon-wrapping">%</span>
-										</div>
+										<input type="text" id="otro_impuesto" name="otro_impuesto" class="form-control input" readonly placeholder="">
+										<span class="input-group-text" id="addon-wrapping">%</span>
 									</div>
-									<div class="col-md-3">
+								</div>
+
+								<div class="form-group row" style="margin-top:3px; margin-left:800px">
+
+									<div class="col-md-7">
 										<label for="" class="form-label">Peso KG</label>
 										<div class="input-group flex-nowrap"">
 										<input type=" text" id="quantity" name="quantity" class="form-control input" placeholder="EJ: 10,00">
@@ -178,21 +179,20 @@
 							<tfoot id="tabletfoot">
 								<tr>
 									<th>Totales</th>
-									<th>
-										</td>
+									<th></th>
 									<th></th>
 									<td></td>
 									<td></td>
-									<th>$ {{number_format($arrayTotales['kgTotalventa'], 0, ',', '.')}} </th>
-									<th>$ {{number_format($arrayTotales['kgTotalventa'], 0, ',', '.')}} </th>
-									<td class="text-center">
+									<th>$ {{number_format($arrayTotales['TotalBruto'], 0, ',', '.')}} </th>
+									<th>$ {{number_format($arrayTotales['TotalFinal'], 0, ',', '.')}} </th>
+									<th class="text-center">
 										<form method="GET" action="registrar_pago/{{$id}}">
 											@csrf
-											<div class="text-center mt-3">
+											<div class="text-center mt-1">
 												<button type="submit" class="btn btn-success">Pagar</button>
 											</div>
 										</form>
-									</td>
+									</th>
 								</tr>
 							</tfoot>
 						</table>
@@ -200,16 +200,7 @@
 				</div>
 			</div>
 		</div>
-		<div class="widget-content mt-3">
-			<div class="card">
-				<div class="card-body">
-
-				</div>
-			</div>
-		</div>
 	</div>
-
-</div>
 </div>
 @endsection
 @section('script')

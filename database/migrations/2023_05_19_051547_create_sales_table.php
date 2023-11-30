@@ -39,6 +39,8 @@ class CreateSalesTable extends Migration
             $table->decimal('total_bruto',10,0);
             $table->decimal('descuentos',10,0);
             $table->decimal('subtotal',10,0);
+            $table->decimal('total_iva',10,0)->default(0)->nullable();
+            $table->decimal('total_otros_impuestos',10,0)->default(0)->nullable(); 
             $table->decimal('total',10,0);
             $table->decimal('total_otros_descuentos',10,2);
             $table->decimal('valor_a_pagar_efectivo',10,0);
@@ -46,7 +48,7 @@ class CreateSalesTable extends Migration
             $table->decimal('valor_a_pagar_otros',10,0);
             $table->decimal('valor_a_pagar_credito',10,0);
             $table->decimal('valor_pagado',10,0);           
-            $table->decimal('cambio',10,2);    
+            $table->decimal('cambio',10,0);    
 
             $table->enum('status',['0','1','2','3','4','5'])->default('0');
 

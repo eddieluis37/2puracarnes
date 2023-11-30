@@ -161,10 +161,13 @@ const showData = (data) => {
             <th>Totales</th>
             <td></td>
             <td></td>
-            <td></td>                             
-            <td></td>        
+            <td></td>    
+            <td></td>                              
             <th>$ ${formatCantidadSinCero(
-                arrayTotales.kgTotalventa
+                arrayTotales.TotalBruto
+            )}</th>           
+            <th>$ ${formatCantidadSinCero(
+                arrayTotales.TotalFinal
             )}</th>            
             <td class="text-center">
             <button id="cargarInventarioBtn" class="btn btn-success btn-sm">Pagar</button>
