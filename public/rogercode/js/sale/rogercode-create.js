@@ -167,7 +167,7 @@ const showData = (data) => {
                 arrayTotales.TotalBruto
             )}</th>           
             <th>$ ${formatCantidadSinCero(
-                arrayTotales.TotalFinal
+                arrayTotales.TotalValorAPagar
             )}</th>            
             <td class="text-center">
             <button id="cargarInventarioBtn" class="btn btn-success btn-sm">Pagar</button>

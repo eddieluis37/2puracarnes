@@ -362,6 +362,7 @@ Route::group(['middleware' => [('auth')]], function () {
 
     Route::get('/obtener-precios-producto', [saleController::class, 'obtenerPreciosProducto'])->name('sale.obtener-precios-producto');
     Route::get('sale/create/registrar_pago/{id}', [saleController::class, 'create_reg_pago'])->name('sale.registrar_pago');
+
     /*****************************LISTA_DE_PRECIO******************************************/
 
     Route::get('lista_de_precio', [listaPrecioController::class, 'index'])->name('lista_de_precio.index');

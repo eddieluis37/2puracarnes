@@ -110,14 +110,12 @@ class saleController extends Controller
 
         //  dd($dataVenta);
 
-
-
         $venta = Sale::find($id);
         $producto = Product::get();
         /*   $ventasdetalle = $this->getventasdetalle($id, $venta->centrocosto_id); */
         $arrayTotales = $this->sumTotales($id);
 
-        $descuento = $dataVenta[0]->porc_descuento / 100 * $arrayTotales['TotalFinal'];
+        $descuento = $dataVenta[0]->porc_descuento / 100 * $arrayTotales['TotalValorAPagar'];
         $subtotal = $arrayTotales['TotalBruto'] - $descuento;
 
 
@@ -126,14 +124,14 @@ class saleController extends Controller
 
     public function sumTotales($id)
     {
-        $TotalBruto = (float)SaleDetail::Where([['sale_id', $id]])->sum('total_bruto');
-        $TotalFinal = (float)SaleDetail::Where([['sale_id', $id]])->sum('total');
+        $TotalBruto = (float)SaleDetail::Where([['sale_id', $id]])->sum('total_bruto');      
         $TotalIva = (float)SaleDetail::Where([['sale_id', $id]])->sum('iva');
         $TotalOtroImpuesto = (float)SaleDetail::Where([['sale_id', $id]])->sum('otro_impuesto');
+        $TotalValorAPagar = (float)SaleDetail::Where([['sale_id', $id]])->sum('total');
 
         $array = [
             'TotalBruto' => $TotalBruto,
-            'TotalFinal' => $TotalFinal,
+            'TotalValorAPagar' => $TotalValorAPagar,
             'TotalIva' => $TotalIva,
             'TotalOtroImpuesto' => $TotalOtroImpuesto,
         ];
@@ -223,11 +221,14 @@ class saleController extends Controller
             $getReg = SaleDetail::firstWhere('id', $request->regdetailId);
 
             $Por_Iva = $request->get('iva');
+            $OtroImp = $request->get('otro_impuesto');
+
             $Impuestos = $Por_Iva + $request->otro_impuesto;
             $TotalImpuestos = $totalIndBruto * ($Impuestos / 100);
-            $TotalFinal = $TotalImpuestos + $totalIndBruto;
+            $valorAPagar = $TotalImpuestos + $totalIndBruto;
 
             $iva = $totalIndBruto * ($Por_Iva / 100);
+            $OtroImpuesto = $totalIndBruto * ($OtroImp / 100);
 
             $total_otros_impuestos =  $totalIndBruto * ($request->otro_impuesto / 100);
 
@@ -239,11 +240,11 @@ class saleController extends Controller
                 $detail->product_id = $request->producto;
                 $detail->price = $formatPrVenta;
                 $detail->iva = $iva;
-                $detail->otro_impuesto = $request->otro_impuesto;
+                $detail->otro_impuesto = $OtroImpuesto;
                 $detail->porciva = $Por_Iva;
                 $detail->quantity = $request->quantity;
                 $detail->total_bruto = $totalIndBruto;
-                $detail->total = $TotalFinal;
+                $detail->total = $valorAPagar;
 
                 $detail->save();
             } else {
@@ -254,17 +255,17 @@ class saleController extends Controller
                 $updateReg->price = $formatPrVenta;
                 $updateReg->quantity = $formatPesoKg;
                 $updateReg->$iva;
-                $updateReg->otro_impuesto = $request->otro_impuesto;
+                $updateReg->otro_impuesto = $OtroImpuesto;
                 $updateReg->porciva = $ivaprod;
                 $updateReg->total_bruto = $totalIndBruto;
-                $updateReg->total = $TotalFinal;
+                $updateReg->total = $valorAPagar;
                 $updateReg->save();
             }
 
             $sale = Sale::find($request->ventaId);
             $sale->total_iva = $iva;
             $sale->total_otros_impuestos = $total_otros_impuestos;
-            $sale->valor_a_pagar = $valor_a_pagar;
+            $sale->total_valor_a_pagar = $valor_a_pagar;
             $sale->save();
 
 

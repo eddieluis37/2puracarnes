@@ -184,7 +184,7 @@
 									<td></td>
 									<td></td>
 									<th>$ {{number_format($arrayTotales['TotalBruto'], 0, ',', '.')}} </th>
-									<th>$ {{number_format($arrayTotales['TotalFinal'], 0, ',', '.')}} </th>
+									<th>$ {{number_format($arrayTotales['TotalValorAPagar'], 0, ',', '.')}} </th>
 									<th class="text-center">
 										<form method="GET" action="registrar_pago/{{$id}}">
 											@csrf

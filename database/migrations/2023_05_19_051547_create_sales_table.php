@@ -47,7 +47,7 @@ class CreateSalesTable extends Migration
             $table->decimal('valor_a_pagar_tarjeta',10,0);
             $table->decimal('valor_a_pagar_otros',10,0);
             $table->decimal('valor_a_pagar_credito',10,0);
-            $table->decimal('valor_a_pagar',10,0)->default(0)->nullable();      
+            $table->decimal('total_valor_a_pagar',10,0)->default(0)->nullable();      
             $table->decimal('valor_pagado',10,0);           
             $table->decimal('cambio',10,0);    
 
