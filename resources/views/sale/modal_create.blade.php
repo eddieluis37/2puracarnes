@@ -67,7 +67,7 @@
 						<select class="form-control form-control-sm input" name="subcentrodecosto" id="subcentrodecosto" required>
 							<option value="">Seleccione subCentroDeCosto</option>
 							@foreach($subcentrodecostos as $subcentrodecosto)
-							<option value="{{$subcentrodecosto->id}}" {{ $subcentrodecosto->id == 1 ? 'selected' : '' }}>{{$subcentrodecosto->name}}</option>
+							<option value="{{$subcentrodecosto->id}}" {{ $subcentrodecosto->id == 0 ? 'selected' : '' }}>{{$subcentrodecosto->name}}</option>
 							@endforeach
 						</select>
 						<span class="text-danger error-message"></span>

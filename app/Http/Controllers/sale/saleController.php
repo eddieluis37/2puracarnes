@@ -287,20 +287,24 @@ class saleController extends Controller
         }
     }
 
-    public function store(Request $request)
+    public function store(Request $request) //Crear venta domicilio
     {
         try {
 
             $rules = [
                 'ventaId' => 'required',
+                'cliente' => 'required',
                 'vendedor' => 'required',
                 'centrocosto' => 'required',
+                'subcentrodecosto' => 'required',
 
             ];
             $messages = [
                 'ventaId.required' => 'El ventaId es requerido',
+                'cliente.required' => 'El cliente es requerido',
                 'vendedor.required' => 'El proveedor es requerido',
                 'centrocosto.required' => 'El centro de costo es requerido',
+                'subcentrodecosto.required' => 'El subcentro de costo es requerido',
             ];
 
             $validator = Validator::make($request->all(), $rules, $messages);
