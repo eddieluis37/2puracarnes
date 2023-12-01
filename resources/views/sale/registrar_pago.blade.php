@@ -208,44 +208,42 @@
                             </tr>
                             <tr>
                                 <th scope="row" style="text-align: left">Total_Bruto</th>
-                                <td colspan="2">{{number_format($arrayTotales['TotalBruto'], 0, ',', '.')}}</td>
+                                <td colspan="2">$ {{number_format($arrayTotales['TotalBruto'], 0, ',', '.')}}</td>
 
                             </tr>
                             <tr>
                                 <th scope="row" style="text-align: left">Descuentos</th>
-                                <td colspan="2">{{number_format($descuento, 0, ',', '.')}}</td>
+                                <td colspan="2">$ {{number_format($descuento, 0, ',', '.')}}</td>
 
                             </tr>
                             <tr>
                                 <th scope="row" style="text-align: left">SubTotal</th>
-                                <td colspan="2">{{number_format($subtotal, 0, ',', '.')}}</td>
+                                <td colspan="2">$ {{number_format($subtotal, 0, ',', '.')}}</td>
 
                             </tr>
                             <tr>
                                 <th scope="row" style="text-align: left">Total_IVA</th>
-                                <td colspan="2">{{number_format($dataVenta[0]->total_iva, 0, ',', '.')}}</td>
+                                <td colspan="2">$ {{number_format($arrayTotales['TotalIva'], 0, ',', '.')}}</td>
                          
 
                             </tr>
                             <tr>
                                 <th scope="row" style="text-align: left">TotalOtrosImp</th>
-                                <td>{{$dataVenta[0]->total_iva}}</td>
+                                <td colspan="2">$ {{number_format($arrayTotales['TotalOtroImpuesto'], 0, ',', '.')}}</td>
 
                             </tr>
                             <tr>
-                                <th scope="row" style="text-align: left">Valor_a_Pagar</th>
-                                <td colspan="2"><input type="text" name="valor_a_pagar" id="valor_a_pagar" value="valorA_Pagar"></td>
-
+                                <th scope="row" style="text-align: left">Valor_a_Pagar</th>                             
+                                <td colspan="2">$ {{number_format($dataVenta[0]->valor_a_pagar, 0, ',', '.')}}</td>
                             </tr>
                             <tr>
                                 <th scope="row" style="text-align: left">Valor_Pagado</th>
-                                <td colspan="2" style="text-align: right"><input type="text" name="valor_pagado" id="valor_pagado" value="valorPagado" disabled style="text-align: right; font-weight: bold; color: black"></td>
+                                <td colspan="2" style="text-align: right">$ <input type="text" name="valor_pagado" id="valor_pagado" value="valorPagado" disabled style="text-align: right; font-weight: bold; color: black"></td>
 
                             </tr>
                             <tr>
                                 <th scope="row" style="text-align: left">Cambio</th>
-                                <td colspan="2"></td>
-
+                                <td colspan="2" style="text-align: right">$ {{number_format($dataVenta[0]->valor_a_pagar, 0, ',', '.')}}</td>
                             </tr>
 
                         </tbody>

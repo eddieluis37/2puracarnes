@@ -128,10 +128,14 @@ class saleController extends Controller
     {
         $TotalBruto = (float)SaleDetail::Where([['sale_id', $id]])->sum('total_bruto');
         $TotalFinal = (float)SaleDetail::Where([['sale_id', $id]])->sum('total');
+        $TotalIva = (float)SaleDetail::Where([['sale_id', $id]])->sum('iva');
+        $TotalOtroImpuesto = (float)SaleDetail::Where([['sale_id', $id]])->sum('otro_impuesto');
 
         $array = [
             'TotalBruto' => $TotalBruto,
             'TotalFinal' => $TotalFinal,
+            'TotalIva' => $TotalIva,
+            'TotalOtroImpuesto' => $TotalOtroImpuesto,
         ];
 
         return $array;
@@ -225,8 +229,10 @@ class saleController extends Controller
 
             $iva = $totalIndBruto * ($Por_Iva / 100);
 
+            $total_otros_impuestos =  $totalIndBruto * ($request->otro_impuesto / 100);
 
-
+            $valor_a_pagar = $totalIndBruto + $total_otros_impuestos;
+ 
             if ($getReg == null) {
                 $detail = new SaleDetail();
                 $detail->sale_id = $request->ventaId;
@@ -257,6 +263,8 @@ class saleController extends Controller
 
             $sale = Sale::find($request->ventaId);
             $sale->total_iva = $iva;
+            $sale->total_otros_impuestos = $total_otros_impuestos;
+            $sale->valor_a_pagar = $valor_a_pagar;
             $sale->save();
 
 
