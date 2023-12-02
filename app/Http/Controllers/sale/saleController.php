@@ -254,7 +254,7 @@ class saleController extends Controller
                 $updateReg->product_id = $request->producto;
                 $updateReg->price = $formatPrVenta;
                 $updateReg->quantity = $formatPesoKg;
-                $updateReg->$iva;
+                $updateReg->iva = $iva;
                 $updateReg->otro_impuesto = $OtroImpuesto;
                 $updateReg->porciva = $ivaprod;
                 $updateReg->total_bruto = $totalIndBruto;

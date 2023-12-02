@@ -106,7 +106,7 @@
 									</div>
 								</div>
 
-								<div class="form-group row" style="margin-top:3px; margin-left:800px">
+								<div class="form-group row" style="margin-top:3px; margin-left:3px">
 
 									<div class="col-md-7">
 										<label for="" class="form-label">Peso KG</label>
