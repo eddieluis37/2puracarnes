@@ -7,6 +7,8 @@ use App\Http\Livewire\Scaner;
 use App\Models\Category;
 use App\Models\Centro_costo_product;
 use App\Models\Levels_products;
+use App\Models\Listaprecio;
+use App\Models\Listapreciodetalle;
 use App\Models\Product;
 use Livewire\Component;
 use Livewire\WithFileUploads;
@@ -92,9 +94,9 @@ class ProductsController extends Component
 			'name' => 'required|unique:products|min:3',
 			'levelproductid' => 'required|not_in:Elegir',
 			'code' => 'required',
-			'price_fama' => 'required',		
+			'price_fama' => 'required',
 			'alerts' => 'required',
-			
+
 		];
 
 		$messages = [
@@ -108,7 +110,7 @@ class ProductsController extends Component
 			'price_fama.required' => 'El precio mínimo es requerido',
 			'iva.required' => 'El I es requerido',
 			'alerts.required' => 'Ingresa el valor mínimo en existencias',
-			
+
 		];
 
 		$this->validate($rules, $messages);
@@ -123,8 +125,8 @@ class ProductsController extends Component
 			'barcode' => $this->barcode,
 			'price_fama' => $this->price_fama,
 			'iva' => $this->iva,
-			'otro_impuesto' => $this->otro_impuesto,							
-			'alerts' => $this->alerts,			
+			'otro_impuesto' => $this->otro_impuesto,
+			'alerts' => $this->alerts,
 		]);
 
 		if ($this->image) {
@@ -137,7 +139,9 @@ class ProductsController extends Component
 		$this->resetUI();
 		$this->emit('product-added', 'Producto Registrado');
 		$this->CrearProductoEnCentroCosto();
+		$this->CrearProductoEnListapreciodetalle();
 	}
+
 
 	public function CrearProductoEnCentroCosto()
 	{
@@ -152,6 +156,18 @@ class ProductsController extends Component
 		$centrocostoproduct->save();
 	}
 
+	public function CrearProductoEnListapreciodetalle()
+	{
+		$ultimoId = Product::latest('id')->first()->id;
+		$listaprecios = Listaprecio::all();
+		foreach ($listaprecios as $listaprecio) {
+			$listapreciodetalle = Listapreciodetalle::create([
+				'listaprecio_id' => $listaprecio->id,
+				'product_id' => $ultimoId,
+			]);
+			$listapreciodetalle->save();
+		}
+	}
 
 	public function Edit(Product $product)
 	{
@@ -162,7 +178,7 @@ class ProductsController extends Component
 		$this->barcode = $product->barcode;
 		$this->iva = $product->iva;
 		$this->otro_impuesto = $product->otro_impuesto;
-		$this->price_fama = $product->price_fama;	
+		$this->price_fama = $product->price_fama;
 		$this->alerts = $product->alerts;
 		$this->categoryid = $product->category_id;
 		$this->meatcutid = $product->meatcut_id;
@@ -177,7 +193,7 @@ class ProductsController extends Component
 			'name' => "required|min:3|unique:products,name,{$this->selected_id}",
 			'levelproductid' => 'required|not_in:Elegir',
 			'iva' => 'required',
-			'price_fama' => 'required',			
+			'price_fama' => 'required',
 			'alerts' => 'required',
 			'categoryid' => 'required|not_in:Elegir',
 			'meatcutid' => 'required|not_in:Elegir'
@@ -189,7 +205,7 @@ class ProductsController extends Component
 			'name.min' => 'El nombre del producto debe tener al menos 3 caracteres',
 			'levelproductid.not_in' => 'Elige nivel diferente de Elegir',
 			'iva.required' => 'El iva es requerido',
-			'price_fama.required' => 'El precio es requerido',			
+			'price_fama.required' => 'El precio es requerido',
 			'alerts.required' => 'Ingresa el valor mínimo en existencias',
 			'categoryid.not_in' => 'Elige un nombre de categoría diferente de Elegir',
 			'meatcutid.not_in' => 'Elige un nombre de corte de carne diferente de Elegir',
@@ -205,8 +221,8 @@ class ProductsController extends Component
 			'code' => $this->code,
 			'iva' => $this->iva,
 			'otro_impuesto' => $this->otro_impuesto,
-			'price_fama' => $this->price_fama,			
-			'barcode' => $this->barcode,		
+			'price_fama' => $this->price_fama,
+			'barcode' => $this->barcode,
 			'alerts' => $this->alerts,
 			'category_id' => $this->categoryid,
 			'meatcut_id' => $this->meatcutid
@@ -227,7 +243,7 @@ class ProductsController extends Component
 		}
 
 		$this->resetUI();
-		$this->emit('product-updated', 'Producto Actualizado');
+		$this->emit('product-updated', 'Producto Actualizado');		
 	}
 
 
@@ -239,7 +255,7 @@ class ProductsController extends Component
 		$this->barcode = '';
 		$this->iva = '';
 		$this->otro_impuesto = '';
-		$this->price_fama = '';		
+		$this->price_fama = '';
 		$this->alerts = '';
 		$this->search = '';
 		$this->categoryid = 'Elegir';
