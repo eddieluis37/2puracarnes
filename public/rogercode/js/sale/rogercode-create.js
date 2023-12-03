@@ -26,6 +26,9 @@ const cargarInventarioBtn = document.getElementById("cargarInventarioBtn");
 var centrocosto = document.getElementById("centrocosto").value;
 console.log("centro " + centrocosto);
 
+var cliente = document.getElementById("cliente").value;
+console.log("cliente " + cliente);
+
 $(".select2Prod").select2({
     placeholder: "Busca un producto",
     width: "100%",
@@ -48,6 +51,7 @@ function actualizarValoresProducto(productId) {
         data: {
             productId: productId,
             centrocosto: $("#centrocosto").val(), // Obtén el valor del campo centrocosto
+            cliente: $("#cliente").val(), // Obtén el valor del campo centrocosto
         },
         success: function (response) {
             // Actualiza los valores en los campos de entrada del centro de costo

@@ -124,7 +124,7 @@ class saleController extends Controller
 
     public function sumTotales($id)
     {
-        $TotalBruto = (float)SaleDetail::Where([['sale_id', $id]])->sum('total_bruto');      
+        $TotalBruto = (float)SaleDetail::Where([['sale_id', $id]])->sum('total_bruto');
         $TotalIva = (float)SaleDetail::Where([['sale_id', $id]])->sum('iva');
         $TotalOtroImpuesto = (float)SaleDetail::Where([['sale_id', $id]])->sum('otro_impuesto');
         $TotalValorAPagar = (float)SaleDetail::Where([['sale_id', $id]])->sum('total');
@@ -233,7 +233,7 @@ class saleController extends Controller
             $total_otros_impuestos =  $totalIndBruto * ($request->otro_impuesto / 100);
 
             $valor_a_pagar = $totalIndBruto + $total_otros_impuestos;
- 
+
             if ($getReg == null) {
                 $detail = new SaleDetail();
                 $detail->sale_id = $request->ventaId;
@@ -244,6 +244,7 @@ class saleController extends Controller
                 $detail->porciva = $Por_Iva;
                 $detail->quantity = $request->quantity;
                 $detail->total_bruto = $totalIndBruto;
+                $detail->descuento = $request->porc_descuento;
                 $detail->total = $valorAPagar;
 
                 $detail->save();
@@ -556,17 +557,14 @@ class saleController extends Controller
     }
 
     public function obtenerPreciosProducto(Request $request)
-    {
-        /* $producto = DB::table('listapreciodetalles')
-        ->where('product_id', $request->productId)
-        ->where('listaprecio_id', $centrocostoId)
-        ->first();
-         */
-
+    { 
         $centrocostoId = $request->input('centrocosto');
+        $clienteId = $request->input('cliente');
+        $cliente = Third::find($clienteId);
         $producto = Listapreciodetalle::join('products as prod', 'listapreciodetalles.product_id', '=', 'prod.id')
+            ->join('thirds as t', 'listapreciodetalles.listaprecio_id', '=', 't.id')
             ->where('prod.id', $request->productId)
-            ->where('listapreciodetalles.listaprecio_id', $centrocostoId)
+            ->where('t.id', $cliente->listaprecio_genericid)       
             ->first();
         if ($producto) {
             return response()->json([
@@ -581,7 +579,6 @@ class saleController extends Controller
             ], 404);
         }
     }
-
 
     public function cargarInventariocr(Request $request)
     {

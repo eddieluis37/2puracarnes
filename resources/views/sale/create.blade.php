@@ -72,6 +72,7 @@
 										<div class="form-group">
 											<label for="" class="form-label">Buscar producto</label>
 											<input type="hidden" id="centrocosto" name="centrocosto" value="{{$datacompensado[0]->centrocosto_id}}" data-id="{{$datacompensado[0]->centrocosto_id}}">
+											<input type="hidden" id="cliente" name="cliente" value="{{$datacompensado[0]->third_id}}" data-id="{{$datacompensado[0]->third_id}}">
 											<select class="form-control form-control-sm select2Prod" name="producto" id="producto" required="">
 												<option value="">Seleccione el producto</option>
 												@foreach ($prod as $p)
@@ -144,6 +145,7 @@
 									<th class="table-th text-white">IVA</th>
 									<th class="table-th text-white">O.I</th>
 									<th class="table-th text-white">Total.B</th>
+									<th class="table-th text-white">Desc</th>
 									<th class="table-th text-white">Total</th>
 									<th class="table-th text-white text-center">Acciones</th>
 								</tr>
@@ -159,6 +161,7 @@
 									<td>{{$proddetail->iva}}%</td>
 									<td>{{$proddetail->otro_impuesto}}%</td>
 									<td>$ {{ number_format($proddetail->total_bruto, 0, ',', '.')}}</td>
+									<td>$ {{ number_format($proddetail->descuento, 0, ',', '.')}}</td>
 									<td>$ {{ number_format($proddetail->total, 0, ',', '.')}}</td>
 									<td class="text-center">
 										@if($status == 'true')
