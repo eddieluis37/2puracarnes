@@ -22,9 +22,9 @@ class ThirdsController extends Component
 	use WithPagination;
    
 
-	public $name, $type_identificationid, $identification, $digito_verificacion, $officeid, $porc_descuento, $type_regimen_ivaid, $direccion, $search, $provinceid, $celular, $nombre_contacto, $status, $is_client, $is_provider, $is_seller, $is_courier, $correo, $selected_id, $listaprecio_genericId, $listaprecio_nichoId, $pageTitle, $componentName;
+	public $name, $type_identificationid, $identification, $digito_verificacion, $officeid, $porc_descuento, $type_regimen_ivaid, $direccion,  $direccion1, $direccion2, $direccion3, $direccion4, $search, $provinceid, $celular, $nombre_contacto, $status, $is_client, $is_provider, $is_seller, $is_courier, $correo, $selected_id, $listaprecio_genericId, $listaprecio_nichoId, $pageTitle, $componentName;
 	
-	private $pagination = 5;
+	private $pagination = 15;
 
 	public function paginationView()
 	{
@@ -129,6 +129,10 @@ class ThirdsController extends Component
 			'office_id' => $this->officeid,			
 			'type_regimen_iva_id' => $this->type_regimen_ivaid,
 			'direccion' => $this->direccion,
+			'direccion1' => $this->direccion1,
+			'direccion2' => $this->direccion2,			
+			'direccion3' => $this->direccion3,
+			'direccion4' => $this->direccion4,		
 			'province_id' => $this->provinceid,
 			'celular' => $this->celular,
 			'nombre_contacto' => $this->nombre_contacto,
@@ -158,6 +162,10 @@ class ThirdsController extends Component
 		$this->officeid = $third->office_id;	
 		$this->type_regimen_ivaid = $third->type_regimen_iva_id;
 		$this->direccion = $third->direccion;
+		$this->direccion1 = $third->direccion1;
+		$this->direccion2 = $third->direccion2;
+		$this->direccion3 = $third->direccion3;
+		$this->direccion4 = $third->direccion4;
 		$this->provinceid = $third->province_id;
 		$this->celular = $third->celular;
 		$this->nombre_contacto = $third->nombre_contacto;
@@ -218,6 +226,10 @@ class ThirdsController extends Component
 			'office_id' => $this->officeid,			
 			'type_regimen_iva_id' => $this->type_regimen_ivaid,
 			'direccion' => $this->direccion,
+			'direccion1' => $this->direccion1,
+			'direccion2' => $this->direccion2,
+			'direccion3' => $this->direccion3,
+			'direccion4' => $this->direccion4,			
 			'province_id' => $this->provinceid,
 			'celular' => $this->celular,
 			'nombre_contacto' => $this->nombre_contacto,
@@ -244,6 +256,10 @@ class ThirdsController extends Component
 		$this->officeid = '';	
 		$this->type_regimen_ivaid = 'Elegir';
 		$this->direccion = '';
+		$this->direccion1 = '';
+		$this->direccion2 = '';
+		$this->direccion3 = '';
+		$this->direccion4 = '';
 		$this->provinceid = 'Elegir';
 		$this->celular = '';
 		$this->nombre_contacto = '';

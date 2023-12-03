@@ -152,7 +152,8 @@
 			<label class="form-check-label" for="is_courier">Domiciliario</label>
 		</div>
 	</div>
-	<div class="col-sm-12 col-md-4">
+
+	<!-- <div class="col-sm-12 col-md-4">
 		<div class="form-group">
 			<label>Precios por nicho</label>
 			<select wire:model='listaprecio_nichoId' class="form-control">
@@ -163,10 +164,10 @@
 			</select>
 			@error('provinceid') <span class="text-danger er">{{ $message}}</span>@enderror
 		</div>
-	</div>
+	</div> -->
 	<div class="col-sm-12 col-md-4">
 		<div class="form-group">
-			<label>Precios standar</label>
+			<label>Lista de precio asignada</label>
 			<select wire:model='listaprecio_genericId' class="form-control">
 				<option value="Elegir" disabled>Elegir</option>
 				@foreach($listapreciosG as $listaprecio)
@@ -176,6 +177,35 @@
 			@error('provinceid') <span class="text-danger er">{{ $message}}</span>@enderror
 		</div>
 	</div>
+	<div class="col-sm-12 col-md-4">
+		<div class="form-group">
+			<label>Dirección de entrega 1</label>
+			<input type="text" wire:model.lazy="direccion1" class="form-control" placeholder="ej: Calle 109 # 98 - 57">
+			@error('direccion') <span class="text-danger er">{{ $message}}</span>@enderror
+		</div>
+	</div>
+	<div class="col-sm-12 col-md-4">
+		<div class="form-group">
+			<label>Dirección de entrega 2</label>
+			<input type="text" wire:model.lazy="direccion2" class="form-control" placeholder="ej: Calle 109 # 98 - 57">
+			@error('direccion') <span class="text-danger er">{{ $message}}</span>@enderror
+		</div>
+	</div>
+	<div class="col-sm-12 col-md-4">
+		<div class="form-group">
+			<label>Dirección de entrega 3</label>
+			<input type="text" wire:model.lazy="direccion3" class="form-control" placeholder="ej: Calle 109 # 98 - 57">
+			@error('direccion') <span class="text-danger er">{{ $message}}</span>@enderror
+		</div>
+	</div>
+	<div class="col-sm-12 col-md-4">
+		<div class="form-group">
+			<label>Dirección de entrega 4</label>
+			<input type="text" wire:model.lazy="direccion4" class="form-control" placeholder="ej: Calle 109 # 98 - 57">
+			@error('direccion') <span class="text-danger er">{{ $message}}</span>@enderror
+		</div>
+	</div>
+
 
 </div>
 
