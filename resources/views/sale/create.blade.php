@@ -106,6 +106,14 @@
 										<span class="input-group-text" id="addon-wrapping">%</span>
 									</div>
 								</div>
+								<div class="col-md-3">
+									<label for="" class="form-label">Descuento</label>
+									<div class="input-group flex-nowrap">
+
+										<input type="text" id="porc_desc" name="porc_desc" class="form-control input" readonly placeholder="">
+										<span class="input-group-text" id="addon-wrapping">%</span>
+									</div>
+								</div>
 
 								<div class="form-group row" style="margin-top:3px; margin-left:3px">
 

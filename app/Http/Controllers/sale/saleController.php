@@ -570,7 +570,8 @@ class saleController extends Controller
             return response()->json([
                 'precio' => $producto->precio,
                 'iva' => $producto->iva,
-                'otro_impuesto' => $producto->otro_impuesto
+                'otro_impuesto' => $producto->otro_impuesto,
+                'porc_desc' => $producto->porc_desc              
             ]);
         } else {
             // En caso de que el producto no sea encontrado

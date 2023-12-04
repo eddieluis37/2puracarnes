@@ -62,7 +62,7 @@ class CreateThirdsTable extends Migration
             $table->unsignedBigInteger('listaprecio_nichoid')->nullable();
             //$table->foreign('listaprecio_nichoid')->references('id')->on('listaprecios');
 
-            $table->unsignedBigInteger('listaprecio_genericid')->nullable();
+            $table->unsignedBigInteger('listaprecio_genericid')->default(1);
             //$table->foreign('listaprecio_genericid')->references('id')->on('listaprecios');
 
             $table->timestamps();

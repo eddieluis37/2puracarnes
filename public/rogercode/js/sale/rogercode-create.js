@@ -55,10 +55,10 @@ function actualizarValoresProducto(productId) {
         },
         success: function (response) {
             // Actualiza los valores en los campos de entrada del centro de costo
-            $("#price").val(response.precio);
-            $("#pesoKgOrigen").val(response.fisico);
+            $("#price").val(response.precio);        
             $("#iva").val(response.iva);
             $("#otro_impuesto").val(response.otro_impuesto);
+            $("#porc_desc").val(response.porc_desc);          
         },
         error: function (xhr, status, error) {
             // Maneja el error si la solicitud AJAX falla
