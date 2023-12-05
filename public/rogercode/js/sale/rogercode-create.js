@@ -56,8 +56,8 @@ function actualizarValoresProducto(productId) {
         success: function (response) {
             // Actualiza los valores en los campos de entrada del centro de costo
             $("#price").val(response.precio);        
-            $("#iva").val(response.iva);
-            $("#otro_impuesto").val(response.otro_impuesto);
+            $("#porc_iva").val(response.iva);
+            $("#porc_otro_impuesto").val(response.otro_impuesto);
             $("#porc_desc").val(response.porc_desc);          
         },
         error: function (xhr, status, error) {
@@ -141,8 +141,11 @@ const showData = (data) => {
                 <td>${element.nameprod}</td>
                 <td>${formatCantidad(element.quantity)} KG</td>
                 <td>$ ${formatCantidadSinCero(element.price)}</td>  
-                <td>${formatCantidad(element.iva)}%</td> 
-                <td>${element.otro_impuesto}%</td>              
+                <td>${formatCantidadSinCero(element.porc_desc)}</td>
+                <td>$ ${formatCantidadSinCero(element.descuento)}</td>  
+                <td>${formatCantidad(element.porc_iva)}%</td> 
+                <td>$ ${formatCantidadSinCero(element.iva)}</td> 
+                <td>${element.porc_otro_impuesto}%</td>              
                 <td>$ ${formatCantidadSinCero(element.total_bruto)}</td>    
                 <td>$ ${formatCantidadSinCero(element.total)}</td>        
                 <td class="text-center">

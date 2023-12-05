@@ -94,15 +94,15 @@
 									<label for="" class="form-label">IVA</label>
 									<div class="input-group flex-nowrap">
 
-										<input type="text" id="iva" name="iva" class="form-control input" readonly placeholder="">
+										<input type="text" id="porc_iva" name="porc_iva" class="form-control input" readonly placeholder="">
 										<span class="input-group-text" id="addon-wrapping">%</span>
 									</div>
 								</div>
 								<div class="col-md-3">
-									<label for="" class="form-label">O.I</label>
+									<label for="" class="form-label">I.S</label>
 									<div class="input-group flex-nowrap">
 
-										<input type="text" id="otro_impuesto" name="otro_impuesto" class="form-control input" readonly placeholder="">
+										<input type="text" id="porc_otro_impuesto" name="porc_otro_impuesto" class="form-control input" readonly placeholder="">
 										<span class="input-group-text" id="addon-wrapping">%</span>
 									</div>
 								</div>
@@ -149,11 +149,14 @@
 								<tr>
 									<th class="table-th text-white">Producto</th>
 									<th class="table-th text-white">Cant</th>
-									<th class="table-th text-white">Precio</th>
+									<th class="table-th text-white">Valor.U</th>
+									<th class="table-th text-white">%Des</th>
+									<th class="table-th text-white">Des</th>
+									<th class="table-th text-white">%IVA</th>
 									<th class="table-th text-white">IVA</th>
-									<th class="table-th text-white">O.I</th>
-									<th class="table-th text-white">Total.B</th>
-									<th class="table-th text-white">Desc</th>
+									<th class="table-th text-white">%I.S</th>
+									<th class="table-th text-white">I.S</th>
+									<th class="table-th text-white">Total.B</th>								
 									<th class="table-th text-white">Total</th>
 									<th class="table-th text-white text-center">Acciones</th>
 								</tr>
@@ -166,10 +169,13 @@
 									<td>{{$proddetail->nameprod}}</td>
 									<td>{{ number_format($proddetail->quantity, 2, ',', '.')}} KG</td>
 									<td>$ {{ number_format($proddetail->price, 0, ',', '.')}}</td>
-									<td>{{$proddetail->iva}}%</td>
-									<td>{{$proddetail->otro_impuesto}}%</td>
-									<td>$ {{ number_format($proddetail->total_bruto, 0, ',', '.')}}</td>
+									<td>{{ number_format($proddetail->porc_desc, 0, ',', '.')}}</td>
 									<td>$ {{ number_format($proddetail->descuento, 0, ',', '.')}}</td>
+									<td>{{$proddetail->porc_iva}}%</td>
+									<td>$ {{ number_format($proddetail->iva, 0, ',', '.')}}</td>									
+									<td>{{$proddetail->porc_otro_impuesto}}%</td>
+									<td>$ {{ number_format($proddetail->otro_impuesto, 0, ',', '.')}}</td>
+									<td>$ {{ number_format($proddetail->total_bruto, 0, ',', '.')}}</td>									
 									<td>$ {{ number_format($proddetail->total, 0, ',', '.')}}</td>
 									<td class="text-center">
 										@if($status == 'true')
@@ -190,6 +196,10 @@
 							<tfoot id="tabletfoot">
 								<tr>
 									<th>Totales</th>
+									<th></th>
+									<th></th>
+									<td></td>
+									<td></td>
 									<th></th>
 									<th></th>
 									<td></td>
