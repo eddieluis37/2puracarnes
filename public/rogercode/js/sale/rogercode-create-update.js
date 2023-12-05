@@ -1,6 +1,6 @@
 import {sendData} from '../exportModule/core/rogercode-core.js';
 import { successToastMessage, errorMessage } from '../exportModule/message/rogercode-message.js';
-btnAddCompensadoRes.addEventListener("click", async (e) => {
+btnAddVentaDomicilio.addEventListener("click", async (e) => {
     e.preventDefault();
     const dataform = new FormData(formCompensadoRes);
     sendData('/ventasave',dataform,token).then((resp) => {

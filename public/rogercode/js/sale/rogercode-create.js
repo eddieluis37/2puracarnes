@@ -142,11 +142,13 @@ const showData = (data) => {
                 <td>${formatCantidad(element.quantity)} KG</td>
                 <td>$ ${formatCantidadSinCero(element.price)}</td>  
                 <td>${formatCantidadSinCero(element.porc_desc)}</td>
-                <td>$ ${formatCantidadSinCero(element.descuento)}</td>  
+                <td>$ ${formatCantidadSinCero(element.descuento)}</td> 
+                <td>$ ${formatCantidadSinCero(element.descuento_cliente)}</td>
+                <td>$ ${formatCantidadSinCero(element.total_bruto)}</td>   
                 <td>${formatCantidad(element.porc_iva)}%</td> 
                 <td>$ ${formatCantidadSinCero(element.iva)}</td> 
-                <td>${element.porc_otro_impuesto}%</td>              
-                <td>$ ${formatCantidadSinCero(element.total_bruto)}</td>    
+                <td>${element.porc_otro_impuesto}%</td>     
+                <td>$ ${formatCantidadSinCero(element.otro_impuesto)}</td>             
                 <td>$ ${formatCantidadSinCero(element.total)}</td>        
                 <td class="text-center">
                     <button class="btn btn-dark fas fa-edit" data-id="${
@@ -169,10 +171,15 @@ const showData = (data) => {
             <td></td>
             <td></td>
             <td></td>    
-            <td></td>                              
+            <td></td>
+            <td></td>                               
             <th>$ ${formatCantidadSinCero(
                 arrayTotales.TotalBruto
-            )}</th>           
+            )}</th> 
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>          
             <th>$ ${formatCantidadSinCero(
                 arrayTotales.TotalValorAPagar
             )}</th>            

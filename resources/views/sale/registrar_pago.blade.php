@@ -210,13 +210,12 @@
                                 </tr>
                                 <tr>
                                     <th scope="row" style="text-align: left">Total_Bruto</th>
-                                    <td colspan="2">$ {{number_format($arrayTotales['TotalBruto'], 0, ',', '.')}}</td>
+                                    <td colspan="2">$ {{number_format($arrayTotales['TotalBrutoSinDescuento'], 0, ',', '.')}}</td>
 
                                 </tr>
                                 <tr>
                                     <th scope="row" style="text-align: left">Descuentos</th>
-                                    <td colspan="2">$ {{number_format($descuento, 0, ',', '.')}}</td>
-
+                                    <td colspan="2">$ {{number_format($arrayTotales['TotalDescuentos'], 0, ',', '.')}}</td>
                                 </tr>
                                 <tr>
                                     <th scope="row" style="text-align: left">SubTotal</th>
@@ -250,7 +249,7 @@
                                     <td colspan="2" style="text-align: right">$ <input type="text" name="cambio" id="cambio" value="valorCambio" disabled style="text-align: right; font-weight: bold; color: black"></td>
 
                                 </tr>
-                                
+
 
                             </tbody>
                             <tfoot>
@@ -258,6 +257,7 @@
                                     <th colspan="2">
                                         <div class="form-group">
                                             <button type="submit" class="btn btn-success">Guardar e Imprimir</button>
+                                            <button type="button" class="btn btn-primary" onclick="history.back()">Volver</button>
                                         </div>
                                     </th>
                                 </tr>

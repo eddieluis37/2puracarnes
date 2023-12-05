@@ -15,7 +15,7 @@ class ProductSeeder extends Seeder
     public function run()
     {
 
-        $product = new Product(["code" => "RE0001", "barcode" => "1299123456", "name" => "BOLA DE PIERNA", "fisico" => "1", "category_id" => "1", "level_product_id" => "1", "meatcut_id" => "1", "unitofmeasure_id" => "1", "status" => "1", "cost" => "23000", "price_fama" => "24000", "price_insti" => "24000", "price_horeca" => "28000", "price_hogar" => "28000", "iva" => "0", "alerts" => "10", "otro_impuesto" => "4", "image" => "noimage.png"]);
+        $product = new Product(["code" => "RE0001", "barcode" => "1299123456", "name" => "BOLA DE PIERNA", "fisico" => "1", "category_id" => "1", "level_product_id" => "1", "meatcut_id" => "1", "unitofmeasure_id" => "1", "status" => "1", "cost" => "23000", "price_fama" => "24000", "price_insti" => "24000", "price_horeca" => "28000", "price_hogar" => "28000", "iva" => "10", "alerts" => "10", "otro_impuesto" => "5", "image" => "noimage.png"]);
         $product->save();
         $product = new Product(["code" => "RE0002", "barcode" => "1299123457", "name" => "BRAZO COMPLETO", "fisico" => "1", "category_id" => "1", "level_product_id" => "1", "meatcut_id" => "2", "unitofmeasure_id" => "1", "status" => "1", "cost" => "19800", "price_fama" => "20000", "price_insti" => "10", "price_horeca" => "20500", "price_hogar" => "20500", "iva" => "0", "alerts" => "10", "otro_impuesto" => "9", "image" => "noimage.png"]);
         $product->save();

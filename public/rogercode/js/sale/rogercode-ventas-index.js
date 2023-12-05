@@ -1,5 +1,5 @@
 console.log("Starting")
-const btnAddCompensadoRes = document.querySelector("#btnAddCompensadoRes");
+const btnAddVentaDomicilio = document.querySelector("#btnAddVentaDomicilio");
 const formCompensadoRes = document.querySelector("#form-compensado-res");
 const token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
 const btnClose = document.querySelector("#btnModalClose");
@@ -8,7 +8,7 @@ const selectCategory = document.querySelector("#categoria");
 const selectProvider = document.querySelector("#provider");
 const selectCentrocosto = document.querySelector("#centrocosto");
 const inputFactura = document.querySelector("#factura");
-const compensado_id = document.querySelector("#compensadoId");
+const sale_id = document.querySelector("#ventaId");
 const contentform = document.querySelector("#contentDisable");
 
 
@@ -87,7 +87,7 @@ const showModalcreate = () => {
     }
     $('#provider').val('').trigger('change');
     formCompensadoRes.reset();
-    compensado_id.value = 0;
+    sale_id.value = 0;
 }
 
 const showDataForm = (id) => {
@@ -120,11 +120,11 @@ const editCompensado = (id) => {
 
 const showData = (resp) => {
     let register = resp.reg;
-    compensado_id.value = register.id;
+    sale_id.value = register.id;
    /*  selectCategory.value = register.categoria_id; */
     $('#provider').val(register.thirds_id).trigger('change');
     selectCentrocosto.value = register.centrocosto_id;
-    inputFactura.value = register.factura;
+ /*    inputFactura.value = register.factura; */
     const modal = new bootstrap.Modal(document.getElementById('modal-create-compensado'));
     modal.show();
 }

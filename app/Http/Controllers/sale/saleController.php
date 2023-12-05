@@ -107,7 +107,7 @@ class saleController extends Controller
         $vendedor = Third::where('id', $vendedorId)->value('name');
         $dataVenta[0]->vendedor_name = $vendedor;
 
-        //  dd($dataVenta);
+        // dd($dataVenta);
 
         $venta = Sale::find($id);
         $producto = Product::get();
@@ -115,14 +115,18 @@ class saleController extends Controller
         $arrayTotales = $this->sumTotales($id);
 
         $descuento = $dataVenta[0]->porc_descuento / 100 * $arrayTotales['TotalValorAPagar'];
-        $subtotal = $arrayTotales['TotalBruto'] - $descuento;
+        $subtotal = $arrayTotales['TotalBrutoSinDescuento'] - $arrayTotales['TotalDescuentos'];
 
 
         return view('sale.registrar_pago', compact('venta', 'arrayTotales', 'producto', 'dataVenta', 'descuento', 'subtotal'));
+       
     }
+    
 
     public function sumTotales($id)
     {
+        $TotalBrutoSinDescuento = Sale::where('id', $id)->value('total_bruto');
+        $TotalDescuentos = Sale::where('id', $id)->value('descuentos');
         $TotalBruto = (float)SaleDetail::Where([['sale_id', $id]])->sum('total_bruto');
         $TotalIva = (float)SaleDetail::Where([['sale_id', $id]])->sum('iva');
         $TotalOtroImpuesto = (float)SaleDetail::Where([['sale_id', $id]])->sum('otro_impuesto');
@@ -130,6 +134,8 @@ class saleController extends Controller
 
         $array = [
             'TotalBruto' => $TotalBruto,
+            'TotalBrutoSinDescuento' => $TotalBrutoSinDescuento,
+            'TotalDescuentos' => $TotalDescuentos,
             'TotalValorAPagar' => $TotalValorAPagar,
             'TotalIva' => $TotalIva,
             'TotalOtroImpuesto' => $TotalOtroImpuesto,
@@ -158,12 +164,12 @@ class saleController extends Controller
 
     public function getventasdetail($ventaId)
     {
-        $detalles = DB::table('sale_details as de')      
+        $detalles = DB::table('sale_details as de')
             ->join('products as pro', 'de.product_id', '=', 'pro.id')
-            ->select('de.*', 'pro.name as nameprod', 'pro.code', 'de.porc_iva', 'de.iva', 'de.porc_otro_impuesto', )
+            ->select('de.*', 'pro.name as nameprod', 'pro.code', 'de.porc_iva', 'de.iva', 'de.porc_otro_impuesto',)
             ->where([
                 ['de.sale_id', $ventaId],
-                /*   ['de.status', 1] */         
+                /*   ['de.status', 1] */
             ])->get();
 
         return $detalles;
@@ -207,19 +213,24 @@ class saleController extends Controller
             //$preciov = $request->precioventa * 1.0;
             //$subtotal = $request->price * $request->quantity;
 
-            //$total = $precioUnitarioBruto *  $request->iva;
+            //$total = $precioUnitarioBruto *  $request->iva;          
 
             $formatCantidad = new metodosrogercodeController();
 
             $formatPrVenta = $formatCantidad->MoneyToNumber($request->price);
-            $formatPesoKg = $formatCantidad->MoneyToNumber($request->quantity);      
-          
+            $formatPesoKg = $formatCantidad->MoneyToNumber($request->quantity);
+
             $getReg = SaleDetail::firstWhere('id', $request->regdetailId);
 
             $porcDescuento = $request->get('porc_desc');
             $precioUnitarioBruto = ($formatPrVenta * $formatPesoKg);
             $descuento = $precioUnitarioBruto * ($porcDescuento / 100);
-            $precioUnitarioBrutoConDesc = $precioUnitarioBruto - $descuento;           
+            $porc_descuento = $request->get('porc_descuento');
+
+            $descuentoCliente = $precioUnitarioBruto * ($porc_descuento / 100);
+            $totalDescuento = $descuento + $descuentoCliente;
+
+            $precioUnitarioBrutoConDesc = $precioUnitarioBruto - $totalDescuento;
             $porcIva = $request->get('porc_iva');
             $porcOtroImpuesto = $request->get('porc_otro_impuesto');
 
@@ -238,17 +249,20 @@ class saleController extends Controller
                 $detail = new SaleDetail();
                 $detail->sale_id = $request->ventaId;
                 $detail->product_id = $request->producto;
-                $detail->price = $formatPrVenta;                        
+                $detail->price = $formatPrVenta;
                 $detail->quantity = $request->quantity;
-                $detail->porc_desc = $request->porc_descu;
+                $detail->porc_desc = $porcDescuento;
                 $detail->descuento = $descuento;
+
+                $detail->descuento_cliente = $descuentoCliente;
+
                 $detail->porc_iva = $porcIva;
                 $detail->iva = $iva;
                 $detail->porc_otro_impuesto = $porcOtroImpuesto;
                 $detail->otro_impuesto = $otroImpuesto;
-      
+
                 $detail->total_bruto = $precioUnitarioBrutoConDesc;
-               
+
                 $detail->total = $valorAPagar;
 
                 $detail->save();
@@ -261,19 +275,35 @@ class saleController extends Controller
                 $updateReg->quantity = $formatPesoKg;
                 $updateReg->porc_desc = $porcDescuento;
                 $updateReg->descuento = $descuento;
+
+                $updateReg->descuento_cliente = $descuentoCliente;
+
                 $updateReg->iva = $iva;
                 $updateReg->porc_iva = $porcIva;
                 $updateReg->porc_otro_impuesto = $porcOtroImpuesto;
-                $updateReg->otro_impuesto = $otroImpuesto;            
+                $updateReg->otro_impuesto = $otroImpuesto;
                 $updateReg->total_bruto = $precioUnitarioBrutoConDesc;
                 $updateReg->total = $valorAPagar;
                 $updateReg->save();
             }
 
             $sale = Sale::find($request->ventaId);
+            $sale->items = SaleDetail::where('sale_id', $sale->id)->count();
+            $sale->descuentos = $totalDescuento;
             $sale->total_iva = $iva;
             $sale->total_otros_impuestos = $totalOtrosImpuestos;
             $sale->total_valor_a_pagar = $valorApagar;
+            $saleDetails = SaleDetail::where('sale_id', $sale->id)->get();
+            $totalBruto = 0;
+            $totalDesc = 0;
+
+            foreach ($saleDetails as $saleDetail) {
+                $totalBruto += $saleDetail->quantity * $saleDetail->price;
+                $totalDesc += $saleDetail->descuento + $saleDetail->descuento_cliente;
+            }
+
+            $sale->total_bruto = $totalBruto;
+            $sale->descuentos = $totalDesc;
             $sale->save();
 
 

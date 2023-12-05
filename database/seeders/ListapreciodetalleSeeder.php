@@ -16,7 +16,7 @@ class ListapreciodetalleSeeder extends Seeder
      */
     public function run()
     {
-        $listapreciodetalles = new listapreciodetalle(["listaprecio_id" => "1", "product_id" => "1", "costo" => "12200", "precio" => "12200", "porc_iva" => "19", "iva" => "19"]);
+        $listapreciodetalles = new listapreciodetalle(["listaprecio_id" => "1", "product_id" => "1", "costo" => "12200", "precio" => "12200", "porc_iva" => "19", "iva" => "19", "porc_desc" => "4" ]);
         $listapreciodetalles->save();
         $listapreciodetalles = new listapreciodetalle(["listaprecio_id" => "1", "product_id" => "2", "costo" => "12300", "precio" => "12300", "porc_iva" => "0", "iva" => "0"]);
         $listapreciodetalles->save();

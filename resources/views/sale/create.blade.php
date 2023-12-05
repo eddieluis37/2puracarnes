@@ -73,6 +73,7 @@
 											<label for="" class="form-label">Buscar producto</label>
 											<input type="hidden" id="centrocosto" name="centrocosto" value="{{$datacompensado[0]->centrocosto_id}}" data-id="{{$datacompensado[0]->centrocosto_id}}">
 											<input type="hidden" id="cliente" name="cliente" value="{{$datacompensado[0]->third_id}}" data-id="{{$datacompensado[0]->third_id}}">
+											<input type="hidden" id="porc_descuento" name="porc_descuento" value="{{$datacompensado[0]->porc_descuento}}" data-id="{{$datacompensado[0]->porc_descuento}}">
 											<select class="form-control form-control-sm select2Prod" name="producto" id="producto" required="">
 												<option value="">Seleccione el producto</option>
 												@foreach ($prod as $p)
@@ -151,12 +152,14 @@
 									<th class="table-th text-white">Cant</th>
 									<th class="table-th text-white">Valor.U</th>
 									<th class="table-th text-white">%Des</th>
-									<th class="table-th text-white">Des</th>
+									<th class="table-th text-white">Des</th>								
+									<th class="table-th text-white">{{$datacompensado[0]->porc_descuento}}%DCl</th>
+									<th class="table-th text-white">Total.B</th>
 									<th class="table-th text-white">%IVA</th>
 									<th class="table-th text-white">IVA</th>
 									<th class="table-th text-white">%I.S</th>
 									<th class="table-th text-white">I.S</th>
-									<th class="table-th text-white">Total.B</th>								
+																	
 									<th class="table-th text-white">Total</th>
 									<th class="table-th text-white text-center">Acciones</th>
 								</tr>
@@ -169,13 +172,14 @@
 									<td>{{$proddetail->nameprod}}</td>
 									<td>{{ number_format($proddetail->quantity, 2, ',', '.')}} KG</td>
 									<td>$ {{ number_format($proddetail->price, 0, ',', '.')}}</td>
-									<td>{{ number_format($proddetail->porc_desc, 0, ',', '.')}}</td>
+									<td>{{$proddetail->porc_desc}}%</td>									
 									<td>$ {{ number_format($proddetail->descuento, 0, ',', '.')}}</td>
+									<td>$ {{ number_format($proddetail->descuento_cliente, 0, ',', '.')}}</td>
+									<td>$ {{ number_format($proddetail->total_bruto, 0, ',', '.')}}</td>	
 									<td>{{$proddetail->porc_iva}}%</td>
 									<td>$ {{ number_format($proddetail->iva, 0, ',', '.')}}</td>									
 									<td>{{$proddetail->porc_otro_impuesto}}%</td>
-									<td>$ {{ number_format($proddetail->otro_impuesto, 0, ',', '.')}}</td>
-									<td>$ {{ number_format($proddetail->total_bruto, 0, ',', '.')}}</td>									
+									<td>$ {{ number_format($proddetail->otro_impuesto, 0, ',', '.')}}</td>																
 									<td>$ {{ number_format($proddetail->total, 0, ',', '.')}}</td>
 									<td class="text-center">
 										@if($status == 'true')
@@ -198,13 +202,14 @@
 									<th>Totales</th>
 									<th></th>
 									<th></th>
-									<td></td>
-									<td></td>
+									<td></td>									
 									<th></th>
 									<th></th>
-									<td></td>
-									<td></td>
 									<th>$ {{number_format($arrayTotales['TotalBruto'], 0, ',', '.')}} </th>
+									<td></td>
+									<td></td>
+									<td></td>		
+									<td></td>							
 									<th>$ {{number_format($arrayTotales['TotalValorAPagar'], 0, ',', '.')}} </th>
 									<th class="text-center">
 										<form method="GET" action="registrar_pago/{{$id}}">
