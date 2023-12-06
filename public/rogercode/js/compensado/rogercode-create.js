@@ -22,12 +22,26 @@ const regDetail = document.querySelector("#regdetailId");
 const tableFoot = document.querySelector("#tabletfoot");
 const cargarInventarioBtn = document.getElementById('cargarInventarioBtn');
 
+cargarInventarioBtn.addEventListener('click', showConfirmationAlert);
+
 $(".select2Prod").select2({
     placeholder: "Busca un producto",
     width: "100%",
     theme: "bootstrap-5",
     allowClear: true,
 });
+
+function showConfirmationAlert(element) {
+    return swal.fire({
+        title: "CONFIRMAR",
+        text: "Estas seguro que desea cargar el inventario ?",
+        icon: "warning",
+        showDenyButton: true,
+        showCancelButton: true,
+        confirmButtonText: "Aceptar",
+        denyButtonText: `Cancelar`,
+    });
+}
 
 tbodyTable.addEventListener("click", (e) => {
     e.preventDefault();
@@ -57,7 +71,6 @@ tbodyTable.addEventListener("click", (e) => {
             }
         });
     }
-
     if (element.name === "btnEdit") {
         console.log(element);
         let id = element.getAttribute("data-id");
@@ -117,7 +130,6 @@ const showData = (data) => {
             </tr>
         `;
     });
-
     let arrayTotales = data.arrayTotales;
     console.log(arrayTotales);
     tableFoot.innerHTML = "";
@@ -136,19 +148,6 @@ const showData = (data) => {
         </tr>
     `;
 
-    function showConfirmationAlert(element) {
-        return swal.fire({
-            title: "CONFIRMAR",
-            text: "Estas seguro que desea cargar el inventario ?",
-            icon: "warning",
-            showDenyButton: true,
-            showCancelButton: true,
-            confirmButtonText: "Aceptar",
-            denyButtonText: `Cancelar`,
-        });
-    } 
-
-    // Evento click del botón "cargarInventarioBtn"
     tableFoot.addEventListener("click", (e) => {
         e.preventDefault();
         let element = e.target;
@@ -211,29 +210,3 @@ pesokg.addEventListener("change", function () {
     console.log("Entered value: " + enteredValue);
     pesokg.value = enteredValue;
 });
-
-//const selectCategoria = document.querySelector("#categoria");
-//const selectProducto = document.getElementById("producto");
-/*selectCategoria.addEventListener("change", function() {
-    const selectedValue = this.value;
-    console.log("Selected value:", selectedValue);
-
-    const dataform = new FormData();
-    dataform.append("categoriaId", Number(selectedValue));
-    sendData("/getproductos",dataform,token).then((result) => {
-        console.log(result);
-        let prod = result.products;
-        console.log(prod);
-        //showDataTable(result);
-        selectProducto.innerHTML = "";
-        selectProducto.innerHTML += `<option value="">Seleccione el producto</option>`;
-        // Create and append options to the select element
-        prod.forEach(option => {
-        const optionElement = document.createElement("option");
-        optionElement.value = option.id;
-        optionElement.text = option.name;
-        selectProducto.appendChild(optionElement);
-        });
-    });
-
-});*/
