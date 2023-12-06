@@ -494,17 +494,87 @@ class compensadoController extends Controller
 
             // Sumar el valor de accumulatedWeight al campo compensados
             $centroCostoProduct->compensados += $accumulatedWeight->accumulated_weight;
-            $centroCostoProduct->save();            
-            
+            $centroCostoProduct->save();
+
             // Limpiar la tabla temporary_accumulatedWeights
             DB::table('temporary_accumulatedWeights')->truncate();
-
         }
 
         return response()->json([
             'status' => 1,
             'message' => 'Cargado al inventario exitosamente',
             'compensadores' => $compensadores
+        ]);
+    }
+
+    public function cargarInventarioMasivo()
+    {
+        for ($compensadoId = 251; $compensadoId <= 290; $compensadoId++) {
+            $currentDateTime = Carbon::now();
+            $formattedDate = $currentDateTime->format('Y-m-d');
+
+            $compensadores = Compensadores::find($compensadoId);
+            if (!$compensadores) {
+                continue; // Si no se encuentra el registro, pasar al siguiente compensadoId
+            }
+
+            $compensadores->fecha_cierre = $formattedDate;
+            $compensadores->save();
+            $centrocosto_id = $compensadores->centrocosto_id;
+
+            DB::update(
+                "
+            UPDATE centro_costo_products c
+            JOIN compensadores_details d ON c.products_id = d.products_id
+            JOIN compensadores b ON b.id = d.compensadores_id
+            SET c.cto_compensados =  c.cto_compensados + d.pcompra,
+                c.cto_compensados_total  = c.cto_compensados_total + (d.pcompra * d.peso),
+                c.tipoinventario = 'cerrado'
+            WHERE d.compensadores_id = :compensadoresid
+            AND b.centrocosto_id = :cencosid 
+            AND c.centrocosto_id = :cencosid2 ",
+                [
+                    'compensadoresid' => $compensadoId,
+                    'cencosid' => $centrocosto_id,
+                    'cencosid2' => $centrocosto_id
+                ]
+            );
+
+            // Calcular el peso acumulado del producto 
+            $centroCostoProducts = Centro_costo_product::where('tipoinventario', 'cerrado')
+                ->where('centrocosto_id', $centrocosto_id)
+                ->get();
+
+            foreach ($centroCostoProducts as $centroCostoProduct) {
+                $accumulatedWeight = Compensadores_detail::where('compensadores_id', '=', $compensadoId)
+                    ->where('products_id', $centroCostoProduct->products_id)
+                    ->sum('peso');
+
+                // Almacenar el peso acumulado en la tabla temporal
+                DB::table('temporary_accumulatedWeights')->insert([
+                    'product_id' => $centroCostoProduct->products_id,
+                    'accumulated_weight' => $accumulatedWeight
+                ]);
+            }
+
+            // Recuperar los registros de la tabla temporary_accumulatedWeights
+            $accumulatedWeights = DB::table('temporary_accumulatedWeights')->get();
+
+            foreach ($accumulatedWeights as $accumulatedWeight) {
+                $centroCostoProduct = Centro_costo_product::find($accumulatedWeight->product_id);
+
+                // Sumar el valor de accumulatedWeight al campo compensados
+                $centroCostoProduct->compensados += $accumulatedWeight->accumulated_weight;
+                $centroCostoProduct->save();
+
+                // Limpiar la tabla temporary_accumulatedWeights
+                DB::table('temporary_accumulatedWeights')->truncate();
+            }
+        }
+
+        return response()->json([
+            'status' => 1,
+            'message' => 'Carga masiva al inventario completada con éxito'
         ]);
     }
 }
