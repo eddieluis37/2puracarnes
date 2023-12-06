@@ -45,7 +45,13 @@ const calculavalorapagar = () => {
 function calcularCambio() {
     var valorPagado = formatMoneyNumber(document.getElementById("valor_pagado").value);
     var valorAbonado = formatMoneyNumber(document.getElementById("valor_a_pagar").value);
-    var valorCambio = valorPagado - valorAbonado;
+    let valorCambio = valorPagado - valorAbonado;
     document.getElementById("cambio").value = formatCantidadSinCero(valorCambio);
+    console.log(valorCambio);
+    if (valorCambio >= 0) {
+        $("#btnGuardar").prop("disabled", false);
+    } else {
+        $("#btnGuardar").prop("disabled", true);
+    }
     console.log(valorCambio);
 }
