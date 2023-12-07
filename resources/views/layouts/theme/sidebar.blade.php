@@ -22,7 +22,7 @@
             </li>
             @endcan
 
-<!--             @can('Pos_Create')
+            <!--             @can('Pos_Create')
             <li class="">
                 <a href="{{ url('sale/create/3') }}" class="menu-toggle" data-active="false">
                     <div class="base-menu">
@@ -38,7 +38,7 @@
             </li>
             @endcan -->
 
-          <!--   @can('Pos_Create')
+            <!--   @can('Pos_Create')
             <li class="">
                 <a href="{{ url('storeVentaMostrador') }}" class="menu-toggle" data-active="false">
                     <div class="base-menu">
@@ -71,6 +71,20 @@
             </li>
             @endcan
 
+            @can('Pos_Create')
+            <li class="">
+                <a href="{{url('caja')}}" class="menu-toggle" data-active="false">
+                    <div class="base-menu">
+                        <div class="base-icons">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-cash-register">
+                                <path d="M17 10a4 4 0 0 1 4 4v4a4 4 0 0 1-4 4H5a4 4 0 0 1-4-4V5a4 4 0 0 1 4-4h4m0 10a2 2 0 0 0 2 2v4a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2v-4m-6 0a2 2 0 0 1-2-2H5a2 2 0 0 1-2 2v4a2 2 0 0 1 2 2h4a2 2 0 0 1 2-2v-4"></path>
+                            </svg>
+                        </div>
+                        <span>Caja</span>
+                    </div>
+                </a>
+            </li>
+            @endcan
 
             @can('Product_View')
             <li class="menu">

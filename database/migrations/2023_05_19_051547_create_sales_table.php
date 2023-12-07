@@ -34,6 +34,9 @@ class CreateSalesTable extends Migration
             $table->unsignedBigInteger('subcentrocostos_id')->nullable();
             $table->foreign('subcentrocostos_id')->references('id')->on('subcentrocostos');
 
+            $table->unsignedBigInteger('caja_id')->nullable();
+            $table->foreign('caja_id')->references('id')->on('cajas');
+
             $table->decimal('items',10,0);
             
             $table->decimal('total_bruto',10,0);

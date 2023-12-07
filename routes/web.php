@@ -26,6 +26,8 @@ use Illuminate\Support\Facades\Route;
 
 /*************** SIN LIVWWIRE **********************/
 
+use App\Http\Controllers\caja\cajaController;
+
 use App\Http\Controllers\res\desposteresController;
 use App\Http\Controllers\res\beneficioresController;
 use App\Http\Controllers\cerdo\despostecerdoController;
@@ -43,6 +45,7 @@ use App\Http\Controllers\inventory\CargarVentasController;
 use App\Http\Controllers\inventory\CentroCostoProductController;
 use App\Http\Controllers\CentroCostoProdController;
 use App\Http\Controllers\AsignarPreciosProdController;
+
 use App\Http\Controllers\faster\fasterController;
 use App\Http\Controllers\transfer\TransferController;
 use App\Http\Controllers\workshop\workshopController;
@@ -269,6 +272,14 @@ Route::group(['middleware' => [('auth')]], function () {
     Route::post('/downmmainalistamiento', [alistamientoController::class, 'destroyAlistamiento'])->name('alistamiento.downAlistamiento');
     Route::post('/downmmainalistamiento', [alistamientoController::class, 'destroyAlistamiento'])->name('alistamiento.downAlistamiento');
     Route::post('alistamientoAddShoping', [alistamientoController::class, 'add_shopping'])->name('alistamiento.addShopping');
+
+    /***CAJA*/
+
+    Route::get('caja', [cajaController::class, 'index'])->name('caja.index');
+    Route::post('cajasave', [cajaController::class, 'store'])->name('caja.save');
+    Route::get('showcaja', [cajaController::class, 'show'])->name('caja.showcaja');
+
+
 
     /** TALLER ***/
     Route::get('workshop', [workshopController::class, 'index'])->name('workshop.index');

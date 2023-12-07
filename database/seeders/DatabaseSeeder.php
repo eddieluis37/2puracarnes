@@ -46,6 +46,7 @@ class DatabaseSeeder extends Seeder
     $this->call(FormapagoSeeder::class);
     $this->call(ParametrocontableSeeder::class);
     $this->call(SubcentrocostoSeeder::class);
+    $this->call(CajaSeeder::class);
   // $this->call(SaleFormaPagosSeederSeeder::class);
  //   $this->call(ListaprecioSeeder::class);
  //   $this->call(ListapreciodetalleSeeder::class);

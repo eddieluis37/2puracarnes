@@ -83,7 +83,7 @@ class UserSeeder extends Seeder
             'password' => bcrypt('costos@puracarnes.com')
         ]);
         User::create([
-            'name' => 'ventas',
+            'name' => 'Tesoreria',
             'phone' => '3008755514',
             'email' => 'tesoreria@puracarnes.com',
             'profile' => 'Tesoreria',
@@ -99,12 +99,21 @@ class UserSeeder extends Seeder
             'password' => bcrypt('comercial@puracarnes.com')
         ]);       
         User::create([
-            'name' => 'cajaprincipalpcguadalupe',
+            'name' => 'Cajero principal Guadalupe',
             'phone' => '3008755514',
             'email' => 'cajaprincipalpcguadalupe@puracarnes.com',
             'profile' => 'Comercial',
             'status' => 'Active',
             'password' => bcrypt('cajaprincipalpcguadalupe@puracarnes.com')
+        ]);
+
+        User::create([
+            'name' => 'Cajero auxiliar Guadalupe',
+            'phone' => '3008755514',
+            'email' => 'cajaauxiliarpcguadalupe@puracarnes.com',
+            'profile' => 'Comercial',
+            'status' => 'Active',
+            'password' => bcrypt('cajaauxiliarpcguadalupe@puracarnes.com')
         ]);
 
 
