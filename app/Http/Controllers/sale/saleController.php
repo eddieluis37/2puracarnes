@@ -119,9 +119,8 @@ class saleController extends Controller
 
 
         return view('sale.registrar_pago', compact('venta', 'arrayTotales', 'producto', 'dataVenta', 'descuento', 'subtotal'));
-       
     }
-    
+
 
     public function sumTotales($id)
     {
@@ -431,12 +430,6 @@ class saleController extends Controller
         }
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function show()
     {
         $data = DB::table('sales as sa')
@@ -458,8 +451,8 @@ class saleController extends Controller
                 })*/
             ->addColumn('date', function ($data) {
                 $date = Carbon::parse($data->created_at);
-                $onlyDate = $date->toDateString();
-                return $onlyDate;
+                $formattedDate = $date->format('M-d. H:i');
+                return $formattedDate;
             })
             ->addColumn('action', function ($data) {
                 $currentDateTime = Carbon::now();
@@ -682,5 +675,52 @@ class saleController extends Controller
             'message' => 'Cargado al inventario exitosamente',
             'compensadores' => $compensadores
         ]);
+    }
+
+    public function storeVentaMostrador()
+    {
+        try {
+            $currentDateTime = Carbon::now();
+            $currentDateFormat = Carbon::parse($currentDateTime->format('Y-m-d'));
+            $current_date = Carbon::parse($currentDateTime->format('Y-m-d'));
+            $current_date->modify('next monday'); // Move to the next Monday
+            $dateNextMonday = $current_date->format('Y-m-d'); // Output the date in Y-m-d format
+            $id_user = Auth::user()->id;
+
+            $venta = new Sale();
+            $venta->user_id = $id_user;
+            $venta->centrocosto_id = 1; // Valor estático para el campo centrocosto
+            $venta->third_id = 33; // Valor estático para el campo third_id
+            $venta->vendedor_id = 33; // Valor estático para el campo vendedor_id
+
+            $venta->fecha_venta = $currentDateFormat;
+            $venta->fecha_cierre = $dateNextMonday;
+            $venta->total_bruto = 0;
+            $venta->descuentos = 0;
+            $venta->subtotal = 0;
+            $venta->total = 0;
+            $venta->total_otros_descuentos = 0;
+            $venta->valor_a_pagar_efectivo = 0;
+            $venta->valor_a_pagar_tarjeta = 0;
+            $venta->valor_a_pagar_otros = 0;
+            $venta->valor_a_pagar_credito = 0;
+            $venta->valor_pagado = 0;
+            $venta->cambio = 0;
+            $venta->items = 0;
+            $venta->valor_pagado = 0;
+            $venta->cambio = 0;
+            $venta->save();
+
+            return response()->json([
+                'status' => 1,
+                'message' => 'Guardado correctamente',
+                'registroId' => $venta->id
+            ]);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'status' => 0,
+                'array' => (array) $th
+            ]);
+        }
     }
 }

@@ -10,7 +10,8 @@
 				</h4>
 				<ul class="tabs tab-pills">
 					<li>
-						<a href="javascript:void(0)" onclick="showModalcreate()" class="tabmenu bg-dark" data-toggle="modal" data-target="#modal-create-compensado" title="Nuevo Compra">Agregar</a>
+						<a href="javascript:void(0)" onclick="showModalcreate()" class="tabmenu bg-dark" data-toggle="modal" data-target="#modal-create-compensado" title="Nueva venta por domicilio">Domicilio</a>
+						<a href="javascript:void(0)" class="tabmenu bg-dark" id="storeVentaMostradorBtn"  title="Nueva venta por mostrador">Mostrador</a>
 					</li>
 				</ul>
 			</div>
@@ -24,7 +25,7 @@
 								<th class="table-th text-white">CLIENTE</th>
 								<th class="table-th text-white ">CENTRO</th>
 								<th class="table-th text-white">FACTURA</th>
-								<th class="table-th text-white">Fecha</th>
+								<th class="table-th text-white">DIA.HORA</th>
 								<th class="table-th text-white text-center">Acciones</th>
 							</tr>
 						</thead>

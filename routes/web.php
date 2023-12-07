@@ -355,6 +355,7 @@ Route::group(['middleware' => [('auth')]], function () {
     Route::get('sales', [saleController::class, 'index'])->name('sale.index');
     Route::get('showlistVentas', [saleController::class, 'show'])->name('sale.showlistVentas');
     Route::post('ventasave', [saleController::class, 'store'])->name('sale.save');
+    Route::post('store-venta-mostrador', [saleController::class, 'storeVentaMostrador'])->name('sale.storeVentaMostrador');
     Route::post('salesavedetail', [saleController::class, 'savedetail'])->name('sale.savedetail');
     Route::post('saleById', [saleController::class, 'editCompensado'])->name('sale.editCompensado');
     Route::post('ventadown', [saleController::class, 'destroy'])->name('sale.down');
