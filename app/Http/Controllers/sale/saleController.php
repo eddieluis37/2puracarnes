@@ -713,7 +713,7 @@ class saleController extends Controller
 
             return response()->json([
                 'status' => 1,
-                'message' => 'Guardado correctamente',
+                'message' => 'Inicio de venta por mostrador',
                 'registroId' => $venta->id
             ]);
         } catch (\Throwable $th) {

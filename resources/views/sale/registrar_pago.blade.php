@@ -184,7 +184,7 @@
         <div class="widget widget-chart-one">
             <div class="widget-content mt-0">
                 <div class="card-body">
-                    <form method="POST" action="/sale/registrar_pago/">
+                    <form action="{{ route('sale.save') }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         <table class="table">
                             <thead>
@@ -256,11 +256,8 @@
                                 <tr>
                                     <th colspan="2">
                                         <div class="form-group">
-                                        <button type="submit" class="btn btn-success" id="btnGuardar" disabled>Guardar</button>
-                                           
-                                         
+                                            <button type="submit" class="btn btn-success" id="btnGuardar" disabled>Guardar e imprimir</button>
                                             <button type="button" class="btn btn-primary" onclick="history.back()">Volver</button>
-                                            <button type="submit" id="btnAddVentaDomicilio" class="btn btn-primary">Cancelar</button>
                                         </div>
                                     </th>
                                 </tr>
