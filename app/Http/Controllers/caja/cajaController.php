@@ -54,9 +54,65 @@ class cajaController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request) // Crea turno con el modal_create.blade
     {
-        //
+        try {
+
+            $rules = [
+                'alistamientoId' => 'required',
+                'cajero' => 'required',
+                'centrocosto' => 'required',
+                
+            ];
+            $messages = [
+                'alistamientoId.required' => 'El alistamiento es requerido',
+                'cajero.required' => 'El cajero es requerido',
+                'centrocosto.required' => 'El centro de costo es requerido',
+                
+            ];
+
+            $validator = Validator::make($request->all(), $rules, $messages);
+            if ($validator->fails()) {
+                return response()->json([
+                    'status' => 0,
+                    'errors' => $validator->errors()
+                ], 422);
+            }
+
+            $getReg = Caja::firstWhere('id', $request->alistamientoId);
+
+            if ($getReg == null) {
+                $currentDateTime = Carbon::now();
+                $currentDateFormat = Carbon::parse($currentDateTime->format('Y-m-d'));
+                $current_date = Carbon::parse($currentDateTime->format('Y-m-d'));
+                $current_date->modify('next monday'); // Move to the next Monday
+                $dateNextMonday = $current_date->format('Y-m-d'); // Output the date in Y-m-d format
+                $fechaalistamiento = $request->fecha1;
+                $id_user = Auth::user()->id;
+
+                $alist = new Caja();
+                $alist->user_id = $id_user;
+                $alist->centrocosto_id = $request->centrocosto;
+                $alist->cajero_id = $request->cajero;              
+                $alist->base = $request->base;
+    
+               
+                //$alist->fecha_alistamiento = $currentDateFormat;
+                $alist->fecha_hora_inicio = $currentDateTime;;
+                $alist->fecha_hora_cierre = $dateNextMonday;
+                $alist->save();
+                return response()->json([
+                    'status' => 1,
+                    'message' => 'Guardado correctamente',
+                    "registroId" => $alist->id
+                ]);
+            }
+        } catch (\Throwable $th) {
+            return response()->json([
+                'status' => 0,
+                'array' => (array) $th
+            ]);
+        }
     }
 
     /**
@@ -68,24 +124,29 @@ class cajaController extends Controller
     public function show()
     {
         $data = DB::table('cajas as ali')
-           /*  ->join('categories as cat', 'ali.categoria_id', '=', 'cat.id')
-            ->join('meatcuts as cut', 'ali.meatcut_id', '=', 'cut.id')*/
+             ->join('users as u', 'ali.cajero_id', '=', 'u.id')
+          /*   ->join('meatcuts as cut', 'ali.meatcut_id', '=', 'cut.id')*/
             ->join('centro_costo as centro', 'ali.centrocosto_id', '=', 'centro.id')
-            ->select('ali.*', 'centro.name as namecentrocosto')
+            ->select('ali.*', 'centro.name as namecentrocosto', 'u.name as namecajero')
             ->where('ali.status', 1)
             ->get();
         //$data = Compensadores::orderBy('id','desc');
         return Datatables::of($data)->addIndexColumn()
-            ->addColumn('fecha', function ($data) {
-                $fecha = Carbon::parse($data->fecha_hora_inicio);
-                $onlyDate = $fecha->toDateString();
-                return $onlyDate;
+            ->addColumn('fecha1', function ($data) {
+                $fecha1 = Carbon::parse($data->fecha_hora_inicio);
+                $formattedDate1 = $fecha1->format('M-d. H:i');
+                return $formattedDate1;
+            })
+            ->addColumn('fecha2', function ($data) {
+                $fecha2 = Carbon::parse($data->fecha_hora_cierre);
+                $formattedDate = $fecha2->format('M-d. H:i');
+                return $formattedDate;
             })
             ->addColumn('inventory', function ($data) {
-                if ($data->inventario == 'pending') {
-                    $statusInventory = '<span class="badge bg-warning">Pendiente</span>';
+                if ($data->estado == 'close') {
+                    $statusInventory = '<span class="badge bg-warning">Cerrado</span>';
                 } else {
-                    $statusInventory = '<span class="badge bg-success">Agregado</span>';
+                    $statusInventory = '<span class="badge bg-success">Abierto</span>';
                 }
                 return $statusInventory;
             })
@@ -94,7 +155,7 @@ class cajaController extends Controller
                 if (Carbon::parse($currentDateTime->format('Y-m-d'))->gt(Carbon::parse($data->fecha_hora_cierre))) {
                     $btn = '
                     <div class="text-center">
-					<a href="alistamiento/create/' . $data->id . '" class="btn btn-dark" title="Alistar" >
+					<a href="caja/create/' . $data->id . '" class="btn btn-dark" title="Alistar" >
 						<i class="fas fa-directions"></i>
 					</a>
 					<button class="btn btn-dark" title="" onclick="showDataForm(' . $data->id . ')">
@@ -107,12 +168,12 @@ class cajaController extends Controller
                     ';
                 } elseif (Carbon::parse($currentDateTime->format('Y-m-d'))->lt(Carbon::parse($data->fecha_hora_cierre))) {
                     $status = '';
-                    if ($data->inventario == 'added') {
+                    if ($data->estado == 'open') {
                         $status = 'disabled';
                     }
                     $btn = '
                     <div class="text-center">
-					<a href="alistamiento/create/' . $data->id . '" class="btn btn-dark" title="Alistar" >
+					<a href="caja/create/' . $data->id . '" class="btn btn-dark" title="Alistar" >
 						<i class="fas fa-directions"></i>
 					</a>
 					<button class="btn btn-dark" title="" onclick="showDataForm(' . $data->id . ')">
@@ -126,7 +187,7 @@ class cajaController extends Controller
                 } else {
                     $btn = '
                     <div class="text-center">
-					<a href="alistamiento/create/' . $data->id . '" class="btn btn-dark" title="Alistar" >
+					<a href="caja/create/' . $data->id . '" class="btn btn-dark" title="Alistar" >
 						<i class="fas fa-directions"></i>
 					</a>
 					<button class="btn btn-dark" title="" onclick="showDataForm(' . $data->id . ')">
@@ -140,7 +201,7 @@ class cajaController extends Controller
                 }
                 return $btn;
             })
-            ->rawColumns(['fecha', 'inventory', 'action'])
+            ->rawColumns(['fecha1', 'fecha2', 'inventory', 'action'])
             ->make(true);
     }
 

@@ -33,7 +33,7 @@ class CreateCajasTable extends Migration
 
             $table->dateTime('fecha_hora_cierre')->nullable();
 
-            $table->enum('inventario', ['pending', 'added'])->default('pending');
+            $table->enum('estado', ['close', 'open'])->default('open');
 
             $table->boolean('status')->parent_select()->default(true)->nullable();            
            

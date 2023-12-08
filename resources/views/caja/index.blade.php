@@ -20,13 +20,13 @@
 					<table id="tableAlistamiento" class="table table-striped mt-1">
 						<thead class="text-white" style="background: #3B3F5C">
 							<tr>
-								<th class="table-th text-white">#</th>
-								<th class="table-th text-white">Categoria</th>
-								<th class="table-th text-white ">Centro de costo</th>
-								<th class="table-th text-white ">Corte de padre</th>
-								<th class="table-th text-white ">Nuevo stock</th>
-								<th class="table-th text-white ">Inventario</th>
-								<th class="table-th text-white">Fecha</th>
+								<th class="table-th text-white">T</th>							
+								<th class="table-th text-white ">CentroCosto</th>		
+								<th class="table-th text-white ">CAJERO</th>
+								<th class="table-th text-white ">BASE</th>							
+								<th class="table-th text-white ">ESTADO</th>
+								<th class="table-th text-white">INICIO</th>
+								<th class="table-th text-white">CIERRE</th>
 								<th class="table-th text-white text-center">Acciones</th>
 							</tr>
 						</thead>
