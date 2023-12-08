@@ -27,6 +27,8 @@ class CreateCajasTable extends Migration
 
             $table->decimal('base',10,0)->nullable();
 
+            $table->decimal('retiro_caja',10,0)->nullable();
+
             $table->decimal('valor_real',10,0)->nullable();
 
             $table->dateTime('fecha_hora_inicio')->nullable();

@@ -43,10 +43,55 @@ class cajaController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($id)
     {
-        //
+        // dd($id);
+        $dataAlistamiento = DB::table('cajas as ali')
+            ->join('users as u', 'ali.cajero_id', '=', 'u.id')
+            ->join('centro_costo as centro', 'ali.centrocosto_id', '=', 'centro.id')
+            ->select('ali.*', 'centro.name as namecentrocosto', 'u.name as namecajero')
+            ->where('ali.id', $id)
+            ->get();
+
+
+
+        /**************************************** */
+        $status = '';
+        $fechaAlistamientoCierre = Carbon::parse($dataAlistamiento[0]->fecha_hora_cierre);
+        $date = Carbon::now();
+        $currentDate = Carbon::parse($date->format('Y-m-d'));
+        if ($currentDate->gt($fechaAlistamientoCierre)) {
+            //'Date 1 is greater than Date 2';
+            $status = 'false';
+        } elseif ($currentDate->lt($fechaAlistamientoCierre)) {
+            //'Date 1 is less than Date 2';
+            $status = 'true';
+        } else {
+            //'Date 1 and Date 2 are equal';
+            $status = 'false';
+        }
+        /**************************************** */
+        $statusInventory = "";
+        if ($dataAlistamiento[0]->estado == "added") {
+            $statusInventory = "true";
+        } else {
+            $statusInventory = "false";
+        }
+        /**************************************** */
+        //dd($tt = [$status, $statusInventory]);
+
+        $display = "";
+        if ($status == "false" || $statusInventory == "true") {
+            $display = "display:none;";
+        }
+
+        /*  $enlistments = $this->getalistamientodetail($id, $dataAlistamiento[0]->centrocosto_id); */
+        /* 
+        $arrayTotales = $this->sumTotales($id);
+ */
+        return view('caja.create', compact('dataAlistamiento', 'status', 'statusInventory', 'display'));
     }
+
 
     /**
      * Store a newly created resource in storage.
@@ -62,13 +107,13 @@ class cajaController extends Controller
                 'alistamientoId' => 'required',
                 'cajero' => 'required',
                 'centrocosto' => 'required',
-                
+
             ];
             $messages = [
                 'alistamientoId.required' => 'El alistamiento es requerido',
                 'cajero.required' => 'El cajero es requerido',
                 'centrocosto.required' => 'El centro de costo es requerido',
-                
+
             ];
 
             $validator = Validator::make($request->all(), $rules, $messages);
@@ -93,10 +138,10 @@ class cajaController extends Controller
                 $alist = new Caja();
                 $alist->user_id = $id_user;
                 $alist->centrocosto_id = $request->centrocosto;
-                $alist->cajero_id = $request->cajero;              
+                $alist->cajero_id = $request->cajero;
                 $alist->base = $request->base;
-    
-               
+
+
                 //$alist->fecha_alistamiento = $currentDateFormat;
                 $alist->fecha_hora_inicio = $currentDateTime;;
                 $alist->fecha_hora_cierre = $dateNextMonday;
@@ -124,8 +169,8 @@ class cajaController extends Controller
     public function show()
     {
         $data = DB::table('cajas as ali')
-             ->join('users as u', 'ali.cajero_id', '=', 'u.id')
-          /*   ->join('meatcuts as cut', 'ali.meatcut_id', '=', 'cut.id')*/
+            ->join('users as u', 'ali.cajero_id', '=', 'u.id')
+            /*   ->join('meatcuts as cut', 'ali.meatcut_id', '=', 'cut.id')*/
             ->join('centro_costo as centro', 'ali.centrocosto_id', '=', 'centro.id')
             ->select('ali.*', 'centro.name as namecentrocosto', 'u.name as namecajero')
             ->where('ali.status', 1)

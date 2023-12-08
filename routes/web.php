@@ -278,6 +278,7 @@ Route::group(['middleware' => [('auth')]], function () {
     Route::get('caja', [cajaController::class, 'index'])->name('caja.index');
     Route::post('cajasave', [cajaController::class, 'store'])->name('caja.save');
     Route::get('showcaja', [cajaController::class, 'show'])->name('caja.showcaja');
+    Route::get('caja/create/{id}', [cajaController::class, 'create'])->name('caja.create');
 
 
 
