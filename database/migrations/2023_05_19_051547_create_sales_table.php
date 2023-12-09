@@ -39,20 +39,20 @@ class CreateSalesTable extends Migration
 
             $table->decimal('items',10,0);
             
-            $table->decimal('total_bruto',10,0);
-            $table->decimal('descuentos',10,0);
-            $table->decimal('subtotal',10,0);
+            $table->decimal('total_bruto',12,0)->default(0)->nullable();
+            $table->decimal('descuentos',12,0)->default(0)->nullable();
+            $table->decimal('subtotal',12,0)->default(0)->nullable();
             $table->decimal('total_iva',10,0)->default(0)->nullable();
             $table->decimal('total_otros_impuestos',10,0)->default(0)->nullable(); 
-            $table->decimal('total',10,0);
-            $table->decimal('total_otros_descuentos',10,2);
-            $table->decimal('valor_a_pagar_efectivo',10,0);
-            $table->decimal('valor_a_pagar_tarjeta',10,0);
-            $table->decimal('valor_a_pagar_otros',10,0);
-            $table->decimal('valor_a_pagar_credito',10,0);
-            $table->decimal('total_valor_a_pagar',10,0)->default(0)->nullable();      
-            $table->decimal('valor_pagado',10,0);           
-            $table->decimal('cambio',10,0);    
+            $table->decimal('total',12,0)->default(0)->nullable();
+            $table->decimal('total_otros_descuentos',12,0)->default(0)->nullable();
+            $table->decimal('valor_a_pagar_efectivo',12,0)->default(0)->nullable();  
+            $table->decimal('valor_a_pagar_tarjeta',12,0)->default(0)->nullable();
+            $table->decimal('valor_a_pagar_otros',12,0)->default(0)->nullable();
+            $table->decimal('valor_a_pagar_credito',12,0)->default(0)->nullable();
+            $table->decimal('total_valor_a_pagar',12,0)->default(0)->nullable();     
+            $table->decimal('valor_pagado',12,0)->default(0)->nullable();           
+            $table->decimal('cambio',12,0)->default(0)->nullable();    
 
             $table->enum('status',['0','1','2','3','4','5'])->default('0');
 

@@ -317,7 +317,7 @@ class saleController extends Controller
         }
     }
 
-    public function store(Request $request) // Guardar registro de pagos
+    public function store(Request $request) // Guardar venta por domicilio
     {
         try {            
 
