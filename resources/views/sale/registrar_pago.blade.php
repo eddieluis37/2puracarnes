@@ -83,7 +83,7 @@
                         <div class="row">
                             <div class="col-md-4">
                                 <label for="" class="form-label">Tarjetas</label>
-                                <select class="form-control form-control-sm select2Prod" name="" id="" required="">
+                                <select class="form-control form-control-sm select2Prod" name="tarjetas" id="tarjetas" required="">
                                     <option value="">Seleccione</option>
                                     <option value="credito" selected>CREDITO</option>
                                     <option value="debito">DEBITO</option>
@@ -93,7 +93,7 @@
                                 <label for="" class="form-label">Número de Verificación</label>
                                 <div class="input-group flex-nowrap">
                                     <span class="input-group-text" id="addon-wrapping">N°</span>
-                                    <input type="text" id="price" name="price" class="form-control input" placeholder="">
+                                    <input type="text" id="numero_verificacion_tarjeta" name="numero_verificacion_tarjeta" class="form-control input" placeholder="">
                                 </div>
                             </div>
                             <div class="col-md-4">
@@ -116,7 +116,7 @@
                         <div class="row">
                             <div class="col-md-4">
                                 <label for="" class="form-label">Otros</label>
-                                <select class="form-control form-control-sm select2Prod" name="producto" id="producto" required="">
+                                <select class="form-control form-control-sm select2Prod" name="otros" id="otros" required="">
                                     <option value="">Seleccione</option>
                                     <option value="WOMPI" selected>WOMPI</option>
                                     <option value="NEQUI">NEQUI</option>
@@ -126,7 +126,7 @@
                                 <label for="" class="form-label">Número de transacción</label>
                                 <div class="input-group flex-nowrap">
                                     <span class="input-group-text" id="addon-wrapping">N°</span>
-                                    <input type="text" id="price" name="price" class="form-control input" placeholder="">
+                                    <input type="text" id="numero_transacion" name="numero_transacion" class="form-control input" placeholder="">
                                 </div>
                             </div>
                             <div class="col-md-4">
@@ -146,10 +146,11 @@
                 <div class="card-body">
                     <form id="form-detail">
                         <input type="hidden" id="saleId" name="saleId" value="{{$venta->id}}">
+                        <input type="hidden" id="name_cliente" name="name_cliente" value="{{$venta->third->name}}">
                         <div class="row">
                             <div class="col-md-4">
                                 <label for="" class="form-label">Credito</label>
-                                <select class="form-control form-control-sm select2Prod" name="producto" id="producto" required="">
+                                <select class="form-control form-control-sm select2Prod" name="credito" id="credito" required="">
                                     <option value="">Seleccione</option>
                                     <option value="0" selected>0</option>
                                     <option value="8">8</option>
@@ -163,7 +164,7 @@
                                 <label for="" class="form-label">Número de credito</label>
                                 <div class="input-group flex-nowrap">
                                     <span class="input-group-text" id="addon-wrapping">N°</span>
-                                    <input type="text" id="price" name="price" class="form-control input" placeholder="">
+                                    <input type="text" id="numero_credito" name="numero_credito" class="form-control input" placeholder="">
                                 </div>
                             </div>
                             <div class="col-md-4">

@@ -213,3 +213,11 @@ valor_a_pagar_credito.addEventListener("change", function () {
     valor_a_pagar_credito.value = formatCantidadSinCero(enteredValue);
 });
 
+$(document).ready(function() {
+    var clienteMostrador = "CLIENTE MOSTRADOR";
+    var thirdName = "{{$venta->third->name}}";
+    
+    if (thirdName === clienteMostrador) {
+        $("#valor_a_pagar_credito").prop("disabled", true);
+    }
+});

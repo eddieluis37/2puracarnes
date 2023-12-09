@@ -43,10 +43,15 @@ const calculavalorapagar = () => {
 };
 
 function calcularCambio() {
-    var valorPagado = formatMoneyNumber(document.getElementById("valor_pagado").value);
-    var valorAbonado = formatMoneyNumber(document.getElementById("valor_a_pagar").value);
+    var valorPagado = formatMoneyNumber(
+        document.getElementById("valor_pagado").value
+    );
+    var valorAbonado = formatMoneyNumber(
+        document.getElementById("valor_a_pagar").value
+    );
     let valorCambio = valorPagado - valorAbonado;
-    document.getElementById("cambio").value = formatCantidadSinCero(valorCambio);
+    document.getElementById("cambio").value =
+        formatCantidadSinCero(valorCambio);
     console.log(valorCambio);
     if (valorCambio >= 0) {
         $("#btnGuardar").prop("disabled", false);
@@ -55,3 +60,16 @@ function calcularCambio() {
     }
     console.log(valorCambio);
 }
+
+$(document).ready(function () {
+    var clienteMostrador = "CLIENTE MOSTRADOR";
+    var thirdName = $("#name_cliente").val();
+
+    if (thirdName === clienteMostrador) {
+        $("#credito").prop("disabled", true);
+        $("#numero_credito").prop("disabled", true);
+        $("#valor_a_pagar_credito").prop("disabled", true);
+     
+    }
+    console.log(thirdName);
+});
