@@ -38,15 +38,8 @@ class saleController extends Controller
         $domiciliarios = Third::Where('domiciliario', 1)->get();
         $subcentrodecostos = Subcentrocosto::get();
 
-
-        return view('sale.index', compact('centros', 'clientes', 'vendedores', 'domiciliarios', 'ventas', 'subcentrodecostos'));
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+        return view('sale.index', compact('ventas', 'centros', 'clientes', 'vendedores', 'domiciliarios', 'subcentrodecostos'));
+    }  
 
     public function create($id)
     {
@@ -324,44 +317,12 @@ class saleController extends Controller
         }
     }
 
-    public function store(Request $request) //Crear venta domicilio
+    public function store(Request $request) // Guardar registro de pagos
     {
-        try {
-
-            $rules = [
-                'ventaId' => 'required',
-                'cliente' => 'required',
-                'vendedor' => 'required',
-                'centrocosto' => 'required',
-                'subcentrodecosto' => 'required',
-
-            ];
-            $messages = [
-                'ventaId.required' => 'El ventaId es requerido',
-                'cliente.required' => 'El cliente es requerido',
-                'vendedor.required' => 'El proveedor es requerido',
-                'centrocosto.required' => 'El centro de costo es requerido',
-                'subcentrodecosto.required' => 'El subcentro de costo es requerido',
-            ];
-
-            $validator = Validator::make($request->all(), $rules, $messages);
-            if ($validator->fails()) {
-                return response()->json([
-                    'status' => 0,
-                    'errors' => $validator->errors()
-                ], 422);
-            }
+        try {            
 
             $getReg = Sale::firstWhere('id', $request->ventaId);
-
-
-
-            /*    $datacompensado = DB::table('sales as sa')              
-              ->join('thirds as tird', 'sa.third_id', '=', 'tird.$request->ventaId')
-              ->join('centro_costo as centro', 'sa.centrocosto_id', '=', 'centro.$request->ventaId')
-              ->select('sa.*', 'tird.name as namethird', 'centro.name as namecentrocosto', 'tird.porc_descuento')
-              ->where('sa.id', $request->ventaId);
-         dd($datacompensado); */
+         
 
             if ($getReg == null) {
                 $currentDateTime = Carbon::now();
