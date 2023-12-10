@@ -24,11 +24,38 @@ use App\Models\Subcentrocosto;
 
 class saleController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    public function storeRegistroPago(Request $request, $ventaId)
+    {
+        /*    $valorCambio = request()->input('cambio'); */
+        /*  $valorCambio = session()->get('cambio'); */
+        /* */
+        $prueba = $request->user()->id;
+       // dd($prueba);
+
+        $valorCambio = $request->input('cambio');
+        dd($valorCambio);
+
+        $valorCambio = request()->input('cambio');
+
+        try {
+            $valor_a_pagar = $request->input('valor_a_pagar');
+            $venta = Sale::find($ventaId);
+            $venta->user_id = $request->user()->id;
+            $venta->valor_a_pagar_efectivo = $valorCambio;
+            $venta->save();
+            return response()->json([
+                'status' => 1,
+                'message' => 'Guardado correctamente',
+                "registroId" => $venta->id
+            ]);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'status' => 0,
+                'array' => (array) $th
+            ]);
+        }
+    }
+
     public function index()
     {
         $ventas = Sale::get();
@@ -693,31 +720,6 @@ class saleController extends Controller
             return "Nombre del cliente: " . $nombreCliente;
         } else {
             return "Venta no encontrada";
-        }
-    }
-
-    public function storeRegistroPago(Request $request, $ventaId)
-    {     
-     /*    $valorCambio = request()->input('cambio'); */
-       /*  $valorCambio = session()->get('cambio'); */
-      /*   $valorCambio = $request->cambio;
-       dd($valorCambio); */
-
-        try {
-            $valor_a_pagar = $request->input('valor_a_pagar');
-            $venta = Sale::find($ventaId);
-            $venta->valor_a_pagar_efectivo = 666;
-            $venta->save();
-            return response()->json([
-                'status' => 1,
-                'message' => 'Guardado correctamente',
-                "registroId" => $venta->id
-            ]);
-        } catch (\Throwable $th) {
-            return response()->json([
-                'status' => 0,
-                'array' => (array) $th
-            ]);
         }
     }
 }
