@@ -39,7 +39,7 @@ class saleController extends Controller
         $subcentrodecostos = Subcentrocosto::get();
 
         return view('sale.index', compact('ventas', 'centros', 'clientes', 'vendedores', 'domiciliarios', 'subcentrodecostos'));
-    }  
+    }
 
     public function create($id)
     {
@@ -319,10 +319,10 @@ class saleController extends Controller
 
     public function store(Request $request) // Guardar venta por domicilio
     {
-        try {            
+        try {
 
             $getReg = Sale::firstWhere('id', $request->ventaId);
-         
+
 
             if ($getReg == null) {
                 $currentDateTime = Carbon::now();
@@ -676,6 +676,42 @@ class saleController extends Controller
                 'status' => 1,
                 'message' => 'Inicio de venta por mostrador',
                 'registroId' => $venta->id
+            ]);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'status' => 0,
+                'array' => (array) $th
+            ]);
+        }
+    }
+
+    public function obtenerNombreCliente($id)
+    {
+        $venta = Sale::find($id);
+        if ($venta) {
+            $nombreCliente = $venta->third->name;
+            return "Nombre del cliente: " . $nombreCliente;
+        } else {
+            return "Venta no encontrada";
+        }
+    }
+
+    public function storeRegistroPago(Request $request, $ventaId)
+    {     
+     /*    $valorCambio = request()->input('cambio'); */
+       /*  $valorCambio = session()->get('cambio'); */
+      /*   $valorCambio = $request->cambio;
+       dd($valorCambio); */
+
+        try {
+            $valor_a_pagar = $request->input('valor_a_pagar');
+            $venta = Sale::find($ventaId);
+            $venta->valor_a_pagar_efectivo = 666;
+            $venta->save();
+            return response()->json([
+                'status' => 1,
+                'message' => 'Guardado correctamente',
+                "registroId" => $venta->id
             ]);
         } catch (\Throwable $th) {
             return response()->json([

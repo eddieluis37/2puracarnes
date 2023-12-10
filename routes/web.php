@@ -278,9 +278,7 @@ Route::group(['middleware' => [('auth')]], function () {
     Route::get('caja', [cajaController::class, 'index'])->name('caja.index');
     Route::post('cajasave', [cajaController::class, 'store'])->name('caja.save');
     Route::get('showcaja', [cajaController::class, 'show'])->name('caja.showcaja');
-    Route::get('caja/create/{id}', [cajaController::class, 'create'])->name('caja.create');
-
-
+    Route::get('caja/create/{id}', [cajaController::class, 'create'])->name('caja.create'); 
 
     /** TALLER ***/
     Route::get('workshop', [workshopController::class, 'index'])->name('workshop.index');
@@ -375,6 +373,10 @@ Route::group(['middleware' => [('auth')]], function () {
 
     Route::get('/obtener-precios-producto', [saleController::class, 'obtenerPreciosProducto'])->name('sale.obtener-precios-producto');
     Route::get('sale/create/registrar_pago/{id}', [saleController::class, 'create_reg_pago'])->name('sale.registrar_pago');
+    Route::post('sale/create/registrar_pago/{id}', [saleController::class, 'storeRegistroPago'])->name('pago.save');
+
+    /* Route::post('registroPagoSave', [saleController::class, 'storeRegistroPago'])->name('pago.save'); */
+
 
     /*****************************LISTA_DE_PRECIO******************************************/
 

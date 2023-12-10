@@ -185,7 +185,7 @@
         <div class="widget widget-chart-one">
             <div class="widget-content mt-0">
                 <div class="card-body">
-                    <form action="{{ route('sale.save') }}" method="POST" enctype="multipart/form-data">
+                    <form action="{{ route('pago.save', ['id' => $venta->id]) }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         <table class="table">
                             <thead>
