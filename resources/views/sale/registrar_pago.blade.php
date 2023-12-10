@@ -186,7 +186,8 @@
             <div class="widget-content mt-0">
                 <div class="card-body">
                     <form action="{{ route('pago.save', ['id' => $venta->id]) }}" method="POST" enctype="multipart/form-data">
-                        @csrf
+                    <input type="hidden" id="porc_descuento" name="porc_descuento" value="898989" data-id="">   
+                    @csrf
                         <table class="table">
                             <thead>
                                 <tr>
