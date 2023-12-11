@@ -42,8 +42,8 @@ class saleController extends Controller
 
         /*  $valorCambio = $request->input('cambio'); */
       
-        $valorCambio = $request->input('porc_descuento');
-        dd($valorCambio);
+        $valorCambio = $request->input('valor_pagado');
+     //   dd($valorCambio);
 
         $valorCambio = request()->input('cambio');
 

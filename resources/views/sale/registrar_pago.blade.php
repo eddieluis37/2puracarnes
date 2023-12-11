@@ -185,7 +185,7 @@
         <div class="widget widget-chart-one">
             <div class="widget-content mt-0">
                 <div class="card-body">
-                    <form action="{{ route('pago.save', ['id' => $venta->id]) }}" method="POST" enctype="multipart/form-data">
+                    <form action="" method="POST" enctype="multipart/form-data">
                     <input type="hidden" id="porc_descuento" name="porc_descuento" value="898989" data-id="">   
                     @csrf
                         <table class="table">
@@ -256,6 +256,14 @@
                             </tbody>
                             <tfoot>
                                 <tr>
+                                <th class="text-center">
+										<form method="GET" action="{{ route('pago.save', ['id' => $venta->id]) }}">
+											@csrf
+											<div class="text-center mt-1">
+												<button type="submit" class="btn btn-success">Pagar</button>
+											</div>
+										</form>
+									</th>
                                     <th colspan="2">
                                         <div class="form-group">
                                             <button type="submit" class="btn btn-success" id="btnGuardar" disabled>Guardar e imprimir</button>
