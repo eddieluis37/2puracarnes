@@ -73,6 +73,8 @@ $(document).ready(function () {
     console.log(thirdName);
 });
 
+
+
 /* // Obtener los valores de las variables
 var valorAPagar = 0;
 var valorPagado = 0;

@@ -31,13 +31,17 @@ class saleController extends Controller
     {
 
         // Obtener los valores
+        
+        $status = '1'; //1 = pagado
 
         $valor_pagado = $request->input('valor_pagado');
         $valor_pagado = str_replace(['.', ',', '$', '#'], '', $valor_pagado);
 
         $cambio = $request->input('cambio');
         $cambio = str_replace(['.', ',', '$', '#'], '', $cambio);
-
+        
+        $valor_a_pagar_efectivo = $request->input('valor_a_pagar_efectivo');
+        $valor_a_pagar_efectivo = str_replace(['.', ',', '$', '#'], '', $valor_a_pagar_efectivo);
 
 
         try {
@@ -47,11 +51,19 @@ class saleController extends Controller
             $venta->valor_a_pagar_efectivo = 0;
             $venta->valor_pagado = $valor_pagado;
             $venta->cambio = $cambio;
-            $venta->save();
+            $venta->status = $status;
+
+            $venta->save();     
+            
+            if ($venta->status == 1) {
+                return redirect()->route('sale.index');
+            }
+
             return response()->json([
                 'status' => 1,
                 'message' => 'Guardado correctamente',
-                "registroId" => $venta->id
+                "registroId" => $venta->id,
+                'redirect' => route('sale.index')
             ]);
         } catch (\Throwable $th) {
             return response()->json([

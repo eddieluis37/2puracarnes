@@ -48,7 +48,7 @@
                                 <label for="" class="form-label">Valor a pagar en efectivo</label>
                                 <div class="input-group flex-nowrap">
                                     <span class="input-group-text" id="addon-wrapping">$</span>
-                                    <input class="form-control form-control-sm" type="text" name="valor_a_pagar_efectivo" id="valor_a_pagar_efectivo" data-id="" required="">
+                                    <input class="form-control form-control-sm" type="text" name="valor_a_pagar_efectivo" id="valor_a_pagar_efectivo" data-id="">
                                 </div>
 
                                 <div class="widget-content mt-3">
@@ -62,15 +62,7 @@
                             </div>
                         </form>
                     </div>
-                    <div class="row g-3">
-                        <div class="col-md-5">
-
-                        </div>
-                        <div class="col-md-5">
-
-                        </div>
-
-                    </div>
+                 
 
                 </div>
             </div>
@@ -171,7 +163,7 @@
                                 <label for="" class="form-label">Valor</label>
                                 <div class="input-group flex-nowrap">
                                     <span class="input-group-text" id="addon-wrapping">$</span>
-                                    <input class="form-control form-control-sm" type="text" name="valor_a_pagar_credito" id="valor_a_pagar_credito" required="">
+                                    <input class="form-control form-control-sm" type="text" name="valor_a_pagar_credito" id="valor_a_pagar_credito">
                                 </div>
                             </div>
                         </div>
@@ -260,14 +252,14 @@
                         </tbody>
                         <tfoot>
                             <tr>
-                                <th class="text-center">
-                                    <form method="GET" action="">
+                               <!--   <th class="text-center">
+                                   <form method="GET" action="">
                                         @csrf
                                         <div class="text-center mt-1">
                                             <button type="submit" class="btn btn-success">Pagar</button>
                                         </div>
-                                    </form>
-                                </th>
+                                    </form> 
+                                </th>-->
                                 <th colspan="2">
                                     <div class="form-group">
                                         <button type="submit" class="btn btn-success" id="btnGuardar" disabled>Guardar e imprimir</button>
