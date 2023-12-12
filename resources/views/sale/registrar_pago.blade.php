@@ -42,25 +42,25 @@
             <div class="widget-content mt-1">
                 <div class="card">
                     <div class="card-body">
-                        <form id="form-detail">
+                        <form action="" method="POST" enctype="multipart/form-data">
                             <input type="hidden" id="saleId" name="saleId" value="{{$venta->id}}">
                             <div class="col-md-8">
                                 <label for="" class="form-label">Valor a pagar en efectivo</label>
                                 <div class="input-group flex-nowrap">
                                     <span class="input-group-text" id="addon-wrapping">$</span>
-                                    <input class="form-control form-control-sm" type="text" name="valor_a_pagar_efectivo" id="valor_a_pagar_efectivo" required="">
+                                    <input class="form-control form-control-sm" type="text" name="valor_a_pagar_efectivo" id="valor_a_pagar_efectivo" data-id="" required="">
                                 </div>
 
                                 <div class="widget-content mt-3">
                                     <label for="" class="form-label">Valores sugeridos</label>
                                     <div></div>
-                                    <button type="button" class="btn btn-primary" onclick="sugerirValor(10000)">10.000</button>
+                                    <button type="bFutton" class="btn btn-primary" onclick="sugerirValor(10000)">10.000</button>
                                     <button type="button" class="btn btn-primary" onclick="sugerirValor(20000)">20.000</button>
                                     <button type="button" class="btn btn-primary" onclick="sugerirValor(50000)">50.000</button>
                                     <button type="button" class="btn btn-primary" onclick="sugerirValor(100000)">100.000</button>
                                 </div>
                             </div>
-
+                        </form>
                     </div>
                     <div class="row g-3">
                         <div class="col-md-5">
@@ -71,7 +71,7 @@
                         </div>
 
                     </div>
-                    </form>
+
                 </div>
             </div>
         </div>
@@ -186,92 +186,96 @@
             <div class="widget-content mt-0">
                 <div class="card-body">
                     <form action="" method="POST" enctype="multipart/form-data">
-                    <input type="hidden" id="porc_descuento" name="porc_descuento" value="898989" data-id="">   
-                    @csrf
-                        <table class="table">
-                            <thead>
-                                <tr>
-                                    <th scope="col" style="text-align: left; vertical-align: middle;">Cliente</th>
-                                    <th scope="col" style="text-align: left; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{{$venta->third->name}}</th>
-                                    <!--         <th scope="col">Last</th> -->
+                        <fieldset name="personal">
+                            <input type="hidden" id="porc_descuento" name="porc_descuento" value="{{$dataVenta[0]->vendedor_name}}" data-id="">
 
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <th scope="row" style="text-align: left">Centro_Costo</th>
-                                    <td style="text-align: left">
-                                        <p>{{$venta->centrocosto->name}}</p>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th scope="row" style="text-align: left">Vendedor</th>
+                            @csrf
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th scope="col" style="text-align: left; vertical-align: middle;">Cliente</th>
+                                        <th scope="col" style="text-align: left; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{{$venta->third->name}}</th>
+                                        <!--         <th scope="col">Last</th> -->
 
-                                    <td style="text-align: left">{{$dataVenta[0]->vendedor_name}}</td>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <th scope="row" style="text-align: left">Centro_Costo</th>
+                                        <td style="text-align: left">
+                                            <p>{{$venta->centrocosto->name}}</p>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row" style="text-align: left">Vendedor</th>
 
-                                </tr>
-                                <tr>
-                                    <th scope="row" style="text-align: left">Total_Bruto</th>
-                                    <td colspan="2">$ {{number_format($arrayTotales['TotalBrutoSinDescuento'], 0, ',', '.')}}</td>
+                                        <td style="text-align: left">{{$dataVenta[0]->vendedor_name}}</td>
 
-                                </tr>
-                                <tr>
-                                    <th scope="row" style="text-align: left">Descuentos</th>
-                                    <td colspan="2">$ {{number_format($arrayTotales['TotalDescuentos'], 0, ',', '.')}}</td>
-                                </tr>
-                                <tr>
-                                    <th scope="row" style="text-align: left">SubTotal</th>
-                                    <td colspan="2">$ {{number_format($subtotal, 0, ',', '.')}}</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row" style="text-align: left">Total_Bruto</th>
+                                        <td colspan="2">$ {{number_format($arrayTotales['TotalBrutoSinDescuento'], 0, ',', '.')}}</td>
 
-                                </tr>
-                                <tr>
-                                    <th scope="row" style="text-align: left">Total_IVA</th>
-                                    <td colspan="2">$ {{number_format($arrayTotales['TotalIva'], 0, ',', '.')}}</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row" style="text-align: left">Descuentos</th>
+                                        <td colspan="2">$ {{number_format($arrayTotales['TotalDescuentos'], 0, ',', '.')}}</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row" style="text-align: left">SubTotal</th>
+                                        <td colspan="2">$ {{number_format($subtotal, 0, ',', '.')}}</td>
 
-
-                                </tr>
-                                <tr>
-                                    <th scope="row" style="text-align: left">TotalOtrosImp</th>
-                                    <td colspan="2">$ {{number_format($arrayTotales['TotalOtroImpuesto'], 0, ',', '.')}}</td>
-
-                                </tr>
-                                <tr>
-                                    <th scope="row" style="text-align: left">Valor_a_Pagar</th>
-                                    <td colspan="2">
-                                        <input type="text" name="valor_a_pagar" id="valor_a_pagar" value="$ {{number_format($arrayTotales['TotalValorAPagar'], 0, ',', '.')}}" disabled style="text-align: right; font-weight: bold; color: black">
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th scope="row" style="text-align: left">Valor_Pagado</th>
-                                    <td colspan="2" style="text-align: right">$ <input type="text" name="valor_pagado" id="valor_pagado" value="valorPagado" disabled style="text-align: right; font-weight: bold; color: black"></td>
-
-                                </tr>
-                                <tr>
-                                    <th scope="row" style="text-align: left">Cambio</th>
-                                    <td colspan="2" style="text-align: right">$ <input type="text" name="cambio" id="cambio" value="valorCambio" disabled style="text-align: right; font-weight: bold; color: black"></td>
-
-                                </tr>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row" style="text-align: left">Total_IVA</th>
+                                        <td colspan="2">$ {{number_format($arrayTotales['TotalIva'], 0, ',', '.')}}</td>
 
 
-                            </tbody>
-                            <tfoot>
-                                <tr>
-                                <th class="text-center">
-										<form method="GET" action="{{ route('pago.save', ['id' => $venta->id]) }}">
-											@csrf
-											<div class="text-center mt-1">
-												<button type="submit" class="btn btn-success">Pagar</button>
-											</div>
-										</form>
-									</th>
-                                    <th colspan="2">
+                                    </tr>
+                                    <tr>
+                                        <th scope="row" style="text-align: left">TotalOtrosImp</th>
+                                        <td colspan="2">$ {{number_format($arrayTotales['TotalOtroImpuesto'], 0, ',', '.')}}</td>
+
+                                    </tr>
+                                    <tr>
+                                        <th scope="row" style="text-align: left">Valor_a_Pagar</th>
+                                        <td colspan="2">
+                                            <input type="text" id="valor_a_pagar" name="valor_a_pagar" value="$ {{number_format($arrayTotales['TotalValorAPagar'], 0, ',', '.')}}" data-id="" style="text-align: right; font-weight: bold; color: black">
+                                        </td>
+                                    </tr>
+                                    <tr>
                                         <div class="form-group">
-                                            <button type="submit" class="btn btn-success" id="btnGuardar" disabled>Guardar e imprimir</button>
-                                            <button type="button" class="btn btn-primary" onclick="history.back()">Volver</button>
+                                            <th scope="row" style="text-align: left">Valor_Pagado</th>
+                                            <td colspan="2" style="text-align: right">$ <input type="text" name="valor_pagado" id="valor_pagado" value="valorPagado" style="text-align: right; font-weight: bold; color: black"></td>
+                                           
                                         </div>
-                                    </th>
-                                </tr>
-                            </tfoot>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row" style="text-align: left">Cambio</th>
+                                        <td colspan="2" style="text-align: right">$ <input type="text" name="cambio" id="cambio" value="valorCambio" style="text-align: right; font-weight: bold; color: black"></td>
+
+                                    </tr>
+
+                        </fieldset>
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <th class="text-center">
+                                    <form method="GET" action="">
+                                        @csrf
+                                        <div class="text-center mt-1">
+                                            <button type="submit" class="btn btn-success">Pagar</button>
+                                        </div>
+                                    </form>
+                                </th>
+                                <th colspan="2">
+                                    <div class="form-group">
+                                        <button type="submit" class="btn btn-success" id="btnGuardar" disabled>Guardar e imprimir</button>
+                                        <button type="button" class="btn btn-primary" onclick="history.back()">Volver</button>
+                                    </div>
+                                </th>
+                            </tr>
+                        </tfoot>
                         </table>
                     </form>
                 </div>

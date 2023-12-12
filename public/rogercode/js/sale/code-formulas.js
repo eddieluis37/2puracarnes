@@ -69,7 +69,33 @@ $(document).ready(function () {
         $("#credito").prop("disabled", true);
         $("#numero_credito").prop("disabled", true);
         $("#valor_a_pagar_credito").prop("disabled", true);
-     
     }
     console.log(thirdName);
+});
+
+// Obtener los valores de las variables
+var valorAPagar = 0;
+var valorPagado = 0;
+var valorCambio = 0;
+
+// Crear un objeto con las variables a enviar
+var data = {
+    valorAPagar: valorAPagar,
+    valorPagado: valorPagado,
+    valorCambio: valorCambio,
+};
+
+// Realizar la solicitud HTTP al controlador
+$.ajax({
+    url: 'store-registro-pago',
+    method: "GET",
+    data: data,
+    success: function (response) {
+        // Manejar la respuesta del controlador
+        console.log(response);
+    },
+    error: function (error) {
+        // Manejar el error de la solicitud
+        console.log(error);
+    },
 });

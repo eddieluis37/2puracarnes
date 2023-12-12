@@ -24,28 +24,23 @@ use App\Models\Subcentrocosto;
 
 class saleController extends Controller
 {
-    
+
     public $valorCambio;
 
     public function storeRegistroPago(Request $request, $ventaId)
     {
-        
-       // return $this->valorCambio;
-     //  dd($this->valorCambio);
+
+        // Obtener los valores del objeto data
+        $valorAPagar = $request->input('valorAPagar');
+        $valorPagado = $request->input('valorPagado');
+        $valorCambio = $request->input('valorCambio');
+
+
+        //dd($valorCambio);
 
       
-        /*    $valorCambio = request()->input('cambio'); */
-        /*  $valorCambio = session()->get('cambio'); */
-        /* */
-        $prueba = $request->user()->id;
-        // dd($prueba);
-
-        /*  $valorCambio = $request->input('cambio'); */
-      
-        $valorCambio = $request->input('valor_pagado');
-     //   dd($valorCambio);
-
         $valorCambio = request()->input('cambio');
+        dd($valorCambio);
 
         try {
             $valor_a_pagar = $request->input('valor_a_pagar');
