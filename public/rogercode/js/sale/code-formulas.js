@@ -73,7 +73,7 @@ $(document).ready(function () {
     console.log(thirdName);
 });
 
-// Obtener los valores de las variables
+/* // Obtener los valores de las variables
 var valorAPagar = 0;
 var valorPagado = 0;
 var valorCambio = 0;
@@ -99,3 +99,4 @@ $.ajax({
         console.log(error);
     },
 });
+ */

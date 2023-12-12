@@ -246,13 +246,13 @@
                                     <tr>
                                         <div class="form-group">
                                             <th scope="row" style="text-align: left">Valor_Pagado</th>
-                                            <td colspan="2" style="text-align: right">$ <input type="text" name="valor_pagado" id="valor_pagado" value="valorPagado" style="text-align: right; font-weight: bold; color: black"></td>
+                                            <td colspan="2" style="text-align: right">$ <input type="text" name="valor_pagado" id="valor_pagado" value="valorPagado" style="text-align: right; font-weight: bold; color: black" readonly></td>
                                            
                                         </div>
                                     </tr>
                                     <tr>
                                         <th scope="row" style="text-align: left">Cambio</th>
-                                        <td colspan="2" style="text-align: right">$ <input type="text" name="cambio" id="cambio" value="valorCambio" style="text-align: right; font-weight: bold; color: black"></td>
+                                        <td colspan="2" style="text-align: right">$ <input type="text" name="cambio" id="cambio" value="valorCambio" style="text-align: right; font-weight: bold; color: black" readonly></td>
 
                                     </tr>
 

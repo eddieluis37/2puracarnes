@@ -30,23 +30,23 @@ class saleController extends Controller
     public function storeRegistroPago(Request $request, $ventaId)
     {
 
-        // Obtener los valores del objeto data
-        $valorAPagar = $request->input('valorAPagar');
-        $valorPagado = $request->input('valorPagado');
-        $valorCambio = $request->input('valorCambio');
+        // Obtener los valores
+
+        $valor_pagado = $request->input('valor_pagado');
+        $valor_pagado = str_replace(['.', ',', '$', '#'], '', $valor_pagado);
+
+        $cambio = $request->input('cambio');
+        $cambio = str_replace(['.', ',', '$', '#'], '', $cambio);
 
 
-        //dd($valorCambio);
-
-      
-        $valorCambio = request()->input('cambio');
-        dd($valorCambio);
 
         try {
             $valor_a_pagar = $request->input('valor_a_pagar');
             $venta = Sale::find($ventaId);
             $venta->user_id = $request->user()->id;
-            $venta->valor_a_pagar_efectivo = $valorCambio;
+            $venta->valor_a_pagar_efectivo = 0;
+            $venta->valor_pagado = $valor_pagado;
+            $venta->cambio = $cambio;
             $venta->save();
             return response()->json([
                 'status' => 1,
