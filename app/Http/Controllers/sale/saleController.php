@@ -53,6 +53,9 @@ class saleController extends Controller
             $venta->cambio = $cambio;
             $venta->status = $status;
 
+
+            $venta->fecha_cierre = now();
+
             $venta->save();     
             
             if ($venta->status == 1) {
@@ -442,18 +445,18 @@ class saleController extends Controller
             ->join('thirds as tird', 'sa.third_id', '=', 'tird.id')
             ->join('centro_costo as centro', 'sa.centrocosto_id', '=', 'centro.id')
             ->select('sa.*', 'tird.name as namethird', 'centro.name as namecentrocosto')
-            ->where('sa.status', 1)
+           /*  ->where('sa.status', 1) */
             ->get();
         //$data = Sale::orderBy('id','desc');
         return Datatables::of($data)->addIndexColumn()
-            /*->addColumn('status', function($data){
-                    if ($data->estado == 1) {
-                        $status = '<span class="badge bg-success">Activo</span>';
+           ->addColumn('status', function($data){
+                    if ($data->status == 1) {
+                        $status = '<span class="badge bg-success">Cerrada</span>';
                     }else{
-                        $status= '<span class="badge bg-danger">Inactivo</span>';
+                        $status= '<span class="badge bg-danger">Pendiente</span>';
                     }
                     return $status;
-                })*/
+                })
             ->addColumn('date', function ($data) {
                 $date = Carbon::parse($data->created_at);
                 $formattedDate = $date->format('M-d. H:i');
@@ -464,7 +467,7 @@ class saleController extends Controller
                 if (Carbon::parse($currentDateTime->format('Y-m-d'))->gt(Carbon::parse($data->fecha_cierre))) {
                     $btn = '
                         <div class="text-center">
-					    <a href="sale/create/' . $data->id . '" class="btn btn-dark" title="Detalles" >
+					    <a href="sale/create/' . $data->id . '" class="btn btn-dark" title="Detalles" disabled>
 						    <i class="fas fa-directions"></i>
 					    </a>
 					    <button class="btn btn-dark" title="Borrar venta" onclick="showDataForm(' . $data->id . ')">
@@ -481,7 +484,7 @@ class saleController extends Controller
 					    <a href="sale/create/' . $data->id . '" class="btn btn-dark" title="Detalles" >
 						    <i class="fas fa-directions"></i>
 					    </a>
-					    <button class="btn btn-dark" title="Compensado" onclick="editCompensado(' . $data->id . ');">
+					    <button class="btn btn-dark" title="Venta" onclick="editCompensado(' . $data->id . ');">
 						    <i class="fas fa-edit"></i>
 					    </button>
 					  
@@ -490,10 +493,10 @@ class saleController extends Controller
                 } else {
                     $btn = '
                         <div class="text-center">
-					    <a href="sale/create/' . $data->id . '" class="btn btn-dark" title="Detalles" >
+					    <a href="sale/create/' . $data->id . '" class="btn btn-dark" title="Detalles" disabled>
 						    <i class="fas fa-directions"></i>
 					    </a>
-					    <button class="btn btn-dark" title="Compensado" disabled>
+					    <button class="btn btn-dark" title="Venta" disabled>
 						    <i class="fas fa-eye"></i>
 					    </button>
 					  
@@ -502,7 +505,7 @@ class saleController extends Controller
                 }
                 return $btn;
             })
-            ->rawColumns(['date', 'action'])
+            ->rawColumns(['status', 'date', 'action'])
             ->make(true);
     }
 

@@ -225,7 +225,7 @@
 
                                     </tr>
                                     <tr>
-                                        <th scope="row" style="text-align: left">TotalOtrosImp</th>
+                                        <th scope="row" style="text-align: left">ImpSaludable</th>
                                         <td colspan="2">$ {{number_format($arrayTotales['TotalOtroImpuesto'], 0, ',', '.')}}</td>
 
                                     </tr>

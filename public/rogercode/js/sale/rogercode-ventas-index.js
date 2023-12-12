@@ -30,7 +30,7 @@ $(document).ready(function () {
                 { data: "id", name: "id" },
                 { data: "namethird", name: "namethird" },
                 { data: "namecentrocosto", name: "namecentrocosto" },
-                { data: "consec", name: "consec" },
+                { data: "status", name: "status" },
                 { data: "date", name: "date" },
                 { data: "action", name: "action" },
             ],
