@@ -24,6 +24,9 @@ class CreateCajasTable extends Migration
 
             $table->unsignedBigInteger('cajero_id');           
             $table->foreign('cajero_id')->references('id')->on('users');
+/* 
+            $table->unsignedBigInteger('sale_id')->nullable();
+            $table->foreign('sale_id')->references('id')->on('sales'); */
 
             $table->decimal('base',10,0)->nullable();
 
