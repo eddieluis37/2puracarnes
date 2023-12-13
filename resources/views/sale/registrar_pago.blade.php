@@ -49,7 +49,7 @@
                                     <label for="" class="form-label">Valor a pagar en efectivo</label>
                                     <div class="input-group flex-nowrap">
                                         <span class="input-group-text" id="addon-wrapping">$</span>
-                                        <input class="form-control form-control-sm" type="text" name="valor_a_pagar_efectivo" id="valor_a_pagar_efectivo" data-id="">
+                                        <input class="form-control form-control-sm" type="text" name="valor_a_pagar_efectivo" id="valor_a_pagar_efectivo" value="0">
                                     </div>
 
                                     <div class="widget-content mt-3">
