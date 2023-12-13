@@ -200,9 +200,9 @@ class cajaController extends Controller
                 if (Carbon::parse($currentDateTime->format('Y-m-d'))->gt(Carbon::parse($data->fecha_hora_cierre))) {
                     $btn = '
                     <div class="text-center">
-					<a href="caja/create/' . $data->id . '" class="btn btn-dark" title="Alistar" >
-						<i class="fas fa-directions"></i>
-					</a>
+                    <button type="button" class="btn btn-dark" title="Alistar" href="caja/create/' . $data->id . '">
+                    <i class="fas fa-directions"></i>
+                  </button>
 					<button class="btn btn-dark" title="" onclick="showDataForm(' . $data->id . ')">
 						<i class="fas fa-eye"></i>
 					</button>
@@ -213,14 +213,14 @@ class cajaController extends Controller
                     ';
                 } elseif (Carbon::parse($currentDateTime->format('Y-m-d'))->lt(Carbon::parse($data->fecha_hora_cierre))) {
                     $status = '';
-                    if ($data->estado == 'open') {
+                    if ($data->estado == 'close') {
                         $status = 'disabled';
                     }
                     $btn = '
                     <div class="text-center">
-					<a href="caja/create/' . $data->id . '" class="btn btn-dark" title="Alistar" >
-						<i class="fas fa-directions"></i>
-					</a>
+                    <button type="button" class="btn btn-dark" title="Alistar" href="caja/create/' . $data->id . '" ' . $status . '>
+                    <i class="fas fa-directions"></i>
+                  </button>
 					<button class="btn btn-dark" title="" onclick="showDataForm(' . $data->id . ')">
 						<i class="fas fa-eye"></i>
 					</button>
@@ -232,9 +232,9 @@ class cajaController extends Controller
                 } else {
                     $btn = '
                     <div class="text-center">
-					<a href="caja/create/' . $data->id . '" class="btn btn-dark" title="Alistar" >
-						<i class="fas fa-directions"></i>
-					</a>
+                    <button type="button" class="btn btn-dark" title="Alistar" href="caja/create/' . $data->id . '" disabled>
+                    <i class="fas fa-directions"></i>
+                  </button>
 					<button class="btn btn-dark" title="" onclick="showDataForm(' . $data->id . ')">
 						<i class="fas fa-eye"></i>
 					</button>
