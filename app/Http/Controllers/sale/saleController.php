@@ -29,26 +29,39 @@ class saleController extends Controller
 
     public function storeRegistroPago(Request $request, $ventaId)
     {
-
         // Obtener los valores
-        
-        $status = '1'; //1 = pagado
+
+        $valor_a_pagar_efectivo = $request->input('valor_a_pagar_efectivo');
+        $valor_a_pagar_efectivo = str_replace(['.', ',', '$', '#'], '', $valor_a_pagar_efectivo);
+
+        $valor_a_pagar_tarjeta = $request->input('valor_a_pagar_tarjeta');
+        $valor_a_pagar_tarjeta = str_replace(['.', ',', '$', '#'], '', $valor_a_pagar_tarjeta);
+
+        $valor_a_pagar_otros = $request->input('valor_a_pagar_otros');
+        $valor_a_pagar_otros = str_replace(['.', ',', '$', '#'], '', $valor_a_pagar_otros);
+
+        $valor_a_pagar_credito = $request->input('valor_a_pagar_credito');
+        if (is_null($valor_a_pagar_credito)) {
+            $valor_a_pagar_credito = 0;
+        }  
+        $valor_a_pagar_credito = str_replace(['.', ',', '$', '#'], '', $valor_a_pagar_credito);
 
         $valor_pagado = $request->input('valor_pagado');
         $valor_pagado = str_replace(['.', ',', '$', '#'], '', $valor_pagado);
 
         $cambio = $request->input('cambio');
         $cambio = str_replace(['.', ',', '$', '#'], '', $cambio);
-        
-        $valor_a_pagar_efectivo = $request->input('valor_a_pagar_efectivo');
-        $valor_a_pagar_efectivo = str_replace(['.', ',', '$', '#'], '', $valor_a_pagar_efectivo);
 
+        $status = '1'; //1 = pagado
 
         try {
-            $valor_a_pagar = $request->input('valor_a_pagar');
             $venta = Sale::find($ventaId);
             $venta->user_id = $request->user()->id;
-            $venta->valor_a_pagar_efectivo = 0;
+            $venta->valor_a_pagar_efectivo = $valor_a_pagar_efectivo;
+            $venta->valor_a_pagar_tarjeta = $valor_a_pagar_tarjeta;
+            $venta->valor_a_pagar_otros = $valor_a_pagar_otros;
+            $venta->valor_a_pagar_credito = $valor_a_pagar_credito;
+
             $venta->valor_pagado = $valor_pagado;
             $venta->cambio = $cambio;
             $venta->status = $status;
@@ -56,8 +69,8 @@ class saleController extends Controller
 
             $venta->fecha_cierre = now();
 
-            $venta->save();     
-            
+            $venta->save();
+
             if ($venta->status == 1) {
                 return redirect()->route('sale.index');
             }
@@ -445,18 +458,18 @@ class saleController extends Controller
             ->join('thirds as tird', 'sa.third_id', '=', 'tird.id')
             ->join('centro_costo as centro', 'sa.centrocosto_id', '=', 'centro.id')
             ->select('sa.*', 'tird.name as namethird', 'centro.name as namecentrocosto')
-           /*  ->where('sa.status', 1) */
+            /*  ->where('sa.status', 1) */
             ->get();
         //$data = Sale::orderBy('id','desc');
         return Datatables::of($data)->addIndexColumn()
-           ->addColumn('status', function($data){
-                    if ($data->status == 1) {
-                        $status = '<span class="badge bg-success">Cerrada</span>';
-                    }else{
-                        $status= '<span class="badge bg-danger">Pendiente</span>';
-                    }
-                    return $status;
-                })
+            ->addColumn('status', function ($data) {
+                if ($data->status == 1) {
+                    $status = '<span class="badge bg-success">Cerrada</span>';
+                } else {
+                    $status = '<span class="badge bg-danger">Pendiente</span>';
+                }
+                return $status;
+            })
             ->addColumn('date', function ($data) {
                 $date = Carbon::parse($data->created_at);
                 $formattedDate = $date->format('M-d. H:i');
