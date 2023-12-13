@@ -200,9 +200,9 @@ class cajaController extends Controller
                 if (Carbon::parse($currentDateTime->format('Y-m-d'))->gt(Carbon::parse($data->fecha_hora_cierre))) {
                     $btn = '
                     <div class="text-center">
-                    <button type="button" class="btn btn-dark" title="Alistar" href="caja/create/' . $data->id . '">
-                    <i class="fas fa-directions"></i>
-                  </button>
+					<a href="caja/create/' . $data->id . '" class="btn btn-dark" title="Alistar" >
+						<i class="fas fa-directions"></i>
+					</a>
 					<button class="btn btn-dark" title="" onclick="showDataForm(' . $data->id . ')">
 						<i class="fas fa-eye"></i>
 					</button>
@@ -218,9 +218,12 @@ class cajaController extends Controller
                     }
                     $btn = '
                     <div class="text-center">
-                    <button type="button" class="btn btn-dark" title="Alistar" href="caja/create/' . $data->id . '" ' . $status . '>
-                    <i class="fas fa-directions"></i>
-                  </button>
+                    <a href="caja/create/' . $data->id . '" class="btn btn-dark" title="RetiroDinero" >
+						<i class="fas fa-money-bill-alt"></i>
+					</a>
+					<a href="caja/create/' . $data->id . '" class="btn btn-dark" title="CuadreCaja" >
+						<i class="fas fa-money-check-alt"></i>
+					</a>
 					<button class="btn btn-dark" title="" onclick="showDataForm(' . $data->id . ')">
 						<i class="fas fa-eye"></i>
 					</button>
@@ -232,9 +235,9 @@ class cajaController extends Controller
                 } else {
                     $btn = '
                     <div class="text-center">
-                    <button type="button" class="btn btn-dark" title="Alistar" href="caja/create/' . $data->id . '" disabled>
-                    <i class="fas fa-directions"></i>
-                  </button>
+					<a href="caja/create/' . $data->id . '" class="btn btn-dark" title="Alistar" >
+						<i class="fas fa-directions"></i>
+					</a>
 					<button class="btn btn-dark" title="" onclick="showDataForm(' . $data->id . ')">
 						<i class="fas fa-eye"></i>
 					</button>
