@@ -46,12 +46,25 @@ class CreateSalesTable extends Migration
             $table->decimal('total_otros_impuestos',10,0)->default(0)->nullable(); 
             $table->decimal('total',12,0)->default(0)->nullable();
             $table->decimal('total_otros_descuentos',12,0)->default(0)->nullable();
-            $table->decimal('valor_a_pagar_efectivo',12,0)->default(0)->nullable();  
-            
-            $table->decimal('valor_a_pagar_tarjeta',12,0)->nullable();
+            $table->decimal('valor_a_pagar_efectivo',12,0)->default(0)->nullable();           
 
+            $table->unsignedBigInteger('forma_pago_tarjeta_id')->nullable();
+            $table->foreign('forma_pago_tarjeta_id')->references('id')->on('formapagos');
+            
+            $table->unsignedBigInteger('forma_pago_otros_id')->nullable();
+            $table->foreign('forma_pago_otros_id')->references('id')->on('formapagos');
+
+            $table->unsignedBigInteger('forma_pago_credito_id')->nullable();
+            $table->foreign('forma_pago_credito_id')->references('id')->on('formapagos');
+
+            $table->string('codigo_pago_tarjeta', 50)->nullable();
+            $table->string('codigo_pago_otros', 50)->nullable();
+            $table->string('codigo_pago_credito', 50)->nullable();
+
+            $table->decimal('valor_a_pagar_tarjeta',12,0)->nullable();
             $table->decimal('valor_a_pagar_otros',12,0)->default(0)->nullable();
             $table->decimal('valor_a_pagar_credito', 12, 0)->nullable();
+
             $table->decimal('total_valor_a_pagar',12,0)->default(0)->nullable();     
             $table->decimal('valor_pagado',12,0)->default(0)->nullable();           
             $table->decimal('cambio',12,0)->default(0)->nullable();    

@@ -66,8 +66,8 @@ $(document).ready(function () {
     var thirdName = $("#name_cliente").val();
 
     if (thirdName === clienteMostrador) {
-        $("#credito").prop("disabled", true);
-        $("#numero_credito").prop("disabled", true);
+        $("#forma_pago_credito_id").prop("disabled", true);
+        $("#codigo_pago_credito").prop("disabled", true);
         $("#valor_a_pagar_credito").prop("disabled", true);
     }
     console.log(thirdName);

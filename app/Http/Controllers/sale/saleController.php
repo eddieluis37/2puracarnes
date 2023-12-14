@@ -17,6 +17,7 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\metodosgenerales\metodosrogercodeController;
 use App\Models\Centro_costo_product;
+use App\Models\Formapago;
 use App\Models\Listapreciodetalle;
 use App\Models\Sale;
 use App\Models\SaleDetail;
@@ -29,10 +30,19 @@ class saleController extends Controller
 
     public function storeRegistroPago(Request $request, $ventaId)
     {
+
         // Obtener los valores
 
         $valor_a_pagar_efectivo = $request->input('valor_a_pagar_efectivo');
         $valor_a_pagar_efectivo = str_replace(['.', ',', '$', '#'], '', $valor_a_pagar_efectivo);
+
+        $forma_pago_tarjeta_id = $request->input('forma_pago_tarjeta_id');
+        $forma_pago_otros_id = $request->input('forma_pago_otros_id');
+        $forma_pago_credito_id = $request->input('forma_pago_credito_id');
+
+        $codigo_pago_tarjeta = $request->input('codigo_pago_tarjeta');
+        $codigo_pago_otros = $request->input('codigo_pago_otros');
+        $codigo_pago_credito = $request->input('codigo_pago_credito');
 
         $valor_a_pagar_tarjeta = $request->input('valor_a_pagar_tarjeta');
         $valor_a_pagar_tarjeta = str_replace(['.', ',', '$', '#'], '', $valor_a_pagar_tarjeta);
@@ -43,7 +53,7 @@ class saleController extends Controller
         $valor_a_pagar_credito = $request->input('valor_a_pagar_credito');
         if (is_null($valor_a_pagar_credito)) {
             $valor_a_pagar_credito = 0;
-        }  
+        }
         $valor_a_pagar_credito = str_replace(['.', ',', '$', '#'], '', $valor_a_pagar_credito);
 
         $valor_pagado = $request->input('valor_pagado');
@@ -57,11 +67,19 @@ class saleController extends Controller
         try {
             $venta = Sale::find($ventaId);
             $venta->user_id = $request->user()->id;
-            $venta->valor_a_pagar_efectivo = $valor_a_pagar_efectivo;
+            
+            $venta->forma_pago_tarjeta_id = $forma_pago_tarjeta_id;
+            $venta->forma_pago_otros_id = $forma_pago_otros_id;
+            $venta->forma_pago_credito_id = $forma_pago_credito_id;
+
+            $venta->codigo_pago_tarjeta = $codigo_pago_tarjeta;
+            $venta->codigo_pago_otros = $codigo_pago_otros;
+            $venta->codigo_pago_credito = $codigo_pago_credito;
+
             $venta->valor_a_pagar_tarjeta = $valor_a_pagar_tarjeta;
+            $venta->valor_a_pagar_efectivo = $valor_a_pagar_efectivo;           
             $venta->valor_a_pagar_otros = $valor_a_pagar_otros;
             $venta->valor_a_pagar_credito = $valor_a_pagar_credito;
-
             $venta->valor_pagado = $valor_pagado;
             $venta->cambio = $cambio;
             $venta->status = $status;
@@ -103,6 +121,8 @@ class saleController extends Controller
 
     public function create($id)
     {
+        $centros = Centrocosto::Where('status', 1)->get();
+
         //$category = Category::WhereIn('id',[1,2,3])->get();
         //$providers = Third::Where('status',1)->get();
         //$centros = Centrocosto::Where('status',1)->get();
@@ -149,6 +169,10 @@ class saleController extends Controller
 
     public function create_reg_pago($id)
     {
+        $forma_pago_tarjeta = Formapago::Where('tipoformapago', '=', 'TARJETA')->get();
+        $forma_pago_otros = Formapago::Where('tipoformapago', '=', 'OTROS')->get();
+        $forma_pago_credito = Formapago::Where('tipoformapago', '=', 'CREDITO')->get();     
+
         $dataVenta = DB::table('sales as sa')
             ->join('thirds as tird', 'sa.third_id', '=', 'tird.id')
             ->join('centro_costo as centro', 'sa.centrocosto_id', '=', 'centro.id')
@@ -170,8 +194,7 @@ class saleController extends Controller
         $descuento = $dataVenta[0]->porc_descuento / 100 * $arrayTotales['TotalValorAPagar'];
         $subtotal = $arrayTotales['TotalBrutoSinDescuento'] - $arrayTotales['TotalDescuentos'];
 
-
-        return view('sale.registrar_pago', compact('venta', 'arrayTotales', 'producto', 'dataVenta', 'descuento', 'subtotal'));
+        return view('sale.registrar_pago', compact('venta', 'arrayTotales', 'producto', 'dataVenta', 'descuento', 'subtotal', 'forma_pago_tarjeta', 'forma_pago_otros', 'forma_pago_credito'));
     }
 
 
