@@ -67,7 +67,7 @@ class saleController extends Controller
         try {
             $venta = Sale::find($ventaId);
             $venta->user_id = $request->user()->id;
-            
+
             $venta->forma_pago_tarjeta_id = $forma_pago_tarjeta_id;
             $venta->forma_pago_otros_id = $forma_pago_otros_id;
             $venta->forma_pago_credito_id = $forma_pago_credito_id;
@@ -77,7 +77,7 @@ class saleController extends Controller
             $venta->codigo_pago_credito = $codigo_pago_credito;
 
             $venta->valor_a_pagar_tarjeta = $valor_a_pagar_tarjeta;
-            $venta->valor_a_pagar_efectivo = $valor_a_pagar_efectivo;           
+            $venta->valor_a_pagar_efectivo = $valor_a_pagar_efectivo;
             $venta->valor_a_pagar_otros = $valor_a_pagar_otros;
             $venta->valor_a_pagar_credito = $valor_a_pagar_credito;
             $venta->valor_pagado = $valor_pagado;
@@ -171,7 +171,7 @@ class saleController extends Controller
     {
         $forma_pago_tarjeta = Formapago::Where('tipoformapago', '=', 'TARJETA')->get();
         $forma_pago_otros = Formapago::Where('tipoformapago', '=', 'OTROS')->get();
-        $forma_pago_credito = Formapago::Where('tipoformapago', '=', 'CREDITO')->get();     
+        $forma_pago_credito = Formapago::Where('tipoformapago', '=', 'CREDITO')->get();
 
         $dataVenta = DB::table('sales as sa')
             ->join('thirds as tird', 'sa.third_id', '=', 'tird.id')
@@ -403,6 +403,30 @@ class saleController extends Controller
     public function store(Request $request) // Guardar venta por domicilio
     {
         try {
+
+            $rules = [
+                'ventaId' => 'required',
+                'cliente' => 'required',
+                'vendedor' => 'required',
+                'centrocosto' => 'required',
+                'subcentrodecosto' => 'required',
+
+            ];
+            $messages = [
+                'ventaId.required' => 'El ventaId es requerido',
+                'cliente.required' => 'El cliente es requerido',
+                'vendedor.required' => 'El proveedor es requerido',
+                'centrocosto.required' => 'El centro de costo es requerido',
+                'subcentrodecosto.required' => 'El subcentro de costo es requerido',
+            ];
+
+            $validator = Validator::make($request->all(), $rules, $messages);
+            if ($validator->fails()) {
+                return response()->json([
+                    'status' => 0,
+                    'errors' => $validator->errors()
+                ], 422);
+            }
 
             $getReg = Sale::firstWhere('id', $request->ventaId);
 

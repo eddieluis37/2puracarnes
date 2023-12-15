@@ -15,10 +15,29 @@ class CreateParametrocontablesTable extends Migration
     {
         Schema::create('parametrocontables', function (Blueprint $table) {
             $table->id();
+
+            $table->unsignedBigInteger('categorias_contable_id');    
+            $table->foreign('categorias_contable_id')->references('id')->on('categorias_contables');
+
+            $table->unsignedBigInteger('clases_contable_id');   
+            $table->foreign('clases_contable_id')->references('id')->on('clases_contables');
+
+            $table->unsignedBigInteger('relaciones_contable_id');   
+            $table->foreign('relaciones_contable_id')->references('id')->on('relaciones_contables');
+
+            $table->enum('vencimientos', ['No maneja', 'En cartera', 'En Proveedores'])->default('No maneja');
+
             $table->string('codigo')->unique();
-            $table->string('nombre');
-            $table->string('tipoparametro');
-            $table->string('cuenta');
+            $table->string('nombre');            
+
+
+            $table->boolean('status')->parent_select()->default(true)->nullable();
+
+            
+
+            /* $table->string('tipoparametro'); */
+            
+          /*   $table->string('cuenta'); */
             $table->timestamps();
         });
     }

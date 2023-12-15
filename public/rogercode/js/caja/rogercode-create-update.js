@@ -1,5 +1,11 @@
 import {sendData} from '../exportModule/core/rogercode-core.js';
 import { successToastMessage, errorMessage } from '../exportModule/message/rogercode-message.js';
+
+const refresh_table = () => {
+    let table = $("#tableAlistamiento").dataTable();
+    table.fnDraw(false);
+};
+
 btnAddAlistamiento.addEventListener("click", async (e) => {
     e.preventDefault();
     console.log("log")
@@ -10,9 +16,10 @@ btnAddAlistamiento.addEventListener("click", async (e) => {
             formAlistamiento.reset();   
             btnClose.click();
             successToastMessage(resp.message); 
-            refresh_table();
+         //   refresh_table();
             if (resp.registroId != 0) {//for new register
-                window.location.href = `caja/create/${resp.registroId}`;
+                refresh_table();
+              /*   window.location.href = `caja/create/${resp.registroId}`; */
             }else{
                 //refresh_table();
             }

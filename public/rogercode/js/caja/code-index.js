@@ -112,7 +112,7 @@ const showDataForm = (id) => {
 const showData = (resp) => {
     let register = resp.reg;
     //alistamiento_id.value = register.id;
-    selectCategory.value = register.categoria_id;
+   
     selectCentrocosto.value = register.centrocosto_id;
     fechaalistamiento.value = register.fecha_hora_inicio;
     getCortes(register.categoria_id);
