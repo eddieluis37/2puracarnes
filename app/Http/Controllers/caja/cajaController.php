@@ -25,11 +25,40 @@ use App\Models\shopping\shopping_enlistment_details;
 
 class cajaController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    public function sumTotales($id)
+    {
+        $valorApagarEfectivo = DB::table('cajas as ca')
+            ->join('sales as sa', 'ca.cajero_id', '=', 'sa.user_id')
+            ->join('users as u', 'ca.cajero_id', '=', 'u.id')
+            ->join('centro_costo as centro', 'ca.centrocosto_id', '=', 'centro.id')
+            ->where('ca.id', $id)
+            ->whereDate('sa.fecha_venta', now())
+            ->where('sa.third_id', 33)
+            ->sum('sa.valor_a_pagar_efectivo');
+
+        $valorCambio = DB::table('cajas as ca')
+            ->join('sales as sa', 'ca.cajero_id', '=', 'sa.user_id')
+            ->join('users as u', 'ca.cajero_id', '=', 'u.id')
+            ->join('centro_costo as centro', 'ca.centrocosto_id', '=', 'centro.id')
+            ->where('ca.id', $id)
+            ->whereDate('sa.fecha_venta', now())
+            ->where('sa.third_id', 33)
+            ->sum('sa.cambio');
+
+        $valor = $valorApagarEfectivo - $valorCambio;
+
+
+        $array = [
+            'valorApagarEfectivo' => $valorApagarEfectivo,
+            'valorCambio' => $valorCambio,
+            'valor' => $valor,
+
+        ];
+
+        return $array;
+    }
+
+
     public function index()
     {
         $category = Category::WhereIn('id', [1, 2, 3])->get();
@@ -46,34 +75,32 @@ class cajaController extends Controller
      */
     public function create($id)
     {
-        $dataValores = DB::table('cajas as ca')
+        /*   $valorApagarEfectivo = DB::table('cajas as ca')
             ->join('sales as sa', 'ca.cajero_id', '=', 'sa.user_id')
             ->join('users as u', 'ca.cajero_id', '=', 'u.id')
-            /*  ->join('centro_costo as centro', 'ca.centrocosto_id', '=', 'centro.id') */
-            /*   ->select('ca.*', 'sa.valor_a_pagar_efectivo', 'centro.name as namecentrocosto', 'u.name as namecajero') */
+            ->join('centro_costo as centro', 'ca.centrocosto_id', '=', 'centro.id')
             ->where('ca.id', $id)
             ->whereDate('sa.fecha_venta', now())
             ->where('sa.third_id', 33)
-            /* ->where('sa.user_id', 'u.id') */
-            ->sum('sa.valor_a_pagar_efectivo');
+            ->sum('sa.cambio');
 
-        dd($dataValores);
+        dd($valorApagarEfectivo); */
 
         // dd($id);
         $dataAlistamiento = DB::table('cajas as ca')
-            ->join('sales as sa', 'ca.user_id', '=', 'sa.id')
+            /*  ->join('sales as sa', 'ca.user_id', '=', 'sa.id') */
             ->join('users as u', 'ca.cajero_id', '=', 'u.id')
             ->join('centro_costo as centro', 'ca.centrocosto_id', '=', 'centro.id')
-            ->select('ca.*', 'sa.valor_a_pagar_efectivo', 'centro.name as namecentrocosto', 'u.name as namecajero')
+            ->select('ca.*', 'centro.name as namecentrocosto', 'u.name as namecajero')
             ->where('ca.id', $id)
-            ->whereDate('sa.fecha_venta', now())
+            /*        ->whereDate('sa.fecha_venta', now()) */
 
             ->get();
 
 
 
 
-        // dd($dataAlistamiento);
+        //  dd($dataAlistamiento);
 
 
         /**************************************** */
@@ -108,9 +135,11 @@ class cajaController extends Controller
 
         /*  $enlistments = $this->getalistamientodetail($id, $dataAlistamiento[0]->centrocosto_id); */
         /* 
-        $arrayTotales = $this->sumTotales($id);
+       
  */
-        return view('caja.create', compact('dataAlistamiento', 'status', 'statusInventory', 'display'));
+        $arrayTotales = $this->sumTotales($id);
+        dd($arrayTotales);
+        return view('caja.create', compact('dataAlistamiento', 'status', 'statusInventory', 'display', 'arrayTotales'));
     }
 
 
