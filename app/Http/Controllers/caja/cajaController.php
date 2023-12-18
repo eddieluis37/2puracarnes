@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Yajra\Datatables\Datatables;
 use Carbon\Carbon;
+use Illuminate\Validation\Rule;
 
 use Illuminate\Support\Facades\Validator;
 use App\Models\Product;
@@ -45,14 +46,34 @@ class cajaController extends Controller
      */
     public function create($id)
     {
+        $dataValores = DB::table('cajas as ca')
+            ->join('sales as sa', 'ca.cajero_id', '=', 'sa.user_id')
+            ->join('users as u', 'ca.cajero_id', '=', 'u.id')
+            /*  ->join('centro_costo as centro', 'ca.centrocosto_id', '=', 'centro.id') */
+            /*   ->select('ca.*', 'sa.valor_a_pagar_efectivo', 'centro.name as namecentrocosto', 'u.name as namecajero') */
+            ->where('ca.id', $id)
+            ->whereDate('sa.fecha_venta', now())
+            ->where('sa.third_id', 33)
+            /* ->where('sa.user_id', 'u.id') */
+            ->sum('sa.valor_a_pagar_efectivo');
+
+        dd($dataValores);
+
         // dd($id);
-        $dataAlistamiento = DB::table('cajas as ali')
-            ->join('users as u', 'ali.cajero_id', '=', 'u.id')
-            ->join('centro_costo as centro', 'ali.centrocosto_id', '=', 'centro.id')
-            ->select('ali.*', 'centro.name as namecentrocosto', 'u.name as namecajero')
-            ->where('ali.id', $id)
+        $dataAlistamiento = DB::table('cajas as ca')
+            ->join('sales as sa', 'ca.user_id', '=', 'sa.id')
+            ->join('users as u', 'ca.cajero_id', '=', 'u.id')
+            ->join('centro_costo as centro', 'ca.centrocosto_id', '=', 'centro.id')
+            ->select('ca.*', 'sa.valor_a_pagar_efectivo', 'centro.name as namecentrocosto', 'u.name as namecajero')
+            ->where('ca.id', $id)
+            ->whereDate('sa.fecha_venta', now())
+
             ->get();
 
+
+
+
+        // dd($dataAlistamiento);
 
 
         /**************************************** */
@@ -99,23 +120,20 @@ class cajaController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request) // Crea turno con el modal_create.blade
+    public function store(Request $request)
     {
         try {
-
             $rules = [
                 'alistamientoId' => 'required',
                 'cajero' => 'required',
                 'centrocosto' => 'required',
-
             ];
             $messages = [
                 'alistamientoId.required' => 'El alistamiento es requerido',
                 'cajero.required' => 'El cajero es requerido',
                 'centrocosto.required' => 'El centro de costo es requerido',
-
+                'cajero_id.unique' => 'Ya existe un registro para este cajero en la fecha actual',
             ];
-
             $validator = Validator::make($request->all(), $rules, $messages);
             if ($validator->fails()) {
                 return response()->json([
@@ -124,27 +142,39 @@ class cajaController extends Controller
                 ], 422);
             }
 
-            $getReg = Caja::firstWhere('id', $request->alistamientoId);
+            $currentDate = Carbon::now()->format('Y-m-d');
+            $cajeroId = $request->cajero;
+            $existingRecord = Caja::where('cajero_id', $cajeroId)
+                ->whereDate('fecha_hora_inicio', $currentDate)
+                ->first();
 
+            if ($existingRecord) {
+                return response()->json([
+                    'status' => 0,
+                    'message' => 'Ya existe un registro para este cajero en la fecha actual',
+                ]);
+            }
+            /* 
+            $current_date->modify('next monday'); // Move to the next Monday
+                $dateNextMonday = $current_date->format('Y-m-d'); // Output the date in Y-m-d format */
+
+            $getReg = Caja::firstWhere('id', $request->alistamientoId);
             if ($getReg == null) {
                 $currentDateTime = Carbon::now();
                 $currentDateFormat = Carbon::parse($currentDateTime->format('Y-m-d'));
                 $current_date = Carbon::parse($currentDateTime->format('Y-m-d'));
-                $current_date->modify('next monday'); // Move to the next Monday
-                $dateNextMonday = $current_date->format('Y-m-d'); // Output the date in Y-m-d format
+                $fechaHoraCierre =  $current_date->addHours(18);
+
                 $fechaalistamiento = $request->fecha1;
                 $id_user = Auth::user()->id;
-
                 $alist = new Caja();
                 $alist->user_id = $id_user;
                 $alist->centrocosto_id = $request->centrocosto;
-                $alist->cajero_id = $request->cajero;
+                $alist->cajero_id = $cajeroId;
                 $alist->base = $request->base;
-
-
                 //$alist->fecha_alistamiento = $currentDateFormat;
-                $alist->fecha_hora_inicio = $currentDateTime;;
-                $alist->fecha_hora_cierre = $dateNextMonday;
+                $alist->fecha_hora_inicio = $currentDateTime;
+                $alist->fecha_hora_cierre = $fechaHoraCierre;
                 $alist->save();
                 return response()->json([
                     'status' => 1,
@@ -200,7 +230,7 @@ class cajaController extends Controller
                 if (Carbon::parse($currentDateTime->format('Y-m-d'))->gt(Carbon::parse($data->fecha_hora_cierre))) {
                     $btn = '
                     <div class="text-center">
-					<a href="caja/create/' . $data->id . '" class="btn btn-dark" title="Alistar" >
+					<a href="caja/create/' . $data->id . '" class="btn btn-dark" title="CuadreCaja" >
 						<i class="fas fa-directions"></i>
 					</a>
 					<button class="btn btn-dark" title="" onclick="showDataForm(' . $data->id . ')">

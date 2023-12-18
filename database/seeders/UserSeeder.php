@@ -210,10 +210,10 @@ class UserSeeder extends Seeder
         // asignar permisos al vendedor
         $ventas->givePermissionTo(['Pos_Create', 'Cashout_Create', 'Category_View', 'Category_Search', 'Product_View', 'Product_Search']);
 
-        // asignar permisos al usuario comercial
-        $comercial->givePermissionTo(['Inventory']);
+        // asignar permisos al usuario comercial o cajero, activa menu ventas y caja
+        $comercial->givePermissionTo(['Pos_Create']);
 
-        /************************ Asignar role Admin al usuario Eddie Rad */
+        /************************ Asignar role Admin al usuario */
         /* $uAdmin = User::find(1);
         $uAdmin->assignRole('Admin'); */
 
