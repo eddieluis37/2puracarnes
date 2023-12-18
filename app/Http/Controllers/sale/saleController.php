@@ -16,12 +16,14 @@ use Yajra\Datatables\Datatables;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\metodosgenerales\metodosrogercodeController;
+use App\Models\caja\Caja;
 use App\Models\Centro_costo_product;
 use App\Models\Formapago;
 use App\Models\Listapreciodetalle;
 use App\Models\Sale;
 use App\Models\SaleDetail;
 use App\Models\Subcentrocosto;
+
 
 class saleController extends Controller
 {
@@ -792,6 +794,77 @@ class saleController extends Controller
         }
     }
 
+    /*    public function storeVentaMostrador()
+    {
+        try {
+
+
+            // Validación para que solo permita crear la instancia Sale, solo si existe algun nuevo registro en la tabla cajas donde en esa tabla cajas corresponan el campo user_id con cajero_id, fecha_hora_inicio sea igual a la fecha actual, y el campo estado sea igual a open.
+            $id_user = Auth::user()->id;
+            $caja = Caja::where('user_id', $id_user)
+                //  ->where('fecha_hora_inicio', $currentDateTime) 
+                ->where('estado', 'open')
+                ->first();
+
+
+            if ($caja) {
+                $venta = new Sale();
+                $venta->save();
+                return response()->json([
+                    'status' => 1,
+                    'message' => 'Inicio de venta por mostrador',
+                    'registroId' => $venta->id
+
+                ]);
+
+                $currentDateTime = Carbon::now();
+                $currentDateFormat = Carbon::parse($currentDateTime->format('Y-m-d'));
+                $current_date = Carbon::parse($currentDateTime->format('Y-m-d'));
+                $current_date->modify('next monday'); // Move to the next Monday
+                $dateNextMonday = $current_date->format('Y-m-d'); // Output the date in Y-m-d format
+
+                $venta = new Sale();
+                $venta->user_id = $id_user;
+                $venta->centrocosto_id = 1; // Valor estático para el campo centrocosto
+                $venta->third_id = 33; // Valor estático para el campo third_id
+                $venta->vendedor_id = 33; // Valor estático para el campo vendedor_id
+                $venta->fecha_venta = $currentDateFormat;
+                $venta->fecha_cierre = $dateNextMonday;
+                $venta->total_bruto = 0;
+                $venta->descuentos = 0;
+                $venta->subtotal = 0;
+                $venta->total = 0;
+                $venta->total_otros_descuentos = 0;
+                $venta->valor_a_pagar_efectivo = 0;
+                $venta->valor_a_pagar_tarjeta = 0;
+                $venta->valor_a_pagar_otros = 0;
+                $venta->valor_a_pagar_credito = 0;
+                $venta->valor_pagado = 0;
+                $venta->cambio = 0;
+                $venta->items = 0;
+                $venta->valor_pagado = 0;
+                $venta->cambio = 0;
+                $venta->save();
+
+                return response()->json([
+                    'status' => 1,
+                    'message' => 'venta por mostrador',
+                    'registroId' => $venta->id
+                ]);
+            } else {
+                return response()->json([
+                    'status' => 0,
+                    'message' => 'No se puede iniciar una nueva venta por mostrador, ya que no existe una caja abierta.'
+                ]);
+            }
+        } catch (\Throwable $th) {
+            return response()->json([
+                'status' => 0,
+                'array' => (array) $th
+            ]);
+        }
+    }
+ */
     public function obtenerNombreCliente($id)
     {
         $venta = Sale::find($id);

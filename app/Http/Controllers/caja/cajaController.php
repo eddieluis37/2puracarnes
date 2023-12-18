@@ -45,13 +45,13 @@ class cajaController extends Controller
             ->where('sa.third_id', 33)
             ->sum('sa.cambio');
 
-        $valor = $valorApagarEfectivo - $valorCambio;
+        $valorEfectivo = $valorApagarEfectivo - $valorCambio;
 
 
         $array = [
             'valorApagarEfectivo' => $valorApagarEfectivo,
             'valorCambio' => $valorCambio,
-            'valor' => $valor,
+            'valorEfectivo' => $valorEfectivo,
 
         ];
 
@@ -97,10 +97,7 @@ class cajaController extends Controller
 
             ->get();
 
-
-
-
-        //  dd($dataAlistamiento);
+      //  dd($dataAlistamiento);
 
 
         /**************************************** */
@@ -138,7 +135,7 @@ class cajaController extends Controller
        
  */
         $arrayTotales = $this->sumTotales($id);
-        dd($arrayTotales);
+        //  dd($arrayTotales);
         return view('caja.create', compact('dataAlistamiento', 'status', 'statusInventory', 'display', 'arrayTotales'));
     }
 
@@ -192,7 +189,7 @@ class cajaController extends Controller
                 $currentDateTime = Carbon::now();
                 $currentDateFormat = Carbon::parse($currentDateTime->format('Y-m-d'));
                 $current_date = Carbon::parse($currentDateTime->format('Y-m-d'));
-                $fechaHoraCierre =  $current_date->addHours(18);
+                $fechaHoraCierre =  $current_date->addHours(23);
 
                 $fechaalistamiento = $request->fecha1;
                 $id_user = Auth::user()->id;

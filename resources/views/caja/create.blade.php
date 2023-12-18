@@ -3,7 +3,7 @@
 <style>
 	.table-totales {
 		border: 2px solid red;
-	}	
+	}
 
 	.table-inventario,
 	th,
@@ -102,11 +102,11 @@
 											<tbody>
 												<tr>
 													<th scope="row" style="text-align: left">Total tarjetas</th>
-													<td colspan="2">$ {{number_format($dataAlistamiento[0]->base, 0, ',', '.')}}</td>
+													<td colspan="2">$ </td>
 												</tr>
 												<tr>
 													<th scope="row" style="text-align: left">Otros</th>
-												
+
 												</tr>
 												<tr>
 													<th scope="row" style="text-align: left">Total</th>
@@ -114,27 +114,26 @@
 												</tr>
 
 												<tr>
-												
-												
+
+
 												</tr>
 												<tr>
-												
-												
+
+
 												</tr>
 											</tbody>
 											<tfoot>
 												<tr>
 													<th colspan="2">
 														<div class="form-group">
-															
-														
+
+
 														</div>
 													</th>
 												</tr>
 											</tfoot>
 										</table>
 									</div>
-								</form>
 							</div>
 						</div>
 					</div>
@@ -143,7 +142,7 @@
 					<div class="widget widget-chart-one">
 						<div class="widget-content mt-0">
 							<div class="card-body">
-								<form action="{{ route('sale.save') }}" method="POST" enctype="multipart/form-data">
+								
 									<input type="hidden" id="alistamientoId" name="alistamientoId" value="{{$dataAlistamiento[0]->id}}">
 									@csrf
 									<div class="table-responsive">
@@ -157,28 +156,40 @@
 											<tbody>
 												<tr>
 													<th scope="row" style="text-align: left">Base inicial</th>
-													<td colspan="2">$ {{number_format($dataAlistamiento[0]->base, 0, ',', '.')}}</td>
+													<td colspan="2">
+														<input type="text" id="base" name="base" value="$ {{number_format($dataAlistamiento[0]->base, 0, ',', '.')}}" data-id="" style="text-align: right; font-weight: bold; color: black" readonly>
+													</td>
 												</tr>
 												<tr>
 													<th scope="row" style="text-align: left">Efectivo</th>
-												
+													<td colspan="2">
+														<input type="text" id="valor_efectivo" name="valor_efectivo" value="$ {{number_format($arrayTotales['valorEfectivo'], 0, ',', '.')}}" data-id="" style="text-align: right; font-weight: bold; color: black" readonly>
+													</td>
 												</tr>
 												<tr>
 													<th scope="row" style="text-align: left">Retiro de caja</th>
-												
+
 												</tr>
 												<tr>
 													<th scope="row" style="text-align: left">Total</th>
-													<td colspan="2"></td>
+													<td colspan="2">
+														<input type="text" id="total" name="total" value="" data-id="" style="text-align: right; font-weight: bold; color: black" readonly>
+													</td>
 												</tr>
 
 												<tr>
 													<th scope="row" style="text-align: left">Valor_real_ingresado</th>
-												
+													<td colspan="2">
+														<input type="text" id="valor_real" name="valor_real" value="" data-id="" style="text-align: right; font-weight: bold; color: black">
+													</td>
+
 												</tr>
 												<tr>
 													<th scope="row" style="text-align: left">Diferencia</th>
-												
+													<td colspan="2">
+														<input type="text" id="diferencia" name="diferencia" value="" data-id="" style="text-align: right; font-weight: bold; color: black">
+													</td>
+
 												</tr>
 											</tbody>
 											<tfoot>
@@ -208,4 +219,5 @@
 @endsection
 @section('script')
 <script src="{{asset('rogercode/js/caja/rogercode-create.js')}}" type="module"></script>
+<script src="{{asset('rogercode/js/caja/code-formulas.js')}}"></script>
 @endsection
