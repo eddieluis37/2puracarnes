@@ -25,6 +25,78 @@ use App\Models\shopping\shopping_enlistment_details;
 
 class cajaController extends Controller
 {
+
+    public function storeCierreCaja(Request $request, $ventaId)
+    {
+
+        // Obtener los valores
+
+        $valor_real = $request->input('valor_real');
+        $valor_real = str_replace(['.', ',', '$', '#'], '', $valor_real);
+
+        $forma_pago_tarjeta_id = $request->input('forma_pago_tarjeta_id');
+        $forma_pago_otros_id = $request->input('forma_pago_otros_id');
+        $forma_pago_credito_id = $request->input('forma_pago_credito_id');
+
+        $codigo_pago_tarjeta = $request->input('codigo_pago_tarjeta');
+        $codigo_pago_otros = $request->input('codigo_pago_otros');
+        $codigo_pago_credito = $request->input('codigo_pago_credito');
+
+        $valor_a_pagar_tarjeta = $request->input('valor_a_pagar_tarjeta');
+        $valor_a_pagar_tarjeta = str_replace(['.', ',', '$', '#'], '', $valor_a_pagar_tarjeta);
+
+        $valor_a_pagar_otros = $request->input('valor_a_pagar_otros');
+        $valor_a_pagar_otros = str_replace(['.', ',', '$', '#'], '', $valor_a_pagar_otros);
+
+        $valor_a_pagar_credito = $request->input('valor_a_pagar_credito');
+        if (is_null($valor_a_pagar_credito)) {
+            $valor_a_pagar_credito = 0;
+        }
+        $valor_a_pagar_credito = str_replace(['.', ',', '$', '#'], '', $valor_a_pagar_credito);
+
+        $valor_pagado = $request->input('valor_pagado');
+        $valor_pagado = str_replace(['.', ',', '$', '#'], '', $valor_pagado);
+
+        $cambio = $request->input('cambio');
+        $cambio = str_replace(['.', ',', '$', '#'], '', $cambio);
+
+        $estado = 'close';
+        $status = '1'; //1 = pagado
+
+        try {
+            $caja = Caja::find($ventaId);
+            $caja->user_id = $request->user()->id;
+
+            $caja->valor_real = $valor_real;
+          
+            $caja->estado = $estado;
+            $caja->status = $status;
+
+
+            $caja->fecha_hora_cierre = now();
+
+            $caja->save();
+
+            if ($caja->status == 1) {
+                return redirect()->route('caja.index');
+            }
+
+            return response()->json([
+                'status' => 1,
+                'message' => 'Guardado correctamente',
+                "registroId" => $caja->id,
+                'redirect' => route('caja.index')
+            ]);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'status' => 0,
+                'array' => (array) $th
+            ]);
+        }
+    }
+
+
+
     public function sumTotales($id)
     {
         $valorApagarEfectivo = DB::table('cajas as ca')
@@ -97,7 +169,7 @@ class cajaController extends Controller
 
             ->get();
 
-      //  dd($dataAlistamiento);
+        //  dd($dataAlistamiento);
 
 
         /**************************************** */

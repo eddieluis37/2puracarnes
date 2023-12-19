@@ -88,8 +88,8 @@
 					<div class="widget widget-chart-one">
 						<div class="widget-content mt-0">
 							<div class="card-body">
-								<form action="{{ route('sale.save') }}" method="POST" enctype="multipart/form-data">
-									<input type="hidden" id="alistamientoId" name="alistamientoId" value="{{$dataAlistamiento[0]->id}}">
+								<form action="" method="POST" enctype="multipart/form-data">
+									<input type="hidden" id="ventaId" name="ventaId" value="{{$dataAlistamiento[0]->id}}">
 									@csrf
 									<div class="table-responsive">
 										<table class="table">
@@ -142,68 +142,68 @@
 					<div class="widget widget-chart-one">
 						<div class="widget-content mt-0">
 							<div class="card-body">
-								
-									<input type="hidden" id="alistamientoId" name="alistamientoId" value="{{$dataAlistamiento[0]->id}}">
-									@csrf
-									<div class="table-responsive">
-										<table class="table">
-											<thead>
-												<tr>
-													<th scope="col" style="text-align: center; vertical-align: middle;">CONCEPTO</th>
-													<th scope="col" style="text-align: center; vertical-align: middle;">VALOR</th>
-												</tr>
-											</thead>
-											<tbody>
-												<tr>
-													<th scope="row" style="text-align: left">Base inicial</th>
-													<td colspan="2">
-														<input type="text" id="base" name="base" value="$ {{number_format($dataAlistamiento[0]->base, 0, ',', '.')}}" data-id="" style="text-align: right; font-weight: bold; color: black" readonly>
-													</td>
-												</tr>
-												<tr>
-													<th scope="row" style="text-align: left">Efectivo</th>
-													<td colspan="2">
-														<input type="text" id="valor_efectivo" name="valor_efectivo" value="$ {{number_format($arrayTotales['valorEfectivo'], 0, ',', '.')}}" data-id="" style="text-align: right; font-weight: bold; color: black" readonly>
-													</td>
-												</tr>
-												<tr>
-													<th scope="row" style="text-align: left">Retiro de caja</th>
 
-												</tr>
-												<tr>
-													<th scope="row" style="text-align: left">Total</th>
-													<td colspan="2">
-														<input type="text" id="total" name="total" value="" data-id="" style="text-align: right; font-weight: bold; color: black" readonly>
-													</td>
-												</tr>
+								<input type="hidden" id="ventaId" name="ventaId" value="{{$dataAlistamiento[0]->id}}">
+								@csrf
+								<div class="table-responsive">
+									<table class="table">
+										<thead>
+											<tr>
+												<th scope="col" style="text-align: center; vertical-align: middle;">CONCEPTO</th>
+												<th scope="col" style="text-align: center; vertical-align: middle;">VALOR</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr>
+												<th scope="row" style="text-align: left">Base inicial</th>
+												<td colspan="2">
+													<input type="text" id="base" name="base" value="$ {{number_format($dataAlistamiento[0]->base, 0, ',', '.')}}" data-id="" style="text-align: right; font-weight: bold; color: black" readonly>
+												</td>
+											</tr>
+											<tr>
+												<th scope="row" style="text-align: left">Efectivo</th>
+												<td colspan="2">
+													<input type="text" id="valor_efectivo" name="valor_efectivo" value="$ {{number_format($arrayTotales['valorEfectivo'], 0, ',', '.')}}" data-id="" style="text-align: right; font-weight: bold; color: black" readonly>
+												</td>
+											</tr>
+											<tr>
+												<th scope="row" style="text-align: left">Retiro de caja</th>
 
-												<tr>
-													<th scope="row" style="text-align: left">Valor_real_ingresado</th>
-													<td colspan="2">
-														<input type="text" id="valor_real" name="valor_real" value="" data-id="" style="text-align: right; font-weight: bold; color: black">
-													</td>
+											</tr>
+											<tr>
+												<th scope="row" style="text-align: left">Total</th>
+												<td colspan="2">
+													<input type="text" id="total" name="total" value="" data-id="" style="text-align: right; font-weight: bold; color: black" readonly>
+												</td>
+											</tr>
 
-												</tr>
-												<tr>
-													<th scope="row" style="text-align: left">Diferencia</th>
-													<td colspan="2">
-														<input type="text" id="diferencia" name="diferencia" value="" data-id="" style="text-align: right; font-weight: bold; color: black">
-													</td>
+											<tr>
+												<th scope="row" style="text-align: left">Valor_real_ingresado</th>
+												<td colspan="2">
+													<input type="text" id="valor_real" name="valor_real" value="" data-id="" style="text-align: right; font-weight: bold; color: black">
+												</td>
 
-												</tr>
-											</tbody>
-											<tfoot>
-												<tr>
-													<th colspan="2">
-														<div class="form-group">
-															<button type="submit" class="btn btn-success" id="btnGuardar" disabled>Guardar e imprimir</button>
-															<button type="button" class="btn btn-primary" onclick="history.back()">Volver</button>
-														</div>
-													</th>
-												</tr>
-											</tfoot>
-										</table>
-									</div>
+											</tr>
+											<tr>
+												<th scope="row" style="text-align: left">Diferencia</th>
+												<td colspan="2">
+													<input type="text" id="diferencia" name="diferencia" value="" data-id="" style="text-align: right; font-weight: bold; color: black">
+												</td>
+
+											</tr>
+										</tbody>
+										<tfoot>
+											<tr>
+												<th colspan="2">
+													<div class="form-group">
+														<button type="submit" class="btn btn-success" id="btnGuardar" disabled>Guardar e imprimir</button>
+														<button type="button" class="btn btn-primary" onclick="history.back()">Volver</button>
+													</div>
+												</th>
+											</tr>
+										</tfoot>
+									</table>
+								</div>
 								</form>
 							</div>
 						</div>
