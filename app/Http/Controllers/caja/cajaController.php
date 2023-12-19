@@ -37,9 +37,9 @@ class cajaController extends Controller
             ->where('cajas.id', $id)
             ->get();
 
-        dd($caja);
+      //  dd($caja);
 
-        return view('cajas.showReciboCaja', compact('caja'));
+        return view('caja.showReciboCaja', compact('caja'));
     }
 
     public function storeCierreCaja(Request $request, $ventaId)
