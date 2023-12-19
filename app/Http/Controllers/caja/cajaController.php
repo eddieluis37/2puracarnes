@@ -26,6 +26,22 @@ use App\Models\shopping\shopping_enlistment_details;
 class cajaController extends Controller
 {
 
+    public function showReciboCaja($id)
+    {
+        $caja = Caja::findOrFail($id)
+            ->join('users as u', 'cajas.cajero_id', '=', 'u.id')
+            /*   ->join('meatcuts as cut', 'cajas.meatcut_id', '=', 'cut.id')*/
+            ->join('centro_costo as centro', 'cajas.centrocosto_id', '=', 'centro.id')
+            ->select('cajas.*', 'centro.name as namecentrocosto', 'u.name as namecajero')
+            ->where('cajas.status', 1)
+            ->where('cajas.id', $id)
+            ->get();
+
+        dd($caja);
+
+        return view('cajas.showReciboCaja', compact('caja'));
+    }
+
     public function storeCierreCaja(Request $request, $ventaId)
     {
 
@@ -68,7 +84,7 @@ class cajaController extends Controller
             $caja->user_id = $request->user()->id;
 
             $caja->valor_real = $valor_real;
-          
+
             $caja->estado = $estado;
             $caja->status = $status;
 
@@ -355,6 +371,9 @@ class cajaController extends Controller
 					<button class="btn btn-dark" title="" onclick="showDataForm(' . $data->id . ')">
 						<i class="fas fa-eye"></i>
 					</button>
+                    <a href="caja/showReciboCaja/' . $data->id . '" class="btn btn-dark" title="VerReciboCaja" >
+						<i class="fas fa-money-check-alt"></i>
+					</a>
 					<button class="btn btn-dark" title="Borrar Beneficio" onclick="downAlistamiento(' . $data->id . ');" ' . $status . '>
 						<i class="fas fa-trash"></i>
 					</button>
