@@ -26,6 +26,15 @@ use App\Models\shopping\shopping_enlistment_details;
 class cajaController extends Controller
 {
 
+    public function pdf($id)
+    {
+        $caja = Caja::findOrFail($id);
+
+        $pdf = PDF::loadView('cajas.pdf', compact('caja'));
+
+        return $pdf->download('caja.pdf');
+    }
+
     public function showReciboCaja($id)
     {
         $caja = Caja::findOrFail($id)
@@ -37,7 +46,7 @@ class cajaController extends Controller
             ->where('cajas.id', $id)
             ->get();
 
-      //  dd($caja);
+        //  dd($caja);
 
         return view('caja.showReciboCaja', compact('caja'));
     }
@@ -47,8 +56,20 @@ class cajaController extends Controller
 
         // Obtener los valores
 
+        $efectivo = $request->input('efectivo');
+        $efectivo = str_replace(['.', ',', '$', '#'], '', $efectivo);
+
         $valor_real = $request->input('valor_real');
         $valor_real = str_replace(['.', ',', '$', '#'], '', $valor_real);
+        
+        $total = $request->input('total');
+        $total = str_replace(['.', ',', '$', '#'], '', $total);
+
+        $diferencia = $request->input('diferencia');
+        $diferencia = str_replace(['.', ',', '$', '#'], '', $diferencia);
+
+        $total = $request->input('total');
+        $total = str_replace(['.', ',', '$', '#'], '', $total);
 
         $forma_pago_tarjeta_id = $request->input('forma_pago_tarjeta_id');
         $forma_pago_otros_id = $request->input('forma_pago_otros_id');
@@ -82,15 +103,13 @@ class cajaController extends Controller
         try {
             $caja = Caja::find($ventaId);
             $caja->user_id = $request->user()->id;
-
+            $caja->efectivo = $efectivo;
             $caja->valor_real = $valor_real;
-
+            $caja->total = $total;
+            $caja->diferencia = $diferencia;
             $caja->estado = $estado;
             $caja->status = $status;
-
-
             $caja->fecha_hora_cierre = now();
-
             $caja->save();
 
             if ($caja->status == 1) {
@@ -347,9 +366,9 @@ class cajaController extends Controller
 					<a href="caja/create/' . $data->id . '" class="btn btn-dark" title="CuadreCaja" >
 						<i class="fas fa-directions"></i>
 					</a>
-					<button class="btn btn-dark" title="" onclick="showDataForm(' . $data->id . ')">
-						<i class="fas fa-eye"></i>
-					</button>
+                    <a href="caja/showReciboCaja/' . $data->id . '" class="btn btn-dark" title="VerReciboCaja" >
+                    <i class="fas fa-eye"></i>
+                    </a>				
 					<button class="btn btn-dark" title="" disabled>
 						<i class="fas fa-trash"></i>
 					</button>
@@ -365,16 +384,13 @@ class cajaController extends Controller
                     <a href="caja/create/' . $data->id . '" class="btn btn-dark" title="RetiroDinero" >
 						<i class="fas fa-money-bill-alt"></i>
 					</a>
-					<a href="caja/create/' . $data->id . '" class="btn btn-dark" title="CuadreCaja" >
+					<a href="caja/create/' . $data->id . '" class="btn btn-dark" title="CuadreCaja" ' . $status . '>
 						<i class="fas fa-money-check-alt"></i>
+					</a>					
+                    <a href="caja/showReciboCaja/' . $data->id . '" class="btn btn-dark" title="VerReciboCaja">
+					    <i class="fas fa-eye"></i>
 					</a>
-					<button class="btn btn-dark" title="" onclick="showDataForm(' . $data->id . ')">
-						<i class="fas fa-eye"></i>
-					</button>
-                    <a href="caja/showReciboCaja/' . $data->id . '" class="btn btn-dark" title="VerReciboCaja" >
-						<i class="fas fa-money-check-alt"></i>
-					</a>
-					<button class="btn btn-dark" title="Borrar Beneficio" onclick="downAlistamiento(' . $data->id . ');" ' . $status . '>
+					<button class="btn btn-dark" title="Borrar" onclick="downAlistamiento(' . $data->id . ');" ' . $status . '>
 						<i class="fas fa-trash"></i>
 					</button>
                     </div>

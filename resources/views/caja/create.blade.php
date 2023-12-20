@@ -163,7 +163,7 @@
 											<tr>
 												<th scope="row" style="text-align: left">Efectivo</th>
 												<td colspan="2">
-													<input type="text" id="valor_efectivo" name="valor_efectivo" value="$ {{number_format($arrayTotales['valorEfectivo'], 0, ',', '.')}}" data-id="" style="text-align: right; font-weight: bold; color: black" readonly>
+													<input type="text" id="efectivo" name="efectivo" value="$ {{number_format($arrayTotales['valorEfectivo'], 0, ',', '.')}}" data-id="" style="text-align: right; font-weight: bold; color: black" readonly>
 												</td>
 											</tr>
 											<tr>
@@ -187,7 +187,7 @@
 											<tr>
 												<th scope="row" style="text-align: left">Diferencia</th>
 												<td colspan="2">
-													<input type="text" id="diferencia" name="diferencia" value="" data-id="" style="text-align: right; font-weight: bold; color: black">
+													<input type="text" id="diferencia" name="diferencia" value="" data-id="" style="text-align: right; font-weight: bold; color: black" readonly>
 												</td>
 
 											</tr>

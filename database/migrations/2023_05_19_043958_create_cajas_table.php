@@ -29,10 +29,16 @@ class CreateCajasTable extends Migration
             $table->foreign('sale_id')->references('id')->on('sales'); */
 
             $table->decimal('base',10,0)->nullable();
+            
+            $table->decimal('efectivo',10,0)->nullable();
 
             $table->decimal('retiro_caja',10,0)->nullable();
 
+            $table->decimal('total',10,0)->nullable();
+
             $table->decimal('valor_real',10,0)->nullable();
+            
+            $table->decimal('diferencia',10,0)->nullable();
 
             $table->dateTime('fecha_hora_inicio')->nullable();
 
