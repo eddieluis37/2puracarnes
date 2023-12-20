@@ -549,6 +549,9 @@ class saleController extends Controller
 					    <button class="btn btn-dark" title="Venta" onclick="editCompensado(' . $data->id . ');">
 						    <i class="fas fa-edit"></i>
 					    </button>
+                        <a href="caja/showReciboCaja/' . $data->id . '" class="btn btn-dark" title="VerReciboCaja">
+					    <i class="fas fa-eye"></i>
+					    </a>
 					  
                         </div>
                         ';

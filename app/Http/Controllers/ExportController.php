@@ -6,7 +6,7 @@ use App\Exports\SalesExport;
 use App\Models\Sale;
 use App\Models\SaleDetail;
 use App\Models\User;
-use Barryvdh\DomPDF\Facade as PDF;
+use Barryvdh\DomPDF\Facade\Pdf as PDF;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;

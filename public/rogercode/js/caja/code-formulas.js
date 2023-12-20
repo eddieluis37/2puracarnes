@@ -20,7 +20,7 @@ $("#valor_real").on("input", function () {
     document.getElementById("valor_real").value = valorIngresado;
     document.getElementById("diferencia").value = valorDiferencia;
 
-    if (valorDiferencia >= -20000) {
+    if (valorDiferencia >= -10000) {
         $("#btnGuardar").prop("disabled", false);
     } else {
         $("#btnGuardar").prop("disabled", true);
