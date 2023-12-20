@@ -228,6 +228,7 @@ class UserSeeder extends Seeder
         User::find(9)->assignRole('Tesoreria');
         User::find(10)->assignRole('Comercial');
         User::find(11)->assignRole('Comercial');
+        User::find(12)->assignRole('Comercial');
         
     }
 }

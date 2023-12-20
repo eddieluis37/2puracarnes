@@ -60,7 +60,7 @@ use App\Http\Controllers\listaprecio\listaPrecioController;
 use App\Http\Controllers\ReportController;
 
 use App\Http\Controllers\ImportStockFisicoController;
-
+use App\Http\Controllers\sale\exportFacturaController;
 
 /************************************************* */
 
@@ -375,6 +375,8 @@ Route::group(['middleware' => [('auth')]], function () {
     Route::get('/obtener-precios-producto', [saleController::class, 'obtenerPreciosProducto'])->name('sale.obtener-precios-producto');
     Route::get('sale/create/registrar_pago/{id}', [saleController::class, 'create_reg_pago'])->name('sale.registrar_pago');
     Route::post('sale/create/registrar_pago/{id}', [saleController::class, 'storeRegistroPago'])->name('pago.save');
+
+    Route::get('sale/showFactura/{id}', [exportFacturaController::class, 'showFactura']);
     
 
     /* Route::post('registroPagoSave', [saleController::class, 'storeRegistroPago'])->name('pago.save'); */

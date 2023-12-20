@@ -526,15 +526,14 @@ class saleController extends Controller
             })
             ->addColumn('action', function ($data) {
                 $currentDateTime = Carbon::now();
+
                 if (Carbon::parse($currentDateTime->format('Y-m-d'))->gt(Carbon::parse($data->fecha_cierre))) {
                     $btn = '
                         <div class="text-center">
-					    <a href="sale/create/' . $data->id . '" class="btn btn-dark" title="Detalles" disabled>
-						    <i class="fas fa-directions"></i>
-					    </a>
-					    <button class="btn btn-dark" title="Borrar venta" onclick="showDataForm(' . $data->id . ')">
-						    <i class="fas fa-eye"></i>
-					    </button>
+					    
+                        <a href="sale/showFactura/' . $data->id . '" class="btn btn-dark" title="VerFactura">
+					    <i class="fas fa-eye"></i>
+					    </a>				
 					    <button class="btn btn-dark" title="Borrar venta" disabled>
 						    <i class="fas fa-trash"></i>
 					    </button>
@@ -546,23 +545,22 @@ class saleController extends Controller
 					    <a href="sale/create/' . $data->id . '" class="btn btn-dark" title="Detalles" >
 						    <i class="fas fa-directions"></i>
 					    </a>
-					    <button class="btn btn-dark" title="Venta" onclick="editCompensado(' . $data->id . ');">
-						    <i class="fas fa-edit"></i>
-					    </button>
-                        <a href="caja/showReciboCaja/' . $data->id . '" class="btn btn-dark" title="VerReciboCaja">
+					   
+                        <a href="sale/showFactura/' . $data->id . '" class="btn btn-dark" title="VerFacturaPendiente">
 					    <i class="fas fa-eye"></i>
 					    </a>
 					  
                         </div>
                         ';
+                    //ESTADO Cerrada
                 } else {
                     $btn = '
                         <div class="text-center">
-					    <a href="sale/create/' . $data->id . '" class="btn btn-dark" title="Detalles" disabled>
-						    <i class="fas fa-directions"></i>
+                        <a href="sale/showFactura/' . $data->id . '" class="btn btn-dark" title="VerFacturaCerrada">
+					    <i class="fas fa-eye"></i>
 					    </a>
-					    <button class="btn btn-dark" title="Venta" disabled>
-						    <i class="fas fa-eye"></i>
+					    <button class="btn btn-dark" title="Borra la venta" disabled>
+						    <i class="fas fa-trash"></i>
 					    </button>
 					  
                         </div>
