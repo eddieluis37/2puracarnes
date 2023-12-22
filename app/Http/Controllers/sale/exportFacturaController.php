@@ -18,8 +18,18 @@ class exportFacturaController extends Controller
     public function showFactura($id)
     {
         $sale = Sale::findOrFail($id);
+        $saleDetails = SaleDetail::where('sale_id', $sale->id)
+            ->join('products as pro', 'sale_details.product_id', '=', 'pro.id')
+            ->select('sale_details.*', 'pro.name as nameprod', 'pro.code', 'sale_details.porc_iva', 'sale_details.iva', 'sale_details.porc_otro_impuesto')
+            ->where([
+                ['sale_details.sale_id', $id],
+                /*   ['sale_details.status', 1] */
+            ])->get();
 
-        $showFactura = PDF::loadView('sale.reporte', compact('sale'));
+
+    //    dd($saleDetails[0]->nameprod);
+
+        $showFactura = PDF::loadView('sale.reporte', compact('sale', 'saleDetails'));
 
         return $showFactura->download('sale.pdf');
     }

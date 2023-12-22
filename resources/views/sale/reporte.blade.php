@@ -40,8 +40,8 @@
 					<span style="font-size: 9px; font-weight: bold; display: block; margin-top: 10;">POS GUADALUPE CAJA PRINCIPAL</span>
 					<span style="font-size: 9px; font-weight: bold; display: block; margin: 0;">N°.PC {{$sale->id}}</span>
 				</td>
-			</tr>			
-			<tr>				
+			</tr>
+			<tr>
 				<td width="70%" class="text-left text-company" style="vertical-align: top; padding-top: 10px">
 					<span style="font-size: 8px"><strong>Fecha: {{ \Carbon\Carbon::now()->format('d-M-Y')}}</strong></span>
 					<br>
@@ -50,24 +50,25 @@
 			</tr>
 		</table>
 	</section>
-
+	{{$sale->id}}
 
 	<section style="margin-top: -110px">
 		<table cellpadding="0" cellspacing="0" class="table-items" width="100%">
 			<thead>
 				<tr>
-					<th width="10%">#</th>
-					<th width="12%">Descripción</th>
+					<th width="32%">Descripción</th>
 					<th width="10%">Cant.</th>
-					<th width="12%">Vr.Total</th>				
+					<th width="12%">Vr.Total</th>
 				</tr>
 			</thead>
 			<tbody>
-
+				@foreach($saleDetails as $item)
 				<tr>
-					<td align="center">{{$sale->id}}</td>
+					<td align="center">{{$item->nameprod}}</td>
+					<td align="center">{{$item->quantity}}</td>
+					<td align="center">$ {{number_format($item->total),2}}</td>
 				</tr>
-
+				@endforeach
 			</tbody>
 			<tfoot>
 				<tr>
@@ -75,12 +76,12 @@
 						<span><b>TOTALES</b></span>
 					</td>
 					<td colspan="1" class="text-center">
-						<span><strong>${{ number_format($sale->sum('total_valor_a_pagar'),2)}}</strong></span>
+						<span><strong>{{ $quantity = $item->where('sale_id', '=', $item->sale_id)->sum('quantity')}}</strong></span>
 					</td>
 					<td class="text-center">
 						{{$sale->sum('items')}}
 					</td>
-					<td colspan="3"></td>
+					<td colspan="3"><span><strong>${{ number_format($sale->sum('total_valor_a_pagar'),2)}}</strong></span></td>
 				</tr>
 			</tfoot>
 		</table>

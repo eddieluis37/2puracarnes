@@ -61,7 +61,7 @@ class cajaController extends Controller
 
         $valor_real = $request->input('valor_real');
         $valor_real = str_replace(['.', ',', '$', '#'], '', $valor_real);
-        
+
         $total = $request->input('total');
         $total = str_replace(['.', ',', '$', '#'], '', $total);
 
@@ -361,15 +361,14 @@ class cajaController extends Controller
             ->addColumn('action', function ($data) {
                 $currentDateTime = Carbon::now();
                 if (Carbon::parse($currentDateTime->format('Y-m-d'))->gt(Carbon::parse($data->fecha_hora_cierre))) {
+                    //ESTADO Cerrado
                     $btn = '
                     <div class="text-center">
-					<a href="caja/create/' . $data->id . '" class="btn btn-dark" title="CuadreCaja" >
-						<i class="fas fa-directions"></i>
-					</a>
-                    <a href="caja/showReciboCaja/' . $data->id . '" class="btn btn-dark" title="VerReciboCaja" >
+					
+                    <a href="caja/showReciboCaja/' . $data->id . '" class="btn btn-dark" title="VerReciboCajaCerrado" >
                     <i class="fas fa-eye"></i>
                     </a>				
-					<button class="btn btn-dark" title="" disabled>
+					<button class="btn btn-dark" title="CajaCerrada" disabled>
 						<i class="fas fa-trash"></i>
 					</button>
                     </div>
@@ -390,7 +389,7 @@ class cajaController extends Controller
                     <a href="caja/showReciboCaja/' . $data->id . '" class="btn btn-dark" title="VerReciboCaja">
 					    <i class="fas fa-eye"></i>
 					</a>
-					<button class="btn btn-dark" title="Borrar" onclick="downAlistamiento(' . $data->id . ');" ' . $status . '>
+					<button class="btn btn-dark" title="BorrarCaja" onclick="downAlistamiento(' . $data->id . ');" ' . $status . '>
 						<i class="fas fa-trash"></i>
 					</button>
                     </div>
@@ -404,7 +403,7 @@ class cajaController extends Controller
 					<button class="btn btn-dark" title="" onclick="showDataForm(' . $data->id . ')">
 						<i class="fas fa-eye"></i>
 					</button>
-					<button class="btn btn-dark" title="" disabled>
+					<button class="btn btn-dark" title="BorraCajaCerrado" disabled>
 						<i class="fas fa-trash"></i>
 					</button>
                     </div>
