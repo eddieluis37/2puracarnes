@@ -38,21 +38,22 @@
 			<tr>
 				<td colspan=" 2" class="text-center">
 					<span style="font-size: 9px; font-weight: bold; display: block; margin-top: 10;">POS GUADALUPE CAJA PRINCIPAL</span>
-					<span style="font-size: 9px; font-weight: bold; display: block; margin: 0;">N°.PC {{$sale->id}}</span>
+					<span style="font-size: 9px; font-weight: bold; display: block; margin: 0;">N°.PC {{$sale[0]->id}}</span>
 				</td>
 			</tr>
 			<tr>
-				<td width="70%" class="text-left text-company" style="vertical-align: top; padding-top: 10px">
-					<span style="font-size: 8px"><strong>Fecha: {{ \Carbon\Carbon::now()->format('d-M-Y')}}</strong></span>
-					<br>
-					<span style="font-size: 8px">Usuario: </span>
+				<td width="70%" class="text-left text-company" style="vertical-align: top; padding-top: 7px">
+					<span style="font-size: 8px; font-weight: bold; display: block; margin-top: 10"><strong>Fecha: {{ \Carbon\Carbon::now()->format('d-M-Y')}}</strong></span>
+					<span style="font-size: 8px; font-weight: lighter; display: block; margin: 2;">Cajero: {{$sale[0]->namethird}}</span>
+					<span style="font-size: 8px; font-weight: lighter; display: block; margin: 2;">Cliente: {{$sale[0]->namethird}}</span>
+					<span style="font-size: 8px; font-weight: lighter; display: block; margin: 2;">Identificación: {{$sale[0]->identificacion}}</span>
+					<span style="font-size: 8px">Cliente: {{$sale[0]->namethird}} </span>
 				</td>
 			</tr>
 		</table>
 	</section>
-	{{$sale->id}}
 
-	<section style="margin-top: -110px">
+	<section style="margin-top: -80px">
 		<table cellpadding="0" cellspacing="0" class="table-items" width="100%">
 			<thead>
 				<tr>
@@ -85,6 +86,9 @@
 				</tr>
 			</tfoot>
 		</table>
+		<p align="center" style="font-size: 7px; margin-top: 10px;">A esta factura de venta aplican las normas relativas a la letra de cambio (artículo 5 Ley 1231 de 2008). Con esta el Comprador declara haber recibido real ymaterialmente las mercancías o prestación de servicios descritos en este título - Valor.</p>
+		<p align="center" style="font-size: 7px; margin: 1px;"><strong>Número Autorización 18764061412040 aprobado en 20231206prefijo PC desde el número 1001 al 20000 Vigencia: 12 Meses</strong></p>
+		<p align="center" style="font-size: 7px; margin: 1px;">Responsable de IVA - Actividad Económica 4620 Comercio al por mayor de materias primas agropecuarias; animales vivos Tarifa 11.04</p>
 	</section>
 
 

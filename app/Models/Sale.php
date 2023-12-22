@@ -10,8 +10,10 @@ class Sale extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['valor_a_pagar_efectivo', 'total', 'total_iva', 'items', 'cash', 'cambio', 'status', 'fecha', 'consecutivo', 'user_id', 
-                            'third_id','vendedor_id', 'domiciliario_id', 'centrocosto_id'];
+    protected $fillable = [
+        'valor_a_pagar_efectivo', 'total', 'total_iva', 'items', 'cash', 'cambio', 'status', 'fecha', 'consecutivo', 'user_id',
+        'third_id', 'vendedor_id', 'domiciliario_id', 'centrocosto_id'
+    ];
 
     public function user()
     {
@@ -19,16 +21,22 @@ class Sale extends Model
     }
 
     public function centrocosto()
-	{
-		return $this->belongsTo(Centrocosto::class);
+    {
+        return $this->belongsTo(Centrocosto::class);
     }
 
     public function third()
-	{
-		return $this->belongsTo(Third::class);
+    {
+        return $this->belongsTo(Third::class);
     }
 
-    
+
+    public function thirds()
+    {
+        return $this->hasOne('App\Models\Third');
+    }
+
+
     // MUTATORS
     /*
     public function setTotalAttribute($value)
@@ -40,5 +48,4 @@ class Sale extends Model
         $this->attributes['total'] = $priceFilter;
     }
     */
-
 }
