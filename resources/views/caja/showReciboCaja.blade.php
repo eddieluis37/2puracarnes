@@ -100,6 +100,10 @@
 						<th>Diferencia:</th>
 						<td colspan="2">$ {{number_format($caja[0]->diferencia, 0, ',', '.')}}</td>
 					</tr>	
+					<tr>
+						<th>___________________________</th>
+						<td>___________________________</td>
+					</tr>
 				</table>
 			</body>
 		</div>

@@ -25,6 +25,7 @@
 								<th class="table-th text-white">CLIENTE</th>
 								<th class="table-th text-white ">CENTRO</th>
 								<th class="table-th text-white">ESTADO</th>
+								<th class="table-th text-white">VALOR</th>
 								<th class="table-th text-white">DIA.HORA</th>
 								<th class="table-th text-white text-center">Acciones</th>
 							</tr>

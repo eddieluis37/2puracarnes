@@ -130,42 +130,6 @@ class cajaController extends Controller
         }
     }
 
-
-
-    public function sumTotales($id)
-    {
-        $valorApagarEfectivo = DB::table('cajas as ca')
-            ->join('sales as sa', 'ca.cajero_id', '=', 'sa.user_id')
-            ->join('users as u', 'ca.cajero_id', '=', 'u.id')
-            ->join('centro_costo as centro', 'ca.centrocosto_id', '=', 'centro.id')
-            ->where('ca.id', $id)
-            ->whereDate('sa.fecha_venta', now())
-            ->where('sa.third_id', 33)
-            ->sum('sa.valor_a_pagar_efectivo');
-
-        $valorCambio = DB::table('cajas as ca')
-            ->join('sales as sa', 'ca.cajero_id', '=', 'sa.user_id')
-            ->join('users as u', 'ca.cajero_id', '=', 'u.id')
-            ->join('centro_costo as centro', 'ca.centrocosto_id', '=', 'centro.id')
-            ->where('ca.id', $id)
-            ->whereDate('sa.fecha_venta', now())
-            ->where('sa.third_id', 33)
-            ->sum('sa.cambio');
-
-        $valorEfectivo = $valorApagarEfectivo - $valorCambio;
-
-
-        $array = [
-            'valorApagarEfectivo' => $valorApagarEfectivo,
-            'valorCambio' => $valorCambio,
-            'valorEfectivo' => $valorEfectivo,
-
-        ];
-
-        return $array;
-    }
-
-
     public function index()
     {
         $category = Category::WhereIn('id', [1, 2, 3])->get();
@@ -204,7 +168,7 @@ class cajaController extends Controller
 
             ->get();
 
-        //  dd($dataAlistamiento);
+        // dd($dataAlistamiento);
 
 
         /**************************************** */
@@ -241,9 +205,65 @@ class cajaController extends Controller
         /* 
        
  */
+        //Suma el total de efecetivo, totalTarjetas, totalOtros de la venta del dia de ese cajero.
         $arrayTotales = $this->sumTotales($id);
         //  dd($arrayTotales);
         return view('caja.create', compact('dataAlistamiento', 'status', 'statusInventory', 'display', 'arrayTotales'));
+    }
+
+    public function sumTotales($id)
+    {
+        $valorApagarEfectivo = DB::table('cajas as ca')
+            ->join('sales as sa', 'ca.cajero_id', '=', 'sa.user_id')
+            ->join('users as u', 'ca.cajero_id', '=', 'u.id')
+            ->join('centro_costo as centro', 'ca.centrocosto_id', '=', 'centro.id')
+            ->where('ca.id', $id)
+            ->whereDate('sa.fecha_venta', now())
+            ->where('sa.third_id', 33)
+            ->sum('sa.valor_a_pagar_efectivo');
+
+        $valorCambio = DB::table('cajas as ca')
+            ->join('sales as sa', 'ca.cajero_id', '=', 'sa.user_id')
+            ->join('users as u', 'ca.cajero_id', '=', 'u.id')
+            ->join('centro_costo as centro', 'ca.centrocosto_id', '=', 'centro.id')
+            ->where('ca.id', $id)
+            ->whereDate('sa.fecha_venta', now())
+            ->where('sa.third_id', 33)
+            ->sum('sa.cambio');
+
+        $valorEfectivo = $valorApagarEfectivo - $valorCambio;
+
+        $valorApagarTarjeta = DB::table('cajas as ca')
+            ->join('sales as sa', 'ca.cajero_id', '=', 'sa.user_id')
+            ->join('users as u', 'ca.cajero_id', '=', 'u.id')
+            ->join('centro_costo as centro', 'ca.centrocosto_id', '=', 'centro.id')
+            ->where('ca.id', $id)
+            ->whereDate('sa.fecha_venta', now())
+            ->where('sa.third_id', 33)
+            ->sum('sa.valor_a_pagar_tarjeta');
+
+        $valorApagarOtros = DB::table('cajas as ca')
+            ->join('sales as sa', 'ca.cajero_id', '=', 'sa.user_id')
+            ->join('users as u', 'ca.cajero_id', '=', 'u.id')
+            ->join('centro_costo as centro', 'ca.centrocosto_id', '=', 'centro.id')
+            ->where('ca.id', $id)
+            ->whereDate('sa.fecha_venta', now())
+            ->where('sa.third_id', 33)
+            ->sum('sa.valor_a_pagar_otros');
+
+            $valorTotal = $valorApagarTarjeta + $valorApagarOtros;
+
+
+        $array = [
+            'valorApagarEfectivo' => $valorApagarEfectivo,
+            'valorCambio' => $valorCambio,
+            'valorEfectivo' => $valorEfectivo,
+            'valorApagarTarjeta' => $valorApagarTarjeta,
+            'valorApagarOtros' => $valorApagarOtros,
+            'valorTotal' => $valorTotal,
+        ];
+
+        return $array;
     }
 
 

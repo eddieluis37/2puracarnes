@@ -102,15 +102,21 @@
 											<tbody>
 												<tr>
 													<th scope="row" style="text-align: left">Total tarjetas</th>
-													<td colspan="2">$ </td>
+													<td colspan="2">
+														<input type="text" id="valor_a_pagar_tarjeta" name="valor_a_pagar_tarjeta" value="$ {{number_format($arrayTotales['valorApagarTarjeta'], 0, ',', '.')}}" data-id="" style="text-align: right; font-weight: bold; color: black" readonly>
+													</td>
 												</tr>
 												<tr>
 													<th scope="row" style="text-align: left">Otros</th>
-
+													<td colspan="2">
+														<input type="text" id="valor_a_pagar_otros" name="valor_a_pagar_otros" value="$ {{number_format($arrayTotales['valorApagarOtros'], 0, ',', '.')}}" data-id="" style="text-align: right; font-weight: bold; color: black" readonly>
+													</td>
 												</tr>
 												<tr>
 													<th scope="row" style="text-align: left">Total</th>
-													<td colspan="2"></td>
+													<td colspan="2">
+														<input type="text" id="" name="" value="$ {{number_format($arrayTotales['valorTotal'], 0, ',', '.')}}" data-id="" style="text-align: right; font-weight: bold; color: black" readonly>
+													</td>
 												</tr>
 
 												<tr>

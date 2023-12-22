@@ -509,7 +509,9 @@ class saleController extends Controller
             ->select('sa.*', 'tird.name as namethird', 'centro.name as namecentrocosto')
             /*  ->where('sa.status', 1) */
             ->get();
-        //$data = Sale::orderBy('id','desc');
+          
+      //  $data = Sale::orderBy('id','desc');
+        
         return Datatables::of($data)->addIndexColumn()
             ->addColumn('status', function ($data) {
                 if ($data->status == 1) {
