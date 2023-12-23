@@ -45,7 +45,7 @@ use App\Http\Controllers\inventory\CargarVentasController;
 use App\Http\Controllers\inventory\CentroCostoProductController;
 use App\Http\Controllers\CentroCostoProdController;
 use App\Http\Controllers\AsignarPreciosProdController;
-
+use App\Http\Controllers\compensado\pdfCompensadoController;
 use App\Http\Controllers\faster\fasterController;
 use App\Http\Controllers\transfer\TransferController;
 use App\Http\Controllers\workshop\workshopController;
@@ -61,6 +61,7 @@ use App\Http\Controllers\ReportController;
 
 use App\Http\Controllers\ImportStockFisicoController;
 use App\Http\Controllers\sale\exportFacturaController;
+
 
 /************************************************* */
 
@@ -238,6 +239,8 @@ Route::group(['middleware' => [('auth')]], function () {
     Route::post('compensadoById', [compensadoController::class, 'editCompensado'])->name('compensado.editCompensado');
     Route::post('/downmaincompensado', [compensadoController::class, 'destroyCompensado'])->name('compensado.downCompensado');
     Route::post('compensadoInvres', [compensadoController::class, 'cargarInventariocr'])->name('compensado.cargarInventariocr');
+
+    Route::get('compensado/pdfCompensado/{id}', [pdfCompensadoController::class, 'pdfCompensado']);
 
     /**BENEFICIO CERDO */
     Route::get('beneficiocerdo', [beneficiocerdoController::class, 'index'])->name('beneficiocerdo.index');

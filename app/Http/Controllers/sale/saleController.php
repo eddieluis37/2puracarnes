@@ -563,7 +563,7 @@ class saleController extends Controller
                 } elseif (Carbon::parse($currentDateTime->format('Y-m-d'))->lt(Carbon::parse($data->fecha_cierre))) {
                     $btn = '
                         <div class="text-center">
-					    <a href="sale/create/' . $data->id . '" class="btn btn-dark" title="Detalles" >
+					    <a href="sale/create/' . $data->id . '" class="btn btn-dark" title="Detalles">
 						    <i class="fas fa-directions"></i>
 					    </a>
 					   

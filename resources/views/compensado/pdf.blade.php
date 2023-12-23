@@ -35,7 +35,7 @@
 			</tr>
 			<tr>
 				<td colspan=" 2" class="text-center">
-					<span style="font-size: 9px; font-weight: bold; display: block; margin-top: 10;">POS {{$sale[0]->namecentrocosto}} CAJA {{$sale[0]->nameuser}}</span>
+					<span style="font-size: 9px; font-weight: bold; display: block; margin-top: 10;">COMPRA COMPENSADO {{$sale[0]->namecentrocosto}} CAJA {{$sale[0]->nameuser}}</span>
 					<span style="font-size: 9px; font-weight: bold; display: block; margin: 0;">N°.PC {{$sale[0]->id}}</span>
 				</td>
 			</tr>
@@ -46,7 +46,7 @@
 					<span style="font-size: 8px; font-weight: lighter; display: block; margin: 2;">Cliente:<strong> {{$sale[0]->namethird}}</strong></span>
 					<span style="font-size: 8px; font-weight: lighter; display: block; margin: 2;">Nit / C.C.:<strong> {{$sale[0]->identification}}</strong></span>
 					<span style="font-size: 8px; font-weight: lighter; display: block; margin: 2;">Dirección:<strong> {{$sale[0]->direccion}}</strong></span>
-					<span style="font-size: 8px; font-weight: lighter; display: block; margin: 2;">Estado_Factura:
+					<span style="font-size: 8px; font-weight: lighter; display: block; margin: 2;">Estado_compensado:
 						{{-- Display "Cerrada" if status is 1 --}}
 						{{-- Display "Pendiente" if status is 0 --}}
 						<strong>{{ $sale[0]->status == 1 ? 'Cerrada' : 'Pendiente' }}</strong>

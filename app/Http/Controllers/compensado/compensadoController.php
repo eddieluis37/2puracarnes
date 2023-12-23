@@ -313,16 +313,14 @@ class compensadoController extends Controller
                 if (Carbon::parse($currentDateTime->format('Y-m-d'))->gt(Carbon::parse($data->fecha_cierre))) {
                     $btn = '
                         <div class="text-center">
-					    <a href="compensado/create/' . $data->id . '" class="btn btn-dark" title="Detalles" >
-						    <i class="fas fa-directions"></i>
-					    </a>
-					    <button class="btn btn-dark" title="Borrar Compensado" onclick="showDataForm(' . $data->id . ')">
-						    <i class="fas fa-eye"></i>
+					   
+					    <button class="btn btn-dark" title="Editar Compensado" onclick="showDataForm(' . $data->id . ')" disabled>
+                            <i class="fas fa-edit"></i>
 					    </button>
 					    <button class="btn btn-dark" title="Borrar Compensado" disabled>
 						    <i class="fas fa-trash"></i>
 					    </button>
-                        <a href="compensado/exportCompraPdf/' . $data->id . '" class="btn btn-dark" title="VerPDFPend">
+                        <a href="compensado/pdfCompensado/' . $data->id . '" class="btn btn-dark" title="VerCompraCargadaPdf">
                         <i class="far fa-file-pdf"></i>
 					    </a>
                         </div>
@@ -336,7 +334,7 @@ class compensadoController extends Controller
 					    <button class="btn btn-dark" title="Compensado" onclick="editCompensado(' . $data->id . ');">
 						    <i class="fas fa-edit"></i>
 					    </button>
-                        <a href="compensado/exportCompraPdf/' . $data->id . '" class="btn btn-dark" title="VerPDF" target="_blank">
+                        <a href="compensado/pdfCompensado/' . $data->id . '" class="btn btn-dark" title="VerCompraSinCargarPdf" target="_blank">
                         <i class="far fa-file-pdf"></i>
 					    </a>
 					  
@@ -349,7 +347,7 @@ class compensadoController extends Controller
 					    <button class="btn btn-dark" title="Compensado" disabled>
 						    <i class="fas fa-eye"></i>
 					    </button>
-                        <a href="compensado/exportCompraPdf/' . $data->id . '" class="btn btn-dark" title="VerPdf">
+                        <a href="compensado/pdfCompensado/' . $data->id . '" class="btn btn-dark" title="VerCompraSinCargarPdf">
                         <i class="far fa-file-pdf"></i>
 					    </a>					  
                         </div>
