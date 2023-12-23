@@ -23,8 +23,9 @@ class exportFacturaController extends Controller
     {
         $sale = Sale::findOrFail($id)
             ->join('thirds as third', 'sales.third_id', '=', 'third.id')
+            ->join('users as u', 'sales.user_id', '=', 'u.id')
             ->join('centro_costo as centro', 'sales.centrocosto_id', '=', 'centro.id')
-            ->select('sales.*', 'third.name as namethird', 'third.identification as identificacion', 'centro.name as namecentrocosto', 'third.porc_descuento', 'sales.total_iva', 'sales.vendedor_id')
+            ->select('sales.*', 'u.name as nameuser', 'third.name as namethird', 'third.identification', 'third.direccion', 'centro.name as namecentrocosto', 'third.porc_descuento', 'sales.total_iva', 'sales.vendedor_id')
             ->where([
                 ['sales.id', $id],
                 /*  ['sale_details.status', 1]  */

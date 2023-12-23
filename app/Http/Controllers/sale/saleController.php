@@ -364,7 +364,7 @@ class saleController extends Controller
                 $updateReg->save();
             }
 
-            $sale = Sale::find($request->ventaId);
+            /*  $sale = Sale::find($request->ventaId);
             $sale->items = SaleDetail::where('sale_id', $sale->id)->count();
             $sale->descuentos = $totalDescuento;
             $sale->total_iva = $iva;
@@ -381,8 +381,27 @@ class saleController extends Controller
 
             $sale->total_bruto = $totalBruto;
             $sale->descuentos = $totalDesc;
-            $sale->save();
+            $sale->save(); */
 
+            $sale = Sale::find($request->ventaId);
+            $sale->items = SaleDetail::where('sale_id', $sale->id)->count();
+            $sale->descuentos = $totalDescuento;
+            $sale->total_iva = $iva;
+            $sale->total_otros_impuestos = $totalOtrosImpuestos;
+            $sale->total_valor_a_pagar = $valorApagar;
+            $saleDetails = SaleDetail::where('sale_id', $sale->id)->get();
+            $totalBruto = 0;
+            $totalDesc = 0;
+            $sale->total_valor_a_pagar = $saleDetails->where('sale_id', $sale->id)->sum('total');
+            $totalBruto = $saleDetails->sum(function ($saleDetail) {
+                return $saleDetail->quantity * $saleDetail->price;
+            });
+            $totalDesc = $saleDetails->sum(function ($saleDetail) {
+                return $saleDetail->descuento + $saleDetail->descuento_cliente;
+            });
+            $sale->total_bruto = $totalBruto;
+            $sale->descuentos = $totalDesc;
+            $sale->save();
 
             $arraydetail = $this->getventasdetail($request->ventaId);
 
@@ -509,9 +528,9 @@ class saleController extends Controller
             ->select('sa.*', 'tird.name as namethird', 'centro.name as namecentrocosto')
             /*  ->where('sa.status', 1) */
             ->get();
-          
-      //  $data = Sale::orderBy('id','desc');
-        
+
+        //  $data = Sale::orderBy('id','desc');
+
         return Datatables::of($data)->addIndexColumn()
             ->addColumn('status', function ($data) {
                 if ($data->status == 1) {
