@@ -12,7 +12,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
 
-  /* $sale = Sale::with('third')->findOrFail($id);
+/* $sale = Sale::with('third')->findOrFail($id);
             $sale = Sale::with('third')->whereHas('third', function ($query) {
                 $query->where('status', 1);
             })->findOrFail($id); */
@@ -29,9 +29,9 @@ class exportFacturaController extends Controller
             ->where([
                 ['sales.id', $id],
                 /*  ['sale_details.status', 1]  */
-            ])->get();      
+            ])->get();
 
-    //  dd($sale);
+        //  dd($sale);
 
         $saleDetails = SaleDetail::where('sale_id', $id)
             ->join('products as pro', 'sale_details.product_id', '=', 'pro.id')
@@ -41,10 +41,10 @@ class exportFacturaController extends Controller
                 /*   ['sale_details.status', 1] */
             ])->get();
 
-       //  dd($saleDetails);
+        //  dd($saleDetails);
 
         $showFactura = PDF::loadView('sale.reporte', compact('sale', 'saleDetails'));
-
-        return $showFactura->download('sale.pdf');
+        return $showFactura->stream('sale.pdf');
+        //return $showFactura->download('sale.pdf');
     }
 }

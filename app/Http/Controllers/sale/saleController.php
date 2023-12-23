@@ -552,8 +552,8 @@ class saleController extends Controller
                     $btn = '
                         <div class="text-center">
 					    
-                        <a href="sale/showFactura/' . $data->id . '" class="btn btn-dark" title="VerFactura">
-					    <i class="fas fa-eye"></i>
+                        <a href="sale/showFactura/' . $data->id . '" class="btn btn-dark" title="VerFactura" target="_blank">
+                        <i class="far fa-file-pdf"></i>
 					    </a>				
 					    <button class="btn btn-dark" title="Borrar venta" disabled>
 						    <i class="fas fa-trash"></i>
@@ -567,8 +567,8 @@ class saleController extends Controller
 						    <i class="fas fa-directions"></i>
 					    </a>
 					   
-                        <a href="sale/showFactura/' . $data->id . '" class="btn btn-dark" title="VerFacturaPendiente">
-					    <i class="fas fa-eye"></i>
+                        <a href="sale/showFactura/' . $data->id . '" class="btn btn-dark" title="VerFacturaPendiente" target="_blank">
+                        <i class="far fa-file-pdf"></i>
 					    </a>
 					  
                         </div>
@@ -577,8 +577,8 @@ class saleController extends Controller
                 } else {
                     $btn = '
                         <div class="text-center">
-                        <a href="sale/showFactura/' . $data->id . '" class="btn btn-dark" title="VerFacturaCerrada">
-					    <i class="fas fa-eye"></i>
+                        <a href="sale/showFactura/' . $data->id . '" class="btn btn-dark" title="VerFacturaCerrada" target="_blank">
+                        <i class="far fa-file-pdf"></i>
 					    </a>
 					    <button class="btn btn-dark" title="Borra la venta" disabled>
 						    <i class="fas fa-trash"></i>

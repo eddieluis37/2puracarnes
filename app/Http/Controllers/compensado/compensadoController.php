@@ -322,6 +322,9 @@ class compensadoController extends Controller
 					    <button class="btn btn-dark" title="Borrar Compensado" disabled>
 						    <i class="fas fa-trash"></i>
 					    </button>
+                        <a href="compensado/exportCompraPdf/' . $data->id . '" class="btn btn-dark" title="VerPDFPend">
+                        <i class="far fa-file-pdf"></i>
+					    </a>
                         </div>
                         ';
                 } elseif (Carbon::parse($currentDateTime->format('Y-m-d'))->lt(Carbon::parse($data->fecha_cierre))) {
@@ -333,19 +336,22 @@ class compensadoController extends Controller
 					    <button class="btn btn-dark" title="Compensado" onclick="editCompensado(' . $data->id . ');">
 						    <i class="fas fa-edit"></i>
 					    </button>
+                        <a href="compensado/exportCompraPdf/' . $data->id . '" class="btn btn-dark" title="VerPDF" target="_blank">
+                        <i class="far fa-file-pdf"></i>
+					    </a>
 					  
                         </div>
                         ';
                 } else {
                     $btn = '
                         <div class="text-center">
-					    <a href="compensado/create/' . $data->id . '" class="btn btn-dark" title="Detalles" >
-						    <i class="fas fa-directions"></i>
-					    </a>
+					  
 					    <button class="btn btn-dark" title="Compensado" disabled>
 						    <i class="fas fa-eye"></i>
 					    </button>
-					  
+                        <a href="compensado/exportCompraPdf/' . $data->id . '" class="btn btn-dark" title="VerPdf">
+                        <i class="far fa-file-pdf"></i>
+					    </a>					  
                         </div>
                         ';
                 }
