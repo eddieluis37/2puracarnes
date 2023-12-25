@@ -46,6 +46,9 @@
 									</div>
 								</div>
 							</div>
+							<div class="col-md-2 mt-6">
+								<button type="button" class="btn btn-primary" onclick="history.back()">Volver</button>
+							</div>
 						</div>
 					</div>
 				</div>
@@ -161,11 +164,11 @@
 										<th>$ {{number_format($arrayTotales['totalGlobal'], 0, ',', '.')}} </th>
 										<td></td>
 										<td class="text-center">
-											<button class="btn btn-success" id="cargarInventarioBtn">Cargar al inventario</button>
+											<button type="hidden" id="cargarInventarioBtn"></button>
 										</td>
 									</tr>
 								</tfoot>
-							</table>
+							</table>						
 						</div>
 					</div>
 				</div>

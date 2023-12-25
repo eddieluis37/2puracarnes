@@ -291,7 +291,7 @@ class compensadoController extends Controller
             ->join('thirds as tird', 'comp.thirds_id', '=', 'tird.id')
             ->join('centro_costo as centro', 'comp.centrocosto_id', '=', 'centro.id')
             ->select('comp.*', 'tird.name as namethird', 'centro.name as namecentrocosto')
-            ->where('comp.status', 1)
+          /*   ->where('comp.status', 1) */
             ->get();
         //$data = Compensadores::orderBy('id','desc');
         return Datatables::of($data)->addIndexColumn()
@@ -320,7 +320,7 @@ class compensadoController extends Controller
 					    <button class="btn btn-dark" title="Borrar Compensado" disabled>
 						    <i class="fas fa-trash"></i>
 					    </button>
-                        <a href="compensado/pdfCompensado/' . $data->id . '" class="btn btn-dark" title="VerCompraCargadaPdf">
+                        <a href="compensado/pdfCompensado/' . $data->id . '" class="btn btn-dark" title="VerCompraVencidaPorFecha" target="_blank">
                         <i class="far fa-file-pdf"></i>
 					    </a>
                         </div>
@@ -334,7 +334,7 @@ class compensadoController extends Controller
 					    <button class="btn btn-dark" title="Compensado" onclick="editCompensado(' . $data->id . ');">
 						    <i class="fas fa-edit"></i>
 					    </button>
-                        <a href="compensado/pdfCompensado/' . $data->id . '" class="btn btn-dark" title="VerCompraSinCargarPdf" target="_blank">
+                        <a href="compensado/pdfCompensado/' . $data->id . '" class="btn btn-dark" title="VerCompraPendiente" target="_blank">
                         <i class="far fa-file-pdf"></i>
 					    </a>
 					  
@@ -347,7 +347,7 @@ class compensadoController extends Controller
 					    <button class="btn btn-dark" title="Compensado" disabled>
 						    <i class="fas fa-eye"></i>
 					    </button>
-                        <a href="compensado/pdfCompensado/' . $data->id . '" class="btn btn-dark" title="VerCompraSinCargarPdf">
+                        <a href="compensado/pdfCompensado/' . $data->id . '" class="btn btn-dark" title="VerCompraCerrada" target="_blank">
                         <i class="far fa-file-pdf"></i>
 					    </a>					  
                         </div>
@@ -452,6 +452,7 @@ class compensadoController extends Controller
         $compensadoId = $request->input('compensadoId');
         $compensadores = Compensadores::find($compensadoId);
         $compensadores->fecha_cierre = $formattedDate;
+        $compensadores->status = true;
         $compensadores->save();
         $compensadores = Compensadores::where('id', $compensadoId)->get();
         $centrocosto_id = $compensadores->first()->centrocosto_id;

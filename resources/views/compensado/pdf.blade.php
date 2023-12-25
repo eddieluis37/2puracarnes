@@ -5,7 +5,7 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-	<title>Reporte de Ventas</title>
+	<title>Compra compensada</title>
 
 	<!-- cargar a través de la url del sistema -->
 	<!--
@@ -35,23 +35,25 @@
 			</tr>
 			<tr>
 				<td colspan=" 2" class="text-center">
-					<span style="font-size: 9px; font-weight: bold; display: block; margin-top: 10;">COMPRA COMPENSADO {{$sale[0]->namecentrocosto}} CAJA {{$sale[0]->nameuser}}</span>
-					<span style="font-size: 9px; font-weight: bold; display: block; margin: 0;">N°.PC {{$sale[0]->id}}</span>
+					<span style="font-size: 9px; font-weight: bold; display: block; margin-top: 10;">COMPRA COMPENSADO {{$comp[0]->namecentrocosto}} CAJA {{$comp[0]->nameuser}}</span>
+					<span style="font-size: 9px; font-weight: bold; display: block; margin: 0;">N°.PC {{$comp[0]->id}}</span>
 				</td>
 			</tr>
 			<tr>
 				<td width="70%" class="text-left text-company" style="vertical-align: top; padding-top: 7px">
+					<span style="font-size: 8px; font-weight: lighter; display: block; margin: 2;">Factura:<strong> {{$comp[0]->factura}}</strong></span>
 					<span style="font-size: 8px; font-weight: lighter; display: block; margin: 2;">Fecha y hora:<strong> {{\Carbon\Carbon::now()->format('Y-m-d H:i')}}</strong></span>
-					<span style="font-size: 8px; font-weight: lighter; display: block; margin: 2;">Cajero:<strong> {{$sale[0]->nameuser}}</strong></span>
-					<span style="font-size: 8px; font-weight: lighter; display: block; margin: 2;">Cliente:<strong> {{$sale[0]->namethird}}</strong></span>
-					<span style="font-size: 8px; font-weight: lighter; display: block; margin: 2;">Nit / C.C.:<strong> {{$sale[0]->identification}}</strong></span>
-					<span style="font-size: 8px; font-weight: lighter; display: block; margin: 2;">Dirección:<strong> {{$sale[0]->direccion}}</strong></span>
+
+					<span style="font-size: 8px; font-weight: lighter; display: block; margin: 2;">Usuario:<strong> {{$comp[0]->nameuser}}</strong></span>
+					<span style="font-size: 8px; font-weight: lighter; display: block; margin: 2;">Proveedor:<strong> {{$comp[0]->namethird}}</strong></span>
+					<span style="font-size: 8px; font-weight: lighter; display: block; margin: 2;">Nit / C.C.:<strong> {{$comp[0]->identification}}</strong></span>
+					<span style="font-size: 8px; font-weight: lighter; display: block; margin: 2;">Dirección:<strong> {{$comp[0]->direccion}}</strong></span>
 					<span style="font-size: 8px; font-weight: lighter; display: block; margin: 2;">Estado_compensado:
 						{{-- Display "Cerrada" if status is 1 --}}
 						{{-- Display "Pendiente" if status is 0 --}}
-						<strong>{{ $sale[0]->status == 1 ? 'Cerrada' : 'Pendiente' }}</strong>
+						<strong>{{ $comp[0]->status == 1 ? 'Cerrada' : 'Pendiente' }}</strong>
 					</span>
-					<span style="font-size: 8px; font-weight: lighter; display: block; margin: 2;">Items:<strong>{{$sale->sum('items')}}</strong></span>
+					<!-- 	<span style="font-size: 8px; font-weight: lighter; display: block; margin: 2;">Items:<strong>{{$comp->sum('id')}}</strong></span> -->
 				</td>
 			</tr>
 		</table>
@@ -61,17 +63,22 @@
 		<table cellpadding="0" cellspacing="0" class="table-items" width="100%">
 			<thead>
 				<tr>
+					<th width="5%">Código</th>
 					<th width="32%">Descripción</th>
-					<th width="10%">Cant.</th>
-					<th width="12%">Vr.Total</th>
+					<th width="5%">Vr.Compra</th>
+					<th width="3%">Cant.</th>
+					<th width="5%">SubTotal</th>
+
 				</tr>
 			</thead>
 			<tbody>
-				@foreach($saleDetails as $item)
+				@foreach($compDetails as $item)
 				<tr>
+					<td align="left">{{$item->code}}</td>
 					<td align="center">{{$item->nameprod}}</td>
-					<td align="center">{{$item->quantity}}</td>
-					<td align="center">$ {{number_format($item->total),2}}</td>
+					<td align="right">$ {{number_format($item->pcompra),2}}</td>
+					<td align="right">{{$item->peso}}</td>
+					<td align="right">$ {{number_format($item->subtotal),2}}</td>
 				</tr>
 				@endforeach
 			</tbody>
@@ -80,12 +87,17 @@
 					<td class="text-center">
 						<span><b>TOTALES</b></span>
 					</td>
-					<td colspan="1" class="text-center">
-						<span><strong>{{ $quantity = $item->where('sale_id', '=', $item->sale_id)->sum('quantity')}}</strong></span>
+					<td></td>
+					<td colspan="1" class="text-right">
+						<span><strong>$ {{ number_format($total_precio),0}}</strong></span>
 					</td>
 					<td class="text-center">
-						<span><strong>${{ number_format($sale->sum('total_valor_a_pagar'),0)}}</strong></span>
+						<span><strong>{{$total_weight}}</strong></span>
 					</td>
+					<td class="text-right">
+						<span><strong>$ {{ number_format($total_subtotal),0}}</strong></span>
+					</td>
+
 				</tr>
 			</tfoot>
 		</table>
@@ -109,4 +121,5 @@
 		</table>
 	</section>
 </body>
+
 </html>

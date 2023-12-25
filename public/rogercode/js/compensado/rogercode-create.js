@@ -143,7 +143,7 @@ const showData = (data) => {
             <th>$ ${formatCantidadSinCero(arrayTotales.totalGlobal)}</th>
             <td></td>
             <td class="text-center">
-            <button id="cargarInventarioBtn" class="btn btn-success btn-sm">inventario</button>
+            <button id="cargarInventarioBtn" class="btn btn-success btn-sm">Cargar al inventario</button>
             </td>
         </tr>
     `;
