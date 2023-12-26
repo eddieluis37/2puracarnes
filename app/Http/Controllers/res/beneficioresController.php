@@ -258,9 +258,10 @@ class beneficioresController extends Controller
 					    <button class="btn btn-dark" title="Editar Beneficio" onclick="showDataForm(' . $data->id . ')">
 						    <i class="fas fa-eye"></i>
 					    </button>
-					    <button class="btn btn-dark" title="Borrar Beneficio" disabled>
-						    <i class="fas fa-trash"></i>
-					    </button>
+					  
+						<a href="beneficiores/pdfLote/' . $data->id . '" class="btn btn-dark" title="VerCompraVencidaPorFecha" target="_blank">
+                        <i class="far fa-file-pdf"></i>
+					    </a>
                         </div>
                         ';
 				} elseif (Carbon::parse($currentDateTime->format('Y-m-d'))->lt(Carbon::parse($data->fecha_cierre))) {
@@ -272,9 +273,10 @@ class beneficioresController extends Controller
 					    <button class="btn btn-dark" title="Editar Beneficio" onclick="edit(' . $data->id . ');">
 						    <i class="fas fa-edit"></i>
 					    </button>
-					    <button class="btn btn-dark" title="Borrar Beneficio" onclick="Confirm(' . $data->id . ');">
-						    <i class="fas fa-trash"></i>
-					    </button>
+					   
+						<a href="beneficiores/pdfLote/' . $data->id . '" class="btn btn-dark" title="VerCompraPendiente" target="_blank">
+                        	<i class="far fa-file-pdf"></i>
+					    </a>
                         </div>
                         ';
 				} else {
@@ -286,9 +288,9 @@ class beneficioresController extends Controller
 					    <button class="btn btn-dark" title="Editar Beneficio" onclick="showDataForm(' . $data->id . ')">
 						    <i class="fas fa-eye"></i>
 					    </button>
-					    <button class="btn btn-dark" title="Borrar Beneficio" disabled>
-						    <i class="fas fa-trash"></i>
-					    </button>
+						<a href="beneficiores/pdfLote/' . $data->id . '" class="btn btn-dark" title="VerCompraCerrada" target="_blank">
+                        	<i class="far fa-file-pdf"></i>
+					    </a>
                         </div>
                         ';
 				}

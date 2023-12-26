@@ -21,7 +21,7 @@ class BeneficioreSeeder extends Seeder
 		$dateNextMonday = $current_date->format('Y-m-d'); // Output the date in Y-m-d format
         Beneficiore::create([
             'centrocosto_id' => 1,
-            'thirds_id' => 674,
+            'thirds_id' => 1,
             'plantasacrificio_id' => 1,
             'cantidadmacho' => 15,
             'valorunitariomacho' => 350000,
@@ -64,7 +64,7 @@ class BeneficioreSeeder extends Seeder
         
         Beneficiore::create([
             'centrocosto_id' => 2,
-            'thirds_id' => 674,
+            'thirds_id' => 2,
             'plantasacrificio_id' => 1,
             'cantidadmacho' => 15,
             'valorunitariomacho' => 350000,

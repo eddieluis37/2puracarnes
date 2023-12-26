@@ -60,6 +60,7 @@ use App\Http\Controllers\listaprecio\listaPrecioController;
 use App\Http\Controllers\ReportController;
 
 use App\Http\Controllers\ImportStockFisicoController;
+use App\Http\Controllers\res\pdfLoteController;
 use App\Http\Controllers\sale\exportFacturaController;
 
 
@@ -210,7 +211,7 @@ Route::group(['middleware' => [('auth')]], function () {
     Route::post('savebeneficiores', [beneficioresController::class, 'store'])->name('beneficiores.save');
     Route::get('/edit/{id}', [beneficioresController::class, 'edit'])->name('beneficiores.edit');
     Route::get('downbeneficiores/{id}', [beneficioresController::class, 'destroy'])->name('beneficiores.destroy');
-
+    Route::get('beneficiores/pdfLote/{id}', [pdfLoteController::class, 'pdfLote']);
 
 
     /*****************************DESPOSTE-RES******************************************/
