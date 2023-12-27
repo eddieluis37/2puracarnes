@@ -36,25 +36,27 @@ class pdfLoteController extends Controller
 
         //  dd($lote);
 
-        $compDetails = DB::table('compensadores_details as comp_de')
-            ->join('products as pro', 'comp_de.products_id', '=', 'pro.id')
-            ->select('comp_de.*', 'pro.name as nameprod', 'pro.code')
-            ->where('comp_de.compensadores_id', $id)
+        $desposte = DB::table('desposteres as dr')
+            ->join('products as pro', 'dr.products_id', '=', 'pro.id')
+            ->select('dr.*', 'pro.name as nameprod', 'pro.code')
+            ->where('dr.beneficiores_id', $id)
             ->get();
 
-        $total_weight = 0;
+         //   dd($desposte);
+
+     /*    $total_weight = 0;
         $total_precio = 0;
         $total_subtotal = 0;
 
-        foreach ($compDetails as $item) {
+        foreach ($desposte as $item) {
             $total_weight += $item->peso;
             $total_precio += $item->pcompra;
             $total_subtotal += $item->subtotal;
-        }
+        } */
 
         // dd($total_weight);
 
-        $pdfLote = PDF::loadView('categorias.res.beneficiores.pdf', compact('compDetails', 'lote', 'nameclientpieles', 'nameclientvisceras', 'total_weight', 'total_precio', 'total_subtotal'));
+        $pdfLote = PDF::loadView('categorias.res.beneficiores.pdf', compact('desposte', 'lote', 'nameclientpieles', 'nameclientvisceras'));
         return $pdfLote->stream('categorias.res.beneficiores.pdf');
         //return $pdfCompensado->download('sale.pdf');
     }
