@@ -8,13 +8,14 @@
   <title>Compra compensada</title>
 
   <!-- cargar a través de la url del sistema -->
-  <!--
-		<link rel="stylesheet" href="{{ asset('css/custom_pdf.css') }}">
-		<link rel="stylesheet" href="{{ asset('css/custom_page.css') }}">
-	-->
+
+  <link rel="stylesheet" href="{{ asset('css/custom_pdf.css') }}">
+  <link rel="stylesheet" href="{{ asset('css/custom_page.css') }}">
+
   <!-- ruta física relativa OS -->
-  <link rel="stylesheet" href="{{ public_path('css/custom_pdf.css') }}">
+  <!-- <link rel="stylesheet" href="{{ public_path('css/custom_pdf.css') }}">
   <link rel="stylesheet" href="{{ public_path('css/custom_page.css') }}">
+  -->
   <!-- Enlace al archivo CSS de Bootstrap 5 -->
   <!--   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"></script>
@@ -46,7 +47,7 @@
       <tr>
         <td width="70%" class="text-left text-company" style="vertical-align: top; padding-top: 7px">
           <span style="font-size: 8px; font-weight: lighter; display: block; margin: 2;">Factura:<strong> {{$lote[0]->factura}}</strong></span>
-      
+
           <span style="font-size: 8px; font-weight: lighter; display: block; margin: 2;">Fecha y hora consulta:<strong> {{\Carbon\Carbon::now()->format('Y-m-d H:i')}}</strong></span>
           <span style="font-size: 8px; font-weight: lighter; display: block; margin: 2;">Fecha creación beneficio:<strong> {{$lote[0]->fecha_beneficio}}</strong></span>
           <span style="font-size: 8px; font-weight: lighter; display: block; margin: 2;">Proveedor:<strong> {{$lote[0]->namethird}}</strong></span>
@@ -65,29 +66,37 @@
         </td>
   </section>
 
-  <style>
-    .align-items-start {
-      height: 100px;
-      background-color: green;
-    }
+  <section style="margin-top: 20px">
+      <table cellpadding="0" cellspacing="0" class="table-items" width="100%">
+        <thead>
+          <tr>
+            <th>CantMachos</th>
+            <th>ValorMacho</th>
+            <th>ValorTotalMacho</th>
+            <th>CantHembras</th>
+            <th>ValorHembras</th>
+            <th>ValorTotalHembra</th>            
+          </tr>
+        </thead>
+        <tr>
+          <td align="center">{{number_format( $lote[0]->cantidadmacho ,0, ',', '.' )}}</td>
+          <td align="center">$ {{number_format( $lote[0]->valorunitariomacho ,0, ',', '.' )}}</td>
+          <td align="center">$ {{number_format( $lote[0]->valortotalmacho ,0, ',', '.' )}}</td>
+          <td align="center">{{number_format( $lote[0]->cantidadhembra ,0, ',', '.' )}}</td>
+          <td align="center">$ {{number_format( $lote[0]->valorunitariohembra ,0, ',', '.' )}}</td>
+          <td align="center">$ {{number_format( $lote[0]->valortotalhembra ,0, ',', '.' )}} KG</td>      
+        </tr>
+      </table>
+    </section>
 
-    .align-items-center {
-      height: 100px;
-      background-color: blue;
-    }
+  
 
-    .align-items-end {
-      height: 100px;
-      background-color: red;
-    }
 
-    .col {
-      background-color: #e4e4e4;
-      border: 1px solid grey;
-    }
-  </style>
+
 
   <div class="row">
+   
+
     <div class="table-responsive">
       <table class="table table-bordered">
         <!-- <thead>
@@ -97,41 +106,16 @@
           </tr>
         </thead> -->
         <tbody>
-          <th>CantMachos:</th>
-          <td>{{$lote[0]->cantidadmacho}}</td>         
-          <th>ValorMacho:</th>          
-          <td>$ {{number_format($lote[0]->valorunitariomacho),2}}</td>
-          <th>ValorTotalMacho:</th>          
-          <td>$ {{number_format($lote[0]->valortotalmacho),2}}</td>
-          <th>CantHembras:</th>
-          <td>{{$lote[0]->cantidadhembra}}</td>
-          <th>ValorHembras:</th>          
-          <td>$ {{number_format($lote[0]->valorunitariohembra),2}}</td>
-          <th>ValorTotalHembra:</th>
-          <td>$ {{number_format($lote[0]->valortotalhembra),2}}</td>        
-        </tbody>
-      </table>
-    </div> 
-    
-    <div class="table-responsive">
-      <table class="table table-bordered">
-        <!-- <thead>
-          <tr>
-            <th>Nombre del campo</th>
-            <th>Valor</th>
-          </tr>
-        </thead> -->
-        <tbody>
-          <th>Sacrificio:</th>          
+          <th>Sacrificio:</th>
           <td>$ {{number_format($lote[0]->sacrificio),2}}</td>
           <th>Fomento:</th>
           <td>$ {{number_format($lote[0]->fomento),2}}</td>
-          <th>Deguello:</th>          
+          <th>Deguello:</th>
           <td>$ {{number_format($lote[0]->deguello),2}}</td>
-          <th>Bascula:</th>          
+          <th>Bascula:</th>
           <td>$ {{number_format($lote[0]->bascula),2}}</td>
-          <th>Transporte:</th>          
-          <td>$ {{number_format($lote[0]->transporte),2}}</td>         
+          <th>Transporte:</th>
+          <td>$ {{number_format($lote[0]->transporte),2}}</td>
         </tbody>
       </table>
     </div>
@@ -145,17 +129,17 @@
           </tr>
         </thead> -->
         <tbody>
-          <th>PesoPie1:</th>          
+          <th>PesoPie1:</th>
           <td>{{number_format($lote[0]->pesopie1),2}}</td>
-          <th>PesoPie2:</th>          
+          <th>PesoPie2:</th>
           <td>{{number_format($lote[0]->pesopie2),2}}</td>
           <th>PesoPie3:</th>
-          <td>{{number_format($lote[0]->pesopie3),2}}</td>                
+          <td>{{number_format($lote[0]->pesopie3),2}}</td>
         </tbody>
       </table>
     </div>
 
-    
+
     <div class="table-responsive">
       <table class="table table-bordered">
         <!-- <thead>
@@ -165,18 +149,18 @@
           </tr>
         </thead> -->
         <tbody>
-          <th>CostoPie1:</th>          
-          <td>$ {{number_format($lote[0]->costopie1),2}}</td>      
+          <th>CostoPie1:</th>
+          <td>$ {{number_format($lote[0]->costopie1),2}}</td>
           <th>CostoPie2:</th>
-          <td>$ {{number_format($lote[0]->costopie2),2}}</td>  
+          <td>$ {{number_format($lote[0]->costopie2),2}}</td>
           <th>CostoPie3:</th>
-          <td>$ {{number_format($lote[0]->costopie3),2}}</td>  
-          <th>CostoAninal1:</th>          
-          <td>$ {{number_format($lote[0]->costoanimal1),2}}</td>  
+          <td>$ {{number_format($lote[0]->costopie3),2}}</td>
+          <th>CostoAninal1:</th>
+          <td>$ {{number_format($lote[0]->costoanimal1),2}}</td>
           <th>CostoAninal2:</th>
-          <td>$ {{number_format($lote[0]->costoanimal2),2}}</td>          
-          <th>CostoAninal3:</th>     
-          <td>$ {{number_format($lote[0]->costoanimal3),2}}</td>             
+          <td>$ {{number_format($lote[0]->costoanimal2),2}}</td>
+          <th>CostoAninal3:</th>
+          <td>$ {{number_format($lote[0]->costoanimal3),2}}</td>
         </tbody>
       </table>
     </div>
@@ -190,23 +174,23 @@
           </tr>
         </thead> -->
         <tbody>
-          <th>CanalCaliente:</th>          
-          <td>{{number_format($lote[0]->canalcaliente),2}}</td>    
-          <th>CanalFria:</th>          
-          <td>{{number_format($lote[0]->canalfria),2}}</td>    
-          <th>CanalPlanta:</th>          
+          <th>CanalCaliente:</th>
+          <td>{{number_format($lote[0]->canalcaliente),2}}</td>
+          <th>CanalFria:</th>
+          <td>{{number_format($lote[0]->canalfria),2}}</td>
+          <th>CanalPlanta:</th>
           <td>{{number_format($lote[0]->canalplanta),2}}</td>
-          <th>PielesKg:</th>          
+          <th>PielesKg:</th>
           <td>{{number_format($lote[0]->pieleskg),2}}</td>
-          <th>PielesCosto:</th>          
+          <th>PielesCosto:</th>
           <td>{{number_format($lote[0]->pielescosto),2}}</td>
-          <th>Visceras:</th>               
-          <td>{{number_format($lote[0]->visceras),2}}</td>         
+          <th>Visceras:</th>
+          <td>{{number_format($lote[0]->visceras),2}}</td>
         </tbody>
       </table>
     </div>
 
-    
+
     <div class="table-responsive">
       <table class="table table-bordered">
         <!-- <thead>
@@ -216,21 +200,21 @@
           </tr>
         </thead> -->
         <tbody>
-          <th>TSacrificio:</th>          
-          <td>$ {{number_format($lote[0]->tsacrificio),2}}</td>  
-          <th>TFomento:</th>          
-          <td>$ {{number_format($lote[0]->tfomento),2}}</td>  
-          <th>TDeguello:</th>          
-          <td>$ {{number_format($lote[0]->tdeguello),2}}</td>  
-          <th>TBascula:</th>          
-          <td>$ {{number_format($lote[0]->tbascula),2}}</td>  
-          <th>TTransporte:</th>                      
-          <td>$ {{number_format($lote[0]->ttransporte),2}}</td>  
+          <th>TSacrificio:</th>
+          <td>$ {{number_format($lote[0]->tsacrificio),2}}</td>
+          <th>TFomento:</th>
+          <td>$ {{number_format($lote[0]->tfomento),2}}</td>
+          <th>TDeguello:</th>
+          <td>$ {{number_format($lote[0]->tdeguello),2}}</td>
+          <th>TBascula:</th>
+          <td>$ {{number_format($lote[0]->tbascula),2}}</td>
+          <th>TTransporte:</th>
+          <td>$ {{number_format($lote[0]->ttransporte),2}}</td>
         </tbody>
       </table>
     </div>
 
-      
+
     <div class="table-responsive">
       <table class="table table-bordered">
         <!-- <thead>
@@ -240,16 +224,16 @@
           </tr>
         </thead> -->
         <tbody>
-          <th>TotalPieles:</th>          
-          <td>$ {{number_format($lote[0]->tpieles),2}}</td> 
-          <th>TotalVisceras:</th>          
-          <td>$ {{number_format($lote[0]->tvisceras),2}}</td> 
-          <th>TotalCanalFria:</th>          
-          <td>$ {{number_format($lote[0]->tcanalfria),2}}</td> 
-          <th>valorFactura:</th>          
-          <td>$ {{number_format($lote[0]->valorfactura),2}}</td> 
-          <th>CostoKilo:</th>                   
-          <td>$ {{number_format($lote[0]->costokilo),2}}</td>    
+          <th>TotalPieles:</th>
+          <td>$ {{number_format($lote[0]->tpieles),2}}</td>
+          <th>TotalVisceras:</th>
+          <td>$ {{number_format($lote[0]->tvisceras),2}}</td>
+          <th>TotalCanalFria:</th>
+          <td>$ {{number_format($lote[0]->tcanalfria),2}}</td>
+          <th>valorFactura:</th>
+          <td>$ {{number_format($lote[0]->valorfactura),2}}</td>
+          <th>CostoKilo:</th>
+          <td>$ {{number_format($lote[0]->costokilo),2}}</td>
         </tbody>
       </table>
     </div>
@@ -265,39 +249,14 @@
         <tbody>
           <th>Costo:</th>
           <td>$ {{number_format($lote[0]->costo),2}}</td>
-          <th>TotalCosto:</th>          
+          <th>TotalCosto:</th>
           <td>$ {{number_format($lote[0]->totalcostos),2}}</td>
-          <th>PesoPie:</th>          
-          <td>{{number_format($lote[0]->pesopie),2}}</td>   
-          <th>RtCanalCaliente:</th>          
-          <td>{{number_format($lote[0]->rtcanalcaliente),2}}</td>  
-          <th>RtCanalPlanta:</th>                        
-          <td>{{number_format($lote[0]->rtcanalplanta),2}}</td>  
+          <th>PesoPie:</th>
+          <td>{{number_format($lote[0]->pesopie),2}}</td>
         </tbody>
       </table>
     </div>
 
-    <div class="table-responsive">
-      <table class="table table-bordered">
-        <!-- <thead>
-          <tr>
-            <th>Nombre del campo</th>
-            <th>Valor</th>
-          </tr>
-        </thead> -->
-        <tbody>
-          <th>RtCanalFria:</th>          
-          <td>{{number_format($lote[0]->rtcanalfria),2}}</td>  
-          <th>RendCaliente:</th>          
-          <td>{{number_format($lote[0]->rendcaliente),2}}</td>  
-          <th>RendPlanta:</th>          
-          <td>{{number_format($lote[0]->rendplanta),2}}</td>  
-          <th>RendFrio:</th>          
-          <td>{{number_format($lote[0]->rendfrio),2}}</td>  
-             
-        </tbody>
-      </table>
-    </div>
 
 
 
@@ -311,10 +270,10 @@
           <th width="5%">Código</th>
           <th width="12%">Descripción</th>
           <th width="3%">%_Desp</th>
-          <th width="5%">Precio</th>
+          <th width="5%">PrecioV</th>
           <th width="3%">Peso</th>
-          <th width="5%">TVenta</th>
-          <th width="3%">%Venta</th>
+          <th width="6%">TVenta</th>
+          <th width="5%">%Venta</th>
           <th width="7%">CostoT</th>
           <th width="7%">CostoKg</th>
 
@@ -325,11 +284,11 @@
         <tr>
           <td align="left">{{$item->code}}</td>
           <td align="center">{{$item->nameprod}}</td>
-          <td align="right">{{number_format($item->porcdesposte),2}} %</td>          
+          <td align="right">{{$item->porcdesposte}} %</td>
           <td align="right">$ {{number_format($item->precio),2}}</td>
           <td align="right">{{$item->peso}}</td>
           <td align="right">$ {{number_format($item->totalventa),2}}</td>
-          <td align="right">{{number_format($item->porcventa),2}} %</td>   
+          <td align="right">{{$item->porcventa}} %</td>
           <td align="right">$ {{number_format($item->costo),2}}</td>
           <td align="right">$ {{number_format($item->costo_kilo),2}}</td>
         </tr>
@@ -338,22 +297,192 @@
       <tfoot>
         <tr>
           <td class="text-center">
-            <span><b></b></span>
+            <span><b>TOTALES</b></span>
           </td>
           <td></td>
           <td colspan="1" class="text-right">
-            <span><strong></strong></span>
-          </td>
-          <td class="text-center">
-            <span><strong></strong></span>
+            <span><strong>{{number_format($total_porcdesposte),2}} %</strong></span>
           </td>
           <td class="text-right">
-            <span><strong></strong></span>
+            <span><strong>$ {{number_format($precioventa),2}}</strong></span>
+          </td>
+          <td class="text-right">
+            <span><strong>{{number_format($total_weight),2}}</strong></span>
+          </td>
+          <td class="text-right">
+            <span><strong>$ {{number_format($totalprecioventa),2}}</strong></span>
+          </td>
+          <td colspan="1" class="text-right">
+            <span><strong>{{number_format($total_porcventa),2}} %</strong></span>
+          </td>
+          <td class="text-right">
+            <span><strong>$ {{number_format($total_costo),2}}</strong></span>
+          </td>
+          <td class="text-right">
+            <span><strong>$ {{number_format($total_costo_kilo),2}}</strong></span>
           </td>
 
         </tr>
       </tfoot>
     </table>
+
+    <section style="margin-top: 20px">
+      <table cellpadding="0" cellspacing="0" class="table-items" width="100%">
+        <thead>
+          <tr>
+            <th>Peso Pie</th>
+            <th>RtCanalCaliente</th>
+            <th>RtCanalPlanta</th>
+            <th>RtCanalFria</th>
+            <th>RendCaliente</th>
+            <th>RendPlanta</th>
+            <th>RendFrio</th>
+          </tr>
+        </thead>
+        <tr>
+          <td align="center">{{number_format( $lote[0]->pesopie ,0, ',', '.' )}} KG</td>
+          <td align="center">{{number_format( $lote[0]->rtcanalplanta ,0, ',', '.' )}} KG</td>
+          <td align="center">{{number_format( $lote[0]->rtcanalcaliente ,0, ',', '.' )}} KG</td>
+          <td align="center">{{number_format( $lote[0]->rtcanalfria ,0, ',', '.' )}} KG</td>
+          <td align="center">{{number_format( $lote[0]->rendcaliente ,2, ',', '.' )}} KG</td>
+          <td align="center">{{number_format( $lote[0]->rendplanta ,2, ',', '.' )}} KG</td>
+          <td align="center">{{number_format( $lote[0]->rendfrio ,2, ',', '.' )}} KG</td>
+
+        </tr>
+      </table>
+    </section>
+
+    </br>
+    <!--  <div class="table-responsive">
+      <table class="table table-bordered">
+         <thead>
+          <tr>
+            <th>Nombre del campo</th>
+            <th>Valor</th>
+          </tr>
+        </thead> 
+        <tbody>
+          <th>RtCanalCaliente:</th>
+          <td>{{number_format($lote[0]->rtcanalcaliente),2}}</td>
+          <th>RtCanalPlanta:</th>
+          <td>{{number_format($lote[0]->rtcanalplanta),2}}</td>
+          <th>RtCanalFria:</th>
+          <td>{{number_format($lote[0]->rtcanalfria),2}}</td>
+          <th>RendCaliente:</th>
+          <td>{{number_format($lote[0]->rendcaliente),2}}</td>
+          <th>RendPlanta:</th>
+          <td>{{number_format($lote[0]->rendplanta),2}}</td>
+          <th>RendFrio:</th>
+          <td>{{number_format($lote[0]->rendfrio),2}}</td>
+        </tbody>
+      </table>
+    </div>
+ -->
+    <div class="widget-content mt-3">
+      <div class="card">
+        <div class="card-body">
+          <div class="table-responsive mt-3">
+            <table id="tableDespostere" class="table table-sm table-striped table-bordered">
+
+              <tbody id="tbody">
+                <?php $tpeso = 0;
+                $tdesposte = 0; ?>
+                @foreach($desposte as $item)
+
+                <?php $tpeso = $tpeso + $item->peso;
+                $tdesposte = $tdesposte + $item->totalventa; ?>
+                @endforeach
+              </tbody>
+
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <?php
+    $pi = $lote[0]->canalplanta;
+    $cant = $lote[0]->cantidad;
+    $ck = $lote[0]->costokilo;
+    $tck = $pi * $ck;
+    ?>
+    <section style="margin-top: 10px">
+      <table cellpadding="0" cellspacing="0" class="table-items" width="100%">
+        <thead>
+          <tr>
+            <th>Peso Inicial</th>
+            <th>Peso por animal</th>
+            <th>Peso total Desp</th>
+            <th>Merma</th>
+            <th>% Merma</th>
+            <th>% Cant animales</th>
+          </tr>
+        </thead>
+        <tr>
+          <td align="center">{{ number_format( $pi, 2, ',', '.' )}}</td>
+          <td align="center">{{ number_format( $pi / $cant, 2, ',', '.' )}}</td>
+          <td align="center">{{ number_format( $tpeso,2, ',', '.')}}</td>
+          <td align="center"><strong>{{ number_format( $tpeso - $pi, 2, ',', '.')}}</strong></td>
+          <td align="center"><strong><?php if ($tpeso == 0) { ?>
+                <div class="form-control campo">
+                  <?php echo number_format($tpeso, 2); ?>
+                </div>
+              <?php } ?>
+              <?php if ($tpeso != 0) { ?>
+                <div class="form-control campo">
+                  <?php echo number_format((($tpeso  - $pi) / $tpeso) * 100, 2); ?> %
+                </div>
+              <?php } ?>
+            </strong>
+          </td>
+          <td align="center">{{ number_format($cant, 0, ',', '.')}}</td>
+        </tr>
+      </table>
+    </section>
+
+    <section style="margin-top: 20px">
+      <table cellpadding="0" cellspacing="0" class="table-items" width="100%">
+        <thead>
+          <tr>
+            <th>Costo Kilo</th>
+            <th>Valor desposte</th>
+            <th>Total costo kilo</th>
+            <th>Utilidad</th>
+            <th>% Utilidad</th>
+            <th>Utilidad por animal</th>
+          </tr>
+        </thead>
+        <tr>
+          <td align="center">$ {{ number_format( $ck, 2, ',', '.') }}</td>
+          <td align="center">$ {{ number_format( $tdesposte, 0, ',', '.') }}</td>
+          <td align="center">$ {{ number_format( $tck, 0, ',', '.') }}</td>
+          <td align="center">$ {{ number_format( $tdesposte - $tck ,0, ',', '.') }}</td>
+          <td align="center"><?php if ($tdesposte == 0) { ?>
+              <div class="form-control campo">
+                <?php echo number_format($tdesposte, 2); ?>
+              </div>
+            <?php } ?>
+            <?php if ($tdesposte != 0) { ?>
+              <div class="form-control campo">
+                <?php echo number_format((($tdesposte - $tck) / $tdesposte) * 100, 2); ?> %
+              </div>
+            <?php } ?>
+          </td>
+          <td align="center"><?php if ($tdesposte == 0) { ?>
+              <div class="form-control campo">
+                <?php echo number_format($tdesposte, 2, ',', '.'); ?>
+              </div>
+            <?php } ?>
+            <?php if ($tdesposte != 0) { ?>
+              <div class="form-control campo">
+                $ <?php echo number_format(($tdesposte - $tck) / $cant, 0, ',', '.'); ?>
+              </div>
+            <?php } ?>
+          </td>
+        </tr>
+      </table>
+    </section>
+
     <p align="center" style="font-size: 7px; margin-top: 20px;">Esta documento contiene información confidencial y hace parte del modulo beneficios lotes. servicios descritos en este título. <strong>Sistema para todos ERP puracanes SAS</strong></p>
     <p align="center" style="font-size: 7px; margin: -7px;">Versión 1.0</p>
   </section>

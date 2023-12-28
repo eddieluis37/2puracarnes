@@ -42,21 +42,31 @@ class pdfLoteController extends Controller
             ->where('dr.beneficiores_id', $id)
             ->get();
 
-         //   dd($desposte);
+        //   dd($desposte);
 
-     /*    $total_weight = 0;
-        $total_precio = 0;
-        $total_subtotal = 0;
+        $total_porcdesposte = 0;
+        $precioventa = 0;
+        $total_weight = 0;
+        $totalprecioventa = 0;
+        $total_porcventa = 0;
+        $total_costo = 0;
+        $total_costo_kilo = 0;
+
 
         foreach ($desposte as $item) {
+            $total_porcdesposte += $item->porcdesposte;
+            $precioventa += $item->precio;
             $total_weight += $item->peso;
-            $total_precio += $item->pcompra;
-            $total_subtotal += $item->subtotal;
-        } */
+            $totalprecioventa += $item->totalventa;
+            $total_porcventa += $item->porcventa;
+            $total_costo += $item->costo; 
+            $total_costo_kilo += $item->costo_kilo;            
+        
+        }
 
         // dd($total_weight);
 
-        $pdfLote = PDF::loadView('categorias.res.beneficiores.pdf', compact('desposte', 'lote', 'nameclientpieles', 'nameclientvisceras'));
+        $pdfLote = PDF::loadView('categorias.res.beneficiores.pdf', compact('desposte', 'lote', 'nameclientpieles', 'nameclientvisceras', 'total_porcdesposte', 'precioventa', 'total_weight', 'totalprecioventa', 'total_porcventa', 'total_costo', 'total_costo_kilo'));
         return $pdfLote->stream('categorias.res.beneficiores.pdf');
         //return $pdfCompensado->download('sale.pdf');
     }
