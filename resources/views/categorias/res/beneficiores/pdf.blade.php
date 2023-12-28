@@ -45,7 +45,14 @@
         </td>
       </tr>
       <tr>
-        <td width="70%" class="text-left text-company" style="vertical-align: top; padding-top: 7px">
+        
+    </table>
+  </section>
+
+  <section style="margin-top: -150px">
+    <table cellpadding="0" cellspacing="0" width="100%">
+      
+        <td width="70%" class="text-left text-company" style="vertical-align: top; padding-top: -200px">
           <span style="font-size: 8px; font-weight: lighter; display: block; margin: 2;">Factura:<strong> {{$lote[0]->factura}}</strong></span>
 
           <span style="font-size: 8px; font-weight: lighter; display: block; margin: 2;">Fecha y hora consulta:<strong> {{\Carbon\Carbon::now()->format('Y-m-d H:i')}}</strong></span>
@@ -64,206 +71,209 @@
           </span>
           <!--     <span style="font-size: 8px; font-weight: lighter; display: block; margin: 2;">Items:<strong>{{$lote->sum('id')}}</strong></span> -->
         </td>
+    </table>
+  </section>
+
+
+  <section style="margin-top: 20px">
+    <table cellpadding="0" cellspacing="0" class="table-items" width="100%">
+      <thead>
+        <tr>
+          <th>Sacrificio</th>
+          <th>Fomento</th>
+          <th>Deguello</th>
+          <th>Bascula</th>
+          <th>Transporte</th>
+        </tr>
+      </thead>
+      <tr>
+        <td align="center">$ {{number_format( $lote[0]->sacrificio ,0, ',', '.' )}}</td>
+        <td align="center">$ {{number_format( $lote[0]->fomento ,0, ',', '.' )}}</td>
+        <td align="center">$ {{number_format( $lote[0]->deguello ,0, ',', '.' )}}</td>
+        <td align="center">{{number_format( $lote[0]->bascula ,0, ',', '.' )}}</td>
+        <td align="center">$ {{number_format( $lote[0]->transporte ,0, ',', '.' )}}</td>
+      </tr>
+    </table>
   </section>
 
   <section style="margin-top: 20px">
-      <table cellpadding="0" cellspacing="0" class="table-items" width="100%">
-        <thead>
-          <tr>
-            <th>CantMachos</th>
-            <th>ValorMacho</th>
-            <th>ValorTotalMacho</th>
-            <th>CantHembras</th>
-            <th>ValorHembras</th>
-            <th>ValorTotalHembra</th>            
-          </tr>
-        </thead>
+    <table cellpadding="0" cellspacing="0" class="table-items" width="100%">
+      <thead>
         <tr>
-          <td align="center">{{number_format( $lote[0]->cantidadmacho ,0, ',', '.' )}}</td>
-          <td align="center">$ {{number_format( $lote[0]->valorunitariomacho ,0, ',', '.' )}}</td>
-          <td align="center">$ {{number_format( $lote[0]->valortotalmacho ,0, ',', '.' )}}</td>
-          <td align="center">{{number_format( $lote[0]->cantidadhembra ,0, ',', '.' )}}</td>
-          <td align="center">$ {{number_format( $lote[0]->valorunitariohembra ,0, ',', '.' )}}</td>
-          <td align="center">$ {{number_format( $lote[0]->valortotalhembra ,0, ',', '.' )}} KG</td>      
+          <th>CantMachos</th>
+          <th>ValorMacho</th>
+          <th>ValorTotalMacho</th>
+          <th>CantHembras</th>
+          <th>ValorHembras</th>
+          <th>ValorTotalHembra</th>
         </tr>
-      </table>
-    </section>
-
-  
-
-
-
-
-  <div class="row">
-   
-
-    <div class="table-responsive">
-      <table class="table table-bordered">
-        <!-- <thead>
-          <tr>
-            <th>Nombre del campo</th>
-            <th>Valor</th>
-          </tr>
-        </thead> -->
-        <tbody>
-          <th>Sacrificio:</th>
-          <td>$ {{number_format($lote[0]->sacrificio),2}}</td>
-          <th>Fomento:</th>
-          <td>$ {{number_format($lote[0]->fomento),2}}</td>
-          <th>Deguello:</th>
-          <td>$ {{number_format($lote[0]->deguello),2}}</td>
-          <th>Bascula:</th>
-          <td>$ {{number_format($lote[0]->bascula),2}}</td>
-          <th>Transporte:</th>
-          <td>$ {{number_format($lote[0]->transporte),2}}</td>
-        </tbody>
-      </table>
-    </div>
-
-    <div class="table-responsive">
-      <table class="table table-bordered">
-        <!-- <thead>
-          <tr>
-            <th>Nombre del campo</th>
-            <th>Valor</th>
-          </tr>
-        </thead> -->
-        <tbody>
-          <th>PesoPie1:</th>
-          <td>{{number_format($lote[0]->pesopie1),2}}</td>
-          <th>PesoPie2:</th>
-          <td>{{number_format($lote[0]->pesopie2),2}}</td>
-          <th>PesoPie3:</th>
-          <td>{{number_format($lote[0]->pesopie3),2}}</td>
-        </tbody>
-      </table>
-    </div>
-
-
-    <div class="table-responsive">
-      <table class="table table-bordered">
-        <!-- <thead>
-          <tr>
-            <th>Nombre del campo</th>
-            <th>Valor</th>
-          </tr>
-        </thead> -->
-        <tbody>
-          <th>CostoPie1:</th>
-          <td>$ {{number_format($lote[0]->costopie1),2}}</td>
-          <th>CostoPie2:</th>
-          <td>$ {{number_format($lote[0]->costopie2),2}}</td>
-          <th>CostoPie3:</th>
-          <td>$ {{number_format($lote[0]->costopie3),2}}</td>
-          <th>CostoAninal1:</th>
-          <td>$ {{number_format($lote[0]->costoanimal1),2}}</td>
-          <th>CostoAninal2:</th>
-          <td>$ {{number_format($lote[0]->costoanimal2),2}}</td>
-          <th>CostoAninal3:</th>
-          <td>$ {{number_format($lote[0]->costoanimal3),2}}</td>
-        </tbody>
-      </table>
-    </div>
-
-    <div class="table-responsive">
-      <table class="table table-bordered">
-        <!-- <thead>
-          <tr>
-            <th>Nombre del campo</th>
-            <th>Valor</th>
-          </tr>
-        </thead> -->
-        <tbody>
-          <th>CanalCaliente:</th>
-          <td>{{number_format($lote[0]->canalcaliente),2}}</td>
-          <th>CanalFria:</th>
-          <td>{{number_format($lote[0]->canalfria),2}}</td>
-          <th>CanalPlanta:</th>
-          <td>{{number_format($lote[0]->canalplanta),2}}</td>
-          <th>PielesKg:</th>
-          <td>{{number_format($lote[0]->pieleskg),2}}</td>
-          <th>PielesCosto:</th>
-          <td>{{number_format($lote[0]->pielescosto),2}}</td>
-          <th>Visceras:</th>
-          <td>{{number_format($lote[0]->visceras),2}}</td>
-        </tbody>
-      </table>
-    </div>
-
-
-    <div class="table-responsive">
-      <table class="table table-bordered">
-        <!-- <thead>
-          <tr>
-            <th>Nombre del campo</th>
-            <th>Valor</th>
-          </tr>
-        </thead> -->
-        <tbody>
-          <th>TSacrificio:</th>
-          <td>$ {{number_format($lote[0]->tsacrificio),2}}</td>
-          <th>TFomento:</th>
-          <td>$ {{number_format($lote[0]->tfomento),2}}</td>
-          <th>TDeguello:</th>
-          <td>$ {{number_format($lote[0]->tdeguello),2}}</td>
-          <th>TBascula:</th>
-          <td>$ {{number_format($lote[0]->tbascula),2}}</td>
-          <th>TTransporte:</th>
-          <td>$ {{number_format($lote[0]->ttransporte),2}}</td>
-        </tbody>
-      </table>
-    </div>
-
-
-    <div class="table-responsive">
-      <table class="table table-bordered">
-        <!-- <thead>
-          <tr>
-            <th>Nombre del campo</th>
-            <th>Valor</th>
-          </tr>
-        </thead> -->
-        <tbody>
-          <th>TotalPieles:</th>
-          <td>$ {{number_format($lote[0]->tpieles),2}}</td>
-          <th>TotalVisceras:</th>
-          <td>$ {{number_format($lote[0]->tvisceras),2}}</td>
-          <th>TotalCanalFria:</th>
-          <td>$ {{number_format($lote[0]->tcanalfria),2}}</td>
-          <th>valorFactura:</th>
-          <td>$ {{number_format($lote[0]->valorfactura),2}}</td>
-          <th>CostoKilo:</th>
-          <td>$ {{number_format($lote[0]->costokilo),2}}</td>
-        </tbody>
-      </table>
-    </div>
-
-    <div class="table-responsive">
-      <table class="table table-bordered">
-        <!-- <thead>
-          <tr>
-            <th>Nombre del campo</th>
-            <th>Valor</th>
-          </tr>
-        </thead> -->
-        <tbody>
-          <th>Costo:</th>
-          <td>$ {{number_format($lote[0]->costo),2}}</td>
-          <th>TotalCosto:</th>
-          <td>$ {{number_format($lote[0]->totalcostos),2}}</td>
-          <th>PesoPie:</th>
-          <td>{{number_format($lote[0]->pesopie),2}}</td>
-        </tbody>
-      </table>
-    </div>
+      </thead>
+      <tr>
+        <td align="center">{{number_format( $lote[0]->cantidadmacho ,0, ',', '.' )}}</td>
+        <td align="center">$ {{number_format( $lote[0]->valorunitariomacho ,0, ',', '.' )}}</td>
+        <td align="center">$ {{number_format( $lote[0]->valortotalmacho ,0, ',', '.' )}}</td>
+        <td align="center">{{number_format( $lote[0]->cantidadhembra ,0, ',', '.' )}}</td>
+        <td align="center">$ {{number_format( $lote[0]->valorunitariohembra ,0, ',', '.' )}}</td>
+        <td align="center">$ {{number_format( $lote[0]->valortotalhembra ,0, ',', '.' )}} KG</td>
+      </tr>
+    </table>
+  </section>
 
 
 
+  <section style="margin-top: 20px">
+    <table cellpadding="0" cellspacing="0" class="table-items" width="100%">
+      <thead>
+        <tr>
+          <th>PesoPie1</th>
+          <th>PesoPie2</th>
+          <th>PesoPie3</th>
+        </tr>
+      </thead>
+      <tr>
+        <td align="center"> {{number_format( $lote[0]->pesopie1 ,2, ',', '.' )}} KG</td>
+        <td align="center"> {{number_format( $lote[0]->pesopie2 ,2, ',', '.' )}} KG</td>
+        <td align="center"> {{number_format( $lote[0]->pesopie3 ,2, ',', '.' )}} KG</td>
+      </tr>
+    </table>
+  </section>
 
+  <section style="margin-top: 20px">
+    <table cellpadding="0" cellspacing="0" class="table-items" width="100%">
+      <thead>
+        <tr>
+          <th>CostoPie1</th>
+          <th>CostoPie2</th>
+          <th>CostoPie3</th>
+          <th>CostoAninal1</th>
+          <th>CostoAninal2</th>
+          <th>CostoAninal3</th>
+        </tr>
+      </thead>
+      <tr>
+        <td align="center">$ {{number_format( $lote[0]->costopie1 ,0, ',', '.' )}}</td>
+        <td align="center">$ {{number_format( $lote[0]->costopie2 ,0, ',', '.' )}}</td>
+        <td align="center">$ {{number_format( $lote[0]->costopie3 ,0, ',', '.' )}}</td>
+        <td align="center">$ {{number_format( $lote[0]->costoanimal1 ,0, ',', '.' )}}</td>
+        <td align="center">$ {{number_format( $lote[0]->costoanimal2 ,0, ',', '.' )}}</td>
+        <td align="center">$ {{number_format( $lote[0]->costoanimal3 ,0, ',', '.' )}}</td>
+      </tr>
+    </table>
+  </section>
 
-  </div>
+  <section style="margin-top: 20px">
+    <table cellpadding="0" cellspacing="0" class="table-items" width="100%">
+      <thead>
+        <tr>
+          <th>CanalCaliente</th>
+          <th>CanalFria</th>
+          <th>CanalPlanta</th>
+          <th>PielesKg</th>
+          <th>PielesCosto</th>
+          <th>Visceras</th>
+        </tr>
+      </thead>
+      <tr>
+        <td align="center">$ {{number_format( $lote[0]->canalcaliente ,0, ',', '.' )}}</td>
+        <td align="center">$ {{number_format( $lote[0]->canalfria ,0, ',', '.' )}}</td>
+        <td align="center">$ {{number_format( $lote[0]->canalplanta ,0, ',', '.' )}}</td>
+        <td align="center">$ {{number_format( $lote[0]->pieleskg ,0, ',', '.' )}}</td>
+        <td align="center">$ {{number_format( $lote[0]->pielescosto ,0, ',', '.' )}}</td>
+        <td align="center">$ {{number_format( $lote[0]->visceras ,0, ',', '.' )}}</td>
+      </tr>
+    </table>
+  </section>
 
-  <section style="margin-top: 10px">
+  <section style="margin-top: 20px">
+    <table cellpadding="0" cellspacing="0" class="table-items" width="100%">
+      <thead>
+        <tr>
+          <th>TSacrificio</th>
+          <th>TFomento</th>
+          <th>TDeguello</th>
+          <th>TBascula</th>
+          <th>TTransporte</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tr>
+        <td align="center">$ {{number_format( $lote[0]->tsacrificio ,0, ',', '.' )}}</td>
+        <td align="center">$ {{number_format( $lote[0]->tfomento ,0, ',', '.' )}}</td>
+        <td align="center">$ {{number_format( $lote[0]->tdeguello ,0, ',', '.' )}}</td>
+        <td align="center">$ {{number_format( $lote[0]->tbascula ,0, ',', '.' )}}</td>
+        <td align="center">$ {{number_format( $lote[0]->ttransporte ,0, ',', '.' )}}</td>
+      </tr>
+    </table>
+  </section>
+
+  <section style="margin-top: 20px">
+    <table cellpadding="0" cellspacing="0" class="table-items" width="100%">
+      <thead>
+        <tr>
+          <th>TotalPieles</th>
+          <th>TotalVisceras</th>
+          <th>TotalCanalFria</th>
+          <th>valorFactura</th>
+          <th>CostoKilo</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tr>
+        <td align="center">$ {{number_format( $lote[0]->tpieles ,0, ',', '.' )}}</td>
+        <td align="center">$ {{number_format( $lote[0]->tvisceras ,0, ',', '.' )}}</td>
+        <td align="center">$ {{number_format( $lote[0]->tcanalfria ,0, ',', '.' )}}</td>
+        <td align="center">$ {{number_format( $lote[0]->valorfactura ,0, ',', '.' )}}</td>
+        <td align="center">$ {{number_format( $lote[0]->costokilo ,0, ',', '.' )}}</td>
+      </tr>
+    </table>
+  </section>
+
+  <section style="margin-top: 20px">
+    <table cellpadding="0" cellspacing="0" class="table-items" width="100%">
+      <thead>
+        <tr>
+          <th>Costo</th>
+          <th>TotalCosto</th>
+          <th>PesoPie</th>
+          <th></th>
+          <th></th>
+          <th></th>
+        </tr>
+      </thead>
+      <tr>
+        <td align="center">$ {{number_format( $lote[0]->costo ,0, ',', '.' )}}</td>
+        <td align="center">$ {{number_format( $lote[0]->totalcostos ,0, ',', '.' )}}</td>
+        <td align="center">$ {{number_format( $lote[0]->pesopie ,0, ',', '.' )}}</td>
+      </tr>
+    </table>
+  </section>
+
+  <section style="margin-top: 50px">
+    <table cellpadding="0" cellspacing="0" class="table-items" width="100%">
+      <thead>
+        <tr>
+          <th>Peso Pie</th>
+          <th>RtCanalCaliente</th>
+          <th>RtCanalPlanta</th>
+          <th>RtCanalFria</th>
+          <th>RendCaliente</th>
+          <th>RendPlanta</th>
+          <th>RendFrio</th>
+        </tr>
+      </thead>
+      <tr>
+        <td align="center">{{number_format( $lote[0]->pesopie ,0, ',', '.' )}} KG</td>
+        <td align="center">{{number_format( $lote[0]->rtcanalplanta ,0, ',', '.' )}} KG</td>
+        <td align="center">{{number_format( $lote[0]->rtcanalcaliente ,0, ',', '.' )}} KG</td>
+        <td align="center">{{number_format( $lote[0]->rtcanalfria ,0, ',', '.' )}} KG</td>
+        <td align="center">{{number_format( $lote[0]->rendcaliente ,2, ',', '.' )}} KG</td>
+        <td align="center">{{number_format( $lote[0]->rendplanta ,2, ',', '.' )}} KG</td>
+        <td align="center">{{number_format( $lote[0]->rendfrio ,2, ',', '.' )}} KG</td>
+      </tr>
+    </table>
+  </section>
+
+  <section style="margin-top: 180px">
     <table cellpadding="0" cellspacing="0" class="table-items" width="100%">
       <thead>
         <tr>
@@ -326,31 +336,6 @@
       </tfoot>
     </table>
 
-    <section style="margin-top: 20px">
-      <table cellpadding="0" cellspacing="0" class="table-items" width="100%">
-        <thead>
-          <tr>
-            <th>Peso Pie</th>
-            <th>RtCanalCaliente</th>
-            <th>RtCanalPlanta</th>
-            <th>RtCanalFria</th>
-            <th>RendCaliente</th>
-            <th>RendPlanta</th>
-            <th>RendFrio</th>
-          </tr>
-        </thead>
-        <tr>
-          <td align="center">{{number_format( $lote[0]->pesopie ,0, ',', '.' )}} KG</td>
-          <td align="center">{{number_format( $lote[0]->rtcanalplanta ,0, ',', '.' )}} KG</td>
-          <td align="center">{{number_format( $lote[0]->rtcanalcaliente ,0, ',', '.' )}} KG</td>
-          <td align="center">{{number_format( $lote[0]->rtcanalfria ,0, ',', '.' )}} KG</td>
-          <td align="center">{{number_format( $lote[0]->rendcaliente ,2, ',', '.' )}} KG</td>
-          <td align="center">{{number_format( $lote[0]->rendplanta ,2, ',', '.' )}} KG</td>
-          <td align="center">{{number_format( $lote[0]->rendfrio ,2, ',', '.' )}} KG</td>
-
-        </tr>
-      </table>
-    </section>
 
     </br>
     <!--  <div class="table-responsive">

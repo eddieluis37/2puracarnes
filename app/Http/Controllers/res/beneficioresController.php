@@ -282,10 +282,10 @@ class beneficioresController extends Controller
 				} else {
 					$btn = '
                         <div class="text-center">
-					    <a href="desposteres/' . $data->id . '" class="btn btn-dark" title="Despostar" >
-						    <i class="fas fa-directions"></i>
+					    <a href="desposteres/' . $data->id . '" class="btn btn-dark" title="DesposteCerrado" target="_blank">
+							<i class="fas fa-check-circle"></i>
 					    </a>
-					    <button class="btn btn-dark" title="Editar Beneficio" onclick="showDataForm(' . $data->id . ')">
+					    <button class="btn btn-dark" title="VerBeneficio" onclick="showDataForm(' . $data->id . ')">
 						    <i class="fas fa-eye"></i>
 					    </button>
 						<a href="beneficiores/pdfLote/' . $data->id . '" class="btn btn-dark" title="VerCompraCerrada" target="_blank">

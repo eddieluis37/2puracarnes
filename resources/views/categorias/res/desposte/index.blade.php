@@ -149,7 +149,7 @@
 										<td>{{$costoKiloTotal}}</td>
 										<td class="text-center">
 										
-											<button id="cargarInventarioBtn" class="btn btn-success btn-sm">Cargar al inventario</button>
+											<button type="hidden" id="cargarInventarioBtn"></button>
 											
 										</td>
 									</tr>

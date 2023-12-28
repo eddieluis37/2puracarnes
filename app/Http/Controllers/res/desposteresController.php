@@ -54,7 +54,7 @@ class desposteresController extends Controller
                 ['status', 1],
                 ['category_id', 1],
                 ['level_product_id', 1],
-            ])->whereNotIn('id', [302, 303 ])->orderBy('name', 'asc')->get();
+            ])->whereNotIn('id', [128, 129, 302, 303 ])->orderBy('name', 'asc')->get();
             foreach ($prod as $key) {
                 $despost = new Despostere(); //Se crea una instancia del modelo
                 $despost->users_id = $id_user; //Se establecen los valores para cada columna de la tabla
