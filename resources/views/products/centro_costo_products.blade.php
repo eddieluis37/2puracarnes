@@ -69,6 +69,7 @@
                 <th class="table-th text-white text-center">ID</th>
                 <th class="table-th text-white text-center">PRODUCTO</th>
                 <th class="table-th text-white text-center">NIV</th>
+                <th class="table-th text-white text-center">COSTO</th>
                 <th class="table-th text-white text-center">PRECIO_MIN</th>
                 <th class="table-th text-white text-center">CONTROL</th>
               </tr>

@@ -51,6 +51,7 @@ class CentroCostoProdController extends Controller
                 'pro.name as nameproducto',
                 'pro.id as productId',
                 'pro.level_product_id as level_product_id',           
+                'pro.cost as costo',
                 'pro.price_fama as price_fama',
                 'pro.status as status'
             )

@@ -29,6 +29,7 @@ $(document).ready(function () {
                             nameproducto: item.nameproducto,
                             status: getStatusCheckbox(item.status, item.productId),
                             level_product_id: item.level_product_id,
+                            costo: item.costo,
                             price_fama: getPriceInput(item.price_fama),
                             productId: item.productId,
                         };
@@ -37,10 +38,18 @@ $(document).ready(function () {
                 },
             },
             columns: [
+                
                 { data: "namecategoria", name: "namecategoria" },
                 { data: "productId", name: "productId" },
                 { data: "nameproducto", name: "nameproducto" },
                 { data: "level_product_id", name: "level_product_id" },
+                {
+                    data: "costo",
+                    name: "costo",
+                    render: function (data, type, row) {
+                        return "$ " + formatCantidadSinCero(data);
+                    },
+                },
                 { data: "price_fama", name: "price_fama" },
                 { data: "status", name: "status" },
             ],
