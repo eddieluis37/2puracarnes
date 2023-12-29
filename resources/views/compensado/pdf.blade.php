@@ -8,13 +8,13 @@
 	<title>Compra compensada</title>
 
 	<!-- cargar a través de la url del sistema -->
-	<!--
-		<link rel="stylesheet" href="{{ asset('css/custom_pdf.css') }}">
-		<link rel="stylesheet" href="{{ asset('css/custom_page.css') }}">
-	-->
+
+	<link rel="stylesheet" href="{{ asset('css/custom_pdf.css') }}">
+	<link rel="stylesheet" href="{{ asset('css/custom_page.css') }}">
+
 	<!-- ruta física relativa OS -->
-	<link rel="stylesheet" href="{{ public_path('css/custom_pdf.css') }}">
-	<link rel="stylesheet" href="{{ public_path('css/custom_page.css') }}">
+	<!-- <link rel="stylesheet" href="{{ public_path('css/custom_pdf.css') }}">
+	<link rel="stylesheet" href="{{ public_path('css/custom_page.css') }}"> -->
 
 </head>
 

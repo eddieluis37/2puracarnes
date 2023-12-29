@@ -252,8 +252,8 @@ class beneficioresController extends Controller
 				if (Carbon::parse($currentDateTime->format('Y-m-d'))->gt(Carbon::parse($data->fecha_cierre))) {
 					$btn = '
                         <div class="text-center">
-					    <a href="desposteres/' . $data->id . '" class="btn btn-dark" title="Despostar" >
-						    <i class="fas fa-directions"></i>
+					    <a href="desposteres/' . $data->id . '" class="btn btn-dark" title="DesposteCerradoPorFecha" target="_blank">
+							<i class="fas fa-check-circle"></i>
 					    </a>
 					    <button class="btn btn-dark" title="Editar Beneficio" onclick="showDataForm(' . $data->id . ')">
 						    <i class="fas fa-eye"></i>
