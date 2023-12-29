@@ -45,7 +45,7 @@ class AsignarPreciosProdController extends Controller
                 'cat.name as namecategoria',
                 'pro.name as nameproducto',
                 'pro.id as productId',
-                'lpd.costo as costo',
+                'pro.cost as costo',
                 'lpd.porc_util_proyectada as porc_util_proyectada',
                 'lpd.precio_proyectado as precio_proyectado',
                 'lpd.precio as precio',
