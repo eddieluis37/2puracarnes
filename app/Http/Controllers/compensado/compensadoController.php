@@ -109,7 +109,7 @@ class compensadoController extends Controller
     }
 
 
-    public function savedetail(Request $request)
+    public function savedetail(Request $request) // Detallado 
     {
         try {
             $rules = [
@@ -207,7 +207,7 @@ class compensadoController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request) // Save primera parte
     {
         try {
 
@@ -313,7 +313,9 @@ class compensadoController extends Controller
                 if (Carbon::parse($currentDateTime->format('Y-m-d'))->gt(Carbon::parse($data->fecha_cierre))) {
                     $btn = '
                         <div class="text-center">
-					   
+                        <a href="" class="btn btn-dark" title="DesposteCerradoPorFecha" target="_blank">
+                            <i class="fas fa-check-circle"></i>
+                        </a>					   
 					    <button class="btn btn-dark" title="Editar Compensado" onclick="showDataForm(' . $data->id . ')" disabled>
                             <i class="fas fa-edit"></i>
 					    </button>
@@ -343,7 +345,9 @@ class compensadoController extends Controller
                 } else {
                     $btn = '
                         <div class="text-center">
-					  
+                        <a href="" class="btn btn-dark" title="DesposteCerrado" target="_blank">
+                            <i class="fas fa-check-circle"></i>
+                        </a>
 					    <button class="btn btn-dark" title="Compensado" disabled>
 						    <i class="fas fa-eye"></i>
 					    </button>
@@ -462,9 +466,11 @@ class compensadoController extends Controller
             UPDATE centro_costo_products c
             JOIN compensadores_details d ON c.products_id = d.products_id
             JOIN compensadores b ON b.id = d.compensadores_id
+            JOIN products p ON p.id = d.products_id
             SET c.cto_compensados =  c.cto_compensados + d.pcompra,
                 c.cto_compensados_total  = c.cto_compensados_total + (d.pcompra * d.peso),
-                c.tipoinventario = 'cerrado'
+                c.tipoinventario = 'cerrado',
+                p.cost = d.pcompra
             WHERE d.compensadores_id = :compensadoresid
             AND b.centrocosto_id = :cencosid 
             AND c.centrocosto_id = :cencosid2 ",

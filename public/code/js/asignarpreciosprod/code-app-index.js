@@ -27,7 +27,7 @@ $(document).ready(function () {
                         return {
                             namecategoria: item.namecategoria,
                             nameproducto: item.nameproducto,
-                            costo: item.costo,
+                            costo: item.costo,                          
                             porc_util_proyectada: item.porc_util_proyectada,
                             precio_proyectado: item.precio_proyectado,                        
                             precio: getPriceInput(item.precio),
@@ -45,7 +45,13 @@ $(document).ready(function () {
                 { data: "namecategoria", name: "namecategoria" },
                 { data: "productId", name: "productId" },
                 { data: "nameproducto", name: "nameproducto" },
-                { data: "costo", name: "costo" },
+                 {
+                    data: "costo",
+                    name: "costo",
+                    render: function (data, type, row) {
+                        return "$ " + formatCantidadSinCero(data);
+                    },
+                }, 
                 { data: "porc_util_proyectada", name: "porc_util_proyectada" },
                 { data: "precio_proyectado", name: "precio_proyectado" },
                 { data: "precio", name: "precio" },

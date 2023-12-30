@@ -287,9 +287,11 @@ class desposteresController extends Controller
         UPDATE centro_costo_products c
         JOIN desposteres d ON c.products_id = d.products_id
         JOIN beneficiores b ON b.id = d.beneficiores_id
+        JOIN products p ON p.id = d.products_id
         SET c.compralote =  c.compralote + d.peso,
             c.cto_compralote =  c.cto_compralote + d.costo_kilo,
-            c.cto_compralote_total  = c.cto_compralote_total + (d.costo_kilo * d.peso)
+            c.cto_compralote_total  = c.cto_compralote_total + (d.costo_kilo * d.peso),
+            p.cost = d.costo_kilo
         WHERE d.beneficiores_id = :beneficioid
         AND b.centrocosto_id = :cencosid 
         AND c.centrocosto_id = :cencosid2 ",

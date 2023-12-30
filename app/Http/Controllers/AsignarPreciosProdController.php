@@ -39,7 +39,7 @@ class AsignarPreciosProdController extends Controller
 
         $data = DB::table('listapreciodetalles as lpd')
             ->join('listaprecios as lp', 'lp.id', '=', 'lpd.listaprecio_id')
-            ->join('products as pro', 'pro.id', '=', 'lpd.product_id')
+            ->join('products as pro', 'pro.id', '=', 'lpd.product_id')           
             ->join('categories as cat', 'pro.category_id', '=', 'cat.id')
             ->select(
                 'cat.name as namecategoria',
@@ -55,7 +55,7 @@ class AsignarPreciosProdController extends Controller
                 'lpd.status as status',
             )
             ->where('lpd.listaprecio_id', $listaprecioId)
-            ->where('pro.category_id', $categoriaId)
+            ->where('pro.category_id', $categoriaId)           
             /*       ->where('pro.status', 1)
           /*   ->where('pro.level_product_id', 1) */
             ->get();

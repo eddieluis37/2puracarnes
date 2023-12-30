@@ -260,7 +260,7 @@ class beneficioresController extends Controller
 					    </button>
 					  
 						<a href="beneficiores/pdfLote/' . $data->id . '" class="btn btn-dark" title="VerCompraVencidaPorFecha" target="_blank">
-                        <i class="far fa-file-pdf"></i>
+                       		 <i class="far fa-file-pdf"></i>
 					    </a>
                         </div>
                         ';

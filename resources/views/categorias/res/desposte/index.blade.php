@@ -147,13 +147,10 @@
 										<td>{{round($porcVentaTotal)}} %</td>
 										<td>$ {{ number_format($costoTotalGlobal, 0, ',', '.')}}</td>
 										<td>{{$costoKiloTotal}}</td>
-										<td class="text-center">
-										
-											<button type="hidden" id="cargarInventarioBtn"></button>
-											
+										<td class="text-center">										
+											<button type="hidden" id="cargarInventarioBtn"></button>											
 										</td>
 									</tr>
-
 								</tfoot>
 							</table>
 						</div>
