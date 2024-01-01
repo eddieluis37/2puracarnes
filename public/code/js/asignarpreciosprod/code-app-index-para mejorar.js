@@ -2,7 +2,6 @@ console.log("Comenzando");
 const token = document.querySelector('meta[name="csrf-token"]').getAttribute("content");
 $(document).ready(function () {
     var dataTable;
-
     function initializeDataTable(listaprecioId = "-1", categoriaId = "-1") {
         dataTable = $("#tableInventory").DataTable({
             paging: true,
@@ -24,14 +23,13 @@ $(document).ready(function () {
                 dataSrc: function (response) {
                     // Modificar los datos antes de que se procesen en la tabla
                     var modifiedData = response.data.map(function (item) {
-                        var porc_utilidad =  (item.utilidad / item.precio)  * 100;
-
+                        var porc_utilidad = item.precio / item.utilidad;
                         return {
                             namecategoria: item.namecategoria,
                             nameproducto: item.nameproducto,
-                            costo: item.costo,                          
+                            costo: item.costo,
                             porc_util_proyectada: item.porc_util_proyectada,
-                            precio_proyectado: item.precio_proyectado,                        
+                            precio_proyectado: item.precio_proyectado,
                             precio: getPriceInput(item.precio),
                             porc_iva: item.porc_iva,
                             utilidad: item.utilidad,
@@ -45,15 +43,15 @@ $(document).ready(function () {
             },
             columns: [
                 { data: "namecategoria", name: "namecategoria" },
-                { data: "productId", name: "productId" },
+                { data: "productId", name: "productId", id: "productId" },
                 { data: "nameproducto", name: "nameproducto" },
-                 {
+                {
                     data: "costo",
                     name: "costo",
                     render: function (data, type, row) {
                         return "$ " + formatCantidadSinCero(data);
                     },
-                }, 
+                },
                 { data: "porc_util_proyectada", name: "porc_util_proyectada" },
                 {
                     data: "precio_proyectado",
@@ -61,8 +59,14 @@ $(document).ready(function () {
                     render: function (data, type, row) {
                         return "$ " + formatCantidadSinCero(data);
                     },
-                },               
-                { data: "precio", name: "precio" },
+                },
+                {
+                    data: "precio",
+                    name: "precio",
+                    render: function (data, type, row) {
+                        return data;
+                    }
+                },
                 { data: "porc_iva", name: "porc_iva" },
                 {
                     data: "utilidad",
@@ -77,8 +81,8 @@ $(document).ready(function () {
                     render: function (data, type, row) {
                         return formatCantidad(data) + " %";
                     },
-                },                                 
-                { data: "status", name: "status" },                
+                },
+                { data: "status", name: "status" },
             ],
             order: [[2, "ASC"]],
             language: {
@@ -101,42 +105,50 @@ $(document).ready(function () {
             },
         });
     }
-
     function getStatusCheckbox(status, productId) {
         var checkboxChecked = status ? "checked" : "";
         return '<input type="checkbox" class="edit-status" data-product-id="' + productId + '" ' + checkboxChecked + ' />';
     }
-
     function getPriceInput(precio) {
         return '<input type="text" class="edit-precio" value="' + new Intl.NumberFormat("es-CO", { style: "currency", currency: "COP", minimumFractionDigits: 0 }).format(precio) + '" size="8" />';
     }
-
-    function updateAPPSwitch(productId, precio, listaprecioId, status) {
-        console.log("productId:", productId);
-        console.log("precio", precio);
-        console.log("listaprecioId:", listaprecioId);
-        $.ajax({
-            headers: {
-                "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
-            },
-            url: "/updateAPPSwitch",
-            type: "POST",
-            data: {
-                productId: productId,
-                precio: precio,
-                status: status,
-                listaprecioId: listaprecioId,
-            },
-            success: function (response) {
-                console.log("Update successful");
-                dataTable.ajax.reload();
-            },
-            error: function (xhr, status, error) {
-                console.error("Error updating");
-            },
-        });
-    }
-
+    dataTable.on("init.dt", function () {
+        // Llamar a la función updateAPPSwitch aquí
+        function updateAPPSwitch(productId, precio, listaprecioId, status) {
+            console.log("productId:", productId);
+            console.log("precio", precio);
+            console.log("listaprecioId:", listaprecioId);
+            var row = dataTable.row("#" + productId).node();
+            console.log("row:", row);
+            if (row) {
+                $.ajax({
+                    headers: {
+                        "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+                    },
+                    url: "/updateAPPSwitch",
+                    type: "POST",
+                    data: {
+                        productId: productId,
+                        precio: precio,
+                        status: status,
+                        listaprecioId: listaprecioId,
+                    },
+                    success: function (response) {
+                        console.log("Update successful");
+                        // Actualizar el registro en la tabla
+                        row.cells[6].innerHTML = getPriceInput(precio);
+                        row.cells[9].innerHTML = formatCantidad(precio / row.cells[8].innerText) + " %";
+                    },
+                    error: function (xhr, status, error) {
+                        console.error("Error updating");
+                    },
+                });
+            } else {
+                console.error("Row not found for productId:", productId);
+            }
+        }
+    });
+   
     function handlePriceFamaInput(event) {
         if (event.which === 13 || event.which === 9) {
             event.preventDefault();
@@ -157,7 +169,6 @@ $(document).ready(function () {
             }
         }
     }
-
     function handleStatusChange() {
         var productId = $(this).data("product-id");
         var listaprecioId = $("#listaprecio").val();
@@ -165,7 +176,6 @@ $(document).ready(function () {
         updateAPPSwitch(productId, null, listaprecioId, status);
         /* dataTable.ajax.reload(); */
     }
-
     initializeDataTable("-1");
     $("#listaprecio, #categoria").on("change", function () {
         var listaprecioId = $("#listaprecio").val();
@@ -173,7 +183,6 @@ $(document).ready(function () {
         dataTable.destroy();
         initializeDataTable(listaprecioId, categoriaId);
     });
-
     $(document).on("keydown", ".edit-precio", handlePriceFamaInput);
     $(document).on("change", ".edit-status", handleStatusChange);
 });
