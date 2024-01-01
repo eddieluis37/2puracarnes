@@ -304,8 +304,8 @@ class workshopController extends Controller
                 if (Carbon::parse($currentDateTime->format('Y-m-d'))->gt(Carbon::parse($data->fecha_cierre))) {
                     $btn = '
                     <div class="text-center">
-					<a href="workshop/create/' . $data->id . '" class="btn btn-dark" title="Alistar" >
-						<i class="fas fa-directions"></i>
+					<a href="workshop/create/' . $data->id . '" class="btn btn-dark" title="TallerCerradoPorFecha" target="_blank>
+                        <i class="fas fa-check-circle"></i>
 					</a>
 					<button class="btn btn-dark" title="" onclick="showDataForm(' . $data->id . ')">
 						<i class="fas fa-eye"></i>
@@ -322,7 +322,7 @@ class workshopController extends Controller
                     }
                     $btn = '
                     <div class="text-center">
-					<a href="workshop/create/' . $data->id . '" class="btn btn-dark" title="Alistar" >
+					<a href="workshop/create/' . $data->id . '" class="btn btn-dark" title="HacerTaller" >
 						<i class="fas fa-directions"></i>
 					</a>
 					<button class="btn btn-dark" title="" onclick="showDataForm(' . $data->id . ')">
@@ -336,8 +336,8 @@ class workshopController extends Controller
                 } else {
                     $btn = '
                     <div class="text-center">
-					<a href="workshop/create/' . $data->id . '" class="btn btn-dark" title="Taller" >
-						<i class="fas fa-directions"></i>
+					<a href="workshop/create/' . $data->id . '" class="btn btn-dark" title="TallerCerrado" target="_blank">
+                        <i class="fas fa-check-circle"></i>
 					</a>
 					<button class="btn btn-dark" title="" onclick="showDataForm(' . $data->id . ')">
 						<i class="fas fa-eye"></i>
@@ -773,4 +773,46 @@ class workshopController extends Controller
             ]);
         }
     }
+
+    public function afectarCostos(Request $request)
+    {
+        $tallerId = $request->input('tallerId');
+
+        $currentDateTime = Carbon::now();
+        $formattedDate = $currentDateTime->format('Y-m-d');
+
+        $work = Workshop::find($tallerId);
+        $work->fecha_cierre = $formattedDate;
+        $work->save();
+
+        $workshopc = Workshop::where('id', $tallerId)->get();
+
+        DB::update(
+            "
+        UPDATE centro_costo_products c
+        JOIN workshop_details d ON c.products_id = d.products_id
+        JOIN workshops b ON b.id = d.workshops_id
+        JOIN products p ON p.id = d.products_id
+        SET       
+            p.cost = d.costo_kilo
+        WHERE d.workshops_id = :tallerId
+        AND b.centrocosto_id = :cencosid 
+        AND c.centrocosto_id = :cencosid2 ",
+            [
+                'tallerId' => $tallerId,
+                'cencosid' =>  $work->centrocosto_id,
+                'cencosid2' =>  $work->centrocosto_id
+            ]
+        );
+
+        return response()->json([
+            'status' => 1,
+            'message' => 'Cargado al inventario exitosamente',
+            'workshopc' => $workshopc
+        ]);
+
+        // return view('categorias.res.desposte.index', ['beneficio' => $beneficio]);
+    }
+
+
 }

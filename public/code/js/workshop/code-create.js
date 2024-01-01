@@ -39,7 +39,7 @@ var costoKiloPadre = document
     .getElementById("costoKiloPadre")
     .getAttribute("data-id");
 
-    console.log('costoKiloPadre = ' + costoKiloPadre)
+console.log("costoKiloPadre = " + costoKiloPadre);
 /* $porcventa = 0; */
 
 $(".select2Prod").select2({
@@ -163,12 +163,81 @@ const showData = (data) => {
 		    <th>${formatCantidad(arrayTotales.totalPesoProductoHijo)} KG</td>
 		    <th>$ ${formatCantidadSinCero(arrayTotales.totalPrecioVenta)}</th>
             <th>U.$ ${formatCantidadSinCero(arrayTotales.totalUtilidad)}</th>
-            <th>${formatCantidad(arrayTotales.porcUtilidad)} %.U</td>	   
+            <th>${formatCantidad(arrayTotales.porcUtilidad)} %.U</td>
+            <td></td>	
+            <td class="text-center">
+            <button id="cargarInventarioBtn" class="btn btn-success btn-sm">Afectar costos</button>
+            </td>   
 	    </tr>
     `;
     let newTotalStockPadre =
         pesoProductoPadre.value - arrayTotales.totalPesoProductoHijo;
     //  newStockPadre.value = newTotalStockPadre;
+
+    tableFoot.addEventListener("click", (e) => {
+        e.preventDefault();
+        let element = e.target;
+        console.log(element);
+        if (element.id === "cargarInventarioBtn") {
+            console.log("click");
+            showConfirmationAlert(element)
+                .then((result) => {
+                    if (result && result.value) {
+                        loadingStart(element);
+                        const dataform = new FormData();
+                        dataform.append(
+                            "tallerId",
+                            Number(tallerId.value)
+                        );
+                        return sendData("/afectarCostos", dataform, token);
+                    }
+                })
+                .then((result) => {
+                    console.log(result);
+                    if (result && result.status == 1) {
+                        loadingEnd(
+                            element,
+                            "success",
+                            "Afectando a costos"
+                        );
+                        element.disabled = true;
+                        return swal(
+                            "EXITO",
+                            "Costos afectado exitosamente",
+                            "success"
+                        );
+                    }
+                    if (result && result.status == 0) {
+                        loadingEnd(
+                            element,
+                            "success",
+                            "Afectando a costos"
+                        );
+                        errorMessage(result.message);
+                    }
+                })
+                .then(() => {
+                    window.location.href = "/workshop";
+                })
+                .catch((error) => {
+                    console.error(error);
+                });
+        }
+    });
+
+    function showConfirmationAlert(element) {
+        return swal.fire({
+            title: "CONFIRMAR",
+            text: "Estas seguro que desea afectar a costos ?",
+            icon: "warning",
+            showDenyButton: true,
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Acpetar",
+            denyButtonText: `Cancelar`,
+        });
+    }
 };
 
 peso_producto_hijo.addEventListener("change", function () {
@@ -276,9 +345,8 @@ tfootTable.addEventListener("click", (e) => {
     }
 });
 
-
-if (!sessionStorage.getItem('pageLoaded')) {
-    sessionStorage.setItem('pageLoaded', 'true');
+if (!sessionStorage.getItem("pageLoaded")) {
+    sessionStorage.setItem("pageLoaded", "true");
     location.reload();
 }
 
@@ -290,7 +358,6 @@ if (!sessionStorage.getItem('pageLoaded')) {
     document.cookie = 'pageLoaded=true; expires=Fri, 31 Dec 9999 23:59:59 GMT';
     location.reload();
 } */
-
 
 //if (addShopping) {
 /*addShopping.addEventListener('click', (e) => {

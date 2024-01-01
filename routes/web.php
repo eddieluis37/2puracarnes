@@ -299,6 +299,8 @@ Route::group(['middleware' => [('auth')]], function () {
     Route::post('/downmmainworkshop', [workshopController::class, 'destroyWorkshop'])->name('workshop.downAlistamiento');
     Route::post('workshopAddShoping', [workshopController::class, 'add_shopping'])->name('workshop.addShopping');
 
+    Route::post('afectarCostos', [workshopController::class, 'afectarCostos'])->name('afectarCostos.show');
+
     /***** TRANSFER ******** */
     Route::get('transfer', [transferController::class, 'index'])->name('transfer.index');
     Route::post('transfersave', [transferController::class, 'store'])->name('transfer.save');
