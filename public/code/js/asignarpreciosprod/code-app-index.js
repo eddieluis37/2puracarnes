@@ -53,7 +53,13 @@ $(document).ready(function () {
                     },
                 }, 
                 { data: "porc_util_proyectada", name: "porc_util_proyectada" },
-                { data: "precio_proyectado", name: "precio_proyectado" },
+                {
+                    data: "precio_proyectado",
+                    name: "precio_proyectado",
+                    render: function (data, type, row) {
+                        return "$ " + formatCantidadSinCero(data);
+                    },
+                },               
                 { data: "precio", name: "precio" },
                 { data: "porc_iva", name: "porc_iva" },
                 { data: "utilidad", name: "utilidad" },

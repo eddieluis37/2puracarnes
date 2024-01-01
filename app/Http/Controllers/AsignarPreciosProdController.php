@@ -39,7 +39,7 @@ class AsignarPreciosProdController extends Controller
 
         $data = DB::table('listapreciodetalles as lpd')
             ->join('listaprecios as lp', 'lp.id', '=', 'lpd.listaprecio_id')
-            ->join('products as pro', 'pro.id', '=', 'lpd.product_id')           
+            ->join('products as pro', 'pro.id', '=', 'lpd.product_id')
             ->join('categories as cat', 'pro.category_id', '=', 'cat.id')
             ->select(
                 'cat.name as namecategoria',
@@ -47,15 +47,15 @@ class AsignarPreciosProdController extends Controller
                 'pro.id as productId',
                 'pro.cost as costo',
                 'lpd.porc_util_proyectada as porc_util_proyectada',
-                'lpd.precio_proyectado as precio_proyectado',
+                DB::raw('pro.cost / (1 - (lpd.porc_utilidad / 100) ) as precio_proyectado '),
                 'lpd.precio as precio',
-                'lpd.porc_iva as porc_iva',
-                'lpd.utilidad as utilidad',
-                'lpd.porc_utilidad as porc_utilidad',
+                'lpd.porc_iva as porc_iva',                
+                DB::raw('pro.cost / (1 - (lpd.porc_utilidad / 100) ) as utilidad '),        
+                'lpd.utilidad as porc_utilidad',
                 'lpd.status as status',
             )
             ->where('lpd.listaprecio_id', $listaprecioId)
-            ->where('pro.category_id', $categoriaId)           
+            ->where('pro.category_id', $categoriaId)
             /*       ->where('pro.status', 1)
           /*   ->where('pro.level_product_id', 1) */
             ->get();
