@@ -304,7 +304,7 @@ class workshopController extends Controller
                 if (Carbon::parse($currentDateTime->format('Y-m-d'))->gt(Carbon::parse($data->fecha_cierre))) {
                     $btn = '
                     <div class="text-center">
-					<a href="workshop/create/' . $data->id . '" class="btn btn-dark" title="TallerCerradoPorFecha" target="_blank>
+					<a href="workshop/create/' . $data->id . '" class="btn btn-dark" title="TallerCerradoPorFecha" target="_blank">
                         <i class="fas fa-check-circle"></i>
 					</a>
 					<button class="btn btn-dark" title="" onclick="showDataForm(' . $data->id . ')">
