@@ -12,7 +12,7 @@
 			<div class="row">
 				<div class="col-sm-5">
 					<h4 class="">
-						<b> Alistamiento / Categoria </b>
+						<b> Alistamiento | Categoria </b>
 					</h4>
 				</div>
 			</div>
@@ -33,6 +33,7 @@
 								<div class="task-header">
 									<div class="form-group">
                                         <label for="" class="form-label">Categoria</label>
+										<input type="hidden" id="categoryId" name="categoryId" value="{{$dataAlistamiento[0]->categoria_id}}">
 										<p>{{$dataAlistamiento[0]->namecategoria}}</p>
 									</div>
 								</div>
@@ -62,6 +63,7 @@
                                         <label for="" class="form-label">Buscar corte padre</label>
 										<input type="hidden" id="meatcutId" name="meatcutId" value="{{$dataAlistamiento[0]->meatcut_id}}">
 										<input type="hidden" id="productopadreId" name="productopadreId" value="{{$cortes[0]->productopadreId}}">
+										<input type="hidden" id="centrocosto" name="centrocosto" value="{{$dataAlistamiento[0]->centrocosto_id}}">
 										<input type="text" id="productoCorte" name="productoCorte"value="{{$cortes[0]->name}}" class="form-control input" readonly >
 					                    <!--select class="form-control form-control-sm select2Prod" name="productoCorte" id="productoCorte" required="">
 											<option value="">Seleccione el producto</option>
@@ -104,7 +106,7 @@
 							<div class="col-md-4">
 								<label for="" class="form-label">Stock actual</label>
 								<div class="input-group flex-nowrap">
-								<input type="text" id="stockCortePadre" name="stockCortePadre" value="{{$cortes[0]->stock}}" class="form-control-sm form-control" placeholder="10,00 kg" readonly>
+								<input type="text" id="stockCortePadre" name="stockCortePadre" value="{{$cortes[0]->stockPadre}}" class="form-control-sm form-control" placeholder="10,00 kg" readonly>
 									<span class="input-group-text" id="addon-wrapping">KG</span>
 								</div>
 							</div>
@@ -118,7 +120,7 @@
 							<div class="col-md-4">
 								<label for="" class="form-label">Nuevo stock</label>
 								<div class="input-group flex-nowrap">
-								<input type="text" id="newStockPadre" name="newStockPadre" value="{{$newStock}}" class="form-control-sm form-control" placeholder="30,00 kg" readonly>
+								<input type="text" id="newStockPadre" name="newStockPadre" value="{{$dataAlistamiento[0]->nuevo_stock_padre}}" class="form-control-sm form-control" placeholder="30,00 kg" readonly>
 									<span class="input-group-text" id="addon-wrapping">KG</span>
 								</div>
 							</div>
@@ -150,7 +152,7 @@
 											<td>{{$proddetail->id}}</td>
 											<td>{{$proddetail->code}}</td>
 											<td>{{$proddetail->nameprod}}</td>
-											<td>{{ number_format($proddetail->stock, 2, ',', '.')}} KG</td>
+											<td>{{ number_format($proddetail->stockHijo, 2, ',', '.')}} KG</td>
 											<td>{{ number_format($proddetail->fisico, 2, ',', '.')}} KG</td>
 											<td>
 												@if($status == 'true' && $statusInventory == 'false')

@@ -19,9 +19,6 @@ class CreateTableCompensadores extends Migration
             $table->unsignedBigInteger('users_id')->nullable();
             $table->foreign('users_id')->references('id')->on('users');
 
-            $table->unsignedBigInteger('categoria_id')->nullable();
-            $table->foreign('categoria_id')->references('id')->on('categories');
-
             $table->unsignedBigInteger('thirds_id')->nullable();
             $table->foreign('thirds_id')->references('id')->on('thirds');
 
@@ -33,7 +30,7 @@ class CreateTableCompensadores extends Migration
             $table->date('fecha_compensado');
             $table->date('fecha_cierre')->nullable();
 
-            $table->boolean('status')->parent_select()->default(true)->nullable();            
+            $table->boolean('status')->parent_select()->default(false)->nullable();            
             $table->timestamps();
         });
     }

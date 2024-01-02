@@ -1,4 +1,12 @@
 import  {sendData} from '../../exportModule/core/rogercode-core.js';
+import {
+  successToastMessage,
+  errorMessage,
+} from "../../exportModule/message/rogercode-message.js";
+import {
+  loadingStart,
+  loadingEnd,
+} from "../../exportModule/core/rogercode-core.js";
 
 const table = document.querySelector("#tableDespostece");
 const token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
@@ -18,35 +26,31 @@ const utilidadUtilidad = document.querySelector("#utilidad");
 const utilidadPorcentajeUtilidad = document.querySelector("#porcentajeUtilidad");
 const utilidadAnimal = document.querySelector("#utilidadAnimal");
 
-
-
-
-
-
-
-
-
-
 table.addEventListener("keydown", function(event) {
-  if (event.keyCode === 13) {
+  if (event.keyCode === 13 || event.keyCode === 9) {
     const target = event.target;
     if (target.tagName === "INPUT" && target.closest("tr")) {
-      // Execute your code here
-      //console.log("Enter key pressed on an input inside a table row");
-      //console.log(event.target.value);
-      //console.log(event.target.id);
-      const inputValue = event.target.value;
+      event.preventDefault(); // Prevent the default Enter or Tab key behavior
+       const inputValue = target.value;
       if (inputValue == "") {
         return false;
       }
       const trimValue = inputValue.trim();
       const dataform = new FormData();
-      dataform.append("id", Number(event.target.id));
+      dataform.append("id", Number(target.id));
       dataform.append("peso_kilo", Number(trimValue));
       dataform.append("beneficioId", Number(beneficioId.value));
-      sendData("/despostecerdoUpdate",dataform,token).then((result) => {
-        //console.log(result);
+      sendData("/despostecerdoUpdate", dataform, token).then((result) => {
         showDataTable(result);
+
+         const inputs = Array.from(table.querySelectorAll("input[type='text']")); // Cuando se envie la data, el cursor salte al siguiente input id="${element.id}" 
+        const currentIndex = inputs.findIndex(input => input.id === target.id);
+        const nextIndex = currentIndex + 1;
+        if (nextIndex < inputs.length) {
+          const nextInput = inputs[nextIndex];
+          nextInput.focus();
+          nextInput.select();
+        }
       });
     }
   }
@@ -69,7 +73,7 @@ const showDataTable = (data) => {
 				<td>${element.name} </td>
 				<td>${element.porcdesposte} %</td>
 				<td>$ ${formatCantidadSinCero(element.precio)}</td>
-				<td> <input type="text" class="form-control-sm" id="${element.id}" value="${element.peso}" placeholder="Ingresar" size="10"></td>
+				<td> <input type="text" class="form-control-sm" id="${element.id}" value="${element.peso}" placeholder="0" size="4"></td>
 				<td>$ ${formatCantidadSinCero(element.totalventa)}</td>
 				<td>${element.porcventa} %</td>
 				<td>$ ${formatCantidadSinCero(element.costo)} </td>
@@ -94,10 +98,69 @@ const showDataTable = (data) => {
 			<td>$ ${formatCantidadSinCero(dataTotals.costoTotalGlobal)}</td>
 			<td>${dataTotals.costoKiloTotal}</td>
 			<td class="text-center">
-				<button class="btn btn-success btn-sm">Cargar al inventario</button>
+      <button id="cargarInventarioBtn" class="btn btn-success btn-sm">Cargar al inventario</button>
 			</td>
 		</tr>
   `;
+
+    tableTfoot.addEventListener("click", (e) => {
+      e.preventDefault();
+      let element = e.target;
+      console.log(element);
+      if (element.id === "cargarInventarioBtn") {
+          console.log("click");
+          showConfirmationAlert(element)
+              .then((result) => {
+                  if (result && result.value) {
+                      loadingStart(element);
+                      const dataform = new FormData();
+                      dataform.append(
+                          "beneficioId",
+                          Number(beneficioId.value)
+                      );
+                      return sendData("/cargarInventarioc", dataform, token);
+                  }
+              })
+              .then((result) => {
+                  console.log(result);
+                  if (result && result.status == 1) {
+                      loadingEnd(element, "success", "Cargando al inventorio");
+                      element.disabled = true;
+                      return swal(
+                          "EXITO",
+                          "Inventario Cargado Exitosamente",
+                          "success"
+                      );
+                  }
+                  if (result && result.status == 0) {
+                      loadingEnd(element, "success", "Cargando al inventorio");
+                      errorMessage(result.message);
+                  }
+              })
+              .then(() => {
+                  window.location.href = "/beneficiocerdo";
+              })
+              .catch((error) => {
+                  console.error(error);
+              });
+        }
+    });
+
+    function showConfirmationAlert(element) {
+      return swal.fire({
+          title: "CONFIRMAR",
+          text: "Estas seguro que desea cargar el inventario ?",
+          icon: "warning",
+          showDenyButton: true,
+          showCancelButton: true,
+          confirmButtonColor: "#3085d6",
+          cancelButtonColor: "#d33",
+          confirmButtonText: "Acpetar",
+          denyButtonText: `Cancelar`,
+      });
+    }
+
+
   /******************MERMA****************************** */
   let Peso_total_Desp = dataTotals.pesoTotalGlobal;
   mermaPesoTotal.innerHTML = "";

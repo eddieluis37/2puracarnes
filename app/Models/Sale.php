@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\centros\Centrocosto;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -9,12 +10,32 @@ class Sale extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['total','items','cash','change','status','user_id', 'third_id'];
+    protected $fillable = [
+        'valor_a_pagar_efectivo', 'total', 'total_iva', 'items', 'cash', 'cambio', 'status', 'fecha', 'consecutivo', 'user_id',
+        'third_id', 'vendedor_id', 'domiciliario_id', 'centrocosto_id'
+    ];
 
     public function user()
     {
         return $this->belongsTo(User::class);
     }
+
+    public function centrocosto()
+    {
+        return $this->belongsTo(Centrocosto::class);
+    }
+
+    public function third()
+    {
+        return $this->belongsTo(Third::class);
+    }
+
+
+    public function thirds()
+    {
+        return $this->hasOne('App\Models\Third');
+    }
+
 
     // MUTATORS
     /*
@@ -27,5 +48,4 @@ class Sale extends Model
         $this->attributes['total'] = $priceFilter;
     }
     */
-
 }

@@ -1,6 +1,6 @@
 export const errorMessage = (message) => {
     Swal.fire(
-        'Error!',
+        'Error en Js!',
         message,
         'error'
     )
@@ -19,7 +19,7 @@ export const successToastMessage = (message) => {
     toast: true,
     position: 'top-end',
     showConfirmButton: false,
-    timer: 3000,
+    timer: 60000,
     timerProgressBar: true,
     didOpen: (toast) => {
         toast.addEventListener('mouseenter', Swal.stopTimer)

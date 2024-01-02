@@ -12,6 +12,7 @@ $(document).ready(function () {
         }, 
         columns: [ //5. La opción "columns" se establece en una matriz de objetos, cada uno con una propiedad "data" y una propiedad "name". La propiedad "data" especifica qué propiedad del objeto de datos debe usarse para esa columna, y la propiedad "name" especifica el nombre de la columna. 
             { data: "id", name: "id" }, 
+                { data: "namecentrocosto", name: "namecentrocosto" },
             { data: "namethird", name: "namethird" }, 
             { data: "date", name: "date" }, 
             { data: "factura", name: "factura" }, 

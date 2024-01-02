@@ -17,9 +17,13 @@ class CreateTriggerEnlistmentUpdateProductoPadre extends Migration
         DB::unprepared('
             CREATE TRIGGER trigger_enlistment_update_producto_padre AFTER INSERT ON shopping_enlistment FOR EACH ROW
             BEGIN
-                UPDATE products
+                /*UPDATE products
                 SET stock = NEW.nuevo_stock
-                WHERE id = NEW.productopadre_id;
+                WHERE id = NEW.productopadre_id;*/
+
+                UPDATE centro_costo_products
+                SET stock = NEW.nuevo_stock
+                WHERE products_id = NEW.productopadre_id AND centrocosto_id = NEW.centrocosto_id;
             END
         ');
     }

@@ -15,12 +15,12 @@ class CreateTriggerUpdatePrecioCompra extends Migration
     public function up()
     {
         DB::unprepared('
-            CREATE TRIGGER trigger_update_precio_compra AFTER INSERT ON compensadores_details FOR EACH ROW
+          /*   CREATE TRIGGER trigger_update_precio_compra AFTER INSERT ON compensadores_details FOR EACH ROW
             BEGIN
                 UPDATE products
                 SET cost = NEW.pcompra
                 WHERE id = NEW.products_id;
-            END
+            END */
         ');
     }
 

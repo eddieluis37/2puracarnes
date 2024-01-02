@@ -7,7 +7,7 @@
 			<div class="row">
 				<div class="col-sm-3">
 					<h4 class="">
-						<b> Desposte / RES</b>
+						<b> Desposte | RES</b>
 					</h4>
 				</div>
 				<!--div class="col-sm-3">
@@ -52,7 +52,7 @@
 								<div class="task-header">
 									<div class="form-group">
 										<label>ID Beneficio</label>
-                                        <p>{{$beneficior[0]->id}} </p>
+										<p>{{$beneficior[0]->id}} </p>
 										<input type="hidden" id="beneficioId" value="{{$beneficior[0]->id}}">
 									</div>
 								</div>
@@ -61,7 +61,7 @@
 								<div class="task-header">
 									<div class="form-group">
 										<label>Proveedor</label>
-                                        <p>{{$beneficior[0]->name}} </p>
+										<p>{{$beneficior[0]->name}} </p>
 									</div>
 								</div>
 							</div>
@@ -69,7 +69,7 @@
 								<div class="task-header">
 									<div class="form-group">
 										<label>Lote</label>
-                                        <p>{{$beneficior[0]->lote}}</p>
+										<p>{{$beneficior[0]->lote}}</p>
 									</div>
 								</div>
 							</div>
@@ -77,87 +77,86 @@
 								<div class="task-header">
 									<div class="form-group">
 										<label>Factura</label>
-                                        <p>{{$beneficior[0]->factura}} </p>
+										<p>{{$beneficior[0]->factura}} </p>
 									</div>
 								</div>
 							</div>
 						</div>
 					</div>
 				</div>
-            </div>
-            <div class="widget-content mt-3">
-                <div class="card">
-                    <div class="card-body">
-							<div class="table-responsive mt-3">
-								<table id="tableDespostere" class="table table-sm table-striped table-bordered">
-									<thead class="text-white" style="background: #3B3F5C">
-										<tr>
-											<th class="table-th text-white">Producto</th>
-											<th class="table-th text-white">% Desposte</th>
-											<th class="table-th text-white">Precio venta</th>
-											<th class="table-th text-white text-center">Peso kilo</th>
-											<th class="table-th text-white text-center">Total venta</th>
-											<th class="table-th text-white text-center">Porcventa</th>
-											<th class="table-th text-white text-center">Costo total</th>
-											<th class="table-th text-white text-center">Costo kilo</th>
-											<th class="table-th text-white text-center">Acciones</th>
-										</tr>
-									</thead>
-									<tbody id="tbody">
-										<?php $tpeso = 0;
-										$tdesposte = 0; ?>
-										@foreach($desposters as $item)
-										<tr>
-											<td> {{ $item->products->name }}</td>
-											<td> {{ $item->porcdesposte }} %</td>
-											<td>$ {{ number_format($item->precio, 0, ',', '.')}}</td>
-											<td>
-												@if($status == 'true')
-												<input type="text" class="form-control-sm" id="{{$item->id}}" value="{{$item->peso}}" placeholder="Ingresar" size="10">
-												@else
-													<p>{{$item->peso}}</p>
-												@endif
-											</td>
+			</div>
+			<div class="widget-content mt-3">
+				<div class="card">
+					<div class="card-body">
+						<div class="table-responsive mt-3">
+							<table id="tableDespostere" class="table table-sm table-striped table-bordered">
+								<thead class="text-white" style="background: #3B3F5C">
+									<tr>
+										<th class="table-th text-white">Producto</th>
+										<th class="table-th text-white">% Desposte</th>
+										<th class="table-th text-white">Precio venta</th>
+										<th class="table-th text-white text-center">Peso kilo</th>
+										<th class="table-th text-white text-center">Total venta</th>
+										<th class="table-th text-white text-center">Porcventa</th>
+										<th class="table-th text-white text-center">Costo total</th>
+										<th class="table-th text-white text-center">Costo kilo</th>
+										<th class="table-th text-white text-center">Acciones</th>
+									</tr>
+								</thead>
+								<tbody id="tbody">
+									<?php $tpeso = 0;
+									$tdesposte = 0; ?>
+									@foreach($desposters as $item)
+									<tr>
+										<td> {{ $item->products->name }}</td>
+										<td> {{ $item->porcdesposte }} %</td>
+										<td>$ {{ number_format($item->precio, 0, ',', '.')}}</td>
+										<td>
+											@if($status == 'true')
+											<input type="text" class="form-control-sm" id="{{$item->id}}" value="{{$item->peso}}" size="4">
+											@else
+											<p>{{$item->peso}}</p>
+											@endif
+										</td>
 
-											<td>$ {{ number_format($item->totalventa, 0, ',', '.')}}</td>
-											<td> {{ $item->porcventa}} %</td>
-											<td>$ {{ number_format($item->costo, 0, ',', '.')}}</td>
-											<td> {{ number_format($item->costo_kilo, 2, ',', '.')}}</td>
-											<td class="text-center">
-												@if($status == 'true')
-												<button type="button" name="btnDownReg" data-id="{{$item->id}}" class="btn btn-dark btn-sm fas fa-trash" title="Cancelar">
-												</button>
-												@else
-												<button type="button" class="btn btn-dark btn-sm fas fa-trash" title="Cancelar" disabled>
-												</button>
-												@endif
-											</td>
-										</tr>
-										<?php $tpeso = $tpeso + $item->peso;
-										$tdesposte = $tdesposte + $item->totalventa; ?>
-										@endforeach
-									</tbody>
-									<tfoot id="tfoot" >
-										<tr>
-											<td>Totales</td>
-											<td>{{round($TotalDesposte)}} %</td>
-											<td>$    --</td>
-											<td>{{number_format($pesoTotalGlobal, 2, ',', '.')}}</td>
-											<td>$ {{ number_format($TotalVenta, 0, ',', '.')}}</td>
-											<td>{{round($porcVentaTotal)}} %</td>
-											<td>$ {{ number_format($costoTotalGlobal, 0, ',', '.')}}</td>
-											<td>{{$costoKiloTotal}}</td>
-											<td class="text-center">
-												<button class="btn btn-success btn-sm">Cargar al inventario</button>
-											</td>
-										</tr>
-
-									</tfoot>
-								</table>
-							</div>
-                    </div>
-                </div>
-            </div>					
+										<td>$ {{ number_format($item->totalventa, 0, ',', '.')}}</td>
+										<td> {{ $item->porcventa}} %</td>
+										<td>$ {{ number_format($item->costo, 0, ',', '.')}}</td>
+										<td> {{ number_format($item->costo_kilo, 2, ',', '.')}}</td>
+										<td class="text-center">
+											@if($status == 'true')
+											<button type="button" name="btnDownReg" data-id="{{$item->id}}" class="btn btn-dark btn-sm fas fa-trash" title="Cancelar">
+											</button>
+											@else
+											<button type="button" class="btn btn-dark btn-sm fas fa-trash" title="Cancelar" disabled>
+											</button>
+											@endif
+										</td>
+									</tr>
+									<?php $tpeso = $tpeso + $item->peso;
+									$tdesposte = $tdesposte + $item->totalventa; ?>
+									@endforeach
+								</tbody>
+								<tfoot id="tfoot">
+									<tr>
+										<td>Totales</td>
+										<td>{{round($TotalDesposte)}} %</td>
+										<td>$ --</td>
+										<td>{{number_format($pesoTotalGlobal, 2, ',', '.')}}</td>
+										<td>$ {{ number_format($TotalVenta, 0, ',', '.')}}</td>
+										<td>{{round($porcVentaTotal)}} %</td>
+										<td>$ {{ number_format($costoTotalGlobal, 0, ',', '.')}}</td>
+										<td>{{$costoKiloTotal}}</td>
+										<td class="text-center">										
+											<button type="hidden" id="cargarInventarioBtn"></button>											
+										</td>
+									</tr>
+								</tfoot>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
 			<?php
 			$pi = $beneficior[0]->canalplanta;
 			$cant = $beneficior[0]->cantidad;
@@ -313,9 +312,9 @@
 					</div>
 				</div>
 			</div>
-        </div>
+		</div>
 
-    </div>
+	</div>
 </div>
 @endsection
 @section('script')

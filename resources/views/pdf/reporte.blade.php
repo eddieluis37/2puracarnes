@@ -54,7 +54,7 @@
 		<table cellpadding="0" cellspacing="0" class="table-items" width="100%">
 			<thead>
 				<tr>
-					<th width="10%"># COMPROB</th>
+					<th width="10%">#_COMPR</th>
 					<th width="12%">SUBTOTAL</th>
 					<th width="10%">ITEMS</th>
 					<th width="12%">ESTADO</th>

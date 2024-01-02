@@ -20,6 +20,8 @@ const alistamientoId = document.querySelector("#alistamientoId");
 const kgrequeridos = document.querySelector("#kgrequeridos");
 const addShopping = document.querySelector("#addShopping");
 const productoPadre = document.querySelector("#productopadreId");
+const centrocosto = document.querySelector("#centrocosto");
+const categoryId = document.querySelector("#categoryId");
 
 
 $('.select2Prod').select2({
@@ -76,6 +78,7 @@ sendData("/getproductos",dataform,token).then((result) => {
 btnAddAlist.addEventListener('click', (e) => {
     e.preventDefault();  
     const dataform = new FormData(formDetail);
+    dataform.append("stockPadre",stockPadre.value)
     sendData("/alistamientosavedetail",dataform,token).then((result) => {
         console.log(result);
         if (result.status === 1) {
@@ -130,7 +133,7 @@ const showData = (data) => {
             </td>
 	    </tr>
     `;
-    let newTotalStockPadre = arrayTotales.kgTotalRequeridos - stockPadre.value;
+    let newTotalStockPadre = stockPadre.value - arrayTotales.kgTotalRequeridos;
     newStockPadre.value = newTotalStockPadre;
 }
 
@@ -156,17 +159,22 @@ tableAlistamiento.addEventListener("keydown", function(event) {
 
       let productoId = target.getAttribute('data-id');
       console.log("prod test id: " + alistamientoId.value);
-
+      console.log(productoId);
+      console.log(centrocosto.value);
       const trimValue = inputValue.trim();
       const dataform = new FormData();
       dataform.append("id", Number(event.target.id));
       dataform.append("newkgrequeridos", Number(trimValue));
       dataform.append("alistamientoId", Number(alistamientoId.value));
       dataform.append("productoId", Number(productoId));
+      dataform.append("centrocosto", Number(centrocosto.value));
+      dataform.append("stockPadre",stockPadre.value)
+      
       sendData("/alistamientoUpdate",dataform,token).then((result) => {
         console.log(result);
         showData(result);
       });
+
     }
   }
 });
@@ -193,6 +201,8 @@ tbodyTable.addEventListener("click", (e) => {
                 const dataform = new FormData();
                 dataform.append("id", Number(id));
                 dataform.append("alistamientoId", Number(alistamientoId.value));
+                dataform.append("centrocosto", Number(centrocosto.value));
+                dataform.append("stockPadre",stockPadre.value)
                 sendData("/alistamientodown",dataform,token).then((result) => {
                     console.log(result);
                     showData(result)
@@ -216,7 +226,8 @@ tfootTable.addEventListener('click', (e) => {
         dataform.append("pesokg", Number(pesokg.value));
         dataform.append("stockPadre", Number(stockPadre.value));
         dataform.append("productoPadre", Number(productoPadre.value));
-
+        dataform.append("centrocosto", Number(centrocosto.value));
+        dataform.append("categoryId", Number(categoryId.value));
         sendData("/alistamientoAddShoping",dataform,token).then((result) => {
             console.log(result);
             if (result.status == 1) {

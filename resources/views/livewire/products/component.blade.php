@@ -20,15 +20,17 @@
 			<div class="widget-content">
 
 				<div class="table-responsive">
-					<table class="table table-bordered table striped mt-1">
+					<table class="table table-striped mt-1">
 						<thead class="text-white" style="background: #3B3F5C;">
 							<tr>
-								<th class="table-th text-white">DESCRIPCIÓN</th>
+								<th class="table-th text-white text-center">CATEGORÍA</th>
+								<th class="table-th text-white">BASICO</th>
+								<th class="table-th text-white">NOMBRE</th>
 								<th class="table-th text-white text-center">CODE</th>
 								<th class="table-th text-white text-center">BARCODE</th>
-								<th class="table-th text-white text-center">CATEGORÍA</th>
-								<th class="table-th text-white text-center">PRECIO</th>
+								<th class="table-th text-white text-center">PRECIO_M</th>
 								<th class="table-th text-white text-center">IVA</th>
+								<th class="table-th text-white text-center">O.I</th>
 								<th class="table-th text-white text-center">STOCK</th>
 								<th class="table-th text-white text-center">INV.MIN</th>
 								<th class="table-th text-white text-center">IMAGEN</th>
@@ -39,6 +41,12 @@
 							@foreach($data as $product)
 							<tr>
 								<td>
+									<h6 class="text-center">{{$product->category}}</h6>
+								</td>
+								<td>
+									<h6 class="text-left">{{$product->meacuty}}</h6>
+								</td>
+								<td>
 									<h6 class="text-left">{{$product->name}}</h6>
 								</td>
 								<td>
@@ -46,15 +54,16 @@
 								</td>
 								<td>
 									<h6 class="text-center">{{$product->barcode}}</h6>
-								</td>								
-								<td>
-									<h6 class="text-center">{{$product->category}}</h6>
 								</td>
+
 								<td>
-									<h6 class="text-center">${{number_format($product->price,0)}}</h6>
+									<h6 class="text-center">${{number_format($product->price_fama,0)}}</h6>
 								</td>
 								<td>
 									<h6 class="text-center">{{number_format($product->iva)}}%</h6>
+								</td>
+								<td>
+									<h6 class="text-center">{{number_format($product->otro_impuesto)}}%</h6>
 								</td>
 								<td>
 									<h6 class="text-center {{$product->stock <= $product->alerts ? 'text-danger' : '' }} ">
@@ -103,7 +112,8 @@
 
 	@include('livewire.products.form')
 </div>
-@include('layouts.theme.footer')
+
+
 
 <script>
 	document.addEventListener('DOMContentLoaded', function() {
@@ -124,7 +134,7 @@
 			$('#theModal').modal('hide')
 		});
 		window.livewire.on('hidden.bs.modal', msg => {
-			$('.er').css('display', 'none')			
+			$('.er').css('display', 'none')
 		});
 		$('#theModal').on('hidden.bs.modal', function(e) {
 			$('.er').css('display', 'none')
@@ -132,8 +142,6 @@
 		$('#theModal').on('shown.bs.modal', function(e) {
 			$('.product-name').focus()
 		})
-
-
 
 	});
 

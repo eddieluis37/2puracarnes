@@ -16,7 +16,7 @@ $(document).ready(function () {
     $(function() {
         $('#tableCompensado').DataTable({
             "paging": true,
-            "pageLength": 5,
+            "pageLength": 50,
             /*"lengthChange": false,*/
             "autoWidth": false,
             processing: true,
@@ -26,8 +26,7 @@ $(document).ready(function () {
                 type: 'GET',
             },
             columns: [
-                { data:'id', name: 'id'},
-                { data:'namecategoria', name: 'namecategoria'},
+                { data:'id', name: 'id'},                
                 { data: 'namethird', name: 'namethird'},
                 { data: 'namecentrocosto', name: 'namecentrocosto' },
                 { data:'factura', name: 'factura'},
@@ -122,7 +121,7 @@ const editCompensado = (id) => {
 const showData = (resp) => {
     let register = resp.reg;
     compensado_id.value = register.id;
-    selectCategory.value = register.categoria_id;
+   /*  selectCategory.value = register.categoria_id; */
     $('#provider').val(register.thirds_id).trigger('change');
     selectCentrocosto.value = register.centrocosto_id;
     inputFactura.value = register.factura;

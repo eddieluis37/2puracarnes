@@ -8,4 +8,17 @@ use Illuminate\Database\Eloquent\Model;
 class Sacrificiopollo extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'name',
+        'dni',       
+        'address',
+        'phone',
+        'email',
+        'sacrificio',
+        'fomento',
+        'deguello',
+        'bascula',
+        'transporte'
+    ];
 }
