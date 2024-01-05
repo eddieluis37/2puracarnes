@@ -60,6 +60,7 @@ use App\Http\Controllers\listaprecio\listaPrecioController;
 use App\Http\Controllers\ReportController;
 
 use App\Http\Controllers\ImportStockFisicoController;
+use App\Http\Controllers\notacredito\NotacreditoController;
 use App\Http\Controllers\res\pdfLoteController;
 use App\Http\Controllers\sale\exportFacturaController;
 
@@ -386,6 +387,11 @@ Route::group(['middleware' => [('auth')]], function () {
     
 
     /* Route::post('registroPagoSave', [saleController::class, 'storeRegistroPago'])->name('pago.save'); */
+
+     /*****************************NOTA_CREDITO******************************************/
+
+     Route::get('notacredito', [NotacreditoController::class, 'index'])->name('notacredito.index');
+     Route::get('showNotacredito', [NotacreditoController::class, 'show'])->name('notacredito.showNotacredito');
 
 
     /*****************************LISTA_DE_PRECIO******************************************/

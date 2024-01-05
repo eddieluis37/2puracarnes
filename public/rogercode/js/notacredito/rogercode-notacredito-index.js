@@ -23,7 +23,7 @@ $(document).ready(function () {
             processing: true,
             serverSide: true,
             ajax: {
-                url: "/showlistVentas",
+                url: "/showNotacredito",
                 type: "GET",
             },
             columns: [
@@ -42,8 +42,6 @@ $(document).ready(function () {
                     }
                 },                      
                 { data: "date", name: "date" },
-                { data: "consecutivo", name: "consecutivo" },
-                { data: "resolucion", name: "resolucion" },
                 { data: "action", name: "action" },
             ],
             order: [[0, "DESC"]],
@@ -68,7 +66,7 @@ $(document).ready(function () {
             },
         });
     });
-    $(".select2Provider").select2({
+    $(".select2Ventas").select2({
         placeholder: "Busca un proveedor",
         width: "100%",
         theme: "bootstrap-5",
