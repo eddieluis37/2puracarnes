@@ -664,20 +664,20 @@ class saleController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroyVenta(Request $request)
+    public function destroy(Request $request)
     {
         try {
             $compe = SaleDetail::where('id', $request->id)->first();
-            $compe->status = 0;
-            $compe->save();
+            $compe->delete();
 
             $arraydetail = $this->getventasdetail($request->ventaId);
 
             $arrayTotales = $this->sumTotales($request->ventaId);
             return response()->json([
-                'status' => 1,
+                'status' => 1,                
                 'array' => $arraydetail,
-                'arrayTotales' => $arrayTotales
+                'arrayTotales' => $arrayTotales,
+                'message' => 'Se realizo con exito'
             ]);
         } catch (\Throwable $th) {
             return response()->json([
@@ -687,7 +687,7 @@ class saleController extends Controller
         }
     }
 
-    public function destroy(Request $request)
+    public function destroyVenta(Request $request)
     {
         try {
             $compe = Sale::where('id', $request->id)->first();
