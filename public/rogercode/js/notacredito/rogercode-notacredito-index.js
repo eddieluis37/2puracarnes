@@ -67,7 +67,7 @@ $(document).ready(function () {
         });
     });
     $(".select2Ventas").select2({
-        placeholder: "Busca un proveedor",
+        placeholder: "Busca una factura",
         width: "100%",
         theme: "bootstrap-5",
         allowClear: true,

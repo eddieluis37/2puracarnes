@@ -87,17 +87,17 @@ class saleController extends Controller
             $venta->status = $status;
             $venta->fecha_cierre = now();
 
-            if ($venta->centrocosto_id == 1 && $venta->tipo == '0') {
+            if (($venta->centrocosto_id == 1 || $venta->centrocosto_id == 2) && $venta->tipo == '0') {
                 $count = DB::table('sales')->where('tipo', '0')->count();
-                $resolucion = 'PC ' . str_pad(9000 + $count, 4, '0', STR_PAD_LEFT);                
-                $venta->resolucion = $resolucion; 
-            } 
-            
-            if ($venta->centrocosto_id == 1 && $venta->tipo == '1') {
+                $resolucion = 'PC ' . str_pad(9000 + $count, 4, '0', STR_PAD_LEFT);
+                $venta->resolucion = $resolucion;
+            }
+
+            if (($venta->centrocosto_id == 1 || $venta->centrocosto_id == 2) && $venta->tipo == '1') {
                 $count = DB::table('sales')->where('tipo', '1')->count();
                 $resolucion = 'PCE ' . str_pad(13135 + $count, 4, '0', STR_PAD_LEFT);
-                $venta->resolucion = $resolucion; 
-            }       
+                $venta->resolucion = $resolucion;
+            }
 
             $venta->save();
 
@@ -666,15 +666,42 @@ class saleController extends Controller
      */
     public function destroy(Request $request)
     {
+     
+
         try {
+
             $compe = SaleDetail::where('id', $request->id)->first();
             $compe->delete();
 
             $arraydetail = $this->getventasdetail($request->ventaId);
 
             $arrayTotales = $this->sumTotales($request->ventaId);
+
+           
+            $sale = Sale::find($request->ventaId);
+            $sale->items = SaleDetail::where('sale_id', $sale->id)->count();
+            $sale->descuentos = 0;
+            $sale->total_iva = 0;
+            $sale->total_otros_impuestos = 0;
+            $saleDetails = SaleDetail::where('sale_id', $sale->id)->get();
+            $totalBruto = 0;
+            $totalDesc = 0;
+            $total_valor_a_pagar = $saleDetails->where('sale_id', $sale->id)->sum('total');
+            $sale->total_valor_a_pagar = $total_valor_a_pagar;
+            $totalBruto = $saleDetails->sum(function ($saleDetail) {
+                return $saleDetail->quantity * $saleDetail->price;
+            });
+            $totalDesc = $saleDetails->sum(function ($saleDetail) {
+                return $saleDetail->descuento + $saleDetail->descuento_cliente;
+            });
+            $sale->total_bruto = $totalBruto;
+            $sale->descuentos = $totalDesc;
+            $sale->save();
+           
+          
+
             return response()->json([
-                'status' => 1,                
+                'status' => 1,
                 'array' => $arraydetail,
                 'arrayTotales' => $arrayTotales,
                 'message' => 'Se realizo con exito'
@@ -737,12 +764,12 @@ class saleController extends Controller
         $formattedDate = $currentDateTime->format('Y-m-d');
         $ventaId = $request->input('ventaId');
         $compensadores = Sale::find($ventaId);
-        $compensadores->resolucion = '777889996';
+     
         $compensadores->fecha_cierre = $formattedDate;
         $compensadores->save();
         $compensadores = Sale::where('id', $ventaId)->get();
         $centrocosto_id = $compensadores->first()->centrocosto_id;
-       
+
 
         DB::update(
             "
