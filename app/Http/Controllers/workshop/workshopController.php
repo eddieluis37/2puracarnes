@@ -176,7 +176,7 @@ class workshopController extends Controller
 
         $costo_kilo_padre = $cortes[0]->cost;
         $workshop = Workshop::firstWhere('id', $id);
-        $workshop->costo_kilo_padre = $costo_kilo_padre;
+     /*    $workshop->costo_kilo_padre = $costo_kilo_padre; */
         $workshop->save();
 
         $total_valor_padre = $workshop->peso_producto_padre * $costo_kilo_padre;
