@@ -64,7 +64,7 @@ class workshopController extends Controller
             ])->get();
         //  dd($cortes);
         // dd($dataWorkshop);
-        $cate = $dataWorkshop[0]->categoria_id;
+       /*  $cate = $dataWorkshop[0]->categoria_id;
         // dd($cate);
         switch ($cate) {
             case 1:
@@ -136,7 +136,7 @@ class workshopController extends Controller
         }
         if ($getCostoKilo->isEmpty()) {
             echo "Advertencia: Costo Kilo esta vacio. Favor validar los valores en el Desposte";
-        }
+        } */
         //  dd($getCostoKilo);
 
         /**************************************** */
@@ -174,7 +174,7 @@ class workshopController extends Controller
         $arrayTotales = $this->sumTotales($id);
 
 
-        $costo_kilo_padre = $getCostoKilo[0]->costo_kilo;
+        $costo_kilo_padre = $cortes[0]->cost;
         $workshop = Workshop::firstWhere('id', $id);
         $workshop->costo_kilo_padre = $costo_kilo_padre;
         $workshop->save();
@@ -186,7 +186,7 @@ class workshopController extends Controller
 
         Session::flash('refresh', true);
 
-        return view('workshop.create', compact('dataWorkshop', 'cortes', 'getCostoKilo', 'workshops', 'arrayTotales', 'status', 'statusInventory', 'display'));
+        return view('workshop.create', compact('dataWorkshop', 'cortes', 'workshops', 'arrayTotales', 'status', 'statusInventory', 'display'));
 
         /*     return redirect(url()->current()); */
     }
