@@ -52,10 +52,8 @@
         <ul class="navbar-item flex-row search-ul">
             <li class="nav-item align-self-center search-animated">
                
-
             </li>
         </ul>
-
 
         <ul class="navbar-item flex-row navbar-dropdown">
             <li class="nav-item dropdown language-dropdown more-dropdown">
