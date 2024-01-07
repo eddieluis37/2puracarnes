@@ -9,14 +9,16 @@
 <div class="row sales layout-top-spacing">
 	<div class="col-sm-12">
 		<div class="widget widget-chart-one">
-			<div class="row">
-				<div class="col-sm-5">
-					<h4 class="">
-						<b> Compensado / Categoria </b>
-					</h4>
-				</div>
+			<div class="widget-heading">
+				<h4 class="card-title">
+					<b> Compensado | Categoria </b>
+				</h4>
+				<ul class="tabs tab-pills">
+					<li>						
+						<a href="javascript:void(0)" onclick="window.location.href = '../../compensado'" class="tabmenu bg-blue" data-toggle="modal" data-target="" title="Regresa al listado">Volver</a>
+					</li>
+				</ul>
 			</div>
-
 			<div class="widget-content mt-3">
 				<div class="card">
 					<div class="card-body">
@@ -47,7 +49,7 @@
 								</div>
 							</div>
 							<div class="col-md-2 mt-6">
-								<button type="button" class="btn btn-primary" onclick="history.back()">Volver</button>
+								
 							</div>
 						</div>
 					</div>
@@ -168,7 +170,7 @@
 										</td>
 									</tr>
 								</tfoot>
-							</table>						
+							</table>
 						</div>
 					</div>
 				</div>
