@@ -11,11 +11,11 @@
 		<div class="widget widget-chart-one">
 			<div class="widget-heading">
 				<h4 class="card-title">
-					<b> Compensado | Categoria </b>
+					<b> Compensado | Res </b>
 				</h4>
 				<ul class="tabs tab-pills">
 					<li>						
-						<a href="javascript:void(0)" onclick="window.location.href = '../../compensado'" class="tabmenu bg-blue" data-toggle="modal" data-target="" title="Regresa al listado">Volver</a>
+						<a href="javascript:void(0)" onclick="window.location.href = '../../compensado'" class="tabmenu bg-dark" data-toggle="modal" data-target="" title="Regresa al listado">Volver</a>
 					</li>
 				</ul>
 			</div>
