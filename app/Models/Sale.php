@@ -11,7 +11,7 @@ class Sale extends Model
     use HasFactory;
 
     protected $fillable = [
-        'valor_a_pagar_efectivo', 'total', 'total_iva', 'items', 'cash', 'cambio', 'status', 'fecha', 'consecutivo', 'user_id',
+        'valor_a_pagar_efectivo', 'total', 'total_iva', 'items', 'cash', 'cambio', 'status', 'fecha', 'consecutivo', 'resol', 'user_id',
         'third_id', 'vendedor_id', 'domiciliario_id', 'centrocosto_id'
     ];
 

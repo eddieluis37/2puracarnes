@@ -22,6 +22,26 @@
             </li>
             @endcan
 
+            @can('Admin_Menu')
+            <li class="menu">
+                <a href="#documentos" data-active="false" class="menu-toggle">
+                    <div class="base-menu">
+                        <div class="base-icons">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text">
+                                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                                <polyline points="14 2 14 8 20 8"></polyline>
+                                <line x1="16" y1="13" x2="8" y2="13"></line>
+                            </svg>
+                        </div>
+                        <span>Documentos</span>
+                    </div>
+                </a>
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-left">
+                    <polyline points="15 18 9 12 15 6"></polyline>
+                </svg>
+            </li>
+            @endcan
+
             <!--             @can('Pos_Create')
             <li class="">
                 <a href="{{ url('sale/create/3') }}" class="menu-toggle" data-active="false">
@@ -207,6 +227,26 @@
                         <span>Arqueos</span>
                     </div>
                 </a>
+            </li>
+            @endcan
+
+            @can('Admin_Menu')
+            <li class="menu">
+                <a href="#documentos" data-active="false" class="menu-toggle">
+                    <div class="base-menu">
+                        <div class="base-icons">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text">
+                                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                                <polyline points="14 2 14 8 20 8"></polyline>
+                                <line x1="16" y1="13" x2="8" y2="13"></line>
+                            </svg>
+                        </div>
+                        <span>Documentos</span>
+                    </div>
+                </a>
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-left">
+                    <polyline points="15 18 9 12 15 6"></polyline>
+                </svg>
             </li>
             @endcan
 
@@ -725,54 +765,71 @@
             </ul>
         </div>
 
-        <div class=" submenu" id="users">
-                                <ul class="submenu-list" data-parent-element="#users">
+        <div class=" submenu" id="documentos">
+                                <ul class="submenu-list" data-parent-element="#documentos">
                                     <li>
-                                        <a href="{{ url('roles') }}"><span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-circle">
+                                        <a href="{{ url('notacredito') }}"><span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-circle">
                                                     <circle cx="12" cy="12" r="10"></circle>
-                                                </svg></span> Roles </a>
+                                                </svg></span> Nota crédito </a>
                                     </li>
                                     <li>
-                                        <a href="{{ url('users') }}"><span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-circle">
+                                        <a href="{{ url('notadebito') }}"><span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-circle">
                                                     <circle cx="12" cy="12" r="10"></circle>
-                                                </svg></span> Usuarios </a>
+                                                </svg></span> Nota débito </a>
                                     </li>
-                                    <li>
-                                        <a href="{{ url('permisos') }}"><span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-circle">
-                                                    <circle cx="12" cy="12" r="10"></circle>
-                                                </svg></span> Permisos </a>
-                                    </li>
-                                    <li>
-                                        <a href="{{ url('asignar') }}"><span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-circle">
-                                                    <circle cx="12" cy="12" r="10"></circle>
-                                                </svg></span> Asignar Permisos </a>
-                                    </li>
-                                    <li>
-                                        <a href="{{url('coins')}}"><span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-circle">
-                                                    <circle cx="12" cy="12" r="10"></circle>
-                                                </svg></span> Denominaciones </a>
-                                    </li>
-                                    <li>
-                                        <a href="{{url('thirds')}}"><span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-circle">
-                                                    <circle cx="12" cy="12" r="10"></circle>
-                                                </svg></span> Terceros </a>
-                                    </li>
-                                    <li>
-                                        <a href="{{url('precio_agreements')}}"><span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-circle">
-                                                    <circle cx="12" cy="12" r="10"></circle>
-                                                </svg></span> Precios Acuerdos </a>
-                                    </li>
-                                    <li>
-                                        <a href="{{url('formapago')}}"><span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-circle">
-                                                    <circle cx="12" cy="12" r="10"></circle>
-                                                </svg></span> Formas de Pago </a>
-                                    </li>
-                                    <li>
-                                        <a href="{{url('parametrocontable')}}"><span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-circle">
-                                                    <circle cx="12" cy="12" r="10"></circle>
-                                                </svg></span> Parámetros Contables </a>
-                                    </li>
+
                                 </ul>
+        </div>
+
+
+        <div class=" submenu" id="users">
+            <ul class="submenu-list" data-parent-element="#users">
+                <li>
+                    <a href="{{ url('roles') }}"><span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-circle">
+                                <circle cx="12" cy="12" r="10"></circle>
+                            </svg></span> Roles </a>
+                </li>
+                <li>
+                    <a href="{{ url('users') }}"><span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-circle">
+                                <circle cx="12" cy="12" r="10"></circle>
+                            </svg></span> Usuarios </a>
+                </li>
+                <li>
+                    <a href="{{ url('permisos') }}"><span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-circle">
+                                <circle cx="12" cy="12" r="10"></circle>
+                            </svg></span> Permisos </a>
+                </li>
+                <li>
+                    <a href="{{ url('asignar') }}"><span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-circle">
+                                <circle cx="12" cy="12" r="10"></circle>
+                            </svg></span> Asignar Permisos </a>
+                </li>
+                <li>
+                    <a href="{{url('coins')}}"><span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-circle">
+                                <circle cx="12" cy="12" r="10"></circle>
+                            </svg></span> Denominaciones </a>
+                </li>
+                <li>
+                    <a href="{{url('thirds')}}"><span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-circle">
+                                <circle cx="12" cy="12" r="10"></circle>
+                            </svg></span> Terceros </a>
+                </li>
+                <li>
+                    <a href="{{url('precio_agreements')}}"><span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-circle">
+                                <circle cx="12" cy="12" r="10"></circle>
+                            </svg></span> Precios Acuerdos </a>
+                </li>
+                <li>
+                    <a href="{{url('formapago')}}"><span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-circle">
+                                <circle cx="12" cy="12" r="10"></circle>
+                            </svg></span> Formas de Pago </a>
+                </li>
+                <li>
+                    <a href="{{url('parametrocontable')}}"><span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-circle">
+                                <circle cx="12" cy="12" r="10"></circle>
+                            </svg></span> Parámetros Contables </a>
+                </li>
+            </ul>
         </div>
 
 

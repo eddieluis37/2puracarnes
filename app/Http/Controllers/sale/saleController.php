@@ -85,9 +85,19 @@ class saleController extends Controller
             $venta->valor_pagado = $valor_pagado;
             $venta->cambio = $cambio;
             $venta->status = $status;
-
-
             $venta->fecha_cierre = now();
+
+            if (($venta->centrocosto_id == 1 || $venta->centrocosto_id == 2) && $venta->tipo == '0') {
+                $count = DB::table('sales')->where('tipo', '0')->count();
+                $resolucion = 'PC ' . str_pad(9000 + $count, 4, '0', STR_PAD_LEFT);
+                $venta->resolucion = $resolucion;
+            }
+
+            if (($venta->centrocosto_id == 1 || $venta->centrocosto_id == 2) && $venta->tipo == '1') {
+                $count = DB::table('sales')->where('tipo', '1')->count();
+                $resolucion = 'PCE ' . str_pad(13135 + $count, 4, '0', STR_PAD_LEFT);
+                $venta->resolucion = $resolucion;
+            }
 
             $venta->save();
 
@@ -489,9 +499,27 @@ class saleController extends Controller
 
                 $venta->valor_pagado = 0;
                 $venta->cambio = 0;
-
-
+                $venta->tipo = "1";
                 $venta->save();
+
+                //ACTUALIZA CONSECUTIVO 
+                $idcc = $request->centrocosto;
+                DB::update(
+                    "
+        UPDATE sales a,    
+        (
+            SELECT @numeroConsecutivo:= (SELECT (COALESCE (max(consec),0) ) FROM sales where centrocosto_id = :vcentrocosto1 ),
+            @documento:= (SELECT MAX(prefijo) FROM centro_costo where id = :vcentrocosto2 )
+        ) as tabla
+        SET a.consecutivo =  CONCAT( @documento,  LPAD( (@numeroConsecutivo:=@numeroConsecutivo + 1),5,'0' ) ),
+            a.consec = @numeroConsecutivo
+        WHERE a.consecutivo is null",
+                    [
+                        'vcentrocosto1' => $idcc,
+                        'vcentrocosto2' => $idcc
+                    ]
+                );
+
                 return response()->json([
                     'status' => 1,
                     'message' => 'Guardado correctamente',
@@ -636,20 +664,47 @@ class saleController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroyVenta(Request $request)
+    public function destroy(Request $request)
     {
+     
+
         try {
+
             $compe = SaleDetail::where('id', $request->id)->first();
-            $compe->status = 0;
-            $compe->save();
+            $compe->delete();
 
             $arraydetail = $this->getventasdetail($request->ventaId);
 
             $arrayTotales = $this->sumTotales($request->ventaId);
+
+           
+            $sale = Sale::find($request->ventaId);
+            $sale->items = SaleDetail::where('sale_id', $sale->id)->count();
+            $sale->descuentos = 0;
+            $sale->total_iva = 0;
+            $sale->total_otros_impuestos = 0;
+            $saleDetails = SaleDetail::where('sale_id', $sale->id)->get();
+            $totalBruto = 0;
+            $totalDesc = 0;
+            $total_valor_a_pagar = $saleDetails->where('sale_id', $sale->id)->sum('total');
+            $sale->total_valor_a_pagar = $total_valor_a_pagar;
+            $totalBruto = $saleDetails->sum(function ($saleDetail) {
+                return $saleDetail->quantity * $saleDetail->price;
+            });
+            $totalDesc = $saleDetails->sum(function ($saleDetail) {
+                return $saleDetail->descuento + $saleDetail->descuento_cliente;
+            });
+            $sale->total_bruto = $totalBruto;
+            $sale->descuentos = $totalDesc;
+            $sale->save();
+           
+          
+
             return response()->json([
                 'status' => 1,
                 'array' => $arraydetail,
-                'arrayTotales' => $arrayTotales
+                'arrayTotales' => $arrayTotales,
+                'message' => 'Se realizo con exito'
             ]);
         } catch (\Throwable $th) {
             return response()->json([
@@ -659,7 +714,7 @@ class saleController extends Controller
         }
     }
 
-    public function destroy(Request $request)
+    public function destroyVenta(Request $request)
     {
         try {
             $compe = Sale::where('id', $request->id)->first();
@@ -709,10 +764,12 @@ class saleController extends Controller
         $formattedDate = $currentDateTime->format('Y-m-d');
         $ventaId = $request->input('ventaId');
         $compensadores = Sale::find($ventaId);
+     
         $compensadores->fecha_cierre = $formattedDate;
         $compensadores->save();
         $compensadores = Sale::where('id', $ventaId)->get();
         $centrocosto_id = $compensadores->first()->centrocosto_id;
+
 
         DB::update(
             "
@@ -762,6 +819,7 @@ class saleController extends Controller
             DB::table('temporary_accumulatedWeights')->truncate();
         }
 
+
         return response()->json([
             'status' => 1,
             'message' => 'Cargado al inventario exitosamente',
@@ -769,7 +827,7 @@ class saleController extends Controller
         ]);
     }
 
-    public function storeVentaMostrador()
+    public function storeVentaMostrador(Request $request)
     {
         try {
             $currentDateTime = Carbon::now();
@@ -802,6 +860,24 @@ class saleController extends Controller
             $venta->valor_pagado = 0;
             $venta->cambio = 0;
             $venta->save();
+
+            //ACTUALIZA CONSECUTIVO 
+            $idcc = $request->centrocosto;
+            DB::update(
+                "
+     UPDATE sales a,    
+     (
+         SELECT @numeroConsecutivo:= (SELECT (COALESCE (max(consec),0) ) FROM sales where centrocosto_id = :vcentrocosto1 ),
+         @documento:= (SELECT MAX(prefijo) FROM centro_costo where id = :vcentrocosto2 )
+     ) as tabla
+     SET a.consecutivo =  CONCAT( @documento,  LPAD( (@numeroConsecutivo:=@numeroConsecutivo + 1),5,'0' ) ),
+         a.consec = @numeroConsecutivo
+     WHERE a.consecutivo is null",
+                [
+                    'vcentrocosto1' => $idcc,
+                    'vcentrocosto2' => $idcc
+                ]
+            );
 
             return response()->json([
                 'status' => 1,

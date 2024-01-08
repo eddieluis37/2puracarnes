@@ -6,12 +6,12 @@
 		<div class="widget widget-chart-one">
 			<div class="widget-heading">
 				<h4 class="card-title">
-					<b>Ventas | Listado </b>
+					<b>Nota crédito | Listado </b>
 				</h4>
 				<ul class="tabs tab-pills">
 					<li>
-						<a href="javascript:void(0)" onclick="showModalcreate()" class="tabmenu bg-dark" data-toggle="modal" data-target="#modal-create-compensado" title="Nueva venta por domicilio">Domicilio</a>
-						<a href="javascript:void(0)" class="tabmenu bg-dark" id="storeVentaMostradorBtn"  title="Nueva venta por mostrador">Mostrador</a>
+						<a href="javascript:void(0)" onclick="showModalcreate()" class="tabmenu bg-dark" data-toggle="modal" data-target="#modal-create-compensado" title="Nueva nota credito">Crear</a>
+					
 					</li>
 				</ul>
 			</div>
@@ -27,8 +27,6 @@
 								<th class="table-th text-white">ESTADO</th>
 								<th class="table-th text-white">VALOR.F</th>
 								<th class="table-th text-white">DIA.HORA</th>
-								<th class="table-th text-white">FACTURA</th>
-								<th class="table-th text-white">RESOLUCION</th>
 								<th class="table-th text-white text-center">Acciones</th>
 							</tr>
 						</thead>
@@ -46,12 +44,12 @@
 				<fieldset id="contentDisable">
 					<form action="" id="form-compensado-res">
 						<div class="modal-header">
-							<h4 class="modal-title">Crear venta domicilio</h4>
+							<h4 class="modal-title">Crear nota credito</h4>
 							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 								<span aria-hidden="true">&times;</span></button>
 						</div>
 				 		<div class="modal-body">
-								@include('sale.modal_create')
+								@include('notacredito.modal_create')
 						</div>
 						<div class="modal-footer">
 							<button type="button" id="btnModalClose" class="btn btn-default" data-dismiss="modal">Cancelar</button>
@@ -68,6 +66,6 @@
 </div>
 @endsection
 @section('script')
-<script src="{{asset('rogercode/js/sale/rogercode-ventas-index.js')}}"></script>
-<script src="{{asset('rogercode/js/sale/rogercode-create-update.js')}}" type="module"></script>
+<script src="{{asset('rogercode/js/notacredito/rogercode-notacredito-index.js')}}"></script>
+<script src="{{asset('rogercode/js/notacredito/rogercode-create-update.js')}}" type="module"></script>
 @endsection

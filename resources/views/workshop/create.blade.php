@@ -9,12 +9,15 @@
 <div class="row sales layout-top-spacing">
 	<div class="col-sm-12">
 		<div class="widget widget-chart-one">
-			<div class="row">
-				<div class="col-sm-5">
-					<h4 class="">
-						<b> Taller / Categoria </b>
-					</h4>
-				</div>
+			<div class="widget-heading">
+				<h4 class="card-title">
+					<b> Taller | Categorías </b>
+				</h4>
+				<ul class="tabs tab-pills">
+					<li>
+						<a href="javascript:void(0)" onclick="window.location.href = '../../workshop'" class="tabmenu bg-dark" data-toggle="modal" data-target="" title="Regresa al listado">Volver</a>
+					</li>
+				</ul>
 			</div>
 
 			<div class="widget-content mt-3">
@@ -116,7 +119,7 @@
 							<div class="col-md-2">
 								<label for="" class="form-label">Costo KG padre</label>
 								<div class="input-group flex-nowrap">
-									<input type="text" id="costoKiloPadre" name="costoKiloPadre" value="{{ '$ ' . number_format($getCostoKilo[0]->costo_kilo, 0) }}" data-id="{{ $getCostoKilo[0]->costo_kilo }}" class="form-control-sm form-control" placeholder="10,00 kg" readonly>
+									<input type="text" id="costoKiloPadre" name="costoKiloPadre" value="{{ '$ ' . number_format($cortes[0]->cost, 0) }}" data-id="{{ $cortes[0]->cost }}" class="form-control-sm form-control" placeholder="10,00 kg" readonly>
 								</div>
 							</div>
 
@@ -131,13 +134,13 @@
 							<div class="col-md-2">
 								<label for="" class="form-label">Costo padre</label>
 								<div class="input-group flex-nowrap">
-								<input type="text" id="totalValorPadre" name="totalValorPadre" value="{{ '$ ' . number_format($dataWorkshop[0]->total_valor_padre, 0) }}" class="form-control-sm form-control" placeholder="10,00 kg" readonly>
+									<input type="text" id="totalValorPadre" name="totalValorPadre" value="{{ '$ ' . number_format($dataWorkshop[0]->total_valor_padre, 0) }}" class="form-control-sm form-control" placeholder="10,00 kg" readonly>
 									<!-- <input type="text" id="totalValorPadre" name="totalValorPadre" value="{{$dataWorkshop[0]->total_valor_padre}}" class="form-control-sm form-control" placeholder="30,00 kg" readonly> -->
 									<span class="input-group-text" id="addon-wrapping">KG</span>
 								</div>
 							</div>
 
-						<!-- 	<div class="col-md-2">
+							<!-- 	<div class="col-md-2">
 								<label for="" class="form-label">Merma</label>
 								<div class="input-group flex-nowrap">
 									<input type="text" id="merma" name="merma" value="{{$dataWorkshop[0]->merma}}" class="form-control-sm form-control" placeholder="180.40 kg" readonly>
@@ -199,7 +202,7 @@
 								</tbody>
 								<tfoot id="tabletfoot">
 									<tr>
-										<th>Merma</th>										
+										<th>Merma</th>
 										<th> {{number_format($arrayTotales['totalMerma'], 2, ',', '.')}} </th>
 										<th></th>
 										<th> {{number_format($arrayTotales['totalPesoProductoHijo'], 2, ',', '.')}} KG</th>
@@ -221,11 +224,11 @@
 
 
 @if(Session::has('refresh'))
-    <script>
-        $(document).ready(function() {
-            location.reload();
-        });
-    </script>
+<script>
+	$(document).ready(function() {
+		location.reload();
+	});
+</script>
 @endif
 
 

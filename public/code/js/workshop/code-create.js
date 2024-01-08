@@ -69,30 +69,6 @@ sendData("/getproductos", dataform, token).then((result) => {
         selectProducto.appendChild(optionElement);
     });
 });
-/*$('.select2Prod').on('change', function() {
-    const selectedValue = $(this).val();
-    console.log("Selected value: " + selectedValue);
-    const selectedOption = $(this).find('option:selected');
-    const attributeStock = selectedOption.attr('data-stock');
-    console.log("Attribute value: " + attributeStock);
-    stockPadre.value = attributeStock;
-    const dataform = new FormData();
-    dataform.append("categoriaId", Number(selectedValue));
-    sendData("/getproductos",dataform,token).then((result) => {
-        console.log(result);
-        let prod = result.products;
-        console.log(prod);
-        selectProducto.innerHTML = "";
-        selectProducto.innerHTML += `<option value="">Seleccione el producto</option>`;
-        prod.forEach(option => {
-        const optionElement = document.createElement("option");
-        optionElement.value = option.id;
-        optionElement.text = option.name;
-        selectProducto.appendChild(optionElement);
-        });
-    });
-});*/
-
 btnAddWork.addEventListener("click", (e) => {
     e.preventDefault();
     const dataform = new FormData(formDetail);
@@ -113,13 +89,14 @@ btnAddWork.addEventListener("click", (e) => {
             $("#producto").val("").trigger("change");
             formDetail.reset();
             showData(result);
+
+           
         }
         if (result.status === 0) {
             errorMessage("Tienes campos vacios");
         }
     });
 });
-
 const showData = (data) => {
     console.log(data);
     let dataAll = data.array;
@@ -185,21 +162,14 @@ const showData = (data) => {
                     if (result && result.value) {
                         loadingStart(element);
                         const dataform = new FormData();
-                        dataform.append(
-                            "tallerId",
-                            Number(tallerId.value)
-                        );
+                        dataform.append("tallerId", Number(tallerId.value));
                         return sendData("/afectarCostos", dataform, token);
                     }
                 })
                 .then((result) => {
                     console.log(result);
                     if (result && result.status == 1) {
-                        loadingEnd(
-                            element,
-                            "success",
-                            "Afectando a costos"
-                        );
+                        loadingEnd(element, "success", "Afectando a costos");
                         element.disabled = true;
                         return swal(
                             "EXITO",
@@ -208,11 +178,7 @@ const showData = (data) => {
                         );
                     }
                     if (result && result.status == 0) {
-                        loadingEnd(
-                            element,
-                            "success",
-                            "Afectando a costos"
-                        );
+                        loadingEnd(element, "success", "Afectando a costos");
                         errorMessage(result.message);
                     }
                 })

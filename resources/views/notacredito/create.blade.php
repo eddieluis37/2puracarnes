@@ -9,16 +9,14 @@
 <div class="row sales layout-top-spacing">
 	<div class="col-sm-12">
 		<div class="widget widget-chart-one">
-			<div class="widget-heading">
-				<h4 class="card-title">
-					<b> Ventas </b>
-				</h4>
-				<ul class="tabs tab-pills">
-					<li>
-						<a href="javascript:void(0)" onclick="window.location.href = '../../sales'" class="tabmenu bg-dark" data-toggle="modal" data-target="" title="Regresa al listado">Volver</a>
-					</li>
-				</ul>
+			<div class="row">
+				<div class="col-sm-5">
+					<h4 class="">
+						<b> Ventas </b>
+					</h4>
+				</div>
 			</div>
+
 			<div class="widget-content mt-3">
 				<div class="card">
 					<div class="card-body">
@@ -154,14 +152,14 @@
 									<th class="table-th text-white">Cant</th>
 									<th class="table-th text-white">Valor.U</th>
 									<th class="table-th text-white">%Des</th>
-									<th class="table-th text-white">Des</th>
+									<th class="table-th text-white">Des</th>								
 									<th class="table-th text-white">{{$datacompensado[0]->porc_descuento}}%DCl</th>
 									<th class="table-th text-white">Total.B</th>
 									<th class="table-th text-white">%IVA</th>
 									<th class="table-th text-white">IVA</th>
 									<th class="table-th text-white">%I.S</th>
 									<th class="table-th text-white">I.S</th>
-
+																	
 									<th class="table-th text-white">Total</th>
 									<th class="table-th text-white text-center">Acciones</th>
 								</tr>
@@ -174,14 +172,14 @@
 									<td>{{$proddetail->nameprod}}</td>
 									<td>{{ number_format($proddetail->quantity, 2, ',', '.')}} KG</td>
 									<td>$ {{ number_format($proddetail->price, 0, ',', '.')}}</td>
-									<td>{{$proddetail->porc_desc}}%</td>
+									<td>{{$proddetail->porc_desc}}%</td>									
 									<td>$ {{ number_format($proddetail->descuento, 0, ',', '.')}}</td>
 									<td>$ {{ number_format($proddetail->descuento_cliente, 0, ',', '.')}}</td>
-									<td>$ {{ number_format($proddetail->total_bruto, 0, ',', '.')}}</td>
+									<td>$ {{ number_format($proddetail->total_bruto, 0, ',', '.')}}</td>	
 									<td>{{$proddetail->porc_iva}}%</td>
-									<td>$ {{ number_format($proddetail->iva, 0, ',', '.')}}</td>
+									<td>$ {{ number_format($proddetail->iva, 0, ',', '.')}}</td>									
 									<td>{{$proddetail->porc_otro_impuesto}}%</td>
-									<td>$ {{ number_format($proddetail->otro_impuesto, 0, ',', '.')}}</td>
+									<td>$ {{ number_format($proddetail->otro_impuesto, 0, ',', '.')}}</td>																
 									<td>$ {{ number_format($proddetail->total, 0, ',', '.')}}</td>
 									<td class="text-center">
 										@if($status == 'true')
@@ -204,14 +202,14 @@
 									<th>Totales</th>
 									<th></th>
 									<th></th>
-									<td></td>
+									<td></td>									
 									<th></th>
 									<th></th>
 									<th>$ {{number_format($arrayTotales['TotalBruto'], 0, ',', '.')}} </th>
 									<td></td>
 									<td></td>
-									<td></td>
-									<td></td>
+									<td></td>		
+									<td></td>							
 									<th>$ {{number_format($arrayTotales['TotalValorAPagar'], 0, ',', '.')}} </th>
 									<th class="text-center">
 										<form method="GET" action="registrar_pago/{{$id}}">
@@ -232,5 +230,5 @@
 </div>
 @endsection
 @section('script')
-<script src="{{asset('rogercode/js/sale/rogercode-create.js')}}" type="module"></script>
+<script src="{{asset('rogercode/js/notacredito/rogercode-create.js')}}" type="module"></script>
 @endsection

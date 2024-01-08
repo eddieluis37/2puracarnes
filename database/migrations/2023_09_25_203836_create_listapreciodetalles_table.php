@@ -22,9 +22,7 @@ class CreateListapreciodetallesTable extends Migration
             $table->decimal('costo',10,0)->default(0)->nullable();
             $table->decimal('porc_util_proyectada',10,0)->default(18.00)->nullable();
             $table->decimal('precio_proyectado',10,0)->nullable();
-            $table->decimal('precio',10,0)->default(0)->nullable();
-            $table->decimal('descuento',10,0)->default(0)->nullable();
-            $table->decimal('porc_desc',10,2)->default(0)->nullable();
+            $table->decimal('precio',10,0)->default(0)->nullable();         
             $table->decimal('porc_iva',10,2)->default(0)->nullable();
             $table->decimal('iva',10,2)->default(0)->nullable();
             $table->decimal('utilidad',10,2)->default(2350)->nullable();
