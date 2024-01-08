@@ -64,16 +64,16 @@ class NotacreditoController extends Controller
      */
     public function show()
     {
-        $data = DB::table('sales as sa')
-            /*   ->join('categories as cat', 'sa.categoria_id', '=', 'cat.id') */
-            ->join('thirds as tird', 'sa.third_id', '=', 'tird.id')
-            ->join('centro_costo as centro', 'sa.centrocosto_id', '=', 'centro.id')
-            ->select('sa.*', 'tird.name as namethird', 'centro.name as namecentrocosto')
+        $data = DB::table('notacreditos as nc')
+             /*  ->join('sales as sa', 'nc.sale_id', '=', 'sa.id') */
+          /*   ->join('thirds as tird', 'sa.third_id', '=', 'tird.id')
+            ->join('centro_costo as centro', 'sa.centrocosto_id', '=', 'centro.id') */
+            ->select('nc.*')
             /*  ->where('sa.status', 1) */
             ->get();
 
         //  $data = Sale::orderBy('id','desc');
-
+ 
         return Datatables::of($data)->addIndexColumn()
             ->addColumn('status', function ($data) {
                 if ($data->status == 1) {

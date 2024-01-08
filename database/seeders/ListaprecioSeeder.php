@@ -1,6 +1,7 @@
 <?php
 
 namespace Database\Seeders;
+
 use App\Models\Listaprecio;
 
 use Illuminate\Database\Seeder;
@@ -15,107 +16,105 @@ class ListaprecioSeeder extends Seeder
     public function run()
     {
         $lp = new Listaprecio([
-            "id"=> "1", 
-            "centrocosto_id" => "1", 
-            "nombre" => "GENERAL - GUADALUPE", 
-            "tipo" => "GENERAL"
-        ]); $lp->save();
-        
-        $lp = new Listaprecio([
-            "id"=> "2", 
-            "centrocosto_id" => "1", 
-            "nombre" => "HOGAR - GUADALUPE", 
-            "tipo" => "NICHO"
-        ]); $lp->save();
+            "centrocosto_id" => "1",
+            "nombre" => "1 - HOGAR",
+            "tipo" => "NICHO",
+            "fecha_cierre" => now(),
+        ]);
+        $lp->save();
 
         $lp = new Listaprecio([
-            "id"=> "3", 
-            "centrocosto_id" => "1", 
-            "nombre" => "PUNTO DE VENTA - GUADALUPE", 
-            "tipo" => "NICHO"
-        ]); $lp->save();
-        
-        $lp = new Listaprecio([
-            "id"=> "4", 
-            "centrocosto_id" => "1", 
-            "nombre" => "INSTITUCIONAL/FAMA - GUADALUPE", 
-            "tipo" => "NICHO"
-        ]); $lp->save();
-        
-        $lp = new Listaprecio([
-            "id"=> "5", 
-            "centrocosto_id" => "1", 
-            "nombre" => "REST PROD PORCIONADO - GUADALUPE", 
-            "tipo" => "NICHO"
-        ]); $lp->save();
+            "centrocosto_id" => "1",
+            "nombre" => "1 - PUNTO DE VENTA",
+            "tipo" => "NICHO",
+            "fecha_cierre" => now(),
+        ]);
+        $lp->save();
 
         $lp = new Listaprecio([
-            "id"=> "6", 
-            "centrocosto_id" => "1", 
-            "nombre" => "REST PROD EN POSTA - GUADALUPE", 
-            "tipo" => "NICHO"
-        ]); $lp->save();
+            "centrocosto_id" => "1",
+            "nombre" => "1 - INSTITUCIONAL/ FAMA",
+            "tipo" => "NICHO",
+            "fecha_cierre" => now(),
+        ]);
+        $lp->save();
 
         $lp = new Listaprecio([
-            "id"=> "7", 
-            "centrocosto_id" => "1", 
-            "nombre" => "APP MOVIL PLAYSTORE/APPLE - GUADALUPE",
-            "tipo" => "NICHO"
-        ]); $lp->save();
+            "centrocosto_id" => "1",
+            "nombre" => "1 - RESTAURANTES  PORCIONADOS",
+            "tipo" => "NICHO",
+            "fecha_cierre" => now(),
+        ]);
+        $lp->save();
 
         $lp = new Listaprecio([
-            "id"=> "8", 
-            "centrocosto_id" => "1", 
-            "nombre" => "RAPPI - GUADALUPE",
-            "tipo" => "NICHO"
-        ]); $lp->save();
+            "centrocosto_id" => "1",
+            "nombre" => "1 - RESTAURANTES PRODUCTOS  POSTA",
+            "tipo" => "NICHO",
+            "fecha_cierre" => now(),
+        ]);
+        $lp->save();
 
         $lp = new Listaprecio([
-            "id"=> "9", 
-            "centrocosto_id" => "1", 
-            "nombre" => "COLEGIO MINUTO DE DIOS - GUADALUPE",
-            "tipo" => "NICHO"
-        ]); $lp->save();
+            "centrocosto_id" => "1",
+            "nombre" => "1 - APP",
+            "tipo" => "NICHO",
+            "fecha_cierre" => now(),
+        ]);
+        $lp->save();
 
         $lp = new Listaprecio([
-            "id"=> "10", 
-            "centrocosto_id" => "1", 
-            "nombre" => "RAMDY - GUADALUPE",
-            "tipo" => "NICHO"
-        ]); $lp->save();
+            "centrocosto_id" => "1",
+            "nombre" => "1 - RAPPI",
+            "tipo" => "NICHO",
+            "fecha_cierre" => now(),
+        ]);
+        $lp->save();
 
         $lp = new Listaprecio([
-            "id"=> "11", 
-            "centrocosto_id" => "1", 
-            "nombre" => "MEGATIENDAS - GUADALUPE",
-            "tipo" => "NICHO"
-        ]); $lp->save();
+            "centrocosto_id" => "1",
+            "nombre" => "1 - CEMID",
+            "tipo" => "NICHO",
+            "fecha_cierre" => now(),
+        ]);
+        $lp->save();
 
         $lp = new Listaprecio([
-            "id"=> "12", 
-            "centrocosto_id" => "1", 
-            "nombre" => "JOSE SIERRA ESSASY - GUADALUPE",
-            "tipo" => "NICHO"
-        ]); $lp->save();
+            "centrocosto_id" => "1",
+            "nombre" => "1 - RAMDY",
+            "tipo" => "NICHO",
+            "fecha_cierre" => now(),
+        ]);
+        $lp->save();
 
         $lp = new Listaprecio([
-            "id"=> "13", 
-            "centrocosto_id" => "1", 
-            "nombre" => "GRUPO NAZCA - GUADALUPE",
-            "tipo" => "NICHO"
-        ]); $lp->save();
+            "centrocosto_id" => "1",
+            "nombre" => "1 - 14 INKA",
+            "tipo" => "NICHO",
+            "fecha_cierre" => now(),
+        ]);
+        $lp->save();
 
         $lp = new Listaprecio([
-            "id"=> "14", 
-            "centrocosto_id" => "1", 
-            "nombre" => "CASINO FAC - GUADALUPE",
-            "tipo" => "NICHO"
-        ]); $lp->save();
-
-
-    // PARA SEGUNDO CENTRO COSTO
+            "centrocosto_id" => "1",
+            "nombre" => "1 - FAC",
+            "tipo" => "NICHO",
+            "fecha_cierre" => now(),
+        ]);
+        $lp->save();     
 
         $lp = new Listaprecio([
+            "centrocosto_id" => "1",
+            "nombre" => "1 - GRUPO VEZA",
+            "tipo" => "NICHO",
+            "fecha_cierre" => now(),
+        ]);
+        $lp->save();
+
+
+        // PARA SEGUNDO CENTRO COSTO
+
+        /*    $lp = new Listaprecio([
             "id"=> "15", 
             "centrocosto_id" => "2", 
             "nombre" => "GENERAL - MIN DE DIOS", 
@@ -155,7 +154,6 @@ class ListaprecioSeeder extends Seeder
             "centrocosto_id" => "2", 
             "nombre" => "REST PROD EN POSTA - MIN DE DIOS", 
             "tipo" => "NICHO"
-        ]); $lp->save();       
-       
+        ]); $lp->save();      */
     }
 }

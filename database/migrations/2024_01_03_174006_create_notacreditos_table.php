@@ -18,8 +18,10 @@ class CreateNotacreditosTable extends Migration
             $table->unsignedBigInteger('sale_id');    
             $table->foreign('sale_id')->references('id')->on('sales'); 
             $table->enum('status',['0','1','2','3','4','5'])->default('0');
-            $table->enum('tipo', ['DEVOLUCION', 'ANULACION'])->default('DEVOLUCION');
-            $table->string('observacion');
+            $table->enum('tipo', ['DEVOLUCION', 'ANULACION', 'REBAJA', 'DESCUENTO', 'RESCISION', 'OTROS'])->default('DEVOLUCION');
+            $table->string('observacion')->nullable();
+            $table->date('fecha_notacredito')->nullable();       
+            $table->date('fecha_cierre')->nullable();   
             $table->timestamps();
         });
     }

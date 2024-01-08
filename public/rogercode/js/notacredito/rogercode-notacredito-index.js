@@ -28,7 +28,7 @@ $(document).ready(function () {
             },
             columns: [
                 { data: "id", name: "id" },
-                { data: "namethird", name: "namethird" },
+               /*  { data: "namethird", name: "namethird" },
                 { data: "namecentrocosto", name: "namecentrocosto" },
                 { data: "status", name: "status" },
                 {
@@ -40,7 +40,7 @@ $(document).ready(function () {
                             maximumFractionDigits: 0
                         });
                     }
-                },                      
+                },                    */   
                 { data: "date", name: "date" },
                 { data: "action", name: "action" },
             ],
