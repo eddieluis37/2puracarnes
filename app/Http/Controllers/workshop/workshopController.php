@@ -64,7 +64,7 @@ class workshopController extends Controller
             ])->get();
         //  dd($cortes);
         // dd($dataWorkshop);
-       /*  $cate = $dataWorkshop[0]->categoria_id;
+        /*  $cate = $dataWorkshop[0]->categoria_id;
         // dd($cate);
         switch ($cate) {
             case 1:
@@ -176,7 +176,7 @@ class workshopController extends Controller
 
         $costo_kilo_padre = $cortes[0]->cost;
         $workshop = Workshop::firstWhere('id', $id);
-     /*    $workshop->costo_kilo_padre = $costo_kilo_padre; */
+        /*    $workshop->costo_kilo_padre = $costo_kilo_padre; */
         $workshop->save();
 
         $total_valor_padre = $workshop->peso_producto_padre * $costo_kilo_padre;
@@ -369,181 +369,6 @@ class workshopController extends Controller
         return response()->json(['products' => $products]);
     }
 
-    public function savedetail(Request $request)
-    {
-        try {
-
-            $rules = [
-                'peso_producto_hijo' => 'required',
-                'producto' => 'required',
-                'costo_kilo_padre' => 'required|regex:/^\d+(\.\d+)?$/'
-
-            ];
-            $messages = [
-                'peso_producto_hijo.required' => 'Los kg requeridos son necesarios',
-                'producto.required' => 'El producto es requerido',
-                'costo_kilo_padre.regex' => 'costo_kilo_padre es un número entero o decimal separado por punto'
-            ];
-
-            $validator = Validator::make($request->all(), $rules, $messages);
-            if ($validator->fails()) {
-                return response()->json([
-                    'status' => 0,
-                    'errors' => $validator->errors()
-                ], 422);
-            }
-
-            $prod = DB::table('products as p')
-                ->join('centro_costo_products as ce', 'p.id', '=', 'ce.products_id')
-                ->select('ce.stock', 'ce.fisico', 'p.price_fama')
-                ->where([
-                    ['p.id', $request->producto],
-                    ['ce.centrocosto_id', $request->centrocosto],
-                    ['p.status', 1],
-
-                ])->get();
-
-
-            $formatCantidad = new metodosrogercodeController();
-
-            $sumakilosTotal = (float)Workshop_detail::Where([['workshops_id', $request->workshopId], ['status', 'VALID']])->sum('peso');
-            //  $porc = (float)number_format($key->peso / $sumakilosTotal,4);
-            //   $porcentajeDesposte = (float)number_format($porc * 100,2);
-
-
-            $formatpeso_producto_hijo = $formatCantidad->MoneyToNumber($request->peso_producto_hijo);
-            $newStock = $prod[0]->stock + $formatpeso_producto_hijo;
-
-            $users_id = Auth::user()->id;
-
-
-            $details = new workshop_detail();
-            $details->workshops_id = $request->tallerId;
-            $details->products_id = $request->producto;
-            $details->users_id = $users_id;
-            $details->precio = $prod[0]->price_fama;
-            $details->peso_producto_hijo = $formatpeso_producto_hijo;
-            $details->total = $formatpeso_producto_hijo * $prod[0]->price_fama;
-
-            $arrayTotales = $this->sumTotales($request->tallerId);
-
-            /*
-
-            if ($arrayTotales['totalPesoProductoHijo'] != 0) {
-                $details->porcventa = (float)number_format(($formatpeso_producto_hijo * $prod[0]->price_fama) / ($arrayTotales['totalPesoProductoHijo']) * 100, 2);
-            } else {
-                // Manejar la división por cero aquí
-                $details->porcventa = (float)number_format($formatpeso_producto_hijo * $prod[0]->price_fama / $formatpeso_producto_hijo);
-                // O mostrar un mensaje de error
-                // echo "Error: División por cero";
-            } */
-
-            $sumakilosTotal = (float)workshop_detail::Where([['workshops_id', $request->tallerId], ['status', 'VALID']])->sum('peso_producto_hijo');
-
-            if ($sumakilosTotal != 0) {
-                $porcve = (float)number_format($details->total / $sumakilosTotal, 4);
-                $details->porcventa = $porcve;
-            } else {
-                $porcve = (float)number_format(100);
-                $details->porcventa = $porcve;
-            }
-
-            $porcentajeVenta = (float)number_format($porcve * 100, 2);
-
-            $porcentajecostoTotal = (float)number_format($porcentajeVenta / 100, 4);
-
-            $workshop = Workshop::firstWhere('id', $request->tallerId);
-            $costo_kilo_padre = $workshop->costo_kilo_padre;
-            $peso_producto_padre = $workshop->peso_producto_padre;
-
-            //$details->costo = $formatCantidad->MoneyToNumber($request->porcventa * ($arrayTotales['totalPesoProductoHijo']));
-
-            $total2 = $peso_producto_padre * $costo_kilo_padre;
-
-            //  $total = $detail->peso_producto_hijo *  $costo_kilo_padre;
-
-            $costo = $porcentajecostoTotal * $total2;
-            $costo_kilo = $costo / $details->peso_producto_hijo;
-            $details->costo = $costo;
-            $details->costo_kilo = $costo_kilo;
-            $details->save();
-          
-            $arrayTotales = $this->sumTotales($request->tallerId);
-            $arraydetail = $this->getworkshopdetail($request->tallerId, $request->centrocosto);
-
-            $merma = $peso_producto_padre - $sumakilosTotal;
-
-            //   $newStockPadre = $request->stockPadre - $arrayTotales['totalPesoProductoHijo'];
-            $alist = Workshop::firstWhere('id', $request->tallerId);
-            $alist->total_peso_producto_hijo =  $arrayTotales['totalPesoProductoHijo'];
-            $alist->costo_kilo_padre = $request->input('costo_kilo_padre');
-            $alist->merma = 99;
-            //$alist->nuevo_stock_padre = $newStockPadre;
-            $alist->save();
-            
-           
-            return response()->json([
-                'status' => 1,
-                'message' => "Agregado correctamente",
-                'array' => $arraydetail,
-                'arrayTotales' => $arrayTotales,
-            ]);
-           
-        } catch (\Throwable $th) {
-            return response()->json([
-                'status' => 0,
-                'array' => (array) $th
-            ]);
-        }       
-    }
-
-    public function getworkshopdetail($tallerId, $centrocostoId)
-    {
-        $detail = DB::table('workshop_details as wd')
-            ->join('products as pro', 'wd.products_id', '=', 'pro.id')
-            ->join('centro_costo_products as ce', 'pro.id', '=', 'ce.products_id')
-            ->select('wd.*', 'pro.name as nameprod', 'pro.code', 'ce.stock', 'ce.fisico')
-            ->where([
-                ['ce.centrocosto_id', $centrocostoId],
-                ['wd.workshops_id', $tallerId],
-                ['wd.status', 1]
-            ])->get();
-
-        return $detail;
-    }
-
-    public function sumTotales($id)
-    {
-        $totalPesoProductoHijo = (float)workshop_detail::Where([['workshops_id', $id], ['status', 1]])->sum('peso_producto_hijo');
-        $totalPrecioVenta = (float)workshop_detail::Where([['workshops_id', $id], ['status', 1]])->sum('total');
-        $porcVentaTotal = (float)workshop_detail::Where([['workshops_id', $id], ['status', 'VALID']])->sum('porcventa');
-        $newTotalStock = (float)workshop_detail::Where([['workshops_id', $id], ['status', 1]])->sum('newstock');
-
-        $workshop = workshop::find($id);
-        $peso_producto_padre = $workshop->peso_producto_padre;
-        $total_valor_padre = $workshop->total_valor_padre;
-
-        $totalMerma = $totalPesoProductoHijo - $peso_producto_padre;
-        $totalUtilidad = $totalPrecioVenta - $total_valor_padre;
-
-        $porcUtilidad = 0;
-        if ($totalPesoProductoHijo != 0) {
-            $porcUtilidad = ($totalUtilidad / $totalPrecioVenta) * 100;
-        }
-
-        $array = [
-            'totalPesoProductoHijo' => $totalPesoProductoHijo,
-            'totalPrecioVenta' => $totalPrecioVenta,
-            'porcVentaTotal' => $porcVentaTotal,
-            'newTotalStock' => $newTotalStock,
-            'totalMerma' => $totalMerma,
-            'totalUtilidad' => $totalUtilidad,
-            'porcUtilidad' => $porcUtilidad,
-        ];
-
-        return $array;
-    }
-
     public function updatedetail(Request $request)
     {
         try {
@@ -642,6 +467,188 @@ class workshopController extends Controller
             ]);
         }
     }
+
+    public function savedetail(Request $request)
+    {
+        try {
+            $rules = [
+                'peso_producto_hijo' => 'required',
+                'producto' => 'required',
+                'costo_kilo_padre' => 'required|regex:/^\d+(\.\d+)?$/'
+            ];
+            $messages = [
+                'peso_producto_hijo.required' => 'Los kg requeridos son necesarios',
+                'producto.required' => 'El producto es requerido',
+                'costo_kilo_padre.regex' => 'costo_kilo_padre es un número entero o decimal separado por punto'
+            ];
+            $validator = Validator::make($request->all(), $rules, $messages);
+            if ($validator->fails()) {
+                return response()->json([
+                    'status' => 0,
+                    'errors' => $validator->errors()
+                ], 422);
+            }
+            $prod = DB::table('products as p')
+                ->join('centro_costo_products as ce', 'p.id', '=', 'ce.products_id')
+                ->select('ce.stock', 'ce.fisico', 'p.price_fama')
+                ->where([
+                    ['p.id', $request->producto],
+                    ['ce.centrocosto_id', $request->centrocosto],
+                    ['p.status', 1],
+                ])->get();
+            $formatCantidad = new metodosrogercodeController();
+            $sumakilosTotal = (float)Workshop_detail::Where([['workshops_id', $request->workshopId], ['status', 'VALID']])->sum('peso');
+            //  $porc = (float)number_format($key->peso / $sumakilosTotal,4);
+            //   $porcentajeDesposte = (float)number_format($porc * 100,2);
+            $formatpeso_producto_hijo = $formatCantidad->MoneyToNumber($request->peso_producto_hijo);
+            $newStock = $prod[0]->stock + $formatpeso_producto_hijo;
+
+            $users_id = Auth::user()->id;
+
+            $details = new workshop_detail();
+            $details->workshops_id = $request->tallerId;
+            $details->products_id = $request->producto;
+            $details->users_id = $users_id;
+            $details->precio = $prod[0]->price_fama;
+            $details->peso_producto_hijo = $formatpeso_producto_hijo;
+            $details->total = $formatpeso_producto_hijo * $prod[0]->price_fama;
+
+            $arrayTotales = $this->sumTotales($request->tallerId);
+
+            $sumakilosTotal = (float)workshop_detail::Where([['workshops_id', $request->tallerId], ['status', 'VALID']])->sum('peso_producto_hijo');
+
+            if ($sumakilosTotal != 0) {
+                $porcve = (float)number_format($details->total / $sumakilosTotal, 4);
+                $details->porcventa = $porcve;
+            } else {
+                $porcve = (float)number_format(100);
+                $details->porcventa = $porcve;
+            }
+
+            $porcentajeVenta = (float)number_format($porcve * 100, 2);
+
+            $porcentajecostoTotal = (float)number_format($porcentajeVenta / 100, 4);
+
+            $workshop = Workshop::firstWhere('id', $request->tallerId);
+            $costo_kilo_padre = $workshop->costo_kilo_padre;
+            $peso_producto_padre = $workshop->peso_producto_padre;
+            $total2 = $peso_producto_padre * $costo_kilo_padre;
+            $costo = $porcentajecostoTotal * $total2;
+            $costo_kilo = $costo / $details->peso_producto_hijo;
+            $details->costo = $costo;
+            $details->costo_kilo = $costo_kilo;
+            $details->save();
+
+            $merma = $peso_producto_padre - $sumakilosTotal;
+
+            //   $newStockPadre = $request->stockPadre - $arrayTotales['totalPesoProductoHijo'];
+            $alist = Workshop::firstWhere('id', $request->tallerId);
+            $alist->total_peso_producto_hijo =  $arrayTotales['totalPesoProductoHijo'];
+            $alist->costo_kilo_padre = $request->input('costo_kilo_padre');
+            $alist->merma = 99;
+            //$alist->nuevo_stock_padre = $newStockPadre;
+            $alist->save();
+
+            $arrayTotales = $this->sumTotales($request->tallerId);
+            $arraydetail = $this->getworkshopdetail($request->tallerId, $request->centrocosto);
+
+            $workshopDetails = workshop_detail::Where([['workshops_id', $request->tallerId], ['status', 'VALID']])->get();
+            $porcentajeVenta = 0;
+            $porcentajeDesposte = 0;
+
+            foreach ($workshopDetails as $detail) {
+                $sumakilosTotal = (float)workshop_detail::Where([['workshops_id', $request->tallerId], ['status', 'VALID']])->sum('peso_producto_hijo');
+                $porc = (float)number_format($detail->peso_producto_hijo / $sumakilosTotal, 4);
+
+                $sumaTotal = (float)workshop_detail::Where([['workshops_id', $request->tallerId], ['status', 'VALID']])->sum('total');
+                $porcve = (float)number_format($detail->total / $sumaTotal, 4);
+                $porcentajeVenta = (float)number_format($porcve * 100, 2);
+
+                $porcentajecostoTotal = (float)number_format($porcentajeVenta / 100, 4);
+                // $costoTotal = $porcentajecostoTotal * 2;                
+
+                $workshop = Workshop::firstWhere('id', $request->tallerId);
+                $costo_kilo_padre = $workshop->costo_kilo_padre;
+                $peso_producto_padre = $workshop->peso_producto_padre;
+
+                $total2 = $peso_producto_padre * $costo_kilo_padre;
+
+                //  $total = $detail->peso_producto_hijo *  $costo_kilo_padre;
+
+                $costo = $porcentajecostoTotal * $total2;
+                $costo_kilo = $costo / $detail->peso_producto_hijo;
+
+                $updateworkshop = workshop_detail::firstWhere('id', $detail->id);
+                $updateworkshop->porcventa = $porcentajeVenta;
+                $updateworkshop->costo = $costo;
+                $updateworkshop->costo_kilo = $costo_kilo;
+
+                $updateworkshop->save();
+
+            }
+
+            return response()->json([
+                'status' => 1,
+                'message' => "Agregado correctamente",
+                'array' => $arraydetail,
+                'arrayTotales' => $arrayTotales,
+            ]);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'status' => 0,
+                'array' => (array) $th
+            ]);
+        }
+    }
+
+    public function getworkshopdetail($tallerId, $centrocostoId)
+    {
+        $detail = DB::table('workshop_details as wd')
+            ->join('products as pro', 'wd.products_id', '=', 'pro.id')
+            ->join('centro_costo_products as ce', 'pro.id', '=', 'ce.products_id')
+            ->select('wd.*', 'pro.name as nameprod', 'pro.code', 'ce.stock', 'ce.fisico')
+            ->where([
+                ['ce.centrocosto_id', $centrocostoId],
+                ['wd.workshops_id', $tallerId],
+                ['wd.status', 1]
+            ])->get();
+
+        return $detail;
+    }
+
+    public function sumTotales($id)
+    {
+        $totalPesoProductoHijo = (float)workshop_detail::Where([['workshops_id', $id], ['status', 1]])->sum('peso_producto_hijo');
+        $totalPrecioVenta = (float)workshop_detail::Where([['workshops_id', $id], ['status', 1]])->sum('total');
+        $porcVentaTotal = (float)workshop_detail::Where([['workshops_id', $id], ['status', 'VALID']])->sum('porcventa');
+        $newTotalStock = (float)workshop_detail::Where([['workshops_id', $id], ['status', 1]])->sum('newstock');
+
+        $workshop = workshop::find($id);
+        $peso_producto_padre = $workshop->peso_producto_padre;
+        $total_valor_padre = $workshop->total_valor_padre;
+
+        $totalMerma = $totalPesoProductoHijo - $peso_producto_padre;
+        $totalUtilidad = $totalPrecioVenta - $total_valor_padre;
+
+        $porcUtilidad = 0;
+        if ($totalPesoProductoHijo != 0) {
+            $porcUtilidad = ($totalUtilidad / $totalPrecioVenta) * 100;
+        }
+
+        $array = [
+            'totalPesoProductoHijo' => $totalPesoProductoHijo,
+            'totalPrecioVenta' => $totalPrecioVenta,
+            'porcVentaTotal' => $porcVentaTotal,
+            'newTotalStock' => $newTotalStock,
+            'totalMerma' => $totalMerma,
+            'totalUtilidad' => $totalUtilidad,
+            'porcUtilidad' => $porcUtilidad,
+        ];
+
+        return $array;
+    }
+
+
 
     public function editWorkshop(Request $request)
     {
@@ -813,6 +820,4 @@ class workshopController extends Controller
 
         // return view('categorias.res.desposte.index', ['beneficio' => $beneficio]);
     }
-
-
 }

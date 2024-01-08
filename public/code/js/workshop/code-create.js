@@ -89,8 +89,7 @@ btnAddWork.addEventListener("click", (e) => {
             $("#producto").val("").trigger("change");
             formDetail.reset();
             showData(result);
-
-           
+            location.reload();           
         }
         if (result.status === 0) {
             errorMessage("Tienes campos vacios");
