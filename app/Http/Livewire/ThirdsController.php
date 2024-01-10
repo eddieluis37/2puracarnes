@@ -39,9 +39,10 @@ class ThirdsController extends Component
 		$this->type_identificationid = 'Elegir';
 		$this->digito_verificacion = 0;
 		$this->officeid = 'Elegir';
-		$this->porc_descuento = 'Elegir';
+		$this->porc_descuento = 0;
 		$this->type_regimen_ivaid = 'Elegir';
 		$this->provinceid = 'Elegir';
+		$this->listaprecio_genericId = 1;
 		$this->status = 1;
 	}
 
