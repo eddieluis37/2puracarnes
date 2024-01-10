@@ -11,7 +11,7 @@
 				<ul class="tabs tab-pills">
 					<li>
 						<a href="javascript:void(0)" onclick="showModalcreate()" class="tabmenu bg-dark" data-toggle="modal" data-target="#modal-create-compensado" title="Nueva venta por domicilio">Domicilio</a>
-						<a href="javascript:void(0)" class="tabmenu bg-dark" id="storeVentaMostradorBtn"  title="Nueva venta por mostrador">Mostrador</a>
+						<a href="javascript:void(0)" class="tabmenu bg-dark ml-2" id="storeVentaMostradorBtn"  title="Nueva venta por mostrador">Mostrador</a>
 					</li>
 				</ul>
 			</div>
