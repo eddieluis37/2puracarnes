@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Listapreciodetalle;
 use Illuminate\Http\Request;
 
-class ListapreciodetalleController extends Controller
+class listapreciodetalleController extends Controller
 {
     /**
      * Display a listing of the resource.
