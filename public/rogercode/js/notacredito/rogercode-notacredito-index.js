@@ -28,19 +28,22 @@ $(document).ready(function () {
             },
             columns: [
                 { data: "id", name: "id" },
-               /*  { data: "namethird", name: "namethird" },
+                { data: "namethird", name: "namethird" },
                 { data: "namecentrocosto", name: "namecentrocosto" },
                 { data: "status", name: "status" },
                 {
-                    data: 'total_valor_a_pagar',
-                    name: 'total_valor_a_pagar',
-                    render: function(data) {
-                        return "$ " + parseFloat(data).toLocaleString(undefined, {
-                            minimumFractionDigits: 0,
-                            maximumFractionDigits: 0
-                        });
-                    }
-                },                    */   
+                    data: "total_valor_a_pagar",
+                    name: "total_valor_a_pagar",
+                    render: function (data) {
+                        return (
+                            "$ " +
+                            parseFloat(data).toLocaleString(undefined, {
+                                minimumFractionDigits: 0,
+                                maximumFractionDigits: 0,
+                            })
+                        );
+                    },
+                },
                 { data: "date", name: "date" },
                 { data: "action", name: "action" },
             ],
@@ -164,4 +167,3 @@ const downCompensado = (id) => {
         }
     });
 };
-

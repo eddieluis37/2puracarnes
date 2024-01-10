@@ -6,7 +6,7 @@ import {
 btnAddVentaDomicilio.addEventListener("click", async (e) => {
     e.preventDefault();
     const dataform = new FormData(formCompensadoRes);
-    sendData("/ventasave", dataform, token).then((resp) => {
+    sendData("/notacreditosave", dataform, token).then((resp) => {
         console.log(resp);
         if (resp.status == 1) {
             formCompensadoRes.reset();
@@ -14,7 +14,7 @@ btnAddVentaDomicilio.addEventListener("click", async (e) => {
             successToastMessage(resp.message);
             if (resp.registroId != 0) {
                 //for new register
-                window.location.href = `sale/create/${resp.registroId}`;
+                window.location.href = `notacredito/create/${resp.registroId}`;
             } else {
                 refresh_table();
             }

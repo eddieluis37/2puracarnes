@@ -133,27 +133,25 @@ class saleController extends Controller
 
     public function create($id)
     {
-        $centros = Centrocosto::Where('status', 1)->get();
-
-        //$category = Category::WhereIn('id',[1,2,3])->get();
-        //$providers = Third::Where('status',1)->get();
-        //$centros = Centrocosto::Where('status',1)->get();
-        $datacompensado = DB::table('sales as sa')
-            ->join('thirds as tird', 'sa.third_id', '=', 'tird.id')
-            ->join('centro_costo as centro', 'sa.centrocosto_id', '=', 'centro.id')
-            ->select('sa.*', 'tird.name as namethird', 'centro.name as namecentrocosto', 'tird.porc_descuento')
-            ->where('sa.id', $id)
-            ->get();
-
+        $venta = Sale::find($id);
         $prod = Product::Where([
-            /*  ['category_id',$datacompensado[0]->categoria_id], */
+            
             ['status', 1]
         ])
             ->orderBy('category_id', 'asc')
             ->orderBy('name', 'asc')
             ->get();
+        $ventasdetalle = $this->getventasdetalle($id,$venta->centrocosto_id);
+        $arrayTotales = $this->sumTotales($id);
 
-        /**************************************** */
+        $datacompensado = DB::table('sales as sa')
+        ->join('thirds as tird', 'sa.third_id', '=', 'tird.id')
+        ->join('centro_costo as centro', 'sa.centrocosto_id', '=', 'centro.id')
+        ->select('sa.*', 'tird.name as namethird', 'centro.name as namecentrocosto', 'tird.porc_descuento')
+        ->where('sa.id', $id)
+        ->get();
+
+        
         $status = '';
         $fechaCompensadoCierre = Carbon::parse($datacompensado[0]->fecha_cierre);
         $date = Carbon::now();
@@ -168,16 +166,76 @@ class saleController extends Controller
             //'Date 1 and Date 2 are equal';
             $status = 'false';
         }
-        /**************************************** */
+
 
         $detalleVenta = $this->getventasdetail($id);
 
-        //     dd($detalleVenta);
+
+        return view('sale.create',compact('datacompensado', 'id', 'prod', 'detalleVenta', 'ventasdetalle', 'arrayTotales', 'status'));
+    }
+
+    public function getventasdetalle($ventaId, $centrocostoId)
+    {
+        $detail = DB::table('sale_details as dv')
+            ->join('products as pro', 'dv.product_id', '=', 'pro.id')
+            ->join('centro_costo_products as ce', 'pro.id', '=', 'ce.products_id')
+            ->select('dv.*', 'pro.name as nameprod', 'pro.code',  'ce.fisico')
+            ->selectRaw('ce.invinicial + ce.compraLote + ce.alistamiento +
+            ce.compensados + ce.trasladoing - (ce.venta + ce.trasladosal) stock')
+            ->where([
+                ['ce.centrocosto_id', $centrocostoId],                
+                ['dv.sale_id', $ventaId],                
+            ])->orderBy('dv.id','DESC')->get();
+
+        return $detail;
+    }
+
+  /*   public function create($id)
+    {
+        $centros = Centrocosto::Where('status', 1)->get();
+
+        //$category = Category::WhereIn('id',[1,2,3])->get();
+        //$providers = Third::Where('status',1)->get();
+        //$centros = Centrocosto::Where('status',1)->get();
+        $datacompensado = DB::table('sales as sa')
+            ->join('thirds as tird', 'sa.third_id', '=', 'tird.id')
+            ->join('centro_costo as centro', 'sa.centrocosto_id', '=', 'centro.id')
+            ->select('sa.*', 'tird.name as namethird', 'centro.name as namecentrocosto', 'tird.porc_descuento')
+            ->where('sa.id', $id)
+            ->get();
+
+        $prod = Product::Where([
+            
+            ['status', 1]
+        ])
+            ->orderBy('category_id', 'asc')
+            ->orderBy('name', 'asc')
+            ->get();
+
+      
+        $status = '';
+        $fechaCompensadoCierre = Carbon::parse($datacompensado[0]->fecha_cierre);
+        $date = Carbon::now();
+        $currentDate = Carbon::parse($date->format('Y-m-d'));
+        if ($currentDate->gt($fechaCompensadoCierre)) {
+            //'Date 1 is greater than Date 2';
+            $status = 'false';
+        } elseif ($currentDate->lt($fechaCompensadoCierre)) {
+            //'Date 1 is less than Date 2';
+            $status = 'true';
+        } else {
+            //'Date 1 and Date 2 are equal';
+            $status = 'false';
+        }
+
+        $detalleVenta = $this->getventasdetail($id);
+
+     
 
         $arrayTotales = $this->sumTotales($id);
-        //  dd($arrayTotales);
+       
         return view('sale.create', compact('datacompensado', 'prod', 'id', 'detalleVenta', 'arrayTotales', 'status'));
-    }
+    } */
 
     public function create_reg_pago($id)
     {

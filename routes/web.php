@@ -364,7 +364,7 @@ Route::group(['middleware' => [('auth')]], function () {
     Route::get('sale{saleId}/delete', [SaleController::class, 'delete'])->name('sale.delete');
     Route::get('sale{ventaId}/edit', [SaleController::class, 'edit'])->name('sale.edit');
     Route::post('sale/{ventaId}', [SaleController::class, 'update'])->name('sale.update');
-    Route::get('sale/create/{id}', [SaleController::class, 'create'])->name('sale.create');
+    /* Route::get('sale/create/{id}', [SaleController::class, 'create'])->name('sale.create'); */
     Route::post('getproductosv', [SaleController::class, 'getproducts'])->name('sale.getproductos');
     //Route::post('salesavedetail', [SaleController::class, 'savedetail'])->name('sale.savedetail');
 
@@ -379,7 +379,11 @@ Route::group(['middleware' => [('auth')]], function () {
     Route::post('ventadown', [saleController::class, 'destroy'])->name('sale.down');
     Route::post('/destroyVenta', [saleController::class, 'destroyVenta'])->name('sale.destroyVenta');
 
+
+
+    Route::get('sale/create/{id}', [saleController::class, 'create'])->name('sale.create'); 
     Route::get('/obtener-precios-producto', [saleController::class, 'obtenerPreciosProducto'])->name('sale.obtener-precios-producto');
+
     Route::get('sale/create/registrar_pago/{id}', [saleController::class, 'create_reg_pago'])->name('sale.registrar_pago');
     Route::post('sale/create/registrar_pago/{id}', [saleController::class, 'storeRegistroPago'])->name('pago.save');
 
@@ -392,6 +396,8 @@ Route::group(['middleware' => [('auth')]], function () {
 
      Route::get('notacredito', [NotacreditoController::class, 'index'])->name('notacredito.index');
      Route::get('showNotacredito', [NotacreditoController::class, 'show'])->name('notacredito.showNotacredito');
+     Route::post('notacreditosave', [NotacreditoController::class, 'store'])->name('notacredito.save');
+     Route::get('notacredito/create/{id}', [NotacreditoController::class, 'create'])->name('notacredito.create');
 
 
     /*****************************LISTA_DE_PRECIO******************************************/

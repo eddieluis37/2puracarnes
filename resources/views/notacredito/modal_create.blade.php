@@ -79,7 +79,7 @@
 				<div class="task-header">
 					<div class="form-group">
 						<label for="" class="form-label">Facturas</label>
-						<select class="form-control form-control-sm select2Ventas " name="provider" id="provider" required>
+						<select class="form-control form-control-sm select2Ventas " name="factura" id="factura" required>
 							<option value="">Seleccione factura</option>
 							@foreach($ventas as $domiciliario)
 							<option value="{{ $domiciliario->id }}">{{ $domiciliario->consecutivo }}</option>

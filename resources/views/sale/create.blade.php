@@ -213,17 +213,17 @@
 									<td></td>
 									<td></td>
 									<th>$ {{number_format($arrayTotales['TotalValorAPagar'], 0, ',', '.')}} </th>
-									<th class="text-center">
-										<form method="GET" action="registrar_pago/{{$id}}">
-											@csrf
-											<div class="text-center mt-1">
-												<button type="submit" class="btn btn-success">Pagar</button>
-											</div>
-										</form>
-									</th>
 								</tr>
 							</tfoot>
 						</table>
+						<div>
+							<form method="GET" action="registrar_pago/{{$id}}">
+								@csrf
+								<div class="text-center mt-1">
+									<button id="cargarInventarioBtn" type="submit" class="btn btn-success">Pagar</button>
+								</div>
+							</form>
+						</div>
 					</div>
 				</div>
 			</div>

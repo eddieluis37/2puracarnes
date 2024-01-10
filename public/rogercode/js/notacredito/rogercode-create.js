@@ -184,7 +184,7 @@ const showData = (data) => {
                 arrayTotales.TotalValorAPagar
             )}</th>            
             <td class="text-center">
-            
+            <button id="cargarInventarioBtn" class="btn btn-success btn-sm">Pagar</button>
             </td>
         </tr>
     `;
@@ -201,9 +201,7 @@ const showData = (data) => {
         });
     }
 
-    
-
-  /*   // Evento click del botón "facturarBtn"
+    // Evento click del botón "facturarBtn"
     tableFoot.addEventListener("click", (e) => {
         e.preventDefault();
         let element = e.target;
@@ -215,7 +213,7 @@ const showData = (data) => {
                         loadingStart(element);
                         const dataform = new FormData();
                         dataform.append("ventaId", Number(venta_id.value));
-                        return sendData("/registrar_pago", dataform, token);
+                        return sendData("/compensadoInvres", dataform, token);
                     }
                 })
                 .then((result) => {
@@ -243,20 +241,14 @@ const showData = (data) => {
                     }
                 })
                 .then(() => {
-                    window.location.href = 'registrar_pago/{{$id}}';
+                    window.location.href = "/sales";
                 })
                 .catch((error) => {
                     console.error(error);
                 });
         }
-    }); */
-
-    
+    });
 };
-
-
-
-
 
 price.addEventListener("change", function () {
     const enteredValue = formatMoneyNumber(price.value);
