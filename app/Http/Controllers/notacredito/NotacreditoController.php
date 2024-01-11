@@ -83,6 +83,7 @@ class NotacreditoController extends Controller
 
         $detalleVenta = $this->getventasdetalle($id,$venta->centrocosto_id);
 
+dd($ventasdetalle);
 
         return view('notacredito.create', compact('datacompensado', 'id', 'prod', 'detalleVenta', 'ventasdetalle', 'arrayTotales', 'status'));
     }
