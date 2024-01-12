@@ -307,7 +307,8 @@ class notacreditoController extends Controller
             ->join('thirds as tird', 'sa.third_id', '=', 'tird.id')
             ->join('centro_costo as centro', 'sa.centrocosto_id', '=', 'centro.id')
             ->select('sa.*', 'tird.name as namethird', 'centro.name as namecentrocosto')
-            /*  ->where('sa.status', 1) */
+             ->where('sa.tipo', '1')
+             ->where('sa.status', '1')
             ->get();
 
         //  $data = Sale::orderBy('id','desc');
@@ -361,7 +362,7 @@ class notacreditoController extends Controller
                         <a href="notacredito/create/' . $data->id . '" class="btn btn-dark" title="Detalles">
                             <i class="fas fa-directions"></i>
                         </a>
-                        <a href="notacredito/showFactura/' . $data->id . '" class="btn btn-dark" title="VerFacturaCerrada" target="_blank">
+                        <a href="sale/showFactura/' . $data->id . '" class="btn btn-dark" title="VerFacturaCerrada" target="_blank">
                         <i class="far fa-file-pdf"></i>
 					    </a>
 					    <button class="btn btn-dark" title="Borra la venta" disabled>
