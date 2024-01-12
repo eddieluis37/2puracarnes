@@ -63,7 +63,7 @@ use App\Http\Controllers\ImportStockFisicoController;
 use App\Http\Controllers\notacredito\NotacreditoController;
 use App\Http\Controllers\res\pdfLoteController;
 use App\Http\Controllers\sale\exportFacturaController;
-
+use App\Models\Notacredito;
 
 /************************************************* */
 
@@ -394,11 +394,13 @@ Route::group(['middleware' => [('auth')]], function () {
 
      /*****************************NOTA_CREDITO******************************************/
 
-     Route::get('notacredito', [NotacreditoController::class, 'index'])->name('notacredito.index');
-     Route::get('showNotacredito', [NotacreditoController::class, 'show'])->name('notacredito.showNotacredito');
-     Route::post('notacreditosave', [NotacreditoController::class, 'store'])->name('notacredito.save');
-     Route::get('notacredito/create/{id}', [NotacreditoController::class, 'create'])->name('notacredito.create');
-
+     Route::get('notacredito', [notacreditoController::class, 'index'])->name('notacredito.index');
+     Route::get('showNotacredito', [notacreditoController::class, 'show'])->name('notacredito.showNotacredito');
+     Route::post('notacreditosave', [notacreditoController::class, 'store'])->name('notacredito.save');
+     Route::get('notacredito/create/{id}', [notacreditoController::class, 'create'])->name('notacredito.create');
+     Route::post('notacreditosavedetail', [notacreditoController::class, 'savedetail'])->name('notacredito.savedetail');
+     Route::get('/obtener-precios-producto', [notacreditoController::class, 'obtenerPreciosProducto'])->name('notacredito.obtener-precios-producto');
+     Route::post('notacreditoById', [notacreditoController::class, 'editNotacredito'])->name('notacredito.editNotacredito');
 
     /*****************************LISTA_DE_PRECIO******************************************/
 

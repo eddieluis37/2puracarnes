@@ -13,14 +13,14 @@ use App\Models\Subcentrocosto;
 use App\Models\Third;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
-
+use App\Http\Controllers\metodosgenerales\metodosrogercodeController;
+use App\Models\NotacreditoDetail;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Yajra\Datatables\Datatables;
 use Carbon\Carbon;
 
-
-class NotacreditoController extends Controller
+class notacreditoController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -47,15 +47,19 @@ class NotacreditoController extends Controller
     public function create($id)
     {
         $venta = Sale::find($id);
+        /*    $detalle = SaleDetail::firstWhere('sale_id', $id); */
         $prod = Product::Where([
-
             ['status', 1]
         ])
             ->orderBy('category_id', 'asc')
             ->orderBy('name', 'asc')
             ->get();
+
         $ventasdetalle = $this->getventasdetalle($id, $venta->centrocosto_id);
         $arrayTotales = $this->sumTotales($id);
+
+        $detalle = $this->notacreditodetalle($id, $venta->centrocosto_id);
+
 
         $datacompensado = DB::table('sales as sa')
             ->join('thirds as tird', 'sa.third_id', '=', 'tird.id')
@@ -63,7 +67,7 @@ class NotacreditoController extends Controller
             ->select('sa.*', 'tird.name as namethird', 'centro.name as namecentrocosto', 'tird.porc_descuento')
             ->where('sa.id', $id)
             ->get();
-//dd($datacompensado);
+        //dd($datacompensado);
 
         $status = '';
         $fechaCompensadoCierre = Carbon::parse($datacompensado[0]->fecha_cierre);
@@ -79,13 +83,13 @@ class NotacreditoController extends Controller
             //'Date 1 and Date 2 are equal';
             $status = 'false';
         }
-       
 
-        $detalleVenta = $this->getventasdetalle($id,$venta->centrocosto_id);
 
-dd($ventasdetalle);
+        // dd($ventasdetalle);
 
-        return view('notacredito.create', compact('datacompensado', 'id', 'prod', 'detalleVenta', 'ventasdetalle', 'arrayTotales', 'status'));
+        
+
+        return view('notacredito.create', compact('datacompensado', 'id', 'prod', 'ventasdetalle', 'detalle', 'arrayTotales', 'status'));
     }
 
     public function obtenerPreciosProducto(Request $request)
@@ -115,7 +119,23 @@ dd($ventasdetalle);
 
     public function getventasdetalle($ventaId, $centrocostoId)
     {
-        $detail = DB::table('sale_details as dv')
+        $detail = DB::table('notacredito_details as dv')
+            ->join('products as pro', 'dv.product_id', '=', 'pro.id')
+            ->join('centro_costo_products as ce', 'pro.id', '=', 'ce.products_id')
+            ->select('dv.*', 'pro.name as nameprod', 'pro.code',  'ce.fisico')
+            ->selectRaw('ce.invinicial + ce.compraLote + ce.alistamiento +
+            ce.compensados + ce.trasladoing - (ce.venta + ce.trasladosal) stock')
+            ->where([
+                ['ce.centrocosto_id', $centrocostoId],
+                ['dv.sale_id', $ventaId],
+            ])->orderBy('dv.id', 'DESC')->get();
+
+        return $detail;
+    }
+
+    public function notacreditodetalle($ventaId, $centrocostoId)
+    {
+        $detail = DB::table('notacredito_details as dv')
             ->join('products as pro', 'dv.product_id', '=', 'pro.id')
             ->join('centro_costo_products as ce', 'pro.id', '=', 'ce.products_id')
             ->select('dv.*', 'pro.name as nameprod', 'pro.code',  'ce.fisico')
@@ -133,10 +153,10 @@ dd($ventasdetalle);
     {
         $TotalBrutoSinDescuento = Sale::where('id', $id)->value('total_bruto');
         $TotalDescuentos = Sale::where('id', $id)->value('descuentos');
-        $TotalBruto = (float)SaleDetail::Where([['sale_id', $id]])->sum('total_bruto');
-        $TotalIva = (float)SaleDetail::Where([['sale_id', $id]])->sum('iva');
-        $TotalOtroImpuesto = (float)SaleDetail::Where([['sale_id', $id]])->sum('otro_impuesto');
-        $TotalValorAPagar = (float)SaleDetail::Where([['sale_id', $id]])->sum('total');
+        $TotalBruto = (float)NotacreditoDetail::Where([['sale_id', $id]])->sum('total_bruto');
+        $TotalIva = (float)NotacreditoDetail::Where([['sale_id', $id]])->sum('iva');
+        $TotalOtroImpuesto = (float)NotacreditoDetail::Where([['sale_id', $id]])->sum('otro_impuesto');
+        $TotalValorAPagar = (float)NotacreditoDetail::Where([['sale_id', $id]])->sum('total');
 
         $array = [
             'TotalBruto' => $TotalBruto,
@@ -274,7 +294,7 @@ dd($ventasdetalle);
      */
     public function show()
     {
-       /*  $data = DB::table('notacreditos as nc')
+        /*  $data = DB::table('notacreditos as nc')
              ->join('sales as sa', 'nc.sale_id', '=', 'sa.id')
               ->join('thirds as tird', 'sa.third_id', '=', 'tird.id')
             ->join('centro_costo as centro', 'sa.centrocosto_id', '=', 'centro.id')
@@ -282,7 +302,7 @@ dd($ventasdetalle);
             ->where('sa.status', 1) 
             ->get(); */
 
-            $data = DB::table('sales as sa')
+        $data = DB::table('sales as sa')
             /*   ->join('categories as cat', 'sa.categoria_id', '=', 'cat.id') */
             ->join('thirds as tird', 'sa.third_id', '=', 'tird.id')
             ->join('centro_costo as centro', 'sa.centrocosto_id', '=', 'centro.id')
@@ -338,6 +358,9 @@ dd($ventasdetalle);
                 } else {
                     $btn = '
                         <div class="text-center">
+                        <a href="notacredito/create/' . $data->id . '" class="btn btn-dark" title="Detalles">
+                            <i class="fas fa-directions"></i>
+                        </a>
                         <a href="notacredito/showFactura/' . $data->id . '" class="btn btn-dark" title="VerFacturaCerrada" target="_blank">
                         <i class="far fa-file-pdf"></i>
 					    </a>
@@ -360,31 +383,144 @@ dd($ventasdetalle);
      * @param  \App\Models\notacredito  $notacredito
      * @return \Illuminate\Http\Response
      */
-    public function edit(notacredito $notacredito)
+
+    public function getventasdetail($ventaId)
     {
-        //
+        $detalles = DB::table('notacredito_details as de')
+            ->join('products as pro', 'de.product_id', '=', 'pro.id')
+            ->select('de.*', 'pro.name as nameprod', 'pro.code', 'de.porc_iva', 'de.iva', 'de.porc_otro_impuesto',)
+            ->where([
+                ['de.sale_id', $ventaId],
+                /*   ['de.status', 1] */
+            ])->get();
+
+        return $detalles;
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\notacredito  $notacredito
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, notacredito $notacredito)
+    public function savedetail(Request $request)
     {
-        //
+        try {
+            $rules = [
+                'ventaId' => 'required',
+                'producto' => 'required',
+                'price' => 'required',
+                'quantity' => 'required',
+            ];
+            $messages = [
+                'ventaId.required' => 'El compensado es requerido',
+                'producto.required' => 'El producto es requerido',
+                'price.required' => 'El precio de compra es requerido',
+                'quantity.required' => 'El peso es requerido',
+            ];
+
+            $validator = Validator::make($request->all(), $rules, $messages);
+            if ($validator->fails()) {
+                return response()->json([
+                    'status' => 0,
+                    'errors' => $validator->errors()
+                ], 422);
+            }
+
+            $formatCantidad = new metodosrogercodeController();
+
+            $formatPrVenta = $formatCantidad->MoneyToNumber($request->price);
+            $formatPesoKg = $formatCantidad->MoneyToNumber($request->quantity);
+
+            $getReg = NotacreditoDetail::firstWhere('id', $request->regdetailId);
+
+            $porcDescuento = $request->get('porc_desc');
+            $precioUnitarioBruto = ($formatPrVenta * $formatPesoKg);
+            $descuento = $precioUnitarioBruto * ($porcDescuento / 100);
+            $porc_descuento = $request->get('porc_descuento');
+
+            $descuentoCliente = $precioUnitarioBruto * ($porc_descuento / 100);
+            $totalDescuento = $descuento + $descuentoCliente;
+
+            $precioUnitarioBrutoConDesc = $precioUnitarioBruto - $totalDescuento;
+            $porcIva = $request->get('porc_iva');
+            $porcOtroImpuesto = $request->get('porc_otro_impuesto');
+
+            $Impuestos = $porcIva + $request->porc_otro_impuesto;
+            $TotalImpuestos = $precioUnitarioBrutoConDesc * ($Impuestos / 100);
+            $valorAPagar = $TotalImpuestos + $precioUnitarioBrutoConDesc;
+
+            $iva = $precioUnitarioBrutoConDesc * ($porcIva / 100);
+            $otroImpuesto = $precioUnitarioBrutoConDesc * ($porcOtroImpuesto / 100);
+
+            $totalOtrosImpuestos =  $precioUnitarioBrutoConDesc * ($request->porc_otro_impuesto / 100);
+
+            $valorApagar = $precioUnitarioBrutoConDesc + $totalOtrosImpuestos;
+
+            if ($getReg == null) {
+                $detail = new NotacreditoDetail();
+                $detail->sale_id = $request->ventaId;
+                $detail->product_id = $request->producto;
+                $detail->price = $formatPrVenta;
+                $detail->quantity = $request->quantity;
+                $detail->porc_desc = $porcDescuento;
+                $detail->descuento = $descuento;
+
+                $detail->descuento_cliente = $descuentoCliente;
+
+                $detail->porc_iva = $porcIva;
+                $detail->iva = $iva;
+                $detail->porc_otro_impuesto = $porcOtroImpuesto;
+                $detail->otro_impuesto = $otroImpuesto;
+
+                $detail->total_bruto = $precioUnitarioBrutoConDesc;
+
+                $detail->total = $valorAPagar;
+
+                $detail->save();
+
+              
+            } else {
+                $updateReg = NotacreditoDetail::firstWhere('id', $request->regdetailId);
+                $detalleVenta = $this->getventasdetail($request->ventaId);
+                $ivaprod = $detalleVenta[0]->porc_iva;
+                $updateReg->product_id = $request->producto;
+                $updateReg->price = $formatPrVenta;
+                $updateReg->quantity = $formatPesoKg;
+                $updateReg->porc_desc = $porcDescuento;
+                $updateReg->descuento = $descuento;
+
+                $updateReg->descuento_cliente = $descuentoCliente;
+
+                $updateReg->iva = $iva;
+                $updateReg->porc_iva = $porcIva;
+                $updateReg->porc_otro_impuesto = $porcOtroImpuesto;
+                $updateReg->otro_impuesto = $otroImpuesto;
+                $updateReg->total_bruto = $precioUnitarioBrutoConDesc;
+                $updateReg->total = $valorAPagar;
+                $updateReg->save();
+            }
+        
+
+            $arraydetail = $this->getventasdetail($request->ventaId);
+
+            $arrayTotales = $this->sumTotales($request->ventaId);
+
+            return response()->json([
+                'status' => 1,
+                'message' => "Agregado correctamente",
+                'array' => $arraydetail,
+                'arrayTotales' => $arrayTotales
+            ]);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'status' => 0,
+                'message' => (array) $th
+            ]);
+        }
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\notacredito  $notacredito
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(notacredito $notacredito)
+    public function editNotacredito(Request $request)
     {
-        //
+        $reg = NotacreditoDetail::where('id', $request->id)->first();
+        //  dd($reg);
+        return response()->json([
+            'status' => 1,
+            'reg' => $reg
+        ]);
     }
 }

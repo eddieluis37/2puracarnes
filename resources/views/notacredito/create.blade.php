@@ -168,7 +168,7 @@
 								</tr>
 							</thead>
 							<tbody id="tbodyDetail">
-								@foreach($detalleVenta as $proddetail)
+								@foreach($detalle as $proddetail)
 								<tr>
 									<!--td>{{$proddetail->id}}</td-->
 

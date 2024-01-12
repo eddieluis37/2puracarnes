@@ -102,7 +102,7 @@ tbodyTable.addEventListener("click", (e) => {
         console.log(id);
         const dataform = new FormData();
         dataform.append("id", Number(id));
-        sendData("/saleById", dataform, token).then((result) => {
+        sendData("/notacreditoById", dataform, token).then((result) => {
             console.log(result);
             let editReg = result.reg;
             console.log(editReg);
@@ -118,7 +118,7 @@ tbodyTable.addEventListener("click", (e) => {
 btnAdd.addEventListener("click", (e) => {
     e.preventDefault();
     const dataform = new FormData(formDetail);
-    sendData("/salesavedetail", dataform, token).then((result) => {
+    sendData("/notacreditosavedetail", dataform, token).then((result) => {
         console.log(result);
         if (result.status === 1) {
             $("#producto").val("").trigger("change");
@@ -261,29 +261,3 @@ quantity.addEventListener("change", function () {
     console.log("Entered value: " + enteredValue);
     quantity.value = enteredValue;
 });
-
-//const selectCategoria = document.querySelector("#categoria");
-//const selectProducto = document.getElementById("producto");
-/*selectCategoria.addEventListener("change", function() {
-    const selectedValue = this.value;
-    console.log("Selected value:", selectedValue);
-
-    const dataform = new FormData();
-    dataform.append("categoriaId", Number(selectedValue));
-    sendData("/getproductos",dataform,token).then((result) => {
-        console.log(result);
-        let prod = result.products;
-        console.log(prod);
-        //showDataTable(result);
-        selectProducto.innerHTML = "";
-        selectProducto.innerHTML += `<option value="">Seleccione el producto</option>`;
-        // Create and append options to the select element
-        prod.forEach(option => {
-        const optionElement = document.createElement("option");
-        optionElement.value = option.id;
-        optionElement.text = option.name;
-        selectProducto.appendChild(optionElement);
-        });
-    });
-
-});*/
