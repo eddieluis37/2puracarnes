@@ -66,6 +66,9 @@ class saleController extends Controller
 
         $status = '1'; //1 = pagado
 
+        // Call the cargarInventariocr method
+        $this->cargarInventariocr($ventaId);
+
         try {
             $venta = Sale::find($ventaId);
             $venta->user_id = $request->user()->id;
@@ -119,6 +122,53 @@ class saleController extends Controller
         }
     }
 
+    public function cargarInventariocr($ventaId)
+    {
+        $currentDateTime = Carbon::now();
+        $formattedDate = $currentDateTime->format('Y-m-d');
+       
+        $compensadores = Sale::where('id', $ventaId)->get();
+        
+        $centrocosto_id = 1;
+        
+        // Calcular el cantidad de productos acumulado del producto 
+        $centroCostoProducts = Centro_costo_product::where('tipoinventario', 'cerrado')
+            ->where('centrocosto_id', $centrocosto_id)
+            ->get();
+
+        foreach ($centroCostoProducts as $centroCostoProduct) {
+            $accumulatedQuantity = SaleDetail::where('sale_id', '=', $ventaId)
+                ->where('product_id', $centroCostoProduct->products_id)
+                ->sum('quantity');
+
+            // Almacenar la cantidad acomulado en la tabla temporal
+            DB::table('table_temporary_accumulated_sales')->insert([
+                'product_id' => $centroCostoProduct->products_id,
+                'accumulated_quantity' => $accumulatedQuantity
+            ]);
+        }
+
+        // Recuperar los registros de la tabla table_temporary_accumulated_sales
+        $accumulatedQuantitys = DB::table('table_temporary_accumulated_sales')->get();
+
+        foreach ($accumulatedQuantitys as $accumulatedQuantity) {
+            $centroCostoProduct = Centro_costo_product::find($accumulatedQuantity->product_id);
+
+            // Sumar el valor de accumulatedQuantity al campo compensados
+            $centroCostoProduct->venta += $accumulatedQuantity->accumulated_quantity;
+            $centroCostoProduct->save();
+
+            // Limpiar la tabla table_temporary_accumulated_sales
+            DB::table('table_temporary_accumulated_sales')->truncate();
+        }
+
+        return response()->json([
+            'status' => 1,
+            'message' => 'Cargado al inventario exitosamente',
+            'compensadores' => $compensadores
+        ]);
+    }
+
     public function index()
     {
         $ventas = Sale::get();
@@ -135,23 +185,23 @@ class saleController extends Controller
     {
         $venta = Sale::find($id);
         $prod = Product::Where([
-            
+
             ['status', 1]
         ])
             ->orderBy('category_id', 'asc')
             ->orderBy('name', 'asc')
             ->get();
-        $ventasdetalle = $this->getventasdetalle($id,$venta->centrocosto_id);
+        $ventasdetalle = $this->getventasdetalle($id, $venta->centrocosto_id);
         $arrayTotales = $this->sumTotales($id);
 
         $datacompensado = DB::table('sales as sa')
-        ->join('thirds as tird', 'sa.third_id', '=', 'tird.id')
-        ->join('centro_costo as centro', 'sa.centrocosto_id', '=', 'centro.id')
-        ->select('sa.*', 'tird.name as namethird', 'centro.name as namecentrocosto', 'tird.porc_descuento')
-        ->where('sa.id', $id)
-        ->get();
+            ->join('thirds as tird', 'sa.third_id', '=', 'tird.id')
+            ->join('centro_costo as centro', 'sa.centrocosto_id', '=', 'centro.id')
+            ->select('sa.*', 'tird.name as namethird', 'centro.name as namecentrocosto', 'tird.porc_descuento')
+            ->where('sa.id', $id)
+            ->get();
 
-        
+
         $status = '';
         $fechaCompensadoCierre = Carbon::parse($datacompensado[0]->fecha_cierre);
         $date = Carbon::now();
@@ -171,7 +221,7 @@ class saleController extends Controller
         $detalleVenta = $this->getventasdetail($id);
 
 
-        return view('sale.create',compact('datacompensado', 'id', 'prod', 'detalleVenta', 'ventasdetalle', 'arrayTotales', 'status'));
+        return view('sale.create', compact('datacompensado', 'id', 'prod', 'detalleVenta', 'ventasdetalle', 'arrayTotales', 'status'));
     }
 
     public function getventasdetalle($ventaId, $centrocostoId)
@@ -183,14 +233,14 @@ class saleController extends Controller
             ->selectRaw('ce.invinicial + ce.compraLote + ce.alistamiento +
             ce.compensados + ce.trasladoing - (ce.venta + ce.trasladosal) stock')
             ->where([
-                ['ce.centrocosto_id', $centrocostoId],                
-                ['dv.sale_id', $ventaId],                
-            ])->orderBy('dv.id','DESC')->get();
+                ['ce.centrocosto_id', $centrocostoId],
+                ['dv.sale_id', $ventaId],
+            ])->orderBy('dv.id', 'DESC')->get();
 
         return $detail;
     }
 
-  /*   public function create($id)
+    /*   public function create($id)
     {
         $centros = Centrocosto::Where('status', 1)->get();
 
@@ -266,6 +316,8 @@ class saleController extends Controller
 
         return view('sale.registrar_pago', compact('venta', 'arrayTotales', 'producto', 'dataVenta', 'descuento', 'subtotal', 'forma_pago_tarjeta', 'forma_pago_otros', 'forma_pago_credito'));
     }
+
+
 
 
     public function sumTotales($id)
@@ -724,7 +776,7 @@ class saleController extends Controller
      */
     public function destroy(Request $request)
     {
-     
+
 
         try {
 
@@ -735,7 +787,7 @@ class saleController extends Controller
 
             $arrayTotales = $this->sumTotales($request->ventaId);
 
-           
+
             $sale = Sale::find($request->ventaId);
             $sale->items = SaleDetail::where('sale_id', $sale->id)->count();
             $sale->descuentos = 0;
@@ -755,8 +807,8 @@ class saleController extends Controller
             $sale->total_bruto = $totalBruto;
             $sale->descuentos = $totalDesc;
             $sale->save();
-           
-          
+
+
 
             return response()->json([
                 'status' => 1,
@@ -816,74 +868,7 @@ class saleController extends Controller
         }
     }
 
-    public function cargarInventariocr(Request $request)
-    {
-        $currentDateTime = Carbon::now();
-        $formattedDate = $currentDateTime->format('Y-m-d');
-        $ventaId = $request->input('ventaId');
-        $compensadores = Sale::find($ventaId);
-     
-        $compensadores->fecha_cierre = $formattedDate;
-        $compensadores->save();
-        $compensadores = Sale::where('id', $ventaId)->get();
-        $centrocosto_id = $compensadores->first()->centrocosto_id;
 
-
-        DB::update(
-            "
-            UPDATE centro_costo_products c
-            JOIN compensadores_details d ON c.products_id = d.products_id
-            JOIN compensadores b ON b.id = d.compensadores_id
-            SET c.cto_compensados =  c.cto_compensados + d.price,
-                c.cto_compensados_total  = c.cto_compensados_total + (d.price * d.peso),
-                c.tipoinventario = 'cerrado'
-            WHERE d.compensadores_id = :compensadoresid
-            AND b.centrocosto_id = :cencosid 
-            AND c.centrocosto_id = :cencosid2 ",
-            [
-                'compensadoresid' => $ventaId,
-                'cencosid' => $centrocosto_id,
-                'cencosid2' => $centrocosto_id
-            ]
-        );
-        // Calcular el peso acumulado del producto 
-        $centroCostoProducts = Centro_costo_product::where('tipoinventario', 'cerrado')
-            ->where('centrocosto_id', $centrocosto_id)
-            ->get();
-
-        foreach ($centroCostoProducts as $centroCostoProduct) {
-            $accumulatedWeight = Compensadores_detail::where('compensadores_id', '=', $ventaId)
-                ->where('products_id', $centroCostoProduct->products_id)
-                ->sum('peso');
-
-            // Almacenar el peso acomulado en la tabla temporal
-            DB::table('temporary_accumulatedWeights')->insert([
-                'product_id' => $centroCostoProduct->products_id,
-                'accumulated_weight' => $accumulatedWeight
-            ]);
-        }
-
-        // Recuperar los registros de la tabla temporary_accumulatedWeights
-        $accumulatedWeights = DB::table('temporary_accumulatedWeights')->get();
-
-        foreach ($accumulatedWeights as $accumulatedWeight) {
-            $centroCostoProduct = Centro_costo_product::find($accumulatedWeight->product_id);
-
-            // Sumar el valor de accumulatedWeight al campo compensados
-            $centroCostoProduct->compensados += $accumulatedWeight->accumulated_weight;
-            $centroCostoProduct->save();
-
-            // Limpiar la tabla temporary_accumulatedWeights
-            DB::table('temporary_accumulatedWeights')->truncate();
-        }
-
-
-        return response()->json([
-            'status' => 1,
-            'message' => 'Cargado al inventario exitosamente',
-            'compensadores' => $compensadores
-        ]);
-    }
 
     public function storeVentaMostrador(Request $request)
     {
