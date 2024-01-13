@@ -90,7 +90,7 @@
 									<label for="" class="form-label">Precio venta</label>
 									<div class="input-group flex-nowrap">
 										<span class="input-group-text" id="addon-wrapping">$</span>
-										<input type="text" id="price" name="price" class="form-control input" readonly placeholder="">
+										<input type="text" id="price" name="price" class="form-control input" placeholder="">
 									</div>
 								</div>
 
@@ -98,7 +98,7 @@
 									<label for="" class="form-label">IVA</label>
 									<div class="input-group flex-nowrap">
 
-										<input type="text" id="porc_iva" name="porc_iva" class="form-control input" readonly placeholder="">
+										<input type="text" id="porc_iva" name="porc_iva" class="form-control input" placeholder="">
 										<span class="input-group-text" id="addon-wrapping">%</span>
 									</div>
 								</div>
@@ -106,7 +106,7 @@
 									<label for="" class="form-label">I.S</label>
 									<div class="input-group flex-nowrap">
 
-										<input type="text" id="porc_otro_impuesto" name="porc_otro_impuesto" class="form-control input" readonly placeholder="">
+										<input type="text" id="porc_otro_impuesto" name="porc_otro_impuesto" class="form-control input" placeholder="">
 										<span class="input-group-text" id="addon-wrapping">%</span>
 									</div>
 								</div>
@@ -114,7 +114,7 @@
 									<label for="" class="form-label">Descuento</label>
 									<div class="input-group flex-nowrap">
 
-										<input type="text" id="porc_desc" name="porc_desc" class="form-control input" readonly placeholder="">
+										<input type="text" id="porc_desc" name="porc_desc" class="form-control input" placeholder="">
 										<span class="input-group-text" id="addon-wrapping">%</span>
 									</div>
 								</div>
