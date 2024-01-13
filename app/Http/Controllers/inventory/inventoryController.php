@@ -53,6 +53,8 @@ class inventoryController extends Controller
                 'ccp.trasladoing as trasladoing',
                 'ccp.trasladosal as trasladosal',
                 'ccp.venta as venta',
+                'ccp.notacredito as notacredito',
+                'ccp.notadebito as notadebito',
                 'ccp.stock as stock',
                 'ccp.fisico as fisico',
                 'ccp.products_id as products_id'

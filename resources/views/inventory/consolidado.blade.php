@@ -187,6 +187,8 @@
               <th class="table-th text-white">TRAS ING</th>
               <th class="table-th text-white">TRAS SAL</th>
               <th class="table-th text-white">VENTA</th>
+              <th class="table-th text-white">NT.C</th>
+              <th class="table-th text-white">NT.D</th>
               <th class="table-th text-white">STOCK IDEAL</th>
               <th class="table-th text-white">INV FINAL</th>
               <th class="table-th text-white">DISPO</th>

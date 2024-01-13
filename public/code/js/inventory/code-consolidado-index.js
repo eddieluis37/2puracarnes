@@ -41,6 +41,8 @@ function initializeDataTable(centrocostoId = "-1", categoriaId = "-1") {
             { data: "trasladoing", name: "trasladoing" },
             { data: "trasladosal", name: "trasladosal" },
             { data: "venta", name: "venta" },
+            { data: "notacredito", name: "notacredito" },
+            { data: "notadebito", name: "notadebito" },
             { data: "stock", name: "stock" },
             { data: "fisico", name: "fisico" },
 

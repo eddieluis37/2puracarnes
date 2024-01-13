@@ -32,6 +32,8 @@ class CreateCentroCostoProductsTable extends Migration
             $table->decimal('trasladoing', 18, 2)->default(0)->nullable(); // Ingreso por traslados
             $table->decimal('trasladosal', 18, 2)->default(0)->nullable(); // Salida por traslados
             $table->decimal('venta', 18, 2)->default(0)->nullable(); // Ventas
+            $table->decimal('notacredito', 18, 2)->default(0)->nullable(); // NotaCredito
+            $table->decimal('notadebito', 18, 2)->default(0)->nullable(); // NotaDedito
             $table->decimal('stock', 18, 2)->default(0)->nullable(); //Stock ideal en tiempo real del sistema
             $table->decimal('fisico', 18, 2)->default(0)->nullable(); //Inventario Final
 
