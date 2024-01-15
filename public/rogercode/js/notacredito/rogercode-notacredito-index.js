@@ -30,10 +30,13 @@ $(document).ready(function () {
                 { data: "id", name: "id" },
                 { data: "namethird", name: "namethird" },
                 { data: "namecentrocosto", name: "namecentrocosto" },
-                { data: "status", name: "status" },
+                { data: "saresolucion", name: "saresolucion" },
+                { data: "ncresolucion", name: "ncresolucion" },
+                { data: "ncstatus", name: "ncstatus" },
+                { data: "tipo", name: "tipo" },
                 {
-                    data: "total_valor_a_pagar",
-                    name: "total_valor_a_pagar",
+                    data: "nctotal",
+                    name: "nctotal",
                     render: function (data) {
                         return (
                             "$ " +

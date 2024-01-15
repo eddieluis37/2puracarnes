@@ -184,7 +184,7 @@ const showData = (data) => {
                 arrayTotales.TotalValorAPagar
             )}</th>            
             <td class="text-center">
-            <button id="cargarInventarioBtn" class="btn btn-success btn-sm">Pagar</button>
+            <button id="cargarInventarioBtn" class=""></button>
             </td>
         </tr>
     `;

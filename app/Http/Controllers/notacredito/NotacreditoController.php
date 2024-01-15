@@ -20,13 +20,69 @@ use Illuminate\Support\Facades\Auth;
 use Yajra\Datatables\Datatables;
 use Carbon\Carbon;
 
+
 class notacreditoController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    public function storeNotacredito(Request $request, $id)
+    {
+
+        $ventaId = Sale::find($id);
+
+        //  dd($ventaId->id);
+        // Obtener los valores
+
+        $tipo = $request->get('tipo');
+
+
+        $status = '1'; //1 = pagado
+
+        // Call the cargarInventariocr method
+        //   $this->cargarInventariocr($ventaId);
+
+        try {
+
+            $venta = new notacredito();
+
+            //  dd($venta);
+            $venta->user_id = $request->user()->id;
+            $venta->sale_id = $ventaId->id;
+            $venta->tipo = $tipo;
+            $venta->status = $status;
+            $venta->fecha_notacredito = now();
+            $venta->fecha_cierre = now();
+
+            $count = DB::table('notacreditos')->where('status', '1')->count();
+            $resolucion = 'NC ' . str_pad(9000 + $count, 4, '0', STR_PAD_LEFT);
+            $venta->resolucion = $resolucion;
+
+            $venta->fecha_notacredito = now();
+            $venta->fecha_cierre = now();
+
+            $totalValor = (float)NotacreditoDetail::Where([['sale_id', $id]])->sum('total');
+            $venta->valor_total = $totalValor;
+
+            $venta->save();
+
+
+            if ($venta->status == 1) {
+                return redirect()->route('notacredito.index');
+            }
+
+            return response()->json([
+                'status' => 1,
+                'message' => 'Guardado correctamente',
+                "registroId" => $venta->id,
+                'redirect' => route('notacredito.index')
+            ]);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'status' => 0,
+                'array' => (array) $th
+            ]);
+        }
+    }
+
+
     public function index()
     {
         $ventas = Sale::get();
@@ -46,7 +102,7 @@ class notacreditoController extends Controller
      */
     public function create($id)
     {
-        $venta = Sale::find($id);
+        $venta = notacredito::find($id);
         /*    $detalle = SaleDetail::firstWhere('sale_id', $id); */
         $prod = Product::Where([
             ['status', 1]
@@ -55,10 +111,10 @@ class notacreditoController extends Controller
             ->orderBy('name', 'asc')
             ->get();
 
-        $ventasdetalle = $this->getventasdetalle($id, $venta->centrocosto_id);
+        $ventasdetalle = $this->getventasdetalle($id, 1);
         $arrayTotales = $this->sumTotales($id);
 
-        $detalle = $this->notacreditodetalle($id, $venta->centrocosto_id);
+        $detalle = $this->notacreditodetalle($id, 1);
 
 
         $datacompensado = DB::table('sales as sa')
@@ -87,7 +143,7 @@ class notacreditoController extends Controller
 
         // dd($ventasdetalle);
 
-        
+
 
         return view('notacredito.create', compact('datacompensado', 'id', 'prod', 'ventasdetalle', 'detalle', 'arrayTotales', 'status'));
     }
@@ -176,7 +232,7 @@ class notacreditoController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request) // Guardar venta por domicilio
+    public function store(Request $request) // Guardar crear nota credito
     {
         try {
 
@@ -198,7 +254,7 @@ class notacreditoController extends Controller
                 ], 422);
             }
 
-            $getReg = Sale::firstWhere('id', $request->ventaId);
+            $getReg = notacredito::firstWhere('id', $request->factura);
 
 
             if ($getReg == null) {
@@ -211,41 +267,22 @@ class notacreditoController extends Controller
                 $id_user = Auth::user()->id;
                 //    $idcc = $request->centrocosto;
 
-                $venta = new Sale();
+                $venta = new notacredito();
                 $venta->user_id = $id_user;
-                $venta->centrocosto_id = $request->centrocosto;
-                $venta->third_id = $request->cliente;
-                $venta->vendedor_id = $request->vendedor;
-                $venta->domiciliario_id = $request->domiciliario;
-                $venta->subcentrocostos_id = $request->subcentrodecosto;
+                $venta->sale_id = $request->factura;
 
-                $venta->fecha_venta = $currentDateFormat;
+                $venta->fecha_notacredito = $currentDateFormat;
                 $venta->fecha_cierre = $dateNextMonday;
 
-                $venta->total_bruto = 0;
-                $venta->descuentos = 0;
-                $venta->subtotal = 0;
-                $venta->total = 0;
-                $venta->total_otros_descuentos = 0;
-                $venta->valor_a_pagar_efectivo = 0;
-                $venta->valor_a_pagar_tarjeta = 0;
-                $venta->valor_a_pagar_otros = 0;
-                $venta->valor_a_pagar_credito = 0;
-                $venta->valor_pagado = 0;
-                $venta->cambio = 0;
+                $venta->valor_total = 0;
 
-                $venta->items = 0;
-
-                $venta->valor_pagado = 0;
-                $venta->cambio = 0;
-                $venta->tipo = "1";
                 $venta->save();
 
                 //ACTUALIZA CONSECUTIVO 
                 $idcc = $request->centrocosto;
                 DB::update(
                     "
-        UPDATE sales a,    
+        UPDATE notacreditos a,    
         (
             SELECT @numeroConsecutivo:= (SELECT (COALESCE (max(consec),0) ) FROM sales where centrocosto_id = :vcentrocosto1 ),
             @documento:= (SELECT MAX(prefijo) FROM centro_costo where id = :vcentrocosto2 )
@@ -265,11 +302,9 @@ class notacreditoController extends Controller
                     "registroId" => $venta->id
                 ]);
             } else {
-                $getReg = Sale::firstWhere('id', $request->ventaId);
-                $getReg->third_id = $request->vendedor;
-                $getReg->centrocosto_id = $request->centrocosto;
-                $getReg->subcentrocostos_id = $request->subcentrodecosto;
-                $getReg->factura = $request->factura;
+                $getReg = notacredito::firstWhere('id', $request->factura);
+
+                $getReg->fecha_cierre = now();
                 $getReg->save();
 
                 return response()->json([
@@ -303,24 +338,24 @@ class notacreditoController extends Controller
             ->get(); */
 
         $data = DB::table('sales as sa')
-            /*   ->join('categories as cat', 'sa.categoria_id', '=', 'cat.id') */
             ->join('thirds as tird', 'sa.third_id', '=', 'tird.id')
             ->join('centro_costo as centro', 'sa.centrocosto_id', '=', 'centro.id')
-            ->select('sa.*', 'tird.name as namethird', 'centro.name as namecentrocosto')
-             ->where('sa.tipo', '1')
-             ->where('sa.status', '1')
+            ->leftJoin('notacreditos as nc', 'sa.id', '=', 'nc.sale_id')
+            ->select('sa.*', 'nc.tipo', 'sa.resolucion as saresolucion', 'nc.valor_total as nctotal',  'nc.resolucion as ncresolucion', 'nc.status as ncstatus', 'nc.fecha_notacredito', 'tird.name as namethird', 'centro.name as namecentrocosto')
+            ->where('sa.tipo', '1')
+            ->where('sa.status', '1')
             ->get();
 
         //  $data = Sale::orderBy('id','desc');
 
         return Datatables::of($data)->addIndexColumn()
-            ->addColumn('status', function ($data) {
-                if ($data->status == 1) {
-                    $status = '<span class="badge bg-success">Cerrada</span>';
+            ->addColumn('ncstatus', function ($data) {
+                if ($data->ncstatus == 1) {
+                    $ncstatus = '<span class="badge bg-success">Creada</span>';
                 } else {
-                    $status = '<span class="badge bg-danger">Pendiente</span>';
+                    $ncstatus = '<span class="badge bg-danger">NO tiene</span>';
                 }
-                return $status;
+                return $ncstatus;
             })
             ->addColumn('date', function ($data) {
                 $date = Carbon::parse($data->created_at);
@@ -374,7 +409,7 @@ class notacreditoController extends Controller
                 }
                 return $btn;
             })
-            ->rawColumns(['status', 'date', 'action'])
+            ->rawColumns(['ncstatus', 'date', 'action'])
             ->make(true);
     }
 
@@ -473,8 +508,6 @@ class notacreditoController extends Controller
                 $detail->total = $valorAPagar;
 
                 $detail->save();
-
-              
             } else {
                 $updateReg = NotacreditoDetail::firstWhere('id', $request->regdetailId);
                 $detalleVenta = $this->getventasdetail($request->ventaId);
@@ -495,7 +528,7 @@ class notacreditoController extends Controller
                 $updateReg->total = $valorAPagar;
                 $updateReg->save();
             }
-        
+
 
             $arraydetail = $this->getventasdetail($request->ventaId);
 
