@@ -14,6 +14,7 @@ use App\Models\Third;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\metodosgenerales\metodosrogercodeController;
+use App\Models\Centro_costo_product;
 use App\Models\NotacreditoDetail;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
@@ -34,10 +35,7 @@ class notacreditoController extends Controller
         $tipo = $request->get('tipo');
 
 
-        $status = '1'; //1 = pagado
-
-        // Call the cargarInventariocr method
-        //   $this->cargarInventariocr($ventaId);
+        $status = '1'; //1 = pagado       
 
         try {
 
@@ -63,6 +61,9 @@ class notacreditoController extends Controller
 
             $venta->save();
 
+            // Call the cargarInventariocr method
+            $this->cargarInventariocr($id);
+
 
             if ($venta->status == 1) {
                 return redirect()->route('notacredito.index');
@@ -80,6 +81,60 @@ class notacreditoController extends Controller
                 'array' => (array) $th
             ]);
         }
+    }
+
+    public function cargarInventariocr($id)
+    {
+
+        $currentDateTime = Carbon::now();
+        $formattedDate = $currentDateTime->format('Y-m-d');
+
+        $compensadores = NotacreditoDetail::where('sale_id', $id)->get();
+        //   dd($compensadores);
+        $centrocosto_id = 1;
+
+        /*   for ($i = 0; $i < count($compensadores); $i++) {
+            $product_id = $compensadores[$i]->product_id;
+        }
+      */
+        // Calcular el cantidad de productos acumulado  
+        $centroCostoProducts = Centro_costo_product::all();
+        /* ->where('centrocosto_id', $centrocosto_id)
+            ->get(); */
+
+        //  dd($centroCostoProducts);
+
+        foreach ($centroCostoProducts as $centroCostoProduct) {
+            $accumulatedQuantity = NotacreditoDetail::where('sale_id', '=', $id)
+                ->where('product_id', $centroCostoProduct->products_id)
+                ->sum('quantity');
+
+            // Almacenar la cantidad acomulado en la tabla temporal
+            DB::table('table_temporary_accumulated_notacredito')->insert([
+                'product_id' => $centroCostoProduct->products_id,
+                'accumulated_quantity' => $accumulatedQuantity
+            ]);
+        }
+
+        // Recuperar los registros de la tabla table_temporary_accumulated_notacredito
+        $accumulatedQuantitys = DB::table('table_temporary_accumulated_notacredito')->get();
+
+        foreach ($accumulatedQuantitys as $accumulatedQuantity) {
+            $centroCostoProduct = Centro_costo_product::find($accumulatedQuantity->product_id);
+
+            // Sumar el valor de accumulatedQuantity al campo compensados
+            $centroCostoProduct->notacredito += $accumulatedQuantity->accumulated_quantity;
+            $centroCostoProduct->save();
+
+            // Limpiar la tabla table_temporary_accumulated_notacredito
+            DB::table('table_temporary_accumulated_notacredito')->truncate();
+        }
+
+        return response()->json([
+            'status' => 1,
+            'message' => 'Cargado al inventario exitosamente',
+            'compensadores' => $compensadores
+        ]);
     }
 
 

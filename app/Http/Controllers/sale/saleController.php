@@ -132,9 +132,9 @@ class saleController extends Controller
         $centrocosto_id = 1;
         
         // Calcular el cantidad de productos acumulado del producto 
-        $centroCostoProducts = Centro_costo_product::where('tipoinventario', 'cerrado')
-            ->where('centrocosto_id', $centrocosto_id)
-            ->get();
+        $centroCostoProducts = Centro_costo_product::all();
+            /* ->where('centrocosto_id', $centrocosto_id)
+            ->get(); */
 
         foreach ($centroCostoProducts as $centroCostoProduct) {
             $accumulatedQuantity = SaleDetail::where('sale_id', '=', $ventaId)
