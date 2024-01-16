@@ -5,7 +5,7 @@ namespace App\Http\Controllers\notacredito;
 use App\Http\Controllers\Controller;
 use App\Models\centros\Centrocosto;
 use App\Models\Listapreciodetalle;
-use App\Models\notacredito;
+use App\Models\Notacredito;
 use App\Models\Product;
 use App\Models\Sale;
 use App\Models\SaleDetail;
@@ -41,7 +41,7 @@ class notacreditoController extends Controller
 
         try {
 
-            $venta = new notacredito();
+            $venta = new Notacredito();
 
             //  dd($venta);
             $venta->user_id = $request->user()->id;
@@ -102,7 +102,7 @@ class notacreditoController extends Controller
      */
     public function create($id)
     {
-        $venta = notacredito::find($id);
+        $venta = Notacredito::find($id);
         /*    $detalle = SaleDetail::firstWhere('sale_id', $id); */
         $prod = Product::Where([
             ['status', 1]
@@ -254,7 +254,7 @@ class notacreditoController extends Controller
                 ], 422);
             }
 
-            $getReg = notacredito::firstWhere('id', $request->factura);
+            $getReg = Notacredito::firstWhere('id', $request->factura);
 
 
             if ($getReg == null) {
@@ -267,7 +267,7 @@ class notacreditoController extends Controller
                 $id_user = Auth::user()->id;
                 //    $idcc = $request->centrocosto;
 
-                $venta = new notacredito();
+                $venta = new Notacredito();
                 $venta->user_id = $id_user;
                 $venta->sale_id = $request->factura;
 
@@ -302,7 +302,7 @@ class notacreditoController extends Controller
                     "registroId" => $venta->id
                 ]);
             } else {
-                $getReg = notacredito::firstWhere('id', $request->factura);
+                $getReg = Notacredito::firstWhere('id', $request->factura);
 
                 $getReg->fecha_cierre = now();
                 $getReg->save();
@@ -324,7 +324,7 @@ class notacreditoController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\notacredito  $notacredito
+     * @param  \App\Models\Notacredito  $Notacredito
      * @return \Illuminate\Http\Response
      */
     public function show()
