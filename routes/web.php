@@ -61,6 +61,8 @@ use App\Http\Controllers\ReportController;
 
 use App\Http\Controllers\ImportStockFisicoController;
 use App\Http\Controllers\notacredito\NotacreditoController;
+use App\Http\Controllers\notacredito\notacreditoController as NotacreditoNotacreditoController;
+use App\Http\Controllers\notacredito\pdfNotacreditoController;
 use App\Http\Controllers\res\pdfLoteController;
 use App\Http\Controllers\sale\exportFacturaController;
 use App\Models\Notacredito;
@@ -402,6 +404,7 @@ Route::group(['middleware' => [('auth')]], function () {
      Route::get('/obtener-precios-producto', [notacreditoController::class, 'obtenerPreciosProducto'])->name('notacredito.obtener-precios-producto');
      Route::post('notacreditoById', [notacreditoController::class, 'editNotacredito'])->name('notacredito.editNotacredito');
      Route::post('notacredito/create/registrar_notacredito/{id}', [notacreditoController::class, 'storeNotacredito'])->name('notacredito2.save');
+     Route::get('notacredito/showNotacredito/{id}', [pdfNotacreditoController::class, 'showNotacredito']);
 
 
     /*****************************LISTA_DE_PRECIO******************************************/

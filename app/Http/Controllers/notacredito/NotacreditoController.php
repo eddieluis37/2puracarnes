@@ -327,7 +327,7 @@ class notacreditoController extends Controller
                 $venta->sale_id = $request->factura;
 
                 $venta->fecha_notacredito = $currentDateFormat;
-                $venta->fecha_cierre = $dateNextMonday;
+                $venta->fecha_cierre =  now();
 
                 $venta->valor_total = 0;
 
@@ -396,7 +396,7 @@ class notacreditoController extends Controller
             ->join('thirds as tird', 'sa.third_id', '=', 'tird.id')
             ->join('centro_costo as centro', 'sa.centrocosto_id', '=', 'centro.id')
             ->leftJoin('notacreditos as nc', 'sa.id', '=', 'nc.sale_id')
-            ->select('sa.*', 'nc.tipo', 'sa.resolucion as saresolucion', 'nc.valor_total as nctotal',  'nc.resolucion as ncresolucion', 'nc.status as ncstatus', 'nc.fecha_notacredito', 'tird.name as namethird', 'centro.name as namecentrocosto')
+            ->select('sa.*', 'nc.tipo', 'sa.resolucion as saresolucion', 'nc.valor_total as nctotal',  'nc.resolucion as ncresolucion', 'nc.status as ncstatus', 'nc.fecha_notacredito', 'nc.fecha_cierre as ncfecha_cierre', 'tird.name as namethird', 'centro.name as namecentrocosto')
             ->where('sa.tipo', '1')
             ->where('sa.status', '1')
             ->get();
@@ -420,7 +420,7 @@ class notacreditoController extends Controller
             ->addColumn('action', function ($data) {
                 $currentDateTime = Carbon::now();
 
-                if (Carbon::parse($currentDateTime->format('Y-m-d'))->gt(Carbon::parse($data->fecha_cierre))) {
+                if (Carbon::parse($currentDateTime->format('Y-m-d'))->gt(Carbon::parse($data->ncfecha_cierre))) {
                     $btn = '
                         <div class="text-center">
 					    
@@ -432,14 +432,14 @@ class notacreditoController extends Controller
 					    </button>
                         </div>
                         ';
-                } elseif (Carbon::parse($currentDateTime->format('Y-m-d'))->lt(Carbon::parse($data->fecha_cierre))) {
+                } elseif (Carbon::parse($currentDateTime->format('Y-m-d'))->lt(Carbon::parse($data->ncfecha_cierre))) {
                     $btn = '
                         <div class="text-center">
 					    <a href="notacredito/create/' . $data->id . '" class="btn btn-dark" title="Detalles">
 						    <i class="fas fa-directions"></i>
 					    </a>
 					   
-                        <a href="notacredito/showFactura/' . $data->id . '" class="btn btn-dark" title="VerFacturaPendiente" target="_blank">
+                        <a href="notacredito/showFactura/' . $data->id . '" class="btn btn-dark" title="VerFactura" target="_blank">
                         <i class="far fa-file-pdf"></i>
 					    </a>
 					  
@@ -448,13 +448,14 @@ class notacreditoController extends Controller
                     //ESTADO Cerrada
                 } else {
                     $btn = '
-                        <div class="text-center">
-                        <a href="notacredito/create/' . $data->id . '" class="btn btn-dark" title="Detalles">
-                            <i class="fas fa-directions"></i>
-                        </a>
+                        <div class="text-center">  
+                                        
                         <a href="sale/showFactura/' . $data->id . '" class="btn btn-dark" title="VerFacturaCerrada" target="_blank">
                         <i class="far fa-file-pdf"></i>
 					    </a>
+                        <a href="notacredito/showNotacredito/' . $data->id . '" class="btn btn-dark" title="VerNotacredito" target="_blank">
+                        <i class="far fa-file-pdf"></i>
+					    </a>  
 					    <button class="btn btn-dark" title="Borra la venta" disabled>
 						    <i class="fas fa-trash"></i>
 					    </button>
