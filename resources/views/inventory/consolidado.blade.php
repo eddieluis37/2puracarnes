@@ -178,22 +178,22 @@
         <table id="tableInventory" class="table table-striped mt-1">
           <thead class="text-white" style="background: #3B3F5C">
             <tr>
-              <th class="table-th text-white">CAT</th>
-              <th class="table-th text-white">PRODUCTO</th>
-              <th class="table-th text-white">INV INICIAL</th>
-              <th class="table-th text-white">COMPRA LOTE</th>
-              <th class="table-th text-white">ALIST</th>
-              <th class="table-th text-white">COMPEN</th>
-              <th class="table-th text-white">TRAS ING</th>
-              <th class="table-th text-white">TRAS SAL</th>
-              <th class="table-th text-white">VENTA</th>
-              <th class="table-th text-white">NT.C</th>
-              <th class="table-th text-white">NT.D</th>
-              <th class="table-th text-white">STOCK IDEAL</th>
-              <th class="table-th text-white">INV FINAL</th>
-              <th class="table-th text-white">DISPO</th>
-              <th class="table-th text-white">MERMA</th>
-              <th class="table-th text-white">%MERMA</th>
+              <th class="table-th text-white" title="Categoria">CAT</th>
+              <th class="table-th text-white" title="Productos">PRODUCTO</th>
+              <th class="table-th text-white" title="InventarioInicial">INI</th>
+              <th class="table-th text-white" title="ComprasLotes">CL</th>
+              <th class="table-th text-white" title="Alistamiento">AL</th>
+              <th class="table-th text-white" title="ComprasCompensados">CP</th>
+              <th class="table-th text-white" title="TransladosIngresos">TI</th>
+              <th class="table-th text-white" title="TransladosSalidas">TS</th>
+              <th class="table-th text-white" title="Ventas">VE</th>
+              <th class="table-th text-white" title="NotasCreditos">NC</th>
+              <th class="table-th text-white" title="NotasDebitos">ND</th>
+              <th class="table-th text-white" title="StockInicial">SI</th>
+              <th class="table-th text-white" title="InventarioFinal">INF</th>
+              <th class="table-th text-white" title="Disponible">DIS</th>
+              <th class="table-th text-white" title="Merma">MER</th>
+              <th class="table-th text-white" title="PorcentajeMerma">%MER</th>
             </tr>
           </thead>
           <tbody>

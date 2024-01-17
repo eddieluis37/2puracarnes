@@ -38,8 +38,8 @@ class pdfNotacreditoController extends Controller
 
         //  dd($saleDetails);
 
-        $showFactura = PDF::loadView('sale.reporte', compact('sale', 'saleDetails'));
-        return $showFactura->stream('sale.pdf');
+        $showFactura = PDF::loadView('notacredito.reporte', compact('sale', 'saleDetails'));
+        return $showFactura->stream('notacredito.pdf');
         //return $showFactura->download('sale.pdf');
     }
 }

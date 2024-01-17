@@ -419,17 +419,17 @@ class notacreditoController extends Controller
             })
             ->addColumn('action', function ($data) {
                 $currentDateTime = Carbon::now();
-
+                // 1.Despues de la fecha de cierre, 2.Antes de la fecha de cierre , 3.Cuando ya esta cerrada la fecha de cierre 
                 if (Carbon::parse($currentDateTime->format('Y-m-d'))->gt(Carbon::parse($data->ncfecha_cierre))) {
                     $btn = '
-                        <div class="text-center">
-					    
-                        <a href="notacredito/showFactura/' . $data->id . '" class="btn btn-dark" title="VerFactura" target="_blank">
+                        <div class="text-center">					    
+                        <a href="sale/showFactura/' . $data->id . '" class="btn btn-dark" title="VerFactura" target="_blank">
                         <i class="far fa-file-pdf"></i>
-					    </a>				
-					    <button class="btn btn-dark" title="Borrar venta" disabled>
-						    <i class="fas fa-trash"></i>
-					    </button>
+					    </a>	
+                        <a href="notacredito/showNotacredito/' . $data->id . '" class="btn btn-dark" title="VerNotacredito" target="_blank">
+                        <i class="far fa-file-pdf"></i>
+					    </a>			
+					  
                         </div>
                         ';
                 } elseif (Carbon::parse($currentDateTime->format('Y-m-d'))->lt(Carbon::parse($data->ncfecha_cierre))) {
@@ -439,7 +439,7 @@ class notacreditoController extends Controller
 						    <i class="fas fa-directions"></i>
 					    </a>
 					   
-                        <a href="notacredito/showFactura/' . $data->id . '" class="btn btn-dark" title="VerFactura" target="_blank">
+                        <a href="sale/showFactura/' . $data->id . '" class="btn btn-dark" title="VerFacturaSinNC" target="_blank">
                         <i class="far fa-file-pdf"></i>
 					    </a>
 					  
@@ -456,9 +456,7 @@ class notacreditoController extends Controller
                         <a href="notacredito/showNotacredito/' . $data->id . '" class="btn btn-dark" title="VerNotacredito" target="_blank">
                         <i class="far fa-file-pdf"></i>
 					    </a>  
-					    <button class="btn btn-dark" title="Borra la venta" disabled>
-						    <i class="fas fa-trash"></i>
-					    </button>
+					  
 					  
                         </div>
                         ';
