@@ -49,8 +49,11 @@ class notacreditoController extends Controller
             $venta->fecha_notacredito = now();
             $venta->fecha_cierre = now();
 
-            $count = DB::table('notacreditos')->where('status', '1')->count();
-            $resolucion = 'NC ' . str_pad(9000 + $count, 4, '0', STR_PAD_LEFT);
+            $count1 = DB::table('sales')->where('status', '1')->count();
+            $count2 = DB::table('notacreditos')->where('status', '1')->count();
+            $count = $count1 + $count2;
+
+            $resolucion = 'PCE ' . str_pad(13135 + $count, 4, '0', STR_PAD_LEFT);
             $venta->resolucion = $resolucion;
 
             $venta->fecha_notacredito = now();
@@ -397,7 +400,7 @@ class notacreditoController extends Controller
             ->join('centro_costo as centro', 'sa.centrocosto_id', '=', 'centro.id')
             ->leftJoin('notacreditos as nc', 'sa.id', '=', 'nc.sale_id')
             ->select('sa.*', 'nc.tipo', 'sa.resolucion as saresolucion', 'nc.valor_total as nctotal',  'nc.resolucion as ncresolucion', 'nc.status as ncstatus', 'nc.fecha_notacredito', 'nc.fecha_cierre as ncfecha_cierre', 'tird.name as namethird', 'centro.name as namecentrocosto')
-            ->where('sa.tipo', '1')
+      /*       ->where('sa.tipo', '1') */ // Tipo 1 = domicilio, 0= POS mostrador
             ->where('sa.status', '1')
             ->get();
 

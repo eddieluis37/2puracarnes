@@ -97,7 +97,9 @@ class saleController extends Controller
             }
 
             if (($venta->centrocosto_id == 1 || $venta->centrocosto_id == 2) && $venta->tipo == '1') {
-                $count = DB::table('sales')->where('tipo', '1')->count();
+                $count1 = DB::table('sales')->where('status', '1')->count();
+                $count2 = DB::table('notacreditos')->where('status', '1')->count();
+                $count = $count1 + $count2;
                 $resolucion = 'PCE ' . str_pad(13135 + $count, 4, '0', STR_PAD_LEFT);
                 $venta->resolucion = $resolucion;
             }
@@ -126,14 +128,14 @@ class saleController extends Controller
     {
         $currentDateTime = Carbon::now();
         $formattedDate = $currentDateTime->format('Y-m-d');
-       
+
         $compensadores = Sale::where('id', $ventaId)->get();
-        
+
         $centrocosto_id = 1;
-        
+
         // Calcular el cantidad de productos acumulado del producto 
         $centroCostoProducts = Centro_costo_product::all();
-            /* ->where('centrocosto_id', $centrocosto_id)
+        /* ->where('centrocosto_id', $centrocosto_id)
             ->get(); */
 
         foreach ($centroCostoProducts as $centroCostoProduct) {

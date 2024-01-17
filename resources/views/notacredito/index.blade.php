@@ -9,10 +9,10 @@
 					<b>Nota crédito | Listado </b>
 				</h4>
 				<ul class="tabs tab-pills">
-					<li>
+<!-- 					<li>
 						<a href="javascript:void(0)" onclick="showModalcreate()" class="tabmenu bg-dark" data-toggle="modal" data-target="#modal-create-compensado" title="Nueva nota credito">Crear</a>
 					
-					</li>
+					</li> -->
 				</ul>
 			</div>
 

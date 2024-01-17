@@ -36,7 +36,8 @@
 			<tr>
 				<td colspan=" 2" class="text-center">
 					<span style="font-size: 9px; font-weight: bold; display: block; margin-top: 10;">POS {{$sale[0]->namecentrocosto}} CAJA {{$sale[0]->nameuser}}</span>
-					<span style="font-size: 9px; font-weight: bold; display: block; margin: 0;">N°. {{$sale[0]->resolucion}}</span>
+					<span style="font-size: 9px; font-weight: bold; display: block; margin: 0;">N°.RESOLUCION FACTURA {{$sale[0]->resolucion}}</span>
+					<span style="font-size: 9px; font-weight: bold; display: block; margin: 0;">N°.RESOLUCION NOTACREDITO {{$sale[0]->ncresolucion}}</span>
 				</td>
 			</tr>
 			<tr>
@@ -85,12 +86,12 @@
 						<span><strong>{{ $quantity = $item->where('sale_id', '=', $item->sale_id)->sum('quantity')}}</strong></span>
 					</td>
 					<td class="text-center">
-						<span><strong>${{ number_format($sale->sum('total_valor_a_pagar'),0)}}</strong></span>
+						<span><strong>${{ number_format($item->where('sale_id', '=', $item->sale_id)->sum('total'),0)}}</strong></span>
 					</td>
 				</tr>
 			</tfoot>
 		</table>
-		<p align="center" style="font-size: 7px; margin-top: 20px;">A esta factura de venta aplican las normas relativas a la letra de cambio (artículo 5 Ley 1231 de 2008). Con esta el Comprador declara haber recibido real y materialmente las mercancías o prestación de servicios descritos en este título - Valor. <strong>Número Autorización 18764061412040 aprobado en 20231206 prefijo PC desde el número 1001 al 20000 Vigencia: 12 Meses</strong></p>
+		<p align="center" style="font-size: 7px; margin-top: 20px;">A esta notacredito aplican las normas relativas a la letra de cambio (artículo 5 Ley 1231 de 2008). Con esta el Comprador declara haber recibido real y materialmente las mercancías o prestación de servicios descritos en este título - Valor. <strong>Número Autorización 18764061412040 aprobado en 20231206 prefijo PC desde el número 1001 al 20000 Vigencia: 12 Meses</strong></p>
 		<p align="center" style="font-size: 7px; margin: -7px;">Responsable de IVA - Actividad Económica 4620 Comercio al por mayor de materias primas agropecuarias; animales vivos Tarifa 11.04</p>
 	</section>
 	<section class="footer">

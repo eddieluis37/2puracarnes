@@ -240,7 +240,7 @@
 							<th class="text-center">
 								@csrf
 								<div class="text-center mt-1">
-									<button type="submit" class="btn btn-success">Pagar</button>
+									<button type="submit" class="btn btn-success">Afectar</button>
 								</div>
 	</form>
 </div>
