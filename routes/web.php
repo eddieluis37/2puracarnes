@@ -60,9 +60,10 @@ use App\Http\Controllers\listaprecio\listaPrecioController;
 use App\Http\Controllers\ReportController;
 
 use App\Http\Controllers\ImportStockFisicoController;
-use App\Http\Controllers\notacredito\NotacreditoController;
-use App\Http\Controllers\notacredito\notacreditoController as NotacreditoNotacreditoController;
+use App\Http\Controllers\notacredito\notacreditoController;
 use App\Http\Controllers\notacredito\pdfNotacreditoController;
+use App\Http\Controllers\notadebito\notadebitoController;
+use App\Http\Controllers\notadebito\pdfNotadebitoController;
 use App\Http\Controllers\res\pdfLoteController;
 use App\Http\Controllers\sale\exportFacturaController;
 use App\Models\Notacredito;
@@ -405,6 +406,18 @@ Route::group(['middleware' => [('auth')]], function () {
      Route::post('notacreditoById', [notacreditoController::class, 'editNotacredito'])->name('notacredito.editNotacredito');
      Route::post('notacredito/create/registrar_notacredito/{id}', [notacreditoController::class, 'storeNotacredito'])->name('notacredito2.save');
      Route::get('notacredito/showNotacredito/{id}', [pdfNotacreditoController::class, 'showNotacredito']);
+
+     /*****************************NOTA_DEBITO******************************************/
+
+     Route::get('notadebito', [notadebitoController::class, 'index'])->name('notadebito.index');
+     Route::get('showNotadebito', [notadebitoController::class, 'show'])->name('notadebito.showNotadebito');
+     Route::post('notadebitosave', [notadebitoController::class, 'store'])->name('notadebito.save');
+     Route::get('notadebito/create/{id}', [notadebitoController::class, 'create'])->name('notadebito.create');
+     Route::post('notadebitosavedetail', [notadebitoController::class, 'savedetail'])->name('notadebito.savedetail');
+     Route::get('/obtener-precios-producto', [notadebitoController::class, 'obtenerPreciosProducto'])->name('notadebito.obtener-precios-producto');
+     Route::post('notadebitoById', [notadebitoController::class, 'editNotacredito'])->name('notadebito.editNotadebito');
+     Route::post('notadebito/create/registrar_notadebito/{id}', [notadebitoController::class, 'storeNotadebito'])->name('notadebito2.save');
+     Route::get('notadebito/showNotacredito/{id}', [pdfNotadebitoController::class, 'showNotadebito']);
 
 
     /*****************************LISTA_DE_PRECIO******************************************/

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateNotacreditosTable extends Migration
+class CreateNotadebitosTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateNotacreditosTable extends Migration
      */
     public function up()
     {
-        Schema::create('notacreditos', function (Blueprint $table) {
+        Schema::create('notadebitos', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('sale_id');    
             $table->foreign('sale_id')->references('id')->on('sales'); 
@@ -24,7 +24,7 @@ class CreateNotacreditosTable extends Migration
             
             $table->enum('status',['0','1','2','3','4','5'])->default('0');
             
-            $table->enum('tipo', ['DEVOLUCION', 'ANULACION', 'REBAJA', 'DESCUENTO', 'RESCISION', 'OTROS'])->default('DEVOLUCION');
+            $table->enum('tipo', ['ANULACION', 'REBAJA', 'DESCUENTO', 'RESCISION', 'OTROS'])->default('ANULACION');
 
             $table->decimal('items',10,0)->nullable();
             $table->decimal('total_iva',10,0)->default(0)->nullable();
@@ -32,13 +32,17 @@ class CreateNotacreditosTable extends Migration
             $table->decimal('valor_total',12,0)->default(0)->nullable();     
 
             $table->string('observacion')->nullable();
-            $table->date('fecha_notacredito')->nullable();       
-            $table->date('fecha_cierre')->nullable(); 
+            $table->date('fecha_notadebito')->nullable();       
+            $table->date('fecha_cierre')->nullable();
+            $table->date('fecha_vencimiento')->nullable(); 
             
             $table->string('consecutivo', 50, 0)->nullable();
             $table->bigInteger('consec')->length(50)->nullable();
-
+            
+            
             $table->string('resolucion', 50, 0)->nullable();
+
+
 
 
 
@@ -55,6 +59,6 @@ class CreateNotacreditosTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('notacreditos');
+        Schema::dropIfExists('notadebitos');
     }
 }
