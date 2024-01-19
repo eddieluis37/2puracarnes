@@ -14,7 +14,7 @@ btnAddVentaDomicilio.addEventListener("click", async (e) => {
             successToastMessage(resp.message);
             if (resp.registroId != 0) {
                 //for new register
-                window.location.href = `notacredito/create/${resp.registroId}`;
+                window.location.href = `notadebito/create/${resp.registroId}`;
             } else {
                 refresh_table();
             }

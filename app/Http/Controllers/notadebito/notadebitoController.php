@@ -4,10 +4,9 @@ namespace App\Http\Controllers\notadebito;
 
 
 use App\Http\Controllers\Controller;
-use App\Models\notadebito;
 use App\Models\centros\Centrocosto;
 use App\Models\Listapreciodetalle;
-use App\Models\Notacredito;
+use App\Models\Notadebito;
 use App\Models\Product;
 use App\Models\Sale;
 use App\Models\SaleDetail;
@@ -17,7 +16,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\metodosgenerales\metodosrogercodeController;
 use App\Models\Centro_costo_product;
-use App\Models\NotacreditoDetail;
+use App\Models\NotadebitoDetail;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Yajra\Datatables\Datatables;
@@ -25,7 +24,7 @@ use Carbon\Carbon;
 
 class notadebitoController extends Controller
 {
-    public function storeNotacredito(Request $request, $id)
+    public function storeNotadebito(Request $request, $id)
     {
 
         $ventaId = Sale::find($id);
@@ -40,14 +39,14 @@ class notadebitoController extends Controller
 
         try {
 
-            $venta = new Notacredito();
+            $venta = new Notadebito();
 
             //  dd($venta);
             $venta->user_id = $request->user()->id;
             $venta->sale_id = $ventaId->id;
             $venta->tipo = $tipo;
             $venta->status = $status;
-            $venta->fecha_notacredito = now();
+            $venta->fecha_notadebito = now();
             $venta->fecha_cierre = now();
 
             $count1 = DB::table('sales')->where('status', '1')->count();
@@ -57,10 +56,10 @@ class notadebitoController extends Controller
             $resolucion = 'PCE ' . str_pad(13135 + $count, 4, '0', STR_PAD_LEFT);
             $venta->resolucion = $resolucion;
 
-            $venta->fecha_notacredito = now();
+            $venta->fecha_notadebito = now();
             $venta->fecha_cierre = now();
 
-            $totalValor = (float)NotacreditoDetail::Where([['sale_id', $id]])->sum('total');
+            $totalValor = (float)NotadebitoDetail::Where([['sale_id', $id]])->sum('total');
             $venta->valor_total = $totalValor;
 
             $venta->save();
@@ -70,14 +69,14 @@ class notadebitoController extends Controller
 
 
             if ($venta->status == 1) {
-                return redirect()->route('notacredito.index');
+                return redirect()->route('notadebito.index');
             }
 
             return response()->json([
                 'status' => 1,
                 'message' => 'Guardado correctamente',
                 "registroId" => $venta->id,
-                'redirect' => route('notacredito.index')
+                'redirect' => route('notadebito.index')
             ]);
         } catch (\Throwable $th) {
             return response()->json([
@@ -93,7 +92,7 @@ class notadebitoController extends Controller
         $currentDateTime = Carbon::now();
         $formattedDate = $currentDateTime->format('Y-m-d');
 
-        $compensadores = NotacreditoDetail::where('sale_id', $id)->get();
+        $compensadores = NotadebitoDetail::where('sale_id', $id)->get();
         //   dd($compensadores);
         $centrocosto_id = 1;
 
@@ -109,7 +108,7 @@ class notadebitoController extends Controller
         //  dd($centroCostoProducts);
 
         foreach ($centroCostoProducts as $centroCostoProduct) {
-            $accumulatedQuantity = NotacreditoDetail::where('sale_id', '=', $id)
+            $accumulatedQuantity = NotadebitoDetail::where('sale_id', '=', $id)
                 ->where('product_id', $centroCostoProduct->products_id)
                 ->sum('quantity');
 
@@ -161,7 +160,7 @@ class notadebitoController extends Controller
      */
     public function create($id)
     {
-        $venta = Notacredito::find($id);
+        $venta = Notadebito::find($id);
         /*    $detalle = SaleDetail::firstWhere('sale_id', $id); */
         $prod = Product::Where([
             ['status', 1]
@@ -234,7 +233,7 @@ class notadebitoController extends Controller
 
     public function getventasdetalle($ventaId, $centrocostoId)
     {
-        $detail = DB::table('notacredito_details as dv')
+        $detail = DB::table('notadebito_details as dv')
             ->join('products as pro', 'dv.product_id', '=', 'pro.id')
             ->join('centro_costo_products as ce', 'pro.id', '=', 'ce.products_id')
             ->select('dv.*', 'pro.name as nameprod', 'pro.code',  'ce.fisico')
@@ -250,7 +249,7 @@ class notadebitoController extends Controller
 
     public function notacreditodetalle($ventaId, $centrocostoId)
     {
-        $detail = DB::table('notacredito_details as dv')
+        $detail = DB::table('notadebito_details as dv')
             ->join('products as pro', 'dv.product_id', '=', 'pro.id')
             ->join('centro_costo_products as ce', 'pro.id', '=', 'ce.products_id')
             ->select('dv.*', 'pro.name as nameprod', 'pro.code',  'ce.fisico')
@@ -268,10 +267,10 @@ class notadebitoController extends Controller
     {
         $TotalBrutoSinDescuento = Sale::where('id', $id)->value('total_bruto');
         $TotalDescuentos = Sale::where('id', $id)->value('descuentos');
-        $TotalBruto = (float)NotacreditoDetail::Where([['sale_id', $id]])->sum('total_bruto');
-        $TotalIva = (float)NotacreditoDetail::Where([['sale_id', $id]])->sum('iva');
-        $TotalOtroImpuesto = (float)NotacreditoDetail::Where([['sale_id', $id]])->sum('otro_impuesto');
-        $TotalValorAPagar = (float)NotacreditoDetail::Where([['sale_id', $id]])->sum('total');
+        $TotalBruto = (float)NotadebitoDetail::Where([['sale_id', $id]])->sum('total_bruto');
+        $TotalIva = (float)NotadebitoDetail::Where([['sale_id', $id]])->sum('iva');
+        $TotalOtroImpuesto = (float)NotadebitoDetail::Where([['sale_id', $id]])->sum('otro_impuesto');
+        $TotalValorAPagar = (float)NotadebitoDetail::Where([['sale_id', $id]])->sum('total');
 
         $array = [
             'TotalBruto' => $TotalBruto,
@@ -313,7 +312,7 @@ class notadebitoController extends Controller
                 ], 422);
             }
 
-            $getReg = Notacredito::firstWhere('id', $request->factura);
+            $getReg = Notadebito::firstWhere('id', $request->factura);
 
 
             if ($getReg == null) {
@@ -326,11 +325,11 @@ class notadebitoController extends Controller
                 $id_user = Auth::user()->id;
                 //    $idcc = $request->centrocosto;
 
-                $venta = new Notacredito();
+                $venta = new Notadebito();
                 $venta->user_id = $id_user;
                 $venta->sale_id = $request->factura;
 
-                $venta->fecha_notacredito = $currentDateFormat;
+                $venta->fecha_notadebito = $currentDateFormat;
                 $venta->fecha_cierre =  now();
 
                 $venta->valor_total = 0;
@@ -341,7 +340,7 @@ class notadebitoController extends Controller
                 $idcc = $request->centrocosto;
                 DB::update(
                     "
-        UPDATE notacreditos a,    
+        UPDATE notadebitos a,    
         (
             SELECT @numeroConsecutivo:= (SELECT (COALESCE (max(consec),0) ) FROM sales where centrocosto_id = :vcentrocosto1 ),
             @documento:= (SELECT MAX(prefijo) FROM centro_costo where id = :vcentrocosto2 )
@@ -361,7 +360,7 @@ class notadebitoController extends Controller
                     "registroId" => $venta->id
                 ]);
             } else {
-                $getReg = Notacredito::firstWhere('id', $request->factura);
+                $getReg = Notadebito::firstWhere('id', $request->factura);
 
                 $getReg->fecha_cierre = now();
                 $getReg->save();
@@ -383,7 +382,7 @@ class notadebitoController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Notacredito  $Notacredito
+     * @param  \App\Models\Notadebito  $Notadebito
      * @return \Illuminate\Http\Response
      */
     public function show()
@@ -439,7 +438,7 @@ class notadebitoController extends Controller
                 } elseif (Carbon::parse($currentDateTime->format('Y-m-d'))->lt(Carbon::parse($data->ndfecha_cierre))) {
                     $btn = '
                         <div class="text-center">
-					    <a href="notacredito/create/' . $data->id . '" class="btn btn-dark" title="Detalles">
+					    <a href="notadebito/create/' . $data->id . '" class="btn btn-dark" title="Detalles">
 						    <i class="fas fa-directions"></i>
 					    </a>
 					   
@@ -480,7 +479,7 @@ class notadebitoController extends Controller
 
     public function getventasdetail($ventaId)
     {
-        $detalles = DB::table('notacredito_details as de')
+        $detalles = DB::table('notadebito_details as de')
             ->join('products as pro', 'de.product_id', '=', 'pro.id')
             ->select('de.*', 'pro.name as nameprod', 'pro.code', 'de.porc_iva', 'de.iva', 'de.porc_otro_impuesto',)
             ->where([
@@ -520,7 +519,7 @@ class notadebitoController extends Controller
             $formatPrVenta = $formatCantidad->MoneyToNumber($request->price);
             $formatPesoKg = $formatCantidad->MoneyToNumber($request->quantity);
 
-            $getReg = NotacreditoDetail::firstWhere('id', $request->regdetailId);
+            $getReg = NotadebitoDetail::firstWhere('id', $request->regdetailId);
 
             $porcDescuento = $request->get('porc_desc');
             $precioUnitarioBruto = ($formatPrVenta * $formatPesoKg);
@@ -546,7 +545,7 @@ class notadebitoController extends Controller
             $valorApagar = $precioUnitarioBrutoConDesc + $totalOtrosImpuestos;
 
             if ($getReg == null) {
-                $detail = new NotacreditoDetail();
+                $detail = new NotadebitoDetail();
                 $detail->sale_id = $request->ventaId;
                 $detail->product_id = $request->producto;
                 $detail->price = $formatPrVenta;
@@ -567,7 +566,7 @@ class notadebitoController extends Controller
 
                 $detail->save();
             } else {
-                $updateReg = NotacreditoDetail::firstWhere('id', $request->regdetailId);
+                $updateReg = NotadebitoDetail::firstWhere('id', $request->regdetailId);
                 $detalleVenta = $this->getventasdetail($request->ventaId);
                 $ivaprod = $detalleVenta[0]->porc_iva;
                 $updateReg->product_id = $request->producto;
@@ -608,7 +607,7 @@ class notadebitoController extends Controller
 
     public function editNotacredito(Request $request)
     {
-        $reg = NotacreditoDetail::where('id', $request->id)->first();
+        $reg = NotadebitoDetail::where('id', $request->id)->first();
         //  dd($reg);
         return response()->json([
             'status' => 1,

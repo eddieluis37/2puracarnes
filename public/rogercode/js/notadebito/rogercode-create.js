@@ -102,7 +102,7 @@ tbodyTable.addEventListener("click", (e) => {
         console.log(id);
         const dataform = new FormData();
         dataform.append("id", Number(id));
-        sendData("/notacreditoById", dataform, token).then((result) => {
+        sendData("/notadebitoById", dataform, token).then((result) => {
             console.log(result);
             let editReg = result.reg;
             console.log(editReg);
@@ -118,7 +118,7 @@ tbodyTable.addEventListener("click", (e) => {
 btnAdd.addEventListener("click", (e) => {
     e.preventDefault();
     const dataform = new FormData(formDetail);
-    sendData("/notacreditosavedetail", dataform, token).then((result) => {
+    sendData("/notadebitosavedetail", dataform, token).then((result) => {
         console.log(result);
         if (result.status === 1) {
             $("#producto").val("").trigger("change");

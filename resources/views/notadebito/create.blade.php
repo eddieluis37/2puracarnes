@@ -7,7 +7,7 @@
 </style>
 <meta name="csrf-token" content="{{ csrf_token() }}">
 <div class="row sales layout-top-spacing">
-	<form id="form-detail" method="POST" action="registrar_notacredito/{{$id}}">
+	<form id="form-detail" method="POST" action="registrar_notadebito/{{$id}}">
 		<div class="col-sm-12">
 			<div class="widget widget-chart-one">
 				<div class="widget-heading">
@@ -250,5 +250,5 @@
 </div>
 @endsection
 @section('script')
-<script src="{{asset('rogercode/js/notacredito/rogercode-create.js')}}" type="module"></script>
+<script src="{{asset('rogercode/js/notadebito/rogercode-create.js')}}" type="module"></script>
 @endsection
