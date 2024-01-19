@@ -390,7 +390,7 @@ Route::group(['middleware' => [('auth')]], function () {
     Route::get('sale/create/registrar_pago/{id}', [saleController::class, 'create_reg_pago'])->name('sale.registrar_pago');
     Route::post('sale/create/registrar_pago/{id}', [saleController::class, 'storeRegistroPago'])->name('pago.save');
 
-    Route::get('sale/showFactura/{id}', [exportFacturaController::class, 'showFactura']);
+    Route::get('sale/showFactura/{id}', [exportFacturaController::class, 'showFactura'])->name('sale.showFactura');
     
 
     /* Route::post('registroPagoSave', [saleController::class, 'storeRegistroPago'])->name('pago.save'); */

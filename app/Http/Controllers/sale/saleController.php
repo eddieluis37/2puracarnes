@@ -64,10 +64,7 @@ class saleController extends Controller
         $cambio = $request->input('cambio');
         $cambio = str_replace(['.', ',', '$', '#'], '', $cambio);
 
-        $status = '1'; //1 = pagado
-
-        // Call the cargarInventariocr method
-        $this->cargarInventariocr($ventaId);
+        $status = '1'; //1 = pagado   
 
         try {
             $venta = Sale::find($ventaId);
@@ -89,32 +86,35 @@ class saleController extends Controller
             $venta->cambio = $cambio;
             $venta->status = $status;
             $venta->fecha_cierre = now();
-
+            /* 
             if (($venta->centrocosto_id == 1 || $venta->centrocosto_id == 2) && $venta->tipo == '0') {
                 $count = DB::table('sales')->where('tipo', '0')->count();
                 $resolucion = 'PC ' . str_pad(9000 + $count, 4, '0', STR_PAD_LEFT);
                 $venta->resolucion = $resolucion;
-            }
+            } */
 
-            if (($venta->centrocosto_id == 1 || $venta->centrocosto_id == 2) && $venta->tipo == '1') {
+            if ($venta->centrocosto_id == 1 || $venta->centrocosto_id == 2) {
                 $count1 = DB::table('sales')->where('status', '1')->count();
                 $count2 = DB::table('notacreditos')->where('status', '1')->count();
-                $count = $count1 + $count2;
+                $count3 = DB::table('notadebitos')->where('status', '1')->count();
+                $count = $count1 + $count2 + $count3;
                 $resolucion = 'PCE ' . str_pad(13135 + $count, 4, '0', STR_PAD_LEFT);
                 $venta->resolucion = $resolucion;
             }
-
             $venta->save();
 
+            // Call the cargarInventariocr method
+            $this->cargarInventariocr($ventaId);
+
             if ($venta->status == 1) {
-                return redirect()->route('sale.index');
+                return redirect()->route('sale.showFactura', $ventaId);
             }
 
             return response()->json([
                 'status' => 1,
                 'message' => 'Guardado correctamente',
                 "registroId" => $venta->id,
-                'redirect' => route('sale.index')
+                'redirect' => route('sale.showFactura', 'registroId')
             ]);
         } catch (\Throwable $th) {
             return response()->json([
@@ -130,13 +130,20 @@ class saleController extends Controller
         $formattedDate = $currentDateTime->format('Y-m-d');
 
         $compensadores = Sale::where('id', $ventaId)->get();
+        
+        $ventadetalle = SaleDetail::where('sale_id', $ventaId)->get();
+        $product_ids = $ventadetalle->pluck('product_id'); // consulta todos los registros 
+
+        //  dd($product_ids);
+        //  dd($ventadetalle[1]);
 
         $centrocosto_id = 1;
 
-        // Calcular el cantidad de productos acumulado del producto 
-        $centroCostoProducts = Centro_costo_product::all();
-        /* ->where('centrocosto_id', $centrocosto_id)
-            ->get(); */
+        // Calcular el cantidad de productos acumulado del producto, // 
+
+        $centroCostoProducts = Centro_costo_product::whereIn('products_id', $product_ids)
+            ->where('centrocosto_id', $centrocosto_id)
+            ->get();
 
         foreach ($centroCostoProducts as $centroCostoProduct) {
             $accumulatedQuantity = SaleDetail::where('sale_id', '=', $ventaId)
@@ -904,6 +911,15 @@ class saleController extends Controller
             $venta->items = 0;
             $venta->valor_pagado = 0;
             $venta->cambio = 0;
+
+            if ($venta->centrocosto_id == 1 || $venta->centrocosto_id == 2) {
+                $count1 = DB::table('sales')->where('status', '1')->count();
+                $count2 = DB::table('notacreditos')->where('status', '1')->count();
+                $count3 = DB::table('notadebitos')->where('status', '1')->count();
+                $count = $count1 + $count2 + $count3;
+                $resolucion = 'PCE ' . str_pad(13135 + $count, 4, '0', STR_PAD_LEFT);
+                $venta->resolucion = $resolucion;
+            }
             $venta->save();
 
             //ACTUALIZA CONSECUTIVO 

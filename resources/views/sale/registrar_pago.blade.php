@@ -253,7 +253,8 @@
                                 </th>-->
                                 <th colspan="2">
                                     <div class="form-group">
-                                        <button type="submit" class="btn btn-success" id="btnGuardar" disabled>Guardar e imprimir</button>
+                                   
+                                        <button type="submit" class="btn btn-success" id="btnGuardar" disabled target="_blank">Guardar e imprimir</button>
                                         <button type="button" class="btn btn-primary" onclick="history.back()">Volver</button>
                                     </div>
                                 </th>
