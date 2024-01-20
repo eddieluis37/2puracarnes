@@ -88,7 +88,6 @@ class notacreditoController extends Controller
 
     public function cargarInventariocr($id)
     {
-
         $currentDateTime = Carbon::now();
         $formattedDate = $currentDateTime->format('Y-m-d');
 
@@ -100,10 +99,16 @@ class notacreditoController extends Controller
             $product_id = $compensadores[$i]->product_id;
         }
       */
+
+        $notaCreditodetalle = NotacreditoDetail::where('sale_id', $id)->get();
+        $product_ids = $notaCreditodetalle->pluck('product_id'); // consulta todos los registros 
+
+       // dd($product_ids);
+
         // Calcular el cantidad de productos acumulado  
-        $centroCostoProducts = Centro_costo_product::all();
-        /* ->where('centrocosto_id', $centrocosto_id)
-            ->get(); */
+        $centroCostoProducts = Centro_costo_product::whereIn('products_id', $product_ids)
+            ->where('centrocosto_id', $centrocosto_id)
+            ->get();
 
         //  dd($centroCostoProducts);
 
@@ -400,7 +405,7 @@ class notacreditoController extends Controller
             ->join('centro_costo as centro', 'sa.centrocosto_id', '=', 'centro.id')
             ->leftJoin('notacreditos as nc', 'sa.id', '=', 'nc.sale_id')
             ->select('sa.*', 'nc.tipo', 'sa.resolucion as saresolucion', 'nc.valor_total as nctotal',  'nc.resolucion as ncresolucion', 'nc.status as ncstatus', 'nc.fecha_notacredito', 'nc.fecha_cierre as ncfecha_cierre', 'tird.name as namethird', 'centro.name as namecentrocosto')
-      /*       ->where('sa.tipo', '1') */ // Tipo 1 = domicilio, 0= POS mostrador
+            /*       ->where('sa.tipo', '1') */ // Tipo 1 = domicilio, 0= POS mostrador
             ->where('sa.status', '1')
             ->get();
 

@@ -100,10 +100,15 @@ class notadebitoController extends Controller
             $product_id = $compensadores[$i]->product_id;
         }
       */
+        $notaDebitodetalle = NotadebitoDetail::where('sale_id', $id)->get();
+        $product_ids = $notaDebitodetalle->pluck('product_id'); // consulta todos los registros 
+
+        // dd($product_ids);
+
         // Calcular el cantidad de productos acumulado  
-        $centroCostoProducts = Centro_costo_product::all();
-        /* ->where('centrocosto_id', $centrocosto_id)
-            ->get(); */
+        $centroCostoProducts = Centro_costo_product::whereIn('products_id', $product_ids)
+            ->where('centrocosto_id', $centrocosto_id)
+            ->get();
 
         //  dd($centroCostoProducts);
 
