@@ -552,7 +552,7 @@ class notadebitoController extends Controller
                 $detail->sale_id = $request->ventaId;
                 $detail->product_id = $request->producto;
                 $detail->price = $formatPrVenta;
-                $detail->quantity = $request->quantity;
+                $detail->quantity = $formatPesoKg;
                 $detail->porc_desc = $porcDescuento;
                 $detail->descuento = $descuento;
 
