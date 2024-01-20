@@ -39,9 +39,7 @@ class notadebitoController extends Controller
 
         try {
 
-            $venta = new Notadebito();
-
-            //  dd($venta);
+            $venta = new Notadebito();            
             $venta->user_id = $request->user()->id;
             $venta->sale_id = $ventaId->id;
             $venta->tipo = $tipo;
@@ -51,8 +49,8 @@ class notadebitoController extends Controller
 
             $count1 = DB::table('sales')->where('status', '1')->count();
             $count2 = DB::table('notacreditos')->where('status', '1')->count();
-            $count = $count1 + $count2;
-
+            $count3 = DB::table('notadebitos')->where('status', '1')->count();
+            $count = $count1 + $count2 + $count3;
             $resolucion = 'PCE ' . str_pad(13135 + $count, 4, '0', STR_PAD_LEFT);
             $venta->resolucion = $resolucion;
 
@@ -118,24 +116,24 @@ class notadebitoController extends Controller
                 ->sum('quantity');
 
             // Almacenar la cantidad acomulado en la tabla temporal
-            DB::table('table_temporary_accumulated_notacredito')->insert([
+            DB::table('table_temporary_accumulated_notadebito')->insert([
                 'product_id' => $centroCostoProduct->products_id,
                 'accumulated_quantity' => $accumulatedQuantity
             ]);
         }
 
-        // Recuperar los registros de la tabla table_temporary_accumulated_notacredito
-        $accumulatedQuantitys = DB::table('table_temporary_accumulated_notacredito')->get();
+        // Recuperar los registros de la tabla table_temporary_accumulated_notadebito
+        $accumulatedQuantitys = DB::table('table_temporary_accumulated_notadebito')->get();
 
         foreach ($accumulatedQuantitys as $accumulatedQuantity) {
             $centroCostoProduct = Centro_costo_product::find($accumulatedQuantity->product_id);
 
             // Sumar el valor de accumulatedQuantity al campo compensados
-            $centroCostoProduct->notacredito += $accumulatedQuantity->accumulated_quantity;
+            $centroCostoProduct->notadebito += $accumulatedQuantity->accumulated_quantity;
             $centroCostoProduct->save();
 
-            // Limpiar la tabla table_temporary_accumulated_notacredito
-            DB::table('table_temporary_accumulated_notacredito')->truncate();
+            // Limpiar la tabla table_temporary_accumulated_notadebito
+            DB::table('table_temporary_accumulated_notadebito')->truncate();
         }
 
         return response()->json([

@@ -40,8 +40,6 @@ class notacreditoController extends Controller
         try {
 
             $venta = new Notacredito();
-
-            //  dd($venta);
             $venta->user_id = $request->user()->id;
             $venta->sale_id = $ventaId->id;
             $venta->tipo = $tipo;
@@ -51,8 +49,8 @@ class notacreditoController extends Controller
 
             $count1 = DB::table('sales')->where('status', '1')->count();
             $count2 = DB::table('notacreditos')->where('status', '1')->count();
-            $count = $count1 + $count2;
-
+            $count3 = DB::table('notadebitos')->where('status', '1')->count();
+            $count = $count1 + $count2 + $count3;
             $resolucion = 'PCE ' . str_pad(13135 + $count, 4, '0', STR_PAD_LEFT);
             $venta->resolucion = $resolucion;
 
@@ -103,7 +101,7 @@ class notacreditoController extends Controller
         $notaCreditodetalle = NotacreditoDetail::where('sale_id', $id)->get();
         $product_ids = $notaCreditodetalle->pluck('product_id'); // consulta todos los registros 
 
-       // dd($product_ids);
+        // dd($product_ids);
 
         // Calcular el cantidad de productos acumulado  
         $centroCostoProducts = Centro_costo_product::whereIn('products_id', $product_ids)
