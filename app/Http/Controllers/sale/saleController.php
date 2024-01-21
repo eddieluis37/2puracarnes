@@ -24,7 +24,6 @@ use App\Models\Sale;
 use App\Models\SaleDetail;
 use App\Models\Subcentrocosto;
 
-
 class saleController extends Controller
 {
 
@@ -107,7 +106,10 @@ class saleController extends Controller
             $this->cargarInventariocr($ventaId);
 
             if ($venta->status == 1) {
-                return redirect()->route('sale.showFactura', $ventaId);
+                /* return redirect()->route('sale.index'); */
+                session()->flush();
+                return redirect()->route('sale.showFactura', $ventaId, 302);
+                /*   return redirect()->route('sale.showFactura', $ventaId, 302)->flush(); */
             }
 
             return response()->json([
@@ -115,6 +117,7 @@ class saleController extends Controller
                 'message' => 'Guardado correctamente',
                 "registroId" => $venta->id,
                 'redirect' => route('sale.showFactura', 'registroId')
+                /* 'redirect' => route('sale.index') */
             ]);
         } catch (\Throwable $th) {
             return response()->json([
@@ -130,7 +133,7 @@ class saleController extends Controller
         $formattedDate = $currentDateTime->format('Y-m-d');
 
         $compensadores = Sale::where('id', $ventaId)->get();
-        
+
         $ventadetalle = SaleDetail::where('sale_id', $ventaId)->get();
         $product_ids = $ventadetalle->pluck('product_id'); // consulta todos los registros 
 
