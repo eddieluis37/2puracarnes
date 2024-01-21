@@ -51,7 +51,7 @@ class notadebitoController extends Controller
             $count2 = DB::table('notacreditos')->where('status', '1')->count();
             $count3 = DB::table('notadebitos')->where('status', '1')->count();
             $count = $count1 + $count2 + $count3;
-            $resolucion = 'PCE ' . str_pad(13135 + $count, 4, '0', STR_PAD_LEFT);
+            $resolucion = 'ERPC' . str_pad(10000 + $count, 4, '0', STR_PAD_LEFT);
             $venta->resolucion = $resolucion;
 
             $venta->fecha_notadebito = now();
