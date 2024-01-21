@@ -1,20 +1,13 @@
-body {
-    min-height: 100vh;
-    max-width: 300px;
-    /* background-color: rgb(255, 255, 255);  */
-    margin: 0 auto;
-}
-
-@page {
-            margin-top: 300px;
+        @page {
+            margin-top: 310px;
             margin-bottom: 5px;
         }
 
         .header h1 {
-            margin-right: 300px;
+            margin: 0;
         }
 
-         .footer {
+        .footer {
             bottom: 15px;
             font-size: 7pt;
             color: #333333;             
@@ -31,4 +24,4 @@ body {
 
         .pagenum:before {
             content: counter(page);
-        } 
+        }

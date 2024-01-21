@@ -1,4 +1,4 @@
-/* .header, */
+.header,
 .footer {
     width: 100%;
     position: fixed;
@@ -46,8 +46,8 @@ hr {
     padding: 5px 2px;
     text-align: center;
     vertical-align: middle;
-    background-color: #f0f0f2;
-    color: #000000;
+    background-color: #515365;
+    color: #ffffff;
 }
 
 .table-items tbody td {
