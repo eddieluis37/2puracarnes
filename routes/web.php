@@ -3,6 +3,7 @@
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\BooksController;
 use App\Http\Controllers\ExportController;
+use App\Http\Controllers\ExportCxcController;
 use App\Http\Controllers\TodosController;
 use App\Http\Livewire\AsignarController;
 use App\Http\Livewire\BeneficiopollosController;
@@ -18,6 +19,7 @@ use App\Http\Livewire\PrecioAgreementsController;
 use App\Http\Livewire\ProductsController;
 use App\Http\Livewire\MeatcutsController;
 use App\Http\Livewire\ReportsController;
+use App\Http\Livewire\CuentasporcobrarsController;
 use App\Http\Livewire\RolesController;
 use App\Http\Livewire\Select2;
 use App\Http\Livewire\ThirdsController;
@@ -66,6 +68,7 @@ use App\Http\Controllers\notadebito\notadebitoController;
 use App\Http\Controllers\notadebito\pdfNotadebitoController;
 use App\Http\Controllers\res\pdfLoteController;
 use App\Http\Controllers\sale\exportFacturaController;
+
 use App\Models\Notacredito;
 
 /************************************************* */
@@ -155,6 +158,17 @@ Route::group(['middleware' => [('auth')]], function () {
 
     Route::post('storem', [DesposterController::class, 'storem'])->name('storem');
 
+    /************************* CUENTAS POR COBRAR ********************************** */
+    Route::get('cuentasporcobrars', CuentasporcobrarsController::class);
+
+     //reportes PDF
+     Route::get('reportCxc/pdf/{user}/{type}/{f1}/{f2}', [ExportCxcController::class, 'reportPDF']);
+     Route::get('reportCxc/pdf/{user}/{type}', [ExportCxcController::class, 'reportPDF']);
+ 
+ 
+     //reportes EXCEL
+     Route::get('reportCxc/excel/{user}/{type}/{f1}/{f2}', [ExportCxcController::class, 'reporteExcel']);
+     Route::get('reportCxc/excel/{user}/{type}', [ExportCxcController::class, 'reporteExcel']);
 
 
     //Route::post('citywithstatecountry', [CityController::class, 'citywithstatecountry'])->name('citywithstatecountry');
