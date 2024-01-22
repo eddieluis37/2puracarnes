@@ -80,8 +80,8 @@
 				<tr>
 					<td align="center">{{$item->nameprod}}</td>
 					<td align="center">{{$item->quantity}}</td>
-					<td align="center">${{number_format($item->price),2}}</td>
-					<td align="center">${{number_format($item->total),2}}</td>
+					<td align="center">{{number_format($item->price),2}}</td>
+					<td align="center">{{number_format($item->total),2}}</td>
 				</tr>
 				@endforeach
 			</tbody>
@@ -95,7 +95,7 @@
 					</td>
 					<td></td>
 					<td class="text-center">
-						<span><strong>${{ number_format($sale->sum('total_valor_a_pagar'),0)}}</strong></span>
+						<span><strong>{{ number_format($sale->sum('total_valor_a_pagar'),0)}}</strong></span>
 					</td>
 				</tr>
 			</tfoot>
@@ -106,10 +106,10 @@
 			<span><strong>Forma de pago</strong></span>
 		</p>
 		<p class="text-right" style="font-size: 28px;">
-			<span><strong>${{ number_format($sale[0]->valor_pagado,0)}}</strong></span>
+			<span><strong>{{ number_format($sale[0]->valor_pagado,0)}}</strong></span>
 		</p>
 		<p class="text-right" style="font-size: 28px;">
-			<span><strong>Cambio: ${{ number_format($sale[0]->cambio,0)}}</strong></span>
+			<span><strong>Cambio: {{ number_format($sale[0]->cambio,0)}}</strong></span>
 		</p>
 
 		<p align="center" style="font-size: 17px; margin-top: -15px;">A esta factura de venta aplican las normas relativas a la letra de cambio (artículo 5 Ley 1231 de 2008). Con esta el Comprador declara haber recibido real y materialmente las mercancías o prestación de servicios descritos en este título - Valor. <strong>Número Autorización 18764064061708 aprobado en 20240120 prefijo ERPC desde el número 1 al 10000, del dia 20 de enero de 2024, Vigencia: 6 Meses</strong></p>
