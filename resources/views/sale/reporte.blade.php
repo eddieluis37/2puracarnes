@@ -2,20 +2,20 @@
 <html lang="es">
 
 <head>
-	
-		<meta charset="UTF-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-		<title>Reporte de Ventas</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-		<!-- cargar a través de la url del sistema -->
-		<!--
+	<title>Reporte de Ventas</title>
+
+	<!-- cargar a través de la url del sistema -->
+	<!--
 		<link rel="stylesheet" href="{{ asset('css/custom_pdf.css') }}">
 		<link rel="stylesheet" href="{{ asset('css/custom_page.css') }}">
 	-->
-		<!-- ruta física relativa OS -->
-		<link rel="stylesheet" href="{{ public_path('css/custom_pdf.css') }}">
-		<link rel="stylesheet" href="{{ public_path('css/custom_page.css') }}">
+	<!-- ruta física relativa OS -->
+	<link rel="stylesheet" href="{{ public_path('css/custom_pdf.css') }}">
+	<link rel="stylesheet" href="{{ public_path('css/custom_page.css') }}">
 
 </head>
 
@@ -39,8 +39,8 @@
 					<span style="font-size: 28px; font-weight: lighter; display: block; margin: 0;">11.04 Maquina</span>
 					<img src="{{ asset('assets/img/logo65.png') }}" alt="" class="invoice-logo" width="177%" style="vertical-align: top; padding-top: -70px; position: relative">
 				</td>
-
 			</tr>
+			<hr width="140mm" color="black" size="3">
 			<tr>
 				<td colspan=" 2" class="text-center">
 					<span style="font-size: 29px; font-weight: bold; display: block; margin-top: 10;">Sistema POS: {{$sale[0]->resolucion}}</span>
@@ -59,19 +59,20 @@
 						{{-- Display "Pendiente" if status is 0 --}}
 						<strong>{{ $sale[0]->status == 1 ? 'Cerrada' : 'Pendiente' }}</strong>
 					</span>
-					<span style="font-size: 8px; font-weight: lighter; display: block; margin: 2;">Items:<strong>{{$sale->sum('items')}}</strong></span>
+					<span style="font-size: 28px; font-weight: lighter; display: block; margin: 2;">Items:<strong>{{$sale->sum('items')}}</strong></span>
 				</td>
 			</tr>
 		</table>
 	</section>
-
+	<hr width="140mm" color="black" size="4">
 	<section style="margin-top: 15px">
-		<table align="center" cellpadding="0" cellspacing="0" class="table-items" width="100%">
+		<table align="center" cellpadding="33" cellspacing="1" class="table-items" width="100%">
 			<thead>
 				<tr>
-					<th width="28%">Descripción</th>
+					<th width="60%">Descripción</th>
 					<th width="10%">Cant.</th>
-					<th width="12%">Vr.Total</th>
+					<th width="10%">Vr.unit</th>
+					<th width="10%">Vr.Total</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -79,7 +80,8 @@
 				<tr>
 					<td align="center">{{$item->nameprod}}</td>
 					<td align="center">{{$item->quantity}}</td>
-					<td align="center">$ {{number_format($item->total),2}}</td>
+					<td align="center">${{number_format($item->price),2}}</td>
+					<td align="center">${{number_format($item->total),2}}</td>
 				</tr>
 				@endforeach
 			</tbody>
@@ -91,14 +93,27 @@
 					<td colspan="1" class="text-center">
 						<span><strong>{{ $quantity = $item->where('sale_id', '=', $item->sale_id)->sum('quantity')}}</strong></span>
 					</td>
+					<td></td>
 					<td class="text-center">
 						<span><strong>${{ number_format($sale->sum('total_valor_a_pagar'),0)}}</strong></span>
 					</td>
 				</tr>
 			</tfoot>
 		</table>
-		<p align="center" style="font-size: 17px; margin-top: 20px;">A esta factura de venta aplican las normas relativas a la letra de cambio (artículo 5 Ley 1231 de 2008). Con esta el Comprador declara haber recibido real y materialmente las mercancías o prestación de servicios descritos en este título - Valor. <strong>Número Autorización 18764064061708 aprobado en 20240120 prefijo ERPC desde el número 1 al 10000, del dia 20 de enero de 2024, Vigencia: 6 Meses</strong></p>
-		<p align="center" style="font-size: 17px; margin: -7px;">Responsable de IVA - Actividad Económica 4620 Comercio al por mayor de materias primas agropecuarias; animales vivos Tarifa 11.04</p>
+
+		<hr width="140mm" color="black" size="3">
+		<p class="text-center" style="font-size: 21px;">
+			<span><strong>Forma de pago</strong></span>
+		</p>
+		<p class="text-right" style="font-size: 28px;">
+			<span><strong>${{ number_format($sale[0]->valor_pagado,0)}}</strong></span>
+		</p>
+		<p class="text-right" style="font-size: 28px;">
+			<span><strong>Cambio: ${{ number_format($sale[0]->cambio,0)}}</strong></span>
+		</p>
+
+		<p align="center" style="font-size: 17px; margin-top: -15px;">A esta factura de venta aplican las normas relativas a la letra de cambio (artículo 5 Ley 1231 de 2008). Con esta el Comprador declara haber recibido real y materialmente las mercancías o prestación de servicios descritos en este título - Valor. <strong>Número Autorización 18764064061708 aprobado en 20240120 prefijo ERPC desde el número 1 al 10000, del dia 20 de enero de 2024, Vigencia: 6 Meses</strong></p>
+		<p align="center" style="font-size: 17px; margin: -27px;">Responsable de IVA - Actividad Económica 4620 Comercio al por mayor de materias primas agropecuarias; animales vivos Tarifa 11.04</p>
 	</section>
 	<!-- <section class="footer">
 		<table cellpadding="0" cellspacing="0" class="table-items" width="100%">

@@ -5,6 +5,10 @@ body {
     margin: 0 auto;
 }
 
+table {
+    font-size: 28px;
+  }
+
 @page {
             margin-top: 7px;
             margin-bottom: 5px;
