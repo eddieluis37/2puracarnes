@@ -1,12 +1,12 @@
 body {
     min-height: 100vh;
-    max-width: 300px;
-    /* background-color: rgb(255, 255, 255);  */
+    max-width: 500px;
+  /*   background-color: rgb(234, 185, 185);  */
     margin: 0 auto;
 }
 
 @page {
-            margin-top: 300px;
+            margin-top: 7px;
             margin-bottom: 5px;
         }
 
