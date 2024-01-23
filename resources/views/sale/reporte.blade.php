@@ -105,15 +105,24 @@
 		<p class="text-center" style="font-size: 21px;">
 			<span><strong>Forma de pago</strong></span>
 		</p>
-		<p class="text-right" style="font-size: 28px;">
-			<span><strong>{{ number_format($sale[0]->valor_pagado,0)}}</strong></span>
+		<p class="text-right" style="font-size: 19px;">
+			<span>EFECTIVO: </span><span><strong>{{ number_format($sale[0]->valor_a_pagar_efectivo,0)}}</strong></span>
 		</p>
-		<p class="text-right" style="font-size: 28px;">
+		<p class="text-right" style="font-size: 19px;">
+			<span>{{$sale[0]->formapago1}}: </span><span><strong>{{ number_format($sale[0]->valor_a_pagar_tarjeta,0)}}</strong></span>
+		</p>
+		<p class="text-right" style="font-size: 19px;">
+			<span>{{$sale[0]->formapago2}}: </span><span><strong>{{ number_format($sale[0]->valor_a_pagar_otros,0)}}</strong></span>
+		</p>
+		<p class="text-right" style="font-size: 19px;">
+			<span>{{$sale[0]->formapago3}}: </span><span><strong>{{ number_format($sale[0]->valor_a_pagar_credito,0)}}</strong></span>
+		</p>
+		<p class="text-right" style="font-size: 19px;">
 			<span><strong>Cambio: {{ number_format($sale[0]->cambio,0)}}</strong></span>
 		</p>
-
-		<p align="center" style="font-size: 17px; margin-top: -15px;">A esta factura de venta aplican las normas relativas a la letra de cambio (artículo 5 Ley 1231 de 2008). Con esta el Comprador declara haber recibido real y materialmente las mercancías o prestación de servicios descritos en este título - Valor. <strong>Número Autorización 18764064061708 aprobado en 20240120 prefijo ERPC desde el número 1 al 10000, del dia 20 de enero de 2024, Vigencia: 6 Meses</strong></p>
-		<p align="center" style="font-size: 17px; margin: -27px;">Responsable de IVA - Actividad Económica 4620 Comercio al por mayor de materias primas agropecuarias; animales vivos Tarifa 11.04</p>
+		<hr width="140mm" color="black" size="4">
+		<p align="center" style="font-size: 17px; margin-top: 8px;">A esta factura de venta aplican las normas relativas a la letra de cambio (artículo 5 Ley 1231 de 2008). Con esta el Comprador declara haber recibido real y materialmente las mercancías o prestación de servicios descritos en este título - Valor. <strong>Número Autorización 18764064061708 aprobado en 20240120 prefijo ERPC desde el número 1 al 10000, del dia 20 de enero de 2024, Vigencia: 6 Meses</strong></p>
+		<p align="center" style="font-size: 17px; margin: -18px;">Responsable de IVA - Actividad Económica 4620 Comercio al por mayor de materias primas agropecuarias; animales vivos Tarifa 11.04</p>
 	</section>
 	<!-- <section class="footer">
 		<table cellpadding="0" cellspacing="0" class="table-items" width="100%">

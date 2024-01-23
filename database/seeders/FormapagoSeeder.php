@@ -15,46 +15,45 @@ class FormapagoSeeder extends Seeder
     public function run()
     {
         $formapago = new Formapago([
-            "codigo" => "EFECTIVO",
-            "nombre" => "EFECTIVO ",
-            "tipoformapago" => "MEDIOPAGO",
+            "codigo" => "DATAFONO",
+            "nombre" => "DATAFONO CTA CTE DAVIVIENDA",
+            "tipoformapago" => "TARJETA",
             "diascredito" => null,
             "cuenta" => "11050501"
         ]);
         $formapago->save();
 
         $formapago = new Formapago([
-            "codigo" => "WOMPI",
-            "nombre" => "OTROS",
-            "tipoformapago" => "OTROS",
+            "codigo" => "DAVIVIENDA",
+            "nombre" => "DAVIVIENDA AHORROS",
+            "tipoformapago" => "TARJETA",
             "diascredito" => null,
             "cuenta" => "22050501"
         ]);
         $formapago->save();
-
+    
+        $formapago = new Formapago([
+            "codigo" => "BANCOLOMBIA",
+            "nombre" => "BANCOLOMBIA AHORROS",
+            "tipoformapago" => "TARJETA",
+            "diascredito" => null,
+            "cuenta" => "22050501"
+        ]);
+        $formapago->save();      
         
         $formapago = new Formapago([
-            "codigo" => "TRANSFIYA",
-            "nombre" => "TRANSFIYA",
-            "tipoformapago" => "OTROS",
+            "codigo" => "WOMPI",
+            "nombre" => "WOMPI",
+            "tipoformapago" => "TARJETA",
             "diascredito" => null,
             "cuenta" => "32050501"
         ]);
-        $formapago->save();
+        $formapago->save();        
 
         $formapago = new Formapago([
-            "codigo" => "TCREDITO",
-            "nombre" => "TARJETA DE CREDITO",
-            "tipoformapago" => "TARJETA",
-            "diascredito" => null,
-            "cuenta" => "42050501"
-        ]);
-        $formapago->save();
-
-        $formapago = new Formapago([
-            "codigo" => "TDEBITO",
-            "nombre" => "TARJETA DEBITO",
-            "tipoformapago" => "TARJETA",
+            "codigo" => "VENTA A CREDITO",
+            "nombre" => "VENTA A CREDITO",
+            "tipoformapago" => "OTROS",
             "diascredito" => null,
             "cuenta" => "42050501"
         ]);
