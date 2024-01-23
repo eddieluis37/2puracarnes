@@ -66,7 +66,7 @@
 	</section>
 	<hr width="140mm" color="black" size="4">
 	<section style="margin-top: 15px">
-		<table align="center" cellpadding="33" cellspacing="1" class="table-items" width="100%">
+		<table align="" cellpadding="33" cellspacing="1" class="table-items" width="120%">
 			<thead>
 				<tr>
 					<th width="60%">Descripción</th>
@@ -78,10 +78,10 @@
 			<tbody>
 				@foreach($saleDetails as $item)
 				<tr>
-					<td align="center">{{$item->nameprod}}</td>
+					<td align="left">{{$item->nameprod}}</td>
 					<td align="center">{{$item->quantity}}</td>
 					<td align="center">{{number_format($item->price),2}}</td>
-					<td align="center">{{number_format($item->total),2}}</td>
+					<td align="right">{{number_format($item->total),2}}</td>
 				</tr>
 				@endforeach
 			</tbody>
