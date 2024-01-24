@@ -42,7 +42,8 @@
 			<tr>
 				<td width="70%" class="text-left text-company" style="vertical-align: top; padding-top: 7px">
 					<span style="font-size: 8px; font-weight: lighter; display: block; margin: 2;">Factura:<strong> {{$comp[0]->factura}}</strong></span>
-					<span style="font-size: 8px; font-weight: lighter; display: block; margin: 2;">Fecha y hora:<strong> {{\Carbon\Carbon::now()->format('Y-m-d H:i')}}</strong></span>
+					<span style="font-size: 8px; font-weight: lighter; display: block; margin: 2;">Fecha de compra:<strong> {{$comp[0]->fecha_compensado}}</strong></span>
+					<span style="font-size: 8px; font-weight: lighter; display: block; margin: 2;">Fecha y hora de consulta:<strong> {{\Carbon\Carbon::now()->format('Y-m-d H:i')}}</strong></span>
 
 					<span style="font-size: 8px; font-weight: lighter; display: block; margin: 2;">Usuario:<strong> {{$comp[0]->nameuser}}</strong></span>
 					<span style="font-size: 8px; font-weight: lighter; display: block; margin: 2;">Proveedor:<strong> {{$comp[0]->namethird}}</strong></span>

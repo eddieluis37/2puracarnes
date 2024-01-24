@@ -1,4 +1,4 @@
-.header,
+/* .header, */
 .footer {
     width: 100%;
     position: fixed;
@@ -11,7 +11,7 @@ body {
 }
 
 hr {
-    border: 1px solid #dddddd;
+   /*  border: 1px solid #000000; */
     margin-bottom: 0;
 }
 
@@ -28,7 +28,7 @@ hr {
 }
 
 .text-company {
-    color: #666666;
+    color: #000000;
     font-size: 9pt;
 }
 
@@ -46,8 +46,8 @@ hr {
     padding: 5px 2px;
     text-align: center;
     vertical-align: middle;
-    background-color: #515365;
-    color: #ffffff;
+    background-color: #f0f0f2;
+    color: #000000;
 }
 
 .table-items tbody td {

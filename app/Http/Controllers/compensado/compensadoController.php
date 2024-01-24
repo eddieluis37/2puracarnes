@@ -248,7 +248,8 @@ class compensadoController extends Controller
                 /*     $comp->categoria_id = $request->categoria; */
                 $comp->thirds_id = $request->provider;
                 $comp->centrocosto_id = $request->centrocosto;
-                $comp->fecha_compensado = $currentDateFormat;
+                /*    $comp->fecha_compensado = $currentDateFormat; */
+                $comp->fecha_compensado = $request->fecha;
                 $comp->fecha_cierre = $dateNextMonday;
                 $comp->factura = $request->factura;
                 $comp->save();
@@ -291,7 +292,7 @@ class compensadoController extends Controller
             ->join('thirds as tird', 'comp.thirds_id', '=', 'tird.id')
             ->join('centro_costo as centro', 'comp.centrocosto_id', '=', 'centro.id')
             ->select('comp.*', 'tird.name as namethird', 'centro.name as namecentrocosto')
-          /*   ->where('comp.status', 1) */
+            /*   ->where('comp.status', 1) */
             ->get();
         //$data = Compensadores::orderBy('id','desc');
         return Datatables::of($data)->addIndexColumn()
@@ -304,7 +305,7 @@ class compensadoController extends Controller
                     return $status;
                 })*/
             ->addColumn('date', function ($data) {
-                $date = Carbon::parse($data->created_at);
+                $date = Carbon::parse($data->fecha_compensado);
                 $onlyDate = $date->toDateString();
                 return $onlyDate;
             })

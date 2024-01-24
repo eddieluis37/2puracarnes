@@ -23,14 +23,14 @@
 				<div class="card">
 					<div class="card-body">
 						<div class="row g-3">
-							<div class="col-md-3">
+							<!-- <div class="col-md-3">
 								<div class="task-header">
 									<div class="form-group">
 										<label for="date1" class="form-label">Fecha</label>
 										<input type="date" class="form-control" name="fecha" id="fecha" placeholder="Last name" aria-label="Last name" value="{{date('Y-m-d')}}">
 									</div>
 								</div>
-							</div>
+							</div> -->
 
 							<div class="col-md-4">
 								<div class="task-header">
@@ -119,7 +119,7 @@
 								<thead class="text-white" style="background: #3B3F5C">
 									<tr>
 										<!--th class="table-th text-white">Item</th>-->
-										<th class="table-th text-white">Fecha compra</th>
+										<!-- <th class="table-th text-white">Fecha compra</th> -->
 										<th class="table-th text-white">Codigo</th>
 										<th class="table-th text-white">Productos</th>
 										<th class="table-th text-white">Precio compra</th>
@@ -133,7 +133,7 @@
 									@foreach($detail as $proddetail)
 									<tr>
 										<!--td>{{$proddetail->id}}</td-->
-										<td>{{ date('m-d-Y', strtotime($proddetail->created_at))}}</td>
+									<!-- 	<td>{{ date('m-d-Y', strtotime($proddetail->created_at))}}</td> -->
 										<td>{{$proddetail->code}}</td>
 										<td>{{$proddetail->nameprod}}</td>
 										<td>$ {{ number_format($proddetail->pcompra, 0, ',', '.')}}</td>

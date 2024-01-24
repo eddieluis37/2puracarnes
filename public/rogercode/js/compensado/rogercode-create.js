@@ -104,6 +104,7 @@ btnAdd.addEventListener("click", (e) => {
         }
     });
 });
+   //<td>${formatDate(element.created_at)}</td>
 
 const showData = (data) => {
     let dataAll = data.array;
@@ -111,8 +112,7 @@ const showData = (data) => {
     showRegTbody.innerHTML = "";
     dataAll.forEach((element, indice) => {
         showRegTbody.innerHTML += `
-            <tr>
-                <td>${formatDate(element.created_at)}</td>
+            <tr>             
                 <td>${element.code}</td>
                 <td>${element.nameprod}</td>
                 <td>$ ${formatCantidadSinCero(element.pcompra)}</td>
@@ -137,8 +137,7 @@ const showData = (data) => {
         <tr>
             <th>Totales</th>
             <td></td>
-            <td></td>
-            <td></td>
+            <td></td>           
             <th>${formatCantidad(arrayTotales.pesoTotalGlobal)} KG</td>
             <th>$ ${formatCantidadSinCero(arrayTotales.totalGlobal)}</th>
             <td></td>

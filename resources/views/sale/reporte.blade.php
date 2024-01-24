@@ -14,8 +14,8 @@
 		<link rel="stylesheet" href="{{ asset('css/custom_page.css') }}">
 	-->
 	<!-- ruta física relativa OS -->
-	<link rel="stylesheet" href="{{ public_path('css/custom_pdf.css') }}">
-	<link rel="stylesheet" href="{{ public_path('css/custom_page.css') }}">
+	<link rel="stylesheet" href="{{ public_path('css/pos_custom_pdf.css') }}">
+	<link rel="stylesheet" href="{{ public_path('css/pos_custom_page.css') }}">
 
 </head>
 
