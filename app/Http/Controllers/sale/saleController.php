@@ -108,7 +108,8 @@ class saleController extends Controller
 
             if ($venta->status == 1) {
                 /* return redirect()->route('sale.index'); */
-                session()->flush();
+                /*  session()->flush(); */
+                session()->regenerate();
                 return redirect()->route('sale.showFactura', $ventaId, 302);
                 /*   return redirect()->route('sale.showFactura', $ventaId, 302)->flush(); */
             }

@@ -62,7 +62,7 @@ function calcularCambio() {
 }
 
 $(document).ready(function () {
-    var clienteMostrador = "CLIENTE MOSTRADOR";
+    var clienteMostrador = "Cliente Mostrador";
     var thirdName = $("#name_cliente").val();
 
     if (thirdName === clienteMostrador) {

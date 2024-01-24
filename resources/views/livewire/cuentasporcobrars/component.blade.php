@@ -11,12 +11,12 @@
                     <div class="col-sm-12 col-md-3">
                         <div class="row">
                             <div class="col-sm-12">
-                                <h6>Elige el usuario</h6>
+                                <h6>Elige el cliente</h6>
                                 <div class="form-group">
                                     <select wire:model="userId" class="form-control">
                                         <option value="0">Todos</option>
-                                        @foreach($users as $user)
-                                        <option value="{{$user->id}}">{{$user->name}}</option>
+                                        @foreach($terceros as $tercer)
+                                        <option value="{{$tercer->id}}">{{$tercer->name}}</option>
                                         @endforeach
                                     </select>
                                 </div>

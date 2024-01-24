@@ -34,7 +34,7 @@ class CuentasporcobrarsController extends Component
         $this->SalesByDate();
 
         return view('livewire.cuentasporcobrars.component', [
-            'users' => Third::orderBy('name','asc')->get()
+            'terceros' => Third::orderBy('name','asc')->get()
         ])->extends('layouts.theme.app')
         ->section('content');
     }
@@ -57,15 +57,15 @@ class CuentasporcobrarsController extends Component
 
         if($this->userId == 0)        
         {
-            $this->data = Sale::join('users as u','u.id','sales.user_id')
-            ->select('sales.*','u.name as user')
+            $this->data = Sale::join('thirds as t','t.id','sales.third_id')
+            ->select('sales.*','t.name as user')
             ->whereBetween('sales.created_at', [$from, $to])
             ->get();
         } else {
-            $this->data = Sale::join('users as u','u.id','sales.user_id')
-            ->select('sales.*','u.name as user')
+            $this->data = Sale::join('thirds as t','t.id','sales.third_id')
+            ->select('sales.*','t.name as user')
             ->whereBetween('sales.created_at', [$from, $to])
-            ->where('user_id', $this->userId)
+            ->where('third_id', $this->userId)
             ->get();
         }
 
