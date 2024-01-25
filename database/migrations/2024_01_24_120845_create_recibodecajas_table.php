@@ -17,10 +17,25 @@ class CreateRecibodecajasTable extends Migration
             $table->id();
             $table->unsignedBigInteger('user_id');           
             $table->foreign('user_id')->references('id')->on('users');
-
             $table->unsignedBigInteger('third_id')->nullable();           
-            $table->foreign('third_id')->references('id')->on('thirds');   
-                  
+            $table->foreign('third_id')->references('id')->on('thirds'); 
+            $table->unsignedBigInteger('sale_id');    
+            $table->foreign('sale_id')->references('id')->on('sales');               
+            $table->unsignedBigInteger('subcentrocostos_id')->nullable();
+            $table->foreign('subcentrocostos_id')->references('id')->on('subcentrocostos'); 
+            $table->unsignedBigInteger('formapagos_id')->nullable();
+            $table->foreign('formapagos_id')->references('id')->on('formapagos'); 
+            $table->decimal('valor_recibido',12,0)->default(0)->nullable();           
+
+            $table->date('fecha_elaboracion')->nullable();  
+            $table->date('fecha_cierre')->nullable();    
+            $table->string('consecutivo', 50, 0)->nullable();
+            $table->bigInteger('consec')->length(50)->nullable();    
+          
+ 
+            $table->enum('status',['0','1','2','3','4','5'])->default('0');
+            $table->enum('tipo',['0','1','2','3'])->default('0');    // 0 = Ninguno , 1 = RC - 1 Recibo de caja diario , RC - 2 Recibo de caja de cartera
+            $table->enum('realizar_un',['Abono a deuda','Anticipo','Avanzado (Impuestos, descuentos, ajustes)'])->default('Abono a deuda','Anticipo');  
             
             $table->timestamps();
         });

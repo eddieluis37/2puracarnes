@@ -67,16 +67,15 @@ class CreateSalesTable extends Migration
 
             $table->decimal('total_valor_a_pagar',12,0)->default(0)->nullable();     
             $table->decimal('valor_pagado',12,0)->default(0)->nullable();           
-            $table->decimal('cambio',12,0)->default(0)->nullable();    
-
-            $table->enum('status',['0','1','2','3','4','5'])->default('0');
+            $table->decimal('cambio',12,0)->default(0)->nullable(); 
 
             $table->date('fecha_venta')->nullable();       
             $table->date('fecha_cierre')->nullable();            
             $table->string('consecutivo', 50, 0)->nullable();
             $table->bigInteger('consec')->length(50)->nullable();
             $table->string('resolucion', 50, 0)->nullable();          
-            $table->enum('tipo',['0','1','2','3','4','5'])->default('0');    // 0 = Mostrador , 1 =  Domicilio                      
+            $table->enum('tipo',['0','1','2','3','4','5'])->default('0');    // 0 = Mostrador , 1 =  Domicilio   
+            $table->enum('status',['0','1','2','3','4','5'])->default('0');                   
 
             $table->timestamps();
         });

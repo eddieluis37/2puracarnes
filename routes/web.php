@@ -66,6 +66,7 @@ use App\Http\Controllers\notacredito\notacreditoController;
 use App\Http\Controllers\notacredito\pdfNotacreditoController;
 use App\Http\Controllers\notadebito\notadebitoController;
 use App\Http\Controllers\notadebito\pdfNotadebitoController;
+use App\Http\Controllers\recibodecaja\recibodecajaController;
 use App\Http\Controllers\res\pdfLoteController;
 use App\Http\Controllers\sale\exportFacturaController;
 
@@ -405,6 +406,11 @@ Route::group(['middleware' => [('auth')]], function () {
     Route::post('sale/create/registrar_pago/{id}', [saleController::class, 'storeRegistroPago'])->name('pago.save');
 
     Route::get('sale/showFactura/{id}', [exportFacturaController::class, 'showFactura'])->name('sale.showFactura');
+
+     /*****************************RECIBO DE CAJAS******************************************/
+     Route::get('recibodecajas', [recibodecajaController::class, 'index'])->name('recibodecaja.index');
+     Route::get('showlistRecibodecajas', [recibodecajaController::class, 'show'])->name('recibodecaja.showlistRecibodecajas');
+     Route::post('recibodecajasave', [recibodecajaController::class, 'store'])->name('recibodecaja.save');
     
 
     /* Route::post('registroPagoSave', [saleController::class, 'storeRegistroPago'])->name('pago.save'); */
