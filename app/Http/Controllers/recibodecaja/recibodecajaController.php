@@ -96,7 +96,7 @@ class recibodecajaController extends Controller
                 } elseif (Carbon::parse($currentDateTime->format('Y-m-d'))->lt(Carbon::parse($data->fecha_cierre))) {
                     $btn = '
                          <div class="text-center">
-                         <a href="sale/create/' . $data->id . '" class="btn btn-dark" title="Detalles">
+                         <a href="recibodecaja/create/' . $data->id . '" class="btn btn-dark" title="Detalles">
                              <i class="fas fa-directions"></i>
                          </a>
                         
@@ -126,11 +126,6 @@ class recibodecajaController extends Controller
             ->make(true);
     }
 
-    public function create()
-    {
-        //
-    }
-
     /**
      * Store a newly created resource in storage.
      *
@@ -145,14 +140,14 @@ class recibodecajaController extends Controller
                 'recibocajaId' => 'required',
                 'cliente' => 'required',
                 'formapagos' => 'required',
-               
+
                 'subcentrodecosto' => 'required',
 
             ];
             $messages = [
                 'recibocajaId.required' => 'El recibocajaId es requerido',
                 'cliente.required' => 'El cliente es requerido',
-                'formapagos.required' => 'Forma pago es requerido',             
+                'formapagos.required' => 'Forma pago es requerido',
                 'subcentrodecosto.required' => 'El subcentro de costo es requerido',
             ];
 
@@ -179,14 +174,14 @@ class recibodecajaController extends Controller
 
                 $recibo = new Recibodecaja();
                 $recibo->user_id = $id_user;
-                $recibo->third_id = $request->cliente; 
-                $recibo->sale_id = 1;     
+                $recibo->third_id = $request->cliente;
+                $recibo->sale_id = 1;
                 $recibo->subcentrocostos_id = $request->subcentrodecosto;
                 $recibo->formapagos_id = $request->formapagos;
                 $recibo->valor_recibido = 0;
 
                 $recibo->fecha_elaboracion = $request->valor_recibo;
-                $recibo->fecha_cierre = $dateNextMonday;         
+                $recibo->fecha_cierre = $dateNextMonday;
 
                 $recibo->save();
 
@@ -216,9 +211,9 @@ class recibodecajaController extends Controller
             } else {
                 $getReg = Recibodecaja::firstWhere('id', $request->recibocajaId);
                 $getReg->third_id = $request->vendedor;
-             
+
                 $getReg->subcentrocostos_id = $request->subcentrodecosto;
-              
+
                 $getReg->save();
 
                 return response()->json([
@@ -235,39 +230,98 @@ class recibodecajaController extends Controller
         }
     }
 
-
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\recibodecaja  $recibodecaja
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(recibodecaja $recibodecaja)
+    public function create($id)
     {
-        //
+        $venta = Sale::find($id);
+        $prod = Product::Where([
+
+            ['status', 1]
+        ])
+            ->orderBy('category_id', 'asc')
+            ->orderBy('name', 'asc')
+            ->get();
+        $ventasdetalle = $this->getventasdetalle($id, $venta->centrocosto_id);
+        $arrayTotales = $this->sumTotales($id);
+
+        $datacompensado = DB::table('sales as sa')
+            ->join('thirds as tird', 'sa.third_id', '=', 'tird.id')
+            ->join('centro_costo as centro', 'sa.centrocosto_id', '=', 'centro.id')
+            ->select('sa.*', 'tird.name as namethird', 'centro.name as namecentrocosto', 'tird.porc_descuento')
+            ->where('sa.id', $id)
+            ->get();
+
+
+        $status = '';
+        $fechaCompensadoCierre = Carbon::parse($datacompensado[0]->fecha_cierre);
+        $date = Carbon::now();
+        $currentDate = Carbon::parse($date->format('Y-m-d'));
+        if ($currentDate->gt($fechaCompensadoCierre)) {
+            //'Date 1 is greater than Date 2';
+            $status = 'false';
+        } elseif ($currentDate->lt($fechaCompensadoCierre)) {
+            //'Date 1 is less than Date 2';
+            $status = 'true';
+        } else {
+            //'Date 1 and Date 2 are equal';
+            $status = 'false';
+        }
+
+
+        $detalleVenta = $this->getventasdetail($id);
+
+
+        return view('sale.create', compact('datacompensado', 'id', 'prod', 'detalleVenta', 'ventasdetalle', 'arrayTotales', 'status'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\recibodecaja  $recibodecaja
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, recibodecaja $recibodecaja)
+    public function getventasdetalle($ventaId, $centrocostoId)
     {
-        //
+        $detail = DB::table('sale_details as dv')
+            ->join('products as pro', 'dv.product_id', '=', 'pro.id')
+            ->join('centro_costo_products as ce', 'pro.id', '=', 'ce.products_id')
+            ->select('dv.*', 'pro.name as nameprod', 'pro.code',  'ce.fisico')
+            ->selectRaw('ce.invinicial + ce.compraLote + ce.alistamiento +
+            ce.compensados + ce.trasladoing - (ce.venta + ce.trasladosal) stock')
+            ->where([
+                ['ce.centrocosto_id', $centrocostoId],
+                ['dv.sale_id', $ventaId],
+            ])->orderBy('dv.id', 'DESC')->get();
+
+        return $detail;
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\recibodecaja  $recibodecaja
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(recibodecaja $recibodecaja)
+    public function sumTotales($id)
     {
-        //
+        $TotalBrutoSinDescuento = Sale::where('id', $id)->value('total_bruto');
+        $TotalDescuentos = Sale::where('id', $id)->value('descuentos');
+        $TotalBruto = (float)SaleDetail::Where([['sale_id', $id]])->sum('total_bruto');
+        $TotalIva = (float)SaleDetail::Where([['sale_id', $id]])->sum('iva');
+        $TotalOtroImpuesto = (float)SaleDetail::Where([['sale_id', $id]])->sum('otro_impuesto');
+        $TotalValorAPagar = (float)SaleDetail::Where([['sale_id', $id]])->sum('total');
+
+        $array = [
+            'TotalBruto' => $TotalBruto,
+            'TotalBrutoSinDescuento' => $TotalBrutoSinDescuento,
+            'TotalDescuentos' => $TotalDescuentos,
+            'TotalValorAPagar' => $TotalValorAPagar,
+            'TotalIva' => $TotalIva,
+            'TotalOtroImpuesto' => $TotalOtroImpuesto,
+        ];
+
+        return $array;
     }
+
+    public function getventasdetail($ventaId)
+    {
+        $detalles = DB::table('sale_details as de')
+            ->join('products as pro', 'de.product_id', '=', 'pro.id')
+            ->select('de.*', 'pro.name as nameprod', 'pro.code', 'de.porc_iva', 'de.iva', 'de.porc_otro_impuesto',)
+            ->where([
+                ['de.sale_id', $ventaId],
+                /*   ['de.status', 1] */
+            ])->get();
+
+        return $detalles;
+    }
+
+
 }

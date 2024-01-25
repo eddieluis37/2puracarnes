@@ -14,7 +14,7 @@ btnAddVentaDomicilio.addEventListener("click", async (e) => {
             successToastMessage(resp.message);
             if (resp.registroId != 0) {
                 //for new register
-                window.location.href = `sale/create/${resp.registroId}`;
+                window.location.href = `recibodecaja/create/${resp.registroId}`;
             } else {
                 refresh_table();
             }
@@ -35,7 +35,7 @@ btnAddVentaDomicilio.addEventListener("click", async (e) => {
     });
 });
 
-storeVentaMostradorBtn.addEventListener("click", async (e) => {
+/* storeVentaMostradorBtn.addEventListener("click", async (e) => {
     e.preventDefault();
     const dataform = new FormData(formCompensadoRes);
     sendData("/store-venta-mostrador", dataform, token).then((resp) => {
@@ -65,4 +65,4 @@ storeVentaMostradorBtn.addEventListener("click", async (e) => {
             });
         }
     });
-});
+}); */

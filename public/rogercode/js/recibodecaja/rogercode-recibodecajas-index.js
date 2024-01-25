@@ -43,7 +43,7 @@ $(document).ready(function () {
                 },                      
                 { data: "date", name: "date" },
                 { data: "consecutivo", name: "consecutivo" },
-                { data: "resolucion", name: "resolucion" },
+             /*    { data: "resolucion", name: "resolucion" }, */
                 { data: "action", name: "action" },
             ],
             order: [[0, "DESC"]],

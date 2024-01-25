@@ -411,6 +411,7 @@ Route::group(['middleware' => [('auth')]], function () {
      Route::get('recibodecajas', [recibodecajaController::class, 'index'])->name('recibodecaja.index');
      Route::get('showlistRecibodecajas', [recibodecajaController::class, 'show'])->name('recibodecaja.showlistRecibodecajas');
      Route::post('recibodecajasave', [recibodecajaController::class, 'store'])->name('recibodecaja.save');
+     Route::get('recibodecaja/create/{id}', [recibodecajaController::class, 'create'])->name('recibodecaja.create'); 
     
 
     /* Route::post('registroPagoSave', [saleController::class, 'storeRegistroPago'])->name('pago.save'); */
