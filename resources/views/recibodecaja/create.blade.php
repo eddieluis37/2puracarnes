@@ -15,7 +15,7 @@
 				</h4>
 				<ul class="tabs tab-pills">
 					<li>
-						<a href="javascript:void(0)" onclick="window.location.href = '../../sales'" class="tabmenu bg-dark" data-toggle="modal" data-target="" title="Regresa al listado">Volver</a>
+						<a href="javascript:void(0)" onclick="window.location.href = '../../recibodecajas'" class="tabmenu bg-dark" data-toggle="modal" data-target="" title="Regresa al listado">Volver</a>
 					</li>
 				</ul>
 			</div>

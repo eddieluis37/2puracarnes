@@ -233,10 +233,12 @@ class recibodecajaController extends Controller
     public function create($id)
     {
         $venta = Recibodecaja::find($id);
+       // dd($venta->third_id);
+       $clienteId = $venta->third_id;
         
         $prod = Sale::Where([
-
-            ['status', '1']
+            ['status', '1'],
+            ['third_id', $clienteId]
         ])
             /* ->orderBy('category_id', 'asc')
             ->orderBy('name', 'asc') */
