@@ -247,7 +247,7 @@ class recibodecajaController extends Controller
         $datacompensado = DB::table('recibodecajas as rc')
             ->join('thirds as tird', 'rc.third_id', '=', 'tird.id')
             ->join('subcentrocostos as centro', 'rc.subcentrocostos_id', '=', 'centro.id')
-            ->select('rc.*', 'tird.name as namethird', 'centro.name as namecentrocosto', 'tird.porc_descuento')
+            ->select('rc.*', 'tird.name as namethird', 'centro.name as namecentrocosto', 'tird.porc_descuento', 'tird.identification')
             ->where('rc.id', $id)
             ->get();
 
