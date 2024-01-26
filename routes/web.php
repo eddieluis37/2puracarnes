@@ -412,8 +412,8 @@ Route::group(['middleware' => [('auth')]], function () {
      Route::get('showlistRecibodecajas', [recibodecajaController::class, 'show'])->name('recibodecaja.showlistRecibodecajas');
      Route::post('recibodecajasave', [recibodecajaController::class, 'store'])->name('recibodecaja.save');
      Route::get('recibodecaja/create/{id}', [recibodecajaController::class, 'create'])->name('recibodecaja.create'); 
+     Route::get('/obtener-valores', [recibodecajaController::class, 'obtenerValores'])->name('recibodecaja.obtener-valores');
     
-
     /* Route::post('registroPagoSave', [saleController::class, 'storeRegistroPago'])->name('pago.save'); */
 
      /*****************************NOTA_CREDITO******************************************/

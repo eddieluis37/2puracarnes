@@ -232,22 +232,23 @@ class recibodecajaController extends Controller
 
     public function create($id)
     {
-        $venta = Sale::find($id);
-        $prod = Product::Where([
+        $venta = Recibodecaja::find($id);
+        
+        $prod = Sale::Where([
 
-            ['status', 1]
+            ['status', '1']
         ])
-            ->orderBy('category_id', 'asc')
-            ->orderBy('name', 'asc')
+            /* ->orderBy('category_id', 'asc')
+            ->orderBy('name', 'asc') */
             ->get();
         $ventasdetalle = $this->getventasdetalle($id, $venta->centrocosto_id);
         $arrayTotales = $this->sumTotales($id);
 
-        $datacompensado = DB::table('sales as sa')
-            ->join('thirds as tird', 'sa.third_id', '=', 'tird.id')
-            ->join('centro_costo as centro', 'sa.centrocosto_id', '=', 'centro.id')
-            ->select('sa.*', 'tird.name as namethird', 'centro.name as namecentrocosto', 'tird.porc_descuento')
-            ->where('sa.id', $id)
+        $datacompensado = DB::table('recibodecajas as rc')
+            ->join('thirds as tird', 'rc.third_id', '=', 'tird.id')
+            ->join('subcentrocostos as centro', 'rc.subcentrocostos_id', '=', 'centro.id')
+            ->select('rc.*', 'tird.name as namethird', 'centro.name as namecentrocosto', 'tird.porc_descuento')
+            ->where('rc.id', $id)
             ->get();
 
 
@@ -270,7 +271,7 @@ class recibodecajaController extends Controller
         $detalleVenta = $this->getventasdetail($id);
 
 
-        return view('sale.create', compact('datacompensado', 'id', 'prod', 'detalleVenta', 'ventasdetalle', 'arrayTotales', 'status'));
+        return view('recibodecaja.create', compact('datacompensado', 'id', 'prod', 'detalleVenta', 'ventasdetalle', 'arrayTotales', 'status'));
     }
 
     public function getventasdetalle($ventaId, $centrocostoId)
@@ -321,6 +322,31 @@ class recibodecajaController extends Controller
             ])->get();
 
         return $detalles;
+    }
+
+    public function obtenerValores(Request $request)
+    {
+        $centrocostoId = $request->input('centrocosto');
+        $clienteId = $request->input('cliente');
+        $cliente = Third::find($clienteId);
+        $producto = Listapreciodetalle::join('products as prod', 'listapreciodetalles.product_id', '=', 'prod.id')
+            ->join('thirds as t', 'listapreciodetalles.listaprecio_id', '=', 't.id')
+            ->where('prod.id', $request->productId)
+            ->where('t.id', $cliente->listaprecio_genericid)
+            ->first();
+        if ($producto) {
+            return response()->json([
+                'precio' => $producto->precio,
+                'iva' => $producto->iva,
+                'otro_impuesto' => $producto->otro_impuesto,
+                'porc_desc' => $producto->porc_desc
+            ]);
+        } else {
+            // En caso de que el producto no sea encontrado
+            return response()->json([
+                'error' => 'Product not found'
+            ], 404);
+        }
     }
 
 

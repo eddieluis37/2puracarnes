@@ -26,7 +26,7 @@
 							<div class="col-md-3">
 								<div class="task-header">
 									<div class="form-group">
-										<label for="date1" class="form-label">Fecha de venta</label>
+										<label for="date1" class="form-label">Fecha de recibo de caja</label>
 										<input type="date" class="form-control" name="fecha" id="fecha" placeholder="Last name" aria-label="Last name" value="{{date('Y-m-d')}}">
 									</div>
 								</div>
@@ -34,7 +34,7 @@
 							<div class="col-md-3">
 								<div class="task-header">
 									<div class="form-group">
-										<label for="" class="form-label">Centro de costo</label>
+										<label for="" class="form-label">Subcentro de costo</label>
 										<p>{{$datacompensado[0]->namecentrocosto}}</p>
 									</div>
 								</div>
@@ -49,14 +49,14 @@
 								</div>
 							</div>
 
-							<div class="col-md-2">
+							<!-- <div class="col-md-2">
 								<div class="task-header">
 									<div class="form-group">
 										<label for="" class="form-label">% Descuento</label>
 										<p>{{$datacompensado[0]->porc_descuento}}</p>
 									</div>
 								</div>
-							</div>
+							</div> -->
 						</div>
 					</div>
 				</div>
@@ -66,27 +66,27 @@
 				<div class="card">
 					<div class="card-body">
 						<form id="form-detail">
-							<input type="hidden" id="ventaId" name="ventaId" value="{{$id}}">
+							<input type="hidden" id="recibodecajaId" name="recibodecajaId" value="{{$id}}">
 							<input type="hidden" id="regdetailId" name="regdetailId" value="0">
 							<div class="row g-3">
 								<div class="col-md-3">
 									<div class="task-header">
 										<div class="form-group">
-											<label for="" class="form-label">Buscar producto</label>
-											<input type="hidden" id="centrocosto" name="centrocosto" value="{{$datacompensado[0]->centrocosto_id}}" data-id="{{$datacompensado[0]->centrocosto_id}}">
+											<label for="" class="form-label">Buscar facturas</label>
+											<input type="hidden" id="centrocosto" name="centrocosto" value="{{$datacompensado[0]->subcentrocostos_id }}" data-id="{{$datacompensado[0]->subcentrocostos_id }}">
 											<input type="hidden" id="cliente" name="cliente" value="{{$datacompensado[0]->third_id}}" data-id="{{$datacompensado[0]->third_id}}">
 											<input type="hidden" id="porc_descuento" name="porc_descuento" value="{{$datacompensado[0]->porc_descuento}}" data-id="{{$datacompensado[0]->porc_descuento}}">
 											<select class="form-control form-control-sm select2Prod" name="producto" id="producto" required="">
-												<option value="">Seleccione el producto</option>
+												<option value="">Seleccione el facturas</option>
 												@foreach ($prod as $p)
-												<option value="{{$p->id}}">{{$p->name}}</option>
+												<option value="{{$p->id}}">{{$p->consecutivo}}</option>
 												@endforeach
 											</select>
 										</div>
 									</div>
 								</div>
 								<div class="col-md-3">
-									<label for="" class="form-label">Precio venta</label>
+									<label for="" class="form-label"></label>
 									<div class="input-group flex-nowrap">
 										<span class="input-group-text" id="addon-wrapping">$</span>
 										<input type="text" id="price" name="price" class="form-control input" readonly placeholder="">
@@ -94,7 +94,7 @@
 								</div>
 
 								<div class="col-md-3">
-									<label for="" class="form-label">IVA</label>
+									<label for="" class="form-label"></label>
 									<div class="input-group flex-nowrap">
 
 										<input type="text" id="porc_iva" name="porc_iva" class="form-control input" readonly placeholder="">
@@ -102,7 +102,7 @@
 									</div>
 								</div>
 								<div class="col-md-3">
-									<label for="" class="form-label">I.S</label>
+									<label for="" class="form-label"></label>
 									<div class="input-group flex-nowrap">
 
 										<input type="text" id="porc_otro_impuesto" name="porc_otro_impuesto" class="form-control input" readonly placeholder="">
@@ -110,7 +110,7 @@
 									</div>
 								</div>
 								<div class="col-md-3">
-									<label for="" class="form-label">Descuento</label>
+									<label for="" class="form-label"></label>
 									<div class="input-group flex-nowrap">
 
 										<input type="text" id="porc_desc" name="porc_desc" class="form-control input" readonly placeholder="">
@@ -118,10 +118,10 @@
 									</div>
 								</div>
 
-								<div class="form-group row" style="margin-top:3px; margin-left:3px">
+								<!-- <div class="form-group row" style="margin-top:3px; margin-left:3px">
 
 									<div class="col-md-7">
-										<label for="" class="form-label">Peso KG</label>
+										<label for="" class="form-label"></label>
 										<div class="input-group flex-nowrap"">
 										<input type=" text" id="quantity" name="quantity" class="form-control input" placeholder="EJ: 10,00">
 											<span class="input-group-text" id="addon-wrapping">KG</span>
@@ -135,7 +135,7 @@
 											</div>
 										</div>
 									</div>
-								</div>
+								</div> -->
 							</div>
 						</form>
 					</div>
@@ -150,17 +150,17 @@
 						<table id="tableDespostere" class="table table-sm table-striped table-bordered">
 							<thead class="text-white" style="background: #3B3F5C">
 								<tr>
-									<th class="table-th text-white">Producto</th>
-									<th class="table-th text-white">Cant</th>
-									<th class="table-th text-white">Valor.U</th>
-									<th class="table-th text-white">%Des</th>
-									<th class="table-th text-white">Des</th>
-									<th class="table-th text-white">{{$datacompensado[0]->porc_descuento}}%DCl</th>
-									<th class="table-th text-white">Total.B</th>
-									<th class="table-th text-white">%IVA</th>
-									<th class="table-th text-white">IVA</th>
-									<th class="table-th text-white">%I.S</th>
-									<th class="table-th text-white">I.S</th>
+									<th class="table-th text-white"></th>
+									<th class="table-th text-white"></th>
+									<th class="table-th text-white"></th>
+									<th class="table-th text-white"></th>
+									<th class="table-th text-white"></th>
+									<th class="table-th text-white"></th>
+									<th class="table-th text-white"></th>
+									<th class="table-th text-white"></th>
+									<th class="table-th text-white"></th>
+									<th class="table-th text-white"></th>
+									<th class="table-th text-white"></th>
 
 									<th class="table-th text-white">Total</th>
 									<th class="table-th text-white text-center">Acciones</th>
@@ -220,7 +220,7 @@
 							<form method="GET" action="registrar_pago/{{$id}}">
 								@csrf
 								<div class="text-center mt-1">
-									<button id="cargarInventarioBtn" type="submit" class="btn btn-success">Pagar</button>
+									<!-- <button id="cargarInventarioBtn" type="submit" class="btn btn-success">Pagar</button> -->
 								</div>
 							</form>
 						</div>
@@ -232,5 +232,5 @@
 </div>
 @endsection
 @section('script')
-<script src="{{asset('rogercode/js/recibocaja/rogercode-create.js')}}" type="module"></script>
+<script src="{{asset('rogercode/js/recibodecaja/rogercode-create.js')}}" type="module"></script>
 @endsection

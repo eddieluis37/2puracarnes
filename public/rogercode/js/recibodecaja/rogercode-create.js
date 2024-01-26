@@ -39,14 +39,14 @@ $(".select2Prod").select2({
 $(document).ready(function () {
     $("#producto").change(function () {
         var productId = $(this).val();
-        // Llama a una función para actualizar los valores en función del producto seleccionado
+        // Llama a una función para actualizar los valores en función del producto seleccionado     
         actualizarValoresProducto(productId);
     });
 });
 
 function actualizarValoresProducto(productId) {
     $.ajax({
-        url: "/obtener-precios-producto", // Reemplaza con tu ruta o URL para obtener los valores del producto
+        url: "/obtener-valores", // Reemplaza con tu ruta o URL para obtener los valores
         type: "GET",
         data: {
             productId: productId,
