@@ -72,7 +72,7 @@
 								<div class="col-md-3">
 									<div class="task-header">
 										<div class="form-group">
-											<label for="" class="form-label">Buscar facturas</label>
+											<label for="" class="form-label">Buscar facturas del cliente</label>
 											<input type="hidden" id="centrocosto" name="centrocosto" value="{{$datacompensado[0]->subcentrocostos_id }}" data-id="{{$datacompensado[0]->subcentrocostos_id }}">
 											<input type="hidden" id="cliente" name="cliente" value="{{$datacompensado[0]->third_id}}" data-id="{{$datacompensado[0]->third_id}}">
 											<input type="hidden" id="porc_descuento" name="porc_descuento" value="{{$datacompensado[0]->porc_descuento}}" data-id="{{$datacompensado[0]->porc_descuento}}">

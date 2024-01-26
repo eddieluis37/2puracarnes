@@ -30,7 +30,7 @@ var cliente = document.getElementById("cliente").value;
 console.log("cliente " + cliente);
 
 $(".select2Prod").select2({
-    placeholder: "Busca un producto",
+    placeholder: "Busca una factura",
     width: "100%",
     theme: "bootstrap-5",
     allowClear: true,
