@@ -18,6 +18,7 @@ use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\metodosgenerales\metodosrogercodeController;
 use App\Models\caja\Caja;
 use App\Models\Centro_costo_product;
+use App\Models\Cuentas_por_cobrar;
 use App\Models\Formapago;
 use App\Models\Listapreciodetalle;
 use App\Models\Sale;
@@ -175,12 +176,31 @@ class saleController extends Controller
             // Limpiar la tabla table_temporary_accumulated_sales
             DB::table('table_temporary_accumulated_sales')->truncate();
         }
-
+        
+        if (($compensadores[0]->valor_a_pagar_credito) > 0 ) {
+            $this->cuentasPorCobrar($ventaId);
+        }
+        
+   
+        
         return response()->json([
             'status' => 1,
             'message' => 'Cargado al inventario exitosamente',
             'compensadores' => $compensadores
         ]);
+    }
+
+    public function cuentasPorCobrar($ventaId)
+    {
+        $venta = Sale::find($ventaId);
+
+        $cXc = new Cuentas_por_cobrar();
+        $cXc->sale_id = $ventaId;
+        $cXc->deuda_inicial = $venta->valor_a_pagar_credito;
+
+        $cXc->save();
+
+        
     }
 
     public function index()

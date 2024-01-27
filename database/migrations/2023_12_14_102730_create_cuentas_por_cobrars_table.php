@@ -21,11 +21,12 @@ class CreateCuentasPorCobrarsTable extends Migration
 
             $table->unsignedBigInteger('sale_id');    
             $table->foreign('sale_id')->references('id')->on('sales'); 
-            
+
             $table->unsignedBigInteger('third_id')->nullable();           
             $table->foreign('third_id')->references('id')->on('thirds');
             
             $table->date('fecha_vecimiento')->nullable();     
+            $table->decimal('deuda_inicial',12,0)->default(0)->nullable();
             $table->decimal('deudaporcobrar',12,0)->default(0)->nullable();   
             $table->decimal('valoranticipo',12,0)->default(0)->nullable();   
             $table->decimal('saldocartera',12,0)->default(0)->nullable();   
