@@ -147,8 +147,8 @@
 										<td>{{round($porcVentaTotal)}} %</td>
 										<td>$ {{ number_format($costoTotalGlobal, 0, ',', '.')}}</td>
 										<td>{{$costoKiloTotal}}</td>
-										<td class="text-center">										
-											<button type="hidden" id="cargarInventarioBtn"></button>											
+										<td class="text-center">
+											<button type="hidden" id="cargarInventarioBtn"></button>
 										</td>
 									</tr>
 								</tfoot>
@@ -161,7 +161,8 @@
 			$pi = $beneficior[0]->canalplanta;
 			$cant = $beneficior[0]->cantidad;
 			$ck = $beneficior[0]->costokilo;
-			$tck = $pi * $ck;
+		/* 		$tck = $pi * $ck; */
+			$tck = floatval($costoTotalGlobal);
 			?>
 			<div class="widget-content mt-3">
 				<div class="card">
