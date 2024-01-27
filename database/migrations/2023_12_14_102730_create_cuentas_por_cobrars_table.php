@@ -19,6 +19,9 @@ class CreateCuentasPorCobrarsTable extends Migration
             $table->unsignedBigInteger('parametrocontable_id')->nullable();           
             $table->foreign('parametrocontable_id')->references('id')->on('parametrocontables');
 
+            $table->unsignedBigInteger('sale_id');    
+            $table->foreign('sale_id')->references('id')->on('sales'); 
+            
             $table->unsignedBigInteger('third_id')->nullable();           
             $table->foreign('third_id')->references('id')->on('thirds');
             

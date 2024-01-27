@@ -16,7 +16,7 @@ class SalesSeeder extends Seeder
     {
         Sale::create([
             'user_id' => 1,
-            'third_id' => 1,
+            'third_id' => 30,
             'vendedor_id' => 1,
             'domiciliario_id' => NULL,
             'centrocosto_id' => 1,

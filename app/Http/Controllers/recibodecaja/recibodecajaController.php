@@ -27,6 +27,7 @@ use App\Models\Sale;
 use App\Models\SaleDetail;
 use App\Models\Subcentrocosto;
 
+
 class recibodecajaController extends Controller
 {
     /**
