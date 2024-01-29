@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire;
 
+use App\Models\Cuentas_por_cobrar;
 use Livewire\Component;
 use App\Models\User;
 use App\Models\Sale;
@@ -57,14 +58,14 @@ class CuentasporcobrarsController extends Component
 
         if($this->userId == 0)        
         {
-            $this->data = Sale::join('thirds as t','t.id','sales.third_id')
-            ->select('sales.*','t.name as user')
-            ->whereBetween('sales.created_at', [$from, $to])
+            $this->data = Cuentas_por_cobrar::join('thirds as t','t.id','cuentas_por_cobrars.third_id')
+            ->select('cuentas_por_cobrars.*','t.name as cliente')
+            ->whereBetween('cuentas_por_cobrars.created_at', [$from, $to])
             ->get();
         } else {
-            $this->data = Sale::join('thirds as t','t.id','sales.third_id')
-            ->select('sales.*','t.name as user')
-            ->whereBetween('sales.created_at', [$from, $to])
+            $this->data = Cuentas_por_cobrar::join('thirds as t','t.id','cuentas_por_cobrars.third_id')
+            ->select('cuentas_por_cobrars.*','t.name as cliente')
+            ->whereBetween('cuentas_por_cobrars.created_at', [$from, $to])
             ->where('third_id', $this->userId)
             ->get();
         }

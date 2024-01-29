@@ -62,14 +62,11 @@
                             <table class="table table-bordered table striped mt-1">
                                 <thead class="text-white" style="background: #3B3F5C">
                                     <tr>
-                                        <th class="table-th text-white text-center"># COMPROB</th>
-                                        <th class="table-th text-white text-center">TOTAL</th>
-                                        <th class="table-th text-white text-center">UNID</th>
-                                        <th class="table-th text-white text-center">PAGO</th>
-                                        <th class="table-th text-white text-center">CAJERO</th>
-                                        <th class="table-th text-white text-center">VENDEDOR</th>
-                                         <th class="table-th text-white text-center">LINEA</th>
-                                        <th class="table-th text-white text-center">FECHA</th>
+                                        <th class="table-th text-white text-center">#.C</th>
+                                        <th class="table-th text-white text-center">CLIENTE</th>
+                                        <th class="table-th text-white text-center">FECHA.V</th>
+                                        <th class="table-th text-white text-center">DEUDA</th>
+                                        <th class="table-th text-white text-center">SALDO</th>                                                                          
                                         <th class="table-th text-white text-center" >ACCIONES</th>
                                     </tr>
                                 </thead>
@@ -79,18 +76,18 @@
                                     @endif
                                     @foreach($data as $d)
                                     <tr>
-                                        <td class="text-center"><h6>{{$d->id}}</h6></td>                               
-                                        <td class="text-center"><h6>$ {{number_format($d->total)}}</h6></td>
-                                        <td class="text-center"><h6>{{number_format($d->items,1)}}</h6></td>                                   
-                                        <td class="text-center"><h6>{{$d->status}}</h6></td>    
-                                        <td class="text-center"><h6>{{$d->user}}</h6></td>
-                                        <td class="text-center"><h6>{{$d->vendedor}}</h6></td>
-                                        <td class="text-center"><h6>{{$d->line}}</h6></td>       
+                                        <td class="text-center"><h6>{{$d->id}}</h6></td>    
+                                        <td class="text-center"><h6>{{$d->cliente}}</h6></td>  
                                         <td class="text-center">
                                             <h6>
                                                 {{\Carbon\Carbon::parse($d->created_at)->format('d-m-Y')}}
                                             </h6>
-                                        </td>    
+                                        </td>                           
+                                        <td class="text-center"><h6>${{number_format($d->deuda_x_cobrar)}}</h6></td>
+                                        <td class="text-center"><h6>{{number_format($d->items,1)}}</h6></td>                                   
+                                                                                                                  
+                                           
+                                        
                                         <td class="text-center" >
                                             <button wire:click.prevent="getDetails({{$d->id}})"
                                                 class="btn btn-dark btn-sm">
