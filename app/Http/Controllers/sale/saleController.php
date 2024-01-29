@@ -108,10 +108,10 @@ class saleController extends Controller
             $this->cargarInventariocr($ventaId);
 
             if ($venta->status == 1) {
-                /* return redirect()->route('sale.index'); */
-                /*  session()->flush(); */
                 session()->regenerate();
-                return redirect()->route('sale.showFactura', $ventaId, 302);
+                return redirect()->route('sale.index');
+                /*  session()->flush(); */
+                /*   return redirect()->route('sale.showFactura', $ventaId, 302); */
                 /*   return redirect()->route('sale.showFactura', $ventaId, 302)->flush(); */
             }
 
@@ -119,8 +119,8 @@ class saleController extends Controller
                 'status' => 1,
                 'message' => 'Guardado correctamente',
                 "registroId" => $venta->id,
-                'redirect' => route('sale.showFactura', 'registroId')
-                /* 'redirect' => route('sale.index') */
+                /* 'redirect' => route('sale.showFactura', 'registroId') */
+                'redirect' => route('sale.index')
             ]);
         } catch (\Throwable $th) {
             return response()->json([
@@ -176,13 +176,13 @@ class saleController extends Controller
             // Limpiar la tabla table_temporary_accumulated_sales
             DB::table('table_temporary_accumulated_sales')->truncate();
         }
-        
-        if (($compensadores[0]->valor_a_pagar_credito) > 0 ) {
+
+        if (($compensadores[0]->valor_a_pagar_credito) > 0) {
             $this->cuentasPorCobrar($ventaId);
         }
-        
-   
-        
+
+
+
         return response()->json([
             'status' => 1,
             'message' => 'Cargado al inventario exitosamente',
@@ -199,8 +199,6 @@ class saleController extends Controller
         $cXc->deuda_inicial = $venta->valor_a_pagar_credito;
 
         $cXc->save();
-
-        
     }
 
     public function index()

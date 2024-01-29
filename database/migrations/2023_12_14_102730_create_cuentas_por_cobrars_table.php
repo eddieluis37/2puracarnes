@@ -16,20 +16,24 @@ class CreateCuentasPorCobrarsTable extends Migration
         Schema::create('cuentas_por_cobrars', function (Blueprint $table) {
             $table->id();
 
+            $table->unsignedBigInteger('user_id')->nullable();           
+            $table->foreign('user_id')->references('id')->on('users');
+
             $table->unsignedBigInteger('parametrocontable_id')->nullable();           
             $table->foreign('parametrocontable_id')->references('id')->on('parametrocontables');
 
-            $table->unsignedBigInteger('sale_id');    
+            $table->unsignedBigInteger('sale_id')->nullable();    
             $table->foreign('sale_id')->references('id')->on('sales'); 
 
             $table->unsignedBigInteger('third_id')->nullable();           
             $table->foreign('third_id')->references('id')->on('thirds');
             
-            $table->date('fecha_vecimiento')->nullable();     
-            $table->decimal('deuda_inicial',12,0)->default(0)->nullable();
-            $table->decimal('deudaporcobrar',12,0)->default(0)->nullable();   
-            $table->decimal('valoranticipo',12,0)->default(0)->nullable();   
-            $table->decimal('saldocartera',12,0)->default(0)->nullable();   
+            $table->date('fecha_inicial')->nullable();     
+            $table->date('fecha_vencimiento')->nullable();     
+            $table->decimal('deuda_inicial',12,0)->default(0);
+            $table->decimal('deuda_x_cobrar',12,0)->default(0)->nullable();   
+            $table->decimal('valor_anticipo',12,0)->default(0)->nullable();   
+            $table->decimal('saldo_cartera',12,0)->default(0)->nullable();   
 
 
             $table->timestamps();
