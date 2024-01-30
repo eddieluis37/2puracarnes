@@ -59,12 +59,12 @@ class CuentasporcobrarsController extends Component
         if($this->userId == 0)        
         {
             $this->data = Cuentas_por_cobrar::join('thirds as t','t.id','cuentas_por_cobrars.third_id')
-            ->select('cuentas_por_cobrars.*','t.name as cliente')
-            ->whereBetween('cuentas_por_cobrars.created_at', [$from, $to])
+            ->select('cuentas_por_cobrars.*','t.identification as identification')
+            ->whereBetween('cuentas_por_cobrars.created_at', [$from, $to])           
             ->get();
         } else {
             $this->data = Cuentas_por_cobrar::join('thirds as t','t.id','cuentas_por_cobrars.third_id')
-            ->select('cuentas_por_cobrars.*','t.name as cliente')
+            ->select('cuentas_por_cobrars.*','t.identification as identification')
             ->whereBetween('cuentas_por_cobrars.created_at', [$from, $to])
             ->where('third_id', $this->userId)
             ->get();

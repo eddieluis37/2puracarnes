@@ -77,10 +77,10 @@
                                     @foreach($data as $d)
                                     <tr>
                                         <td class="text-center"><h6>{{$d->id}}</h6></td>    
-                                        <td class="text-center"><h6>{{$d->cliente}}</h6></td>  
+                                        <td class="text-center"><h6>{{$d->identification}}</h6></td>  
                                         <td class="text-center">
                                             <h6>
-                                                {{\Carbon\Carbon::parse($d->created_at)->format('d-m-Y')}}
+                                                {{\Carbon\Carbon::parse($d->fecha_vencimiento)->format('d-m-Y')}}
                                             </h6>
                                         </td>                           
                                         <td class="text-center"><h6>${{number_format($d->deuda_x_cobrar)}}</h6></td>
