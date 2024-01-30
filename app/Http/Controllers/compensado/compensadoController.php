@@ -511,7 +511,7 @@ class compensadoController extends Controller
             // Limpiar la tabla temporary_accumulatedWeights
             DB::table('temporary_accumulatedWeights')->truncate();
         }
-
+        session()->regenerate();
         return response()->json([
             'status' => 1,
             'message' => 'Cargado al inventario exitosamente',
@@ -521,7 +521,7 @@ class compensadoController extends Controller
 
     public function cargarInventarioMasivo()
     {
-        for ($compensadoId = 251; $compensadoId <= 290; $compensadoId++) {
+        for ($compensadoId = 547; $compensadoId <= 605; $compensadoId++) {
             $currentDateTime = Carbon::now();
             $formattedDate = $currentDateTime->format('Y-m-d');
 
