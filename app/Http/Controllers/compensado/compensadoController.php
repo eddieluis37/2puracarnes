@@ -489,6 +489,7 @@ class compensadoController extends Controller
         foreach ($centroCostoProducts as $centroCostoProduct) {
             $accumulatedWeight = Compensadores_detail::where('compensadores_id', '=', $compensadoId)
                 ->where('products_id', $centroCostoProduct->products_id)
+                ->where('compensadores_details.status', '1')
                 ->sum('peso');
 
             // Almacenar el peso acomulado en la tabla temporal

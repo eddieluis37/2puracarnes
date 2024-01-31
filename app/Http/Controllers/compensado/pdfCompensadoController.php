@@ -35,6 +35,7 @@ class pdfCompensadoController extends Controller
             ->join('products as pro', 'comp_de.products_id', '=', 'pro.id')
             ->select('comp_de.*', 'pro.name as nameprod', 'pro.code')
             ->where('comp_de.compensadores_id', $id)
+            ->where('comp_de.status', '1')
             ->get();
 
         $total_weight = 0; $total_precio = 0; $total_subtotal = 0;
