@@ -64,6 +64,7 @@
                                     <tr>
                                         <th class="table-th text-white text-center">#.C</th>
                                         <th class="table-th text-white text-center">CLIENTE</th>
+                                        <th class="table-th text-white text-center">FACTURA</th>
                                         <th class="table-th text-white text-center">FECHA.V</th>
                                         <th class="table-th text-white text-center">DEUDA.I</th>
                                         <th class="table-th text-white text-center">DEUDA.PC</th>
@@ -79,6 +80,7 @@
                                     <tr>
                                         <td class="text-center"><h6>{{$d->id}}</h6></td>    
                                         <td class="text-center"><h6>{{$d->identification}}</h6></td>  
+                                        <td class="text-center"><h6>{{$d->consecutivo}}</h6></td>  
                                         <td class="text-center">
                                             <h6>
                                                 {{\Carbon\Carbon::parse($d->fecha_vencimiento)->format('d-m-Y')}}
