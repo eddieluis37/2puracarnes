@@ -65,7 +65,8 @@
                                         <th class="table-th text-white text-center">#.C</th>
                                         <th class="table-th text-white text-center">CLIENTE</th>
                                         <th class="table-th text-white text-center">FECHA.V</th>
-                                        <th class="table-th text-white text-center">DEUDA</th>
+                                        <th class="table-th text-white text-center">DEUDA.I</th>
+                                        <th class="table-th text-white text-center">DEUDA.PC</th>
                                         <th class="table-th text-white text-center">SALDO</th>                                                                          
                                         <th class="table-th text-white text-center" >ACCIONES</th>
                                     </tr>
@@ -82,7 +83,8 @@
                                             <h6>
                                                 {{\Carbon\Carbon::parse($d->fecha_vencimiento)->format('d-m-Y')}}
                                             </h6>
-                                        </td>                           
+                                        </td>    
+                                        <td class="text-center"><h6>${{number_format($d->deuda_inicial)}}</h6></td>                       
                                         <td class="text-center"><h6>${{number_format($d->deuda_x_cobrar)}}</h6></td>
                                         <td class="text-center"><h6>{{number_format($d->items,1)}}</h6></td>                                   
                                                                                                                   

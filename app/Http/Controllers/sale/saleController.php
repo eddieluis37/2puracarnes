@@ -193,11 +193,15 @@ class saleController extends Controller
     public function cuentasPorCobrar($ventaId)
     {
         $venta = Sale::find($ventaId);
-
+        $clienteId = $venta->third_id;
+        $formaPagoCreditoId =  $venta->forma_pago_credito_id;
+        $formaPagos = Formapago::find($formaPagoCreditoId);
+        $diasCredito = $formaPagos->diascredito;
         $cXc = new Cuentas_por_cobrar();
         $cXc->sale_id = $ventaId;
+        $cXc->third_id = $clienteId;
         $cXc->deuda_inicial = $venta->valor_a_pagar_credito;
-
+        $cXc->fecha_vencimiento = now()->addDays($diasCredito);
         $cXc->save();
     }
 
