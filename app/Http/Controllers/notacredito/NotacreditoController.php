@@ -150,8 +150,9 @@ class notacreditoController extends Controller
     {
 
         try {
-            $cuentas = Cuentas_por_cobrar::where('sale_id', $id)->first();
-            $cuentas->delete();
+            $cuentas = Cuentas_por_cobrar::where('sale_id', $id)->latest()->first(); // el ultimo mas reciente
+            $cuentas->status = '1';
+            $cuentas->save();
 
             return response()->json([
                 'status' => 1,
@@ -207,6 +208,8 @@ class notacreditoController extends Controller
             ->where('sa.id', $id)
             ->get();
         //dd($datacompensado);
+
+        //dd($detalle);
 
         $status = '';
         $fechaCompensadoCierre = Carbon::parse($datacompensado[0]->fecha_cierre);
@@ -639,4 +642,56 @@ class notacreditoController extends Controller
             'reg' => $reg
         ]);
     }
+
+    public function destroy(Request $request)
+    {
+
+
+        try {
+
+            $compe = NotacreditoDetail::where('sale_id', $request->id)->first();
+            $compe->delete();
+
+            $arraydetail = $this->getventasdetail($request->ventaId);
+
+            $arrayTotales = $this->sumTotales($request->ventaId);
+
+
+            $sale = Notacredito::find($request->ventaId);
+            $sale->items = NotacreditoDetail::where('sale_id', $sale->id)->count();
+            $sale->descuentos = 0;
+            $sale->total_iva = 0;
+            $sale->total_otros_impuestos = 0;
+            $saleDetails = NotacreditoDetail::where('sale_id', $sale->id)->get();
+            $totalBruto = 0;
+            $totalDesc = 0;
+            $total_valor_a_pagar = $saleDetails->where('sale_id', $sale->id)->sum('total');
+            $sale->total_valor_a_pagar = $total_valor_a_pagar;
+            $totalBruto = $saleDetails->sum(function ($saleDetail) {
+                return $saleDetail->quantity * $saleDetail->price;
+            });
+            $totalDesc = $saleDetails->sum(function ($saleDetail) {
+                return $saleDetail->descuento + $saleDetail->descuento_cliente;
+            });
+            $sale->total_bruto = $totalBruto;
+            $sale->descuentos = $totalDesc;
+            $sale->save();
+
+
+
+            return response()->json([
+                'status' => 1,
+                'array' => $arraydetail,
+                'arrayTotales' => $arrayTotales,
+                'message' => 'Se realizo con exito'
+            ]);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'status' => 0,
+                'array' => (array) $th
+            ]);
+        }
+    }
+
+
 }

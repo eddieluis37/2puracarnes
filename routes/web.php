@@ -427,6 +427,7 @@ Route::group(['middleware' => [('auth')]], function () {
      Route::post('notacreditoById', [notacreditoController::class, 'editNotacredito'])->name('notacredito.editNotacredito');
      Route::post('notacredito/create/registrar_notacredito/{id}', [notacreditoController::class, 'storeNotacredito'])->name('notacredito2.save');
      Route::get('notacredito/showNotacredito/{id}', [pdfNotacreditoController::class, 'showNotacredito']);
+     Route::post('downnotacredito', [notacreditoController::class, 'destroy'])->name('notacredito.down');
 
      /*****************************NOTA_DEBITO******************************************/
 

@@ -11,7 +11,7 @@
 		<div class="widget widget-chart-one">
 			<div class="widget-heading">
 				<h4 class="card-title">
-					<b> Ventas </b>
+					<b> Recibo de caja | Crear </b>
 				</h4>
 				<ul class="tabs tab-pills">
 					<li>
@@ -86,15 +86,15 @@
 									</div>
 								</div>
 								<div class="col-md-3">
-									<label for="" class="form-label"></label>
+									<label for="" class="form-label">Valor factura</label>
 									<div class="input-group flex-nowrap">
 										<span class="input-group-text" id="addon-wrapping">$</span>
-										<input type="text" id="price" name="price" class="form-control input" readonly placeholder="">
+										<input type="text" id="price" name="price" class="form-control input" placeholder="">
 									</div>
 								</div>
 
 								<div class="col-md-3">
-									<label for="" class="form-label"></label>
+									<label for="" class="form-label">Valor pagado</label>
 									<div class="input-group flex-nowrap">
 
 										<input type="text" id="porc_iva" name="porc_iva" class="form-control input" readonly placeholder="">

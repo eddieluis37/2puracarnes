@@ -27,6 +27,8 @@ class CreateCuentasPorCobrarsTable extends Migration
 
             $table->unsignedBigInteger('third_id')->nullable();           
             $table->foreign('third_id')->references('id')->on('thirds');
+
+            $table->enum('status',['0','1','2','3','4','5'])->default('0'); // 0 = PE, 1 = NC, 
             
             $table->date('fecha_inicial')->nullable();     
             $table->date('fecha_vencimiento')->nullable();     

@@ -88,7 +88,7 @@ tbodyTable.addEventListener("click", (e) => {
                 const dataform = new FormData();
                 dataform.append("id", Number(id));
                 dataform.append("ventaId", Number(venta_id.value));
-                sendData("/ventadown", dataform, token).then((result) => {
+                sendData("/downnotacredito", dataform, token).then((result) => {
                     console.log(result);
                     showData(result);
                 });

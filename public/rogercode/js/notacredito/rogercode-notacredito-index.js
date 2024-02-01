@@ -163,7 +163,7 @@ const downCompensado = (id) => {
             console.log(id);
             const dataform = new FormData();
             dataform.append("id", id);
-            send(dataform, "/downmaincompensado").then((resp) => {
+            send(dataform, "/downnotacredito").then((resp) => {
                 console.log(resp);
                 refresh_table();
             });
