@@ -15,6 +15,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\metodosgenerales\metodosrogercodeController;
 use App\Models\Centro_costo_product;
+use App\Models\Cuentas_por_cobrar;
 use App\Models\NotacreditoDetail;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
@@ -135,12 +136,33 @@ class notacreditoController extends Controller
             // Limpiar la tabla table_temporary_accumulated_notacredito
             DB::table('table_temporary_accumulated_notacredito')->truncate();
         }
-
+        
+            // Call the method para afectar cuentas por cobrar
+            $this->afectarCuentasPorCobrar($id);
         return response()->json([
             'status' => 1,
             'message' => 'Cargado al inventario exitosamente',
             'compensadores' => $compensadores
         ]);
+    }
+
+    public function afectarCuentasPorCobrar($id)
+    {
+
+        try {
+            $cuentas = Cuentas_por_cobrar::where('sale_id', $id)->first();
+            $cuentas->delete();
+
+            return response()->json([
+                'status' => 1,
+                'message' => 'Se realizo con exito'
+            ]);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'status' => 0,
+                'array' => (array) $th
+            ]);
+        }
     }
 
 

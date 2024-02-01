@@ -522,7 +522,7 @@ class compensadoController extends Controller
 
     public function cargarInventarioMasivo()
     {
-        for ($compensadoId = 547; $compensadoId <= 605; $compensadoId++) {
+        for ($compensadoId = 606; $compensadoId <= 615; $compensadoId++) {
             $currentDateTime = Carbon::now();
             $formattedDate = $currentDateTime->format('Y-m-d');
 

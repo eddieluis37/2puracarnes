@@ -177,7 +177,7 @@
                         <thead>
                             <tr>
                                 <th scope="col" style="text-align: left; vertical-align: middle;">Cliente</th>
-                                <th scope="col" style="text-align: left; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{{$venta->third->name}}</th>
+                                <th scope="col" style="text-align: left; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{{Str::limit($venta->third->name, 28)}}</th>
                                 <!--         <th scope="col">Last</th> -->
 
                             </tr>
@@ -192,7 +192,7 @@
                             <tr>
                                 <th scope="row" style="text-align: left">Vendedor</th>
 
-                                <td style="text-align: left">{{$dataVenta[0]->vendedor_name}}</td>
+                                <td style="text-align: left">{{Str::limit($dataVenta[0]->vendedor_name, 26)}}</td>
 
                             </tr>
                             <tr>
