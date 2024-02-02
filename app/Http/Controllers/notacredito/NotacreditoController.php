@@ -17,6 +17,7 @@ use App\Http\Controllers\metodosgenerales\metodosrogercodeController;
 use App\Models\Centro_costo_product;
 use App\Models\Cuentas_por_cobrar;
 use App\Models\NotacreditoDetail;
+use App\Models\Products\Meatcut;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Yajra\Datatables\Datatables;
@@ -25,12 +26,25 @@ use Carbon\Carbon;
 
 class notacreditoController extends Controller
 {
-    public function storeNotacredito(Request $request, $id)
+
+    public function getFacturaCliente(Request $request)
+    {
+        $cortes = Meatcut::Where([
+            ['category_id', $request->categoriaId],
+            ['status', 1]
+        ])->get();
+        return response()->json(['products' => $cortes]);
+    }
+
+    public function storeNotacredito(Request $request, $id) // para cerrar detalles y cargar a inventario
     {
 
-        $ventaId = Sale::find($id);
+        $ventaId = Notacredito::where('id', $request->id)->latest()->first(); // el ultimo mas reciente;
 
-        //  dd($ventaId->id);
+        $SaleIdNC = $ventaId->sale_id;
+
+        //  dd($SaleIdNC);
+
         // Obtener los valores
 
         $tipo = $request->get('tipo');
@@ -40,9 +54,9 @@ class notacreditoController extends Controller
 
         try {
 
-            $venta = new Notacredito();
+            $venta = Notacredito::where('id', $id)->latest()->first(); // el ultimo mas reciente;
             $venta->user_id = $request->user()->id;
-            $venta->sale_id = $ventaId->id;
+            $venta->sale_id = $SaleIdNC;
             $venta->tipo = $tipo;
             $venta->status = $status;
             $venta->fecha_notacredito = now();
@@ -136,9 +150,9 @@ class notacreditoController extends Controller
             // Limpiar la tabla table_temporary_accumulated_notacredito
             DB::table('table_temporary_accumulated_notacredito')->truncate();
         }
-        
-            // Call the method para afectar cuentas por cobrar
-            $this->afectarCuentasPorCobrar($id);
+
+        // Call the method para afectar cuentas por cobrar
+        $this->afectarCuentasPorCobrar($id);
         return response()->json([
             'status' => 1,
             'message' => 'Cargado al inventario exitosamente',
@@ -186,7 +200,8 @@ class notacreditoController extends Controller
      */
     public function create($id)
     {
-        $venta = Notacredito::find($id);
+        $nc = Notacredito::firstWhere('id', $id);
+        //  dd($nc->sale_id);
         /*    $detalle = SaleDetail::firstWhere('sale_id', $id); */
         $prod = Product::Where([
             ['status', 1]
@@ -205,9 +220,9 @@ class notacreditoController extends Controller
             ->join('thirds as tird', 'sa.third_id', '=', 'tird.id')
             ->join('centro_costo as centro', 'sa.centrocosto_id', '=', 'centro.id')
             ->select('sa.*', 'tird.name as namethird', 'centro.name as namecentrocosto', 'tird.porc_descuento')
-            ->where('sa.id', $id)
+            ->where('sa.id', $nc->sale_id)
             ->get();
-        //dd($datacompensado);
+        // dd($datacompensado);
 
         //dd($detalle);
 
@@ -321,17 +336,14 @@ class notacreditoController extends Controller
     public function store(Request $request) // Guardar crear nota credito
     {
         try {
-
             $rules = [
                 'ventaId' => 'required',
                 'factura' => 'required',
-
             ];
             $messages = [
                 'ventaId.required' => 'El ventaId es requerido',
                 'factura.required' => 'La factura es requerida',
             ];
-
             $validator = Validator::make($request->all(), $rules, $messages);
             if ($validator->fails()) {
                 return response()->json([
@@ -339,31 +351,23 @@ class notacreditoController extends Controller
                     'errors' => $validator->errors()
                 ], 422);
             }
-
-            $getReg = Notacredito::firstWhere('id', $request->factura);
-
-
-            if ($getReg == null) {
+            $getReg = Notacredito::where('sale_id', $request->factura)->count();
+            if ($getReg < 2) {
                 $currentDateTime = Carbon::now();
                 $currentDateFormat = Carbon::parse($currentDateTime->format('Y-m-d'));
                 $current_date = Carbon::parse($currentDateTime->format('Y-m-d'));
                 $current_date->modify('next monday'); // Move to the next Monday
                 $dateNextMonday = $current_date->format('Y-m-d'); // Output the date in Y-m-d format
-
                 $id_user = Auth::user()->id;
                 //    $idcc = $request->centrocosto;
-
                 $venta = new Notacredito();
                 $venta->user_id = $id_user;
                 $venta->sale_id = $request->factura;
-
+                //  dd($request->factura); // es el id de la factura de venta seleccionada en el modal create
                 $venta->fecha_notacredito = $currentDateFormat;
                 $venta->fecha_cierre =  now();
-
                 $venta->valor_total = 0;
-
                 $venta->save();
-
                 //ACTUALIZA CONSECUTIVO 
                 $idcc = $request->centrocosto;
                 DB::update(
@@ -381,22 +385,15 @@ class notacreditoController extends Controller
                         'vcentrocosto2' => $idcc
                     ]
                 );
-
                 return response()->json([
                     'status' => 1,
                     'message' => 'Guardado correctamente',
                     "registroId" => $venta->id
                 ]);
             } else {
-                $getReg = Notacredito::firstWhere('id', $request->factura);
-
-                $getReg->fecha_cierre = now();
-                $getReg->save();
-
                 return response()->json([
-                    'status' => 1,
-                    'message' => 'Guardado correctamente',
-                    "registroId" => 0
+                    'status' => 0,
+                    'message' => 'No se puede crear más de 2 notas de crédito para la misma factura'
                 ]);
             }
         } catch (\Throwable $th) {
@@ -415,24 +412,24 @@ class notacreditoController extends Controller
      */
     public function show()
     {
-        /*  $data = DB::table('notacreditos as nc')
-             ->join('sales as sa', 'nc.sale_id', '=', 'sa.id')
-              ->join('thirds as tird', 'sa.third_id', '=', 'tird.id')
+        $data = DB::table('notacreditos as nc')
+            ->join('sales as sa', 'nc.sale_id', '=', 'sa.id')
+            ->join('thirds as tird', 'sa.third_id', '=', 'tird.id')
             ->join('centro_costo as centro', 'sa.centrocosto_id', '=', 'centro.id')
-            ->select('nc')
-            ->where('sa.status', 1) 
-            ->get(); */
+            ->select('sa.*', 'nc.tipo', 'sa.resolucion as saresolucion', 'nc.valor_total as nctotal',  'nc.resolucion as ncresolucion', 'nc.status as ncstatus', 'nc.fecha_notacredito', 'nc.fecha_cierre as ncfecha_cierre', 'tird.name as namethird', 'centro.name as namecentrocosto')
+            ->where('nc.status', '1')
+            ->get();
 
-        $data = DB::table('sales as sa')
+        /*   $data = DB::table('sales as sa')
             ->join('thirds as tird', 'sa.third_id', '=', 'tird.id')
             ->join('centro_costo as centro', 'sa.centrocosto_id', '=', 'centro.id')
             ->leftJoin('notacreditos as nc', 'sa.id', '=', 'nc.sale_id')
             ->select('sa.*', 'nc.tipo', 'sa.resolucion as saresolucion', 'nc.valor_total as nctotal',  'nc.resolucion as ncresolucion', 'nc.status as ncstatus', 'nc.fecha_notacredito', 'nc.fecha_cierre as ncfecha_cierre', 'tird.name as namethird', 'centro.name as namecentrocosto')
-            /*       ->where('sa.tipo', '1') */ // Tipo 1 = domicilio, 0= POS mostrador
+                   ->where('sa.tipo', '1')  // Tipo 1 = domicilio, 0= POS mostrador
             ->where('sa.status', '1')
             ->get();
 
-        //  $data = Sale::orderBy('id','desc');
+        //  $data = Sale::orderBy('id','desc'); */
 
         return Datatables::of($data)->addIndexColumn()
             ->addColumn('ncstatus', function ($data) {
@@ -692,6 +689,4 @@ class notacreditoController extends Controller
             ]);
         }
     }
-
-
 }

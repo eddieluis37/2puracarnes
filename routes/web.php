@@ -429,6 +429,8 @@ Route::group(['middleware' => [('auth')]], function () {
      Route::get('notacredito/showNotacredito/{id}', [pdfNotacreditoController::class, 'showNotacredito']);
      Route::post('downnotacredito', [notacreditoController::class, 'destroy'])->name('notacredito.down');
 
+     Route::post('getfacturacliente', [notacreditoController::class, 'getFacturaCliente'])->name('notacredito.getfacturacliente');
+
      /*****************************NOTA_DEBITO******************************************/
 
      Route::get('notadebito', [notadebitoController::class, 'index'])->name('notadebito.index');

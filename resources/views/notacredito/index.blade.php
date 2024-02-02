@@ -9,10 +9,10 @@
 					<b>Nota crédito | Listado </b>
 				</h4>
 				<ul class="tabs tab-pills">
-<!-- 					<li>
-						<a href="javascript:void(0)" onclick="showModalcreate()" class="tabmenu bg-dark" data-toggle="modal" data-target="#modal-create-compensado" title="Nueva nota credito">Crear</a>
-					
-					</li> -->
+					<li>
+						<a href="javascript:void(0)" onclick="showModalcreate()" class="tabmenu bg-dark" data-toggle="modal" data-target="#modal-create-compensado" title="Nueva nota credito">Crear notacredito</a>
+
+					</li>
 				</ul>
 			</div>
 
@@ -21,7 +21,7 @@
 					<table id="tableCompensado" class="table table-striped mt-1">
 						<thead class="text-white" style="background: #3B3F5C">
 							<tr>
-								<th class="table-th text-white">#</th>								
+								<th class="table-th text-white">#</th>
 								<th class="table-th text-white">CLIENTE</th>
 								<th class="table-th text-white ">CENTRO</th>
 								<th class="table-th text-white ">RESOL.FA</th>
@@ -41,7 +41,7 @@
 		</div>
 	</div>
 	<!-- modal -->
-	<div class="modal fade" id="modal-create-compensado" aria-hidden="true" data-keyboard="false" data-backdrop="static" >
+	<div class="modal fade" id="modal-create-compensado" aria-hidden="true" data-keyboard="false" data-backdrop="static">
 		<div class="modal-dialog modal-xl" role="document">
 			<div class="modal-content bg-default">
 				<fieldset id="contentDisable">
@@ -51,8 +51,8 @@
 							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 								<span aria-hidden="true">&times;</span></button>
 						</div>
-				 		<div class="modal-body">
-								@include('notacredito.modal_create')
+						<div class="modal-body">
+							@include('notacredito.modal_create')
 						</div>
 						<div class="modal-footer">
 							<button type="button" id="btnModalClose" class="btn btn-default" data-dismiss="modal">Cancelar</button>
