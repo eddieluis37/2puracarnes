@@ -49,7 +49,7 @@
 						<select class="form-control form-control-sm select2Ventas " name="factura" id="factura" required>
 							<option value="">Seleccione factura</option>
 							@foreach($ventas as $factura)
-							<option value="{{ $factura->id }}">{{ $factura->consecutivo }}</option>
+							<option value="{{ $factura->id }}">{{ $factura->resolucion }}</option>
 							@endforeach
 						</select>
 						<span class="text-danger error-message"></span>

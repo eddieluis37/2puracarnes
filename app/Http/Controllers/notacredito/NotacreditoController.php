@@ -362,7 +362,7 @@ class notacreditoController extends Controller
                 $venta->sale_id = $request->factura;
                 //  dd($request->factura); // es el id de la factura de venta seleccionada en el modal create
                 $venta->fecha_notacredito = $currentDateFormat;
-                $venta->fecha_cierre =  now();
+               /*  $venta->fecha_cierre =  now(); */
                 $venta->valor_total = 0;
                 $venta->save();
                 //ACTUALIZA CONSECUTIVO 
@@ -413,8 +413,8 @@ class notacreditoController extends Controller
             ->join('sales as sa', 'nc.sale_id', '=', 'sa.id')
             ->join('thirds as tird', 'sa.third_id', '=', 'tird.id')
             ->join('centro_costo as centro', 'sa.centrocosto_id', '=', 'centro.id')
-            ->select('sa.*', 'nc.tipo', 'sa.resolucion as saresolucion', 'nc.valor_total as nctotal',  'nc.resolucion as ncresolucion', 'nc.status as ncstatus', 'nc.fecha_notacredito', 'nc.fecha_cierre as ncfecha_cierre', 'tird.name as namethird', 'centro.name as namecentrocosto')
-            ->where('nc.status', '1')
+            ->select('sa.*', 'nc.id as ncid', 'nc.tipo', 'sa.resolucion as saresolucion', 'nc.valor_total as nctotal',  'nc.resolucion as ncresolucion', 'nc.status as ncstatus', 'nc.fecha_notacredito', 'nc.fecha_cierre as ncfecha_cierre', 'tird.name as namethird', 'centro.name as namecentrocosto')
+            /*  ->where('nc.status', '1') */
             ->get();
 
         /*   $data = DB::table('sales as sa')
@@ -433,7 +433,7 @@ class notacreditoController extends Controller
                 if ($data->ncstatus == 1) {
                     $ncstatus = '<span class="badge bg-success">Creada</span>';
                 } else {
-                    $ncstatus = '<span class="badge bg-danger">NO tiene</span>';
+                    $ncstatus = '<span class="badge bg-danger">Pendiente</span>';
                 }
                 return $ncstatus;
             })
@@ -451,7 +451,7 @@ class notacreditoController extends Controller
                         <a href="sale/showFactura/' . $data->id . '" class="btn btn-dark" title="VerFactura" target="_blank">
                         <i class="far fa-file-pdf"></i>
 					    </a>	
-                        <a href="notacredito/showNotacredito/' . $data->id . '" class="btn btn-dark" title="VerNotacredito" target="_blank">
+                        <a href="notacredito/showNotacredito/' . $data->ncid . '" class="btn btn-dark" title="VerNotacredito" target="_blank">
                         <i class="far fa-file-pdf"></i>
 					    </a>			
 					  
@@ -460,10 +460,9 @@ class notacreditoController extends Controller
                 } elseif (Carbon::parse($currentDateTime->format('Y-m-d'))->lt(Carbon::parse($data->ncfecha_cierre))) {
                     $btn = '
                         <div class="text-center">
-					    <a href="notacredito/create/' . $data->id . '" class="btn btn-dark" title="Detalles">
-						    <i class="fas fa-directions"></i>
-					    </a>
-					   
+                        <a href="notacredito/create/' . $data->ncid . '" class="btn btn-dark" title="Detalles">
+                        <i class="fas fa-directions"></i>
+                        </a>
                         <a href="sale/showFactura/' . $data->id . '" class="btn btn-dark" title="VerFacturaSinNC" target="_blank">
                         <i class="far fa-file-pdf"></i>
 					    </a>
@@ -474,11 +473,11 @@ class notacreditoController extends Controller
                 } else {
                     $btn = '
                         <div class="text-center">  
-                                        
+                                                             
                         <a href="sale/showFactura/' . $data->id . '" class="btn btn-dark" title="VerFacturaCerrada" target="_blank">
                         <i class="far fa-file-pdf"></i>
 					    </a>
-                        <a href="notacredito/showNotacredito/' . $data->id . '" class="btn btn-dark" title="VerNotacredito" target="_blank">
+                        <a href="notacredito/showNotacredito/' . $data->ncid . '" class="btn btn-dark" title="VerNotacredito" target="_blank">
                         <i class="far fa-file-pdf"></i>
 					    </a>  
 					  

@@ -46,7 +46,7 @@ $(document).ready(function() {
                 success:function(data) {
                     $('#factura').empty();
                     $.each(data, function(key, value) {
-                        $('#factura').append('<option value="'+ value.id +'">'+ value.consecutivo +'</option>');
+                        $('#factura').append('<option value="'+ value.id +'">'+ value.resolucion +'</option>');
                     });
                 }
             });
