@@ -83,10 +83,10 @@
 						<span><b>TOTALES</b></span>
 					</td>
 					<td colspan="1" class="text-center">
-						<span><strong>{{ $quantity = $item->where('sale_id', '=', $item->sale_id)->sum('quantity')}}</strong></span>
+						<span><strong>{{ $quantity = $item->where('notacredito_id', '=', $item->notacredito_id)->sum('quantity')}}</strong></span>
 					</td>
 					<td class="text-center">
-						<span><strong>${{ number_format($item->where('sale_id', '=', $item->sale_id)->sum('total'),0)}}</strong></span>
+						<span><strong>${{ number_format($item->where('notacredito_id', '=', $item->notacredito_id)->sum('total'),0)}}</strong></span>
 					</td>
 				</tr>
 			</tfoot>

@@ -27,13 +27,10 @@ use Carbon\Carbon;
 class notacreditoController extends Controller
 {
 
-    public function getFacturaCliente(Request $request)
+    public function getFacturasByCliente($cliente_id)
     {
-        $cortes = Meatcut::Where([
-            ['category_id', $request->categoriaId],
-            ['status', 1]
-        ])->get();
-        return response()->json(['products' => $cortes]);
+        $facturas = Sale::where('third_id', $cliente_id)->orderBy('id', 'desc')->get(); // despliega las mas reciente
+        return response()->json($facturas);
     }
 
     public function storeNotacredito(Request $request, $id) // para cerrar detalles y cargar a inventario
@@ -72,7 +69,7 @@ class notacreditoController extends Controller
             $venta->fecha_notacredito = now();
             $venta->fecha_cierre = now();
 
-            $totalValor = (float)NotacreditoDetail::Where([['sale_id', $id]])->sum('total');
+            $totalValor = (float)NotacreditoDetail::Where([['notacredito_id', $id]])->sum('total');
             $venta->valor_total = $totalValor;
 
             $venta->save();
@@ -104,7 +101,7 @@ class notacreditoController extends Controller
         $currentDateTime = Carbon::now();
         $formattedDate = $currentDateTime->format('Y-m-d');
 
-        $compensadores = NotacreditoDetail::where('sale_id', $id)->get();
+        $compensadores = NotacreditoDetail::where('notacredito_id', $id)->get();
         //   dd($compensadores);
         $centrocosto_id = 1;
 
@@ -113,7 +110,7 @@ class notacreditoController extends Controller
         }
       */
 
-        $notaCreditodetalle = NotacreditoDetail::where('sale_id', $id)->get();
+        $notaCreditodetalle = NotacreditoDetail::where('notacredito_id', $id)->get();
         $product_ids = $notaCreditodetalle->pluck('product_id'); // consulta todos los registros 
 
         // dd($product_ids);
@@ -126,7 +123,7 @@ class notacreditoController extends Controller
         //  dd($centroCostoProducts);
 
         foreach ($centroCostoProducts as $centroCostoProduct) {
-            $accumulatedQuantity = NotacreditoDetail::where('sale_id', '=', $id)
+            $accumulatedQuantity = NotacreditoDetail::where('notacredito_id', '=', $id)
                 ->where('product_id', $centroCostoProduct->products_id)
                 ->sum('quantity');
 
@@ -284,7 +281,7 @@ class notacreditoController extends Controller
             ce.compensados + ce.trasladoing - (ce.venta + ce.trasladosal) stock')
             ->where([
                 ['ce.centrocosto_id', $centrocostoId],
-                ['dv.sale_id', $ventaId],
+                ['dv.notacredito_id', $ventaId],
             ])->orderBy('dv.id', 'DESC')->get();
 
         return $detail;
@@ -300,7 +297,7 @@ class notacreditoController extends Controller
             ce.compensados + ce.trasladoing - (ce.venta + ce.trasladosal) stock')
             ->where([
                 ['ce.centrocosto_id', $centrocostoId],
-                ['dv.sale_id', $ventaId],
+                ['dv.notacredito_id', $ventaId],
             ])->orderBy('dv.id', 'DESC')->get();
 
         return $detail;
@@ -310,10 +307,10 @@ class notacreditoController extends Controller
     {
         $TotalBrutoSinDescuento = Sale::where('id', $id)->value('total_bruto');
         $TotalDescuentos = Sale::where('id', $id)->value('descuentos');
-        $TotalBruto = (float)NotacreditoDetail::Where([['sale_id', $id]])->sum('total_bruto');
-        $TotalIva = (float)NotacreditoDetail::Where([['sale_id', $id]])->sum('iva');
-        $TotalOtroImpuesto = (float)NotacreditoDetail::Where([['sale_id', $id]])->sum('otro_impuesto');
-        $TotalValorAPagar = (float)NotacreditoDetail::Where([['sale_id', $id]])->sum('total');
+        $TotalBruto = (float)NotacreditoDetail::Where([['notacredito_id', $id]])->sum('total_bruto');
+        $TotalIva = (float)NotacreditoDetail::Where([['notacredito_id', $id]])->sum('iva');
+        $TotalOtroImpuesto = (float)NotacreditoDetail::Where([['notacredito_id', $id]])->sum('otro_impuesto');
+        $TotalValorAPagar = (float)NotacreditoDetail::Where([['notacredito_id', $id]])->sum('total');
 
         $array = [
             'TotalBruto' => $TotalBruto,
@@ -333,7 +330,7 @@ class notacreditoController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request) // Guardar crear nota credito
+    public function store(Request $request) // Crear nota credito desde ventana modal
     {
         try {
             $rules = [
@@ -508,7 +505,7 @@ class notacreditoController extends Controller
             ->join('products as pro', 'de.product_id', '=', 'pro.id')
             ->select('de.*', 'pro.name as nameprod', 'pro.code', 'de.porc_iva', 'de.iva', 'de.porc_otro_impuesto',)
             ->where([
-                ['de.sale_id', $ventaId],
+                ['de.notacredito_id', $ventaId],
                 /*   ['de.status', 1] */
             ])->get();
 
@@ -571,7 +568,7 @@ class notacreditoController extends Controller
 
             if ($getReg == null) {
                 $detail = new NotacreditoDetail();
-                $detail->sale_id = $request->ventaId;
+                $detail->notacredito_id = $request->ventaId;
                 $detail->product_id = $request->producto;
                 $detail->price = $formatPrVenta;
                 $detail->quantity = $formatPesoKg;
@@ -646,7 +643,7 @@ class notacreditoController extends Controller
 
         try {
 
-            $compe = NotacreditoDetail::where('sale_id', $request->id)->first();
+            $compe = NotacreditoDetail::where('notacredito_id', $request->id)->first();
             $compe->delete();
 
             $arraydetail = $this->getventasdetail($request->ventaId);
@@ -655,14 +652,14 @@ class notacreditoController extends Controller
 
 
             $sale = Notacredito::find($request->ventaId);
-            $sale->items = NotacreditoDetail::where('sale_id', $sale->id)->count();
+            $sale->items = NotacreditoDetail::where('notacredito_id', $sale->id)->count();
             $sale->descuentos = 0;
             $sale->total_iva = 0;
             $sale->total_otros_impuestos = 0;
-            $saleDetails = NotacreditoDetail::where('sale_id', $sale->id)->get();
+            $saleDetails = NotacreditoDetail::where('notacredito_id', $sale->id)->get();
             $totalBruto = 0;
             $totalDesc = 0;
-            $total_valor_a_pagar = $saleDetails->where('sale_id', $sale->id)->sum('total');
+            $total_valor_a_pagar = $saleDetails->where('notacredito_id', $sale->id)->sum('total');
             $sale->total_valor_a_pagar = $total_valor_a_pagar;
             $totalBruto = $saleDetails->sum(function ($saleDetail) {
                 return $saleDetail->quantity * $saleDetail->price;
