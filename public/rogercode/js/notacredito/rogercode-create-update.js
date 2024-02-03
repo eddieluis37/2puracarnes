@@ -55,3 +55,40 @@ $(document).ready(function() {
         }
     });
 });
+
+// Limpiar mensajes de error al cerrar la ventana modal
+$('#modal-create-compensado').on('hidden.bs.modal', function () {
+    $('.error-message').text('');
+});
+
+// Limpiar mensajes de error al cambiar el valor del campo factura
+$('#factura').on('change', function() {
+    $('.error-message').text('');
+});
+
+/* // Limpiar mensajes de error al limpiar el campo
+$('#fecha_venta, #centrocosto, #cliente, #factura, #vendedor, #subcentrodecosto').on('blur', function () {
+    $(this).next('.error-message').text('');
+}); */
+/* 
+// Limpiar mensajes de error al limpiar el campo
+$('#fecha_venta, #centrocosto, #cliente, #factura, #vendedor, #subcentrodecosto').on('focusout', function () {
+    $(this).next('.error-message').text('');
+});
+ */
+/* // Limpiar mensajes de error al limpiar el campo
+$('#fecha_venta, #centrocosto, #cliente, #factura').on('change', function () {
+    $(this).next('.error-message').text('');
+}); */
+
+/* 
+// Limpiar mensajes de error al limpiar el campo
+$('#fecha_venta, #centrocosto, #cliente, #factura, #vendedor, #subcentrodecosto').on('input', function () {
+    $(this).next('.error-message').text('');
+}); */
+
+
+/* // Limpiar mensajes de error al limpiar el campo
+$('#fecha_venta, #centrocosto, #cliente, #factura, #vendedor, #subcentrodecosto').on('keyup', function () {
+    $(this).next('.error-message').text('');
+}); */
