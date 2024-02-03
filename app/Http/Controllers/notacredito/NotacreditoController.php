@@ -335,7 +335,15 @@ class notacreditoController extends Controller
         try {
             $rules = [
                 'ventaId' => 'required',
-                'factura' => 'required',
+                'factura' => [
+                    'required',
+                    function ($attribute, $value, $fail) {
+                        $count = Notacredito::where('sale_id', $value)->count();
+                        if ($count >= 2) {
+                            $fail('No se puede crear más de 2 notas de crédito para la misma factura');
+                        }
+                    }
+                ],
             ];
             $messages = [
                 'ventaId.required' => 'El ventaId es requerido',
@@ -362,7 +370,7 @@ class notacreditoController extends Controller
                 $venta->sale_id = $request->factura;
                 //  dd($request->factura); // es el id de la factura de venta seleccionada en el modal create
                 $venta->fecha_notacredito = $currentDateFormat;
-               /*  $venta->fecha_cierre =  now(); */
+                /*  $venta->fecha_cierre =  now(); */
                 $venta->valor_total = 0;
                 $venta->save();
                 //ACTUALIZA CONSECUTIVO 
