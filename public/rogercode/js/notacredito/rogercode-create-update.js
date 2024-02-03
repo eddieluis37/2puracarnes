@@ -57,7 +57,7 @@ $(document).ready(function() {
 });
 
 // Limpiar mensajes de error al cerrar la ventana modal
-$('#modal-create-compensado').on('hidden.bs.modal', function () {
+$('#modal-create-notacredito').on('hidden.bs.modal', function () {
     $('.error-message').text('');
 });
 
