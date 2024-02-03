@@ -18,6 +18,7 @@ const venta_id = document.querySelector("#recibocajaId");
 const centrocosto_id = document.querySelector("#centrocosto_id");
 const quantity = document.querySelector("#quantity");
 const price = document.querySelector("#price");
+const total_bruto = document.querySelector("#total_bruto");
 const iva = document.querySelector("#iva");
 const regDetail = document.querySelector("#regdetailId");
 const tableFoot = document.querySelector("#tabletfoot");
@@ -55,10 +56,9 @@ function actualizarValoresProducto(productId) {
         },
         success: function (response) {
             // Actualiza los valores en los campos de entrada del centro de costo
-            $("#price").val(response.precio);        
-            $("#porc_iva").val(response.iva);
+            $("#price").val(response.precio);                  
             $("#porc_otro_impuesto").val(response.otro_impuesto);
-            $("#porc_desc").val(response.porc_desc);          
+            $("#total_bruto").val(response.total_bruto);          
         },
         error: function (xhr, status, error) {
             // Maneja el error si la solicitud AJAX falla
@@ -255,14 +255,18 @@ const showData = (data) => {
 };
 
 
-
-
-
 price.addEventListener("change", function () {
     const enteredValue = formatMoneyNumber(price.value);
     console.log("Entered value: " + enteredValue);
     price.value = formatCantidadSinCero(enteredValue);
 });
+
+total_bruto.addEventListener("change", function () {
+    const enteredValue = formatMoneyNumber(total_bruto.value);
+    console.log("Entered value: " + enteredValue);
+    total_bruto.value = formatCantidadSinCero(enteredValue);
+});
+
 
 quantity.addEventListener("change", function () {
     const enteredValue = formatkg(quantity.value);

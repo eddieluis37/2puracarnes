@@ -234,9 +234,9 @@ class recibodecajaController extends Controller
     public function create($id)
     {
         $venta = Recibodecaja::find($id);
-       // dd($venta->third_id);
-       $clienteId = $venta->third_id;
-        
+        // dd($venta->third_id);
+        $clienteId = $venta->third_id;
+
         $prod = Sale::Where([
             ['status', '1'],
             ['third_id', $clienteId]
@@ -332,17 +332,17 @@ class recibodecajaController extends Controller
         $centrocostoId = $request->input('centrocosto');
         $clienteId = $request->input('cliente');
         $cliente = Third::find($clienteId);
-        $producto = Listapreciodetalle::join('products as prod', 'listapreciodetalles.product_id', '=', 'prod.id')
-            ->join('thirds as t', 'listapreciodetalles.listaprecio_id', '=', 't.id')
-            ->where('prod.id', $request->productId)
-            ->where('t.id', $cliente->listaprecio_genericid)
+        $producto = Sale::join('thirds as t', 'sales.third_id', '=', 't.id')
+            /*   ->join('thirds as t', 'listapreciodetalles.listaprecio_id', '=', 't.id') */
+            ->where('sales.id', $request->productId)
+            ->where('t.id', $cliente->id)
             ->first();
         if ($producto) {
             return response()->json([
                 'precio' => $producto->precio,
                 'iva' => $producto->iva,
                 'otro_impuesto' => $producto->otro_impuesto,
-                'porc_desc' => $producto->porc_desc
+                'total_bruto' => $producto->total_bruto
             ]);
         } else {
             // En caso de que el producto no sea encontrado
@@ -351,6 +351,4 @@ class recibodecajaController extends Controller
             ], 404);
         }
     }
-
-
 }

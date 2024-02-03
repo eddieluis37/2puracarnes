@@ -201,6 +201,7 @@ class saleController extends Controller
         $cXc->sale_id = $ventaId;
         $cXc->third_id = $clienteId;
         $cXc->deuda_inicial = $venta->valor_a_pagar_credito;
+        $cXc->deuda_x_cobrar = $venta->valor_a_pagar_credito;
         $cXc->fecha_vencimiento = now()->addDays($diasCredito);
         $cXc->save();
     }

@@ -72,19 +72,28 @@
 								<div class="col-md-3">
 									<div class="task-header">
 										<div class="form-group">
-											<label for="" class="form-label">Buscar facturas del cliente</label>
+											<label for="" class="form-label">Facturas del cliente</label>
 											<input type="hidden" id="centrocosto" name="centrocosto" value="{{$datacompensado[0]->subcentrocostos_id }}" data-id="{{$datacompensado[0]->subcentrocostos_id }}">
 											<input type="hidden" id="cliente" name="cliente" value="{{$datacompensado[0]->third_id}}" data-id="{{$datacompensado[0]->third_id}}">
 											<input type="hidden" id="porc_descuento" name="porc_descuento" value="{{$datacompensado[0]->porc_descuento}}" data-id="{{$datacompensado[0]->porc_descuento}}">
 											<select class="form-control form-control-sm select2Prod" name="producto" id="producto" required="">
 												<option value="">Seleccione el facturas</option>
 												@foreach ($prod as $p)
-												<option value="{{$p->id}}">{{$p->consecutivo}}</option>
+												<option value="{{$p->id}}">{{$p->resolucion}} - {{$p->consecutivo}}</option>
 												@endforeach
 											</select>
 										</div>
 									</div>
 								</div>
+
+								<div class="col-md-3">
+									<label for="" class="form-label">Valor pagado</label>
+									<div class="input-group flex-nowrap">
+										<span class="input-group-text" id="addon-wrapping">$</span>
+										<input type="text" id="total_bruto" name="valor_pagado" class="form-control input" placeholder="">
+									</div>
+								</div>
+
 								<div class="col-md-3">
 									<label for="" class="form-label">Valor factura</label>
 									<div class="input-group flex-nowrap">
@@ -93,14 +102,7 @@
 									</div>
 								</div>
 
-								<div class="col-md-3">
-									<label for="" class="form-label">Valor pagado</label>
-									<div class="input-group flex-nowrap">
 
-										<input type="text" id="porc_iva" name="porc_iva" class="form-control input" readonly placeholder="">
-										<span class="input-group-text" id="addon-wrapping">%</span>
-									</div>
-								</div>
 								<div class="col-md-3">
 									<label for="" class="form-label"></label>
 									<div class="input-group flex-nowrap">
@@ -109,7 +111,7 @@
 										<span class="input-group-text" id="addon-wrapping">%</span>
 									</div>
 								</div>
-							<!-- 	<div class="col-md-3">
+								<!-- 	<div class="col-md-3">
 									<label for="" class="form-label"></label>
 									<div class="input-group flex-nowrap">
 

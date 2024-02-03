@@ -66,7 +66,9 @@
                                         <th class="table-th text-white text-center">ESTADO</th>
                                         <th class="table-th text-white text-center">FECHA.V</th>
                                         <th class="table-th text-white text-center">DEUDA.I</th>
-                                        <th class="table-th text-white text-center">DEUDA.PC</th>
+                                        <th class="table-th text-white text-center">NC</th>
+                                        <th class="table-th text-white text-center">ND</th>
+                                        <th class="table-th text-white text-center">REC.CAJA</th>
                                         <th class="table-th text-white text-center">SALDO</th>
                                         <th class="table-th text-white text-center">ACCIONES</th>
                                     </tr>
@@ -112,12 +114,17 @@
                                             </td>
                                             <td class="text-center">
                                                 <h6>${{number_format($d->deuda_x_cobrar)}}</h6>
+                                            </td>                                           
+                                         
+                                            <td class="text-center">
+                                                <h6>{{number_format($d->items,1)}}</h6>
                                             </td>
                                             <td class="text-center">
                                                 <h6>{{number_format($d->items,1)}}</h6>
                                             </td>
-
-
+                                            <td class="text-center">
+                                                <h6>{{number_format($d->items,1)}}</h6>
+                                            </td>                                         
 
                                             <td class="text-center">
                                                 <button wire:click.prevent="getDetails({{$d->id}})" class="btn btn-dark btn-sm">

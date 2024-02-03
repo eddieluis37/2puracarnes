@@ -34,6 +34,7 @@ class CreateCuentasPorCobrarsTable extends Migration
             $table->date('fecha_vencimiento')->nullable();     
             $table->decimal('deuda_inicial',12,0)->default(0);
             $table->decimal('deuda_x_cobrar',12,0)->default(0)->nullable();   
+            $table->decimal('deuda_x_pagar',12,0)->nullable();
             $table->decimal('valor_anticipo',12,0)->default(0)->nullable();   
             $table->decimal('saldo_cartera',12,0)->default(0)->nullable();   
 
