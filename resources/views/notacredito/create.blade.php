@@ -33,6 +33,21 @@
 										</div>
 									</div>
 								</div>
+								<div class="col-sm-12 col-md-2">
+									<div class="task-header">
+										<div class="form-group">
+											<label>Tipo notacredito</label>
+											<select class="form-control selectProvider" name="tipo" id="tipo" required="">
+												<option value="DEVOLUCION">DEVOLUCION</option>
+												<option value="ANULACION">ANULACION</option>
+												<option value="REBAJA">REBAJA</option>
+												<option value="DESCUENTO">DESCUENTO</option>
+												<option value="RESCISION">RESCISION</option>
+												<option value="OTROS">OTROS</option>
+											</select>
+										</div>
+									</div>
+								</div>
 								<div class="col-md-3">
 									<div class="task-header">
 										<div class="form-group">
@@ -51,30 +66,16 @@
 									</div>
 								</div>
 
-								<div class="col-md-2">
+								<!-- <div class="col-md-2">
 									<div class="task-header">
 										<div class="form-group">
 											<label for="" class="form-label">% Descuento</label>
 											<p>{{$datacompensado[0]->porc_descuento}}</p>
 										</div>
 									</div>
-								</div>
+								</div> -->
 
-								<div class="col-sm-12 col-md-3">
-									<div class="task-header">
-										<div class="form-group">
-											<label>Tipo notacredito</label>
-											<select class="form-control selectProvider" name="tipo" id="tipo" required="">
-												<option value="DEVOLUCION">DEVOLUCION</option>
-												<option value="ANULACION">ANULACION</option>
-												<option value="REBAJA">REBAJA</option>
-												<option value="DESCUENTO">DESCUENTO</option>
-												<option value="RESCISION">RESCISION</option>
-												<option value="OTROS">OTROS</option>
-											</select>
-										</div>
-									</div>
-								</div>
+								
 
 							</div>
 						</div>

@@ -31,7 +31,7 @@
 									</div>
 								</div>
 							</div>
-						<!-- 	<div class="col-md-3">
+							<!-- 	<div class="col-md-3">
 								<div class="task-header">
 									<div class="form-group">
 										<label for="" class="form-label">Tipo de recibo</label>
@@ -61,6 +61,19 @@
 									</div>
 								</div>
 							</div>
+
+							<div class="col-md-2">
+								<div class="task-header">
+									<div class="form-group">
+										<label for="" class="form-label">Tipo de recibo</label>
+										@if ($datacompensado[0]->tipo == 1)
+										INGRESO DIARIO
+										@elseif ($datacompensado[0]->tipo == 2)
+										EGRESO DE CARTERA
+										@endif
+									</div>
+								</div>
+							</div>
 						</div>
 					</div>
 				</div>
@@ -76,7 +89,7 @@
 								<div class="col-md-3">
 									<div class="task-header">
 										<div class="form-group">
-											<label for="" class="form-label">Facturas del cliente</label>											
+											<label for="" class="form-label">Facturas del cliente</label>
 											<input type="hidden" id="cliente" name="cliente" value="{{$datacompensado[0]->third_id}}" data-id="{{$datacompensado[0]->third_id}}">
 											<input type="hidden" id="porc_descuento" name="porc_descuento" value="{{$datacompensado[0]->porc_descuento}}" data-id="{{$datacompensado[0]->porc_descuento}}">
 											<select class="form-control form-control-sm select2Prod" name="producto" id="producto" required="">
