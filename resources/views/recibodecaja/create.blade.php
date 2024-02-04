@@ -31,14 +31,18 @@
 									</div>
 								</div>
 							</div>
-							<div class="col-md-3">
+						<!-- 	<div class="col-md-3">
 								<div class="task-header">
 									<div class="form-group">
-										<label for="" class="form-label">Subcentro de costo</label>
-										<p>{{$datacompensado[0]->namecentrocosto}}</p>
+										<label for="" class="form-label">Tipo de recibo</label>
+										<select class="form-control form-control-sm" name="tipo_recibo" id="tipo_recibo">
+											<option value="0">Ninguno</option>
+											<option value="1">Recibo de caja diario</option>
+											<option value="2">Recibo de caja de cartera</option>
+										</select>
 									</div>
 								</div>
-							</div>
+							</div> -->
 
 							<div class="col-md-4">
 								<div class="task-header">
@@ -72,8 +76,7 @@
 								<div class="col-md-3">
 									<div class="task-header">
 										<div class="form-group">
-											<label for="" class="form-label">Facturas del cliente</label>
-											<input type="hidden" id="centrocosto" name="centrocosto" value="{{$datacompensado[0]->subcentrocostos_id }}" data-id="{{$datacompensado[0]->subcentrocostos_id }}">
+											<label for="" class="form-label">Facturas del cliente</label>											
 											<input type="hidden" id="cliente" name="cliente" value="{{$datacompensado[0]->third_id}}" data-id="{{$datacompensado[0]->third_id}}">
 											<input type="hidden" id="porc_descuento" name="porc_descuento" value="{{$datacompensado[0]->porc_descuento}}" data-id="{{$datacompensado[0]->porc_descuento}}">
 											<select class="form-control form-control-sm select2Prod" name="producto" id="producto" required="">

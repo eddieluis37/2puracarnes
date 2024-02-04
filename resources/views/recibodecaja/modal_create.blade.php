@@ -16,12 +16,11 @@
 			<div class="col-md-6">
 				<div class="task-header">
 					<div class="form-group">
-						<label for="" class="form-label">Sub centro de costo</label>
-						<select class="form-control form-control-sm input" name="subcentrodecosto" id="subcentrodecosto" required>
-							<option value="">Seleccione subCentroDeCosto</option>
-							@foreach($subcentrodecostos as $subcentrodecosto)
-							<option value="{{$subcentrodecosto->id}}" {{ $subcentrodecosto->id == 0 ? 'selected' : '' }}>{{$subcentrodecosto->name}}</option>
-							@endforeach
+						<label for="" class="form-label">Tipo de recibo</label>
+						<select class="form-control form-control-sm" name="tipo" id="tipo">
+							<option value="">Seleccione una opción</option>							
+							<option value="1">INGRESO / CAJA DIARIO</option>
+							<option value="2">EGRESO / CAJA DE CARTERA</option>
 						</select>
 						<span class="text-danger error-message"></span>
 					</div>
@@ -62,7 +61,7 @@
 
 			<div class="col-md-6">
 				<div class="task-header">
-					
+
 				</div>
 			</div>
 

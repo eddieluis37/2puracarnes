@@ -42,9 +42,9 @@ class recibodecajaController extends Controller
         $clientes = Third::Where('cliente', 1)->get();
         $formapagos = Formapago::whereIn('tipoformapago', ['TARJETA', 'OTROS'])->get();
         $domiciliarios = Third::Where('domiciliario', 1)->get();
-        $subcentrodecostos = Subcentrocosto::get();
+   /*      $subcentrodecostos = Subcentrocosto::get(); */
 
-        return view('recibodecaja.index', compact('ventas', 'centros', 'clientes', 'formapagos', 'domiciliarios', 'subcentrodecostos'));
+        return view('recibodecaja.index', compact('ventas', 'centros', 'clientes', 'formapagos', 'domiciliarios'));
     }
 
     /**
@@ -58,8 +58,8 @@ class recibodecajaController extends Controller
         $data = DB::table('recibodecajas as rc')
             /*   ->join('categories as cat', 'rc.categoria_id', '=', 'cat.id') */
             ->join('thirds as tird', 'rc.third_id', '=', 'tird.id')
-            ->join('subcentrocostos as centro', 'rc.subcentrocostos_id', '=', 'centro.id')
-            ->select('rc.*', 'tird.name as namethird', 'centro.name as namecentrocosto')
+            /* ->join('subcentrocostos as centro', 'rc.subcentrocostos_id', '=', 'centro.id') */
+            ->select('rc.*', 'tird.name as namethird')
             /*  ->where('rc.status', 1) */
             ->get();
 
@@ -141,15 +141,14 @@ class recibodecajaController extends Controller
                 'recibocajaId' => 'required',
                 'cliente' => 'required',
                 'formapagos' => 'required',
-
-                'subcentrodecosto' => 'required',
+                'tipo' => 'required',
 
             ];
             $messages = [
                 'recibocajaId.required' => 'El recibocajaId es requerido',
                 'cliente.required' => 'El cliente es requerido',
                 'formapagos.required' => 'Forma pago es requerido',
-                'subcentrodecosto.required' => 'El subcentro de costo es requerido',
+                'tipo.required' => 'El tipo es requerido',
             ];
 
             $validator = Validator::make($request->all(), $rules, $messages);
@@ -177,7 +176,7 @@ class recibodecajaController extends Controller
                 $recibo->user_id = $id_user;
                 $recibo->third_id = $request->cliente;
                 $recibo->sale_id = 1;
-                $recibo->subcentrocostos_id = $request->subcentrodecosto;
+                $recibo->tipo = $request->tipo;
                 $recibo->formapagos_id = $request->formapagos;
                 $recibo->valor_recibido = 0;
 
@@ -213,7 +212,7 @@ class recibodecajaController extends Controller
                 $getReg = Recibodecaja::firstWhere('id', $request->recibocajaId);
                 $getReg->third_id = $request->vendedor;
 
-                $getReg->subcentrocostos_id = $request->subcentrodecosto;
+                $getReg->tipo = $request->tipo;
 
                 $getReg->save();
 
@@ -249,8 +248,8 @@ class recibodecajaController extends Controller
 
         $datacompensado = DB::table('recibodecajas as rc')
             ->join('thirds as tird', 'rc.third_id', '=', 'tird.id')
-            ->join('subcentrocostos as centro', 'rc.subcentrocostos_id', '=', 'centro.id')
-            ->select('rc.*', 'tird.name as namethird', 'centro.name as namecentrocosto', 'tird.porc_descuento', 'tird.identification')
+          /*   ->join('subcentrocostos as centro', 'rc.subcentrocostos_id', '=', 'centro.id') */
+            ->select('rc.*', 'tird.name as namethird', 'tird.porc_descuento', 'tird.identification')
             ->where('rc.id', $id)
             ->get();
 

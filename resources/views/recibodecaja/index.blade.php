@@ -10,7 +10,7 @@
 				</h4>
 				<ul class="tabs tab-pills">
 					<li>
-						<a href="javascript:void(0)" onclick="showModalcreate()" class="tabmenu bg-dark" data-toggle="modal" data-target="#modal-create-compensado" title="Nueva venta por domicilio">Nuevo recibo</a>
+						<a href="javascript:void(0)" onclick="showModalcreate()" class="tabmenu bg-dark" data-toggle="modal" data-target="#modal-create-recibodecaja" title="Nueva venta por domicilio">Nuevo recibo</a>
 						<!-- <a href="javascript:void(0)" class="tabmenu bg-dark ml-2" id="storeVentaMostradorBtn"  title="Nueva venta por mostrador">Mostrador</a> -->
 					</li>
 				</ul>
@@ -23,7 +23,7 @@
 							<tr>
 								<th class="table-th text-white">#</th>								
 								<th class="table-th text-white">CLIENTE</th>
-								<th class="table-th text-white ">SUBCENTRO</th>
+								<th class="table-th text-white ">TIPO</th>
 								<th class="table-th text-white">ESTADO</th>
 								<th class="table-th text-white">VALOR.F</th>
 								<th class="table-th text-white">DIA.HORA</th>
@@ -40,7 +40,7 @@
 		</div>
 	</div>
 	<!-- modal -->
-	<div class="modal fade" id="modal-create-compensado" aria-hidden="true" data-keyboard="false" data-backdrop="static" >
+	<div class="modal fade" id="modal-create-recibodecaja" aria-hidden="true" data-keyboard="false" data-backdrop="static" >
 		<div class="modal-dialog modal-xl" role="document">
 			<div class="modal-content bg-default">
 				<fieldset id="contentDisable">

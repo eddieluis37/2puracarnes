@@ -28,22 +28,48 @@ $(document).ready(function () {
             },
             columns: [
                 { data: "id", name: "id" },
-                { data: "namethird", name: "namethird" },
-                { data: "namecentrocosto", name: "namecentrocosto" },
+                /*  { data: "namethird", name: "namethird" }, */
+                {
+                    data: "namethird",
+                    name: "namethird",
+                    render: function (data) {
+                        if (data.length > 15) {
+                            return data.substring(0, 7) + "...";
+                        } else {
+                            return data;
+                        }
+                    },
+                },
+                {
+                    data: "tipo",
+                    name: "tipo",
+                    render: function (data) {
+                        if (data === "1") {
+                            return '<span title="Recibo de caja diario" style="color: white; background-color: green; border-radius: 5px; padding: 5px; line-height: 1; font-size: 11px;">RD</span>';
+                        } else if (data === "2") {
+                            return '<span title="Recibo de caja de cartera" style="color: white; background-color: blue; border-radius: 5px; padding: 5px; line-height: 1; font-size: 11px;">RC</span>';
+                        } else {
+                            return "";
+                        }
+                    },
+                },
                 { data: "status", name: "status" },
                 {
-                    data: 'total_valor_a_pagar',
-                    name: 'total_valor_a_pagar',
-                    render: function(data) {
-                        return "$ " + parseFloat(data).toLocaleString(undefined, {
-                            minimumFractionDigits: 0,
-                            maximumFractionDigits: 0
-                        });
-                    }
-                },                      
+                    data: "total_valor_a_pagar",
+                    name: "total_valor_a_pagar",
+                    render: function (data) {
+                        return (
+                            "$ " +
+                            parseFloat(data).toLocaleString(undefined, {
+                                minimumFractionDigits: 0,
+                                maximumFractionDigits: 0,
+                            })
+                        );
+                    },
+                },
                 { data: "date", name: "date" },
                 { data: "consecutivo", name: "consecutivo" },
-             /*    { data: "resolucion", name: "resolucion" }, */
+                /*    { data: "resolucion", name: "resolucion" }, */
                 { data: "action", name: "action" },
             ],
             order: [[0, "DESC"]],
@@ -139,7 +165,7 @@ const showData = (resp) => {
     selectCentrocosto.value = register.centrocosto_id;
     /*    inputFactura.value = register.factura; */
     const modal = new bootstrap.Modal(
-        document.getElementById("modal-create-compensado")
+        document.getElementById("modal-create-recibodecaja")
     );
     modal.show();
 };
@@ -166,4 +192,3 @@ const downCompensado = (id) => {
         }
     });
 };
-
