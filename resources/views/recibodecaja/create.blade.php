@@ -161,7 +161,7 @@
 			</div>
 		</div>
 
-		<div class="widget-content mt-3">
+		<!-- <div class="widget-content mt-3">
 			<div class="card">
 				<div class="card-body">
 					<div class="table-responsive mt-3">
@@ -187,7 +187,7 @@
 							<tbody id="tbodyDetail">
 								@foreach($detalleVenta as $proddetail)
 								<tr>
-									<!--td>{{$proddetail->id}}</td-->
+									td>{{$proddetail->id}}</td
 
 									<td>{{$proddetail->nameprod}}</td>
 									<td>{{ number_format($proddetail->quantity, 2, ',', '.')}} KG</td>
@@ -238,7 +238,7 @@
 							<form method="GET" action="registrar_pago/{{$id}}">
 								@csrf
 								<div class="text-center mt-1">
-									<!-- <button id="cargarInventarioBtn" type="submit" class="btn btn-success">Pagar</button> -->
+									<button id="cargarInventarioBtn" type="submit" class="btn btn-success">Pagar</button>
 								</div>
 							</form>
 						</div>
@@ -246,7 +246,7 @@
 				</div>
 			</div>
 		</div>
-	</div>
+	</div> -->
 </div>
 @endsection
 @section('script')
