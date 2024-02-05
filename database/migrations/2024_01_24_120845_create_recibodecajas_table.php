@@ -25,7 +25,9 @@ class CreateRecibodecajasTable extends Migration
             $table->foreign('subcentrocostos_id')->references('id')->on('subcentrocostos');  */
             $table->unsignedBigInteger('formapagos_id')->nullable();
             $table->foreign('formapagos_id')->references('id')->on('formapagos'); 
-            $table->decimal('valor_recibido',12,0)->default(0)->nullable();           
+            $table->decimal('saldo',12,0)->default(0)->nullable();           
+            $table->decimal('abono',12,0)->default(0)->nullable(); 
+            $table->decimal('nuevo_saldo',12,0)->default(0)->nullable();            
 
             $table->date('fecha_elaboracion')->nullable();  
             $table->date('fecha_cierre')->nullable();    
@@ -34,8 +36,9 @@ class CreateRecibodecajasTable extends Migration
           
  
             $table->enum('status',['0','1','2','3','4','5'])->default('0');
-            $table->enum('tipo',['0','1','2','3'])->default('0');    // 0 = Ninguno , 1 = RD - 1 Ingresos-Recibo de caja diario , RC - 2 Egresos-Recibo de caja de cartera
+            $table->enum('tipo',['0','1','2','3'])->default('0');    // 0 = Ninguno , 1 = RD - 1 Ingresos-Recibo de caja diario , RC - 2 Ingreso-Recibo de caja de cartera
             $table->enum('realizar_un',['Abono a deuda','Anticipo','Avanzado (Impuestos, descuentos, ajustes)'])->default('Abono a deuda','Anticipo');  
+            $table->text('observations')->nullable(); // campo text area 
             
             $table->timestamps();
         });

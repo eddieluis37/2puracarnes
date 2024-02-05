@@ -24,8 +24,8 @@ const regDetail = document.querySelector("#regdetailId");
 const tableFoot = document.querySelector("#tabletfoot");
 const cargarInventarioBtn = document.getElementById("cargarInventarioBtn");
 
-var centrocosto = document.getElementById("centrocosto").value;
-console.log("centro " + centrocosto);
+/* var centrocosto = document.getElementById("centrocosto").value;
+console.log("centro " + centrocosto); */
 
 var cliente = document.getElementById("cliente").value;
 console.log("cliente " + cliente);
@@ -67,7 +67,7 @@ function actualizarValoresProducto(productId) {
     });
 }
 
-tbodyTable.addEventListener("click", (e) => {
+/* tbodyTable.addEventListener("click", (e) => {
     e.preventDefault();
     let element = e.target;
     if (element.name === "btnDown") {
@@ -113,7 +113,7 @@ tbodyTable.addEventListener("click", (e) => {
             $(".select2Prod").val(editReg.product_id).trigger("change");
         });
     }
-});
+}); */
 
 btnAdd.addEventListener("click", (e) => {
     e.preventDefault();
@@ -255,47 +255,51 @@ const showData = (data) => {
 };
 
 
-price.addEventListener("change", function () {
-    const enteredValue = formatMoneyNumber(price.value);
+abono.addEventListener("change", function () {
+    const enteredValue = formatMoneyNumber(abono.value);
     console.log("Entered value: " + enteredValue);
-    price.value = formatCantidadSinCero(enteredValue);
+    abono.value = formatCantidadSinCero(enteredValue);
 });
 
-total_bruto.addEventListener("change", function () {
+/* total_bruto.addEventListener("change", function () {
     const enteredValue = formatMoneyNumber(total_bruto.value);
     console.log("Entered value: " + enteredValue);
     total_bruto.value = formatCantidadSinCero(enteredValue);
+}); */
+
+/* const totalBrutoInput = document.getElementById('total_bruto');
+
+// Add an event listener for the 'input' event
+totalBrutoInput.addEventListener('input', function() {
+  // Get the value of the input field
+  const totalBruto = this.value;
+
+  // Check if the value is a number
+  if (isNaN(totalBruto)) {
+    // If the value is not a number, display an error message
+    alert('Please enter a valid number.');
+  } else {
+    // If the value is a number, format it as currency
+    const formattedTotalBruto = formatCantidadSinCero(total_bruto.value);
+
+    // Update the display
+    totalBrutoInput.value = formattedTotalBruto;
+  }
+}); */
+
+const totalBrutoInput = document.getElementById('total_bruto');
+const abonoInput = document.getElementById('abono');
+const nuevoSaldoInput = document.getElementById('nuevo_saldo');
+
+// Add an event listener for the 'input' event on the price input
+abonoInput.addEventListener('input', function() {
+  // Get the values of the total_bruto and abono inputs
+  const totalBruto = parseFloat(totalBrutoInput.value.replace(/[^0-9.]/g, ''));
+  const abono = parseFloat(abonoInput.value.replace(/[^0-9.]/g, ''));
+
+  // Calculate the nuevo_saldo
+  const nuevoSaldo = totalBruto - abono;
+
+  // Update the display
+  nuevoSaldoInput.value = nuevoSaldo;
 });
-
-
-quantity.addEventListener("change", function () {
-    const enteredValue = formatkg(quantity.value);
-    console.log("Entered value: " + enteredValue);
-    quantity.value = enteredValue;
-});
-
-//const selectCategoria = document.querySelector("#categoria");
-//const selectProducto = document.getElementById("producto");
-/*selectCategoria.addEventListener("change", function() {
-    const selectedValue = this.value;
-    console.log("Selected value:", selectedValue);
-
-    const dataform = new FormData();
-    dataform.append("categoriaId", Number(selectedValue));
-    sendData("/getproductos",dataform,token).then((result) => {
-        console.log(result);
-        let prod = result.products;
-        console.log(prod);
-        //showDataTable(result);
-        selectProducto.innerHTML = "";
-        selectProducto.innerHTML += `<option value="">Seleccione el producto</option>`;
-        // Create and append options to the select element
-        prod.forEach(option => {
-        const optionElement = document.createElement("option");
-        optionElement.value = option.id;
-        optionElement.text = option.name;
-        selectProducto.appendChild(optionElement);
-        });
-    });
-
-});*/

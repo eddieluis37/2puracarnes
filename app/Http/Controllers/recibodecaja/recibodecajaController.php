@@ -178,7 +178,7 @@ class recibodecajaController extends Controller
                 $recibo->sale_id = 1;
                 $recibo->tipo = $request->tipo;
                 $recibo->formapagos_id = $request->formapagos;
-                $recibo->valor_recibido = 0;
+                $recibo->abono = 0;
 
                 $recibo->fecha_elaboracion = $request->valor_recibo;
                 $recibo->fecha_cierre = $dateNextMonday;

@@ -19,8 +19,8 @@
 						<label for="" class="form-label">Tipo de recibo</label>
 						<select class="form-control form-control-sm" name="tipo" id="tipo">
 							<option value="">Seleccione una opción</option>							
-							<option value="1">INGRESO / CAJA DIARIO</option>
-							<option value="2">EGRESO / CAJA DE CARTERA</option>
+							<option value="1">DIARIO</option>
+							<option value="2">CARTERA</option>
 						</select>
 						<span class="text-danger error-message"></span>
 					</div>

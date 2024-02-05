@@ -56,7 +56,7 @@ class DatabaseSeeder extends Seeder
     $this->call(ListaprecioSeeder::class);
     $this->call(ListapreciodetalleSeeder::class);
    // $this->call(NotacreditoSeeder::class);
-   $this->call(RecibodecajaSeeder::class);
+   //$this->call(RecibodecajaSeeder::class);
    $this->call(Cuentas_por_cobrarSeeder::class);
   }
 }
