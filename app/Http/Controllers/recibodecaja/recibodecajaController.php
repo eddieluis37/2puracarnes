@@ -82,28 +82,31 @@ class recibodecajaController extends Controller
             ->addColumn('action', function ($data) {
                 $currentDateTime = Carbon::now();
 
-                if (Carbon::parse($currentDateTime->format('Y-m-d'))->gt(Carbon::parse($data->fecha_cierre))) {
+                if ($data->status == 1) {
                     $btn = '
-                         <div class="text-center">
-                         
-                         <a href="sale/showFactura/' . $data->id . '" class="btn btn-dark" title="VerFactura" target="_blank">
+                         <div class="text-center">                         
+                         <a href="recibodecaja/showRecibodecaja/' . $data->id . '" class="btn btn-dark" title="Recibodecaja" target="_blank">
                          <i class="far fa-file-pdf"></i>
                          </a>				
                          <button class="btn btn-dark" title="Borrar venta" disabled>
                              <i class="fas fa-trash"></i>
                          </button>
+                         <a href="javascript:void(0)" data-toggle="tooltip"  data-id="'. $data->id.'" data-original-title="Delete" class="btn btn-danger btn-sm deleteBook">E</a>
                          </div>
                          ';
-                } elseif (Carbon::parse($currentDateTime->format('Y-m-d'))->lt(Carbon::parse($data->fecha_cierre))) {
+                } elseif ($data->status == 0) {
                     $btn = '
                          <div class="text-center">
                          <a href="recibodecaja/create/' . $data->id . '" class="btn btn-dark" title="Detalles">
                              <i class="fas fa-directions"></i>
                          </a>
                         
-                         <a href="sale/showFactura/' . $data->id . '" class="btn btn-dark" title="VerFacturaPendiente" target="_blank">
+                         <a href="recibodecaja/showRecibodecaja/' . $data->id . '" class="btn btn-dark" title="RecibodecajaPendiente" target="_blank">
                          <i class="far fa-file-pdf"></i>
                          </a>
+                         <button class="btn btn-dark" title="Borrar venta">
+                         <i class="fas fa-trash"></i>
+                         </button>
                        
                          </div>
                          ';
@@ -111,7 +114,7 @@ class recibodecajaController extends Controller
                 } else {
                     $btn = '
                          <div class="text-center">
-                         <a href="sale/showFactura/' . $data->id . '" class="btn btn-dark" title="VerFacturaCerrada" target="_blank">
+                         <a href="recibodecaja/showRecibodecaja/' . $data->id . '" class="btn btn-dark" title="RecibodecajaCerrado" target="_blank">
                          <i class="far fa-file-pdf"></i>
                          </a>
                          <button class="btn btn-dark" title="Borra la venta" disabled>
@@ -357,13 +360,13 @@ class recibodecajaController extends Controller
             $rules = [
                 'recibodecajaId' => 'required',
                 'producto' => 'required',
-                'abono' => 'required'
+                'abono' => 'required',
 
             ];
             $messages = [
                 'recibodecajaId.required' => 'El reciboId es requerido',
                 'producto.required' => 'La factura es requerida',
-                'abono.required' => 'El abono es requerido'
+                'abono.required' => 'El abono es requerido',
             ];
 
             $validator = Validator::make($request->all(), $rules, $messages);
@@ -380,22 +383,21 @@ class recibodecajaController extends Controller
             $saldo = str_replace('.', '', $request->get('saldo'));
             $abono = str_replace('.', '', $request->get('abono'));
             $nuevo_saldo = str_replace('.', '', $request->get('nuevo_saldo'));
-          //  dd($saldo, $abono, $nuevo_saldo);
+            //  dd($saldo, $abono, $nuevo_saldo);
 
             if ($getReg == null) {
                 $detail = new Recibodecaja();
                 $detail->sale_id = $request->ventaId;
-                $detail->product_id = $request->producto;
-           ;
+                $detail->product_id = $request->producto;;
 
                 $detail->save();
             } else {
-                $updateReg = Recibodecaja::firstWhere('id', $request->recibodecajaId);                          
+                $updateReg = Recibodecaja::firstWhere('id', $request->recibodecajaId);
                 $updateReg->saldo = $saldo;
                 $updateReg->abono =  $abono;
                 $updateReg->nuevo_saldo = $nuevo_saldo;
                 $updateReg->status = '1';
-          
+
                 $updateReg->save();
             }
 
@@ -408,7 +410,7 @@ class recibodecajaController extends Controller
                 'status' => 1,
                 'message' => "Agregado correctamente",
                 "registroId" => $updateReg->id,
-              /*   'redirect' => route('sale.index') */
+                /*   'redirect' => route('sale.index') */
                 /*       'array' => $arraydetail,
                 'arrayTotales' => $arrayTotales */
             ]);

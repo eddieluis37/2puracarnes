@@ -133,7 +133,7 @@
 									</div>
 								</div>
 
-								 	<button type="submit" id="btnAddReciboCaja" class="btn btn-primary">Aceptar</button> 
+								<!--  	<button type="submit" id="btnAddReciboCaja" class="btn btn-primary">Aceptar</button>  -->
 
 							</div>
 						</form>
