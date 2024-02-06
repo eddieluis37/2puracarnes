@@ -523,7 +523,7 @@ class compensadoController extends Controller
 
     public function cargarInventarioMasivo()
     {
-        for ($compensadoId = 606; $compensadoId <= 615; $compensadoId++) {
+        for ($compensadoId = 606; $compensadoId <= 648; $compensadoId++) {
             $currentDateTime = Carbon::now();
             $formattedDate = $currentDateTime->format('Y-m-d');
 
@@ -563,6 +563,7 @@ class compensadoController extends Controller
             foreach ($centroCostoProducts as $centroCostoProduct) {
                 $accumulatedWeight = Compensadores_detail::where('compensadores_id', '=', $compensadoId)
                     ->where('products_id', $centroCostoProduct->products_id)
+                    ->where('status', 1)
                     ->sum('peso');
 
                 // Almacenar el peso acumulado en la tabla temporal
