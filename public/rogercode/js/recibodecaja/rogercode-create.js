@@ -40,7 +40,7 @@ $(".select2Prod").select2({
 $(document).ready(function () {
     $("#producto").change(function () {
         var productId = $(this).val();
-        // Llama a una función para actualizar los valores en función del producto seleccionado     
+        // Llama a una función para actualizar los valores en función del producto seleccionado
         actualizarValoresProducto(productId);
     });
 });
@@ -56,9 +56,11 @@ function actualizarValoresProducto(productId) {
         },
         success: function (response) {
             // Actualiza los valores en los campos de entrada del centro de costo
-            $("#price").val(response.precio);                  
+            $("#price").val(response.precio);
             $("#porc_otro_impuesto").val(response.otro_impuesto);
-            $("#total_bruto").val(response.total_bruto);          
+            /*       $("#saldo_visual").val(formatCantidadSinCero(response.total_bruto)); */
+            $("#saldo").val(formatCantidadSinCero(response.total_bruto));
+            calculaSaldo();
         },
         error: function (xhr, status, error) {
             // Maneja el error si la solicitud AJAX falla
@@ -66,54 +68,6 @@ function actualizarValoresProducto(productId) {
         },
     });
 }
-
-/* tbodyTable.addEventListener("click", (e) => {
-    e.preventDefault();
-    let element = e.target;
-    if (element.name === "btnDown") {
-        console.log(element);
-        swal({
-            title: "CONFIRMAR",
-            text: "¿CONFIRMAS ELIMINAR EL REGISTRO?",
-            type: "warning",
-            showCancelButton: true,
-            cancelButtonText: "Cerrar",
-            cancelButtonColor: "#fff",
-            confirmButtonColor: "#3B3F5C",
-            confirmButtonText: "Aceptar",
-        }).then(function (result) {
-            if (result.value) {
-                let id = element.getAttribute("data-id");
-                console.log(id);
-                const dataform = new FormData();
-                dataform.append("id", Number(id));
-                dataform.append("recibocajaId", Number(venta_id.value));
-                sendData("/ventadown", dataform, token).then((result) => {
-                    console.log(result);
-                    showData(result);
-                });
-            }
-        });
-    }
-
-    if (element.name === "btnEdit") {
-        console.log(element);
-        let id = element.getAttribute("data-id");
-        console.log(id);
-        const dataform = new FormData();
-        dataform.append("id", Number(id));
-        sendData("/saleById", dataform, token).then((result) => {
-            console.log(result);
-            let editReg = result.reg;
-            console.log(editReg);
-            regDetail.value = editReg.id;
-            price.value = formatCantidadSinCero(editReg.price);
-            quantity.value = formatCantidad(editReg.quantity);
-         
-            $(".select2Prod").val(editReg.product_id).trigger("change");
-        });
-    }
-}); */
 
 btnAdd.addEventListener("click", (e) => {
     e.preventDefault();
@@ -148,7 +102,9 @@ const showData = (data) => {
                 <td>${formatCantidad(element.porc_iva)}%</td> 
                 <td>$ ${formatCantidadSinCero(element.iva)}</td> 
                 <td>${element.porc_otro_impuesto}%</td>     
-                <td>$ ${formatCantidadSinCero(element.otro_impuesto)}</td>             
+                <td>$ ${formatCantidadSinCero(
+                    element.otro_impuesto
+                )}</td>             
                 <td>$ ${formatCantidadSinCero(element.total)}</td>        
                 <td class="text-center">
                     <button class="btn btn-dark fas fa-edit" data-id="${
@@ -173,9 +129,7 @@ const showData = (data) => {
             <td></td>    
             <td></td>
             <td></td>                               
-            <th>$ ${formatCantidadSinCero(
-                arrayTotales.TotalBruto
-            )}</th> 
+            <th>$ ${formatCantidadSinCero(arrayTotales.TotalBruto)}</th> 
             <td></td>
             <td></td>
             <td></td>
@@ -201,9 +155,7 @@ const showData = (data) => {
         });
     }
 
-    
-
-  /*   // Evento click del botón "facturarBtn"
+    /*   // Evento click del botón "facturarBtn"
     tableFoot.addEventListener("click", (e) => {
         e.preventDefault();
         let element = e.target;
@@ -250,24 +202,22 @@ const showData = (data) => {
                 });
         }
     }); */
-
-    
 };
-
 
 abono.addEventListener("change", function () {
     const enteredValue = formatMoneyNumber(abono.value);
     console.log("Entered value: " + enteredValue);
     abono.value = formatCantidadSinCero(enteredValue);
+    calculaSaldo();
 });
 
-/* total_bruto.addEventListener("change", function () {
-    const enteredValue = formatMoneyNumber(total_bruto.value);
+nuevo_saldo.addEventListener("change", function () {
+    const enteredValue = formatMoneyNumber(nuevo_saldo.value);
     console.log("Entered value: " + enteredValue);
-    total_bruto.value = formatCantidadSinCero(enteredValue);
-}); */
+    nuevo_saldo.value = formatCantidadSinCero(enteredValue);
+});
 
-/* const totalBrutoInput = document.getElementById('total_bruto');
+/* const totalSaldoInput = document.getElementById('total_bruto');
 
 // Add an event listener for the 'input' event
 totalBrutoInput.addEventListener('input', function() {
@@ -287,19 +237,41 @@ totalBrutoInput.addEventListener('input', function() {
   }
 }); */
 
-const totalBrutoInput = document.getElementById('total_bruto');
-const abonoInput = document.getElementById('abono');
-const nuevoSaldoInput = document.getElementById('nuevo_saldo');
+/* const totalSaldoInput = document.getElementById("saldo");
+console.log(totalSaldoInput);
+const abonoInput = document.getElementById("abono");
+const nuevoSaldoInput = document.getElementById("nuevo_saldo");
 
 // Add an event listener for the 'input' event on the price input
-abonoInput.addEventListener('input', function() {
-  // Get the values of the total_bruto and abono inputs
-  const totalBruto = parseFloat(totalBrutoInput.value.replace(/[^0-9.]/g, ''));
-  const abono = parseFloat(abonoInput.value.replace(/[^0-9.]/g, ''));
+abonoInput.addEventListener("input", function () {
+    // Get the values of the total_bruto and abono inputs
+    const totalSaldo = parseFloat(
+        totalSaldoInput.value.replace(/[^0-9.]/g, "")
+    );
+    const abono = parseFloat(abonoInput.value.replace(/[^0-9.]/g, ""));
+    console.log(totalSaldo);
+    // Calculate the nuevo_saldo
+    const nuevoSaldo = totalSaldo - abono;
 
-  // Calculate the nuevo_saldo
-  const nuevoSaldo = totalBruto - abono;
+    // Update the display
+    nuevoSaldoInput.value = formatCantidadSinCero(nuevoSaldo);
+}); */
 
-  // Update the display
-  nuevoSaldoInput.value = nuevoSaldo;
-});
+function calculaSaldo() {
+    let saldo = $("#saldo").val();
+    console.log(saldo);
+    saldo = parseFloat(saldo.replace(/[.]/g, ""));
+    let abono = $("#abono").val();
+    abono = parseFloat(abono.replace(/[.]/g, ""));
+    const nuevoSaldoInput = document.getElementById("nuevo_saldo");
+    if (isNaN(saldo) || isNaN(abono)) {
+        // Handle invalid input
+    } else {
+        console.log(saldo);
+        console.log(abono);
+        // Calculate the nuevo_saldo
+        let nuevoSaldo = saldo - abono;
+        // Update the display
+        nuevoSaldoInput.value = formatCantidadSinCero(nuevoSaldo);
+    }
+}

@@ -96,7 +96,7 @@
 									<label for="" class="form-label">Saldo</label>
 									<div class="input-group flex-nowrap">
 										<span class="input-group-text" id="addon-wrapping">$</span>
-										<input type="text" id="total_bruto" name="total_bruto" class="form-control input" readonly placeholder="">
+										<input type="text" id="saldo" name="saldo" class="form-control input" readonly placeholder="">
 									</div>
 								</div>
 
