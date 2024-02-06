@@ -42,7 +42,7 @@ class recibodecajaController extends Controller
         $clientes = Third::Where('cliente', 1)->get();
         $formapagos = Formapago::whereIn('tipoformapago', ['TARJETA', 'OTROS'])->get();
         $domiciliarios = Third::Where('domiciliario', 1)->get();
-   /*      $subcentrodecostos = Subcentrocosto::get(); */
+        /*      $subcentrodecostos = Subcentrocosto::get(); */
 
         return view('recibodecaja.index', compact('ventas', 'centros', 'clientes', 'formapagos', 'domiciliarios'));
     }
@@ -248,7 +248,7 @@ class recibodecajaController extends Controller
 
         $datacompensado = DB::table('recibodecajas as rc')
             ->join('thirds as tird', 'rc.third_id', '=', 'tird.id')
-          /*   ->join('subcentrocostos as centro', 'rc.subcentrocostos_id', '=', 'centro.id') */
+            /*   ->join('subcentrocostos as centro', 'rc.subcentrocostos_id', '=', 'centro.id') */
             ->select('rc.*', 'tird.name as namethird', 'tird.porc_descuento', 'tird.identification')
             ->where('rc.id', $id)
             ->get();
@@ -351,20 +351,19 @@ class recibodecajaController extends Controller
         }
     }
 
-    public function savedetail(Request $request)
+    public function gurdarrecibodecaja(Request $request)
     {
         try {
             $rules = [
-                'ventaId' => 'required',
+                'recibodecajaId' => 'required',
                 'producto' => 'required',
-                'price' => 'required',
-                'quantity' => 'required',
+                'abono' => 'required'
+
             ];
             $messages = [
-                'ventaId.required' => 'El compensado es requerido',
-                'producto.required' => 'El producto es requerido',
-                'price.required' => 'El precio de compra es requerido',
-                'quantity.required' => 'El peso es requerido',
+                'recibodecajaId.required' => 'El reciboId es requerido',
+                'producto.required' => 'La factura es requerida',
+                'abono.required' => 'El abono es requerido'
             ];
 
             $validator = Validator::make($request->all(), $rules, $messages);
@@ -375,88 +374,43 @@ class recibodecajaController extends Controller
                 ], 422);
             }
 
-            $formatCantidad = new metodosrogercodeController();
 
-            $formatPrVenta = $formatCantidad->MoneyToNumber($request->price);
-            $formatPesoKg = $formatCantidad->MoneyToNumber($request->quantity);
-
-            $getReg = Recibodecaja::firstWhere('id', $request->regdetailId);
-
-            $porcDescuento = $request->get('porc_desc');
-            $precioUnitarioBruto = ($formatPrVenta * $formatPesoKg);
-            $descuento = $precioUnitarioBruto * ($porcDescuento / 100);
-            $porc_descuento = $request->get('porc_descuento');
-
-            $descuentoCliente = $precioUnitarioBruto * ($porc_descuento / 100);
-            $totalDescuento = $descuento + $descuentoCliente;
-
-            $precioUnitarioBrutoConDesc = $precioUnitarioBruto - $totalDescuento;
-            $porcIva = $request->get('porc_iva');
-            $porcOtroImpuesto = $request->get('porc_otro_impuesto');
-
-            $Impuestos = $porcIva + $request->porc_otro_impuesto;
-            $TotalImpuestos = $precioUnitarioBrutoConDesc * ($Impuestos / 100);
-            $valorAPagar = $TotalImpuestos + $precioUnitarioBrutoConDesc;
-
-            $iva = $precioUnitarioBrutoConDesc * ($porcIva / 100);
-            $otroImpuesto = $precioUnitarioBrutoConDesc * ($porcOtroImpuesto / 100);
-
-            $totalOtrosImpuestos =  $precioUnitarioBrutoConDesc * ($request->porc_otro_impuesto / 100);
-
-            $valorApagar = $precioUnitarioBrutoConDesc + $totalOtrosImpuestos;
+            $getReg = Recibodecaja::firstWhere('id', $request->recibodecajaId);
+            //  $recibodecajaId = $request->get('recibodecajaId');
+            $saldo = str_replace('.', '', $request->get('saldo'));
+            $abono = str_replace('.', '', $request->get('abono'));
+            $nuevo_saldo = str_replace('.', '', $request->get('nuevo_saldo'));
+          //  dd($saldo, $abono, $nuevo_saldo);
 
             if ($getReg == null) {
                 $detail = new Recibodecaja();
                 $detail->sale_id = $request->ventaId;
                 $detail->product_id = $request->producto;
-                $detail->price = $formatPrVenta;
-                $detail->quantity = $formatPesoKg;
-                $detail->porc_desc = $porcDescuento;
-                $detail->descuento = $descuento;
-
-                $detail->descuento_cliente = $descuentoCliente;
-
-                $detail->porc_iva = $porcIva;
-                $detail->iva = $iva;
-                $detail->porc_otro_impuesto = $porcOtroImpuesto;
-                $detail->otro_impuesto = $otroImpuesto;
-
-                $detail->total_bruto = $precioUnitarioBrutoConDesc;
-
-                $detail->total = $valorAPagar;
+           ;
 
                 $detail->save();
             } else {
-                $updateReg = Recibodecaja::firstWhere('id', $request->regdetailId);
-                $detalleVenta = $this->getventasdetail($request->ventaId);
-                $ivaprod = $detalleVenta[0]->porc_iva;
-                $updateReg->product_id = $request->producto;
-                $updateReg->price = $formatPrVenta;
-                $updateReg->quantity = $formatPesoKg;
-                $updateReg->porc_desc = $porcDescuento;
-                $updateReg->descuento = $descuento;
-
-                $updateReg->descuento_cliente = $descuentoCliente;
-
-                $updateReg->iva = $iva;
-                $updateReg->porc_iva = $porcIva;
-                $updateReg->porc_otro_impuesto = $porcOtroImpuesto;
-                $updateReg->otro_impuesto = $otroImpuesto;
-                $updateReg->total_bruto = $precioUnitarioBrutoConDesc;
-                $updateReg->total = $valorAPagar;
+                $updateReg = Recibodecaja::firstWhere('id', $request->recibodecajaId);                          
+                $updateReg->saldo = $saldo;
+                $updateReg->abono =  $abono;
+                $updateReg->nuevo_saldo = $nuevo_saldo;
+                $updateReg->status = '1';
+          
                 $updateReg->save();
             }
 
 
-            $arraydetail = $this->getventasdetail($request->ventaId);
+            /*  $arraydetail = $this->getventasdetail($request->ventaId);
 
-            $arrayTotales = $this->sumTotales($request->ventaId);
+            $arrayTotales = $this->sumTotales($request->ventaId); */
 
             return response()->json([
                 'status' => 1,
                 'message' => "Agregado correctamente",
-                'array' => $arraydetail,
-                'arrayTotales' => $arrayTotales
+                "registroId" => $updateReg->id,
+              /*   'redirect' => route('sale.index') */
+                /*       'array' => $arraydetail,
+                'arrayTotales' => $arrayTotales */
             ]);
         } catch (\Throwable $th) {
             return response()->json([

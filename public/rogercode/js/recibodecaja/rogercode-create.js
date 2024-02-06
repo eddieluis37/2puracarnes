@@ -57,8 +57,7 @@ function actualizarValoresProducto(productId) {
         success: function (response) {
             // Actualiza los valores en los campos de entrada del centro de costo
             $("#price").val(response.precio);
-            $("#porc_otro_impuesto").val(response.otro_impuesto);
-            /*       $("#saldo_visual").val(formatCantidadSinCero(response.total_bruto)); */
+            $("#porc_otro_impuesto").val(response.otro_impuesto);          
             $("#saldo").val(formatCantidadSinCero(response.total_bruto));
             calculaSaldo();
         },
@@ -69,11 +68,12 @@ function actualizarValoresProducto(productId) {
     });
 }
 
-btnAdd.addEventListener("click", (e) => {
+/* btnAdd.addEventListener("click", (e) => {
     e.preventDefault();
     const dataform = new FormData(formDetail);
-    sendData("/salesavedetail", dataform, token).then((result) => {
+    sendData("/gurdarrecibodecaja", dataform, token).then((result) => {
         console.log(result);
+        window.location.href = `../../recibodecajas`;
         if (result.status === 1) {
             $("#producto").val("").trigger("change");
             formDetail.reset();
@@ -81,6 +81,37 @@ btnAdd.addEventListener("click", (e) => {
         }
         if (result.status === 0) {
             Swal("Error!", "Tiene campos vacios!", "error");
+        }
+    });
+}); */
+
+btnAdd.addEventListener("click", async (e) => {
+    e.preventDefault();
+    const dataform = new FormData(formDetail);
+    sendData("/gurdarrecibodecaja", dataform, token).then((resp) => {
+        console.log(resp);
+        if (resp.status == 1) {
+            formDetail.reset();          
+            successToastMessage(resp.message);
+            if (resp.registroId != 0) {
+                //for new register
+                window.location.href = `../../recibodecajas`;
+            } else {
+                refresh_table();
+            }
+        }
+        if (resp.status == 0) {
+            let errors = resp.errors;
+            console.log(errors);
+            $.each(errors, function (field, messages) {
+                console.log(field, messages);
+                let $input = $('[name="' + field + '"]');
+                let $errorContainer = $input
+                    .closest(".form-group")
+                    .find(".error-message");
+                $errorContainer.html(messages[0]);
+                $errorContainer.show();
+            });
         }
     });
 });

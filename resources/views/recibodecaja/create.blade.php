@@ -30,7 +30,7 @@
 										<input type="date" class="form-control" name="fecha" id="fecha" placeholder="Last name" aria-label="Last name" value="{{date('Y-m-d')}}">
 									</div>
 								</div>
-							</div>					
+							</div>
 
 							<div class="col-md-4">
 								<div class="task-header">
@@ -88,6 +88,7 @@
 												<option value="{{$p->id}}">{{$p->resolucion}} - {{$p->consecutivo}}</option>
 												@endforeach
 											</select>
+											<span class="text-danger error-message"></span>
 										</div>
 									</div>
 								</div>
@@ -105,7 +106,8 @@
 									<div class="input-group flex-nowrap">
 										<span class="input-group-text" id="addon-wrapping">$</span>
 										<input type="text" id="abono" name="abono" class="form-control input" placeholder="">
-									</div>
+										<span class="text-danger error-message"></span>
+									</div>									
 								</div>
 
 								<div class="col-md-3">
@@ -130,6 +132,8 @@
 										</div>
 									</div>
 								</div>
+
+								 	<button type="submit" id="btnAddReciboCaja" class="btn btn-primary">Aceptar</button> 
 
 							</div>
 						</form>
