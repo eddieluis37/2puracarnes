@@ -474,7 +474,8 @@ class compensadoController extends Controller
                 p.cost = d.pcompra
             WHERE d.compensadores_id = :compensadoresid
             AND b.centrocosto_id = :cencosid 
-            AND c.centrocosto_id = :cencosid2 ",
+            AND c.centrocosto_id = :cencosid2
+            AND d.status = 1 ",
             [
                 'compensadoresid' => $compensadoId,
                 'cencosid' => $centrocosto_id,
@@ -545,7 +546,8 @@ class compensadoController extends Controller
                 c.tipoinventario = 'cerrado'
             WHERE d.compensadores_id = :compensadoresid
             AND b.centrocosto_id = :cencosid 
-            AND c.centrocosto_id = :cencosid2 ",
+            AND c.centrocosto_id = :cencosid2
+            AND d.status = 1 ",
                 [
                     'compensadoresid' => $compensadoId,
                     'cencosid' => $centrocosto_id,
