@@ -25,10 +25,13 @@
 								<th class="table-th text-white">CLIENTE</th>
 								<th class="table-th text-white ">TIPO</th>
 								<th class="table-th text-white">ESTADO</th>
-								<th class="table-th text-white">VALOR.F</th>
-								<th class="table-th text-white">DIA.HORA</th>
 								<th class="table-th text-white">FACTURA</th>
-								<th class="table-th text-white">RESOLUCION</th>
+								<th class="table-th text-white">VR.DOC</th>
+								<th class="table-th text-white">ABONO</th>
+								<th class="table-th text-white">SALDO</th>
+								<th class="table-th text-white">DIA.HORA</th>
+								<th class="table-th text-white">RECIBO</th>
+								
 								<th class="table-th text-white text-center">Acciones</th>
 							</tr>
 						</thead>

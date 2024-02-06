@@ -56,10 +56,10 @@ class recibodecajaController extends Controller
     public function show()
     {
         $data = DB::table('recibodecajas as rc')
-            /*   ->join('categories as cat', 'rc.categoria_id', '=', 'cat.id') */
+              ->join('sales as sa', 'rc.sale_id', '=', 'sa.id')
             ->join('thirds as tird', 'rc.third_id', '=', 'tird.id')
             /* ->join('subcentrocostos as centro', 'rc.subcentrocostos_id', '=', 'centro.id') */
-            ->select('rc.*', 'tird.name as namethird')
+            ->select('rc.*', 'sa.resolucion as resolucion_factura', 'tird.name as namethird')
             /*  ->where('rc.status', 1) */
             ->get();
 
@@ -85,13 +85,13 @@ class recibodecajaController extends Controller
                 if ($data->status == 1) {
                     $btn = '
                          <div class="text-center">                         
-                         <a href="recibodecaja/showRecibodecaja/' . $data->id . '" class="btn btn-dark" title="Recibodecaja" target="_blank">
+                         <a href="recibodecaja/showRecibodecaja/' . $data->id . '" class="btn btn-dark" title="RecibodecajaCerrado" target="_blank">
                          <i class="far fa-file-pdf"></i>
                          </a>				
                          <button class="btn btn-dark" title="Borrar venta" disabled>
                              <i class="fas fa-trash"></i>
                          </button>
-                         <a href="javascript:void(0)" data-toggle="tooltip"  data-id="'. $data->id.'" data-original-title="Delete" class="btn btn-danger btn-sm deleteBook">E</a>
+                         <a href="javascript:void(0)" data-toggle="tooltip"  data-id="' . $data->id . '" data-original-title="Delete" class="btn btn-danger btn-sm deleteBook">E</a>
                          </div>
                          ';
                 } elseif ($data->status == 0) {
@@ -388,7 +388,7 @@ class recibodecajaController extends Controller
             if ($getReg == null) {
                 $detail = new Recibodecaja();
                 $detail->sale_id = $request->ventaId;
-                $detail->product_id = $request->producto;;
+                $detail->product_id = $request->producto;
 
                 $detail->save();
             } else {
@@ -397,7 +397,11 @@ class recibodecajaController extends Controller
                 $updateReg->abono =  $abono;
                 $updateReg->nuevo_saldo = $nuevo_saldo;
                 $updateReg->status = '1';
+                $updateReg->observations = $request->get('observations');
 
+                $count1 = DB::table('recibodecajas')->where('status', '1')->count();
+                $resolucion = 'RC' . (1 + $count1);
+                $updateReg->consecutivo = $resolucion;
                 $updateReg->save();
             }
 

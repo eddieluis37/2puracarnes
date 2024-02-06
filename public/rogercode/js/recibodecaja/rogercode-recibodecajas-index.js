@@ -54,9 +54,36 @@ $(document).ready(function () {
                     },
                 },
                 { data: "status", name: "status" },
+                { data: "resolucion_factura", name: "resolucion_factura" },
                 {
-                    data: "total_valor_a_pagar",
-                    name: "total_valor_a_pagar",
+                    data: "saldo",
+                    name: "saldo",
+                    render: function (data) {
+                        return (
+                            "$ " +
+                            parseFloat(data).toLocaleString(undefined, {
+                                minimumFractionDigits: 0,
+                                maximumFractionDigits: 0,
+                            })
+                        );
+                    },
+                },
+                {
+                    data: "abono",
+                    name: "abono",
+                    render: function (data) {
+                        return (
+                            "$ " +
+                            parseFloat(data).toLocaleString(undefined, {
+                                minimumFractionDigits: 0,
+                                maximumFractionDigits: 0,
+                            })
+                        );
+                    },
+                },
+                {
+                    data: "nuevo_saldo",
+                    name: "nuevo_saldo",
                     render: function (data) {
                         return (
                             "$ " +
@@ -69,7 +96,7 @@ $(document).ready(function () {
                 },
                 { data: "date", name: "date" },
                 { data: "consecutivo", name: "consecutivo" },
-                /*    { data: "resolucion", name: "resolucion" }, */
+              
                 { data: "action", name: "action" },
             ],
             order: [[0, "DESC"]],

@@ -66,6 +66,7 @@ use App\Http\Controllers\notacredito\notacreditoController;
 use App\Http\Controllers\notacredito\pdfNotacreditoController;
 use App\Http\Controllers\notadebito\notadebitoController;
 use App\Http\Controllers\notadebito\pdfNotadebitoController;
+use App\Http\Controllers\recibodecaja\pdfRecibodecajaController;
 use App\Http\Controllers\recibodecaja\recibodecajaController;
 use App\Http\Controllers\res\pdfLoteController;
 use App\Http\Controllers\sale\exportFacturaController;
@@ -414,6 +415,7 @@ Route::group(['middleware' => [('auth')]], function () {
      Route::get('recibodecaja/create/{id}', [recibodecajaController::class, 'create'])->name('recibodecaja.create'); 
      Route::get('/obtener-valores', [recibodecajaController::class, 'obtenerValores'])->name('recibodecaja.obtener-valores');
      Route::post('gurdarrecibodecaja', [recibodecajaController::class, 'gurdarrecibodecaja'])->name('recibodecaja.gurdarrecibodecaja');
+     Route::get('recibodecaja/showRecibodecaja/{id}', [pdfRecibodecajaController::class,  'showRecibodecaja'])->name('recibodecaja.showRecibodecaja');
     
     /* Route::post('registroPagoSave', [saleController::class, 'storeRegistroPago'])->name('pago.save'); */
 

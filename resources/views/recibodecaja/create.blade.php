@@ -120,7 +120,7 @@
 								<div class="col-md-6">
 									<div class="form-group">
 										<label for="observations">Observaciones</label>
-										<textarea class="form-control" id="observations" rows="3"></textarea>
+										<textarea class="form-control" id="observations" name="observations" rows="3"></textarea>
 									</div>
 								</div>
 
