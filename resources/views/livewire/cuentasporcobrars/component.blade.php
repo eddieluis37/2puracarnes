@@ -96,7 +96,7 @@
                                                     @if($d->status == 0)
                                                     <span class="badge bg-danger">PE</span>
                                                     @elseif($d->status == 1)
-                                                    <span class="badge bg-success">NC</span>                                                 
+                                                    <span class="badge bg-success">NC</span>
                                                     @elseif($d->status == 2)
                                                     <span class="badge bg-success">ND</span>
                                                     @else
@@ -114,17 +114,16 @@
                                             </td>
                                             <td class="text-center">
                                                 <h6>${{number_format($d->deuda_x_cobrar)}}</h6>
-                                            </td>                                           
-                                         
-                                            <td class="text-center">
-                                                <h6>{{number_format($d->items,1)}}</h6>
                                             </td>
                                             <td class="text-center">
-                                                <h6>{{number_format($d->items,1)}}</h6>
+                                                <h6>${{number_format($d->deuda_x_pagar)}}</h6>
                                             </td>
                                             <td class="text-center">
-                                                <h6>{{number_format($d->items,1)}}</h6>
-                                            </td>                                         
+                                                <h6>{{number_format($d->abono)}}</h6>
+                                            </td>
+                                            <td class="text-center">
+                                                <h6>${{number_format($d->deuda_inicial - $d->abono)}}</h6>
+                                            </td>
 
                                             <td class="text-center">
                                                 <button wire:click.prevent="getDetails({{$d->id}})" class="btn btn-dark btn-sm">

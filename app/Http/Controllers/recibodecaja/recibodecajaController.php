@@ -343,7 +343,7 @@ class recibodecajaController extends Controller
             return response()->json([
                 'precio' => $producto->precio,
                 'iva' => $producto->iva,
-                'otro_impuesto' => $producto->otro_impuesto,
+                'facturaId' => $request->productId,
                 'total_bruto' => $producto->total_bruto
             ]);
         } else {
@@ -379,7 +379,7 @@ class recibodecajaController extends Controller
 
 
             $getReg = Recibodecaja::firstWhere('id', $request->recibodecajaId);
-            //  $recibodecajaId = $request->get('recibodecajaId');
+            $recibodecajaId = $request->get('recibodecajaId');
             $saldo = str_replace('.', '', $request->get('saldo'));
             $abono = str_replace('.', '', $request->get('abono'));
             $nuevo_saldo = str_replace('.', '', $request->get('nuevo_saldo'));
@@ -393,7 +393,7 @@ class recibodecajaController extends Controller
                 $detail->save();
             } else {
                 $updateReg = Recibodecaja::firstWhere('id', $request->recibodecajaId);
-                $updateReg->saldo = $saldo;
+                $updateReg->sale_id = $request->facturaId;                
                 $updateReg->abono =  $abono;
                 $updateReg->nuevo_saldo = $nuevo_saldo;
                 $updateReg->status = '1';

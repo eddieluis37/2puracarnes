@@ -64,16 +64,16 @@ class CuentasporcobrarsController extends Component
             ->whereBetween('cuentas_por_cobrars.created_at', [$from, $to])           
             ->get();
         } else {
-            $this->data = Cuentas_por_cobrar::join('thirds as t','t.id','cuentas_por_cobrars.third_id')
+            $this->data = Cuentas_por_cobrar::join('thirds as t','t.id','cuentas_por_cobrars.third_id')           
+            ->leftjoin('recibodecajas as rc', 'rc.sale_id', '=', 'cuentas_por_cobrars.sale_id')
             ->join('sales as sa', 'sa.id', '=', 'cuentas_por_cobrars.sale_id')
-            ->select('cuentas_por_cobrars.*','t.identification as identification', 'sa.consecutivo')
+            ->select('cuentas_por_cobrars.*','t.identification as identification', 'sa.consecutivo', 'rc.abono')
             ->whereBetween('cuentas_por_cobrars.created_at', [$from, $to])
             ->where('cuentas_por_cobrars.third_id', $this->userId)
             ->get();
         }
-
+      //  dd($this->data);
     }
-
 
     public function getDetails($saleId)
     {

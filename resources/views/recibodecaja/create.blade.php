@@ -81,7 +81,7 @@
 										<div class="form-group">
 											<label for="" class="form-label">Facturas del cliente</label>
 											<input type="hidden" id="cliente" name="cliente" value="{{$datacompensado[0]->third_id}}" data-id="{{$datacompensado[0]->third_id}}">
-											<input type="hidden" id="porc_descuento" name="porc_descuento" value="{{$datacompensado[0]->porc_descuento}}" data-id="{{$datacompensado[0]->porc_descuento}}">
+											<input type="hidden" id="facturaId" name="facturaId" value="{{$datacompensado[0]->sale_id}}" data-id="{{$datacompensado[0]->sale_id}}">
 											<select class="form-control form-control-sm select2Prod" name="producto" id="producto" required="">
 												<option value="">Seleccione el facturas</option>
 												@foreach ($prod as $p)

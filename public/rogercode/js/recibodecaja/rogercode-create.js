@@ -57,7 +57,7 @@ function actualizarValoresProducto(productId) {
         success: function (response) {
             // Actualiza los valores en los campos de entrada del centro de costo
             $("#price").val(response.precio);
-            $("#porc_otro_impuesto").val(response.otro_impuesto);          
+            $("#facturaId").val(response.facturaId);          
             $("#saldo").val(formatCantidadSinCero(response.total_bruto));
             calculaSaldo();
         },
