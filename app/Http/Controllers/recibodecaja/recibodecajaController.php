@@ -56,7 +56,7 @@ class recibodecajaController extends Controller
     public function show()
     {
         $data = DB::table('recibodecajas as rc')
-              ->join('sales as sa', 'rc.sale_id', '=', 'sa.id')
+            ->join('sales as sa', 'rc.sale_id', '=', 'sa.id')
             ->join('thirds as tird', 'rc.third_id', '=', 'tird.id')
             /* ->join('subcentrocostos as centro', 'rc.subcentrocostos_id', '=', 'centro.id') */
             ->select('rc.*', 'sa.resolucion as resolucion_factura', 'tird.name as namethird')
@@ -335,16 +335,19 @@ class recibodecajaController extends Controller
         $clienteId = $request->input('cliente');
         $cliente = Third::find($clienteId);
         $producto = Sale::join('thirds as t', 'sales.third_id', '=', 't.id')
-            /*   ->join('thirds as t', 'listapreciodetalles.listaprecio_id', '=', 't.id') */
+            ->join('recibodecajas as rc', 'sales.id', '=', 'rc.sale_id')           
             ->where('sales.id', $request->productId)
             ->where('t.id', $cliente->id)
+            ->where('rc.status', '1')
+            ->orderBy('rc.id', 'desc')
             ->first();
         if ($producto) {
             return response()->json([
                 'precio' => $producto->precio,
                 'iva' => $producto->iva,
                 'facturaId' => $request->productId,
-                'total_bruto' => $producto->total_bruto
+                'total_bruto' => $producto->total_bruto,
+                'rcNuevoSaldo' => $producto->nuevo_saldo
             ]);
         } else {
             // En caso de que el producto no sea encontrado
@@ -393,7 +396,7 @@ class recibodecajaController extends Controller
                 $detail->save();
             } else {
                 $updateReg = Recibodecaja::firstWhere('id', $request->recibodecajaId);
-                $updateReg->sale_id = $request->facturaId;                
+                $updateReg->sale_id = $request->facturaId;
                 $updateReg->abono =  $abono;
                 $updateReg->nuevo_saldo = $nuevo_saldo;
                 $updateReg->status = '1';

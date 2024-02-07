@@ -94,10 +94,18 @@
 								</div>
 
 								<div class="col-md-3">
-									<label for="" class="form-label">Saldo</label>
+									<label for="" class="form-label">Deuda inicial</label>
 									<div class="input-group flex-nowrap">
 										<span class="input-group-text" id="addon-wrapping">$</span>
 										<input type="text" id="saldo" name="saldo" class="form-control input" readonly placeholder="">
+									</div>
+								</div>
+
+								<div class="col-md-3">
+									<label for="" class="form-label">Saldo Pendiente</label>
+									<div class="input-group flex-nowrap">
+										<span class="input-group-text" id="addon-wrapping">$</span>
+										<input type="text" id="rcNuevoSaldo" name="rcNuevoSaldo" class="form-control input" readonly placeholder="">
 									</div>
 								</div>
 

@@ -59,6 +59,7 @@ function actualizarValoresProducto(productId) {
             $("#price").val(response.precio);
             $("#facturaId").val(response.facturaId);          
             $("#saldo").val(formatCantidadSinCero(response.total_bruto));
+            $("#rcNuevoSaldo").val(formatCantidadSinCero(response.rcNuevoSaldo));
             calculaSaldo();
         },
         error: function (xhr, status, error) {
@@ -289,7 +290,7 @@ abonoInput.addEventListener("input", function () {
 }); */
 
 function calculaSaldo() {
-    let saldo = $("#saldo").val();
+    let saldo = $("#rcNuevoSaldo").val();
     console.log(saldo);
     saldo = parseFloat(saldo.replace(/[.]/g, ""));
     let abono = $("#abono").val();
