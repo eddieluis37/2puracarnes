@@ -921,8 +921,8 @@ class saleController extends Controller
             $venta->user_id = $id_user;
             $venta->centrocosto_id = 1; // Valor estático para el campo centrocosto
             $venta->subcentrocostos_id = 2; // Valor estático para el campo Subcentrocosto PUNTO DE VENTA GUAD
-            $venta->third_id = 33; // Valor estático para el campo third_id
-            $venta->vendedor_id = 33; // Valor estático para el campo vendedor_id
+            $venta->third_id = 52; // Valor estático para el campo third_id
+            $venta->vendedor_id = 52; // Valor estático para el campo vendedor_id
 
             $venta->fecha_venta = $currentDateFormat;
             $venta->fecha_cierre = $dateNextMonday;
