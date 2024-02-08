@@ -30,6 +30,6 @@ class CreateTableSubcentroCosto extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('subcentro_costo');
+        Schema::dropIfExists('subcentrocostos');
     }
 }
