@@ -42,7 +42,20 @@
 				</div>
 			</div>
 
-
+			<div class="col-md-6">
+				<div class="task-header">
+					<div class="form-group">
+						<label for="" class="form-label">Facturas</label>
+						<select class="form-control form-control-sm select2Ventas " name="factura" id="factura" required>
+							<option value="">Seleccione factura</option>
+							@foreach($ventas as $factura)
+							<option value="{{ $factura->id }}">{{ $factura->resolucion }}</option>
+							@endforeach
+						</select>
+						<span class="text-danger error-message"></span>
+					</div>
+				</div>
+			</div>
 
 			<div class="col-md-6">
 				<div class="task-header">
@@ -51,7 +64,7 @@
 						<select class="form-control form-control-sm input" name="formapagos" id="formapagos" required>
 							<option value="">Seleccione forma de pago</option>
 							@foreach($formapagos as $formapago)
-							<option value="{{$formapago->id}}" {{ $formapago->id == 1 ? 'selected' : '' }}>{{$formapago->nombre}}</option>
+							<option value="{{$formapago->id}}" {{ $formapago->id == 0 ? 'selected' : '' }}>{{$formapago->nombre}}</option>
 							@endforeach
 						</select>
 						<span class="text-danger error-message"></span>

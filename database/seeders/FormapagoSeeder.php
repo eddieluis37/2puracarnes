@@ -15,6 +15,15 @@ class FormapagoSeeder extends Seeder
     public function run()
     {
         $formapago = new Formapago([
+            "codigo" => "EFECTIVO",
+            "nombre" => "EFECTIVO",
+            "tipoformapago" => "EFECTIVO",
+            "diascredito" => null,
+            "cuenta" => "31050501"
+        ]);
+        $formapago->save();
+
+        $formapago = new Formapago([
             "codigo" => "DATAFONO",
             "nombre" => "DATAFONO CTA CTE DAVIVIENDA",
             "tipoformapago" => "TARJETA",
@@ -31,7 +40,7 @@ class FormapagoSeeder extends Seeder
             "cuenta" => "22050501"
         ]);
         $formapago->save();
-    
+
         $formapago = new Formapago([
             "codigo" => "BANCOLOMBIA",
             "nombre" => "BANCOLOMBIA AHORROS",
@@ -39,8 +48,8 @@ class FormapagoSeeder extends Seeder
             "diascredito" => null,
             "cuenta" => "22050501"
         ]);
-        $formapago->save();      
-        
+        $formapago->save();
+
         $formapago = new Formapago([
             "codigo" => "WOMPI",
             "nombre" => "WOMPI",
@@ -48,7 +57,7 @@ class FormapagoSeeder extends Seeder
             "diascredito" => null,
             "cuenta" => "32050501"
         ]);
-        $formapago->save();        
+        $formapago->save();
 
         $formapago = new Formapago([
             "codigo" => "VENTA A CREDITO",

@@ -30,17 +30,18 @@ use App\Models\Subcentrocosto;
 
 class recibodecajaController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    public function facturasByCliente($cliente_id)
+    {
+        $facturas = Sale::where('third_id', $cliente_id)->orderBy('id', 'desc')->get(); // despliega las mas reciente
+        return response()->json($facturas);
+    }
+
     public function index()
     {
         $ventas = Sale::get();
         $centros = Centrocosto::Where('status', 1)->get();
         $clientes = Third::Where('cliente', 1)->get();
-        $formapagos = Formapago::whereIn('tipoformapago', ['TARJETA', 'OTROS'])->get();
+        $formapagos = Formapago::whereIn('tipoformapago', ['EFECTIVO', 'TARJETA', 'OTROS'])->get();
         $domiciliarios = Third::Where('domiciliario', 1)->get();
         /*      $subcentrodecostos = Subcentrocosto::get(); */
 
@@ -164,6 +165,9 @@ class recibodecajaController extends Controller
 
             $getReg = Recibodecaja::firstWhere('id', $request->recibocajaId);
 
+           /*  $SaleIdRC = $getReg->sale_id; */
+
+           // dd ($getReg);
 
             if ($getReg == null) {
                 $currentDateTime = Carbon::now();
@@ -178,7 +182,7 @@ class recibodecajaController extends Controller
                 $recibo = new Recibodecaja();
                 $recibo->user_id = $id_user;
                 $recibo->third_id = $request->cliente;
-                $recibo->sale_id = 1;
+                $recibo->sale_id = 0;
                 $recibo->tipo = $request->tipo;
                 $recibo->formapagos_id = $request->formapagos;
                 $recibo->abono = 0;
@@ -213,6 +217,8 @@ class recibodecajaController extends Controller
                 ]);
             } else {
                 $getReg = Recibodecaja::firstWhere('id', $request->recibocajaId);
+                dd ($getReg);
+
                 $getReg->third_id = $request->vendedor;
 
                 $getReg->tipo = $request->tipo;
@@ -251,9 +257,11 @@ class recibodecajaController extends Controller
 
         $datacompensado = DB::table('recibodecajas as rc')
             ->join('thirds as tird', 'rc.third_id', '=', 'tird.id')
+            ->leftjoin('cuentas_por_cobrars as cc', 'rc.sale_id', '=', 'cc.sale_id')
             /*   ->join('subcentrocostos as centro', 'rc.subcentrocostos_id', '=', 'centro.id') */
-            ->select('rc.*', 'tird.name as namethird', 'tird.porc_descuento', 'tird.identification')
+            ->select('rc.*', 'cc.deuda_inicial', 'tird.name as namethird', 'tird.porc_descuento', 'tird.identification')
             ->where('rc.id', $id)
+            ->orderBy('cc.id', 'desc')
             ->get();
 
 
@@ -335,10 +343,11 @@ class recibodecajaController extends Controller
         $clienteId = $request->input('cliente');
         $cliente = Third::find($clienteId);
         $producto = Sale::join('thirds as t', 'sales.third_id', '=', 't.id')
-            ->join('recibodecajas as rc', 'sales.id', '=', 'rc.sale_id')           
+            ->leftjoin('recibodecajas as rc', 'sales.id', '=', 'rc.sale_id')
             ->where('sales.id', $request->productId)
             ->where('t.id', $cliente->id)
-            ->where('rc.status', '1')
+            ->selectRaw('sales.*, sales.valor_a_pagar_credito - SUM(rc.abono) as saldo_pendiente')
+            ->groupBy('sales.id', 'rc.id')
             ->orderBy('rc.id', 'desc')
             ->first();
         if ($producto) {
@@ -346,8 +355,8 @@ class recibodecajaController extends Controller
                 'precio' => $producto->precio,
                 'iva' => $producto->iva,
                 'facturaId' => $request->productId,
-                'total_bruto' => $producto->total_bruto,
-                'rcNuevoSaldo' => $producto->nuevo_saldo
+                'deuda_inicial' => $producto->valor_a_pagar_credito,
+                'saldo_pendiente' => $producto->saldo_pendiente
             ]);
         } else {
             // En caso de que el producto no sea encontrado
@@ -362,13 +371,13 @@ class recibodecajaController extends Controller
         try {
             $rules = [
                 'recibodecajaId' => 'required',
-                'producto' => 'required',
+                /*   'producto' => 'required', */
                 'abono' => 'required',
 
             ];
             $messages = [
                 'recibodecajaId.required' => 'El reciboId es requerido',
-                'producto.required' => 'La factura es requerida',
+                /*   'producto.required' => 'La factura es requerida', */
                 'abono.required' => 'El abono es requerido',
             ];
 
@@ -398,7 +407,7 @@ class recibodecajaController extends Controller
                 $updateReg = Recibodecaja::firstWhere('id', $request->recibodecajaId);
                 $updateReg->sale_id = $request->facturaId;
                 $updateReg->abono =  $abono;
-                $updateReg->nuevo_saldo = $nuevo_saldo;
+                $updateReg->nuevo_saldo = 0;
                 $updateReg->status = '1';
                 $updateReg->observations = $request->get('observations');
 

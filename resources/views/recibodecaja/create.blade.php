@@ -64,6 +64,14 @@
 									</div>
 								</div>
 							</div>
+							<div class="col-md-2">
+								<div class="task-header">
+									<div class="form-group">
+										<label for="" class="form-label">Deuda Inicial</label>
+										<p>{{$datacompensado[0]->deuda_inicial}}</p>
+									</div>
+								</div>
+							</div>
 						</div>
 					</div>
 				</div>
@@ -97,7 +105,7 @@
 									<label for="" class="form-label">Deuda inicial</label>
 									<div class="input-group flex-nowrap">
 										<span class="input-group-text" id="addon-wrapping">$</span>
-										<input type="text" id="saldo" name="saldo" class="form-control input" readonly placeholder="">
+										<input type="text" id="saldo" name="saldo" class="form-control input" value="{{$datacompensado[0]->deuda_inicial}}" data-id="{{$datacompensado[0]->deuda_inicial}}" readonly placeholder="">
 									</div>
 								</div>
 
@@ -105,7 +113,7 @@
 									<label for="" class="form-label">Saldo Pendiente</label>
 									<div class="input-group flex-nowrap">
 										<span class="input-group-text" id="addon-wrapping">$</span>
-										<input type="text" id="rcNuevoSaldo" name="rcNuevoSaldo" class="form-control input" readonly placeholder="">
+										<input type="text" id="saldo_pendiente" name="saldo_pendiente" class="form-control input" readonly placeholder="">
 									</div>
 								</div>
 

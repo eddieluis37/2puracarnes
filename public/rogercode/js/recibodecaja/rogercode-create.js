@@ -58,8 +58,8 @@ function actualizarValoresProducto(productId) {
             // Actualiza los valores en los campos de entrada del centro de costo
             $("#price").val(response.precio);
             $("#facturaId").val(response.facturaId);          
-            $("#saldo").val(formatCantidadSinCero(response.total_bruto));
-            $("#rcNuevoSaldo").val(formatCantidadSinCero(response.rcNuevoSaldo));
+            $("#saldo").val(formatCantidadSinCero(response.deuda_inicial));
+            $("#saldo_pendiente").val(formatCantidadSinCero(response.saldo_pendiente));
             calculaSaldo();
         },
         error: function (xhr, status, error) {
@@ -68,23 +68,6 @@ function actualizarValoresProducto(productId) {
         },
     });
 }
-
-/* btnAdd.addEventListener("click", (e) => {
-    e.preventDefault();
-    const dataform = new FormData(formDetail);
-    sendData("/gurdarrecibodecaja", dataform, token).then((result) => {
-        console.log(result);
-        window.location.href = `../../recibodecajas`;
-        if (result.status === 1) {
-            $("#producto").val("").trigger("change");
-            formDetail.reset();
-            showData(result);
-        }
-        if (result.status === 0) {
-            Swal("Error!", "Tiene campos vacios!", "error");
-        }
-    });
-}); */
 
 btnAdd.addEventListener("click", async (e) => {
     e.preventDefault();
@@ -186,54 +169,7 @@ const showData = (data) => {
             denyButtonText: `Cancelar`,
         });
     }
-
-    /*   // Evento click del botón "facturarBtn"
-    tableFoot.addEventListener("click", (e) => {
-        e.preventDefault();
-        let element = e.target;
-        console.log(element);
-        if (element.id === "cargarInventarioBtn") {
-            showConfirmationAlert(element)
-                .then((result) => {
-                    if (result && result.value) {
-                        loadingStart(element);
-                        const dataform = new FormData();
-                        dataform.append("ventaId", Number(venta_id.value));
-                        return sendData("/registrar_pago", dataform, token);
-                    }
-                })
-                .then((result) => {
-                    console.log(result);
-                    if (result && result.status == 1) {
-                        loadingEnd(
-                            element,
-                            "success",
-                            "Cargando al inventorio"
-                        );
-                        element.disabled = true;
-                        return swal(
-                            "EXITO",
-                            "Inventario Cargado Exitosamente",
-                            "success"
-                        );
-                    }
-                    if (result && result.status == 0) {
-                        loadingEnd(
-                            element,
-                            "success",
-                            "Cargando al inventorio"
-                        );
-                        errorMessage(result.message);
-                    }
-                })
-                .then(() => {
-                    window.location.href = 'registrar_pago/{{$id}}';
-                })
-                .catch((error) => {
-                    console.error(error);
-                });
-        }
-    }); */
+    
 };
 
 abono.addEventListener("change", function () {
@@ -290,7 +226,7 @@ abonoInput.addEventListener("input", function () {
 }); */
 
 function calculaSaldo() {
-    let saldo = $("#rcNuevoSaldo").val();
+    let saldo = $("#saldo_pendiente").val();
     console.log(saldo);
     saldo = parseFloat(saldo.replace(/[.]/g, ""));
     let abono = $("#abono").val();

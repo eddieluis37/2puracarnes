@@ -35,7 +35,7 @@ btnAddVentaDomicilio.addEventListener("click", async (e) => {
     });
 });
 
-btnAddReciboCaja.addEventListener("click", async (e) => {
+/* btnAddReciboCaja.addEventListener("click", async (e) => {
     e.preventDefault();
     const dataform = new FormData(formCompensadoRes);
     sendData("/gurdarrecibodecaja", dataform, token).then((resp) => {
@@ -63,6 +63,27 @@ btnAddReciboCaja.addEventListener("click", async (e) => {
                 $errorContainer.html(messages[0]);
                 $errorContainer.show();
             });
+        }
+    });
+}); */
+
+$(document).ready(function() {
+    $('#cliente').on('change', function() {
+        var cliente_id = $(this).val();
+        if (cliente_id) {
+            $.ajax({
+                url: '/facturasByCliente/' + cliente_id,
+                type: "GET",
+                dataType: "json",
+                success:function(data) {
+                    $('#factura').empty();
+                    $.each(data, function(key, value) {
+                        $('#factura').append('<option value="'+ value.id +'">'+ value.resolucion +'</option>');
+                    });
+                }
+            });
+        } else {
+            $('#factura').empty();
         }
     });
 });
