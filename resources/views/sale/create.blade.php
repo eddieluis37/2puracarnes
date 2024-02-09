@@ -109,18 +109,20 @@
 										<span class="input-group-text" id="addon-wrapping">%</span>
 									</div>
 								</div>
-								<div class="col-md-3">
-									<label for="" class="form-label">Descuento</label>
-									<div class="input-group flex-nowrap">
 
-										<input type="text" id="porc_desc" name="porc_desc" class="form-control input" readonly placeholder="">
-										<span class="input-group-text" id="addon-wrapping">%</span>
-									</div>
-								</div>
 
 								<div class="form-group row" style="margin-top:3px; margin-left:3px">
 
-									<div class="col-md-7">
+									<div class="col-md-3">
+										<label for="" class="form-label">Descuento</label>
+										<div class="input-group flex-nowrap">
+
+											<input type="text" id="porc_desc" name="porc_desc" class="form-control input" readonly placeholder="">
+											<span class="input-group-text" id="addon-wrapping">%</span>
+										</div>
+									</div>
+
+									<div class="col-md-3">
 										<label for="" class="form-label">Peso KG</label>
 										<div class="input-group flex-nowrap"">
 										<input type=" text" id="quantity" name="quantity" class="form-control input" placeholder="EJ: 10,00">
@@ -128,108 +130,127 @@
 										</div>
 									</div>
 
-									<div class="col-md-3">
+									<div class="col-md-2">
 										<div class="" style="margin-top:30px;">
 											<div class="d-grid gap-2">
 												<button id="btnAdd" class="btn btn-primary">Añadir</button>
 											</div>
 										</div>
 									</div>
+
+
+									@can('Admin_Menu')
+									<div class="col-md-2">
+										<div class="" style="margin-top:0px; margin-left:3px">
+											<label for="password">Contraseña:</label>
+											<input type="password" id="password" name="password" class="form-control input">
+
+										</div>
+									</div>
+
+									<div class="col-md-2">
+										<div class="" style="margin-top:30px;">
+											<div class="d-grid gap-2">
+												<button id="btnRemove" class="btn btn-warning">Modificar-Precio</button>
+											</div>
+										</div>
+									</div>
+									@endcan
 								</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="widget-content mt-3">
+		<div class="card">
+			<div class="card-body">
+				<div class="table-responsive mt-3">
+					<table id="tableDespostere" class="table table-sm table-striped table-bordered">
+						<thead class="text-white" style="background: #3B3F5C">
+							<tr>
+								<th class="table-th text-white">Producto</th>
+								<th class="table-th text-white">Cant</th>
+								<th class="table-th text-white">Valor.U</th>
+								<th class="table-th text-white">%Des</th>
+								<th class="table-th text-white">Des</th>
+								<th class="table-th text-white">{{$datacompensado[0]->porc_descuento}}%DCl</th>
+								<th class="table-th text-white">Total.B</th>
+								<th class="table-th text-white">%IVA</th>
+								<th class="table-th text-white">IVA</th>
+								<th class="table-th text-white">%I.S</th>
+								<th class="table-th text-white">I.S</th>
+
+								<th class="table-th text-white">Total</th>
+								<th class="table-th text-white text-center">Acciones</th>
+							</tr>
+						</thead>
+						<tbody id="tbodyDetail">
+							@foreach($detalleVenta as $proddetail)
+							<tr>
+								<!--td>{{$proddetail->id}}</td-->
+
+								<td>{{$proddetail->nameprod}}</td>
+								<td>{{ number_format($proddetail->quantity, 2, ',', '.')}} KG</td>
+								<td>$ {{ number_format($proddetail->price, 0, ',', '.')}}</td>
+								<td>{{$proddetail->porc_desc}}%</td>
+								<td>$ {{ number_format($proddetail->descuento, 0, ',', '.')}}</td>
+								<td>$ {{ number_format($proddetail->descuento_cliente, 0, ',', '.')}}</td>
+								<td>$ {{ number_format($proddetail->total_bruto, 0, ',', '.')}}</td>
+								<td>{{$proddetail->porc_iva}}%</td>
+								<td>$ {{ number_format($proddetail->iva, 0, ',', '.')}}</td>
+								<td>{{$proddetail->porc_otro_impuesto}}%</td>
+								<td>$ {{ number_format($proddetail->otro_impuesto, 0, ',', '.')}}</td>
+								<td>$ {{ number_format($proddetail->total, 0, ',', '.')}}</td>
+								<td class="text-center">
+									@if($status == 'true')
+									<button class="btn btn-dark fas fa-edit" name="btnEdit" data-id="{{$proddetail->id}}" title="Editar">
+									</button>
+									<button class="btn btn-dark fas fa-trash" name="btnDown" data-id="{{$proddetail->id}}" title="Borrar">
+									</button>
+									@else
+									<button class="btn btn-dark fas fa-edit" name="btnEdit" title="Editar" disabled>
+									</button>
+									<button class="btn btn-dark fas fa-trash" name="btnDown" title="Borrar" disabled>
+									</button>
+									@endif
+								</td>
+							</tr>
+							@endforeach
+						</tbody>
+						<tfoot id="tabletfoot">
+							<tr>
+								<th>Totales</th>
+								<th></th>
+								<th></th>
+								<td></td>
+								<th></th>
+								<th></th>
+								<th>$ {{number_format($arrayTotales['TotalBruto'], 0, ',', '.')}} </th>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<th>$ {{number_format($arrayTotales['TotalValorAPagar'], 0, ',', '.')}} </th>
+							</tr>
+						</tfoot>
+					</table>
+					<div>
+						<form method="GET" action="registrar_pago/{{$id}}">
+							@csrf
+							<div class="text-center mt-1">
+								<button id="cargarInventarioBtn" type="submit" class="btn btn-success">Pagar</button>
+								<!-- <a href="registrar_pago/{{$id}}" target="_blank" class="btn btn-success">Pagar</a> -->
 							</div>
 						</form>
 					</div>
 				</div>
 			</div>
 		</div>
-
-		<div class="widget-content mt-3">
-			<div class="card">
-				<div class="card-body">
-					<div class="table-responsive mt-3">
-						<table id="tableDespostere" class="table table-sm table-striped table-bordered">
-							<thead class="text-white" style="background: #3B3F5C">
-								<tr>
-									<th class="table-th text-white">Producto</th>
-									<th class="table-th text-white">Cant</th>
-									<th class="table-th text-white">Valor.U</th>
-									<th class="table-th text-white">%Des</th>
-									<th class="table-th text-white">Des</th>
-									<th class="table-th text-white">{{$datacompensado[0]->porc_descuento}}%DCl</th>
-									<th class="table-th text-white">Total.B</th>
-									<th class="table-th text-white">%IVA</th>
-									<th class="table-th text-white">IVA</th>
-									<th class="table-th text-white">%I.S</th>
-									<th class="table-th text-white">I.S</th>
-
-									<th class="table-th text-white">Total</th>
-									<th class="table-th text-white text-center">Acciones</th>
-								</tr>
-							</thead>
-							<tbody id="tbodyDetail">
-								@foreach($detalleVenta as $proddetail)
-								<tr>
-									<!--td>{{$proddetail->id}}</td-->
-
-									<td>{{$proddetail->nameprod}}</td>
-									<td>{{ number_format($proddetail->quantity, 2, ',', '.')}} KG</td>
-									<td>$ {{ number_format($proddetail->price, 0, ',', '.')}}</td>
-									<td>{{$proddetail->porc_desc}}%</td>
-									<td>$ {{ number_format($proddetail->descuento, 0, ',', '.')}}</td>
-									<td>$ {{ number_format($proddetail->descuento_cliente, 0, ',', '.')}}</td>
-									<td>$ {{ number_format($proddetail->total_bruto, 0, ',', '.')}}</td>
-									<td>{{$proddetail->porc_iva}}%</td>
-									<td>$ {{ number_format($proddetail->iva, 0, ',', '.')}}</td>
-									<td>{{$proddetail->porc_otro_impuesto}}%</td>
-									<td>$ {{ number_format($proddetail->otro_impuesto, 0, ',', '.')}}</td>
-									<td>$ {{ number_format($proddetail->total, 0, ',', '.')}}</td>
-									<td class="text-center">
-										@if($status == 'true')
-										<button class="btn btn-dark fas fa-edit" name="btnEdit" data-id="{{$proddetail->id}}" title="Editar">
-										</button>
-										<button class="btn btn-dark fas fa-trash" name="btnDown" data-id="{{$proddetail->id}}" title="Borrar">
-										</button>
-										@else
-										<button class="btn btn-dark fas fa-edit" name="btnEdit" title="Editar" disabled>
-										</button>
-										<button class="btn btn-dark fas fa-trash" name="btnDown" title="Borrar" disabled>
-										</button>
-										@endif
-									</td>
-								</tr>
-								@endforeach
-							</tbody>
-							<tfoot id="tabletfoot">
-								<tr>
-									<th>Totales</th>
-									<th></th>
-									<th></th>
-									<td></td>
-									<th></th>
-									<th></th>
-									<th>$ {{number_format($arrayTotales['TotalBruto'], 0, ',', '.')}} </th>
-									<td></td>
-									<td></td>
-									<td></td>
-									<td></td>
-									<th>$ {{number_format($arrayTotales['TotalValorAPagar'], 0, ',', '.')}} </th>
-								</tr>
-							</tfoot>
-						</table>
-						<div>
-							<form method="GET" action="registrar_pago/{{$id}}">
-								@csrf
-								<div class="text-center mt-1">
-									<button id="cargarInventarioBtn" type="submit" class="btn btn-success">Pagar</button>
-								<!-- <a href="registrar_pago/{{$id}}" target="_blank" class="btn btn-success">Pagar</a> -->
-								</div>
-							</form>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
 	</div>
+</div>
 </div>
 @endsection
 @section('script')

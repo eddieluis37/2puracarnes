@@ -22,6 +22,7 @@ const iva = document.querySelector("#iva");
 const regDetail = document.querySelector("#regdetailId");
 const tableFoot = document.querySelector("#tabletfoot");
 const cargarInventarioBtn = document.getElementById("cargarInventarioBtn");
+const btnRemove = document.querySelector("#btnRemove");
 
 var centrocosto = document.getElementById("centrocosto").value;
 console.log("centro " + centrocosto);
@@ -55,10 +56,10 @@ function actualizarValoresProducto(productId) {
         },
         success: function (response) {
             // Actualiza los valores en los campos de entrada del centro de costo
-            $("#price").val(response.precio);        
+            $("#price").val(response.precio);
             $("#porc_iva").val(response.iva);
             $("#porc_otro_impuesto").val(response.otro_impuesto);
-            $("#porc_desc").val(response.porc_desc);          
+            $("#porc_desc").val(response.porc_desc);
         },
         error: function (xhr, status, error) {
             // Maneja el error si la solicitud AJAX falla
@@ -109,7 +110,7 @@ tbodyTable.addEventListener("click", (e) => {
             regDetail.value = editReg.id;
             price.value = formatCantidadSinCero(editReg.price);
             quantity.value = formatCantidad(editReg.quantity);
-         
+
             $(".select2Prod").val(editReg.product_id).trigger("change");
         });
     }
@@ -131,6 +132,32 @@ btnAdd.addEventListener("click", (e) => {
     });
 });
 
+// Get the current date
+const date = new Date();
+
+// Create a dynamic password by combining letters and the current date
+const passwordHoy = "admin" + date.getFullYear() + (date.getMonth() + 1) + date.getDate();
+
+
+
+btnRemove.addEventListener("click", (e) => {
+    e.preventDefault();
+    const priceInput = document.querySelector("#price");
+    const passwordInput = document.querySelector("#password");
+    const password = passwordInput.value;
+
+    // Check if the password is correct
+    if (password === passwordHoy) {
+        // Disable the readonly attribute of the price input field
+        priceInput.removeAttribute("readonly");
+    } else {
+        // Set the readonly attribute of the price input field
+        priceInput.setAttribute("readonly", true);
+        // Display an error message
+        alert("Contraseña incorrecta");
+    }
+});
+
 const showData = (data) => {
     let dataAll = data.array;
     console.log(dataAll);
@@ -148,7 +175,9 @@ const showData = (data) => {
                 <td>${formatCantidad(element.porc_iva)}%</td> 
                 <td>$ ${formatCantidadSinCero(element.iva)}</td> 
                 <td>${element.porc_otro_impuesto}%</td>     
-                <td>$ ${formatCantidadSinCero(element.otro_impuesto)}</td>             
+                <td>$ ${formatCantidadSinCero(
+                    element.otro_impuesto
+                )}</td>             
                 <td>$ ${formatCantidadSinCero(element.total)}</td>        
                 <td class="text-center">
                     <button class="btn btn-dark fas fa-edit" data-id="${
@@ -173,9 +202,7 @@ const showData = (data) => {
             <td></td>    
             <td></td>
             <td></td>                               
-            <th>$ ${formatCantidadSinCero(
-                arrayTotales.TotalBruto
-            )}</th> 
+            <th>$ ${formatCantidadSinCero(arrayTotales.TotalBruto)}</th> 
             <td></td>
             <td></td>
             <td></td>
@@ -201,9 +228,7 @@ const showData = (data) => {
         });
     }
 
-    
-
-  /*   // Evento click del botón "facturarBtn"
+    /*   // Evento click del botón "facturarBtn"
     tableFoot.addEventListener("click", (e) => {
         e.preventDefault();
         let element = e.target;
@@ -250,13 +275,7 @@ const showData = (data) => {
                 });
         }
     }); */
-
-    
 };
-
-
-
-
 
 price.addEventListener("change", function () {
     const enteredValue = formatMoneyNumber(price.value);
@@ -270,6 +289,12 @@ quantity.addEventListener("change", function () {
     quantity.value = enteredValue;
 });
 
+/* // Get the form and input elements
+const form = document.querySelector("form-price-change");
+const priceInput = document.querySelector("#price");
+const passwordInput = document.querySelector("#password");
+
+ */
 //const selectCategoria = document.querySelector("#categoria");
 //const selectProducto = document.getElementById("producto");
 /*selectCategoria.addEventListener("change", function() {
