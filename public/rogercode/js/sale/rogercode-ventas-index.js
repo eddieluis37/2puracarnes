@@ -33,7 +33,7 @@ $(document).ready(function () {
                     name: "namethird",
                     render: function (data) {
                         if (data.length > 15) {
-                            return data.substring(0, 7) + "...";
+                            return `<span title="${data}">${data.substring(0, 7)}.</span>`;
                         } else {
                             return data;
                         }
@@ -44,7 +44,7 @@ $(document).ready(function () {
                     name: "namecentrocosto",
                     render: function (data) {
                         if (data.length > 5) {
-                            return data.substring(0, 3) + "...";
+                            return data.substring(0, 3) + ".";
                         } else {
                             return data;
                         }
