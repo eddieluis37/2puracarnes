@@ -28,8 +28,28 @@ $(document).ready(function () {
             },
             columns: [
                 { data: "id", name: "id" },
-                { data: "namethird", name: "namethird" },
-                { data: "namecentrocosto", name: "namecentrocosto" },
+                {
+                    data: "namethird",
+                    name: "namethird",
+                    render: function (data) {
+                        if (data.length > 15) {
+                            return data.substring(0, 7) + "...";
+                        } else {
+                            return data;
+                        }
+                    },
+                },
+                {
+                    data: "namecentrocosto",
+                    name: "namecentrocosto",
+                    render: function (data) {
+                        if (data.length > 5) {
+                            return data.substring(0, 3) + "...";
+                        } else {
+                            return data;
+                        }
+                    },
+                },               
                 { data: "status", name: "status" },
                 {
                     data: 'total_valor_a_pagar',
