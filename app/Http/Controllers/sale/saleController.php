@@ -709,9 +709,9 @@ class saleController extends Controller
         return Datatables::of($data)->addIndexColumn()
             ->addColumn('status', function ($data) {
                 if ($data->status == 1) {
-                    $status = '<span class="badge bg-success">Cerrada</span>';
+                    $status = '<span class="badge bg-success">Close</span>';
                 } else {
-                    $status = '<span class="badge bg-danger">Pendiente</span>';
+                    $status = '<span class="badge bg-danger">Open</span>';
                 }
                 return $status;
             })

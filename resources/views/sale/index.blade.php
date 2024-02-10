@@ -22,13 +22,13 @@
 						<thead class="text-white" style="background: #3B3F5C">
 							<tr>
 								<th class="table-th text-white">#</th>								
-								<th class="table-th text-white">CLIENTE</th>
-								<th class="table-th text-white ">CENTRO</th>
-								<th class="table-th text-white">ESTADO</th>
+								<th class="table-th text-white">CLIENT</th>
+								<th class="table-th text-white ">CE</th>
+								<th class="table-th text-white">ST</th>
 								<th class="table-th text-white">VALOR.F</th>
 								<th class="table-th text-white">DIA.HORA</th>
 								<th class="table-th text-white">FACTURA</th>
-								<th class="table-th text-white">RESOLUCION</th>
+								<th class="table-th text-white">RESOL</th>
 								<th class="table-th text-white text-center">Acciones</th>
 							</tr>
 						</thead>

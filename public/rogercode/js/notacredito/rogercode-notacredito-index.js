@@ -27,13 +27,43 @@ $(document).ready(function () {
                 type: "GET",
             },
             columns: [
-                { data: "id", name: "id" },
-                { data: "namethird", name: "namethird" },
-                { data: "namecentrocosto", name: "namecentrocosto" },
+                { data: "id", name: "id" },                
+                {
+                    data: "namethird",
+                    name: "namethird",
+                    render: function (data) {
+                        if (data.length > 15) {
+                            return data.substring(0, 7) + "...";
+                        } else {
+                            return data;
+                        }
+                    },
+                },
+                {
+                    data: "namecentrocosto",
+                    name: "namecentrocosto",
+                    render: function (data) {
+                        if (data.length > 5) {
+                            return data.substring(0, 3) + "...";
+                        } else {
+                            return data;
+                        }
+                    },
+                },
                 { data: "saresolucion", name: "saresolucion" },
                 { data: "ncresolucion", name: "ncresolucion" },
-                { data: "ncstatus", name: "ncstatus" },
-                { data: "tipo", name: "tipo" },
+                { data: "ncstatus", name: "ncstatus" },                
+                {
+                    data: "tipo",
+                    name: "tipo",
+                    render: function (data) {
+                        if (data.length > 7) {
+                            return data.substring(0, 3) + "...";
+                        } else {
+                            return data;
+                        }
+                    },
+                },
                 {
                     data: "nctotal",
                     name: "nctotal",

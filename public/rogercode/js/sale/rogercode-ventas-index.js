@@ -49,7 +49,7 @@ $(document).ready(function () {
                             return data;
                         }
                     },
-                },               
+                },                             
                 { data: "status", name: "status" },
                 {
                     data: 'total_valor_a_pagar',
