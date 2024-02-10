@@ -32,8 +32,18 @@ function initializeDataTable(centrocostoId = "-1", categoriaId = "-1") {
             },
         },
         columns: [
-            { data: "namecategoria", name: "namecategoria" },
-            { data: "nameproducto", name: "nameproducto" },
+            { data: "namecategoria", name: "namecategoria" },            
+            {
+                data: "nameproducto",
+                name: "nameproducto",
+                render: function (data) {
+                    if (data.length > 10) {
+                        return `<span title="${data}">${data.substring(0, 9)}.</span>`;
+                    } else {
+                        return data;
+                    }
+                },
+            },
             { data: "invinicial", name: "invinicial" },
             { data: "compraLote", name: "compraLote" },
             { data: "alistamiento", name: "alistamiento" },

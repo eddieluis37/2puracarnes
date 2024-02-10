@@ -64,8 +64,8 @@
 			<thead>
 				<tr>
 					<th width="32%">Descripción</th>
-					<th width="10%">Cant.</th>
-					<th width="12%">Vr.Total</th>
+					<th width="5%">Cant.</th>
+					<th width="5%">Vr.Total</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -73,7 +73,7 @@
 				<tr>
 					<td align="center">{{$item->nameprod}}</td>
 					<td align="center">{{$item->quantity}}</td>
-					<td align="center">$ {{number_format($item->total),2}}</td>
+					<td align="right">$ {{number_format($item->total),2}}</td>
 				</tr>
 				@endforeach
 			</tbody>
@@ -85,8 +85,8 @@
 					<td colspan="1" class="text-center">
 						<span><strong>{{ $quantity = $item->where('notacredito_id', '=', $item->notacredito_id)->sum('quantity')}}</strong></span>
 					</td>
-					<td class="text-center">
-						<span><strong>${{ number_format($item->where('notacredito_id', '=', $item->notacredito_id)->sum('total'),0)}}</strong></span>
+					<td class="text-right">
+						<span><strong>$ {{ number_format($item->where('notacredito_id', '=', $item->notacredito_id)->sum('total'),0)}}</strong></span>
 					</td>
 				</tr>
 			</tfoot>
