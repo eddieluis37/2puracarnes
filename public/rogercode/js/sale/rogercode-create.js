@@ -132,31 +132,7 @@ btnAdd.addEventListener("click", (e) => {
     });
 });
 
-// Get the current date
-const date = new Date();
 
-// Create a dynamic password by combining letters and the current date
-const passwordHoy = "admin" + date.getFullYear() + (date.getMonth() + 1) + date.getDate();
-
-
-
-btnRemove.addEventListener("click", (e) => {
-    e.preventDefault();
-    const priceInput = document.querySelector("#price");
-    const passwordInput = document.querySelector("#password");
-    const password = passwordInput.value;
-
-    // Check if the password is correct
-    if (password === passwordHoy) {
-        // Disable the readonly attribute of the price input field
-        priceInput.removeAttribute("readonly");
-    } else {
-        // Set the readonly attribute of the price input field
-        priceInput.setAttribute("readonly", true);
-        // Display an error message
-        alert("Contraseña incorrecta");
-    }
-});
 
 const showData = (data) => {
     let dataAll = data.array;
@@ -289,34 +265,26 @@ quantity.addEventListener("change", function () {
     quantity.value = enteredValue;
 });
 
-/* // Get the form and input elements
-const form = document.querySelector("form-price-change");
-const priceInput = document.querySelector("#price");
-const passwordInput = document.querySelector("#password");
+// Get the current date
+const date = new Date();
 
- */
-//const selectCategoria = document.querySelector("#categoria");
-//const selectProducto = document.getElementById("producto");
-/*selectCategoria.addEventListener("change", function() {
-    const selectedValue = this.value;
-    console.log("Selected value:", selectedValue);
+// Create a dynamic password by combining letters and the current date
+const passwordHoy = "admin" + date.getFullYear() + (date.getMonth() + 1) + date.getDate();
 
-    const dataform = new FormData();
-    dataform.append("categoriaId", Number(selectedValue));
-    sendData("/getproductos",dataform,token).then((result) => {
-        console.log(result);
-        let prod = result.products;
-        console.log(prod);
-        //showDataTable(result);
-        selectProducto.innerHTML = "";
-        selectProducto.innerHTML += `<option value="">Seleccione el producto</option>`;
-        // Create and append options to the select element
-        prod.forEach(option => {
-        const optionElement = document.createElement("option");
-        optionElement.value = option.id;
-        optionElement.text = option.name;
-        selectProducto.appendChild(optionElement);
-        });
-    });
+btnRemove.addEventListener("click", (e) => {
+    e.preventDefault();
+    const priceInput = document.querySelector("#price");
+    const passwordInput = document.querySelector("#password");
+    const password = passwordInput.value;
 
-});*/
+    // Check if the password is correct
+    if (password === passwordHoy) {
+        // Disable the readonly attribute of the price input field
+        priceInput.removeAttribute("readonly");
+    } else {
+        // Set the readonly attribute of the price input field
+        priceInput.setAttribute("readonly", true);
+        // Display an error message
+        alert("Contraseña incorrecta");
+    }
+});
