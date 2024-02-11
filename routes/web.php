@@ -62,6 +62,7 @@ use App\Http\Controllers\listaprecio\listaPrecioController;
 use App\Http\Controllers\ReportController;
 
 use App\Http\Controllers\ImportStockFisicoController;
+use App\Http\Controllers\inventory\inventoryUtilidadController;
 use App\Http\Controllers\notacredito\notacreditoController;
 use App\Http\Controllers\notacredito\pdfNotacreditoController;
 use App\Http\Controllers\notadebito\notadebitoController;
@@ -217,6 +218,10 @@ Route::group(['middleware' => [('auth')]], function () {
     Route::get('inventory/consolidado_historico', [inventoryController::class, 'indexhistorico'])->name('inventory.consolidadohistorico');
     Route::get('totaleshist', [inventoryController::class, 'totaleshist'])->name('inventory.totaleshist');
     //Route::post('/updateCcpInventory', 'CentroCostoProductController@updateCcpInventory')->name('updateCcpInventory');
+
+      /*****************************INVENTORY UTILIDAD ****************************************** */
+
+      Route::get('inventory/utilidad', [inventoryUtilidadController::class, 'index'])->name('inventory.utilidad');
 
     /*****************************CARGAR-VENTAS*******************************************/
     Route::get('inventory/cargar_ventas', [CargarVentasController::class, 'index'])->name('inventory.showcvc');
