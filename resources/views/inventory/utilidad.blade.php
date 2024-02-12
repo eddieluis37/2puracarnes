@@ -180,20 +180,19 @@
             <tr>
               <th class="table-th text-white" title="Categoria">CAT</th>
               <th class="table-th text-white" title="Productos">PRODUCTO</th>
-              <th class="table-th text-white" title="Inventario Inicial">INI</th>
-              <th class="table-th text-white" title="Compras Lotes">CL</th>
-              <th class="table-th text-white" title="Alistamiento">AL</th>
-              <th class="table-th text-white" title="Compras Compensados">CP</th>
+              <th class="table-th text-white" title="Inventario Inicial">$.INI</th>
+              <th class="table-th text-white" title="Compras Lotes">$.LOTES</th>          
+              <th class="table-th text-white" title="Compras Compensados">$.COMPE</th>
               <th class="table-th text-white" title="Translados Ingresos">TI</th>
               <th class="table-th text-white" title="Translados Salidas">TS</th>
-              <th class="table-th text-white" title="Ventas">VE</th>
+              <th class="table-th text-white" title="Inventario final">INV.FINAL</th>
+              <th class="table-th text-white" title="">COSTO</th>
+              <th class="table-th text-white" title="">VENTAS</th>
               <th class="table-th text-white" title="Notas Creditos">NC</th>
               <th class="table-th text-white" title="Notas Debitos">ND</th>
-              <th class="table-th text-white" title="Stock Ideal">SI</th>
-              <th class="table-th text-white" title="InventarioFinal">INF</th>
-              <th class="table-th text-white" title="Disponible">DIS</th>
-              <th class="table-th text-white" title="Merma">MER</th>
-              <th class="table-th text-white" title="Porcentaje Merma">%MER</th>
+              <th class="table-th text-white" title="">TOTAL.VENT</th>
+              <th class="table-th text-white" title="">UTIL</th>            
+              <th class="table-th text-white" title="">%UTIL</th>
             </tr>
           </thead>
           <tbody>
@@ -225,5 +224,5 @@
 </div>
 @endsection
 @section('script')
-<script src="{{asset('code/js/inventory/code-consolidado-index.js')}} " type="module"></script>
+<script src="{{asset('code/js/inventory/code-consolidado-utilidad-index.js')}} " type="module"></script>
 @endsection

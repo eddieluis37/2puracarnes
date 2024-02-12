@@ -222,6 +222,7 @@ Route::group(['middleware' => [('auth')]], function () {
       /*****************************INVENTORY UTILIDAD ****************************************** */
 
       Route::get('inventory/utilidad', [inventoryUtilidadController::class, 'index'])->name('inventory.utilidad');
+      Route::get('showConsolidadoUtilidad', [inventoryUtilidadController::class, 'show'])->name('inventory.showUtilidad');
 
     /*****************************CARGAR-VENTAS*******************************************/
     Route::get('inventory/cargar_ventas', [CargarVentasController::class, 'index'])->name('inventory.showcvc');

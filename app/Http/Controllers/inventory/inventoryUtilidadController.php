@@ -39,19 +39,20 @@ class inventoryUtilidadController extends Controller
             ->select(
                 'cat.name as namecategoria',
                 'pro.name as nameproducto',
-                'ccp.invinicial as invinicial',
-                'ccp.compralote as compraLote',
+                'ccp.cto_invinicial_total as invinicial',
+                'ccp.cto_compralote_total as compraLote',
                 'ccp.alistamiento',
-                'ccp.compensados as compensados',
-                'ccp.trasladoing as trasladoing',
-                'ccp.trasladosal as trasladosal',
-                'ccp.venta as venta',
+                'ccp.cto_compensados_total as compensados',
+                'ccp.cto_trasladoing_total as trasladoing',
+                'ccp.cto_trasladosal_total as trasladosal',                
+                'ccp.cto_venta_total as venta',
                 'ccp.notacredito as notacredito',
                 'ccp.notadebito as notadebito',
                 'ccp.stock as stock',
                 'ccp.fisico as fisico',
-                'ccp.products_id as products_id'
-            )
+                'ccp.products_id as products_id',
+                DB::raw('(pro.cost * ccp.fisico) as invfinaltotal')
+            )          
             ->where('ccp.centrocosto_id', $centrocostoId)
             ->where(function ($query) {
                 $query->where('ccp.tipoinventario', 'cerrado')
