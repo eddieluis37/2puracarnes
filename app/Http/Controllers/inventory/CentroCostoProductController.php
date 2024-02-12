@@ -119,7 +119,8 @@ class CentroCostoProductController extends Controller
                 'pro.name as nameproducto',
                 'pro.id as productId',
                 'ccp.invinicial as invinicial',
-                'ccp.fisico as fisico'
+                'ccp.fisico as fisico',
+                'pro.cost as costo',
             )
             ->where('ccp.centrocosto_id', $centrocostoId)
             ->where('pro.category_id', $categoriaId)

@@ -78,7 +78,9 @@
                 <th class="table-th text-white">CAT</th>
                 <th class="table-th text-white">ID</th>
                 <th class="table-th text-white">PRODUCTO</th>
-                <th class="table-th text-white">STOCK FISICO</th>
+                <th class="table-th text-white">STOCK FISICO</th>  
+                <th class="table-th text-white">COSTO</th>
+                <th class="table-th text-white">SUBTOTAL</th>
               </tr>
             </thead>
             <tbody>

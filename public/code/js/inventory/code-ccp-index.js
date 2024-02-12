@@ -27,6 +27,7 @@ $(document).ready(function () {
                 dataSrc: function (response) {
                     // Modificar los datos antes de que se procesen en la tabla
                     var modifiedData = response.data.map(function (item) {
+                        var subtotal =  (item.fisico * item.costo);
                         return {
                             namecategoria: item.namecategoria,
                             nameproducto: item.nameproducto,
@@ -36,6 +37,8 @@ $(document).ready(function () {
                                 '" size="4" />',
 
                             productId: item.productId,
+                            costo: item.costo,
+                            subtotal: subtotal,
                         };
                     });
                     return modifiedData;
@@ -46,7 +49,23 @@ $(document).ready(function () {
                 { data: "productId", name: "productId" },
                 { data: "nameproducto", name: "nameproducto" },
                 { data: "fisico", name: "fisico" },
+                {
+                    data: "costo",
+                    name: "costo",
+                    render: function (data, type, row) {
+                        return "$ " + formatCantidadSinCero(data);
+                    },
+                },
+                {
+                    data: "subtotal",
+                    name: "subtotal",
+                    render: function (data, type, row) {
+                        return "$ " + formatCantidadSinCero(data);
+                    },
+                },
+                
             ],
+
             order: [[2, "ASC"]],
             language: {
                 processing: "Procesando...",
@@ -89,6 +108,7 @@ $(document).ready(function () {
             },
             success: function (response) {
                 console.log("Update successful");
+                dataTable.ajax.reload();
             },
             error: function (xhr, status, error) {
                 console.error("Error updating");
@@ -123,7 +143,12 @@ $(document).ready(function () {
                     var centrocostoId = $("#centrocosto").val();
                     updateCcpInventory(productId, fisico, centrocostoId);
 
-                    $(this).closest("tr").next().find(".edit-fisico").focus().select();
+                    $(this)
+                        .closest("tr")
+                        .next()
+                        .find(".edit-fisico")
+                        .focus()
+                        .select();
                 } else {
                     Swal.fire({
                         icon: "error",
