@@ -37,16 +37,13 @@ function initializeDataTable(centrocostoId = "-1", categoriaId = "-1") {
                 data: "nameproducto",
                 name: "nameproducto",
                 render: function (data) {
-                    if (data.length > 10) {
-                        return `<span title="${data}">${data.substring(
-                            0,
-                            9
-                        )}.</span>`;
+                    if (data.length > 18) {
+                        return `<span title="${data}">${data.substring(0, 18).toLowerCase()}.</span>`;
                     } else {
-                        return data;
+                        return data.toLowerCase();
                     }
                 },
-            },
+            },            
             {
                 data: "invinicial",
                 name: "invinicial",
