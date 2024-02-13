@@ -127,10 +127,17 @@ class notacreditoController extends Controller
                 ->where('product_id', $centroCostoProduct->products_id)
                 ->sum('quantity');
 
+            $accumulatedTotalBruto = 0;
+
+            $accumulatedTotalBruto += NotacreditoDetail::where('notacredito_id', '=', $id)
+            ->where('product_id', $centroCostoProduct->products_id)
+            ->sum('total_bruto');
+
             // Almacenar la cantidad acomulado en la tabla temporal
             DB::table('table_temporary_accumulated_notacredito')->insert([
                 'product_id' => $centroCostoProduct->products_id,
-                'accumulated_quantity' => $accumulatedQuantity
+                'accumulated_quantity' => $accumulatedQuantity,
+                'accumulated_total_bruto' => $accumulatedTotalBruto
             ]);
         }
 
@@ -140,8 +147,9 @@ class notacreditoController extends Controller
         foreach ($accumulatedQuantitys as $accumulatedQuantity) {
             $centroCostoProduct = Centro_costo_product::find($accumulatedQuantity->product_id);
 
-            // Sumar el valor de accumulatedQuantity al campo compensados
+            // Sumar el valor de accumulatedQuantity al campo 
             $centroCostoProduct->notacredito += $accumulatedQuantity->accumulated_quantity;
+            $centroCostoProduct->cto_notacredito += $accumulatedQuantity->accumulated_total_bruto;
             $centroCostoProduct->save();
 
             // Limpiar la tabla table_temporary_accumulated_notacredito

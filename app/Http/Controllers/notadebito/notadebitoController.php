@@ -39,7 +39,7 @@ class notadebitoController extends Controller
 
         try {
 
-            $venta = new Notadebito();            
+            $venta = new Notadebito();
             $venta->user_id = $request->user()->id;
             $venta->sale_id = $ventaId->id;
             $venta->tipo = $tipo;
@@ -115,10 +115,17 @@ class notadebitoController extends Controller
                 ->where('product_id', $centroCostoProduct->products_id)
                 ->sum('quantity');
 
+            $accumulatedTotalBruto = 0;
+
+            $accumulatedTotalBruto += NotadebitoDetail::where('sale_id', '=', $id)
+                ->where('product_id', $centroCostoProduct->products_id)
+                ->sum('total_bruto');
+
             // Almacenar la cantidad acomulado en la tabla temporal
             DB::table('table_temporary_accumulated_notadebito')->insert([
                 'product_id' => $centroCostoProduct->products_id,
-                'accumulated_quantity' => $accumulatedQuantity
+                'accumulated_quantity' => $accumulatedQuantity,
+                'accumulated_total_bruto' => $accumulatedTotalBruto
             ]);
         }
 
@@ -130,6 +137,7 @@ class notadebitoController extends Controller
 
             // Sumar el valor de accumulatedQuantity al campo compensados
             $centroCostoProduct->notadebito += $accumulatedQuantity->accumulated_quantity;
+            $centroCostoProduct->cto_notadebito += $accumulatedQuantity->accumulated_total_bruto;
             $centroCostoProduct->save();
 
             // Limpiar la tabla table_temporary_accumulated_notadebito
