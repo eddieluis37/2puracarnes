@@ -55,7 +55,9 @@ class CreateCentroCostoProductsTable extends Migration
             $table->decimal('cto_trasladosal_total', 18, 2)->default(0)->nullable(); // Salida por traslados
             $table->decimal('cto_invfisico_total', 18, 2)->default(0)->nullable(); //Inventario Final
 
-            $table->decimal('cto_venta_total', 18, 2)->default(0)->nullable(); // Ventas                       
+            $table->decimal('cto_venta_total', 18, 2)->default(0)->nullable(); // Ventas   
+            $table->decimal('cto_notacredito', 18, 2)->default(0)->nullable(); // NC                        
+            $table->decimal('cto_notadebito', 18, 2)->default(0)->nullable(); // ND
             $table->decimal('precioventa_min', 18, 2)->default(0)->nullable(); // Ventas 
 
             $table->timestamps();

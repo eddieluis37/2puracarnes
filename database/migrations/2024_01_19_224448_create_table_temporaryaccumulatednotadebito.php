@@ -17,6 +17,7 @@ class CreateTableTemporaryAccumulatedNotadebito extends Migration
             $table->increments('id');
             $table->integer('product_id');
             $table->decimal('accumulated_quantity', 8, 2);
+            $table->decimal('accumulated_total_bruto', 12, 0);
             $table->timestamps();
         });
     }
