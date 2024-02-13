@@ -183,15 +183,15 @@
               <th class="table-th text-white" title="Inventario Inicial">$.INI</th>
               <th class="table-th text-white" title="Compras Lotes">$.LOTES</th>          
               <th class="table-th text-white" title="Compras Compensados">$.COMPE</th>
-              <th class="table-th text-white" title="Translados Ingresos">TI</th>
-              <th class="table-th text-white" title="Translados Salidas">TS</th>
-              <th class="table-th text-white" title="Inventario final">INV.FINAL</th>
-              <th class="table-th text-white" title="">COSTO</th>
-              <th class="table-th text-white" title="">VENTAS</th>
-              <th class="table-th text-white" title="Notas Creditos">NC</th>
-              <th class="table-th text-white" title="Notas Debitos">ND</th>
-              <th class="table-th text-white" title="">TOTAL.VENT</th>
-              <th class="table-th text-white" title="">UTIL</th>            
+              <th class="table-th text-white" title="Translados Ingresos">$.TI</th>
+              <th class="table-th text-white" title="Translados Salidas">$.TS</th>
+              <th class="table-th text-white" title="Inventario final">$.IF</th>
+              <th class="table-th text-white" title="">$.COSTO</th>
+              <th class="table-th text-white" title="">$.VENTAS</th>
+              <th class="table-th text-white" title="Notas Creditos">$.NC</th>
+              <th class="table-th text-white" title="Notas Debitos">$.ND</th>
+              <th class="table-th text-white" title="">$.TOTAL.VENT</th>
+              <th class="table-th text-white" title="">$.UTIL</th>            
               <th class="table-th text-white" title="">%UTIL</th>
             </tr>
           </thead>

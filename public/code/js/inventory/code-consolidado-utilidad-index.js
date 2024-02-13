@@ -111,6 +111,14 @@ function initializeDataTable(centrocostoId = "-1", categoriaId = "-1") {
                         return "" + formatCantidadSinCero(costo);
                 },
             },
+            {
+                data: "venta",
+                name: "venta",
+                render: function (data, type, row) {
+                    return "" + formatCantidadSinCero(data);
+                },
+            },
+
                  
             { data: "notacredito", name: "notacredito" },
             { data: "notadebito", name: "notadebito" },
