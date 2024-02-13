@@ -134,18 +134,11 @@ class saleController extends Controller
     {
         $currentDateTime = Carbon::now();
         $formattedDate = $currentDateTime->format('Y-m-d');
-
         $compensadores = Sale::where('id', $ventaId)->get();
-
         $ventadetalle = SaleDetail::where('sale_id', $ventaId)->get();
-        $product_ids = $ventadetalle->pluck('product_id'); // consulta todos los registros 
-
-        //  dd($product_ids);
-        //  dd($ventadetalle[1]);
+        $product_ids = $ventadetalle->pluck('product_id');
 
         $centrocosto_id = 1;
-
-        // Calcular el cantidad de productos acumulado del producto, // 
 
         $centroCostoProducts = Centro_costo_product::whereIn('products_id', $product_ids)
             ->where('centrocosto_id', $centrocosto_id)
@@ -156,21 +149,26 @@ class saleController extends Controller
                 ->where('product_id', $centroCostoProduct->products_id)
                 ->sum('quantity');
 
-            // Almacenar la cantidad acomulado en la tabla temporal
+            $accumulatedTotalBruto = 0;
+
+            $accumulatedTotalBruto += SaleDetail::where('sale_id', '=', $ventaId)
+                ->where('product_id', $centroCostoProduct->products_id)
+                ->sum('total_bruto');
+
             DB::table('table_temporary_accumulated_sales')->insert([
                 'product_id' => $centroCostoProduct->products_id,
-                'accumulated_quantity' => $accumulatedQuantity
+                'accumulated_quantity' => $accumulatedQuantity,
+                'accumulated_total_bruto' => $accumulatedTotalBruto
             ]);
         }
-
-        // Recuperar los registros de la tabla table_temporary_accumulated_sales
+         // Recuperar los registros de la tabla table_temporary_accumulated_sales
         $accumulatedQuantitys = DB::table('table_temporary_accumulated_sales')->get();
 
         foreach ($accumulatedQuantitys as $accumulatedQuantity) {
             $centroCostoProduct = Centro_costo_product::find($accumulatedQuantity->product_id);
 
-            // Sumar el valor de accumulatedQuantity al campo compensados
             $centroCostoProduct->venta += $accumulatedQuantity->accumulated_quantity;
+            $centroCostoProduct->cto_venta_total += $accumulatedQuantity->accumulated_total_bruto;
             $centroCostoProduct->save();
 
             // Limpiar la tabla table_temporary_accumulated_sales
@@ -180,8 +178,6 @@ class saleController extends Controller
         if (($compensadores[0]->valor_a_pagar_credito) > 0) {
             $this->cuentasPorCobrar($ventaId);
         }
-
-
 
         return response()->json([
             'status' => 1,

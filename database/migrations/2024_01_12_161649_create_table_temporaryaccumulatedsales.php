@@ -13,11 +13,12 @@ class CreateTableTemporaryAccumulatedSales extends Migration
      */
     public function up()
     {
-       // Se crea la tabla si no existe, para almacenar el quantity de venta acumulado de las ventas cerradas
+       // Se crea la tabla si no existe, para almacenar el quantity y total bruto de venta acumulado de las ventas cerradas
         Schema::create('table_temporary_accumulated_sales', function (Blueprint $table) {         
             $table->increments('id');
             $table->integer('product_id');
             $table->decimal('accumulated_quantity', 8, 2);
+            $table->decimal('accumulated_total_bruto', 12, 0);
             $table->timestamps();            
         });
     }
