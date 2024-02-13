@@ -46,7 +46,7 @@ function initializeDataTable(centrocostoId = "-1", categoriaId = "-1") {
                         return data;
                     }
                 },
-            },            
+            },
             {
                 data: "invinicial",
                 name: "invinicial",
@@ -61,21 +61,21 @@ function initializeDataTable(centrocostoId = "-1", categoriaId = "-1") {
                     return "" + formatCantidadSinCero(data);
                 },
             },
-          /*   { data: "alistamiento", name: "alistamiento" }, */
+            /*   { data: "alistamiento", name: "alistamiento" }, */
             {
                 data: "compensados",
                 name: "compensados",
                 render: function (data, type, row) {
                     return "" + formatCantidadSinCero(data);
                 },
-            },        
+            },
             {
                 data: "trasladoing",
                 name: "trasladoing",
                 render: function (data, type, row) {
                     return "" + formatCantidadSinCero(data);
                 },
-            },            
+            },
             {
                 data: "trasladosal",
                 name: "trasladosal",
@@ -96,19 +96,19 @@ function initializeDataTable(centrocostoId = "-1", categoriaId = "-1") {
                 name: "costo",
                 render: function (data, type, row) {
                     var invinicial = parseFloat(row.invinicial);
-                    var compraLote = parseFloat(row.compraLote);                 
+                    var compraLote = parseFloat(row.compraLote);
                     var compensados = parseFloat(row.compensados);
                     var trasladoing = parseFloat(row.trasladoing);
                     var trasladosal = parseFloat(row.trasladosal);
                     var invfinaltotal = parseFloat(row.invfinaltotal);
                     var costo =
                         invinicial +
-                        compraLote +                  
+                        compraLote +
                         compensados +
                         trasladoing -
                         trasladosal -
                         invfinaltotal;
-                        return "" + formatCantidadSinCero(costo);
+                    return "" + formatCantidadSinCero(costo);
                 },
             },
             {
@@ -118,82 +118,77 @@ function initializeDataTable(centrocostoId = "-1", categoriaId = "-1") {
                     return "" + formatCantidadSinCero(data);
                 },
             },
-
-                 
-            { data: "notacredito", name: "notacredito" },
-            { data: "notadebito", name: "notadebito" },
-            { data: "stock", name: "stock" },
-            { data: "fisico", name: "fisico" },
+            {
+                data: "notacredito",
+                name: "notacredito",
+                render: function (data, type, row) {
+                    return "" + formatCantidadSinCero(data);
+                },
+            },
+            {
+                data: "notadebito",
+                name: "notadebito",
+                render: function (data, type, row) {
+                    return "" + formatCantidadSinCero(data);
+                },
+            },
 
             {
                 data: null,
-                name: "disponible",
+                name: "totalventa",
                 render: function (data, type, row) {
+                    var venta = parseFloat(row.venta);
+                    var notacredito = parseFloat(row.notacredito);
+                    var notadebito = parseFloat(row.notadebito);
+                    var totalventa = venta - notacredito + notadebito;
+                    return "" + formatCantidadSinCero(totalventa);
+                },
+            },
+            {
+                data: null,
+                name: "utilidad",
+                render: function (data, type, row) {
+                    var venta = parseFloat(row.venta);
+                    var notacredito = parseFloat(row.notacredito);
+                    var notadebito = parseFloat(row.notadebito);
                     var invinicial = parseFloat(row.invinicial);
                     var compraLote = parseFloat(row.compraLote);
-                  /*   var alistamiento = parseFloat(row.alistamiento); */
                     var compensados = parseFloat(row.compensados);
                     var trasladoing = parseFloat(row.trasladoing);
-                    var disponible =
-                        invinicial +
+                    var trasladosal = parseFloat(row.trasladosal);
+                    var invfinaltotal = parseFloat(row.invfinaltotal);
+                    var utilidad = (venta -
+                        notacredito +
+                        notadebito) - (invinicial +
                         compraLote +
-                    /*     alistamiento + */
                         compensados +
-                        trasladoing;
-                    return disponible.toFixed(2);
+                        trasladoing -
+                        trasladosal -
+                        invfinaltotal);                        ;                       ;
+                    return "" + formatCantidadSinCero(utilidad);
                 },
             },
-
             {
                 data: null,
-                name: "merma",
+                name: "utilidad_porcentaje",
                 render: function (data, type, row) {
-                    var merma = row.fisico - row.stock;
-                    var mermaFormatted = merma.toFixed(2);
-                    if (merma < 0) {
-                        return (
-                            '<span style="color: red;">' +
-                            mermaFormatted +
-                            "</span>"
-                        );
-                    } else {
-                        return mermaFormatted;
-                    }
-                },
-            },
-
-            {
-                data: null,
-                name: "pmerma",
-                render: function (data, type, row) {
-                    var merma = row.fisico - row.stock;
+                    var venta = parseFloat(row.venta);
+                    var notacredito = parseFloat(row.notacredito);
+                    var notadebito = parseFloat(row.notadebito);
                     var invinicial = parseFloat(row.invinicial);
                     var compraLote = parseFloat(row.compraLote);
-                 /*    var alistamiento = parseFloat(row.alistamiento); */
                     var compensados = parseFloat(row.compensados);
                     var trasladoing = parseFloat(row.trasladoing);
-                    var disponible =
-                        invinicial +
-                        compraLote +
-                    /*     alistamiento + */
-                        compensados +
-                        trasladoing;
-                    var pmerma = (merma / disponible) * 100;
-                    if (isNaN(pmerma) || !isFinite(pmerma)) {
-                        pmerma = 0;
-                    }
-                    var pmermaFormatted = pmerma.toFixed(2) + "%";
-                    if (pmerma < 0) {
-                        return (
-                            '<span style="color: red;">' +
-                            pmermaFormatted +
-                            "</span>"
-                        );
-                    } else {
-                        return pmermaFormatted;
-                    }
+                    var trasladosal = parseFloat(row.trasladosal);
+                    var invfinaltotal = parseFloat(row.invfinaltotal);
+                    var utilidad = (venta - notacredito + notadebito) - (invinicial + compraLote + compensados + trasladoing - trasladosal - invfinaltotal);
+                    var totalventa = venta - notacredito + notadebito;
+                    var utilidadPorcentaje = (utilidad / totalventa) * 100;
+                    return "" + utilidadPorcentaje.toFixed(2) + "%";
                 },
             },
+
+           
         ],
         order: [[1, "ASC"]],
         language: {
@@ -237,7 +232,7 @@ function initializeDataTable(centrocostoId = "-1", categoriaId = "-1") {
                     return parseFloat(a) + parseFloat(b);
                 }, 0)
                 .toFixed(2);
-/* 
+            /* 
             // Totalizar la columna "alistamiento"
             var totalAlistamiento = api
                 .column("alistamiento:name", { search: "applied" })
@@ -274,7 +269,7 @@ function initializeDataTable(centrocostoId = "-1", categoriaId = "-1") {
                 }, 0)
                 .toFixed(2);
 
-     /*        // Totalizar la columna "venta"
+            /*        // Totalizar la columna "venta"
             var totalVenta = api
                 .column("venta:name", { search: "applied" })
                 .data()
@@ -284,26 +279,26 @@ function initializeDataTable(centrocostoId = "-1", categoriaId = "-1") {
                 .toFixed(2); */
 
             // Totalizar la columna "stock"
-            var totalStock = api
+          /*   var totalStock = api
                 .column("stock:name", { search: "applied" })
                 .data()
                 .reduce(function (a, b) {
                     return parseFloat(a) + parseFloat(b);
                 }, 0)
                 .toFixed(2);
-
+ */
             // Totalizar la columna "fisico"
-            var totalFisico = api
+        /*     var totalFisico = api
                 .column("fisico:name", { search: "applied" })
                 .data()
                 .reduce(function (a, b) {
                     return parseFloat(a) + parseFloat(b);
                 }, 0)
-                .toFixed(2);
+                .toFixed(2); */
 
             // Totalizar la columna "disponible"
             var totalDisponible = api
-                .column("disponible:name", { search: "applied" })
+                .column("totalventa:name", { search: "applied" })
                 .data()
                 .reduce(function (a, b) {
                     var value = parseFloat(b);
@@ -314,13 +309,13 @@ function initializeDataTable(centrocostoId = "-1", categoriaId = "-1") {
             // Agregar los valores totales en el footer
             $(api.column("invinicial:name").footer()).html(totalInvinicial);
             $(api.column("compraLote:name").footer()).html(totalCompraLote);
-        /*     $(api.column("alistamiento:name").footer()).html(totalAlistamiento); */
+            /*     $(api.column("alistamiento:name").footer()).html(totalAlistamiento); */
             $(api.column("compensados:name").footer()).html(totalCompensados);
             $(api.column("trasladoing:name").footer()).html(totalTrasladoing);
             $(api.column("trasladosal:name").footer()).html(totalTrasladosal);
             /* $(api.column("venta:name").footer()).html(totalVenta); */
             $(api.column("stock:name").footer()).html(totalStock);
-            $(api.column("fisico:name").footer()).html(totalFisico);
+           /*  $(api.column("fisico:name").footer()).html(totalFisico); */
             $(api.column("disponible:name").footer()).html(totalDisponible);
         },
     });
@@ -340,7 +335,7 @@ function cargarTotales(centrocostoId = "-1", categoriaId = "-1") {
             $("#totalInvInicial").html(data.totalInvInicial);
 
             $("#totalCompraLote").html(data.totalCompraLote);
-   /*          $("#totalAlistamiento").html(data.totalAlistamiento); */
+            /*          $("#totalAlistamiento").html(data.totalAlistamiento); */
             $("#totalCompensados").html(data.totalCompensados);
             $("#totalTrasladoing").html(data.totalTrasladoing);
 
