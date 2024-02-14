@@ -66,11 +66,11 @@ class inventoryUtilidadController extends Controller
         foreach ($data as $item) {
             $stock = ($item->invinicial + $item->compraLote + $item->alistamiento + $item->compensados + $item->trasladoing) - (($item->venta ) + $item->trasladosal) - ($item->notacredito - $item->notadebito);
             $item->stock = round($stock, 2);
-            // Actualizar el stock 
+           /*  // Actualizar el stock 
             DB::table('centro_costo_products')
                 ->where('centrocosto_id', $centrocostoId)
                 ->where('products_id', $item->products_id)
-                ->update(['stock' => $item->stock]);
+                ->update(['stock' => $item->stock]); */
         }
         return datatables()->of($data)
             ->addIndexColumn()
