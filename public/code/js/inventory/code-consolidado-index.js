@@ -1,11 +1,11 @@
-import  {sendData} from '../exportModule/core/rogercode-core.js' ;
+import { sendData } from "../exportModule/core/rogercode-core.js";
 import {
-  successToastMessage,
-  errorMessage,
+    successToastMessage,
+    errorMessage,
 } from "../exportModule/message/rogercode-message.js";
 import {
-  loadingStart,
-  loadingEnd,
+    loadingStart,
+    loadingEnd,
 } from "../exportModule/core/rogercode-core.js";
 
 console.log("Starting");
@@ -32,15 +32,18 @@ function initializeDataTable(centrocostoId = "-1", categoriaId = "-1") {
             },
         },
         columns: [
-            { data: "namecategoria", name: "namecategoria" },            
+            { data: "namecategoria", name: "namecategoria" },
             {
                 data: "nameproducto",
                 name: "nameproducto",
                 render: function (data) {
-                    if (data.length > 10) {
-                        return `<span title="${data}">${data.substring(0, 9)}.</span>`;
+                    let subStringData = data.substring(0, 25).toLowerCase();
+                    let capitalizedSubString = subStringData.charAt(0).toUpperCase() + subStringData.slice(1);
+                    if (data.length > 25) {
+                        return `<span style="font-size: smaller;" title="${data}">${capitalizedSubString}.</span>`;
                     } else {
-                        return data;
+                      /*   return `<span style="font-size: smaller;">${data.toLowerCase()}</span>`; */
+                        return `<span style="font-size: smaller;">${capitalizedSubString}</span>`;
                     }
                 },
             },
@@ -282,14 +285,13 @@ function cargarTotales(centrocostoId = "-1", categoriaId = "-1") {
             $("#totalSalidas").html(data.totalSalidas);
 
             $("#totalConteoFisico").html(data.totalConteoFisico);
-            
+
             $("#diferenciaKilos").html(data.diferenciaKilos);
             $("#difKilosPermitidos").html(data.difKilosPermitidos);
             $("#porcMerma").html(data.porcMerma);
             $("#porcMermaPermitida").html(data.porcMermaPermitida);
             $("#difKilos").html(data.difKilos);
             $("#difPorcentajeMerma").html(data.difPorcentajeMerma);
-
         },
     });
 }
@@ -308,48 +310,56 @@ $(document).ready(function () {
 });
 
 document
-.getElementById("cargarInventarioBtn")
-.addEventListener("click", (e) => {
-    e.preventDefault();
-    let element = e.target;
-    showConfirmationAlert(element)
-    .then((result) => {
-        if (result && result.value) {
-            loadingStart(element);
-            const dataform = new FormData();
-         
-            const var_centrocostoId = document.querySelector("#centrocosto");
-            const var_categoriaId = document.querySelector("#categoria");
-         
-            dataform.append("centrocostoId", Number(var_centrocostoId.value));
-            dataform.append("categoriaId", Number(var_categoriaId.value));          
-          
-            return sendData("/cargarInventariohist", dataform, token);
-        }
-    })
-    .then((result) => {
-        console.log(result);
-        if (result && result.status == 1) {
-            loadingEnd(element, "success", "Cargando al inventorio");
-            element.disabled = true;
-            return swal(
-                "EXITO",
-                "Inventario Cargado Exitosamente",
-                "success"
-            );
-        }
-        if (result && result.status == 0) {
-            loadingEnd(element, "success", "Cargando al inventorio");
-            errorMessage(result.message);
-        }
-    })
-    .then(() => {
-        window.location.href = "/inventory/consolidado";
-    })
-    .catch((error) => {
-        console.error(error);
+    .getElementById("cargarInventarioBtn")
+    .addEventListener("click", (e) => {
+        e.preventDefault();
+        let element = e.target;
+        showConfirmationAlert(element)
+            .then((result) => {
+                if (result && result.value) {
+                    loadingStart(element);
+                    const dataform = new FormData();
+
+                    const var_centrocostoId =
+                        document.querySelector("#centrocosto");
+                    const var_categoriaId =
+                        document.querySelector("#categoria");
+
+                    dataform.append(
+                        "centrocostoId",
+                        Number(var_centrocostoId.value)
+                    );
+                    dataform.append(
+                        "categoriaId",
+                        Number(var_categoriaId.value)
+                    );
+
+                    return sendData("/cargarInventariohist", dataform, token);
+                }
+            })
+            .then((result) => {
+                console.log(result);
+                if (result && result.status == 1) {
+                    loadingEnd(element, "success", "Cargando al inventorio");
+                    element.disabled = true;
+                    return swal(
+                        "EXITO",
+                        "Inventario Cargado Exitosamente",
+                        "success"
+                    );
+                }
+                if (result && result.status == 0) {
+                    loadingEnd(element, "success", "Cargando al inventorio");
+                    errorMessage(result.message);
+                }
+            })
+            .then(() => {
+                window.location.href = "/inventory/consolidado";
+            })
+            .catch((error) => {
+                console.error(error);
+            });
     });
-});
 
 function showConfirmationAlert(element) {
     return swal.fire({
@@ -363,5 +373,4 @@ function showConfirmationAlert(element) {
         confirmButtonText: "Acpetar",
         denyButtonText: `Cancelar`,
     });
-  }
-
+}

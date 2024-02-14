@@ -37,13 +37,18 @@ function initializeDataTable(centrocostoId = "-1", categoriaId = "-1") {
                 data: "nameproducto",
                 name: "nameproducto",
                 render: function (data) {
-                    if (data.length > 18) {
-                        return `<span title="${data}">${data.substring(0, 18).toLowerCase()}.</span>`;
+                    let subStringData = data.substring(0, 25).toLowerCase();
+                    let capitalizedSubString =
+                        subStringData.charAt(0).toUpperCase() +
+                        subStringData.slice(1);
+                    if (data.length > 25) {
+                        return `<span style="font-size: smaller;" title="${data}">${capitalizedSubString}.</span>`;
                     } else {
-                        return data.toLowerCase();
+                        /*   return `<span style="font-size: smaller;">${data.toLowerCase()}</span>`; */
+                        return `<span style="font-size: smaller;">${capitalizedSubString}</span>`;
                     }
                 },
-            },            
+            },
             {
                 data: "invinicial",
                 name: "invinicial",
@@ -154,14 +159,16 @@ function initializeDataTable(centrocostoId = "-1", categoriaId = "-1") {
                     var trasladoing = parseFloat(row.trasladoing);
                     var trasladosal = parseFloat(row.trasladosal);
                     var invfinaltotal = parseFloat(row.invfinaltotal);
-                    var utilidad = (venta -
+                    var utilidad =
+                        venta -
                         notacredito +
-                        notadebito) - (invinicial +
-                        compraLote +
-                        compensados +
-                        trasladoing -
-                        trasladosal -
-                        invfinaltotal);                        ;                       ;
+                        notadebito -
+                        (invinicial +
+                            compraLote +
+                            compensados +
+                            trasladoing -
+                            trasladosal -
+                            invfinaltotal);
                     return "" + formatCantidadSinCero(utilidad);
                 },
             },
@@ -178,14 +185,21 @@ function initializeDataTable(centrocostoId = "-1", categoriaId = "-1") {
                     var trasladoing = parseFloat(row.trasladoing);
                     var trasladosal = parseFloat(row.trasladosal);
                     var invfinaltotal = parseFloat(row.invfinaltotal);
-                    var utilidad = (venta - notacredito + notadebito) - (invinicial + compraLote + compensados + trasladoing - trasladosal - invfinaltotal);
+                    var utilidad =
+                        venta -
+                        notacredito +
+                        notadebito -
+                        (invinicial +
+                            compraLote +
+                            compensados +
+                            trasladoing -
+                            trasladosal -
+                            invfinaltotal);
                     var totalventa = venta - notacredito + notadebito;
                     var utilidadPorcentaje = (utilidad / totalventa) * 100;
                     return "" + utilidadPorcentaje.toFixed(2) + "%";
                 },
             },
-
-           
         ],
         order: [[1, "ASC"]],
         language: {
@@ -276,7 +290,7 @@ function initializeDataTable(centrocostoId = "-1", categoriaId = "-1") {
                 .toFixed(2); */
 
             // Totalizar la columna "stock"
-          /*   var totalStock = api
+            /*   var totalStock = api
                 .column("stock:name", { search: "applied" })
                 .data()
                 .reduce(function (a, b) {
@@ -285,7 +299,7 @@ function initializeDataTable(centrocostoId = "-1", categoriaId = "-1") {
                 .toFixed(2);
  */
             // Totalizar la columna "fisico"
-        /*     var totalFisico = api
+            /*     var totalFisico = api
                 .column("fisico:name", { search: "applied" })
                 .data()
                 .reduce(function (a, b) {
@@ -312,7 +326,7 @@ function initializeDataTable(centrocostoId = "-1", categoriaId = "-1") {
             $(api.column("trasladosal:name").footer()).html(totalTrasladosal);
             /* $(api.column("venta:name").footer()).html(totalVenta); */
             $(api.column("stock:name").footer()).html(totalStock);
-           /*  $(api.column("fisico:name").footer()).html(totalFisico); */
+            /*  $(api.column("fisico:name").footer()).html(totalFisico); */
             $(api.column("disponible:name").footer()).html(totalDisponible);
         },
     });
