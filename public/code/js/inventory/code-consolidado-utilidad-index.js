@@ -226,32 +226,27 @@ function initializeDataTable(centrocostoId = "-1", categoriaId = "-1") {
         footerCallback: function (row, data, start, end, display) {
             var api = this.api();
 
-            // Totalizar la columna "invinicial"
+            // Totalize the "invinicial" column
             var totalInvinicial = api
                 .column("invinicial:name", { search: "applied" })
                 .data()
-                .reduce(function (a, b) {
-                    return parseFloat(a) + parseFloat(b);
-                }, 0)
-                .toFixed(2);
+                .reduce(function (acc, val) {
+                    return acc + parseFloat(val);
+                }, 0);
+
+            // Format the total using the formatCantidadSinCero function
+            var formattedTotalInvinicial =
+                formatCantidadSinCero(totalInvinicial);
 
             // Totalizar la columna "compraLote"
             var totalCompraLote = api
                 .column("compraLote:name", { search: "applied" })
                 .data()
-                .reduce(function (a, b) {
-                    return parseFloat(a) + parseFloat(b);
-                }, 0)
-                .toFixed(2);
-            /* 
-            // Totalizar la columna "alistamiento"
-            var totalAlistamiento = api
-                .column("alistamiento:name", { search: "applied" })
-                .data()
-                .reduce(function (a, b) {
-                    return parseFloat(a) + parseFloat(b);
-                }, 0)
-                .toFixed(2); */
+                .reduce(function (acc, val) {
+                    return acc + parseFloat(val);
+                }, 0);
+            // Format the total using the formatCantidadSinCero function
+            var formattedCompraLote = formatCantidadSinCero(totalCompraLote);
 
             // Totalizar la columna "compensados"
             var totalCompensados = api
@@ -261,73 +256,65 @@ function initializeDataTable(centrocostoId = "-1", categoriaId = "-1") {
                     return parseFloat(a) + parseFloat(b);
                 }, 0)
                 .toFixed(2);
+            var formattedCompensados = formatCantidadSinCero(totalCompensados);
 
-            // Totalizar la columna "trasladoing"
             var totalTrasladoing = api
                 .column("trasladoing:name", { search: "applied" })
                 .data()
-                .reduce(function (a, b) {
-                    return parseFloat(a) + parseFloat(b);
-                }, 0)
-                .toFixed(2);
+                .reduce(function (acc, val) {
+                    return acc + parseFloat(val);
+                }, 0);
+
+            var formattedtrasladoing = formatCantidadSinCero(totalTrasladoing);
 
             // Totalizar la columna "trasladosal"
             var totalTrasladosal = api
                 .column("trasladosal:name", { search: "applied" })
                 .data()
-                .reduce(function (a, b) {
-                    return parseFloat(a) + parseFloat(b);
-                }, 0)
-                .toFixed(2);
+                .reduce(function (acc, val) {
+                    return acc + parseFloat(val);
+                }, 0);
 
-            /*        // Totalizar la columna "venta"
-            var totalVenta = api
-                .column("venta:name", { search: "applied" })
-                .data()
-                .reduce(function (a, b) {
-                    return parseFloat(a) + parseFloat(b);
-                }, 0)
-                .toFixed(2); */
+            var formattedTotalTrasladosal =
+                formatCantidadSinCero(totalTrasladosal);
 
-            // Totalizar la columna "stock"
-            /*   var totalStock = api
-                .column("stock:name", { search: "applied" })
+            var totalInvFinal = api
+                .column("invfinaltotal:name", { search: "applied" })
                 .data()
-                .reduce(function (a, b) {
-                    return parseFloat(a) + parseFloat(b);
-                }, 0)
-                .toFixed(2);
- */
-            // Totalizar la columna "fisico"
-            /*     var totalFisico = api
-                .column("fisico:name", { search: "applied" })
-                .data()
-                .reduce(function (a, b) {
-                    return parseFloat(a) + parseFloat(b);
-                }, 0)
-                .toFixed(2); */
+                .reduce(function (acc, val) {
+                    return acc + parseFloat(val);
+                }, 0);
 
-            // Totalizar la columna "disponible"
-            var totalDisponible = api
-                .column("totalventa:name", { search: "applied" })
-                .data()
-                .reduce(function (a, b) {
-                    var value = parseFloat(b);
-                    return isNaN(value) ? a : a + value;
-                }, 0)
-                .toFixed(2);
+            var formattedTotalInvFinal = formatCantidadSinCero(totalInvFinal);
+
+            var totalCosto = api
+            .column("costo:name", { search: "applied" })
+            .data()
+            .reduce(function (a, b) {
+                return parseFloat(a) + parseFloat(b);
+            }, 0);
+
+            var formattedTotalCosto = formatCantidadSinCero(totalCosto);
 
             // Agregar los valores totales en el footer
-            $(api.column("invinicial:name").footer()).html(totalInvinicial);
-            $(api.column("compraLote:name").footer()).html(totalCompraLote);
-            /*     $(api.column("alistamiento:name").footer()).html(totalAlistamiento); */
-            $(api.column("compensados:name").footer()).html(totalCompensados);
-            $(api.column("trasladoing:name").footer()).html(totalTrasladoing);
-            $(api.column("trasladosal:name").footer()).html(totalTrasladosal);
-            /* $(api.column("venta:name").footer()).html(totalVenta); */
-            $(api.column("stock:name").footer()).html(totalStock);
-            /*  $(api.column("fisico:name").footer()).html(totalFisico); */
-            $(api.column("disponible:name").footer()).html(totalDisponible);
+            // Display the formatted total in the footer
+            $(api.column("invinicial:name").footer()).html(
+                formattedTotalInvinicial
+            );
+            $(api.column("compraLote:name").footer()).html(formattedCompraLote);
+            $(api.column("compensados:name").footer()).html(
+                formattedCompensados
+            );
+            $(api.column("trasladoing:name").footer()).html(
+                formattedtrasladoing
+            );
+            $(api.column("trasladosal:name").footer()).html(
+                formattedTotalTrasladosal
+            );
+            $(api.column("invfinaltotal:name").footer()).html(
+                formattedTotalInvFinal
+            );
+            $(api.column("costo:name").footer()).html(formattedTotalCosto);
         },
     });
 }
