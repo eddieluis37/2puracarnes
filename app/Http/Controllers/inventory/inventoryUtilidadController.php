@@ -27,7 +27,7 @@ class inventoryUtilidadController extends Controller
 
         return view('inventory.utilidad', compact('category', 'centros', 'startDate', 'endDate', 'totalStock'));
     }
-    
+
     public function show(Request $request)
     {
         $centrocostoId = $request->input('centrocostoId');
@@ -39,20 +39,23 @@ class inventoryUtilidadController extends Controller
             ->select(
                 'cat.name as namecategoria',
                 'pro.name as nameproducto',
-                'ccp.cto_invinicial_total as invinicial',
-                'ccp.cto_compralote_total as compraLote',
-                'ccp.alistamiento',
-                'ccp.cto_compensados_total as compensados',
+                'ccp.cto_invinicial_total as cto_invinicial',
+                'ccp.cto_compralote_total as cto_compraLote',
+                'ccp.cto_compensados_total as cto_compensados',
                 'ccp.cto_trasladoing_total as trasladoing',
-                'ccp.cto_trasladosal_total as trasladosal',                
+                'ccp.cto_trasladosal_total as trasladosal',
                 'ccp.cto_venta_total as venta',
                 'ccp.cto_notacredito as notacredito',
                 'ccp.cto_notadebito as notadebito',
                 'ccp.stock as stock',
                 'ccp.fisico as fisico',
                 'ccp.products_id as products_id',
-                DB::raw('(pro.cost * ccp.fisico) as invfinaltotal')
-            )          
+                DB::raw('(pro.cost * ccp.fisico) as invfinaltotal'),
+                'ccp.costos as costos',
+                DB::raw('((ccp.cto_venta_total - ccp.cto_notacredito) +  ccp.cto_notadebito) as totalventa'),
+                DB::raw('(ccp.total_venta - ccp.costos) as utilidad'),
+                DB::raw('((ccp.utilidad / ccp.total_venta) * 100) as porc_utilidad'),
+            )
             ->where('ccp.centrocosto_id', $centrocostoId)
             ->where(function ($query) {
                 $query->where('ccp.tipoinventario', 'cerrado')
@@ -63,14 +66,12 @@ class inventoryUtilidadController extends Controller
             ->get();
 
         // Calculo de la stock ideal 
-        foreach ($data as $item) {
-            $stock = ($item->invinicial + $item->compraLote + $item->alistamiento + $item->compensados + $item->trasladoing) - (($item->venta ) + $item->trasladosal) - ($item->notacredito - $item->notadebito);
-            $item->stock = round($stock, 2);
-           /*  // Actualizar el stock 
+        foreach ($data as $item) {          
+            $costos = ($item->cto_invinicial + $item->cto_compraLote + $item->cto_compensados + $item->trasladoing) - (($item->invfinaltotal) + $item->trasladosal);
             DB::table('centro_costo_products')
                 ->where('centrocosto_id', $centrocostoId)
                 ->where('products_id', $item->products_id)
-                ->update(['stock' => $item->stock]); */
+                ->update(['cto_invfinal_total' => $item->invfinaltotal, 'costos' => $costos, 'total_venta' =>  $item->totalventa,  'utilidad' =>  $item->utilidad]);
         }
         return datatables()->of($data)
             ->addIndexColumn()
@@ -88,10 +89,10 @@ class inventoryUtilidadController extends Controller
             ->select(
                 'cat.name as namecategoria',
                 'pro.name as nameproducto',
-                'ccp.invinicial as invinicial',
-                'ccp.compralote as compraLote',
+                'ccp.cto_invinicial as cto_invinicial',
+                'ccp.compralote as cto_compraLote',
                 'ccp.alistamiento',
-                'ccp.compensados as compensados',
+                'ccp.compensados as cto_compensados',
                 'ccp.trasladoing as trasladoing',
                 'ccp.trasladosal as trasladosal',
                 'ccp.venta as venta',
@@ -128,11 +129,11 @@ class inventoryUtilidadController extends Controller
 
         foreach ($data as $item) {
 
-            $stock = ($item->invinicial + $item->compraLote + $item->alistamiento + $item->compensados + $item->trasladoing) - ($item->venta + $item->trasladosal);
+            $stock = ($item->cto_invinicial + $item->cto_compraLote + $item->alistamiento + $item->cto_compensados + $item->trasladoing) - ($item->venta + $item->trasladosal);
             $item->stock = round($stock, 2);
             $totalStock += $stock;
 
-            $ingresos = ($item->invinicial + $item->compraLote + $item->alistamiento + $item->compensados + $item->trasladoing);
+            $ingresos = ($item->cto_invinicial + $item->cto_compraLote + $item->alistamiento + $item->cto_compensados + $item->trasladoing);
             $item->ingresos = round($ingresos, 2);
             $totalIngresos += $ingresos;
 
@@ -140,10 +141,10 @@ class inventoryUtilidadController extends Controller
             $item->salidas = round($salidas, 2);
             $totalSalidas += $salidas;
 
-            $totalInvInicial += $item->invinicial;
-            $totalCompraLote += $item->compraLote;
+            $totalInvInicial += $item->cto_invinicial;
+            $totalCompraLote += $item->cto_compraLote;
             $totalAlistamiento += $item->alistamiento;
-            $totalCompensados += $item->compensados;
+            $totalCompensados += $item->cto_compensados;
             $totalTrasladoIng += $item->trasladoing;
             $totalVenta += $item->venta;
             $totalTrasladoSal += $item->trasladosal;
@@ -193,5 +194,4 @@ class inventoryUtilidadController extends Controller
             ]
         );
     }
-
 }

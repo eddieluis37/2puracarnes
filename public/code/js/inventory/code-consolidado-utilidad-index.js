@@ -50,23 +50,22 @@ function initializeDataTable(centrocostoId = "-1", categoriaId = "-1") {
                 },
             },
             {
-                data: "invinicial",
-                name: "invinicial",
+                data: "cto_invinicial",
+                name: "cto_invinicial",
                 render: function (data, type, row) {
                     return "" + formatCantidadSinCero(data);
                 },
             },
             {
-                data: "compraLote",
-                name: "compraLote",
+                data: "cto_compraLote",
+                name: "cto_compraLote",
                 render: function (data, type, row) {
                     return "" + formatCantidadSinCero(data);
                 },
             },
-            /*   { data: "alistamiento", name: "alistamiento" }, */
             {
-                data: "compensados",
-                name: "compensados",
+                data: "cto_compensados",
+                name: "cto_compensados",
                 render: function (data, type, row) {
                     return "" + formatCantidadSinCero(data);
                 },
@@ -92,27 +91,34 @@ function initializeDataTable(centrocostoId = "-1", categoriaId = "-1") {
                     return "" + formatCantidadSinCero(data);
                 },
             },
-
             {
+                data: "costos",
+                name: "costos",
+                render: function (data, type, row) {
+                    return "" + formatCantidadSinCero(data);
+                },
+            },
+
+            /* {
                 data: null,
                 name: "costo",
                 render: function (data, type, row) {
-                    var invinicial = parseFloat(row.invinicial);
-                    var compraLote = parseFloat(row.compraLote);
-                    var compensados = parseFloat(row.compensados);
+                    var cto_invinicial = parseFloat(row.cto_invinicial);
+                    var cto_compraLote = parseFloat(row.cto_compraLote);
+                    var cto_compensados = parseFloat(row.cto_compensados);
                     var trasladoing = parseFloat(row.trasladoing);
                     var trasladosal = parseFloat(row.trasladosal);
                     var invfinaltotal = parseFloat(row.invfinaltotal);
                     var costo =
-                        invinicial +
-                        compraLote +
-                        compensados +
+                        cto_invinicial +
+                        cto_compraLote +
+                        cto_compensados +
                         trasladoing -
                         trasladosal -
                         invfinaltotal;
                     return "" + formatCantidadSinCero(costo);
-                },
-            },
+                }, 
+            },*/
             {
                 data: "venta",
                 name: "venta",
@@ -135,7 +141,7 @@ function initializeDataTable(centrocostoId = "-1", categoriaId = "-1") {
                 },
             },
 
-            {
+            /* {
                 data: null,
                 name: "totalventa",
                 render: function (data, type, row) {
@@ -145,17 +151,24 @@ function initializeDataTable(centrocostoId = "-1", categoriaId = "-1") {
                     var totalventa = venta - notacredito + notadebito;
                     return "" + formatCantidadSinCero(totalventa);
                 },
-            },
+            }, */
             {
+                data: "totalventa",
+                name: "totalventa",
+                render: function (data, type, row) {
+                    return "" + formatCantidadSinCero(data);
+                },
+            },
+            /* {
                 data: null,
                 name: "utilidad",
                 render: function (data, type, row) {
                     var venta = parseFloat(row.venta);
                     var notacredito = parseFloat(row.notacredito);
                     var notadebito = parseFloat(row.notadebito);
-                    var invinicial = parseFloat(row.invinicial);
-                    var compraLote = parseFloat(row.compraLote);
-                    var compensados = parseFloat(row.compensados);
+                    var cto_invinicial = parseFloat(row.cto_invinicial);
+                    var cto_compraLote = parseFloat(row.cto_compraLote);
+                    var cto_compensados = parseFloat(row.cto_compensados);
                     var trasladoing = parseFloat(row.trasladoing);
                     var trasladosal = parseFloat(row.trasladosal);
                     var invfinaltotal = parseFloat(row.invfinaltotal);
@@ -163,25 +176,32 @@ function initializeDataTable(centrocostoId = "-1", categoriaId = "-1") {
                         venta -
                         notacredito +
                         notadebito -
-                        (invinicial +
-                            compraLote +
-                            compensados +
+                        (cto_invinicial +
+                            cto_compraLote +
+                            cto_compensados +
                             trasladoing -
                             trasladosal -
                             invfinaltotal);
                     return "" + formatCantidadSinCero(utilidad);
                 },
-            },
+            }, */
             {
+                data: "utilidad",
+                name: "utilidad",
+                render: function (data, type, row) {
+                    return "" + formatCantidadSinCero(data);
+                },
+            },
+            /* {
                 data: null,
                 name: "utilidad_porcentaje",
                 render: function (data, type, row) {
                     var venta = parseFloat(row.venta);
                     var notacredito = parseFloat(row.notacredito);
                     var notadebito = parseFloat(row.notadebito);
-                    var invinicial = parseFloat(row.invinicial);
-                    var compraLote = parseFloat(row.compraLote);
-                    var compensados = parseFloat(row.compensados);
+                    var cto_invinicial = parseFloat(row.cto_invinicial);
+                    var cto_compraLote = parseFloat(row.cto_compraLote);
+                    var cto_compensados = parseFloat(row.cto_compensados);
                     var trasladoing = parseFloat(row.trasladoing);
                     var trasladosal = parseFloat(row.trasladosal);
                     var invfinaltotal = parseFloat(row.invfinaltotal);
@@ -189,15 +209,22 @@ function initializeDataTable(centrocostoId = "-1", categoriaId = "-1") {
                         venta -
                         notacredito +
                         notadebito -
-                        (invinicial +
-                            compraLote +
-                            compensados +
+                        (cto_invinicial +
+                            cto_compraLote +
+                            cto_compensados +
                             trasladoing -
                             trasladosal -
                             invfinaltotal);
                     var totalventa = venta - notacredito + notadebito;
                     var utilidadPorcentaje = (utilidad / totalventa) * 100;
                     return "" + utilidadPorcentaje.toFixed(2) + "%";
+                },
+            }, */
+            {
+                data: "porc_utilidad",
+                name: "porc_utilidad",
+                render: function (data, type, row) {
+                    return "" + formatCantidad(data);
                 },
             },
         ],
@@ -226,9 +253,9 @@ function initializeDataTable(centrocostoId = "-1", categoriaId = "-1") {
         footerCallback: function (row, data, start, end, display) {
             var api = this.api();
 
-            // Totalize the "invinicial" column
+            // Totalize the "cto_invinicial" column
             var totalInvinicial = api
-                .column("invinicial:name", { search: "applied" })
+                .column("cto_invinicial:name", { search: "applied" })
                 .data()
                 .reduce(function (acc, val) {
                     return acc + parseFloat(val);
@@ -238,9 +265,9 @@ function initializeDataTable(centrocostoId = "-1", categoriaId = "-1") {
             var formattedTotalInvinicial =
                 formatCantidadSinCero(totalInvinicial);
 
-            // Totalizar la columna "compraLote"
+            // Totalizar la columna "cto_compraLote"
             var totalCompraLote = api
-                .column("compraLote:name", { search: "applied" })
+                .column("cto_compraLote:name", { search: "applied" })
                 .data()
                 .reduce(function (acc, val) {
                     return acc + parseFloat(val);
@@ -248,9 +275,9 @@ function initializeDataTable(centrocostoId = "-1", categoriaId = "-1") {
             // Format the total using the formatCantidadSinCero function
             var formattedCompraLote = formatCantidadSinCero(totalCompraLote);
 
-            // Totalizar la columna "compensados"
+            // Totalizar la columna "cto_compensados"
             var totalCompensados = api
-                .column("compensados:name", { search: "applied" })
+                .column("cto_compensados:name", { search: "applied" })
                 .data()
                 .reduce(function (a, b) {
                     return parseFloat(a) + parseFloat(b);
@@ -288,21 +315,76 @@ function initializeDataTable(centrocostoId = "-1", categoriaId = "-1") {
             var formattedTotalInvFinal = formatCantidadSinCero(totalInvFinal);
 
             var totalCosto = api
-            .column("costo:name", { search: "applied" })
+                .column("costos:name", { search: "applied" })
+                .data()
+                .reduce(function (a, b) {
+                    return parseFloat(a) + parseFloat(b);
+                }, 0);
+
+            var formattedTotalCosto = formatCantidadSinCero(totalCosto);
+
+            var venta = api
+                .column("venta:name", { search: "applied" })
+                .data()
+                .reduce(function (a, b) {
+                    return parseFloat(a) + parseFloat(b);
+                }, 0);
+
+            var formattedVenta = formatCantidadSinCero(venta);
+
+            var notacredito = api
+                .column("notacredito:name", { search: "applied" })
+                .data()
+                .reduce(function (a, b) {
+                    return parseFloat(a) + parseFloat(b);
+                }, 0);
+
+            var formattedNotacredito = formatCantidadSinCero(notacredito);
+
+            var notadebito = api
+                .column("notadebito:name", { search: "applied" })
+                .data()
+                .reduce(function (a, b) {
+                    return parseFloat(a) + parseFloat(b);
+                }, 0);
+
+            var formattedNotadebito = formatCantidadSinCero(notadebito);
+
+            var totalventa = api
+                .column("totalventa:name", { search: "applied" })
+                .data()
+                .reduce(function (a, b) {
+                    return parseFloat(a) + parseFloat(b);
+                }, 0);
+
+            var formattedTotalVenta = formatCantidadSinCero(totalventa);
+
+            var utilidad = api
+                .column("utilidad:name", { search: "applied" })
+                .data()
+                .reduce(function (a, b) {
+                    return parseFloat(a) + parseFloat(b);
+                }, 0);
+
+            var formattedUtilidad = formatCantidadSinCero(utilidad);
+           
+            var porc_utilidad = api
+            .column("porc_utilidad:name", { search: "applied" })
             .data()
             .reduce(function (a, b) {
                 return parseFloat(a) + parseFloat(b);
             }, 0);
 
-            var formattedTotalCosto = formatCantidadSinCero(totalCosto);
+            var formattedPorcUtilidad = formatCantidadSinCero(porc_utilidad);
 
             // Agregar los valores totales en el footer
-            // Display the formatted total in the footer
-            $(api.column("invinicial:name").footer()).html(
+            $(api.column("cto_invinicial:name").footer()).html(
                 formattedTotalInvinicial
             );
-            $(api.column("compraLote:name").footer()).html(formattedCompraLote);
-            $(api.column("compensados:name").footer()).html(
+            $(api.column("cto_compraLote:name").footer()).html(
+                formattedCompraLote
+            );
+            $(api.column("cto_compensados:name").footer()).html(
                 formattedCompensados
             );
             $(api.column("trasladoing:name").footer()).html(
@@ -314,7 +396,15 @@ function initializeDataTable(centrocostoId = "-1", categoriaId = "-1") {
             $(api.column("invfinaltotal:name").footer()).html(
                 formattedTotalInvFinal
             );
-            $(api.column("costo:name").footer()).html(formattedTotalCosto);
+            $(api.column("costos:name").footer()).html(formattedTotalCosto);
+            $(api.column("venta:name").footer()).html(formattedVenta);
+            $(api.column("notacredito:name").footer()).html(
+                formattedNotacredito
+            );
+            $(api.column("notadebito:name").footer()).html(formattedNotadebito);
+            $(api.column("totalventa:name").footer()).html(formattedTotalVenta);
+            $(api.column("utilidad:name").footer()).html(formattedUtilidad);
+            $(api.column("porc_utilidad:name").footer()).html(formattedPorcUtilidad);
         },
     });
 }
