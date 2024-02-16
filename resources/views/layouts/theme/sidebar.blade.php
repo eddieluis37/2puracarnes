@@ -24,6 +24,25 @@
 
             @can('Admin_Menu')
             <li class="menu">
+                <a href="#comercial" data-active="false" class="menu-toggle">
+                    <div class="base-menu">
+                        <div class="base-icons">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-briefcase">
+                                <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
+                                <path d="M16 3.5a2.5 2.5 0 0 1 2.5 2.5v2h2a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2v-8a2 2 0 0 1 2-2h2v-2a2.5 2.5 0 0 1 2.5-2.5"></path>
+                            </svg>
+                        </div>
+                        <span>Comercial</span>
+                    </div>
+                </a>
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-left">
+                    <polyline points="15 18 9 12 15 6"></polyline>
+                </svg>
+            </li>
+            @endcan
+
+            @can('Admin_Menu')
+            <li class="menu">
                 <a href="#documentos" data-active="false" class="menu-toggle">
                     <div class="base-menu">
                         <div class="base-icons">
@@ -229,6 +248,7 @@
                 </a>
             </li>
             @endcan
+
 
             @can('Admin_Menu')
             <li class="menu">
@@ -769,6 +789,24 @@
                     </ul>
                 </li>
             </ul>
+        </div>
+
+        <div class=" submenu" id="comercial">
+                                <ul class="submenu-list" data-parent-element="#comercial">
+                                    <li>
+                                        <a href="{{ url('notacredito') }}"><span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-circle">
+                                                    <circle cx="12" cy="12" r="10"></circle>
+                                                </svg></span> Ordenes de pedidos </a>
+                                    </li>
+                                    <li>
+                                        <a href="{{ url('') }}"><span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-circle">
+                                                    <circle cx="12" cy="12" r="10"></circle>
+                                                </svg></span>  </a>
+                                    </li>
+                                  
+
+
+                                </ul>
         </div>
 
         <div class=" submenu" id="documentos">
