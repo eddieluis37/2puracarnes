@@ -45,7 +45,7 @@ class CreateCentroCostoProductsTable extends Migration
             $table->decimal('cto_compensados', 18, 2)->default(0)->nullable(); // Compensados          
             $table->decimal('cto_trasladoing', 18, 2)->default(0)->nullable(); // Ingreso por traslados
             $table->decimal('cto_trasladosal', 18, 2)->default(0)->nullable(); // Salida por traslados               
-            $table->decimal('cto_invfisico', 18, 2)->default(0)->nullable(); //Inventario Final
+            $table->decimal('cto_invfinal', 18, 2)->default(0)->nullable(); //Inventario Final
            
             $table->decimal('cto_invinicial_total', 18, 2)->default(0)->nullable(); //Inventario Inicial
             $table->decimal('cto_compralote_total', 18, 2)->default(0)->nullable(); // Compra del lote
@@ -53,11 +53,14 @@ class CreateCentroCostoProductsTable extends Migration
             $table->decimal('cto_compensados_total', 18, 2)->default(0)->nullable(); // Compensados          
             $table->decimal('cto_trasladoing_total', 18, 2)->default(0)->nullable(); // Ingreso por traslados
             $table->decimal('cto_trasladosal_total', 18, 2)->default(0)->nullable(); // Salida por traslados
-            $table->decimal('cto_invfisico_total', 18, 2)->default(0)->nullable(); //Inventario Final
+            $table->decimal('cto_invfinal_total', 18, 2)->default(0)->nullable(); //Inventario Final
 
+            $table->decimal('costos', 18, 2)->default(0)->nullable(); // 
             $table->decimal('cto_venta_total', 18, 2)->default(0)->nullable(); // Ventas   
             $table->decimal('cto_notacredito', 18, 2)->default(0)->nullable(); // NC                        
             $table->decimal('cto_notadebito', 18, 2)->default(0)->nullable(); // ND
+            $table->decimal('total_venta', 18, 2)->default(0)->nullable(); // 
+            $table->decimal('utilidad', 18, 2)->default(0)->nullable(); // 
             $table->decimal('precioventa_min', 18, 2)->default(0)->nullable(); // Ventas 
 
             $table->timestamps();

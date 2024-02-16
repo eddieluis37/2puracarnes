@@ -67,12 +67,12 @@ use App\Http\Controllers\notacredito\notacreditoController;
 use App\Http\Controllers\notacredito\pdfNotacreditoController;
 use App\Http\Controllers\notadebito\notadebitoController;
 use App\Http\Controllers\notadebito\pdfNotadebitoController;
+use App\Http\Controllers\order\orderController;
 use App\Http\Controllers\recibodecaja\pdfRecibodecajaController;
 use App\Http\Controllers\recibodecaja\recibodecajaController;
 use App\Http\Controllers\res\pdfLoteController;
 use App\Http\Controllers\sale\exportFacturaController;
 
-use App\Models\Notacredito;
 
 /************************************************* */
 
@@ -426,6 +426,22 @@ Route::group(['middleware' => [('auth')]], function () {
      Route::get('/facturasByCliente/{cliente_id}', [recibodecajaController::class, 'facturasByCliente'])->name('recibodecaja.facturasByCliente');
     
     /* Route::post('registroPagoSave', [saleController::class, 'storeRegistroPago'])->name('pago.save'); */
+
+    /*****************************ORDENES DE PEDIDOS******************************************/
+
+    Route::get('orders', [orderController::class, 'index'])->name('order.index');
+    Route::get('showOrder', [orderController::class, 'show'])->name('order.showOrder');
+    Route::post('ordersave', [orderController::class, 'store'])->name('order.save');
+   /* Route::get('notacredito/create/{id}', [notacreditoController::class, 'create'])->name('notacredito.create');
+    Route::post('notacreditosavedetail', [notacreditoController::class, 'savedetail'])->name('notacredito.savedetail');
+    Route::get('/obtener-precios-producto', [notacreditoController::class, 'obtenerPreciosProducto'])->name('notacredito.obtener-precios-producto');
+    Route::post('notacreditoById', [notacreditoController::class, 'editNotacredito'])->name('notacredito.editNotacredito');
+    Route::post('notacredito/create/registrar_notacredito/{id}', [notacreditoController::class, 'storeNotacredito'])->name('notacredito2.save');
+    Route::get('notacredito/showNotacredito/{id}', [pdfNotacreditoController::class, 'showNotacredito']);
+    Route::post('downnotacredito', [notacreditoController::class, 'destroy'])->name('notacredito.down');     
+    
+    Route::get('/getFacturasByCliente/{cliente_id}', [notacreditoController::class, 'getFacturasByCliente'])->name('notacredito.getFacturasByCliente'); */
+
 
      /*****************************NOTA_CREDITO******************************************/
 
