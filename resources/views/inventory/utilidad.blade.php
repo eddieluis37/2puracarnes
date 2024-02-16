@@ -27,7 +27,7 @@
     <div class="widget widget-chart-one">
       <div class="card text-center" style="background: #3B3F5C">
         <div class="m-2">
-          <h4 style="color:white;"><strong>Cierre de Inventario de Utilidad</strong></h3>
+          <h4 style="color:white;"><strong>Inventario de Utilidad</strong></h3>
         </div>
       </div>
       <div class="row g-3 mt-3">
@@ -67,7 +67,7 @@
         </div> -->
         <div class="col-md-3 text-right ml-auto">
           <div style="margin-top:28px;" clas="">
-            <button class="btn btn-success btn-lg" type="button" id="cargarInventarioBtn" disabled>Cerrar Inventario</button>
+        <!--     <button class="btn btn-success btn-lg" type="button" id="cargarInventarioBtn" disabled>Cerrar Inventario</button> -->
           </div>
         </div>
       </div>
@@ -115,7 +115,7 @@
 
         </div>
       </div>
-      <div class="table-responsive">
+    <!--   <div class="table-responsive">
         <table class="table table-sm table-inventario">
           <thead class="text-white" style="background: #3B3F5C">
             <tr>
@@ -166,7 +166,7 @@
               </td>
               <td style="background: orange">
                 <!-- Decomi
-                <div id="decomisos">0,00</div> -->
+                <div id="decomisos">0,00</div> 
               </td>
             </tr>
           </thead>
@@ -177,7 +177,7 @@
             </tr>
           </tfoot>
         </table>
-      </div>
+      </div> -->
       <div class="table-responsive mt-3">
         <table id="tableInventory" class="table table-striped mt-1">
           <thead class="text-white" style="background: #3B3F5C">
@@ -191,12 +191,12 @@
               <th class="table-th text-white" title="Translados Salidas">$.TS</th>
               <th class="table-th text-white" title="Inventario final">$.IF</th>
               <th class="table-th text-white" title="">$.COSTO</th>
-              <th class="table-th text-white" title="">$.SALE</th>
+              <th class="table-th text-white" title="Ventas">$.SALE</th>
               <th class="table-th text-white" title="Notas Creditos">$.NC</th>
               <th class="table-th text-white" title="Notas Debitos">$.ND</th>
               <th class="table-th text-white" title="Total Venta">$.TV</th>
-              <th class="table-th text-white" title="">$.UTIL</th>
-              <th class="table-th text-white" title="">%UTIL</th>
+              <th class="table-th text-white" title="Utilidad">$.UT</th>
+              <th class="table-th text-white" title="Porcentaje Utilidad">%.UT</th>
             </tr>
           </thead>
           <tbody>
