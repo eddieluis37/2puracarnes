@@ -6,7 +6,7 @@ import {
 btnAddVentaDomicilio.addEventListener("click", async (e) => {
     e.preventDefault();
     const dataform = new FormData(formCompensadoRes);
-    sendData("/notacreditosave", dataform, token).then((resp) => {
+    sendData("/ordersave", dataform, token).then((resp) => {
         console.log(resp);
         if (resp.status == 1) {
             formCompensadoRes.reset();
@@ -14,7 +14,7 @@ btnAddVentaDomicilio.addEventListener("click", async (e) => {
             successToastMessage(resp.message);
             if (resp.registroId != 0) {
                 //for new register
-                window.location.href = `notacredito/create/${resp.registroId}`;
+                window.location.href = `order/create/${resp.registroId}`;
             } else {
                 refresh_table();
             }
@@ -46,11 +46,11 @@ $(document).ready(function() {
                 success:function(data) {                  
                     $('#direccion_evio').empty();
                     $.each(data, function(key, value) {                     
-                        $('#direccion_evio').append('<option value="'+ value.id +'">'+ value.direccion +'</option>')
-                        $('#direccion_evio').append('<option value="'+ value.id +'">'+ value.direccion1 +'</option>');
-                        $('#direccion_evio').append('<option value="'+ value.id +'">'+ value.direccion2 +'</option>');
-                        $('#direccion_evio').append('<option value="'+ value.id +'">'+ value.direccion3 +'</option>');
-                        $('#direccion_evio').append('<option value="'+ value.id +'">'+ value.direccion4 +'</option>');
+                        $('#direccion_evio').append('<option value="'+ value.direccion +'">'+ value.direccion +'</option>')
+                        $('#direccion_evio').append('<option value="'+ value.direccion1 +'">'+ value.direccion1 +'</option>');
+                        $('#direccion_evio').append('<option value="'+ value.direccion2 +'">'+ value.direccion2 +'</option>');
+                        $('#direccion_evio').append('<option value="'+ value.direccion3 +'">'+ value.direccion3 +'</option>');
+                        $('#direccion_evio').append('<option value="'+ value.direccion4 +'">'+ value.direccion4 +'</option>');
                     });
                 }
             });

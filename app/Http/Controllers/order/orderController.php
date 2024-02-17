@@ -129,4 +129,84 @@ class orderController extends Controller
             ->rawColumns(['status', 'date', 'action'])
             ->make(true);
     }
+
+    public function store(Request $request) // Crear nota credito desde ventana modal
+    {
+        try {
+            $rules = [
+                'ventaId' => 'required',
+                /* 'factura' => [
+                    'required',
+                    function ($attribute, $value, $fail) {
+                        $count = Order::where('sale_id', $value)->count();
+                        if ($count >= 2) {
+                            $fail('No se puede crear más de 2 notas de crédito para la misma factura');
+                        }
+                    }
+                ], */
+            ];
+            $messages = [
+                'ventaId.required' => 'El ventaId es requerido',
+                /* 'factura.required' => 'La factura es requerida', */
+            ];
+            $validator = Validator::make($request->all(), $rules, $messages);
+            if ($validator->fails()) {
+                return response()->json([
+                    'status' => 0,
+                    'errors' => $validator->errors()
+                ], 422);
+            }
+            $getReg = Order::where('third_id', $request->cliente)->count();
+            if ($getReg < 2) {
+                $currentDateTime = Carbon::now();
+                $currentDateFormat = Carbon::parse($currentDateTime->format('Y-m-d'));
+                $current_date = Carbon::parse($currentDateTime->format('Y-m-d'));
+                $current_date->modify('next monday'); // Move to the next Monday
+                $dateNextMonday = $current_date->format('Y-m-d'); // Output the date in Y-m-d format
+                $id_user = Auth::user()->id;
+                //    $idcc = $request->centrocosto;
+                $venta = new Order();
+                $venta->user_id = $id_user;
+                $venta->third_id = $request->cliente;
+                //  dd($request->factura); // es el id de la factura de venta seleccionada en el modal create
+                $venta->fecha_order = $currentDateFormat;
+                /*  $venta->fecha_cierre =  now(); */
+                $venta->direccion_envio = $request->direccion_evio;
+                $venta->items = 0;
+                $venta->save();
+                /* //ACTUALIZA CONSECUTIVO 
+                $idcc = $request->centrocosto;
+                DB::update(
+                    "
+        UPDATE notacreditos a,    
+        (
+            SELECT @numeroConsecutivo:= (SELECT (COALESCE (max(consec),0) ) FROM sales where centrocosto_id = :vcentrocosto1 ),
+            @documento:= (SELECT MAX(prefijo) FROM centro_costo where id = :vcentrocosto2 )
+        ) as tabla
+        SET a.consecutivo =  CONCAT( @documento,  LPAD( (@numeroConsecutivo:=@numeroConsecutivo + 1),5,'0' ) ),
+            a.consec = @numeroConsecutivo
+        WHERE a.consecutivo is null",
+                    [
+                        'vcentrocosto1' => $idcc,
+                        'vcentrocosto2' => $idcc
+                    ]
+                ); */
+                return response()->json([
+                    'status' => 1,
+                    'message' => 'Guardado correctamente',
+                    "registroId" => $venta->id
+                ]);
+            } else {
+                return response()->json([
+                    'status' => 0,
+                    'message' => 'No se puede crear más de 2 notas de crédito para la misma factura'
+                ]);
+            }
+        } catch (\Throwable $th) {
+            return response()->json([
+                'status' => 0,
+                'array' => (array) $th
+            ]);
+        }
+    }
 }

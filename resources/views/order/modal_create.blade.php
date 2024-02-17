@@ -105,11 +105,11 @@
 						<select class="form-control form-control-sm input" name="direccion_evio" id="direccion_evio" required>
 							<option value="">Seleccione dir de entrega</option>
 							@foreach($direccion as $dir)
-							<option value="{{ $dir->id }}">{{ $dir->direccion }}</option>
-							<option value="{{ $dir->id }}">{{ $dir->direccion1 }}</option>
-							<option value="{{ $dir->id }}">{{ $dir->direccion2 }}</option>
-							<option value="{{ $dir->id }}">{{ $dir->direccion3 }}</option>
-							<option value="{{ $dir->id }}">{{ $dir->direccion4 }}</option>
+							<option value="{{ $dir->direccion }}">{{ $dir->direccion }}</option>
+							<option value="{{ $dir->direccion1 }}">{{ $dir->direccion1 }}</option>
+							<option value="{{ $dir->direccion2 }}">{{ $dir->direccion2 }}</option>
+							<option value="{{ $dir->direccion3 }}">{{ $dir->direccion3 }}</option>
+							<option value="{{ $dir->direccion4 }}">{{ $dir->direccion4 }}</option>
 							@endforeach
 						</select>
 						<span class="text-danger error-message"></span>
