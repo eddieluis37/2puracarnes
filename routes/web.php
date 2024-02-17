@@ -432,6 +432,10 @@ Route::group(['middleware' => [('auth')]], function () {
     Route::get('orders', [orderController::class, 'index'])->name('order.index');
     Route::get('showOrder', [orderController::class, 'show'])->name('order.showOrder');
     Route::post('ordersave', [orderController::class, 'store'])->name('order.save');
+
+
+    Route::get('/getDireccionesByCliente/{cliente_id}', [orderController::class, 'getDireccionesByCliente'])->name('order.getDireccionesByCliente');
+
    /* Route::get('notacredito/create/{id}', [notacreditoController::class, 'create'])->name('notacredito.create');
     Route::post('notacreditosavedetail', [notacreditoController::class, 'savedetail'])->name('notacredito.savedetail');
     Route::get('/obtener-precios-producto', [notacreditoController::class, 'obtenerPreciosProducto'])->name('notacredito.obtener-precios-producto');
@@ -440,7 +444,7 @@ Route::group(['middleware' => [('auth')]], function () {
     Route::get('notacredito/showNotacredito/{id}', [pdfNotacreditoController::class, 'showNotacredito']);
     Route::post('downnotacredito', [notacreditoController::class, 'destroy'])->name('notacredito.down');     
     
-    Route::get('/getFacturasByCliente/{cliente_id}', [notacreditoController::class, 'getFacturasByCliente'])->name('notacredito.getFacturasByCliente'); */
+  
 
 
      /*****************************NOTA_CREDITO******************************************/

@@ -102,10 +102,9 @@
 				<div class="task-header">
 					<div class="form-group">
 						<label for="domiciliario" class="form-label">Dirección de entrega</label>
-						<select class="form-control form-control-sm input" name="domiciliario" id="domiciliario" required>
+						<select class="form-control form-control-sm input" name="direccion_evio" id="direccion_evio" required>
 							<option value="">Seleccione el domiciliario</option>
-							@foreach($direcciones as $domiciliario)
-							<option value="{{ $domiciliario->id }}">{{ $domiciliario->direccion }}</option>
+							@foreach($direccion as $domiciliario)						
 							<option value="{{ $domiciliario->id }}">{{ $domiciliario->direccion1 }}</option>
 							<option value="{{ $domiciliario->id }}">{{ $domiciliario->direccion2 }}</option>
 							<option value="{{ $domiciliario->id }}">{{ $domiciliario->direccion3 }}</option>
@@ -116,8 +115,36 @@
 					</div>
 				</div>
 			</div>
+			<!-- <div class="col-md-6">
+				<div class="task-header">
+					<div class="form-group">
+						<label for="" class="form-label">Facturas</label>
+						<select class="form-control form-control-sm select2Ventas " name="direccion_evio" id="direccion_evio" required>
+							<option value="">Seleccione factura</option>
+							@foreach($ventas as $factura)
+							<option value="{{ $factura->id }}">{{ $factura->resolucion }}</option>
+							@endforeach
+						</select>
+						<span class="text-danger error-message"></span>
+					</div>
+				</div>
+			</div> -->
 
 
+			<div class="col-md-6">
+				<div class="task-header">
+					<div class="form-group">
+						<label for="" class="form-label">Facturas</label>
+						<select class="form-control form-control-sm select2Ventas " name="factura" id="factura" required>
+							<option value="">Seleccione factura</option>
+							@foreach($ventas as $factura)
+							<option value="{{ $factura->id }}">{{ $factura->resolucion }}</option>
+							@endforeach
+						</select>
+						<span class="text-danger error-message"></span>
+					</div>
+				</div>
+			</div>
 
 		</div>
 	</div>

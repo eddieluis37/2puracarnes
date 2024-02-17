@@ -40,18 +40,23 @@ $(document).ready(function() {
         var cliente_id = $(this).val();
         if (cliente_id) {
             $.ajax({
-                url: '/getFacturasByCliente/' + cliente_id,
+                url: '/getDireccionesByCliente/' + cliente_id,
                 type: "GET",
                 dataType: "json",
                 success:function(data) {
                     $('#factura').empty();
+                    $('#direccion_evio').empty();
                     $.each(data, function(key, value) {
                         $('#factura').append('<option value="'+ value.id +'">'+ value.resolucion +'</option>');
+                        $('#direccion_evio').append('<option value="'+ value.id +'">'+ value.direccion +'</option>')
+                        $('#direccion_evio').append('<option value="'+ value.id +'">'+ value.direccion1 +'</option>');
+                        $('#direccion_evio').append('<option value="'+ value.id +'">'+ value.direccion2 +'</option>');
                     });
                 }
             });
         } else {
             $('#factura').empty();
+            $('#direccion_evio').empty();
         }
     });
 });

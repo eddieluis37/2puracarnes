@@ -27,23 +27,47 @@ use Carbon\Carbon;
 
 class orderController extends Controller
 {
+    public function getDireccionesByCliente($cliente_id)
+    {
+        $direcciones = Third::where('id', $cliente_id)->orderBy('id', 'desc')->get(); // despliega las mas reciente
+        return response()->json($direcciones);
+        
+        /* $direcciones = Third::where('id', $cliente_id)
+            ->where(function ($query) {
+                $query->whereNotNull('direccion1')
+                    ->orWhereNotNull('direccion1')
+                    ->orWhereNotNull('direccion2')
+                    ->orWhereNotNull('direccion3')
+                    ->orWhereNotNull('direccion4');
+            })
+            ->select('direccion', 'direccion1', 'direccion2', 'direccion3', 'direccion4')
+            ->get(); */       
+        /* 
+        $direcciones = Third::where('id', $cliente_id)->orderBy('id', 'desc')->get(); // despliega las mas reciente
+        return response()->json($direcciones); */
+    }
+
     public function index()
     {
+        $direccion = Third::where(function ($query) {
+            $query->whereNotNull('direccion')
+                ->orWhereNotNull('direccion1')
+                ->orWhereNotNull('direccion2')
+                ->orWhereNotNull('direccion3')
+                ->orWhereNotNull('direccion4');
+        })
+            ->select('direccion', 'direccion1', 'direccion2', 'direccion3', 'direccion4')
+            ->get();
+
         $ventas = Sale::get();
         $centros = Centrocosto::Where('status', 1)->get();
         $clientes = Third::Where('cliente', 1)->get();
         $vendedores = Third::Where('vendedor', 1)->get();
         $domiciliarios = Third::Where('domiciliario', 1)->get();
         $subcentrodecostos = Subcentrocosto::get();
-        $direcciones = Third::where(function ($query) {
-            $query->whereNotNull('direccion')
-                ->orWhereNotNull('direccion1')
-                ->orWhereNotNull('direccion2')
-                ->orWhereNotNull('direccion3')
-                ->orWhereNotNull('direccion4');
-        })->select('direccion', 'direccion1', 'direccion2', 'direccion3', 'direccion4')->get();
 
-        return view('order.index', compact('ventas', 'centros', 'clientes', 'vendedores', 'domiciliarios', 'direcciones', 'subcentrodecostos'));
+
+        return view('order.index', compact('ventas', 'direccion', 'centros', 'clientes', 'vendedores', 'domiciliarios', 'subcentrodecostos'));
     }
 
     public function show()
@@ -52,7 +76,7 @@ class orderController extends Controller
             /*   ->join('categories as cat', 'sa.categoria_id', '=', 'cat.id') */
             ->join('thirds as tird', 'sa.third_id', '=', 'tird.id')
             ->join('centro_costo as centro', 'sa.centrocosto_id', '=', 'centro.id')
-            ->select('sa.*', 'sa.status as status', 'sa.resolucion as saresolucion', 'tird.name as namethird', 'centro.name as namecentrocosto')
+            ->select('sa.*', 'sa.status as status', 'tird.direccion as direccion', 'sa.resolucion as saresolucion', 'tird.name as namethird', 'centro.name as namecentrocosto')
             /*  ->where('sa.status', 1) */
             ->get();
 
