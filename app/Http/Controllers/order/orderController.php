@@ -31,20 +31,6 @@ class orderController extends Controller
     {
         $direcciones = Third::where('id', $cliente_id)->orderBy('id', 'desc')->get(); // despliega las mas reciente
         return response()->json($direcciones);
-        
-        /* $direcciones = Third::where('id', $cliente_id)
-            ->where(function ($query) {
-                $query->whereNotNull('direccion1')
-                    ->orWhereNotNull('direccion1')
-                    ->orWhereNotNull('direccion2')
-                    ->orWhereNotNull('direccion3')
-                    ->orWhereNotNull('direccion4');
-            })
-            ->select('direccion', 'direccion1', 'direccion2', 'direccion3', 'direccion4')
-            ->get(); */       
-        /* 
-        $direcciones = Third::where('id', $cliente_id)->orderBy('id', 'desc')->get(); // despliega las mas reciente
-        return response()->json($direcciones); */
     }
 
     public function index()

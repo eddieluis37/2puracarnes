@@ -43,19 +43,18 @@ $(document).ready(function() {
                 url: '/getDireccionesByCliente/' + cliente_id,
                 type: "GET",
                 dataType: "json",
-                success:function(data) {
-                    $('#factura').empty();
+                success:function(data) {                  
                     $('#direccion_evio').empty();
-                    $.each(data, function(key, value) {
-                        $('#factura').append('<option value="'+ value.id +'">'+ value.resolucion +'</option>');
+                    $.each(data, function(key, value) {                     
                         $('#direccion_evio').append('<option value="'+ value.id +'">'+ value.direccion +'</option>')
                         $('#direccion_evio').append('<option value="'+ value.id +'">'+ value.direccion1 +'</option>');
                         $('#direccion_evio').append('<option value="'+ value.id +'">'+ value.direccion2 +'</option>');
+                        $('#direccion_evio').append('<option value="'+ value.id +'">'+ value.direccion3 +'</option>');
+                        $('#direccion_evio').append('<option value="'+ value.id +'">'+ value.direccion4 +'</option>');
                     });
                 }
             });
-        } else {
-            $('#factura').empty();
+        } else {         
             $('#direccion_evio').empty();
         }
     });
@@ -66,8 +65,8 @@ $('#modal-create-notacredito').on('hidden.bs.modal', function () {
     $('.error-message').text('');
 });
 
-// Limpiar mensajes de error al cambiar el valor del campo factura
-$('#factura').on('change', function() {
+// Limpiar mensajes de error al cambiar el valor del campo 
+$('#direccion_evio').on('change', function() {
     $('.error-message').text('');
 });
 

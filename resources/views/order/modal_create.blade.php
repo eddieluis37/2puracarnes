@@ -101,51 +101,21 @@
 			<div class="col-md-6">
 				<div class="task-header">
 					<div class="form-group">
-						<label for="domiciliario" class="form-label">Dirección de entrega</label>
+						<label for="dir" class="form-label">Dirección de entrega</label>
 						<select class="form-control form-control-sm input" name="direccion_evio" id="direccion_evio" required>
-							<option value="">Seleccione el domiciliario</option>
-							@foreach($direccion as $domiciliario)						
-							<option value="{{ $domiciliario->id }}">{{ $domiciliario->direccion1 }}</option>
-							<option value="{{ $domiciliario->id }}">{{ $domiciliario->direccion2 }}</option>
-							<option value="{{ $domiciliario->id }}">{{ $domiciliario->direccion3 }}</option>
-							<option value="{{ $domiciliario->id }}">{{ $domiciliario->direccion4 }}</option>
+							<option value="">Seleccione dir de entrega</option>
+							@foreach($direccion as $dir)
+							<option value="{{ $dir->id }}">{{ $dir->direccion }}</option>
+							<option value="{{ $dir->id }}">{{ $dir->direccion1 }}</option>
+							<option value="{{ $dir->id }}">{{ $dir->direccion2 }}</option>
+							<option value="{{ $dir->id }}">{{ $dir->direccion3 }}</option>
+							<option value="{{ $dir->id }}">{{ $dir->direccion4 }}</option>
 							@endforeach
 						</select>
 						<span class="text-danger error-message"></span>
 					</div>
 				</div>
 			</div>
-			<!-- <div class="col-md-6">
-				<div class="task-header">
-					<div class="form-group">
-						<label for="" class="form-label">Facturas</label>
-						<select class="form-control form-control-sm select2Ventas " name="direccion_evio" id="direccion_evio" required>
-							<option value="">Seleccione factura</option>
-							@foreach($ventas as $factura)
-							<option value="{{ $factura->id }}">{{ $factura->resolucion }}</option>
-							@endforeach
-						</select>
-						<span class="text-danger error-message"></span>
-					</div>
-				</div>
-			</div> -->
-
-
-			<div class="col-md-6">
-				<div class="task-header">
-					<div class="form-group">
-						<label for="" class="form-label">Facturas</label>
-						<select class="form-control form-control-sm select2Ventas " name="factura" id="factura" required>
-							<option value="">Seleccione factura</option>
-							@foreach($ventas as $factura)
-							<option value="{{ $factura->id }}">{{ $factura->resolucion }}</option>
-							@endforeach
-						</select>
-						<span class="text-danger error-message"></span>
-					</div>
-				</div>
-			</div>
-
 		</div>
 	</div>
 </div>
