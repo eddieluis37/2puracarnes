@@ -71,6 +71,7 @@ class AsignarPreciosProdController extends Controller
         $listaprecioId = request('listaprecioId');
         $productId = request('productId');
         $precio = request('precio');
+        $porc_descuento = request('porc_descuento');
         $status = request('status');
 
         if (!is_null($precio)) {
@@ -78,6 +79,13 @@ class AsignarPreciosProdController extends Controller
                 ->where('listaprecio_id', $listaprecioId)
                 ->where('product_id', $productId)
                 ->update(['precio' => $precio]);
+        }
+
+        if (!is_null($porc_descuento)) {
+            DB::table('listapreciodetalles')
+                ->where('listaprecio_id', $listaprecioId)
+                ->where('product_id', $productId)
+                ->update(['porc_descuento' => $porc_descuento]);
         }
 
         if (!is_null($status)) {

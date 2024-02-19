@@ -32,8 +32,8 @@ $(document).ready(function () {
                             costo: item.costo,                          
                             porc_util_proyectada: item.porc_util_proyectada,
                             precio_proyectado: item.precio_proyectado,                        
-                            precio: getPriceInput(item.precio),
-                            porc_descuento: item.porc_descuento,
+                            precio: getPriceInput(item.precio),                            
+                            porc_descuento: getPorcDescuentoInput(item.porc_descuento),
                             utilidad: item.utilidad,
                             porc_utilidad: porc_utilidad,
                             productId: item.productId,
@@ -107,13 +107,20 @@ $(document).ready(function () {
         return '<input type="checkbox" class="edit-status" data-product-id="' + productId + '" ' + checkboxChecked + ' />';
     }
 
-    function getPriceInput(precio) {
-        return '<input type="text" class="edit-precio" value="' + new Intl.NumberFormat("es-CO", { style: "currency", currency: "COP", minimumFractionDigits: 0 }).format(precio) + '" size="8" />';
-    }
+    function getPriceInput(precio) { 
+        return '<input type="text" class="edit-precio" value="' + new Intl.NumberFormat("es-CO", { style: "currency", currency: "COP", minimumFractionDigits: 0 }).format(precio) + '" size="8" />'; 
+    } 
 
-    function updateAPPSwitch(productId, precio, listaprecioId, status) {
+    function getPorcDescuentoInput(porc_descuento) {
+        // Convertir el valor a porcentaje y limitar a dos decimales
+        var porcentaje = (porc_descuento * 1).toFixed(2);
+        return '<input type="text" class="edit-porc_descuento" value="' + porcentaje + '" size="6" />';
+    }
+    
+    function updateAPPSwitch(productId, precio, porc_descuento, listaprecioId, status) {
         console.log("productId:", productId);
         console.log("precio", precio);
+        console.log("porc_descuento", porc_descuento);
         console.log("listaprecioId:", listaprecioId);
         $.ajax({
             headers: {
@@ -124,6 +131,7 @@ $(document).ready(function () {
             data: {
                 productId: productId,
                 precio: precio,
+                porc_descuento: porc_descuento,
                 status: status,
                 listaprecioId: listaprecioId,
             },
@@ -145,7 +153,7 @@ $(document).ready(function () {
             if (regex.test(precio)) {
                 var productId = $(this).closest("tr").find("td:eq(1)").text();
                 var listaprecioId = $("#listaprecio").val();
-                updateAPPSwitch(productId, precio, listaprecioId, null);
+                updateAPPSwitch(productId, precio, null, listaprecioId, null);
                 $(this).closest("tr").next().find(".edit-precio").focus().select();
             } else {
                 Swal.fire({
@@ -158,12 +166,32 @@ $(document).ready(function () {
         }
     }
 
+   function handlePorcDescInput(event) {
+        if (event.which === 13 || event.which === 9) {
+            event.preventDefault();
+            var porc_descuento = $(this).val().replace(/[$\s,%]/g, "").replace(",", ".");
+            var regex = /^(?:\d{1,2}(?:,\d{3})*(?:\.\d{2})?|\d{1,5}(?:\.\d{2})?|\d{1,5}(?:\.\d{2})?%)$/;
+            if (regex.test(porc_descuento)) {
+                var productId = $(this).closest("tr").find("td:eq(1)").text();
+                var listaprecioId = $("#listaprecio").val();
+                updateAPPSwitch(productId, null, porc_descuento, listaprecioId, null);
+                $(this).closest("tr").next().find(".edit-porc_descuento").focus().select();
+            } else {
+                Swal.fire({
+                    icon: "error",
+                    title: "Porcentaje de descuento incorrecto",
+                    text: "Solo acepta valores enteros",
+                });
+                console.error("Solo acepta números enteros y decimales");
+            }
+        }
+    } 
+
     function handleStatusChange() {
         var productId = $(this).data("product-id");
         var listaprecioId = $("#listaprecio").val();
         var status = $(this).is(":checked") ? 1 : 0;
-        updateAPPSwitch(productId, null, listaprecioId, status);
-        /* dataTable.ajax.reload(); */
+        updateAPPSwitch(productId, null, null, listaprecioId, status);
     }
 
     initializeDataTable("-1");
@@ -175,5 +203,6 @@ $(document).ready(function () {
     });
 
     $(document).on("keydown", ".edit-precio", handlePriceFamaInput);
+    $(document).on("keydown", ".edit-porc_descuento", handlePorcDescInput);
     $(document).on("change", ".edit-status", handleStatusChange);
 });
