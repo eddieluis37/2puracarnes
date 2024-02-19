@@ -33,7 +33,7 @@ $(document).ready(function () {
                             porc_util_proyectada: item.porc_util_proyectada,
                             precio_proyectado: item.precio_proyectado,                        
                             precio: getPriceInput(item.precio),
-                            porc_iva: item.porc_iva,
+                            porc_descuento: item.porc_descuento,
                             utilidad: item.utilidad,
                             porc_utilidad: porc_utilidad,
                             productId: item.productId,
@@ -63,7 +63,7 @@ $(document).ready(function () {
                     },
                 },               
                 { data: "precio", name: "precio" },
-                { data: "porc_iva", name: "porc_iva" },
+                { data: "porc_descuento", name: "porc_descuento" },
                 {
                     data: "utilidad",
                     name: "utilidad",

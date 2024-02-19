@@ -89,7 +89,7 @@
                 <th class="table-th text-white text-center">%.U.P</th>
                 <th class="table-th text-white text-center">$.PROYE</th>
                 <th class="table-th text-white text-center">PRECIO</th>
-                <th class="table-th text-white text-center">%IVA</th>
+                <th class="table-th text-white text-center">%DES</th>
                 <th class="table-th text-white text-center">UTILIDAD</th>
                 <th class="table-th text-white text-center">%.UT</th>
                 <th class="table-th text-white text-center">ESTADO</th>
