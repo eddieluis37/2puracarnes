@@ -50,7 +50,7 @@ class AsignarPreciosProdController extends Controller
                 DB::raw('pro.cost / (1 - (porc_util_proyectada / 100) ) as precio_proyectado '),
                 'lpd.precio as precio',
                 'lpd.porc_descuento as porc_descuento',
-                DB::raw('precio - pro.cost  as utilidad '),
+                DB::raw('((precio - pro.cost) - (porc_descuento / 100) * precio) as utilidad '),
                 'lpd.utilidad as porc_utilidad',
                 'lpd.status as status',
             )
