@@ -59,7 +59,7 @@ function actualizarValoresProducto(productId) {
             $("#price").val(response.precio);
             $("#porc_iva").val(response.iva);
             $("#porc_otro_impuesto").val(response.otro_impuesto);
-            $("#porc_desc").val(response.porc_desc);
+            $("#porc_descuento").val(response.porc_descuento);
         },
         error: function (xhr, status, error) {
             // Maneja el error si la solicitud AJAX falla
@@ -144,7 +144,7 @@ const showData = (data) => {
                 <td>${element.nameprod}</td>
                 <td>${formatCantidad(element.quantity)} KG</td>
                 <td>$ ${formatCantidadSinCero(element.price)}</td>  
-                <td>${formatCantidadSinCero(element.porc_desc)}</td>
+                <td>${formatCantidadSinCero(element.porc_descuento)}</td>
                 <td>$ ${formatCantidadSinCero(element.descuento)}</td> 
                 <td>$ ${formatCantidadSinCero(element.descuento_cliente)}</td>
                 <td>$ ${formatCantidadSinCero(element.total_bruto)}</td>   

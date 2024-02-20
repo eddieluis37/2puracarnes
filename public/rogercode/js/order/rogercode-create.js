@@ -18,6 +18,7 @@ const venta_id = document.querySelector("#ventaId");
 const centrocosto_id = document.querySelector("#centrocosto_id");
 const quantity = document.querySelector("#quantity");
 const price = document.querySelector("#price");
+const porc_descuento = document.querySelector("#porc_descuento");
 const iva = document.querySelector("#iva");
 const regDetail = document.querySelector("#regdetailId");
 const tableFoot = document.querySelector("#tabletfoot");
@@ -47,7 +48,7 @@ $(document).ready(function () {
 
 function actualizarValoresProducto(productId) {
     $.ajax({
-        url: "/obtener-precios-producto", // Reemplaza con tu ruta o URL para obtener los valores del producto
+        url: "/order-obtener-valores", // Reemplaza con tu ruta o URL para obtener los valores del producto
         type: "GET",
         data: {
             productId: productId,
@@ -59,7 +60,7 @@ function actualizarValoresProducto(productId) {
             $("#price").val(response.precio);
             $("#porc_iva").val(response.iva);
             $("#porc_otro_impuesto").val(response.otro_impuesto);
-            $("#porc_desc").val(response.porc_desc);
+            $("#porc_descuento").val(response.porc_descuento);
         },
         error: function (xhr, status, error) {
             // Maneja el error si la solicitud AJAX falla
@@ -132,8 +133,6 @@ btnAdd.addEventListener("click", (e) => {
     });
 });
 
-
-
 const showData = (data) => {
     let dataAll = data.array;
     console.log(dataAll);
@@ -143,18 +142,24 @@ const showData = (data) => {
             <tr>                              
                 <td>${element.nameprod}</td>
                 <td>${formatCantidad(element.quantity)} KG</td>
-                <td>$ ${formatCantidadSinCero(element.price)}</td>  
-                <td>${formatCantidadSinCero(element.porc_desc)}</td>
-                <td>$ ${formatCantidadSinCero(element.descuento)}</td> 
-                <td>$ ${formatCantidadSinCero(element.descuento_cliente)}</td>
-                <td>$ ${formatCantidadSinCero(element.total_bruto)}</td>   
+                <td>$${formatCantidadSinCero(element.price)}</td>  
+                <td>${formatCantidad(element.porc_desc)}%</td>
+                <td>$${formatCantidadSinCero(element.descuento)}</td> 
+                <td>$${formatCantidadSinCero(element.descuento_cliente)}</td>
+                <td>$${formatCantidadSinCero(element.total_bruto)}</td>  
+                <td></td>
+				<td></td>
+				<td></td>
+				<td></td> 
                 <td>${formatCantidad(element.porc_iva)}%</td> 
-                <td>$ ${formatCantidadSinCero(element.iva)}</td> 
+                <td>$${formatCantidadSinCero(element.iva)}</td> 
                 <td>${element.porc_otro_impuesto}%</td>     
-                <td>$ ${formatCantidadSinCero(
+                <td>${formatCantidadSinCero(
                     element.otro_impuesto
                 )}</td>             
-                <td>$ ${formatCantidadSinCero(element.total)}</td>        
+                <td>$${formatCantidadSinCero(element.total)}</td>  
+                <td></td>
+				<td></td> 
                 <td class="text-center">
                     <button class="btn btn-dark fas fa-edit" data-id="${
                         element.id
@@ -178,12 +183,16 @@ const showData = (data) => {
             <td></td>    
             <td></td>
             <td></td>                               
-            <th>$ ${formatCantidadSinCero(arrayTotales.TotalBruto)}</th> 
+            <th>${formatCantidadSinCero(arrayTotales.TotalBruto)}</th> 
             <td></td>
             <td></td>
             <td></td>
-            <td></td>          
-            <th>$ ${formatCantidadSinCero(
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>            
+            <th>${formatCantidadSinCero(
                 arrayTotales.TotalValorAPagar
             )}</th>            
             <td class="text-center">
@@ -269,7 +278,8 @@ quantity.addEventListener("change", function () {
 const date = new Date();
 
 // Create a dynamic password by combining letters and the current date
-const passwordHoy = "admin" + date.getFullYear() + (date.getMonth() + 1) + date.getDate();
+const passwordHoy =
+    "admin" + date.getFullYear() + (date.getMonth() + 1) + date.getDate();
 
 btnRemove.addEventListener("click", (e) => {
     e.preventDefault();

@@ -452,7 +452,7 @@ class saleController extends Controller
 
             $getReg = SaleDetail::firstWhere('id', $request->regdetailId);
 
-            $porcDescuento = $request->get('porc_desc');
+            $porcDescuento = $request->get('porc_descuento');
             $precioUnitarioBruto = ($formatPrVenta * $formatPesoKg);
             $descuento = $precioUnitarioBruto * ($porcDescuento / 100);
             $porc_descuento = $request->get('porc_descuento');
@@ -481,7 +481,7 @@ class saleController extends Controller
                 $detail->product_id = $request->producto;
                 $detail->price = $formatPrVenta;
                 $detail->quantity = $formatPesoKg;
-                $detail->porc_desc = $porcDescuento;
+                $detail->porc_descuento = $porcDescuento;
                 $detail->descuento = $descuento;
 
                 $detail->descuento_cliente = $descuentoCliente;
@@ -503,7 +503,7 @@ class saleController extends Controller
                 $updateReg->product_id = $request->producto;
                 $updateReg->price = $formatPrVenta;
                 $updateReg->quantity = $formatPesoKg;
-                $updateReg->porc_desc = $porcDescuento;
+                $updateReg->porc_descuento = $porcDescuento;
                 $updateReg->descuento = $descuento;
 
                 $updateReg->descuento_cliente = $descuentoCliente;
@@ -891,7 +891,7 @@ class saleController extends Controller
                 'precio' => $producto->precio,
                 'iva' => $producto->iva,
                 'otro_impuesto' => $producto->otro_impuesto,
-                'porc_desc' => $producto->porc_desc
+                'porc_descuento' => $producto->porc_descuento
             ]);
         } else {
             // En caso de que el producto no sea encontrado

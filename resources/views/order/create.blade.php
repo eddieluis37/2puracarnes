@@ -11,7 +11,7 @@
 		<div class="widget widget-chart-one">
 			<div class="widget-heading">
 				<h4 class="card-title">
-					<b>  Orden de pedido </b>
+					<b> Orden de pedido </b>
 				</h4>
 				<ul class="tabs tab-pills">
 					<li>
@@ -75,7 +75,7 @@
 											<label for="" class="form-label">Buscar producto</label>
 											<input type="hidden" id="centrocosto" name="centrocosto" value="{{$datacompensado[0]->centrocosto_id}}" data-id="{{$datacompensado[0]->centrocosto_id}}">
 											<input type="hidden" id="cliente" name="cliente" value="{{$datacompensado[0]->third_id}}" data-id="{{$datacompensado[0]->third_id}}">
-											<input type="hidden" id="porc_descuento" name="porc_descuento" value="{{$datacompensado[0]->porc_descuento}}" data-id="{{$datacompensado[0]->porc_descuento}}">
+											<input type="hidden" id="porc_descuento_cli" name="porc_descuento_cli" value="{{$datacompensado[0]->porc_descuento}}" data-id="{{$datacompensado[0]->porc_descuento}}">
 											<select class="form-control form-control-sm select2Prod" name="producto" id="producto" required="">
 												<option value="">Seleccione el producto</option>
 												@foreach ($prod as $p)
@@ -110,53 +110,55 @@
 									</div>
 								</div>
 
+								<div class="col-md-3">
+									<label for="" class="form-label">Descuento</label>
+									<div class="input-group flex-nowrap">
 
-								<div class="form-group row" style="margin-top:3px; margin-left:3px">
-
-									<div class="col-md-3">
-										<label for="" class="form-label">Descuento</label>
-										<div class="input-group flex-nowrap">
-
-											<input type="text" id="porc_desc" name="porc_desc" class="form-control input" readonly placeholder="">
-											<span class="input-group-text" id="addon-wrapping">%</span>
-										</div>
+										<input type="text" id="porc_descuento" name="porc_descuento" class="form-control input" readonly placeholder="">
+										<span class="input-group-text" id="addon-wrapping">%</span>
 									</div>
-
-									<div class="col-md-3">
-										<label for="" class="form-label">Peso KG</label>
-										<div class="input-group flex-nowrap"">
-										<input type=" text" id="quantity" name="quantity" class="form-control input" placeholder="EJ: 10,00">
-											<span class="input-group-text" id="addon-wrapping">KG</span>
-										</div>
-									</div>
-
-									<div class="col-md-2">
-										<div class="" style="margin-top:30px;">
-											<div class="d-grid gap-2">
-												<button id="btnAdd" class="btn btn-primary">Añadir</button>
-											</div>
-										</div>
-									</div>
-
-
-									@can('Admin_Menu')
-									<div class="col-md-2">
-										<div class="" style="margin-top:0px; margin-left:3px">
-											<label for="password">Contraseña:</label>
-											<input type="password" id="password" name="password" class="form-control input">
-
-										</div>
-									</div>
-
-									<div class="col-md-2">
-										<div class="" style="margin-top:30px;">
-											<div class="d-grid gap-2">
-												<button id="btnRemove" class="btn btn-warning">Modificar-Precio</button>
-											</div>
-										</div>
-									</div>
-									@endcan
 								</div>
+
+
+								<!-- <div class="form-group row" style="margin-top:3px; margin-left:3px"> -->
+
+
+
+								<div class="col-md-3">
+									<label for="" class="form-label">Peso KG</label>
+									<div class="input-group flex-nowrap"">
+										<input type=" text" id="quantity" name="quantity" class="form-control input" placeholder="EJ: 10,00">
+										<span class="input-group-text" id="addon-wrapping">KG</span>
+									</div>
+								</div>
+
+								<div class="col-md-2">
+									<div class="" style="margin-top:30px;">
+										<div class="d-grid gap-2">
+											<button id="btnAdd" class="btn btn-primary">Añadir</button>
+										</div>
+									</div>
+								</div>
+
+
+								@can('Admin_Menu')
+								<div class="col-md-2">
+									<div class="" style="margin-top:0px; margin-left:3px">
+										<label for="password">Contraseña:</label>
+										<input type="password" id="password" name="password" class="form-control input">
+
+									</div>
+								</div>
+
+								<div class="col-md-2">
+									<div class="" style="margin-top:30px;">
+										<div class="d-grid gap-2">
+											<button id="btnRemove" class="btn btn-warning">Modificar-Precio</button>
+										</div>
+									</div>
+								</div>
+								@endcan
+
 						</form>
 					</div>
 				</div>
@@ -178,12 +180,17 @@
 								<th class="table-th text-white">Des</th>
 								<th class="table-th text-white">{{$datacompensado[0]->porc_descuento}}%DCl</th>
 								<th class="table-th text-white">Total.B</th>
+								<th class="table-th text-white">T.COSTO</th>
+								<th class="table-th text-white">UT</th>
+								<th class="table-th text-white">%UT</th>
+								<th class="table-th text-white">Total.B</th>
 								<th class="table-th text-white">%IVA</th>
 								<th class="table-th text-white">IVA</th>
 								<th class="table-th text-white">%I.S</th>
 								<th class="table-th text-white">I.S</th>
-
 								<th class="table-th text-white">Total</th>
+								<th class="table-th text-white">OBSERVACION</th>
+								<th class="table-th text-white">C.DESP</th>
 								<th class="table-th text-white text-center">Acciones</th>
 							</tr>
 						</thead>
@@ -194,16 +201,22 @@
 
 								<td>{{$proddetail->nameprod}}</td>
 								<td>{{ number_format($proddetail->quantity, 2, ',', '.')}} KG</td>
-								<td>$ {{ number_format($proddetail->price, 0, ',', '.')}}</td>
+								<td>${{ number_format($proddetail->price, 0, ',', '.')}}</td>
 								<td>{{$proddetail->porc_desc}}%</td>
-								<td>$ {{ number_format($proddetail->descuento, 0, ',', '.')}}</td>
-								<td>$ {{ number_format($proddetail->descuento_cliente, 0, ',', '.')}}</td>
-								<td>$ {{ number_format($proddetail->total_bruto, 0, ',', '.')}}</td>
+								<td>${{ $proddetail->descuento}}%</td>
+								<td>{{ number_format($proddetail->descuento_cliente, 0, ',', '.')}}%</td>
+								<td>${{ number_format($proddetail->total_bruto, 0, ',', '.')}}</td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
 								<td>{{$proddetail->porc_iva}}%</td>
-								<td>$ {{ number_format($proddetail->iva, 0, ',', '.')}}</td>
+								<td>${{ number_format($proddetail->iva, 0, ',', '.')}}</td>
 								<td>{{$proddetail->porc_otro_impuesto}}%</td>
-								<td>$ {{ number_format($proddetail->otro_impuesto, 0, ',', '.')}}</td>
-								<td>$ {{ number_format($proddetail->total, 0, ',', '.')}}</td>
+								<td>${{ number_format($proddetail->otro_impuesto, 0, ',', '.')}}</td>
+								<td>${{ number_format($proddetail->total, 0, ',', '.')}}</td>
+								<td></td>
+								<td></td>
 								<td class="text-center">
 									@if($status == 'true')
 									<button class="btn btn-dark fas fa-edit" name="btnEdit" data-id="{{$proddetail->id}}" title="Editar">
@@ -233,6 +246,10 @@
 								<td></td>
 								<td></td>
 								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
 								<th>$ {{number_format($arrayTotales['TotalValorAPagar'], 0, ',', '.')}} </th>
 							</tr>
 						</tfoot>
@@ -241,7 +258,7 @@
 						<form method="GET" action="registrar_pago/{{$id}}">
 							@csrf
 							<div class="text-center mt-1">
-								<button id="cargarInventarioBtn" type="submit" class="btn btn-success">Pagar</button>
+								<button id="cargarInventarioBtn" type="submit" class="btn btn-success">Guardar</button>
 								<!-- <a href="registrar_pago/{{$id}}" target="_blank" class="btn btn-success">Pagar</a> -->
 							</div>
 						</form>

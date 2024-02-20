@@ -343,10 +343,10 @@ class orderController extends Controller
 
             $getReg = OrderDetail::firstWhere('id', $request->regdetailId);
 
-            $porcDescuento = $request->get('porc_desc');
+            $porcDescuento = $request->get('porc_descuento');
             $precioUnitarioBruto = ($formatPrVenta * $formatPesoKg);
             $descuento = $precioUnitarioBruto * ($porcDescuento / 100);
-            $porc_descuento = $request->get('porc_descuento');
+            $porc_descuento = $request->get('porc_descuento_cli');
 
             $descuentoCliente = $precioUnitarioBruto * ($porc_descuento / 100);
             $totalDescuento = $descuento + $descuentoCliente;
@@ -584,6 +584,32 @@ class orderController extends Controller
                 'status' => 0,
                 'array' => (array) $th
             ]);
+        }
+    }
+    
+     public function obtenerValores(Request $request)
+    {
+        $centrocostoId = $request->input('centrocosto');
+        $clienteId = $request->input('cliente');
+        $cliente = Third::find($clienteId);
+        $producto = Listapreciodetalle::join('products as prod', 'listapreciodetalles.product_id', '=', 'prod.id')
+            ->join('thirds as t', 'listapreciodetalles.listaprecio_id', '=', 't.id')
+            ->where('prod.id', $request->productId)
+            ->where('t.id', $cliente->listaprecio_genericid)
+            ->select('listapreciodetalles.precio', 'iva', 'otro_impuesto', 'listapreciodetalles.porc_descuento') // Select only the
+            ->first();
+        if ($producto) {
+            return response()->json([
+                'precio' => $producto->precio,
+                'iva' => $producto->iva,
+                'otro_impuesto' => $producto->otro_impuesto,
+                'porc_descuento' => $producto->porc_descuento
+            ]);
+        } else {
+            // En caso de que el producto no sea encontrado
+            return response()->json([
+                'error' => 'Product not found'
+            ], 404);
         }
     }
 }

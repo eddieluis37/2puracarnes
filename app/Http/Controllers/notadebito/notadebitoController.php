@@ -232,7 +232,7 @@ class notadebitoController extends Controller
                 'precio' => $producto->precio,
                 'iva' => $producto->iva,
                 'otro_impuesto' => $producto->otro_impuesto,
-                'porc_desc' => $producto->porc_desc
+                'porc_descuento' => $producto->porc_descuento
             ]);
         } else {
             // En caso de que el producto no sea encontrado
