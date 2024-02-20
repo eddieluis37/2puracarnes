@@ -56,11 +56,12 @@ function actualizarValoresProducto(productId) {
             cliente: $("#cliente").val(), // Obtén el valor del campo centrocosto
         },
         success: function (response) {
-            // Actualiza los valores en los campos de entrada del centro de costo
+            // Actualiza los valores en los campos de entrada 
             $("#price").val(response.precio);
             $("#porc_iva").val(response.iva);
             $("#porc_otro_impuesto").val(response.otro_impuesto);
             $("#porc_descuento").val(response.porc_descuento);
+            $("#costo_prod").val(response.costo_prod);
         },
         error: function (xhr, status, error) {
             // Maneja el error si la solicitud AJAX falla
@@ -141,10 +142,10 @@ const showData = (data) => {
         showRegTbody.innerHTML += `
             <tr>                              
                 <td>${element.nameprod}</td>
-                <td>${formatCantidad(element.quantity)} KG</td>
+                <td>${formatCantidad(element.quantity)}KG</td>
                 <td>$${formatCantidadSinCero(element.price)}</td>  
-                <td>${formatCantidad(element.porc_desc)}%</td>
-                <td>$${formatCantidadSinCero(element.descuento)}</td> 
+                <td>${formatCantidad(element.porc_desc_prod)}%</td>
+                <td>$${formatCantidadSinCero(element.descuento_prod)}</td> 
                 <td>$${formatCantidadSinCero(element.descuento_cliente)}</td>
                 <td>$${formatCantidadSinCero(element.total_bruto)}</td>  
                 <td></td>

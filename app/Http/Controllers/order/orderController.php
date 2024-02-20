@@ -345,11 +345,11 @@ class orderController extends Controller
 
             $porcDescuento = $request->get('porc_descuento');
             $precioUnitarioBruto = ($formatPrVenta * $formatPesoKg);
-            $descuento = $precioUnitarioBruto * ($porcDescuento / 100);
+            $descuento_prod = $precioUnitarioBruto * ($porcDescuento / 100);
             $porc_descuento = $request->get('porc_descuento_cli');
 
             $descuentoCliente = $precioUnitarioBruto * ($porc_descuento / 100);
-            $totalDescuento = $descuento + $descuentoCliente;
+            $totalDescuento = $descuento_prod + $descuentoCliente;
 
             $precioUnitarioBrutoConDesc = $precioUnitarioBruto - $totalDescuento;
             $porcIva = $request->get('porc_iva');
@@ -366,26 +366,32 @@ class orderController extends Controller
 
             $valorApagar = $precioUnitarioBrutoConDesc + $totalOtrosImpuestos;
 
+        
+            $totalCosto = $request->get('costo_prod') * $formatPesoKg; 
+
+            $utilidad = $precioUnitarioBrutoConDesc - $totalCosto;
+            $porc_utilidad = ($utilidad / $precioUnitarioBrutoConDesc) * 100;
+
             if ($getReg == null) {
                 $detail = new OrderDetail();
                 $detail->order_id = $request->ventaId;
                 $detail->product_id = $request->producto;
                 $detail->price = $formatPrVenta;
                 $detail->quantity = $formatPesoKg;
-                $detail->porc_desc = $porcDescuento;
-                $detail->descuento = $descuento;
-
+                $detail->costo_prod = $request->get('costo_prod');
+                $detail->porc_desc_prod = $porcDescuento;
+                $detail->descuento_prod = $descuento_prod;
                 $detail->descuento_cliente = $descuentoCliente;
-
                 $detail->porc_iva = $porcIva;
                 $detail->iva = $iva;
                 $detail->porc_otro_impuesto = $porcOtroImpuesto;
                 $detail->otro_impuesto = $otroImpuesto;
-
                 $detail->total_bruto = $precioUnitarioBrutoConDesc;
-
+                $detail->total_costo = $totalCosto;
+                $detail->utilidad = $utilidad;
+                $detail->porc_utilidad = $porc_utilidad;
+          
                 $detail->total = $valorAPagar;
-
                 $detail->save();
             } else {
                 $updateReg = OrderDetail::firstWhere('id', $request->regdetailId);
@@ -394,38 +400,21 @@ class orderController extends Controller
                 $updateReg->product_id = $request->producto;
                 $updateReg->price = $formatPrVenta;
                 $updateReg->quantity = $formatPesoKg;
-                $updateReg->porc_desc = $porcDescuento;
-                $updateReg->descuento = $descuento;
-
+                $updateReg->costo_prod =  $request->get('costo_prod');
+                $updateReg->porc_desc_prod = $porcDescuento;
+                $updateReg->descuento_prod = $descuento_prod;
                 $updateReg->descuento_cliente = $descuentoCliente;
-
                 $updateReg->iva = $iva;
                 $updateReg->porc_iva = $porcIva;
                 $updateReg->porc_otro_impuesto = $porcOtroImpuesto;
                 $updateReg->otro_impuesto = $otroImpuesto;
                 $updateReg->total_bruto = $precioUnitarioBrutoConDesc;
-                $updateReg->total = $valorAPagar;
+                $updateReg->total_costo = $totalCosto;
+                $updateReg->total_costo = $totalCosto;
+                $updateReg->utilidad = $utilidad;
+                $updateReg->porc_utilidad = $porc_utilidad;
                 $updateReg->save();
-            }
-
-            /*  $sale = Order::find($request->ventaId);
-            $sale->items = OrderDetail::where('sale_id', $sale->id)->count();
-            $sale->descuentos = $totalDescuento;
-            $sale->total_iva = $iva;
-            $sale->total_otros_impuestos = $totalOtrosImpuestos;
-            $sale->total_valor_a_pagar = $valorApagar;
-            $saleDetails = SaleDetail::where('sale_id', $sale->id)->get();
-            $totalBruto = 0;
-            $totalDesc = 0;
-
-            foreach ($saleDetails as $saleDetail) {
-                $totalBruto += $saleDetail->quantity * $saleDetail->price;
-                $totalDesc += $saleDetail->descuento + $saleDetail->descuento_cliente;
-            }
-
-            $sale->total_bruto = $totalBruto;
-            $sale->descuentos = $totalDesc;
-            $sale->save(); */
+            }       
 
             $sale = Order::find($request->ventaId);
             $sale->items = OrderDetail::where('order_id', $sale->id)->count();
@@ -441,7 +430,7 @@ class orderController extends Controller
                 return $saleDetail->quantity * $saleDetail->price;
             });
             $totalDesc = $saleDetails->sum(function ($saleDetail) {
-                return $saleDetail->descuento + $saleDetail->descuento_cliente;
+                return $saleDetail->descuento_prod + $saleDetail->descuento_cliente;
             });
             $sale->total_bruto = $totalBruto;
             $sale->descuentos = $totalDesc;
@@ -502,7 +491,7 @@ class orderController extends Controller
                 return $saleDetail->quantity * $saleDetail->price;
             });
             $totalDesc = $saleDetails->sum(function ($saleDetail) {
-                return $saleDetail->descuento + $saleDetail->descuento_cliente;
+                return $saleDetail->descuento_prod + $saleDetail->descuento_cliente;
             });
             $sale->total_bruto = $totalBruto;
             $sale->descuentos = $totalDesc;
@@ -596,14 +585,15 @@ class orderController extends Controller
             ->join('thirds as t', 'listapreciodetalles.listaprecio_id', '=', 't.id')
             ->where('prod.id', $request->productId)
             ->where('t.id', $cliente->listaprecio_genericid)
-            ->select('listapreciodetalles.precio', 'iva', 'otro_impuesto', 'listapreciodetalles.porc_descuento') // Select only the
+            ->select('listapreciodetalles.precio', 'iva', 'otro_impuesto', 'listapreciodetalles.porc_descuento', 'cost') // Select only the
             ->first();
         if ($producto) {
             return response()->json([
                 'precio' => $producto->precio,
                 'iva' => $producto->iva,
                 'otro_impuesto' => $producto->otro_impuesto,
-                'porc_descuento' => $producto->porc_descuento
+                'porc_descuento' => $producto->porc_descuento,
+                'costo_prod' => $producto->cost
             ]);
         } else {
             // En caso de que el producto no sea encontrado

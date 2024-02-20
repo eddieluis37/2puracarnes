@@ -223,6 +223,8 @@ class inventoryController extends Controller
          ,trasladoing
          ,trasladosal
          ,venta
+         ,c.notadebito
+         ,c.notacredito
          ,stock 
          ,fisico 
          ,price_fama 
@@ -256,6 +258,8 @@ class inventoryController extends Controller
          ,c.trasladoing
          ,c.trasladosal
          ,c.venta
+         ,c.notadebito
+         ,c.notacredito
          ,c.stock 
          ,c.fisico 
          ,c.price_fama 
@@ -314,6 +318,8 @@ class inventoryController extends Controller
          ,c.trasladoing = 0
          ,c.trasladosal = 0
          ,c.venta = 0
+         ,c.notadebito = 0
+         ,c.notacredito = 0
          ,c.stock  = 0
          ,c.fisico  = 0
          ,c.price_fama = 0

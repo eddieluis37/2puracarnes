@@ -76,6 +76,7 @@
 											<input type="hidden" id="centrocosto" name="centrocosto" value="{{$datacompensado[0]->centrocosto_id}}" data-id="{{$datacompensado[0]->centrocosto_id}}">
 											<input type="hidden" id="cliente" name="cliente" value="{{$datacompensado[0]->third_id}}" data-id="{{$datacompensado[0]->third_id}}">
 											<input type="hidden" id="porc_descuento_cli" name="porc_descuento_cli" value="{{$datacompensado[0]->porc_descuento}}" data-id="{{$datacompensado[0]->porc_descuento}}">
+											<input type="hidden" id="costo_prod" name="costo_prod" class="form-control input" readonly placeholder="">
 											<select class="form-control form-control-sm select2Prod" name="producto" id="producto" required="">
 												<option value="">Seleccione el producto</option>
 												@foreach ($prod as $p)
@@ -117,12 +118,9 @@
 										<input type="text" id="porc_descuento" name="porc_descuento" class="form-control input" readonly placeholder="">
 										<span class="input-group-text" id="addon-wrapping">%</span>
 									</div>
-								</div>
-
+								</div>							
 
 								<!-- <div class="form-group row" style="margin-top:3px; margin-left:3px"> -->
-
-
 
 								<div class="col-md-3">
 									<label for="" class="form-label">Peso KG</label>
@@ -173,8 +171,9 @@
 					<table id="tableDespostere" class="table table-sm table-striped table-bordered">
 						<thead class="text-white" style="background: #3B3F5C">
 							<tr>
-								<th class="table-th text-white">Producto</th>
+								<th class="table-th text-white"> Producto </th>
 								<th class="table-th text-white">Cant</th>
+								<th class="table-th text-white">COSTO</th>
 								<th class="table-th text-white">Valor.U</th>
 								<th class="table-th text-white">%Des</th>
 								<th class="table-th text-white">Des</th>
@@ -182,8 +181,7 @@
 								<th class="table-th text-white">Total.B</th>
 								<th class="table-th text-white">T.COSTO</th>
 								<th class="table-th text-white">UT</th>
-								<th class="table-th text-white">%UT</th>
-								<th class="table-th text-white">Total.B</th>
+								<th class="table-th text-white">%UT</th>								
 								<th class="table-th text-white">%IVA</th>
 								<th class="table-th text-white">IVA</th>
 								<th class="table-th text-white">%I.S</th>
@@ -200,16 +198,16 @@
 								<!--td>{{$proddetail->id}}</td-->
 
 								<td>{{$proddetail->nameprod}}</td>
-								<td>{{ number_format($proddetail->quantity, 2, ',', '.')}} KG</td>
+								<td>{{ number_format($proddetail->quantity, 2, ',', '.')}}KG</td>
+								<td>${{ number_format($proddetail->costo_prod, 0, ',', '.')}}</td>
 								<td>${{ number_format($proddetail->price, 0, ',', '.')}}</td>
-								<td>{{$proddetail->porc_desc}}%</td>
-								<td>${{ $proddetail->descuento}}%</td>
-								<td>{{ number_format($proddetail->descuento_cliente, 0, ',', '.')}}%</td>
+								<td>{{$proddetail->porc_desc_prod}}%</td>								
+								<td>${{ number_format($proddetail->descuento_prod, 0, ',', '.')}}</td>
+								<td>${{ number_format($proddetail->descuento_cliente, 0, ',', '.')}}</td>
 								<td>${{ number_format($proddetail->total_bruto, 0, ',', '.')}}</td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
+								<td>${{ number_format($proddetail->total_costo, 0, ',', '.')}}</td>
+								<td>${{ number_format($proddetail->utilidad, 0, ',', '.')}}</td>
+								<td>{{$proddetail->porc_utilidad}}%</td>							
 								<td>{{$proddetail->porc_iva}}%</td>
 								<td>${{ number_format($proddetail->iva, 0, ',', '.')}}</td>
 								<td>{{$proddetail->porc_otro_impuesto}}%</td>
@@ -241,7 +239,8 @@
 								<td></td>
 								<th></th>
 								<th></th>
-								<th>$ {{number_format($arrayTotales['TotalBruto'], 0, ',', '.')}} </th>
+								<th></th>
+								<th>${{number_format($arrayTotales['TotalBruto'], 0, ',', '.')}} </th>
 								<td></td>
 								<td></td>
 								<td></td>
