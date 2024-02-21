@@ -142,8 +142,7 @@ const showData = (data) => {
         showRegTbody.innerHTML += `
             <tr>                              
                 <td>${element.nameprod}</td>
-                <td>${formatCantidad(element.quantity)}KG</td>
-                <td>${formatCantidad(element.quantity_despachada)}KG</td>
+                <td>${formatCantidad(element.quantity)}KG</td>              
                 <td>$${formatCantidadSinCero(element.costo_prod)}</td>  
                 <td>$${formatCantidadSinCero(element.price)}</td>  
                 <td>${formatCantidad(element.porc_desc_prod)}%</td>
@@ -160,8 +159,7 @@ const showData = (data) => {
                     element.otro_impuesto
                 )}</td>             
                 <td>$${formatCantidadSinCero(element.total)}</td>  
-                <td>${element.observaciones}</td>
-				
+                <td></td>			
                 <td class="text-center">
                     <button class="btn btn-dark fas fa-edit" data-id="${
                         element.id
@@ -186,16 +184,15 @@ const showData = (data) => {
             <td></td>
             <td></td>                               
             <td></td>
-            <th>${formatCantidadSinCero(arrayTotales.TotalBruto)}</th> 
+            <th>$${formatCantidadSinCero(arrayTotales.TotalBruto)}</th> 
             <td></td>
             <td></td>
             <td></td>
             <td></td>
             <td></td>
             <td></td>
-            <td></td>
-            <td></td>            
-            <th>${formatCantidadSinCero(
+            <td></td>             
+            <th>$${formatCantidadSinCero(
                 arrayTotales.TotalValorAPagar
             )}</th>            
             <td class="text-center">

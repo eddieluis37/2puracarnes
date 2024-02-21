@@ -438,6 +438,7 @@ Route::group(['middleware' => [('auth')]], function () {
     Route::post('orderById', [orderController::class, 'editOrder'])->name('order.editOrder');
     Route::post('orderdown', [orderController::class, 'destroy'])->name('order.down');
     Route::get('/order-obtener-valores', [orderController::class, 'obtenerValores'])->name('order.order-obtener-valores');
+    Route::post('order/create/registrar_order/{id}', [orderController::class, 'storeOrder'])->name('order.saveOrder');
 
    /* 
     Route::post('notacreditosavedetail', [notacreditoController::class, 'savedetail'])->name('notacredito.savedetail');

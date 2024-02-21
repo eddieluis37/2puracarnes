@@ -64,7 +64,7 @@ class orderController extends Controller
             ->leftJoin('centro_costo as centro', 'or.centrocosto_id', '=', 'centro.id')
             ->join('thirds as vendedor', 'or.vendedor_id', '=', 'vendedor.id')
             ->select('or.*', 'or.status as status', 'total_valor_a_pagar', 'fecha_order', 'tird.direccion as direccion', 'or.resolucion as resolucion', 'tird.name as namethird', 'centro.name as namecentrocosto', 'total_utilidad', 'vendedor.name as nombre_vendedor')
-            ->where('or.status', 1)
+           /*  ->where('or.status', 1) */
             ->get();
 
     
@@ -550,40 +550,29 @@ class orderController extends Controller
 
             $venta = Order::where('id', $id)->latest()->first(); // el ultimo mas reciente;
             $venta->user_id = $request->user()->id;
-            $venta->sale_id = $SaleIdNC;
-            $venta->tipo = $tipo;
+        /*     $venta->sale_id = $SaleIdNC; */
+        
             $venta->status = $status;
-            $venta->fecha_notacredito = now();
-            $venta->fecha_cierre = now();
-
-            $count1 = DB::table('sales')->where('status', '1')->count();
-            $count2 = DB::table('notacreditos')->where('status', '1')->count();
-            $count3 = DB::table('notadebitos')->where('status', '1')->count();
-            $count = $count1 + $count2 + $count3;
-            $resolucion = 'ERPC ' . (1 + $count);
-            $venta->resolucion = $resolucion;
-
-            $venta->fecha_notacredito = now();
-            $venta->fecha_cierre = now();
-
-            $totalValor = (float)OrderDetail::Where([['notacredito_id', $id]])->sum('total');
+       /*      $venta->fecha_notacredito = now(); */
+            $venta->fecha_cierre = now();         
+           
+          
+/* 
+            $totalValor = (float)OrderDetail::Where([['order_id', $id]])->sum('total');
             $venta->valor_total = $totalValor;
-
+ */
             $venta->save();
-
-            // Call the cargarInventariocr method
-            $this->cargarInventariocr($id);
-
+        
 
             if ($venta->status == 1) {
-                return redirect()->route('notacredito.index');
+                return redirect()->route('order.index');
             }
 
             return response()->json([
                 'status' => 1,
                 'message' => 'Guardado correctamente',
                 "registroId" => $venta->id,
-                'redirect' => route('notacredito.index')
+                'redirect' => route('order.index')
             ]);
         } catch (\Throwable $th) {
             return response()->json([
