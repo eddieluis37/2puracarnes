@@ -139,6 +139,8 @@ class orderController extends Controller
             $rules = [
                 'ventaId' => 'required',
                 'centrocosto' => 'required',
+                'vendedor' => 'required',
+                'subcentrodecosto' => 'required',
                 /* 'factura' => [
                     'required',
                     function ($attribute, $value, $fail) {
@@ -152,7 +154,9 @@ class orderController extends Controller
             $messages = [
                 'ventaId.required' => 'El ventaId es requerido',
                 'centrocosto.required' => 'Centro costo es requerido',
+                'vendedor.required' => 'Vendedor es requerido',
                 /* 'factura.required' => 'La factura es requerida', */
+                'subcentrodecosto.required' => 'Sub Centro de costo es requerido',
             ];
             $validator = Validator::make($request->all(), $rules, $messages);
             if ($validator->fails()) {
@@ -161,8 +165,9 @@ class orderController extends Controller
                     'errors' => $validator->errors()
                 ], 422);
             }
-            $getReg = Order::where('third_id', $request->cliente)->count();
-            if ($getReg < 2) {
+            $getReg = Order::firstWhere('id', $request->ventaId);
+
+            if ($getReg == null) {
                 $currentDateTime = Carbon::now();
                 $currentDateFormat = Carbon::parse($currentDateTime->format('Y-m-d'));
                 $current_date = Carbon::parse($currentDateTime->format('Y-m-d'));
@@ -175,12 +180,14 @@ class orderController extends Controller
                 $venta->third_id = $request->cliente;
                 $venta->vendedor_id = $request->vendedor;
                 $venta->centrocosto_id = $request->centrocosto;
+                $venta->subcentrocostos_id = $request->subcentrodecosto;
                 //  dd($request->factura); // es el id de la factura de venta seleccionada en el modal create
                 $venta->fecha_order = $currentDateFormat;
                 $venta->fecha_entrega = $request->fecha_entrega;
                 /*  $venta->fecha_cierre =  now(); */
                 $venta->direccion_envio = $request->direccion_evio;
                 $venta->items = 0;
+                $venta->observacion = $request->observacion;
                 $venta->save();
                 /* //ACTUALIZA CONSECUTIVO 
                 $idcc = $request->centrocosto;
@@ -382,7 +389,9 @@ class orderController extends Controller
                 $detail->order_id = $request->ventaId;
                 $detail->product_id = $request->producto;
                 $detail->price = $formatPrVenta;
-                $detail->quantity = $formatPesoKg;
+                $detail->quantity = $formatPesoKg;              
+                $detail->observaciones =  $request->get('observations');
+                $detail->quantity_despachada =$request->get('quantity_despachada');
                 $detail->costo_prod = $request->get('costo_prod');
                 $detail->porc_desc_prod = $porcDescuento;
                 $detail->descuento_prod = $descuento_prod;

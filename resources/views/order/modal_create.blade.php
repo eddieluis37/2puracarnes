@@ -116,6 +116,14 @@
 					</div>
 				</div>
 			</div>
+
+			<div class="col-md-12">
+				<div class="form-group">
+					<label for="observations">Observación general</label>
+					<textarea class="form-control" id="observacion" name="observacion" rows="3"></textarea>
+				</div>
+			</div>
+			
 		</div>
 	</div>
 </div>

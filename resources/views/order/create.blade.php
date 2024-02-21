@@ -94,6 +94,24 @@
 									</div>
 								</div>
 
+								@can('Admin_Menu')
+								<div class="col-md-2">
+									<div class="" style="margin-top:0px; margin-left:3px">
+										<label for="password">Contraseña:</label>
+										<input type="password" id="password" name="password" class="form-control input">
+
+									</div>
+								</div>
+
+								<div class="col-md-2">
+									<div class="" style="margin-top:30px;">
+										<div class="d-grid gap-2">
+											<button id="btnRemove" class="btn btn-warning">Modificar-Precio</button>
+										</div>
+									</div>
+								</div>
+								@endcan
+
 								<div class="col-md-3">
 									<label for="" class="form-label">IVA</label>
 									<div class="input-group flex-nowrap">
@@ -125,7 +143,23 @@
 								<div class="col-md-3">
 									<label for="" class="form-label">Peso KG</label>
 									<div class="input-group flex-nowrap"">
-										<input type=" text" id="quantity" name="quantity" class="form-control input" placeholder="EJ: 10,00">
+										<input type=" text" id="quantity" name="quantity" class="form-control input" placeholder="EJ: 25,00">
+										<span class="input-group-text" id="addon-wrapping">KG</span>
+									</div>
+								</div>										
+
+
+								<div class="col-md-6">
+									<div class="form-group">
+										<label for="observations">Observaciones</label>
+										<textarea class="form-control" id="observations" name="observations" rows="3"></textarea>
+									</div>
+								</div>
+
+								<div class="col-md-3">
+									<label for="" class="form-label">Cantidad despachada</label>
+									<div class="input-group flex-nowrap"">
+										<input type=" text" id="quantity_despachada" name="quantity_despachada" class="form-control input" placeholder="EJ: 20,00">
 										<span class="input-group-text" id="addon-wrapping">KG</span>
 									</div>
 								</div>
@@ -137,25 +171,6 @@
 										</div>
 									</div>
 								</div>
-
-
-								@can('Admin_Menu')
-								<div class="col-md-2">
-									<div class="" style="margin-top:0px; margin-left:3px">
-										<label for="password">Contraseña:</label>
-										<input type="password" id="password" name="password" class="form-control input">
-
-									</div>
-								</div>
-
-								<div class="col-md-2">
-									<div class="" style="margin-top:30px;">
-										<div class="d-grid gap-2">
-											<button id="btnRemove" class="btn btn-warning">Modificar-Precio</button>
-										</div>
-									</div>
-								</div>
-								@endcan
 
 						</form>
 					</div>
@@ -173,6 +188,7 @@
 							<tr>
 								<th class="table-th text-white"> Producto </th>
 								<th class="table-th text-white">Cant</th>
+								<th class="table-th text-white">C.DESP</th>
 								<th class="table-th text-white">COSTO</th>
 								<th class="table-th text-white">Valor.U</th>
 								<th class="table-th text-white">%Des</th>
@@ -188,7 +204,7 @@
 								<th class="table-th text-white">I.S</th>
 								<th class="table-th text-white">Total</th>
 								<th class="table-th text-white">OBSERVACION</th>
-								<th class="table-th text-white">C.DESP</th>
+								
 								<th class="table-th text-white text-center">Acciones</th>
 							</tr>
 						</thead>
@@ -199,6 +215,7 @@
 
 								<td>{{$proddetail->nameprod}}</td>
 								<td>{{ number_format($proddetail->quantity, 2, ',', '.')}}KG</td>
+								<td>{{ number_format($proddetail->quantity_despachada, 2, ',', '.')}}KG</td>
 								<td>${{ number_format($proddetail->costo_prod, 0, ',', '.')}}</td>
 								<td>${{ number_format($proddetail->price, 0, ',', '.')}}</td>
 								<td>{{$proddetail->porc_desc_prod}}%</td>								
@@ -213,8 +230,8 @@
 								<td>{{$proddetail->porc_otro_impuesto}}%</td>
 								<td>${{ number_format($proddetail->otro_impuesto, 0, ',', '.')}}</td>
 								<td>${{ number_format($proddetail->total, 0, ',', '.')}}</td>
-								<td></td>
-								<td></td>
+								<td><span style="font-size: small;">{{ strtolower($proddetail->observaciones) }}</span></td>
+							
 								<td class="text-center">
 									@if($status == 'true')
 									<button class="btn btn-dark fas fa-edit" name="btnEdit" data-id="{{$proddetail->id}}" title="Editar">

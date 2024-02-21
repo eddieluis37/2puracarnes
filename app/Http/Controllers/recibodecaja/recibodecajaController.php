@@ -182,7 +182,7 @@ class recibodecajaController extends Controller
                 $recibo = new Recibodecaja();
                 $recibo->user_id = $id_user;
                 $recibo->third_id = $request->cliente;
-                $recibo->sale_id = 0;
+                $recibo->sale_id = 1;
                 $recibo->tipo = $request->tipo;
                 $recibo->formapagos_id = $request->formapagos;
                 $recibo->abono = 0;

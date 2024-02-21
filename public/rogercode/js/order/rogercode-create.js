@@ -143,6 +143,7 @@ const showData = (data) => {
             <tr>                              
                 <td>${element.nameprod}</td>
                 <td>${formatCantidad(element.quantity)}KG</td>
+                <td>${formatCantidad(element.quantity_despachada)}KG</td>
                 <td>$${formatCantidadSinCero(element.costo_prod)}</td>  
                 <td>$${formatCantidadSinCero(element.price)}</td>  
                 <td>${formatCantidad(element.porc_desc_prod)}%</td>
@@ -159,8 +160,8 @@ const showData = (data) => {
                     element.otro_impuesto
                 )}</td>             
                 <td>$${formatCantidadSinCero(element.total)}</td>  
-                <td></td>
-				<td></td> 
+                <td>${element.observaciones}</td>
+				
                 <td class="text-center">
                     <button class="btn btn-dark fas fa-edit" data-id="${
                         element.id
