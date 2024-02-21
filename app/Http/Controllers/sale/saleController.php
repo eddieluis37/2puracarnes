@@ -481,7 +481,7 @@ class saleController extends Controller
                 $detail->product_id = $request->producto;
                 $detail->price = $formatPrVenta;
                 $detail->quantity = $formatPesoKg;
-                $detail->porc_descuento = $porcDescuento;
+                $detail->porc_desc = $porcDescuento;
                 $detail->descuento = $descuento;
 
                 $detail->descuento_cliente = $descuentoCliente;
@@ -503,7 +503,7 @@ class saleController extends Controller
                 $updateReg->product_id = $request->producto;
                 $updateReg->price = $formatPrVenta;
                 $updateReg->quantity = $formatPesoKg;
-                $updateReg->porc_descuento = $porcDescuento;
+                $updateReg->porc_desc = $porcDescuento;
                 $updateReg->descuento = $descuento;
 
                 $updateReg->descuento_cliente = $descuentoCliente;

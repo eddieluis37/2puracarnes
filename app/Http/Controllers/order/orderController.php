@@ -177,6 +177,7 @@ class orderController extends Controller
                 $venta->centrocosto_id = $request->centrocosto;
                 //  dd($request->factura); // es el id de la factura de venta seleccionada en el modal create
                 $venta->fecha_order = $currentDateFormat;
+                $venta->fecha_entrega = $request->fecha_entrega;
                 /*  $venta->fecha_cierre =  now(); */
                 $venta->direccion_envio = $request->direccion_evio;
                 $venta->items = 0;

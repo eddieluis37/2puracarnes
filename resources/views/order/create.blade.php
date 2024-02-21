@@ -26,7 +26,7 @@
 							<div class="col-md-3">
 								<div class="task-header">
 									<div class="form-group">
-										<label for="date1" class="form-label">Fecha de venta</label>
+										<label for="date1" class="form-label">Fecha de orden</label>
 										<input type="date" class="form-control" name="fecha" id="fecha" placeholder="Last name" aria-label="Last name" value="{{date('Y-m-d')}}">
 									</div>
 								</div>
