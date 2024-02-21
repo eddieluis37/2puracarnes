@@ -46,6 +46,25 @@
 			<div class="col-md-6">
 				<div class="task-header">
 					<div class="form-group">
+						<label for="dir" class="form-label">Dirección de entrega</label>
+						<select class="form-control form-control-sm input" name="direccion_evio" id="direccion_evio" required>
+							<option value="">Seleccione dir de entrega</option>
+							@foreach($direccion as $dir)
+							<option value="{{ $dir->direccion }}">{{ $dir->direccion }}</option>
+							<option value="{{ $dir->direccion1 }}">{{ $dir->direccion1 }}</option>
+							<option value="{{ $dir->direccion2 }}">{{ $dir->direccion2 }}</option>
+							<option value="{{ $dir->direccion3 }}">{{ $dir->direccion3 }}</option>
+							<option value="{{ $dir->direccion4 }}">{{ $dir->direccion4 }}</option>
+							@endforeach
+						</select>
+						<span class="text-danger error-message"></span>
+					</div>
+				</div>
+			</div>
+
+			<div class="col-md-6">
+				<div class="task-header">
+					<div class="form-group">
 						<label for="" class="form-label">Vendedor</label>
 						<select class="form-control form-control-sm input" name="vendedor" id="vendedor" required>
 							<option value="">Seleccione el vendedor</option>
@@ -87,8 +106,8 @@
 					</div>
 				</div>
 			</div>
-
-			<div class="col-md-6">
+			
+			<div class="col-md-4">
 				<div class="task-header">
 					<div class="form-group">
 						<label for="date1" class="form-label">Fecha de entrega</label>
@@ -96,28 +115,41 @@
 						<span class="text-danger error-message"></span>
 					</div>
 				</div>
-			</div>
+			</div>		
 
-			<div class="col-md-6">
+			<div class="col-md-4">
 				<div class="task-header">
 					<div class="form-group">
-						<label for="dir" class="form-label">Dirección de entrega</label>
-						<select class="form-control form-control-sm input" name="direccion_evio" id="direccion_evio" required>
-							<option value="">Seleccione dir de entrega</option>
-							@foreach($direccion as $dir)
-							<option value="{{ $dir->direccion }}">{{ $dir->direccion }}</option>
-							<option value="{{ $dir->direccion1 }}">{{ $dir->direccion1 }}</option>
-							<option value="{{ $dir->direccion2 }}">{{ $dir->direccion2 }}</option>
-							<option value="{{ $dir->direccion3 }}">{{ $dir->direccion3 }}</option>
-							<option value="{{ $dir->direccion4 }}">{{ $dir->direccion4 }}</option>
-							@endforeach
-						</select>
-						<span class="text-danger error-message"></span>
+						<label for="hora_inicial_entrega" class="form-label">Hora inicial de entrega</label>
+						<select class="form-control form-control-sm input" name="hora_inicial_entrega" id="hora_inicial_entrega" required>
+							<option value="">Seleccione hora de entrega</option>
+							@php
+							$startTime = strtotime('08:00');
+							$endTime = strtotime('17:00');
+							$interval = 60 * 60; // 1 hour interval
+							for ($i = $startTime; $i <= $endTime; $i +=$interval) { echo '<option value="' . date('H:i', $i) . '">' . date('h:i A', $i) . '</option>' ; } @endphp </select>
+								<span class="text-danger error-message"></span>
 					</div>
 				</div>
 			</div>
 
-			<div class="col-md-12">
+			<div class="col-md-4">
+				<div class="task-header">
+					<div class="form-group">
+						<label for="hora_final_entrega" class="form-label">Hora final de entrega</label>
+						<select class="form-control form-control-sm input" name="hora_final_entrega" id="hora_final_entrega" required>
+							<option value="">Seleccione hora de entrega</option>
+							@php
+							$startTime = strtotime('08:00');
+							$endTime = strtotime('17:00');
+							$interval = 60 * 60; // 1 hour interval
+							for ($i = $startTime; $i <= $endTime; $i +=$interval) { echo '<option value="' . date('H:i', $i) . '">' . date('h:i A', $i) . '</option>' ; } @endphp </select>
+								<span class="text-danger error-message"></span>
+					</div>
+				</div>
+			</div>			
+
+			<div class="col-md-4">
 				<div class="form-group">
 					<label for="observations">Observación general</label>
 					<textarea class="form-control" id="observacion" name="observacion" rows="3"></textarea>

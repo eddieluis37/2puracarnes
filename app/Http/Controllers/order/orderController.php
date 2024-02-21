@@ -59,15 +59,15 @@ class orderController extends Controller
 
     public function show()
     {
-        $data = DB::table('orders as or')            
+        $data = DB::table('orders as or')
             ->join('thirds as tird', 'or.third_id', '=', 'tird.id')
             ->leftJoin('centro_costo as centro', 'or.centrocosto_id', '=', 'centro.id')
             ->join('thirds as vendedor', 'or.vendedor_id', '=', 'vendedor.id')
             ->select('or.*', 'or.status as status', 'total_valor_a_pagar', 'fecha_order', 'tird.direccion as direccion', 'or.resolucion as resolucion', 'tird.name as namethird', 'centro.name as namecentrocosto', 'total_utilidad', 'vendedor.name as nombre_vendedor')
-           /*  ->where('or.status', 1) */
+            /*  ->where('or.status', 1) */
             ->get();
 
-    
+
 
         //  $data = Sale::orderBy('id','desc');
 
@@ -117,7 +117,7 @@ class orderController extends Controller
                 } else {
                     $btn = '
                         <div class="text-center">
-                        <a href="order/showFactura/' . $data->id . '" class="btn btn-dark" title="VerFacturaCerrada" target="_blank">
+                        <a href="order/showPDFOrder/' . $data->id . '" class="btn btn-dark" title="VerOrdenCerrada" target="_blank">
                         <i class="far fa-file-pdf"></i>
 					    </a>
 					    <button class="btn btn-dark" title="Borra la venta" disabled>
@@ -141,22 +141,20 @@ class orderController extends Controller
                 'centrocosto' => 'required',
                 'vendedor' => 'required',
                 'subcentrodecosto' => 'required',
-                /* 'factura' => [
+                'hora_inicial_entrega' => 'required',
+                'hora_final_entrega' => [
                     'required',
-                    function ($attribute, $value, $fail) {
-                        $count = Order::where('sale_id', $value)->count();
-                        if ($count >= 2) {
-                            $fail('No se puede crear más de 2 notas de crédito para la misma factura');
-                        }
-                    }
-                ], */
+                    'after:hora_inicial_entrega',
+                ],
             ];
             $messages = [
                 'ventaId.required' => 'El ventaId es requerido',
                 'centrocosto.required' => 'Centro costo es requerido',
-                'vendedor.required' => 'Vendedor es requerido',
-                /* 'factura.required' => 'La factura es requerida', */
+                'vendedor.required' => 'Vendedor es requerido',                
                 'subcentrodecosto.required' => 'Sub Centro de costo es requerido',
+                'hora_inicial_entrega.required' => 'La hora inicial de entrega es requerida',
+                'hora_final_entrega.required' => 'La hora final de entrega es requerida',
+                'hora_final_entrega.after' => 'La hora final de entrega debe ser posterior a la hora inicial',
             ];
             $validator = Validator::make($request->all(), $rules, $messages);
             if ($validator->fails()) {
@@ -186,6 +184,8 @@ class orderController extends Controller
                 $venta->fecha_entrega = $request->fecha_entrega;
                 /*  $venta->fecha_cierre =  now(); */
                 $venta->direccion_envio = $request->direccion_evio;
+                $venta->hora_inicial_entrega = $request->hora_inicial_entrega;
+                $venta->hora_final_entrega = $request->hora_final_entrega;
                 $venta->items = 0;
                 $venta->observacion = $request->observacion;
                 $venta->save();
@@ -389,9 +389,9 @@ class orderController extends Controller
                 $detail->order_id = $request->ventaId;
                 $detail->product_id = $request->producto;
                 $detail->price = $formatPrVenta;
-                $detail->quantity = $formatPesoKg;              
+                $detail->quantity = $formatPesoKg;
                 $detail->observaciones =  $request->get('observations');
-                $detail->quantity_despachada =$request->get('quantity_despachada');
+                $detail->quantity_despachada = $request->get('quantity_despachada');
                 $detail->costo_prod = $request->get('costo_prod');
                 $detail->porc_desc_prod = $porcDescuento;
                 $detail->descuento_prod = $descuento_prod;
@@ -403,7 +403,7 @@ class orderController extends Controller
                 $detail->total_bruto = $precioUnitarioBrutoConDesc;
                 $detail->total_costo = $totalCosto;
                 $detail->utilidad = $utilidad;
-                $detail->porc_utilidad = $porc_utilidad;             
+                $detail->porc_utilidad = $porc_utilidad;
                 $detail->total = $valorAPagar;
                 $detail->save();
             } else {
@@ -448,7 +448,7 @@ class orderController extends Controller
             });
             $order->total_bruto = $totalBruto;
             $order->descuentos = $totalDesc;
-            $count = DB::table('orders')->where('status', '1')->count(); 
+            $count = DB::table('orders')->where('status', '1')->count();
             $resolucion = 'OP ' . (1 + $count);
             $order->resolucion = $resolucion;
             $order->save();
@@ -550,19 +550,19 @@ class orderController extends Controller
 
             $venta = Order::where('id', $id)->latest()->first(); // el ultimo mas reciente;
             $venta->user_id = $request->user()->id;
-        /*     $venta->sale_id = $SaleIdNC; */
-        
+            /*     $venta->sale_id = $SaleIdNC; */
+
             $venta->status = $status;
-       /*      $venta->fecha_notacredito = now(); */
-            $venta->fecha_cierre = now();         
-           
-          
-/* 
+            /*      $venta->fecha_notacredito = now(); */
+            $venta->fecha_cierre = now();
+
+
+            /* 
             $totalValor = (float)OrderDetail::Where([['order_id', $id]])->sum('total');
             $venta->valor_total = $totalValor;
  */
             $venta->save();
-        
+
 
             if ($venta->status == 1) {
                 return redirect()->route('order.index');

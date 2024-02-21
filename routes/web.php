@@ -68,6 +68,7 @@ use App\Http\Controllers\notacredito\pdfNotacreditoController;
 use App\Http\Controllers\notadebito\notadebitoController;
 use App\Http\Controllers\notadebito\pdfNotadebitoController;
 use App\Http\Controllers\order\orderController;
+use App\Http\Controllers\order\pdfOrderController;
 use App\Http\Controllers\recibodecaja\pdfRecibodecajaController;
 use App\Http\Controllers\recibodecaja\recibodecajaController;
 use App\Http\Controllers\res\pdfLoteController;
@@ -439,6 +440,7 @@ Route::group(['middleware' => [('auth')]], function () {
     Route::post('orderdown', [orderController::class, 'destroy'])->name('order.down');
     Route::get('/order-obtener-valores', [orderController::class, 'obtenerValores'])->name('order.order-obtener-valores');
     Route::post('order/create/registrar_order/{id}', [orderController::class, 'storeOrder'])->name('order.saveOrder');
+    Route::get('order/showPDFOrder/{id}', [pdfOrderController::class, 'showPDFOrder'])->name('order.showPDFOrder');
 
    /* 
     Route::post('notacreditosavedetail', [notacreditoController::class, 'savedetail'])->name('notacredito.savedetail');

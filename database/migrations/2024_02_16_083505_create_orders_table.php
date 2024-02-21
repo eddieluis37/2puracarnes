@@ -73,7 +73,9 @@ class CreateOrdersTable extends Migration
  */
             $table->date('fecha_order')->nullable(); 
             $table->date('fecha_cierre')->nullable();  
-            $table->date('fecha_entrega')->nullable(); 
+            $table->date('fecha_entrega')->nullable();
+            $table->time('hora_inicial_entrega')->nullable(); 
+            $table->time('hora_final_entrega')->nullable();
 
             $table->string('direccion_envio', 50, 0)->nullable();
 
