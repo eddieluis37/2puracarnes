@@ -59,12 +59,15 @@ class orderController extends Controller
 
     public function show()
     {
-        $data = DB::table('orders as or')          
+        $data = DB::table('orders as or')            
             ->join('thirds as tird', 'or.third_id', '=', 'tird.id')
             ->leftJoin('centro_costo as centro', 'or.centrocosto_id', '=', 'centro.id')
-            ->select('or.*', 'or.status as status', 'tird.direccion as direccion', 'or.resolucion as saresolucion', 'tird.name as namethird', 'centro.name as namecentrocosto')
-            /*  ->where('or.status', 1) */
+            ->join('thirds as vendedor', 'or.vendedor_id', '=', 'vendedor.id')
+            ->select('or.*', 'or.status as status', 'total_valor_a_pagar', 'fecha_order', 'tird.direccion as direccion', 'or.resolucion as resolucion', 'tird.name as namethird', 'centro.name as namecentrocosto', 'total_utilidad', 'vendedor.name as nombre_vendedor')
+            ->where('or.status', 1)
             ->get();
+
+    
 
         //  $data = Sale::orderBy('id','desc');
 
@@ -89,7 +92,7 @@ class orderController extends Controller
                     $btn = '
                         <div class="text-center">
 					    
-                        <a href="sale/showFactura/' . $data->id . '" class="btn btn-dark" title="VerFactura" target="_blank">
+                        <a href="order/showFactura/' . $data->id . '" class="btn btn-dark" title="VerFactura" target="_blank">
                         <i class="far fa-file-pdf"></i>
 					    </a>				
 					    <button class="btn btn-dark" title="Borrar venta" disabled>
@@ -104,7 +107,7 @@ class orderController extends Controller
 						    <i class="fas fa-directions"></i>
 					    </a>
 					   
-                        <a href="sale/showFactura/' . $data->id . '" class="btn btn-dark" title="VerFacturaPendiente" target="_blank">
+                        <a href="order/showFactura/' . $data->id . '" class="btn btn-dark" title="VerFacturaPendiente" target="_blank">
                         <i class="far fa-file-pdf"></i>
 					    </a>
 					  
@@ -114,7 +117,7 @@ class orderController extends Controller
                 } else {
                     $btn = '
                         <div class="text-center">
-                        <a href="sale/showFactura/' . $data->id . '" class="btn btn-dark" title="VerFacturaCerrada" target="_blank">
+                        <a href="order/showFactura/' . $data->id . '" class="btn btn-dark" title="VerFacturaCerrada" target="_blank">
                         <i class="far fa-file-pdf"></i>
 					    </a>
 					    <button class="btn btn-dark" title="Borra la venta" disabled>
@@ -170,6 +173,7 @@ class orderController extends Controller
                 $venta = new Order();
                 $venta->user_id = $id_user;
                 $venta->third_id = $request->cliente;
+                $venta->vendedor_id = $request->vendedor;
                 $venta->centrocosto_id = $request->centrocosto;
                 //  dd($request->factura); // es el id de la factura de venta seleccionada en el modal create
                 $venta->fecha_order = $currentDateFormat;
@@ -223,7 +227,7 @@ class orderController extends Controller
             ->orderBy('category_id', 'asc')
             ->orderBy('name', 'asc')
             ->get();
-    /*     $ventasdetalle = $this->getventasdetalle($id, $venta->centrocosto_id); */
+        /*     $ventasdetalle = $this->getventasdetalle($id, $venta->centrocosto_id); */
         $arrayTotales = $this->sumTotales($id);
 
         $datacompensado = DB::table('orders as or')
@@ -272,7 +276,7 @@ class orderController extends Controller
         return $detail;
     }
  */
-     public function sumTotales($id)
+    public function sumTotales($id)
     {
         $TotalBrutoSinDescuento = Order::where('id', $id)->value('total_bruto');
         $TotalDescuentos = Order::where('id', $id)->value('descuentos');
@@ -366,8 +370,8 @@ class orderController extends Controller
 
             $valorApagar = $precioUnitarioBrutoConDesc + $totalOtrosImpuestos;
 
-        
-            $totalCosto = $request->get('costo_prod') * $formatPesoKg; 
+
+            $totalCosto = $request->get('costo_prod') * $formatPesoKg;
 
             $utilidad = $precioUnitarioBrutoConDesc - $totalCosto;
             $porc_utilidad = ($utilidad / $precioUnitarioBrutoConDesc) * 100;
@@ -389,8 +393,7 @@ class orderController extends Controller
                 $detail->total_bruto = $precioUnitarioBrutoConDesc;
                 $detail->total_costo = $totalCosto;
                 $detail->utilidad = $utilidad;
-                $detail->porc_utilidad = $porc_utilidad;
-          
+                $detail->porc_utilidad = $porc_utilidad;             
                 $detail->total = $valorAPagar;
                 $detail->save();
             } else {
@@ -414,27 +417,31 @@ class orderController extends Controller
                 $updateReg->utilidad = $utilidad;
                 $updateReg->porc_utilidad = $porc_utilidad;
                 $updateReg->save();
-            }       
+            }
 
-            $sale = Order::find($request->ventaId);
-            $sale->items = OrderDetail::where('order_id', $sale->id)->count();
-            $sale->descuentos = $totalDescuento;
-            $sale->total_iva = $iva;
-            $sale->total_otros_impuestos = $totalOtrosImpuestos;
-            $sale->total_valor_a_pagar = $valorApagar;
-            $saleDetails = OrderDetail::where('order_id', $sale->id)->get();
+            $order = Order::find($request->ventaId);
+            $order->items = OrderDetail::where('order_id', $order->id)->count();
+            $order->descuentos = $totalDescuento;
+            $order->total_iva = $iva;
+            $order->total_otros_impuestos = $totalOtrosImpuestos;
+            $order->total_valor_a_pagar = $valorApagar;
+            $saleDetails = OrderDetail::where('order_id', $order->id)->get();
             $totalBruto = 0;
             $totalDesc = 0;
-            $sale->total_valor_a_pagar = $saleDetails->where('order_id', $sale->id)->sum('total');
+            $order->total_valor_a_pagar = $saleDetails->where('order_id', $order->id)->sum('total');
+            $order->total_utilidad = $saleDetails->where('order_id', $order->id)->sum('utilidad');
             $totalBruto = $saleDetails->sum(function ($saleDetail) {
                 return $saleDetail->quantity * $saleDetail->price;
             });
             $totalDesc = $saleDetails->sum(function ($saleDetail) {
                 return $saleDetail->descuento_prod + $saleDetail->descuento_cliente;
             });
-            $sale->total_bruto = $totalBruto;
-            $sale->descuentos = $totalDesc;
-            $sale->save();
+            $order->total_bruto = $totalBruto;
+            $order->descuentos = $totalDesc;
+            $count = DB::table('orders')->where('status', '1')->count(); 
+            $resolucion = 'OP ' . (1 + $count);
+            $order->resolucion = $resolucion;
+            $order->save();
 
             $arraydetail = $this->getventasdetail($request->ventaId);
 
@@ -477,25 +484,25 @@ class orderController extends Controller
             $arrayTotales = $this->sumTotales($request->ventaId);
 
 
-            $sale = Sale::find($request->ventaId);
-            $sale->items = OrderDetail::where('order_id', $sale->id)->count();
-            $sale->descuentos = 0;
-            $sale->total_iva = 0;
-            $sale->total_otros_impuestos = 0;
-            $saleDetails = OrderDetail::where('order_id', $sale->id)->get();
+            $order = Sale::find($request->ventaId);
+            $order->items = OrderDetail::where('order_id', $order->id)->count();
+            $order->descuentos = 0;
+            $order->total_iva = 0;
+            $order->total_otros_impuestos = 0;
+            $saleDetails = OrderDetail::where('order_id', $order->id)->get();
             $totalBruto = 0;
             $totalDesc = 0;
-            $total_valor_a_pagar = $saleDetails->where('order_id', $sale->id)->sum('total');
-            $sale->total_valor_a_pagar = $total_valor_a_pagar;
+            $total_valor_a_pagar = $saleDetails->where('order_id', $order->id)->sum('total');
+            $order->total_valor_a_pagar = $total_valor_a_pagar;
             $totalBruto = $saleDetails->sum(function ($saleDetail) {
                 return $saleDetail->quantity * $saleDetail->price;
             });
             $totalDesc = $saleDetails->sum(function ($saleDetail) {
                 return $saleDetail->descuento_prod + $saleDetail->descuento_cliente;
             });
-            $sale->total_bruto = $totalBruto;
-            $sale->descuentos = $totalDesc;
-            $sale->save();
+            $order->total_bruto = $totalBruto;
+            $order->descuentos = $totalDesc;
+            $order->save();
 
 
 
@@ -575,8 +582,8 @@ class orderController extends Controller
             ]);
         }
     }
-    
-     public function obtenerValores(Request $request)
+
+    public function obtenerValores(Request $request)
     {
         $centrocostoId = $request->input('centrocosto');
         $clienteId = $request->input('cliente');

@@ -50,23 +50,12 @@ $(document).ready(function () {
                         }
                     },
                 },
-                { data: "saresolucion", name: "saresolucion" },
+              /*   { data: "saresolucion", name: "saresolucion" }, */
               /*   { data: "ncresolucion", name: "ncresolucion" }, */
-                { data: "status", name: "status" },                
+                { data: "status", name: "status" }, 
                 {
-                    data: "tipo",
-                    name: "tipo",
-                    render: function (data) {
-                        if (data.length > 7) {
-                            return data.substring(0, 3) + "...";
-                        } else {
-                            return data;
-                        }
-                    },
-                },
-                {
-                    data: "nctotal",
-                    name: "nctotal",
+                    data: "total_valor_a_pagar",
+                    name: "total_valor_a_pagar",
                     render: function (data) {
                         return (
                             "$ " +
@@ -76,8 +65,34 @@ $(document).ready(function () {
                             })
                         );
                     },
-                },
+                },  
+                {
+                    data: "total_utilidad",
+                    name: "total_utilidad",
+                    render: function (data) {
+                        return (
+                            "$ " +
+                            parseFloat(data).toLocaleString(undefined, {
+                                minimumFractionDigits: 0,
+                                maximumFractionDigits: 0,
+                            })
+                        );
+                    },
+                },                       
                 { data: "date", name: "date" },
+                
+                { data: "resolucion", name: "resolucion" },
+                {
+                    data: "nombre_vendedor",
+                    name: "nombre_vendedor",
+                    render: function (data) {
+                        if (data.length > 9) {
+                            return data.substring(0, 9) + "...";
+                        } else {
+                            return data;
+                        }
+                    },
+                },
                 { data: "action", name: "action" },
             ],
             order: [[0, "DESC"]],

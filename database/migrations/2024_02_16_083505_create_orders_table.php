@@ -47,7 +47,8 @@ class CreateOrdersTable extends Migration
             $table->decimal('total',12,0)->default(0)->nullable();
             $table->decimal('total_otros_descuentos',12,0)->default(0)->nullable();
             $table->decimal('valor_a_pagar_efectivo',12,0)->default(0)->nullable();  
-            $table->decimal('total_valor_a_pagar',12,0)->default(0)->nullable();         
+            $table->decimal('total_valor_a_pagar',12,0)->default(0)->nullable();  
+            $table->decimal('total_utilidad',12,0)->default(0)->nullable();           
 
             /* $table->unsignedBigInteger('forma_pago_tarjeta_id')->nullable();
             $table->foreign('forma_pago_tarjeta_id')->references('id')->on('formapagos');

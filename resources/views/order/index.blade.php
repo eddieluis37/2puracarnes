@@ -26,9 +26,10 @@
 								<th class="table-th text-white ">CE</th>
 								<th class="table-th text-white">ST</th>
 								<th class="table-th text-white">VALOR.O</th>
+								<th class="table-th text-white">UTILIDAD</th>
 								<th class="table-th text-white">DIA.HORA</th>
-								<th class="table-th text-white">FACTURA</th>
-								<th class="table-th text-white">RESOL</th>
+								<th class="table-th text-white">ORDEN</th>
+								<th class="table-th text-white">VENDEDOR</th>
 								<th class="table-th text-white text-center">Acciones</th>
 							</tr>
 						</thead>

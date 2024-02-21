@@ -143,15 +143,15 @@ const showData = (data) => {
             <tr>                              
                 <td>${element.nameprod}</td>
                 <td>${formatCantidad(element.quantity)}KG</td>
+                <td>$${formatCantidadSinCero(element.costo_prod)}</td>  
                 <td>$${formatCantidadSinCero(element.price)}</td>  
                 <td>${formatCantidad(element.porc_desc_prod)}%</td>
                 <td>$${formatCantidadSinCero(element.descuento_prod)}</td> 
                 <td>$${formatCantidadSinCero(element.descuento_cliente)}</td>
                 <td>$${formatCantidadSinCero(element.total_bruto)}</td>  
-                <td></td>
-				<td></td>
-				<td></td>
-				<td></td> 
+                <td>$${formatCantidadSinCero(element.total_costo)}</td>  
+                <td>$${formatCantidadSinCero(element.utilidad)}</td> 
+                <td>${formatCantidad(element.porc_utilidad)}%</td>				
                 <td>${formatCantidad(element.porc_iva)}%</td> 
                 <td>$${formatCantidadSinCero(element.iva)}</td> 
                 <td>${element.porc_otro_impuesto}%</td>     
@@ -184,6 +184,7 @@ const showData = (data) => {
             <td></td>    
             <td></td>
             <td></td>                               
+            <td></td>
             <th>${formatCantidadSinCero(arrayTotales.TotalBruto)}</th> 
             <td></td>
             <td></td>
