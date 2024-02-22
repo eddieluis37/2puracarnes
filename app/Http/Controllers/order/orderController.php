@@ -140,6 +140,7 @@ class orderController extends Controller
                 'ventaId' => 'required',
                 'centrocosto' => 'required',
                 'vendedor' => 'required',
+                'alistador' => 'required',
                 'subcentrodecosto' => 'required',
                 'hora_inicial_entrega' => 'required',
                 'hora_final_entrega' => [
@@ -150,7 +151,8 @@ class orderController extends Controller
             $messages = [
                 'ventaId.required' => 'El ventaId es requerido',
                 'centrocosto.required' => 'Centro costo es requerido',
-                'vendedor.required' => 'Vendedor es requerido',                
+                'vendedor.required' => 'Vendedor es requerido',   
+                'alistador.required' => 'Alistador es requerido',                   
                 'subcentrodecosto.required' => 'Sub Centro de costo es requerido',
                 'hora_inicial_entrega.required' => 'La hora inicial de entrega es requerida',
                 'hora_final_entrega.required' => 'La hora final de entrega es requerida',
