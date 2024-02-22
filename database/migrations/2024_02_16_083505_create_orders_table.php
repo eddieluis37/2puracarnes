@@ -25,6 +25,9 @@ class CreateOrdersTable extends Migration
             $table->unsignedBigInteger('vendedor_id')->nullable();           
             $table->foreign('vendedor_id')->references('id')->on('thirds'); 
             
+            $table->unsignedBigInteger('alistador_id')->nullable();           
+            $table->foreign('alistador_id')->references('id')->on('thirds'); 
+            
             $table->unsignedBigInteger('domiciliario_id')->nullable();           
             $table->foreign('domiciliario_id')->references('id')->on('thirds');                   
                  

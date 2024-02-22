@@ -36,8 +36,8 @@
 			</tr>
 			<tr>
 				<td colspan=" 2" class="text-center">
-					<span style="font-size: 9px; font-weight: bold; display: block; margin-top: 10;">CENTRO COSTO: {{$order[0]->namecentrocosto}} - Digitador: {{$order[0]->nameuser}}</span>
-					<span style="font-size: 9px; font-weight: bold; display: block; margin: 0;">N°. ORDEN DE PEDIDO {{$order[0]->resolucion}}</span>
+					<span style="font-size: 9px; font-weight: bold; display: block; margin-top: 10;">CENTRO COSTO: {{$order[0]->namecentrocosto}} | Digitador: {{$order[0]->nameuser}}</span>
+					<span style="font-size: 9px; font-weight: bold; display: block; margin: 0;">N°. ORDEN DE PEDIDO {{$order[0]->resolucion}} | Alistador: {{$order[0]->nombre_alistador}}</span>
 				</td>
 			</tr>
 			<tr>

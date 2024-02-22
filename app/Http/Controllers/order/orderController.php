@@ -179,6 +179,7 @@ class orderController extends Controller
                 $venta->user_id = $id_user;
                 $venta->third_id = $request->cliente;
                 $venta->vendedor_id = $request->vendedor;
+                $venta->alistador_id = $request->alistador;
                 $venta->centrocosto_id = $request->centrocosto;
                 $venta->subcentrocostos_id = $request->subcentrodecosto;
                 //  dd($request->factura); // es el id de la factura de venta seleccionada en el modal create
