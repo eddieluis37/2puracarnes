@@ -95,11 +95,11 @@
 			<div class="col-md-6">
 				<div class="task-header">
 					<div class="form-group">
-						<label for="" class="form-label">Domiciliario</label>
-						<select class="form-control form-control-sm input" name="domiciliario" id="domiciliario" required>
-							<option value="">Seleccione el domiciliario</option>
-							@foreach($domiciliarios as $domiciliario)
-							<option value="{{ $domiciliario->id }}">{{ $domiciliario->name }}</option>
+						<label for="" class="form-label">Alistador</label>
+						<select class="form-control form-control-sm input" name="alistador" id="alistador" required>
+							<option value="">Seleccione el alistador</option>
+							@foreach($alistadores as $alistador)
+							<option value="{{ $alistador->id }}">{{ $alistador->name }}</option>
 							@endforeach
 						</select>
 						<span class="text-danger error-message"></span>

@@ -50,11 +50,11 @@ class orderController extends Controller
         $centros = Centrocosto::Where('status', 1)->get();
         $clientes = Third::Where('cliente', 1)->get();
         $vendedores = Third::Where('vendedor', 1)->get();
-        $domiciliarios = Third::Where('domiciliario', 1)->get();
+        $alistadores = Third::Where('alistador', 1)->get();
         $subcentrodecostos = Subcentrocosto::get();
 
 
-        return view('order.index', compact('ventas', 'direccion', 'centros', 'clientes', 'vendedores', 'domiciliarios', 'subcentrodecostos'));
+        return view('order.index', compact('ventas', 'direccion', 'centros', 'clientes', 'vendedores', 'alistadores', 'subcentrodecostos'));
     }
 
     public function show()

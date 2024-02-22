@@ -152,6 +152,12 @@
 			<label class="form-check-label" for="is_courier">Domiciliario</label>
 		</div>
 	</div>
+	<div class="col-sm-12 col-md-4">
+		<div class="form-group form-check-inline">
+			<input type="checkbox" wire:model.lazy="is_alistador" class="form-check-input" id="is_alistador">
+			<label class="form-check-label" for="is_alistador">Alistador</label>
+		</div>
+	</div>
 
 	<!-- <div class="col-sm-12 col-md-4">
 		<div class="form-group">

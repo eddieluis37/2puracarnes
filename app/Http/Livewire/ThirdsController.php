@@ -22,7 +22,7 @@ class ThirdsController extends Component
 	use WithPagination;
    
 
-	public $name, $type_identificationid, $identification, $digito_verificacion, $officeid, $porc_descuento, $type_regimen_ivaid, $direccion,  $direccion1, $direccion2, $direccion3, $direccion4, $search, $provinceid, $celular, $nombre_contacto, $status, $is_client, $is_provider, $is_seller, $is_courier, $correo, $selected_id, $listaprecio_genericId, $listaprecio_nichoId, $pageTitle, $componentName;
+	public $name, $type_identificationid, $identification, $digito_verificacion, $officeid, $porc_descuento, $type_regimen_ivaid, $direccion,  $direccion1, $direccion2, $direccion3, $direccion4, $search, $provinceid, $celular, $nombre_contacto, $status, $is_client, $is_provider, $is_seller, $is_courier, $is_alistador, $correo, $selected_id, $listaprecio_genericId, $listaprecio_nichoId, $pageTitle, $componentName;
 	
 	private $pagination = 15;
 
@@ -143,6 +143,7 @@ class ThirdsController extends Component
 			'proveedor' => $this->is_provider,
 			'vendedor' => $this->is_seller,
 			'domiciliario' => $this->is_courier,
+			'alistador' => $this->is_alistador,
 			'listaprecio_nichoid' => $this->listaprecio_nichoId,			
 			'listaprecio_genericid' => $this->listaprecio_genericId
 		]);
@@ -176,6 +177,7 @@ class ThirdsController extends Component
 		$this->is_provider = $third->proveedor;
 		$this->is_seller = $third->vendedor;
 		$this->is_courier = $third->domiciliario;
+		$this->is_alistador = $third->alistador;
 		$this->listaprecio_nichoId = $third->listaprecio_nichoid;
 		$this->listaprecio_genericId = $third->listaprecio_genericid;
 		$this->emit('show-modal', 'show modal!');
@@ -240,6 +242,7 @@ class ThirdsController extends Component
 			'proveedor' => $this->is_provider,
 			'vendedor' => $this->is_seller,
 			'domiciliario' => $this->is_courier,
+			'alistador' => $this->is_alistador,
 			'listaprecio_nichoid' => $this->listaprecio_nichoId,
 			'listaprecio_genericid' => $this->listaprecio_genericId			
 		]);
@@ -272,6 +275,7 @@ class ThirdsController extends Component
 		$this->is_provider = '';
 		$this->is_seller = '';
 		$this->is_courier = '';
+		$this->is_alistador = '';
 		$this->listaprecio_nichoId = 'Elegir';
 		$this->listaprecio_genericId = 'Elegir';
 		$this->resetValidation();

@@ -56,6 +56,7 @@ class CreateThirdsTable extends Migration
             $table->boolean('proveedor')->parent_select()->default(false)->nullable();
             $table->boolean('vendedor')->parent_select()->default(false)->nullable();
             $table->boolean('domiciliario')->parent_select()->default(false)->nullable();
+            $table->boolean('alistador')->parent_select()->default(false)->nullable();
 
             $table->unsignedTinyInteger('porc_descuento')->nullable()->default(0);
 
