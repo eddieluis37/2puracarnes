@@ -92,7 +92,7 @@ class orderController extends Controller
                     $btn = '
                         <div class="text-center">
 					    
-                        <a href="order/showFactura/' . $data->id . '" class="btn btn-dark" title="VerFactura" target="_blank">
+                        <a href="order/showPDFOrder/' . $data->id . '" class="btn btn-dark" title="VerFacturaDespuesdeFechaCierre" target="_blank">
                         <i class="far fa-file-pdf"></i>
 					    </a>				
 					    <button class="btn btn-dark" title="Borrar venta" disabled>
@@ -107,7 +107,7 @@ class orderController extends Controller
 						    <i class="fas fa-directions"></i>
 					    </a>
 					   
-                        <a href="order/showFactura/' . $data->id . '" class="btn btn-dark" title="VerFacturaPendiente" target="_blank">
+                        <a href="order/showPDFOrder/' . $data->id . '" class="btn btn-dark" title="VerOrdenPendiente" target="_blank">
                         <i class="far fa-file-pdf"></i>
 					    </a>
 					  
@@ -117,7 +117,7 @@ class orderController extends Controller
                 } else {
                     $btn = '
                         <div class="text-center">
-                        <a href="order/showPDFOrder/' . $data->id . '" class="btn btn-dark" title="VerOrdenCerrada" target="_blank">
+                        <a href="order/showPDFOrder/' . $data->id . '" class="btn btn-dark" title="VerOrdenCerradaAntesFechaCierre" target="_blank">
                         <i class="far fa-file-pdf"></i>
 					    </a>
 					    <button class="btn btn-dark" title="Borra la venta" disabled>

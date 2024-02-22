@@ -20,10 +20,12 @@ class pdfOrderController extends Controller
             ->join('thirds as third', 'orders.third_id', '=', 'third.id')
             ->join('users as u', 'orders.user_id', '=', 'u.id')
             ->join('centro_costo as centro', 'orders.centrocosto_id', '=', 'centro.id')
+            ->leftJoin('thirds as vendedor', 'orders.vendedor_id', '=', 'vendedor.id')
+            ->leftJoin('subcentrocostos as subcentro', 'orders.subcentrocostos_id', '=', 'subcentro.id')
        /*      ->leftJoin('formapagos as fp', 'orders.forma_pago_tarjeta_id', '=', 'fp.id')
             ->leftJoin('formapagos as fp2', 'orders.forma_pago_otros_id', '=', 'fp2.id')
             ->leftJoin('formapagos as fp3', 'orders.forma_pago_credito_id', '=', 'fp3.id') */
-            ->select('orders.*', 'u.name as nameuser', 'third.name as namethird', 'third.celular', 'third.identification', 'orders.direccion_envio as direccion', 'orders.hora_inicial_entrega', 'centro.name as namecentrocosto', 'third.porc_descuento', 'orders.total_iva', 'orders.vendedor_id')
+            ->select('orders.*', 'u.name as nameuser', 'third.name as namethird', 'vendedor.name as nombre_vendedor', 'subcentro.name as subcentro','third.celular', 'third.identification', 'orders.direccion_envio as direccion', 'orders.hora_inicial_entrega', 'centro.name as namecentrocosto', 'third.porc_descuento', 'orders.total_iva', 'orders.vendedor_id')
             ->where([
                 ['orders.id', $id],
                 /*  ['order_details.status', 1]  */

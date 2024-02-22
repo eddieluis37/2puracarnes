@@ -35,14 +35,15 @@
 			</tr>
 			<tr>
 				<td colspan=" 2" class="text-center">
-					<span style="font-size: 9px; font-weight: bold; display: block; margin-top: 10;">POS {{$order[0]->namecentrocosto}} CAJA {{$order[0]->nameuser}}</span>
+					<span style="font-size: 9px; font-weight: bold; display: block; margin-top: 10;">CENTRO COSTO: {{$order[0]->namecentrocosto}} - Digitador:  {{$order[0]->nameuser}}</span>
 					<span style="font-size: 9px; font-weight: bold; display: block; margin: 0;">N°. ORDEN DE PEDIDO {{$order[0]->resolucion}}</span>
 				</td>
 			</tr>
 			<tr>
 				<td width="70%" class="text-left text-company" style="vertical-align: top; padding-top: 7px">
 					<span style="font-size: 8px; font-weight: lighter; display: block; margin: 2;">Fecha y hora:<strong> {{\Carbon\Carbon::now()->format('Y-m-d H:i')}}</strong></span>
-					<span style="font-size: 8px; font-weight: lighter; display: block; margin: 2;">Cajero:<strong> {{$order[0]->nameuser}}</strong></span>
+					<span style="font-size: 8px; font-weight: lighter; display: block; margin: 2;">Vendedor:<strong> {{$order[0]->nombre_vendedor}}</strong></span>
+					<span style="font-size: 8px; font-weight: lighter; display: block; margin: 2;">Subcentro costo:<strong> {{$order[0]->subcentro}}</strong></span>
 					<span style="font-size: 8px; font-weight: lighter; display: block; margin: 2;">Cliente:<strong> {{$order[0]->namethird}}</strong></span>
 					<span style="font-size: 8px; font-weight: lighter; display: block; margin: 2;">Nit / C.C.:<strong> {{$order[0]->identification}}</strong></span>
 					<span style="font-size: 8px; font-weight: lighter; display: block; margin: 2;">Dirección:<strong> {{$order[0]->direccion}}</strong></span>
@@ -73,13 +74,24 @@
 	</section>
 
 	<section style="margin-top: -1px">
-		<table cellpadding="0" cellspacing="0" class="table-items" width="100%">
+		<table cellpadding="0" cellspacing="0" class="table-items" width="">
 			<thead>
 				<tr>
-					<th width="5%">ITEM</th>
-					<th width="32%">Descripción</th>
-					<th width="5%">Cant.</th>
-					<th width="5%">Vr.Total</th>
+					<th width="auto">ITEM</th>
+					<th width="auto">PRODUCTO</th>
+					<th width="auto">CT.S</th>
+					<th width="5%">CT.D</th>
+					<th width="5%">VR.U</th>
+					<th width="5%">TOTAL.B</th>
+					<th width="5%">T.COSTO</th>
+					<th width="5%">UT</th>
+					<th width="5%">%UT</th>
+					<th width="5%">%IVA</th>
+					<th width="5%">IVA</th>
+					<th width="5%">%I.S</th>
+					<th width="5%">I.S</th>
+					<th width="5%">TOTAL</th>
+					<th width="5%">ESPECIFICACIONES</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -89,20 +101,42 @@
 					<td align="center">{{ $counter++ }}</td>
 					<td align="center">{{$item->nameprod}}</td>
 					<td align="center">{{$item->quantity}}</td>
-					<td align="right">$ {{number_format($item->total),2}}</td>
+					<td></td>
+					<td align="right">{{number_format($item->price),2}}</td>
+					<td align="right">{{number_format($item->total_bruto),2}}</td>
+					<td align="right">{{number_format($item->total_costo),2}}</td>
+					<td align="right">{{number_format($item->utilidad),2}}</td>
+					<td align="center">{{$item->porc_utilidad}}</td>
+					<td align="center">{{$item->porc_iva}}</td>
+					<td align="right">{{number_format($item->iva),2}}</td>
+					<td align="center">{{$item->porc_otro_impuesto}}</td>
+					<td align="right">{{number_format($item->otro_impuesto),2}}</td>				
+					<td align="right">{{number_format($item->total),2}}</td>
+					<td align="center">{{$item->observaciones}}</td>
 				</tr>
 				@endforeach
 			</tbody>
 			<tfoot>
 				<tr>
 					<td class="text-center">
-						<span><b>TOTALES</b></span>
+						<span><b>SUM</b></span>
 					</td>
+					<td></td>
 					<td colspan="1" class="text-center">
 						<span><strong>{{ $quantity = $item->where('order_id', '=', $item->order_id)->sum('quantity')}}</strong></span>
 					</td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
 					<td class="text-right">
-						<span><strong>$ {{ number_format($item->where('order_id', '=', $item->order_id)->sum('total'),0)}}</strong></span>
+						<span><strong>{{ number_format($item->where('order_id', '=', $item->order_id)->sum('total'),0)}}</strong></span>
 					</td>
 				</tr>
 			</tfoot>
