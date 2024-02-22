@@ -1,39 +1,39 @@
+@page {
+    size: 25cm 50.5cm; /* Establece el tamaño de la página a 50 cm de largo por 25 cm de ancho */
+    margin-top: 10px;
+    margin-bottom: 0px;
+}
+
 body {
     min-height: 100vh;
     max-width: 500px;
-  /*   background-color: rgb(234, 185, 185);  */
+    /*   background-color: rgb(234, 185, 185);  */
     margin: 0 auto;
 }
 
 table {
     font-size: 28px;
-    
-  }
+}
 
-@page {
-            margin-top: 7px;
-            margin-bottom: 5px;
-        }
+.header h1 {
+    margin-right: 300px;
+}
 
-        .header h1 {
-            margin-right: 300px;
-        }
+.footer {
+    bottom: 15px;
+    font-size: 7pt;
+    color: #333333;
+    border-top: 1px solid #1f1f1f;
+    z-index: 1000;
+}
+footer {
+    position: fixed;
+    left: 0px;
+    right: 0px;
+    height: 60px;
+    margin-top: -60px;
+}
 
-         .footer {
-            bottom: 15px;
-            font-size: 7pt;
-            color: #333333;             
-            border-top: 1px solid #1f1f1f;
-            z-index: 1000;
-        }
-        footer {
-            position: fixed;
-            left: 0px;
-            right: 0px;
-            height: 60px;
-            margin-top: -60px;
-        }
-
-        .pagenum:before {
-            content: counter(page);
-        } 
+.pagenum:before {
+    content: counter(page);
+}
