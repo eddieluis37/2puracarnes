@@ -30,6 +30,7 @@
 					<span style="font-size: 8px; font-weight: lighter; display: block; margin: 0;">Bogotá - Tel. (601) 9502998</span>
 					<span style="font-size: 8px; font-weight: lighter; display: block; margin: 0;">contabilidad@puracarnes.com</span>
 					<span style="font-size: 8px; font-weight: lighter; display: block; margin: 0;">www.puracarnes.com</span>
+					
 				</td>
 
 			</tr>
@@ -41,7 +42,7 @@
 			</tr>
 			<tr>
 				<td width="70%" class="text-left text-company" style="vertical-align: top; padding-top: 7px">
-					<span style="font-size: 8px; font-weight: lighter; display: block; margin: 2;">Fecha y hora:<strong> {{\Carbon\Carbon::now()->format('Y-m-d H:i')}}</strong></span>
+					<span style="font-size: 8px; font-weight: lighter; display: block; margin: 2;">Fecha y hora actual de consulta: <strong>{{ $fecha->isoFormat('dddd, D [de] MMMM [de] YYYY') }} | {{\Carbon\Carbon::now()->format('H:i')}}</strong></span>
 					<span style="font-size: 8px; font-weight: lighter; display: block; margin: 2;">Vendedor:<strong> {{$order[0]->nombre_vendedor}}</strong></span>
 					<span style="font-size: 8px; font-weight: lighter; display: block; margin: 2;">Subcentro costo:<strong> {{$order[0]->subcentro}}</strong></span>
 					<span style="font-size: 8px; font-weight: lighter; display: block; margin: 2;">Cliente:<strong> {{$order[0]->namethird}}</strong></span>
@@ -50,8 +51,8 @@
 					<span style="font-size: 8px; font-weight: lighter; display: block; margin: 2;">Celular:<strong> {{$order[0]->celular}}</strong></span>
 					<span style="font-size: 8px; font-weight: lighter; display: block; margin: 2;">
 						Fecha de entrega:
-						<strong>
-							{{ \Carbon\Carbon::parse($order[0]->fecha_entrega)->formatLocalized('%A, %d de %B') }}
+						<strong>												
+							{{ \Carbon\Carbon::parse($order[0]->fecha_entrega)->isoFormat('dddd, D [de] MMMM [de] YYYY') }}						
 						</strong>
 					</span>
 					<span style="font-size: 8px; font-weight: lighter; display: block; margin: 2;">
