@@ -35,7 +35,7 @@
 			</tr>
 			<tr>
 				<td colspan=" 2" class="text-center">
-					<span style="font-size: 9px; font-weight: bold; display: block; margin-top: 10;">CENTRO COSTO: {{$order[0]->namecentrocosto}} - Digitador:  {{$order[0]->nameuser}}</span>
+					<span style="font-size: 9px; font-weight: bold; display: block; margin-top: 10;">CENTRO COSTO: {{$order[0]->namecentrocosto}} - Digitador: {{$order[0]->nameuser}}</span>
 					<span style="font-size: 9px; font-weight: bold; display: block; margin: 0;">N°. ORDEN DE PEDIDO {{$order[0]->resolucion}}</span>
 				</td>
 			</tr>
@@ -60,7 +60,7 @@
 							{{ \Carbon\Carbon::parse($order[0]->hora_inicial_entrega)->format('h:i A') }} a
 							{{ \Carbon\Carbon::parse($order[0]->hora_final_entrega)->format('h:i A') }}
 						</strong>
-					</span>				
+					</span>
 					<span style="font-size: 8px; font-weight: lighter; display: block; margin: 2;">Estado_Orden_de_Pedido:
 						{{-- Display "Cerrada" if status is 1 --}}
 						{{-- Display "Pendiente" if status is 0 --}}
@@ -99,7 +99,10 @@
 				@foreach($orderDetails as $item)
 				<tr>
 					<td align="center">{{ $counter++ }}</td>
-					<td align="center">{{$item->nameprod}}</td>
+					<td style="text-align: left;">
+						<span style="font-size: smaller; text-transform: uppercase;">{{$item->nameprod}}</span>
+					</td>
+
 					<td align="center">{{$item->quantity}}</td>
 					<td></td>
 					<td align="right">{{number_format($item->price),2}}</td>
@@ -110,9 +113,11 @@
 					<td align="center">{{$item->porc_iva}}</td>
 					<td align="right">{{number_format($item->iva),2}}</td>
 					<td align="center">{{$item->porc_otro_impuesto}}</td>
-					<td align="right">{{number_format($item->otro_impuesto),2}}</td>				
+					<td align="right">{{number_format($item->otro_impuesto),2}}</td>
 					<td align="right">{{number_format($item->total),2}}</td>
-					<td align="center">{{$item->observaciones}}</td>
+					<td style="text-align: left;">
+						<span style="font-size: smaller; text-transform: uppercase;">{{$item->observaciones}}</span>
+					</td>
 				</tr>
 				@endforeach
 			</tbody>
@@ -138,11 +143,34 @@
 					<td class="text-right">
 						<span><strong>{{ number_format($item->where('order_id', '=', $item->order_id)->sum('total'),0)}}</strong></span>
 					</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+				</tr>
+				<tr>
+					<td colspan="15" style="text-align: left;">
+						<span style="font-size: larger; font-weight: bold;">Observaciones: {{$order[0]->observacion}}</span>
+					</td>
 				</tr>
 			</tfoot>
 		</table>
-	<!-- 	<p align="center" style="font-size: 7px; margin-top: 20px;">A esta notacredito aplican las normas relativas a la letra de cambio (artículo 5 Ley 1231 de 2008). Con esta el Comprador declara haber recibido real y materialmente las mercancías o prestación de servicios descritos en este título - Valor. <strong>Número Autorización 18764061412040 aprobado en 20231206 prefijo PC desde el número 1001 al 20000 Vigencia: 12 Meses</strong></p>
-		<p align="center" style="font-size: 7px; margin: -7px;">Responsable de IVA - Actividad Económica 4620 Comercio al por mayor de materias primas agropecuarias; animales vivos Tarifa 11.04</p> -->
+
+
 	</section>
 	<section class="footer">
 		<table cellpadding="0" cellspacing="0" class="table-items" width="100%">

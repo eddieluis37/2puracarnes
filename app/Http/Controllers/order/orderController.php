@@ -390,7 +390,7 @@ class orderController extends Controller
                 $detail->product_id = $request->producto;
                 $detail->price = $formatPrVenta;
                 $detail->quantity = $formatPesoKg;
-                $detail->observaciones =  $request->get('observations');
+                $detail->observaciones =  $request->get('observaciones');
                 $detail->quantity_despachada = $request->get('quantity_despachada');
                 $detail->costo_prod = $request->get('costo_prod');
                 $detail->porc_desc_prod = $porcDescuento;
@@ -413,6 +413,7 @@ class orderController extends Controller
                 $updateReg->product_id = $request->producto;
                 $updateReg->price = $formatPrVenta;
                 $updateReg->quantity = $formatPesoKg;
+                $updateReg->observaciones =  $request->get('observaciones');
                 $updateReg->costo_prod =  $request->get('costo_prod');
                 $updateReg->porc_desc_prod = $porcDescuento;
                 $updateReg->descuento_prod = $descuento_prod;

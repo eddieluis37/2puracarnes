@@ -151,8 +151,8 @@
 
 								<div class="col-md-6">
 									<div class="form-group">
-										<label for="observations">Observaciones</label>
-										<textarea class="form-control" id="observations" name="observations" rows="3"></textarea>
+										<label for="observaciones">Observaciones</label>
+										<textarea class="form-control" id="observaciones" name="observaciones" rows="3"></textarea>
 									</div>
 								</div>
 

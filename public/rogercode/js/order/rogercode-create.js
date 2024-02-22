@@ -112,6 +112,7 @@ tbodyTable.addEventListener("click", (e) => {
             regDetail.value = editReg.id;
             price.value = formatCantidadSinCero(editReg.price);
             quantity.value = formatCantidad(editReg.quantity);
+            observaciones.value = editReg.observaciones;
 
             $(".select2Prod").val(editReg.product_id).trigger("change");
         });
@@ -159,7 +160,7 @@ const showData = (data) => {
                     element.otro_impuesto
                 )}</td>             
                 <td>$${formatCantidadSinCero(element.total)}</td>  
-                <td></td>			
+                <td>${element.observaciones}</td>		
                 <td class="text-center">
                     <button class="btn btn-dark fas fa-edit" data-id="${
                         element.id
