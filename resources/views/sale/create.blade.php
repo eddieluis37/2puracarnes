@@ -53,7 +53,7 @@
 								<div class="task-header">
 									<div class="form-group">
 										<label for="" class="form-label">% Descuento</label>
-										<p>{{$datacompensado[0]->porc_descuento}}</p>
+										<p>{{$datacompensado[0]->porc_descuento_cliente}}</p>
 									</div>
 								</div>
 							</div>
@@ -75,7 +75,7 @@
 											<label for="" class="form-label">Buscar producto</label>
 											<input type="hidden" id="centrocosto" name="centrocosto" value="{{$datacompensado[0]->centrocosto_id}}" data-id="{{$datacompensado[0]->centrocosto_id}}">
 											<input type="hidden" id="cliente" name="cliente" value="{{$datacompensado[0]->third_id}}" data-id="{{$datacompensado[0]->third_id}}">
-										<!-- 	<input type="hidden" id="porc_descuento" name="porc_descuento" value="{{$datacompensado[0]->porc_descuento}}" data-id="{{$datacompensado[0]->porc_descuento}}"> -->
+										 	<input type="hidden" id="porc_descuento_cliente" name="porc_descuento_cliente" value="{{$datacompensado[0]->porc_descuento_cliente}}" data-id="{{$datacompensado[0]->porc_descuento_cliente}}">
 											<select class="form-control form-control-sm select2Prod" name="producto" id="producto" required="">
 												<option value="">Seleccione el producto</option>
 												@foreach ($prod as $p)
@@ -176,7 +176,7 @@
 								<th class="table-th text-white">Valor.U</th>
 								<th class="table-th text-white">%Des</th>
 								<th class="table-th text-white">Des</th>
-								<th class="table-th text-white">{{$datacompensado[0]->porc_descuento}}%DCl</th>
+								<th class="table-th text-white">{{$datacompensado[0]->porc_descuento_cliente}}%DCl</th>
 								<th class="table-th text-white">Total.B</th>
 								<th class="table-th text-white">%IVA</th>
 								<th class="table-th text-white">IVA</th>

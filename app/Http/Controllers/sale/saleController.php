@@ -161,7 +161,7 @@ class saleController extends Controller
                 'accumulated_total_bruto' => $accumulatedTotalBruto
             ]);
         }
-         // Recuperar los registros de la tabla table_temporary_accumulated_sales
+        // Recuperar los registros de la tabla table_temporary_accumulated_sales
         $accumulatedQuantitys = DB::table('table_temporary_accumulated_sales')->get();
 
         foreach ($accumulatedQuantitys as $accumulatedQuantity) {
@@ -230,7 +230,7 @@ class saleController extends Controller
         $datacompensado = DB::table('sales as sa')
             ->join('thirds as tird', 'sa.third_id', '=', 'tird.id')
             ->join('centro_costo as centro', 'sa.centrocosto_id', '=', 'centro.id')
-            ->select('sa.*', 'tird.name as namethird', 'centro.name as namecentrocosto', 'tird.porc_descuento')
+            ->select('sa.*', 'tird.name as namethird', 'centro.name as namecentrocosto', 'tird.porc_descuento as porc_descuento_cliente')
             ->where('sa.id', $id)
             ->get();
 
@@ -273,53 +273,6 @@ class saleController extends Controller
         return $detail;
     }
 
-    /*   public function create($id)
-    {
-        $centros = Centrocosto::Where('status', 1)->get();
-
-        //$category = Category::WhereIn('id',[1,2,3])->get();
-        //$providers = Third::Where('status',1)->get();
-        //$centros = Centrocosto::Where('status',1)->get();
-        $datacompensado = DB::table('sales as sa')
-            ->join('thirds as tird', 'sa.third_id', '=', 'tird.id')
-            ->join('centro_costo as centro', 'sa.centrocosto_id', '=', 'centro.id')
-            ->select('sa.*', 'tird.name as namethird', 'centro.name as namecentrocosto', 'tird.porc_descuento')
-            ->where('sa.id', $id)
-            ->get();
-
-        $prod = Product::Where([
-            
-            ['status', 1]
-        ])
-            ->orderBy('category_id', 'asc')
-            ->orderBy('name', 'asc')
-            ->get();
-
-      
-        $status = '';
-        $fechaCompensadoCierre = Carbon::parse($datacompensado[0]->fecha_cierre);
-        $date = Carbon::now();
-        $currentDate = Carbon::parse($date->format('Y-m-d'));
-        if ($currentDate->gt($fechaCompensadoCierre)) {
-            //'Date 1 is greater than Date 2';
-            $status = 'false';
-        } elseif ($currentDate->lt($fechaCompensadoCierre)) {
-            //'Date 1 is less than Date 2';
-            $status = 'true';
-        } else {
-            //'Date 1 and Date 2 are equal';
-            $status = 'false';
-        }
-
-        $detalleVenta = $this->getventasdetail($id);
-
-     
-
-        $arrayTotales = $this->sumTotales($id);
-       
-        return view('sale.create', compact('datacompensado', 'prod', 'id', 'detalleVenta', 'arrayTotales', 'status'));
-    } */
-
     public function create_reg_pago($id)
     {
         $forma_pago_tarjeta = Formapago::Where('tipoformapago', '=', 'TARJETA')->get();
@@ -350,9 +303,6 @@ class saleController extends Controller
         return view('sale.registrar_pago', compact('venta', 'arrayTotales', 'producto', 'dataVenta', 'descuento', 'subtotal', 'forma_pago_tarjeta', 'forma_pago_otros', 'forma_pago_credito'));
     }
 
-
-
-
     public function sumTotales($id)
     {
         $TotalBrutoSinDescuento = Sale::where('id', $id)->value('total_bruto');
@@ -373,24 +323,6 @@ class saleController extends Controller
 
         return $array;
     }
-
-    /*  public function getventasdetalle($ventaId, $centrocostoId)
-    {
-        $detail = DB::table('sale_details as dv')
-            ->join('products as pro', 'dv.product_id', '=', 'pro.id')
-            ->join('centro_costo_products as ce', 'pro.id', '=', 'ce.products_id')
-            ->select('dv.*', 'pro.name as nameprod', 'pro.code',  'ce.fisico', 'dv.iva as ')
-            ->selectRaw('ce.invinicial + ce.compraLote + ce.alistamiento +
-             ce.compensados + ce.trasladoing - (ce.venta + ce.trasladosal) stock')
-            ->where([
-                ['ce.centrocosto_id', $centrocostoId],
-                ['dv.sale_id', $ventaId],
-            ])->orderBy('dv.id', 'DESC')->get();
-
-        return $detail;
-    } */
-
-
 
     public function getventasdetail($ventaId)
     {
@@ -454,25 +386,16 @@ class saleController extends Controller
 
             $porcDescuento = $request->get('porc_descuento');
             $precioUnitarioBruto = ($formatPrVenta * $formatPesoKg);
-            $descuento = $precioUnitarioBruto * ($porcDescuento / 100);
-            $porc_descuento = $request->get('porc_descuento');
-
-            $descuentoCliente = $precioUnitarioBruto * ($porc_descuento / 100);
-            $totalDescuento = $descuento + $descuentoCliente;
-
+            $descuentoProducto = $precioUnitarioBruto * ($porcDescuento / 100);
+            $porc_descuento_cliente = $request->get('porc_descuento_cliente');
+            $descuentoCliente = $precioUnitarioBruto * ($porc_descuento_cliente / 100);
+            $totalDescuento = $descuentoProducto + $descuentoCliente;
             $precioUnitarioBrutoConDesc = $precioUnitarioBruto - $totalDescuento;
             $porcIva = $request->get('porc_iva');
             $porcOtroImpuesto = $request->get('porc_otro_impuesto');
-
-            $Impuestos = $porcIva + $request->porc_otro_impuesto;
-            $TotalImpuestos = $precioUnitarioBrutoConDesc * ($Impuestos / 100);
-            $valorAPagar = $TotalImpuestos + $precioUnitarioBrutoConDesc;
-
             $iva = $precioUnitarioBrutoConDesc * ($porcIva / 100);
             $otroImpuesto = $precioUnitarioBrutoConDesc * ($porcOtroImpuesto / 100);
-
             $totalOtrosImpuestos =  $precioUnitarioBrutoConDesc * ($request->porc_otro_impuesto / 100);
-
             $valorApagar = $precioUnitarioBrutoConDesc + $totalOtrosImpuestos;
 
             if ($getReg == null) {
@@ -482,19 +405,16 @@ class saleController extends Controller
                 $detail->price = $formatPrVenta;
                 $detail->quantity = $formatPesoKg;
                 $detail->porc_desc = $porcDescuento;
-                $detail->descuento = $descuento;
-
+                $detail->descuento = $descuentoProducto;
                 $detail->descuento_cliente = $descuentoCliente;
-
+                $total_sin_impuesto = $precioUnitarioBruto - ($descuentoProducto + $descuentoCliente);
                 $detail->porc_iva = $porcIva;
                 $detail->iva = $iva;
                 $detail->porc_otro_impuesto = $porcOtroImpuesto;
                 $detail->otro_impuesto = $otroImpuesto;
-
-                $detail->total_bruto = $precioUnitarioBrutoConDesc;
-
-                $detail->total = $valorAPagar;
-
+                $total_impuestos = $iva + $otroImpuesto;
+                $detail->total_bruto = $precioUnitarioBruto;
+                $detail->total = $total_sin_impuesto + $total_impuestos;
                 $detail->save();
             } else {
                 $updateReg = SaleDetail::firstWhere('id', $request->regdetailId);
@@ -504,37 +424,18 @@ class saleController extends Controller
                 $updateReg->price = $formatPrVenta;
                 $updateReg->quantity = $formatPesoKg;
                 $updateReg->porc_desc = $porcDescuento;
-                $updateReg->descuento = $descuento;
-
+                $updateReg->descuento = $descuentoProducto;
                 $updateReg->descuento_cliente = $descuentoCliente;
-
-                $updateReg->iva = $iva;
+                $total_sin_impuesto = $precioUnitarioBruto - ($descuentoProducto + $descuentoCliente);
                 $updateReg->porc_iva = $porcIva;
+                $updateReg->iva = $iva;
                 $updateReg->porc_otro_impuesto = $porcOtroImpuesto;
                 $updateReg->otro_impuesto = $otroImpuesto;
-                $updateReg->total_bruto = $precioUnitarioBrutoConDesc;
-                $updateReg->total = $valorAPagar;
+                $total_impuestos = $iva + $otroImpuesto;
+                $updateReg->total_bruto = $precioUnitarioBruto;
+                $updateReg->total = $total_sin_impuesto + $total_impuestos;
                 $updateReg->save();
             }
-
-            /*  $sale = Sale::find($request->ventaId);
-            $sale->items = SaleDetail::where('sale_id', $sale->id)->count();
-            $sale->descuentos = $totalDescuento;
-            $sale->total_iva = $iva;
-            $sale->total_otros_impuestos = $totalOtrosImpuestos;
-            $sale->total_valor_a_pagar = $valorApagar;
-            $saleDetails = SaleDetail::where('sale_id', $sale->id)->get();
-            $totalBruto = 0;
-            $totalDesc = 0;
-
-            foreach ($saleDetails as $saleDetail) {
-                $totalBruto += $saleDetail->quantity * $saleDetail->price;
-                $totalDesc += $saleDetail->descuento + $saleDetail->descuento_cliente;
-            }
-
-            $sale->total_bruto = $totalBruto;
-            $sale->descuentos = $totalDesc;
-            $sale->save(); */
 
             $sale = Sale::find($request->ventaId);
             $sale->items = SaleDetail::where('sale_id', $sale->id)->count();
