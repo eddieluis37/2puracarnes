@@ -80,7 +80,7 @@ class CreateOrdersTable extends Migration
             $table->time('hora_inicial_entrega')->nullable(); 
             $table->time('hora_final_entrega')->nullable();
 
-            $table->string('direccion_envio', 50, 0)->nullable();
+            $table->string('direccion_envio', 150, 0)->nullable();
 
             $table->string('consecutivo', 50, 0)->nullable();
             $table->bigInteger('consec')->length(50)->nullable();
