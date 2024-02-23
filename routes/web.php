@@ -408,7 +408,7 @@ Route::group(['middleware' => [('auth')]], function () {
 
 
     Route::get('sale/create/{id}', [saleController::class, 'create'])->name('sale.create'); 
-    Route::get('/obtener-precios-producto', [saleController::class, 'obtenerPreciosProducto'])->name('sale.obtener-precios-producto');
+    Route::get('/sa-obtener-precios-producto', [saleController::class, 'SaObtenerPreciosProducto'])->name('sale.sa-obtener-precios-producto');
 
     Route::get('sale/create/registrar_pago/{id}', [saleController::class, 'create_reg_pago'])->name('sale.registrar_pago');
     Route::post('sale/create/registrar_pago/{id}', [saleController::class, 'storeRegistroPago'])->name('pago.save');

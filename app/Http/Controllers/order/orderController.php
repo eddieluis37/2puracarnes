@@ -595,7 +595,7 @@ class orderController extends Controller
             ->join('thirds as t', 'listapreciodetalles.listaprecio_id', '=', 't.id')
             ->where('prod.id', $request->productId)
             ->where('t.id', $cliente->listaprecio_genericid)
-            ->select('listapreciodetalles.precio', 'iva', 'otro_impuesto', 'listapreciodetalles.porc_descuento', 'cost') // Select only the
+            ->select('listapreciodetalles.precio', 'prod.iva', 'otro_impuesto', 'listapreciodetalles.porc_descuento', 'cost') // Select only the
             ->first();
         if ($producto) {
             return response()->json([

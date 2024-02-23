@@ -47,7 +47,7 @@ $(document).ready(function () {
 
 function actualizarValoresProducto(productId) {
     $.ajax({
-        url: "/obtener-precios-producto", // Reemplaza con tu ruta o URL para obtener los valores del producto
+        url: "/sa-obtener-precios-producto", // Reemplaza con tu ruta o URL para obtener los valores del producto
         type: "GET",
         data: {
             productId: productId,
@@ -142,19 +142,19 @@ const showData = (data) => {
         showRegTbody.innerHTML += `
             <tr>                              
                 <td>${element.nameprod}</td>
-                <td>${formatCantidad(element.quantity)} KG</td>
-                <td>$ ${formatCantidadSinCero(element.price)}</td>  
-                <td>${formatCantidadSinCero(element.porc_descuento)}</td>
-                <td>$ ${formatCantidadSinCero(element.descuento)}</td> 
-                <td>$ ${formatCantidadSinCero(element.descuento_cliente)}</td>
-                <td>$ ${formatCantidadSinCero(element.total_bruto)}</td>   
+                <td>${formatCantidad(element.quantity)}KG</td>
+                <td>$${formatCantidadSinCero(element.price)}</td> 
+                <td>${formatCantidad(element.porc_desc)}%</td>                 
+                <td>$${formatCantidadSinCero(element.descuento)}</td> 
+                <td>$${formatCantidadSinCero(element.descuento_cliente)}</td>
+                <td>$${formatCantidadSinCero(element.total_bruto)}</td>   
                 <td>${formatCantidad(element.porc_iva)}%</td> 
-                <td>$ ${formatCantidadSinCero(element.iva)}</td> 
+                <td>$${formatCantidadSinCero(element.iva)}</td> 
                 <td>${element.porc_otro_impuesto}%</td>     
-                <td>$ ${formatCantidadSinCero(
+                <td>$${formatCantidadSinCero(
                     element.otro_impuesto
                 )}</td>             
-                <td>$ ${formatCantidadSinCero(element.total)}</td>        
+                <td>$${formatCantidadSinCero(element.total)}</td>        
                 <td class="text-center">
                     <button class="btn btn-dark fas fa-edit" data-id="${
                         element.id
@@ -178,12 +178,12 @@ const showData = (data) => {
             <td></td>    
             <td></td>
             <td></td>                               
-            <th>$ ${formatCantidadSinCero(arrayTotales.TotalBruto)}</th> 
+            <th>$${formatCantidadSinCero(arrayTotales.TotalBruto)}</th> 
             <td></td>
             <td></td>
             <td></td>
             <td></td>          
-            <th>$ ${formatCantidadSinCero(
+            <th>$${formatCantidadSinCero(
                 arrayTotales.TotalValorAPagar
             )}</th>            
             <td class="text-center">
