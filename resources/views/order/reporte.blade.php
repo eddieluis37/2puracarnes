@@ -49,13 +49,13 @@
 					<span style="font-size: 8px; font-weight: lighter; display: block; margin: 2;">Nit / C.C.:<strong> {{$order[0]->identification}}</strong></span>
 					<span style="font-size: 8px; font-weight: lighter; display: block; margin: 2;">Dirección:<strong> {{$order[0]->direccion}}</strong></span>
 					<span style="font-size: 8px; font-weight: lighter; display: block; margin: 2;">Celular:<strong> {{$order[0]->celular}}</strong></span>
-					<span style="font-size: 8px; font-weight: lighter; display: block; margin: 2;">
+					<span style="font-size: 9px; font-weight: lighter; display: block; margin: 2;">
 						Fecha de entrega:
 						<strong>												
 							{{ \Carbon\Carbon::parse($order[0]->fecha_entrega)->isoFormat('dddd, D [de] MMMM [de] YYYY') }}						
 						</strong>
 					</span>
-					<span style="font-size: 8px; font-weight: lighter; display: block; margin: 2;">
+					<span style="font-size: 9px; font-weight: lighter; display: block; margin: 2;">
 						Horario de entrega:
 						<strong>
 							{{ \Carbon\Carbon::parse($order[0]->hora_inicial_entrega)->format('h:i A') }} a
