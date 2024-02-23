@@ -65,18 +65,6 @@
 										</div>
 									</div>
 								</div>
-
-								<!-- <div class="col-md-2">
-									<div class="task-header">
-										<div class="form-group">
-											<label for="" class="form-label">% Descuento</label>
-											<p>{{$datacompensado[0]->porc_descuento}}</p>
-										</div>
-									</div>
-								</div> -->
-
-								
-
 							</div>
 						</div>
 					</div>
@@ -95,7 +83,7 @@
 											<label for="" class="form-label">Buscar producto</label>
 											<input type="hidden" id="centrocosto" name="centrocosto" value="{{$datacompensado[0]->centrocosto_id}}" data-id="{{$datacompensado[0]->centrocosto_id}}">
 											<input type="hidden" id="cliente" name="cliente" value="{{$datacompensado[0]->third_id}}" data-id="{{$datacompensado[0]->third_id}}">
-											<input type="hidden" id="porc_descuento" name="porc_descuento" value="{{$datacompensado[0]->porc_descuento}}" data-id="{{$datacompensado[0]->porc_descuento}}">
+											<input type="hidden" id="porc_descuento_cliente" name="porc_descuento_cliente" value="{{$datacompensado[0]->porc_descuento_cliente}}" data-id="{{$datacompensado[0]->porc_descuento_cliente}}">
 											<select class="form-control form-control-sm select2Prod" name="producto" id="producto">
 												<option value="">Seleccione el producto</option>
 												@foreach ($prod as $p)
@@ -132,8 +120,7 @@
 								<div class="col-md-3">
 									<label for="" class="form-label">Descuento</label>
 									<div class="input-group flex-nowrap">
-
-										<input type="text" id="porc_desc" name="porc_desc" class="form-control input" placeholder="">
+										<input type="text" id="porc_descuento" name="porc_descuento" class="form-control input" placeholder="">
 										<span class="input-group-text" id="addon-wrapping">%</span>
 									</div>
 								</div>
@@ -175,7 +162,7 @@
 										<th class="table-th text-white">Valor.U</th>
 										<th class="table-th text-white">%Des</th>
 										<th class="table-th text-white">Des</th>
-										<th class="table-th text-white">{{$datacompensado[0]->porc_descuento}}%DCl</th>
+										<th class="table-th text-white">{{$datacompensado[0]->porc_descuento_cliente}}%DCl</th>
 										<th class="table-th text-white">Total.B</th>
 										<th class="table-th text-white">%IVA</th>
 										<th class="table-th text-white">IVA</th>
@@ -192,17 +179,17 @@
 										<!--td>{{$proddetail->id}}</td-->
 
 										<td>{{$proddetail->nameprod}}</td>
-										<td>{{ number_format($proddetail->quantity, 2, ',', '.')}} KG</td>
-										<td>$ {{ number_format($proddetail->price, 0, ',', '.')}}</td>
+										<td>{{ number_format($proddetail->quantity, 2, ',', '.')}}KG</td>
+										<td>${{ number_format($proddetail->price, 0, ',', '.')}}</td>
 										<td>{{$proddetail->porc_desc}}%</td>
-										<td>$ {{ number_format($proddetail->descuento, 0, ',', '.')}}</td>
-										<td>$ {{ number_format($proddetail->descuento_cliente, 0, ',', '.')}}</td>
-										<td>$ {{ number_format($proddetail->total_bruto, 0, ',', '.')}}</td>
+										<td>${{ number_format($proddetail->descuento, 0, ',', '.')}}</td>
+										<td>${{ number_format($proddetail->descuento_cliente, 0, ',', '.')}}</td>
+										<td>${{ number_format($proddetail->total_bruto, 0, ',', '.')}}</td>
 										<td>{{$proddetail->porc_iva}}%</td>
-										<td>$ {{ number_format($proddetail->iva, 0, ',', '.')}}</td>
+										<td>${{ number_format($proddetail->iva, 0, ',', '.')}}</td>
 										<td>{{$proddetail->porc_otro_impuesto}}%</td>
-										<td>$ {{ number_format($proddetail->otro_impuesto, 0, ',', '.')}}</td>
-										<td>$ {{ number_format($proddetail->total, 0, ',', '.')}}</td>
+										<td>${{ number_format($proddetail->otro_impuesto, 0, ',', '.')}}</td>
+										<td>${{ number_format($proddetail->total, 0, ',', '.')}}</td>
 										<td class="text-center">
 											@if($status == true)
 											<button class="btn btn-dark fas fa-edit" name="btnEdit" data-id="{{$proddetail->id}}" title="Editar">
@@ -227,12 +214,12 @@
 										<td></td>
 										<th></th>
 										<th></th>
-										<th>$ {{number_format($arrayTotales['TotalBruto'], 0, ',', '.')}} </th>
+										<th>${{number_format($arrayTotales['TotalBruto'], 0, ',', '.')}} </th>
 										<td></td>
 										<td></td>
 										<td></td>
 										<td></td>
-										<th>$ {{number_format($arrayTotales['TotalValorAPagar'], 0, ',', '.')}} </th>
+										<th>${{number_format($arrayTotales['TotalValorAPagar'], 0, ',', '.')}} </th>
 
 										</th>
 									</tr>

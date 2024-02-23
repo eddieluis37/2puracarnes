@@ -93,7 +93,7 @@
 											<label for="" class="form-label">Buscar producto</label>
 											<input type="hidden" id="centrocosto" name="centrocosto" value="{{$datacompensado[0]->centrocosto_id}}" data-id="{{$datacompensado[0]->centrocosto_id}}">
 											<input type="hidden" id="cliente" name="cliente" value="{{$datacompensado[0]->third_id}}" data-id="{{$datacompensado[0]->third_id}}">
-											<input type="hidden" id="porc_descuento" name="porc_descuento" value="{{$datacompensado[0]->porc_descuento}}" data-id="{{$datacompensado[0]->porc_descuento}}">
+											<input type="hidden" id="porc_descuento_cliente" name="porc_descuento_cliente" value="{{$datacompensado[0]->porc_descuento_cliente}}" data-id="{{$datacompensado[0]->porc_descuento_cliente}}">
 											<select class="form-control form-control-sm select2Prod" name="producto" id="producto">
 												<option value="">Seleccione el producto</option>
 												@foreach ($prod as $p)
@@ -128,13 +128,12 @@
 									</div>
 								</div>
 								<div class="col-md-3">
-									<label for="" class="form-label">Descuento</label>
-									<div class="input-group flex-nowrap">
-
-										<input type="text" id="porc_desc" name="porc_desc" class="form-control input" placeholder="">
-										<span class="input-group-text" id="addon-wrapping">%</span>
+										<label for="" class="form-label">Descuento</label>
+										<div class="input-group flex-nowrap">
+											<input type="text" id="porc_descuento" name="porc_descuento" class="form-control input" readonly placeholder="">
+											<span class="input-group-text" id="addon-wrapping">%</span>
+										</div>
 									</div>
-								</div>
 
 								<div class="form-group row" style="margin-top:3px; margin-left:3px">
 
@@ -173,7 +172,7 @@
 										<th class="table-th text-white">Valor.U</th>
 										<th class="table-th text-white">%Des</th>
 										<th class="table-th text-white">Des</th>
-										<th class="table-th text-white">{{$datacompensado[0]->porc_descuento}}%DCl</th>
+										<th class="table-th text-white">{{$datacompensado[0]->porc_descuento_cliente}}%DCl</th>
 										<th class="table-th text-white">Total.B</th>
 										<th class="table-th text-white">%IVA</th>
 										<th class="table-th text-white">IVA</th>

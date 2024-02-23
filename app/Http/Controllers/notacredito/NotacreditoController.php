@@ -224,7 +224,7 @@ class notacreditoController extends Controller
         $datacompensado = DB::table('sales as sa')
             ->join('thirds as tird', 'sa.third_id', '=', 'tird.id')
             ->join('centro_costo as centro', 'sa.centrocosto_id', '=', 'centro.id')
-            ->select('sa.*', 'tird.name as namethird', 'centro.name as namecentrocosto', 'tird.porc_descuento')
+            ->select('sa.*', 'tird.name as namethird', 'centro.name as namecentrocosto', 'tird.porc_descuento as porc_descuento_cliente')
             ->where('sa.id', $nc->sale_id)
             ->get();
         // dd($datacompensado);
@@ -254,7 +254,7 @@ class notacreditoController extends Controller
         return view('notacredito.create', compact('datacompensado', 'id', 'prod', 'ventasdetalle', 'detalle', 'arrayTotales', 'status'));
     }
 
-    public function obtenerPreciosProducto(Request $request)
+    public function NCObtenerPreciosProducto(Request $request)
     {
         $centrocostoId = $request->input('centrocosto');
         $clienteId = $request->input('cliente');
@@ -263,14 +263,14 @@ class notacreditoController extends Controller
             ->join('thirds as t', 'listapreciodetalles.listaprecio_id', '=', 't.id')
             ->where('prod.id', $request->productId)
             ->where('t.id', $cliente->listaprecio_genericid)
-            ->select('listapreciodetalles.precio', 'iva', 'otro_impuesto', 'listapreciodetalles.porc_descuento') // Select only the
+            ->select('listapreciodetalles.precio', 'prod.iva', 'otro_impuesto', 'listapreciodetalles.porc_descuento') // Select only the
             ->first();
         if ($producto) {
             return response()->json([
                 'precio' => $producto->precio,
                 'iva' => $producto->iva,
                 'otro_impuesto' => $producto->otro_impuesto,
-                'porc_desc' => $producto->porc_desc
+                'porc_descuento' => $producto->porc_descuento
             ]);
         } else {
             // En caso de que el producto no sea encontrado
@@ -558,29 +558,18 @@ class notacreditoController extends Controller
             $formatPesoKg = $formatCantidad->MoneyToNumber($request->quantity);
 
             $getReg = NotacreditoDetail::firstWhere('id', $request->regdetailId);
-
-            $porcDescuento = $request->get('porc_desc');
+            
+            $porcDescuento = $request->get('porc_descuento');
             $precioUnitarioBruto = ($formatPrVenta * $formatPesoKg);
-            $descuento = $precioUnitarioBruto * ($porcDescuento / 100);
-            $porc_descuento = $request->get('porc_descuento');
-
-            $descuentoCliente = $precioUnitarioBruto * ($porc_descuento / 100);
-            $totalDescuento = $descuento + $descuentoCliente;
-
+            $descuentoProducto = $precioUnitarioBruto * ($porcDescuento / 100);
+            $porc_descuento_cliente = $request->get('porc_descuento_cliente');
+            $descuentoCliente = $precioUnitarioBruto * ($porc_descuento_cliente / 100);
+            $totalDescuento = $descuentoProducto + $descuentoCliente;
             $precioUnitarioBrutoConDesc = $precioUnitarioBruto - $totalDescuento;
             $porcIva = $request->get('porc_iva');
             $porcOtroImpuesto = $request->get('porc_otro_impuesto');
-
-            $Impuestos = $porcIva + $request->porc_otro_impuesto;
-            $TotalImpuestos = $precioUnitarioBrutoConDesc * ($Impuestos / 100);
-            $valorAPagar = $TotalImpuestos + $precioUnitarioBrutoConDesc;
-
             $iva = $precioUnitarioBrutoConDesc * ($porcIva / 100);
-            $otroImpuesto = $precioUnitarioBrutoConDesc * ($porcOtroImpuesto / 100);
-
-            $totalOtrosImpuestos =  $precioUnitarioBrutoConDesc * ($request->porc_otro_impuesto / 100);
-
-            $valorApagar = $precioUnitarioBrutoConDesc + $totalOtrosImpuestos;
+            $otroImpuesto = $precioUnitarioBrutoConDesc * ($porcOtroImpuesto / 100);          
 
             if ($getReg == null) {
                 $detail = new NotacreditoDetail();
@@ -589,41 +578,35 @@ class notacreditoController extends Controller
                 $detail->price = $formatPrVenta;
                 $detail->quantity = $formatPesoKg;
                 $detail->porc_desc = $porcDescuento;
-                $detail->descuento = $descuento;
-
+                $detail->descuento = $descuentoProducto;
                 $detail->descuento_cliente = $descuentoCliente;
-
+                $total_sin_impuesto = $precioUnitarioBruto - ($descuentoProducto + $descuentoCliente);
                 $detail->porc_iva = $porcIva;
                 $detail->iva = $iva;
                 $detail->porc_otro_impuesto = $porcOtroImpuesto;
                 $detail->otro_impuesto = $otroImpuesto;
-
-                $detail->total_bruto = $precioUnitarioBrutoConDesc;
-
-                $detail->total = $valorAPagar;
-
+                $total_impuestos = $iva + $otroImpuesto;
+                $detail->total_bruto = $precioUnitarioBruto;
+                $detail->total = $total_sin_impuesto + $total_impuestos;
                 $detail->save();
             } else {
-                $updateReg = NotacreditoDetail::firstWhere('id', $request->regdetailId);
-                $detalleVenta = $this->getventasdetail($request->ventaId);
-                $ivaprod = $detalleVenta[0]->porc_iva;
+                $updateReg = NotacreditoDetail::firstWhere('id', $request->regdetailId);            
                 $updateReg->product_id = $request->producto;
                 $updateReg->price = $formatPrVenta;
                 $updateReg->quantity = $formatPesoKg;
                 $updateReg->porc_desc = $porcDescuento;
-                $updateReg->descuento = $descuento;
-
+                $updateReg->descuento = $descuentoProducto;
                 $updateReg->descuento_cliente = $descuentoCliente;
-
-                $updateReg->iva = $iva;
+                $total_sin_impuesto = $precioUnitarioBruto - ($descuentoProducto + $descuentoCliente);
                 $updateReg->porc_iva = $porcIva;
+                $updateReg->iva = $iva;
                 $updateReg->porc_otro_impuesto = $porcOtroImpuesto;
                 $updateReg->otro_impuesto = $otroImpuesto;
-                $updateReg->total_bruto = $precioUnitarioBrutoConDesc;
-                $updateReg->total = $valorAPagar;
+                $total_impuestos = $iva + $otroImpuesto;
+                $updateReg->total_bruto = $precioUnitarioBruto;
+                $updateReg->total = $total_sin_impuesto + $total_impuestos;
                 $updateReg->save();
             }
-
 
             $arraydetail = $this->getventasdetail($request->ventaId);
 

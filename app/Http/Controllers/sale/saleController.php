@@ -395,6 +395,7 @@ class saleController extends Controller
             $porcOtroImpuesto = $request->get('porc_otro_impuesto');
             $iva = $precioUnitarioBrutoConDesc * ($porcIva / 100);
             $otroImpuesto = $precioUnitarioBrutoConDesc * ($porcOtroImpuesto / 100);
+            
             $totalOtrosImpuestos =  $precioUnitarioBrutoConDesc * ($request->porc_otro_impuesto / 100);
             $valorApagar = $precioUnitarioBrutoConDesc + $totalOtrosImpuestos;
 

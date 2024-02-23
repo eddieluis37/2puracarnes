@@ -460,7 +460,7 @@ Route::group(['middleware' => [('auth')]], function () {
      Route::post('notacreditosave', [notacreditoController::class, 'store'])->name('notacredito.save');
      Route::get('notacredito/create/{id}', [notacreditoController::class, 'create'])->name('notacredito.create');
      Route::post('notacreditosavedetail', [notacreditoController::class, 'savedetail'])->name('notacredito.savedetail');
-     Route::get('/obtener-precios-producto', [notacreditoController::class, 'obtenerPreciosProducto'])->name('notacredito.obtener-precios-producto');
+     Route::get('/nc-obtener-precios-producto', [notacreditoController::class, 'NCObtenerPreciosProducto'])->name('notacredito.nc-obtener-precios-producto');
      Route::post('notacreditoById', [notacreditoController::class, 'editNotacredito'])->name('notacredito.editNotacredito');
      Route::post('notacredito/create/registrar_notacredito/{id}', [notacreditoController::class, 'storeNotacredito'])->name('notacredito2.save');
      Route::get('notacredito/showNotacredito/{id}', [pdfNotacreditoController::class, 'showNotacredito']);
