@@ -74,8 +74,8 @@
 		</table>
 	</section>
 
-	<section style="margin-top: -1px">
-		<table cellpadding="0" cellspacing="0" class="table-items" width="">
+	<section style="margin-top: 13px">
+		<table cellpadding="0" cellspacing="0" class="table-items" width="100%">
 			<thead>
 				<tr>
 					<th width="auto">ITEM</th>
