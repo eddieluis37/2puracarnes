@@ -372,7 +372,7 @@ class orderController extends Controller
 
             $Impuestos = $porcIva + $request->porc_otro_impuesto;
             $TotalImpuestos = $precioUnitarioBrutoConDesc * ($Impuestos / 100);
-            $valorAPagar = $TotalImpuestos + $precioUnitarioBrutoConDesc;
+            $Total = $TotalImpuestos + $precioUnitarioBrutoConDesc;
 
             $iva = $precioUnitarioBrutoConDesc * ($porcIva / 100);
             $otroImpuesto = $precioUnitarioBrutoConDesc * ($porcOtroImpuesto / 100);
@@ -407,7 +407,7 @@ class orderController extends Controller
                 $detail->total_costo = $totalCosto;
                 $detail->utilidad = $utilidad;
                 $detail->porc_utilidad = $porc_utilidad;
-                $detail->total = $valorAPagar;
+                $detail->total = $Total;
                 $detail->save();
             } else {
                 $updateReg = OrderDetail::firstWhere('id', $request->regdetailId);
@@ -430,6 +430,7 @@ class orderController extends Controller
                 $updateReg->total_costo = $totalCosto;
                 $updateReg->utilidad = $utilidad;
                 $updateReg->porc_utilidad = $porc_utilidad;
+                $updateReg->total = $Total;
                 $updateReg->save();
             }
 
