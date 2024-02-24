@@ -23,14 +23,13 @@
 		<table cellpadding="0" cellspacing="0" width="100%">
 			<tr>
 				<td colspan="2" class="text-center">
-					<img src="{{ asset('assets/img/logo65.png') }}" alt="" class="invoice-logo" width="20%" style="vertical-align: top; padding-top: -100px; position: relative">
+					<img src="{{ asset('assets/img/logo65.png') }}" alt="" class="invoice-logo" width="16%" style="vertical-align: top; padding-top: -100px; position: relative">
 					<span style="font-size: 9px; font-weight: bold; display: block; margin: 0;">PURACARNES SAS</span>
 					<span style="font-size: 8px; font-weight: lighter; display: block; margin: 0;">Nit 901.531.807-3</span>
 					<span style="font-size: 8px; font-weight: lighter; display: block; margin: 0;">AUTOPISTA SUR 66 78 LC B 22 FRIGORIFICO GUADALUPE</span>
 					<span style="font-size: 8px; font-weight: lighter; display: block; margin: 0;">Bogotá - Tel. (601) 9502998</span>
 					<span style="font-size: 8px; font-weight: lighter; display: block; margin: 0;">contabilidad@puracarnes.com</span>
-					<span style="font-size: 8px; font-weight: lighter; display: block; margin: 0;">www.puracarnes.com</span>
-					
+					<span style="font-size: 8px; font-weight: lighter; display: block; margin: 0;">www.puracarnes.com</span>					
 				</td>
 
 			</tr>
@@ -42,27 +41,28 @@
 			</tr>
 			<tr>
 				<td width="70%" class="text-left text-company" style="vertical-align: top; padding-top: 7px">
-					<span style="font-size: 8px; font-weight: lighter; display: block; margin: 2;">Fecha y hora actual de consulta: <strong>{{ $fecha->isoFormat('dddd, D [de] MMMM [de] YYYY') }} | {{\Carbon\Carbon::now()->format('H:i')}}</strong></span>
-					<span style="font-size: 8px; font-weight: lighter; display: block; margin: 2;">Vendedor:<strong> {{$order[0]->nombre_vendedor}}</strong></span>
-					<span style="font-size: 8px; font-weight: lighter; display: block; margin: 2;">Subcentro costo:<strong> {{$order[0]->subcentro}}</strong></span>
-					<span style="font-size: 8px; font-weight: lighter; display: block; margin: 2;">Cliente:<strong> {{$order[0]->namethird}}</strong></span>
-					<span style="font-size: 8px; font-weight: lighter; display: block; margin: 2;">Nit / C.C.:<strong> {{$order[0]->identification}}</strong></span>
-					<span style="font-size: 8px; font-weight: lighter; display: block; margin: 2;">Dirección:<strong> {{$order[0]->direccion}}</strong></span>
-					<span style="font-size: 8px; font-weight: lighter; display: block; margin: 2;">Celular:<strong> {{$order[0]->celular}}</strong></span>
-					<span style="font-size: 9px; font-weight: lighter; display: block; margin: 2;">
-						Fecha de entrega:
+					<span style="font-size: 9px; font-weight: lighter; display: block; margin: 2;">FECHA Y HORA DE CONSULTA: <strong>{{ $fecha->isoFormat('dddd, D [de] MMMM [de] YYYY') }} | {{\Carbon\Carbon::now()->format('H:i')}}</strong></span>
+					<span style="font-size: 9px; font-weight: lighter; display: block; margin: 2;">VENDEDOR:<strong> {{$order[0]->nombre_vendedor}}</strong></span>
+					<span style="font-size: 9px; font-weight: lighter; display: block; margin: 2;">SUBCENTRO DE COSTO:<strong> {{$order[0]->subcentro}}</strong></span>
+					<span style="font-size: 11px; font-weight: lighter; display: block; margin: 2;">CLIENTE:<strong> {{$order[0]->namethird}}</strong></span>
+					<span style="font-size: 9px; font-weight: lighter; display: block; margin: 2;">NIT / C.C.:<strong> {{$order[0]->identification}}</strong></span>
+					<span style="font-size: 9px; font-weight: lighter; display: block; margin: 2;">DIRECCIÓN:<strong> {{$order[0]->direccion}}</strong></span>
+					<span style="font-size: 9px; font-weight: lighter; display: block; margin: 2;">CELULAR:<strong> {{$order[0]->celular}}</strong></span>
+					<span style="font-size: 9px; font-weight: lighter; display: block; margin: 2;">METODO DE PAGO:<strong> {{$order[0]->forma_pago}}</strong></span>
+					<span style="font-size: 11px; font-weight: lighter; display: block; margin: 2;">
+						FECHA DE ENTREGA:
 						<strong>												
 							{{ \Carbon\Carbon::parse($order[0]->fecha_entrega)->isoFormat('dddd, D [de] MMMM [de] YYYY') }}						
 						</strong>
 					</span>
 					<span style="font-size: 9px; font-weight: lighter; display: block; margin: 2;">
-						Horario de entrega:
+						HORARIO DE ENTREGA:
 						<strong>
 							{{ \Carbon\Carbon::parse($order[0]->hora_inicial_entrega)->format('h:i A') }} a
 							{{ \Carbon\Carbon::parse($order[0]->hora_final_entrega)->format('h:i A') }}
 						</strong>
 					</span>
-					<span style="font-size: 8px; font-weight: lighter; display: block; margin: 2;">Estado_Orden_de_Pedido:
+					<span style="font-size: 9px; font-weight: lighter; display: block; margin: 2;">ESTADO DE LA ORDEN DE PEDIDOS:
 						{{-- Display "Cerrada" if status is 1 --}}
 						{{-- Display "Pendiente" if status is 0 --}}
 						<strong>{{ $order[0]->status == 1 ? 'Cerrada' : 'Pendiente' }}</strong>
@@ -74,7 +74,7 @@
 		</table>
 	</section>
 
-	<section style="margin-top: 18px">
+	<section style="margin-top: 37px">
 		<table cellpadding="0" cellspacing="0" class="table-items" width="100%">
 			<thead>
 				<tr>

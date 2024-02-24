@@ -47,7 +47,7 @@
 				<div class="task-header">
 					<div class="form-group">
 						<label for="dir" class="form-label">Dirección de entrega</label>
-						<select class="form-control form-control-sm input" name="direccion_evio" id="direccion_evio" required>
+						<select class="form-control form-control-sm input" name="direccion_envio" id="direccion_envio" required>
 							<option value="">Seleccione dir de entrega</option>
 							@foreach($direccion as $dir)
 							<option value="{{ $dir->direccion }}">{{ $dir->direccion }}</option>
@@ -147,9 +147,24 @@
 								<span class="text-danger error-message"></span>
 					</div>
 				</div>
-			</div>			
-
+			</div>	
+			
 			<div class="col-md-4">
+				<div class="task-header">
+					<div class="form-group">
+						<label for="dir" class="form-label">Forma de pago</label>
+						<select class="form-control form-control-sm input" name="forma_de_pago" id="forma_de_pago" required>
+							<option value="">Seleccione forma de pago</option>
+							@foreach($formapagos as $fp)
+							<option value="{{ $fp->id }}">{{ $fp->nombre }}</option>						
+							@endforeach
+						</select>
+						<span class="text-danger error-message"></span>
+					</div>
+				</div>
+			</div>
+
+			<div class="col-md-12">
 				<div class="form-group">
 					<label for="observations">Observación general</label>
 					<textarea class="form-control" id="observacion" name="observacion" rows="3"></textarea>

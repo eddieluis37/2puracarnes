@@ -44,18 +44,18 @@ $(document).ready(function() {
                 type: "GET",
                 dataType: "json",
                 success:function(data) {                  
-                    $('#direccion_evio').empty();
+                    $('#direccion_envio').empty();
                     $.each(data, function(key, value) {                     
-                        $('#direccion_evio').append('<option value="'+ value.direccion +'">'+ value.direccion +'</option>')
-                        $('#direccion_evio').append('<option value="'+ value.direccion1 +'">'+ value.direccion1 +'</option>');
-                        $('#direccion_evio').append('<option value="'+ value.direccion2 +'">'+ value.direccion2 +'</option>');
-                        $('#direccion_evio').append('<option value="'+ value.direccion3 +'">'+ value.direccion3 +'</option>');
-                        $('#direccion_evio').append('<option value="'+ value.direccion4 +'">'+ value.direccion4 +'</option>');
+                        $('#direccion_envio').append('<option value="'+ value.direccion +'">'+ value.direccion +'</option>')
+                        $('#direccion_envio').append('<option value="'+ value.direccion1 +'">'+ value.direccion1 +'</option>');
+                        $('#direccion_envio').append('<option value="'+ value.direccion2 +'">'+ value.direccion2 +'</option>');
+                        $('#direccion_envio').append('<option value="'+ value.direccion3 +'">'+ value.direccion3 +'</option>');
+                        $('#direccion_envio').append('<option value="'+ value.direccion4 +'">'+ value.direccion4 +'</option>');
                     });
                 }
             });
         } else {         
-            $('#direccion_evio').empty();
+            $('#direccion_envio').empty();
         }
     });
 });
@@ -66,7 +66,7 @@ $('#modal-create-notacredito').on('hidden.bs.modal', function () {
 });
 
 // Limpiar mensajes de error al cambiar el valor del campo 
-$('#direccion_evio').on('change', function() {
+$('#direccion_envio').on('change', function() {
     $('.error-message').text('');
 });
 

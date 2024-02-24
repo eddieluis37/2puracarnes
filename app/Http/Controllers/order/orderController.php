@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\metodosgenerales\metodosrogercodeController;
 use App\Models\Centro_costo_product;
 use App\Models\Cuentas_por_cobrar;
+use App\Models\Formapago;
 use App\Models\NotacreditoDetail;
 use App\Models\Order;
 use App\Models\OrderDetail;
@@ -52,9 +53,10 @@ class orderController extends Controller
         $vendedores = Third::Where('vendedor', 1)->get();
         $alistadores = Third::Where('alistador', 1)->get();
         $subcentrodecostos = Subcentrocosto::get();
+        $formapagos = Formapago::get();
 
 
-        return view('order.index', compact('ventas', 'direccion', 'centros', 'clientes', 'vendedores', 'alistadores', 'subcentrodecostos'));
+        return view('order.index', compact('ventas', 'direccion', 'centros', 'clientes', 'vendedores', 'alistadores', 'subcentrodecostos', 'formapagos'));
     }
 
     public function show()
@@ -140,6 +142,7 @@ class orderController extends Controller
                 'ventaId' => 'required',
                 'centrocosto' => 'required',
                 'vendedor' => 'required',
+                'direccion_envio' => 'required',
                 'alistador' => 'required',
                 'subcentrodecosto' => 'required',
                 'hora_inicial_entrega' => 'required',
@@ -147,16 +150,19 @@ class orderController extends Controller
                     'required',
                     'after:hora_inicial_entrega',
                 ],
+                'forma_de_pago' => 'required',
             ];
             $messages = [
                 'ventaId.required' => 'El ventaId es requerido',
                 'centrocosto.required' => 'Centro costo es requerido',
                 'vendedor.required' => 'Vendedor es requerido',   
+                'direccion_envio.required' => 'La dirección de envio es requerida',   
                 'alistador.required' => 'Alistador es requerido',                   
                 'subcentrodecosto.required' => 'Sub Centro de costo es requerido',
                 'hora_inicial_entrega.required' => 'La hora inicial de entrega es requerida',
                 'hora_final_entrega.required' => 'La hora final de entrega es requerida',
                 'hora_final_entrega.after' => 'La hora final de entrega debe ser posterior a la hora inicial',
+                'forma_de_pago.required' => 'Forma de pago es requerido',   
             ];
             $validator = Validator::make($request->all(), $rules, $messages);
             if ($validator->fails()) {
@@ -179,6 +185,7 @@ class orderController extends Controller
                 $venta->user_id = $id_user;
                 $venta->third_id = $request->cliente;
                 $venta->vendedor_id = $request->vendedor;
+                $venta->formapago_id = $request->forma_de_pago;
                 $venta->alistador_id = $request->alistador;
                 $venta->centrocosto_id = $request->centrocosto;
                 $venta->subcentrocostos_id = $request->subcentrodecosto;
@@ -186,7 +193,7 @@ class orderController extends Controller
                 $venta->fecha_order = $currentDateFormat;
                 $venta->fecha_entrega = $request->fecha_entrega;
                 /*  $venta->fecha_cierre =  now(); */
-                $venta->direccion_envio = $request->direccion_evio;
+                $venta->direccion_envio = $request->direccion_envio;
                 $venta->hora_inicial_entrega = $request->hora_inicial_entrega;
                 $venta->hora_final_entrega = $request->hora_final_entrega;
                 $venta->items = 0;
