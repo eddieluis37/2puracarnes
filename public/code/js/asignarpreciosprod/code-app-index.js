@@ -149,7 +149,7 @@ $(document).ready(function () {
         if (event.which === 13 || event.which === 9) {
             event.preventDefault();
             var precio = $(this).val().replace(/[$\s.,]/g, "");
-            var regex = /^(?:\d{1,2}(?:,\d{3})*(?:\.\d{2})?|\d{1,5}(?:\.\d{2})?)$/;
+            var regex = /^(?:\d{1,3}(?:,\d{3})*(?:\.\d{2})?|\d{1,6}(?:\.\d{2})?)$/;
             if (regex.test(precio)) {
                 var productId = $(this).closest("tr").find("td:eq(1)").text();
                 var listaprecioId = $("#listaprecio").val();
@@ -159,7 +159,7 @@ $(document).ready(function () {
                 Swal.fire({
                     icon: "error",
                     title: "Precio mínimo incorrecto",
-                    text: "Solo acepta valores menores a $ 99.999",
+                    text: "Solo acepta valores menores a $ 999.999",
                 });
                 console.error("Solo acepta números enteros y decimales");
             }
