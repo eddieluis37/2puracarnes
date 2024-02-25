@@ -23,6 +23,7 @@ class CreateEnlistmentDetailsTable extends Migration
 
             $table->decimal('kgrequeridos', 18, 2)->nullable();
             $table->decimal('newstock', 18, 2)->nullable();
+            $table->decimal('cost_transformation', 18, 2)->nullable();
 
             $table->boolean('status')->parent_select()->default(true)->nullable();            
             $table->timestamps();

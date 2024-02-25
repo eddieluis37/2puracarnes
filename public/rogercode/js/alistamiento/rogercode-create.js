@@ -107,6 +107,7 @@ const showData = (data) => {
       	    <td>
             <input type="text" class="form-control-sm" data-id="${element.products_id}" id="${element.id}" value="${element.kgrequeridos}" placeholder="Ingresar" size="10">
             </td>
+            <td>$ ${formatCantidadSinCero(element.cost_transformation)}</td>
       	    <td>${formatCantidad(element.newstock)} KG</td>
 			<td class="text-center">
 				<button class="btn btn-dark fas fa-trash" name="btnDownReg" data-id="${element.id}" title="Borrar" >
@@ -127,6 +128,7 @@ const showData = (data) => {
 		    <td></td>
 		    <td></td>
 		    <th>${formatCantidad(arrayTotales.kgTotalRequeridos)} KG</td>
+            <th>${formatCantidadSinCero(arrayTotales.totalCostTranf)}</td>
 		    <th>${formatCantidad(arrayTotales.newTotalStock)} KG</th>
 		    <td class="text-center">
                 <button class="btn btn-success btn-sm" id="addShopping">Cargar al inventario</button>

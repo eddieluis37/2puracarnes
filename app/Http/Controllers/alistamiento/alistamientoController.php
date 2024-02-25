@@ -282,7 +282,7 @@ class alistamientoController extends Controller
 
             $prod = DB::table('products as p')
                 ->join('centro_costo_products as ce', 'p.id', '=', 'ce.products_id')
-                ->select('ce.stock', 'ce.fisico')
+                ->select('ce.stock', 'ce.fisico', 'p.cost')
                 ->where([
                     ['p.id', $request->producto],
                     ['ce.centrocosto_id', $request->centrocosto],             
@@ -299,6 +299,7 @@ class alistamientoController extends Controller
             $details->enlistments_id = $request->alistamientoId;
             $details->products_id = $request->producto;
             $details->kgrequeridos = $formatkgrequeridos;
+            $details->cost_transformation = $prod[0]->cost * $formatkgrequeridos; 
             $details->newstock = $newStock;
             $details->save();
 
@@ -330,7 +331,7 @@ class alistamientoController extends Controller
         $detail = DB::table('enlistment_details as en')
             ->join('products as pro', 'en.products_id', '=', 'pro.id')
             ->join('centro_costo_products as ce', 'pro.id', '=', 'ce.products_id')
-            ->select('en.*', 'pro.name as nameprod', 'pro.code', 'ce.stock', 'ce.fisico')
+            ->select('en.*', 'pro.name as nameprod', 'pro.code', 'ce.stock', 'ce.fisico', 'en.cost_transformation')
             ->selectRaw('ce.invinicial + ce.compraLote + ce.alistamiento +
             ce.compensados + ce.trasladoing - (ce.venta + ce.trasladosal) stockHijo')
             ->where([
@@ -346,10 +347,12 @@ class alistamientoController extends Controller
     {
 
         $kgTotalRequeridos = (float)enlistment_details::Where([['enlistments_id', $id], ['status', 1]])->sum('kgrequeridos');
+        $totalCostTranf = enlistment_details::Where([['enlistments_id', $id], ['status', 1]])->sum('cost_transformation');
         $newTotalStock = (float)enlistment_details::Where([['enlistments_id', $id], ['status', 1]])->sum('newstock');
 
         $array = [
             'kgTotalRequeridos' => $kgTotalRequeridos,
+            'totalCostTranf' => $totalCostTranf,
             'newTotalStock' => $newTotalStock,
         ];
 
@@ -362,7 +365,7 @@ class alistamientoController extends Controller
 
             $prod = DB::table('products as p')
                 ->join('centro_costo_products as ce', 'p.id', '=', 'ce.products_id')
-                ->select('ce.stock', 'ce.fisico')
+                ->select('ce.stock', 'ce.fisico', 'p.cost')
                 ->where([
                     ['p.id', $request->productoId],
                     ['ce.centrocosto_id', $request->centrocosto],              
@@ -375,6 +378,7 @@ class alistamientoController extends Controller
 
             $updatedetails = enlistment_details::firstWhere('id', $request->id);
             $updatedetails->kgrequeridos = $request->newkgrequeridos;
+            $updatedetails->cost_transformation = $prod[0]->cost * $request->newkgrequeridos;
             $updatedetails->newstock = $newStock;
             $updatedetails->save();
 

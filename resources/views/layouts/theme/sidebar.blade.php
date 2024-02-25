@@ -177,7 +177,7 @@
                                 <path d="M22 12A10 10 0 0 0 12 2v10z"></path>
                             </svg>
                         </div>
-                        <span>Alistamiento</span>
+                        <span>Transformaciones</span>
                     </div>
                 </a>
             </li>

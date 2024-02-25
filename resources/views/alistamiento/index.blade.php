@@ -6,7 +6,7 @@
 		<div class="widget widget-chart-one">
 			<div class="widget-heading">
 				<h4 class="card-title">
-					<b>Alistamiento | Listado </b>
+					<b>Transformación | Listado </b>
 				</h4>
 				<ul class="tabs tab-pills">
 					<li>
@@ -44,7 +44,7 @@
 				<fieldset id="contentDisable">
 					<form action="" id="form-alistamiento">
 						<div class="modal-header">
-							<h4 class="modal-title">Crear Alistamiento</h4>
+							<h4 class="modal-title">Crear transformación</h4>
 							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 								<span aria-hidden="true">&times;</span></button>
 						</div>

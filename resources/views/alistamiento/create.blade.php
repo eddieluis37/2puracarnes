@@ -11,7 +11,7 @@
 		<div class="widget widget-chart-one">
 			<div class="widget-heading">
 				<h4 class="card-title">
-					<b> Alistamiento | Categoria </b>
+					<b> Transformación | Categoria </b>
 				</h4>
 				<ul class="tabs tab-pills">
 					<li>
@@ -144,6 +144,7 @@
 										<th class="table-th text-white">Stock actual</th>
 										<th class="table-th text-white">Fisico</th>
 										<th class="table-th text-white">kg requeridos</th>
+										<th class="table-th text-white">Costo</th>
 										<th class="table-th text-white">New stock hijo</th>
 										<th class="table-th text-white text-center">Acciones</th>
 									</tr>
@@ -163,6 +164,7 @@
 											<p>{{number_format($proddetail->kgrequeridos, 2, ',', '.')}} KG</p>
 											@endif
 										</td>
+										<td>${{ number_format($proddetail->cost_transformation, 0, ',', '.')}}</td>
 										<td>{{ number_format($proddetail->newstock, 2, ',', '.')}} KG</td>
 										<td class="text-center">
 											@if($status == 'true' && $statusInventory == 'false')
@@ -184,6 +186,7 @@
 										<th></th>
 										<th></th>
 										<th> {{number_format($arrayTotales['kgTotalRequeridos'], 2, ',', '.')}} KG</th>
+										<td></td>
 										<th> {{number_format($arrayTotales['newTotalStock'], 2, ',', '.')}} KG</th>
 										<th class="text-center">
 											@if($dataAlistamiento[0]->inventario == 'pending')
