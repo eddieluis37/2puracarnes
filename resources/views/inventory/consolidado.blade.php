@@ -182,7 +182,7 @@
               <th class="table-th text-white" title="Productos">PRODUCTO</th>
               <th class="table-th text-white" title="Inventario Inicial">INI</th>
               <th class="table-th text-white" title="Compras Lotes">CL</th>
-              <th class="table-th text-white" title="Alistamiento">AL</th>
+              <th class="table-th text-white" title="Transformaciones">Tr</th>
               <th class="table-th text-white" title="Compras Compensados">CP</th>
               <th class="table-th text-white" title="Translados Ingresos">TI</th>
               <th class="table-th text-white" title="Translados Salidas">TS</th>

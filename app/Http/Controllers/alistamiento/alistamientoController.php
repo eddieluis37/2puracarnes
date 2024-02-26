@@ -198,7 +198,7 @@ class alistamientoController extends Controller
                 if (Carbon::parse($currentDateTime->format('Y-m-d'))->gt(Carbon::parse($data->fecha_cierre))) {
                     $btn = '
                     <div class="text-center">
-					<a href="alistamiento/create/' . $data->id . '" class="btn btn-dark" title="Alistar" >
+					<a href="alistamiento/create/' . $data->id . '" class="btn btn-dark" title="Transformar" >
 						<i class="fas fa-directions"></i>
 					</a>
 					<button class="btn btn-dark" title="" onclick="showDataForm(' . $data->id . ')">
@@ -216,13 +216,13 @@ class alistamientoController extends Controller
                     }
                     $btn = '
                     <div class="text-center">
-					<a href="alistamiento/create/' . $data->id . '" class="btn btn-dark" title="Alistar" >
+					<a href="alistamiento/create/' . $data->id . '" class="btn btn-dark" title="Transformar" >
 						<i class="fas fa-directions"></i>
 					</a>
 					<button class="btn btn-dark" title="" onclick="showDataForm(' . $data->id . ')">
 						<i class="fas fa-eye"></i>
 					</button>
-					<button class="btn btn-dark" title="Borrar Beneficio" onclick="downAlistamiento(' . $data->id . ');" ' . $status . '>
+					<button class="btn btn-dark" title="Borrar transformación" onclick="downAlistamiento(' . $data->id . ');" ' . $status . '>
 						<i class="fas fa-trash"></i>
 					</button>
                     </div>
@@ -230,7 +230,7 @@ class alistamientoController extends Controller
                 } else {
                     $btn = '
                     <div class="text-center">
-					<a href="alistamiento/create/' . $data->id . '" class="btn btn-dark" title="Alistar" >
+					<a href="alistamiento/create/' . $data->id . '" class="btn btn-dark" title="Transformar" >
 						<i class="fas fa-directions"></i>
 					</a>
 					<button class="btn btn-dark" title="" onclick="showDataForm(' . $data->id . ')">
