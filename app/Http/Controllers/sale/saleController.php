@@ -236,13 +236,12 @@ class saleController extends Controller
 
 
         $status = '';
-        $fechaCompensadoCierre = Carbon::parse($datacompensado[0]->fecha_cierre);
-        $date = Carbon::now();
-        $currentDate = Carbon::parse($date->format('Y-m-d'));
-        if ($currentDate->gt($fechaCompensadoCierre)) {
+        $estadoVenta = ($datacompensado[0]->status);        
+        
+        if ($estadoVenta) {
             //'Date 1 is greater than Date 2';
             $status = 'false';
-        } elseif ($currentDate->lt($fechaCompensadoCierre)) {
+        } elseif ($estadoVenta) {
             //'Date 1 is less than Date 2';
             $status = 'true';
         } else {
@@ -250,11 +249,24 @@ class saleController extends Controller
             $status = 'false';
         }
 
+        $statusInventory = "";
+        if ($datacompensado[0]->status == "true") {
+            $statusInventory = "true";
+        } else {
+            $statusInventory = "false";
+        }
+
+        
+        $display = "";
+        if ($status == "false" || $statusInventory == "true") {
+            $display = "display:none;";
+        }
+
 
         $detalleVenta = $this->getventasdetail($id);
 
 
-        return view('sale.create', compact('datacompensado', 'id', 'prod', 'detalleVenta', 'ventasdetalle', 'arrayTotales', 'status'));
+        return view('sale.create', compact('datacompensado', 'id', 'prod', 'detalleVenta', 'ventasdetalle', 'arrayTotales', 'status', 'statusInventory','display'));
     }
 
     public function getventasdetalle($ventaId, $centrocostoId)

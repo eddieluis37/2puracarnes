@@ -129,15 +129,14 @@
 											<span class="input-group-text" id="addon-wrapping">KG</span>
 										</div>
 									</div>
-
+									@if($datacompensado[0]->status == '0')
 									<div class="col-md-2">
 										<div class="" style="margin-top:30px;">
 											<div class="d-grid gap-2">
 												<button id="btnAdd" class="btn btn-primary">Añadir</button>
 											</div>
 										</div>
-									</div>
-
+									</div>									
 
 									@can('Admin_Menu')
 									<div class="col-md-2">
@@ -151,11 +150,12 @@
 									<div class="col-md-2">
 										<div class="" style="margin-top:30px;">
 											<div class="d-grid gap-2">
-												<button id="btnRemove" class="btn btn-warning">Modificar-Precio</button>
+												<button id="btnRemove" class="btn btn-warning">Modificar Precio</button>
 											</div>
 										</div>
 									</div>
 									@endcan
+									@endif	
 								</div>
 						</form>
 					</div>
@@ -237,6 +237,7 @@
 							</tr>
 						</tfoot>
 					</table>
+					@if($datacompensado[0]->status == '0')
 					<div>
 						<form method="GET" action="registrar_pago/{{$id}}">
 							@csrf
@@ -246,6 +247,7 @@
 							</div>
 						</form>
 					</div>
+					@endif
 				</div>
 			</div>
 		</div>
