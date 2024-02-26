@@ -34,7 +34,6 @@ class saleController extends Controller
     {
 
         // Obtener los valores
-
         $valor_a_pagar_efectivo = $request->input('valor_a_pagar_efectivo');
         $valor_a_pagar_efectivo = str_replace(['.', ',', '$', '#'], '', $valor_a_pagar_efectivo);
 
@@ -101,8 +100,8 @@ class saleController extends Controller
                 /*  $resolucion = 'ERPC ' . str_pad(1 + $count, 4, '0', STR_PAD_LEFT); // ERPC 00001 */
                 $resolucion = 'ERPC ' . (1 + $count);
                 $venta->resolucion = $resolucion;
-            }
-            $venta->save();
+                $venta->save();
+            }           
 
             // Call the cargarInventariocr method
             $this->cargarInventariocr($ventaId);
@@ -852,15 +851,17 @@ class saleController extends Controller
             $venta->valor_pagado = 0;
             $venta->cambio = 0;
 
-            if ($venta->centrocosto_id == 1 || $venta->centrocosto_id == 2) {
-                $count1 = DB::table('sales')->where('status', '1')->count();
-                $count2 = DB::table('notacreditos')->where('status', '1')->count();
-                $count3 = DB::table('notadebitos')->where('status', '1')->count();
+            $venta->save();
+
+        /*     if ($venta->centrocosto_id == 1 || $venta->centrocosto_id == 2) {
+                $count1 = DB::table('sales')->count();
+                $count2 = DB::table('notacreditos')->count();
+                $count3 = DB::table('notadebitos')->count();
                 $count = $count1 + $count2 + $count3;
                 $resolucion = 'ERPC ' . (1 + $count);
-                $venta->resolucion = $resolucion;
-            }
-            $venta->save();
+              //  $venta->resolucion = $resolucion;
+                $venta->save();
+            }  */           
 
             //ACTUALIZA CONSECUTIVO 
             $idcc = $request->centrocosto;
