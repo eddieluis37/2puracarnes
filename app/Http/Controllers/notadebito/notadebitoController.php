@@ -189,7 +189,7 @@ class notadebitoController extends Controller
         $datacompensado = DB::table('sales as sa')
             ->join('thirds as tird', 'sa.third_id', '=', 'tird.id')
             ->join('centro_costo as centro', 'sa.centrocosto_id', '=', 'centro.id')
-            ->select('sa.*', 'tird.name as namethird', 'centro.name as namecentrocosto', 'tird.porc_descuento')
+            ->select('sa.*', 'tird.name as namethird', 'centro.name as namecentrocosto', 'tird.porc_descuento as porc_descuento_cliente')
             ->where('sa.id', $id)
             ->get();
         //dd($datacompensado);
