@@ -14,7 +14,7 @@
 		<link rel="stylesheet" href="{{ asset('css/custom_page.css') }}">
 	-->
 	<!-- ruta física relativa OS -->
- 	<link rel="stylesheet" href="{{ public_path('css/pos_custom_pdf.css') }}">
+	<link rel="stylesheet" href="{{ public_path('css/pos_custom_pdf.css') }}">
 	<link rel="stylesheet" href="{{ public_path('css/pos_custom_page.css') }}">
 
 </head>
@@ -40,7 +40,7 @@
 				</td>
 			</tr>
 			<tr>
-		
+
 			</tr>
 			<tr>
 				<td colspan=" 2" class="">
@@ -65,13 +65,13 @@
 			</tr>
 		</table>
 	</section>
-	<hr width="60mm" color="black" size="3"> 
-	<section style="margin-top: 15px">
-		<table align="" cellpadding="0" cellspacing="1" class="table-items" width="100%">
+	<hr width="60mm" color="black" size="3">
+	<section style="margin-top: 1px">
+		<table align="" cellpadding="0" cellspacing="0" class="table-items" width="100%">
 			<thead>
 				<tr>
-					<th width="60%">Descripción</th>
-					<th width="10%">Cant.</th>
+					<th width="83%">Descripción</th>
+					<th width="7%">Cant.</th>
 					<th width="10%">Vr.unit</th>
 					<th width="10%">Vr.Total</th>
 				</tr>
@@ -79,10 +79,10 @@
 			<tbody>
 				@foreach($saleDetails as $item)
 				<tr>
-					<td align="left">{{$item->nameprod}}</td>
-					<td align="center">{{$item->quantity}}</td>
-					<td align="center">{{number_format($item->price),2}}</td>
-					<td align="right">{{number_format($item->total),2}}</td>
+					<td align="left"><strong>{{$item->nameprod}}</strong></td>
+					<td align="center"><strong>{{$item->quantity}}</strong></td>
+					<td align="center"><strong>{{number_format($item->price),2}}</strong></td>
+					<td align="right"><strong>{{number_format($item->total),2}}</strong></td>
 				</tr>
 				@endforeach
 			</tbody>
