@@ -1,28 +1,28 @@
 /* .header, */
-.footer {
+/* .footer {
     width: 100%;
     position: fixed;
-}
+} */
 
-body {
+/* body {
     font-family: 'Helvetica';
     font-size: 9pt;
     color: #111111;
 }
-
-hr {
+ */
+/* hr {
    /*  border: 1px solid #000000; */
     margin-bottom: 0;
-}
+} */
 
-.text-left {
+/* .text-left {
     text-align: left !important;
 }
-
-.text-center {
+ */
+  .text-center {
     text-align: center !important;
 }
-
+ 
 .text-right {
     text-align: right !important;
 }
@@ -37,16 +37,16 @@ hr {
     font-weight: bold;
     font-size: 9pt;
 }
-.text-head {
+/* .text-head {
     font-size: 9pt;
 }
-
+ */
 .table-items thead th {
     font-weight: bold;
     padding: 5px 2px;
     text-align: center;
     vertical-align: middle;
-    background-color: #f0f0f2;
+    
     color: #000000;
 }
 

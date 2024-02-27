@@ -1,6 +1,6 @@
 @page {
-    size: 25cm 50.5cm; /* Establece el tamaño de la página a 50 cm de largo por 25 cm de ancho */
-    margin-top: 10px;
+    size: 8cm 22.5cm; /* Establece el tamaño de la página a 50 cm de largo por 25 cm de ancho */
+    margin-top: 3px;
     margin-bottom: 0px;
 }
 
@@ -12,7 +12,7 @@ body {
 }
 
 table {
-    font-size: 28px;
+    font-size: 11px;
 }
 
 .header h1 {
