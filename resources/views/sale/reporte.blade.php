@@ -71,7 +71,7 @@
 		<table align="" cellpadding="0" cellspacing="0" class="table-items" width="100%">
 			<thead>
 				<tr>
-					<th width="83%">Descripción</th>
+					<th width="83%">Descripción_prod</th>
 					<th width="7%">Cant.</th>
 					<th width="10%">Vr.unit</th>
 					<th width="10%">Vr.Total</th>
@@ -92,18 +92,17 @@
 					<td class="">
 						<span><b>TOTALES</b></span>
 					</td>
-					<td colspan="1" class="">
+					<td align="right">
 						<span><strong>{{ $quantity = $item->where('sale_id', '=', $item->sale_id)->sum('quantity')}}</strong></span>
 					</td>
 					<td></td>
-					<td class="">
+					<td align="right">
 						<span><strong>{{ number_format($sale->sum('total_valor_a_pagar'),0)}}</strong></span>
 					</td>
 				</tr>
 			</tfoot>
 		</table>
-
-		<hr width="60mm" color="black" size="3">
+		<hr>***************************
 		<p class="text-center" style="font-size: 12px;">
 			<span><strong>Forma de pago</strong></span>
 		</p>

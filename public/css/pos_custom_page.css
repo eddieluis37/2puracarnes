@@ -1,26 +1,30 @@
 @page {
     size: 8cm 22.5cm; /* Establece el tamaño de la página a 50 cm de largo por 25 cm de ancho */
     margin-top: 3px;
-    margin-bottom: 0px;
+   /*  margin-bottom: 0px; */
 }
 
 body {
-    min-height: 100vh;
-    max-width: 500px;
+  /*   min-height: 100vh;
+    max-width: 1000px; */
     /*   background-color: rgb(234, 185, 185);  */
-    margin: 0 auto;
+/*     margin: 0 auto; */
     font-family: 'Courier New', Courier, monospace;
+    font-size: 16pt;
+    font-weight: normal;
+    line-height: 1.0;
+      color: #111111;
 }
 
 table {
     font-size: 11px;
 }
 
-.header h1 {
+/* .header h1 {
     margin-right: 300px;
-}
+} */
 
-.footer {
+/* .footer {
     bottom: 15px;
     font-size: 7pt;
     color: #333333;
@@ -33,7 +37,7 @@ footer {
     right: 0px;
     height: 60px;
     margin-top: -60px;
-}
+} */
 
 .pagenum:before {
     content: counter(page);

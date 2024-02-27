@@ -33,7 +33,7 @@
 }
 
 .text-primary {
-    color: #999999;
+    color: #99999900;
     font-weight: bold;
     font-size: 9pt;
 }
@@ -160,7 +160,7 @@
     color: #1ABB9C
 }
 .dark {
-    color: #34495E
+    color: #000000
 }
 .pull-right {
     float: right !important;
