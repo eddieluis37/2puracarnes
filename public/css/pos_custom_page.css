@@ -9,6 +9,7 @@ body {
     max-width: 500px;
     /*   background-color: rgb(234, 185, 185);  */
     margin: 0 auto;
+    font-family: 'Courier New', Courier, monospace;
 }
 
 table {
