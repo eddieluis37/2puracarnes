@@ -5,6 +5,7 @@
 
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="Content-Type" content="application/pdf">
 
 	<title>Reporte de Ventas</title>
 
@@ -88,14 +89,14 @@
 			</tbody>
 			<tfoot>
 				<tr>
-					<td class="text-center">
+					<td class="">
 						<span><b>TOTALES</b></span>
 					</td>
-					<td colspan="1" class="text-center">
+					<td colspan="1" class="">
 						<span><strong>{{ $quantity = $item->where('sale_id', '=', $item->sale_id)->sum('quantity')}}</strong></span>
 					</td>
 					<td></td>
-					<td class="text-center">
+					<td class="">
 						<span><strong>{{ number_format($sale->sum('total_valor_a_pagar'),0)}}</strong></span>
 					</td>
 				</tr>
