@@ -51,7 +51,7 @@
                                         <span class="input-group-text" id="addon-wrapping">$</span>
                                         <input class="form-control form-control-sm" type="text" name="valor_a_pagar_efectivo" id="valor_a_pagar_efectivo" value="0">
                                     </div>
-
+<!-- 
                                     <div class="widget-content mt-3">
                                         <label for="" class="form-label">Valores sugeridos</label>
                                         <div></div>
@@ -59,7 +59,7 @@
                                         <button type="button" class="btn btn-primary" onclick="sugerirValor(20000)">20.000</button>
                                         <button type="button" class="btn btn-primary" onclick="sugerirValor(50000)">50.000</button>
                                         <button type="button" class="btn btn-primary" onclick="sugerirValor(100000)">100.000</button>
-                                    </div>
+                                    </div> -->
                                 </div>
                     </div>
                 </div>
