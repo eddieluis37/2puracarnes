@@ -415,6 +415,8 @@ Route::group(['middleware' => [('auth')]], function () {
 
     Route::get('sale/showFactura/{id}', [exportFacturaController::class, 'showFactura'])->name('sale.showFactura');
 
+    Route::get('/cargar-inventario-masivo', [saleController::class, 'cargarInventarioMasivo'])->name('cargar.inventario.masivo');
+
      /*****************************RECIBO DE CAJAS******************************************/
      Route::get('recibodecajas', [recibodecajaController::class, 'index'])->name('recibodecaja.index');
      Route::get('showlistRecibodecajas', [recibodecajaController::class, 'show'])->name('recibodecaja.showlistRecibodecajas');

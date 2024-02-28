@@ -101,7 +101,7 @@ class saleController extends Controller
                 $resolucion = 'ERPC ' . (1 + $count);
                 $venta->resolucion = $resolucion;
                 $venta->save();
-            }           
+            }
 
             // Call the cargarInventariocr method
             $this->cargarInventariocr($ventaId);
@@ -127,6 +127,18 @@ class saleController extends Controller
                 'array' => (array) $th
             ]);
         }
+    }
+
+    public function cargarInventarioMasivo()
+    {
+        for ($i = 672; $i <= 1127; $i++) {
+            $this->cargarInventariocr($i);
+        }
+
+        return response()->json([
+            'status' => 1,
+            'message' => 'Cargado al inventario masivo exitosamente'
+        ]);
     }
 
     public function cargarInventariocr($ventaId)
@@ -235,8 +247,8 @@ class saleController extends Controller
 
 
         $status = '';
-        $estadoVenta = ($datacompensado[0]->status);        
-        
+        $estadoVenta = ($datacompensado[0]->status);
+
         if ($estadoVenta) {
             //'Date 1 is greater than Date 2';
             $status = 'false';
@@ -255,7 +267,7 @@ class saleController extends Controller
             $statusInventory = "false";
         }
 
-        
+
         $display = "";
         if ($status == "false" || $statusInventory == "true") {
             $display = "display:none;";
@@ -265,7 +277,7 @@ class saleController extends Controller
         $detalleVenta = $this->getventasdetail($id);
 
 
-        return view('sale.create', compact('datacompensado', 'id', 'prod', 'detalleVenta', 'ventasdetalle', 'arrayTotales', 'status', 'statusInventory','display'));
+        return view('sale.create', compact('datacompensado', 'id', 'prod', 'detalleVenta', 'ventasdetalle', 'arrayTotales', 'status', 'statusInventory', 'display'));
     }
 
     public function getventasdetalle($ventaId, $centrocostoId)
@@ -406,7 +418,7 @@ class saleController extends Controller
             $porcOtroImpuesto = $request->get('porc_otro_impuesto');
             $iva = $precioUnitarioBrutoConDesc * ($porcIva / 100);
             $otroImpuesto = $precioUnitarioBrutoConDesc * ($porcOtroImpuesto / 100);
-            
+
             $totalOtrosImpuestos =  $precioUnitarioBrutoConDesc * ($request->porc_otro_impuesto / 100);
             $valorApagar = $precioUnitarioBrutoConDesc + $totalOtrosImpuestos;
 
@@ -853,7 +865,7 @@ class saleController extends Controller
 
             $venta->save();
 
-        /*     if ($venta->centrocosto_id == 1 || $venta->centrocosto_id == 2) {
+            /*     if ($venta->centrocosto_id == 1 || $venta->centrocosto_id == 2) {
                 $count1 = DB::table('sales')->count();
                 $count2 = DB::table('notacreditos')->count();
                 $count3 = DB::table('notadebitos')->count();
@@ -861,7 +873,7 @@ class saleController extends Controller
                 $resolucion = 'ERPC ' . (1 + $count);
               //  $venta->resolucion = $resolucion;
                 $venta->save();
-            }  */           
+            }  */
 
             //ACTUALIZA CONSECUTIVO 
             $idcc = $request->centrocosto;
