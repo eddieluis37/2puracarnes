@@ -131,13 +131,13 @@ class saleController extends Controller
 
     public function cargarInventarioMasivo()
     {
-        for ($i = 1127; $i <= 672; $i++) {
-            $this->cargarInventariocr($i);
+        for ($ventaId = 672; $ventaId <= 1127; $ventaId++) {
+            $this->cargarInventariocr($ventaId);
         }
-
+    
         return response()->json([
             'status' => 1,
-            'message' => 'Cargado al inventario masivo exitosamente'
+            'message' => 'Cargado al inventario masivamente desde el ID 672 hasta el ID 1127'
         ]);
     }
 
