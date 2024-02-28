@@ -241,8 +241,20 @@ class inventoryController extends Controller
          ,cto_compensados_total
          ,cto_trasladoing_total
          ,cto_trasladosal_total
-         ,cto_invfisico_total
-         ,cto_venta_total 
+         ,cto_invfinal
+         ,cto_invinicial_total
+         ,cto_compralote_total
+         ,cto_alistamiento_total
+         ,cto_compensados_total
+         ,cto_trasladoing_total
+         ,cto_trasladosal_total
+         ,cto_invfinal_total
+         ,costos
+         ,cto_venta_total
+         ,cto_notacredito
+         ,cto_notadebito
+         ,total_venta
+         ,utilidad   
          ,precioventa_min
         )
         
@@ -269,15 +281,20 @@ class inventoryController extends Controller
          ,c.cto_compensados
          ,c.cto_trasladoing
          ,c.cto_trasladosal
-         ,c.cto_invfisico 
+         ,c.cto_invfinal
          ,c.cto_invinicial_total
          ,c.cto_compralote_total
          ,c.cto_alistamiento_total
          ,c.cto_compensados_total
          ,c.cto_trasladoing_total
          ,c.cto_trasladosal_total
-         ,c.cto_invfisico_total
-         ,c.cto_venta_total 
+         ,c.cto_invfinal_total
+         ,c.costos
+         ,c.cto_venta_total
+         ,c.cto_notacredito
+         ,c.cto_notadebito
+         ,c.total_venta
+         ,c.utilidad 
          ,c.precioventa_min
         
         FROM centro_costo_products c INNER JOIN products p ON p.id = c.products_id
@@ -338,6 +355,13 @@ class inventoryController extends Controller
          ,c.cto_trasladosal_total = 0
          ,c.cto_invfisico_total = 0
          ,c.cto_venta_total = 0
+         ,c.cto_invfinal_total
+         ,c.costos = 0
+         ,c.cto_venta_total = 0
+         ,c.cto_notacredito = 0
+         ,c.cto_notadebito = 0
+         ,c.total_venta = 0
+         ,c.utilidad = 0
          ,c.precioventa_min = 0       
          WHERE c.centrocosto_id = :centrocostoId        
          AND tipoinventario = 'cerrado'
