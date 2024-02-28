@@ -131,7 +131,7 @@ class saleController extends Controller
 
     public function cargarInventarioMasivo()
     {
-        for ($i = 672; $i <= 1127; $i++) {
+        for ($i = 1127; $i <= 672; $i++) {
             $this->cargarInventariocr($i);
         }
 
