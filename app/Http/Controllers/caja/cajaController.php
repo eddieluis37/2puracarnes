@@ -98,7 +98,7 @@ class cajaController extends Controller
         $cambio = str_replace(['.', ',', '$', '#'], '', $cambio);
 
         $estado = 'close';
-        $status = '1'; //1 = pagado
+        $status = '1'; //1 = close
 
         try {
             $caja = Caja::find($ventaId);
@@ -159,7 +159,7 @@ class cajaController extends Controller
 
         // dd($id);
         $dataAlistamiento = DB::table('cajas as ca')
-            /*  ->join('sales as sa', 'ca.user_id', '=', 'sa.id') */
+            ->join('sales as sa', 'ca.cajero_id', '=', 'sa.user_id')
             ->join('users as u', 'ca.cajero_id', '=', 'u.id')
             ->join('centro_costo as centro', 'ca.centrocosto_id', '=', 'centro.id')
             ->select('ca.*', 'centro.name as namecentrocosto', 'u.name as namecajero')
@@ -219,7 +219,7 @@ class cajaController extends Controller
             ->join('centro_costo as centro', 'ca.centrocosto_id', '=', 'centro.id')
             ->where('ca.id', $id)
             ->whereDate('sa.fecha_venta', now())
-            ->where('sa.third_id', 33)
+            ->where('sa.tipo', '0')
             ->sum('sa.valor_a_pagar_efectivo');
 
         $valorCambio = DB::table('cajas as ca')
@@ -228,7 +228,7 @@ class cajaController extends Controller
             ->join('centro_costo as centro', 'ca.centrocosto_id', '=', 'centro.id')
             ->where('ca.id', $id)
             ->whereDate('sa.fecha_venta', now())
-            ->where('sa.third_id', 33)
+            ->where('sa.tipo', '0')
             ->sum('sa.cambio');
 
         $valorEfectivo = $valorApagarEfectivo - $valorCambio;
@@ -239,7 +239,7 @@ class cajaController extends Controller
             ->join('centro_costo as centro', 'ca.centrocosto_id', '=', 'centro.id')
             ->where('ca.id', $id)
             ->whereDate('sa.fecha_venta', now())
-            ->where('sa.third_id', 33)
+            ->where('sa.tipo', '0')
             ->sum('sa.valor_a_pagar_tarjeta');
 
         $valorApagarOtros = DB::table('cajas as ca')
@@ -248,10 +248,10 @@ class cajaController extends Controller
             ->join('centro_costo as centro', 'ca.centrocosto_id', '=', 'centro.id')
             ->where('ca.id', $id)
             ->whereDate('sa.fecha_venta', now())
-            ->where('sa.third_id', 33)
+            ->where('sa.tipo', '0')
             ->sum('sa.valor_a_pagar_otros');
 
-            $valorTotal = $valorApagarTarjeta + $valorApagarOtros;
+        $valorTotal = $valorApagarTarjeta + $valorApagarOtros;
 
 
         $array = [
@@ -278,34 +278,36 @@ class cajaController extends Controller
         try {
             $rules = [
                 'alistamientoId' => 'required',
-                'cajero' => 'required',
+                'cajero' => [
+                    'required',
+                    function ($attribute, $value, $fail) {
+                        $currentDate = Carbon::now()->format('Y-m-d');
+                        $existingRecord = Caja::where('cajero_id', $value)
+                            ->whereDate('fecha_hora_inicio', $currentDate)
+                            ->exists();
+                        if ($existingRecord) {
+                            $fail('Ya existe un turno para el cajero en la fecha actual');
+                        }
+                    },
+                ],
                 'centrocosto' => 'required',
+                'base' => 'required',
             ];
+
             $messages = [
                 'alistamientoId.required' => 'El alistamiento es requerido',
                 'cajero.required' => 'El cajero es requerido',
                 'centrocosto.required' => 'El centro de costo es requerido',
-                'cajero_id.unique' => 'Ya existe un registro para este cajero en la fecha actual',
+                'base.required' => 'La base es requerida',
             ];
+
             $validator = Validator::make($request->all(), $rules, $messages);
+
             if ($validator->fails()) {
                 return response()->json([
                     'status' => 0,
                     'errors' => $validator->errors()
                 ], 422);
-            }
-
-            $currentDate = Carbon::now()->format('Y-m-d');
-            $cajeroId = $request->cajero;
-            $existingRecord = Caja::where('cajero_id', $cajeroId)
-                ->whereDate('fecha_hora_inicio', $currentDate)
-                ->first();
-
-            if ($existingRecord) {
-                return response()->json([
-                    'status' => 0,
-                    'message' => 'Ya existe un registro para este cajero en la fecha actual',
-                ]);
             }
             /* 
             $current_date->modify('next monday'); // Move to the next Monday
@@ -323,11 +325,12 @@ class cajaController extends Controller
                 $alist = new Caja();
                 $alist->user_id = $id_user;
                 $alist->centrocosto_id = $request->centrocosto;
-                $alist->cajero_id = $cajeroId;
+                $alist->cajero_id =$request->cajero;
                 $alist->base = $request->base;
                 //$alist->fecha_alistamiento = $currentDateFormat;
                 $alist->fecha_hora_inicio = $currentDateTime;
                 $alist->fecha_hora_cierre = $fechaHoraCierre;
+                $alist->status = '0'; // Open
                 $alist->save();
                 return response()->json([
                     'status' => 1,
@@ -356,7 +359,7 @@ class cajaController extends Controller
             /*   ->join('meatcuts as cut', 'ali.meatcut_id', '=', 'cut.id')*/
             ->join('centro_costo as centro', 'ali.centrocosto_id', '=', 'centro.id')
             ->select('ali.*', 'centro.name as namecentrocosto', 'u.name as namecajero')
-            ->where('ali.status', 1)
+           /*  ->where('ali.status', 1) */
             ->get();
         //$data = Compensadores::orderBy('id','desc');
         return Datatables::of($data)->addIndexColumn()
