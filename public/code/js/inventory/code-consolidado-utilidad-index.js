@@ -307,7 +307,7 @@ function initializeDataTable(centrocostoId = "-1", categoriaId = "-1") {
                 }, 0);
 
             // Calcular la porc_utilidad
-            var porcUtilidad = sumUtilidad / sumTotalVenta;
+            var porcUtilidad = sumTotalVenta / sumUtilidad;
             var formattedPorcUtilidad = formatCantidadSinCero(porcUtilidad);
 
             // Agregar los valores totales en el footer
