@@ -61,12 +61,15 @@
 						<option value="">Seleccione el responsable</option>
 					</select>
         </div> -->
+        
+        @can('Cerrar_Inventario')
         <div class="col-md-3 text-right ml-auto">
           <div style="margin-top:28px;" clas="">
-            <button class="btn btn-success btn-lg" type="button" id="cargarInventarioBtn" disabled>Cerrar Inventario</button>
+            <button class="btn btn-success btn-lg" type="button" id="cargarInventarioBtn">Cerrar Inventario</button>
           </div>
         </div>
       </div>
+      @endcan
       <div class="card border-0">
         <div class="m-3">
 

@@ -70,7 +70,7 @@ class inventoryController extends Controller
 
         // Calculo de la stock ideal 
         foreach ($data as $item) {
-            $stock = ($item->invinicial + $item->compraLote + $item->alistamiento + $item->compensados + $item->trasladoing) - (($item->venta ) + $item->trasladosal) - ($item->notacredito - $item->notadebito);
+            $stock = ($item->invinicial + $item->compraLote + $item->alistamiento + $item->compensados + $item->trasladoing) - (($item->venta) + $item->trasladosal) - ($item->notacredito - $item->notadebito);
             $item->stock = round($stock, 2);
             // Actualizar el stock 
             DB::table('centro_costo_products')
@@ -205,102 +205,101 @@ class inventoryController extends Controller
         $v_centrocostoId = $request->input('centrocostoId');
         $v_categoriaId = $request->input('categoriaId');
 
-      /*    // PASO 1 COPIAR DATOS DESDE LA TABLA CENTRO COSTO PRODUCTS HASTA TABLA DE HISTORICO 
+        // PASO 1 COPIAR DATOS DESDE LA TABLA CENTRO COSTO PRODUCTS HASTA TABLA DE HISTORICO 
 
         DB::update(
             "
         INSERT INTO centro_costo_product_hists  
         (
-          centrocosto_id
-         ,products_id
-         ,consecutivo
-         ,fecha
-         ,tipoinventario 
-         ,invinicial
-         ,compralote
-         ,alistamiento
-         ,compensados
-         ,trasladoing
-         ,trasladosal
-         ,venta
-         ,c.notadebito
-         ,c.notacredito
-         ,stock
-         ,fisico 
-         ,price_fama 
-         ,cto_invinicial
-         ,cto_compralote
-         ,cto_alistamiento
-         ,cto_compensados
-         ,cto_trasladoing
-         ,cto_trasladosal
-         ,cto_invfinal
-         ,cto_invinicial_total
-         ,cto_compralote_total
-         ,cto_alistamiento_total
-         ,cto_compensados_total
-         ,cto_trasladoing_total
-         ,cto_trasladosal_total
-         ,cto_invfinal_total       
-         ,costos
-         ,cto_venta_total
-         ,cto_notacredito
-         ,cto_notadebito
-         ,total_venta
-         ,utilidad   
-         ,precioventa_min
+          centrocosto_id,
+          products_id,
+          consecutivo,
+          fecha,
+          tipoinventario,
+          invinicial,
+          compralote,
+          alistamiento,
+          compensados,
+          trasladoing,
+          trasladosal,
+          venta,
+          notadebito,
+          notacredito,
+          stock,
+          fisico,
+          price_fama,
+          cto_invinicial,
+          cto_compralote,
+          cto_alistamiento,
+          cto_compensados,
+          cto_trasladoing,
+          cto_trasladosal,
+          cto_invfinal,
+          cto_invinicial_total,
+          cto_compralote_total,
+          cto_alistamiento_total,
+          cto_compensados_total,
+          cto_trasladoing_total,
+          cto_trasladosal_total,
+          cto_invfinal_total,
+          costos,
+          cto_venta_total,
+          cto_notacredito,
+          cto_notadebito,
+          total_venta,
+          utilidad,
+          precioventa_min
         )
-        
-        SELECT c.centrocosto_id
-         ,c.products_id
-         ,(SELECT COALESCE(MAX(consecutivo)+1,1)FROM centro_costo_product_hists)
-         ,CURDATE()
-         ,'Final'
-         ,c.invinicial
-         ,c.compralote
-         ,c.alistamiento
-         ,c.compensados
-         ,c.trasladoing
-         ,c.trasladosal
-         ,c.venta 
-         ,c.notadebito
-         ,c.notacredito
-         ,c.stock
-         ,c.fisico 
-         ,c.price_fama 
-         ,c.cto_invinicial
-         ,c.cto_compralote
-         ,c.cto_alistamiento
-         ,c.cto_compensados
-         ,c.cto_trasladoing
-         ,c.cto_trasladosal
-         ,c.cto_invfinal
-         ,c.cto_invinicial_total
-         ,c.cto_compralote_total
-         ,c.cto_alistamiento_total
-         ,c.cto_compensados_total
-         ,c.cto_trasladoing_total
-         ,c.cto_trasladosal_total
-         ,c.cto_invfinal_total
-         ,c.costos
-         ,c.cto_venta_total
-         ,c.cto_notacredito
-         ,c.cto_notadebito
-         ,c.total_venta
-         ,c.utilidad
-         ,c.precioventa_min
-        
-        FROM centro_costo_products c INNER JOIN products p ON p.id = c.products_id
-        WHERE c.centrocosto_id = :centrocostoId       
-        AND c.tipoinventario = 'cerrado'
+        SELECT 
+          c.centrocosto_id,
+          c.products_id,
+          COALESCE((SELECT MAX(consecutivo)+1 FROM centro_costo_product_hists), 1),
+          CURDATE(),
+          'Final',
+          c.invinicial,
+          c.compralote,
+          c.alistamiento,
+          c.compensados,
+          c.trasladoing,
+          c.trasladosal,
+          c.venta,	
+          c.notadebito, 
+          c.notacredito, 
+          c.stock,
+          c.fisico,
+          c.price_fama,
+          c.cto_invinicial,
+          c.cto_compralote,
+          c.cto_alistamiento,
+          c.cto_compensados,
+          c.cto_trasladoing,
+          c.cto_trasladosal,
+          c.cto_invfinal,
+          c.cto_invinicial_total,
+          c.cto_compralote_total,
+          c.cto_alistamiento_total,
+          c.cto_compensados_total,
+          c.cto_trasladoing_total,
+          c.cto_trasladosal_total,
+          c.cto_invfinal_total,
+          c.costos,
+          c.cto_venta_total,
+          c.cto_notacredito,
+          c.cto_notadebito,
+          c.total_venta,
+          c.utilidad,
+          c.precioventa_min
+        FROM centro_costo_products c 
+        INNER JOIN products p ON p.id = c.products_id
+        WHERE c.centrocosto_id = :centrocostoId        
+        AND c.tipoinventario = 'cerrado' 
         OR c.tipoinventario = 'inicial' ",
             [
                 'centrocostoId' => $v_centrocostoId,
-                
             ]
         );
- */
-         // PASO 2 ACTUALIZAR INVENTARIO INICIAL DESDE EL FISICO 
+
+        // PASO 2 ACTUALIZAR INVENTARIO INICIAL DESDE EL FISICO 
 
         DB::update(
             "
@@ -312,7 +311,7 @@ class inventoryController extends Controller
          OR c.tipoinventario = 'inicial' ",
             [
                 'centrocostoId' => $v_centrocostoId,
-              
+
             ]
         );
 
@@ -340,8 +339,7 @@ class inventoryController extends Controller
          ,c.cto_compensados = 0
          ,c.cto_trasladoing = 0
          ,c.cto_trasladosal = 0
-         ,c.cto_invfinal = 0
-         ,c.cto_invinicial_total = 0
+         ,c.cto_invfinal = 0         
          ,c.cto_compralote_total = 0
          ,c.cto_alistamiento_total = 0
          ,c.cto_compensados_total = 0
@@ -360,7 +358,7 @@ class inventoryController extends Controller
          OR tipoinventario = 'inicial' ",
             [
                 'centrocostoId' => $v_centrocostoId,
-               
+
             ]
         );
 
@@ -376,7 +374,7 @@ class inventoryController extends Controller
         $startDate = '2023-05-01';
         $endDate = '2023-05-08';
 
-     /* $category = Category::whereIn('id', [1, 2, 3, 4, 5, 6, 7, 8, 9])->orderBy('name', 'asc')->get(); */
+        /* $category = Category::whereIn('id', [1, 2, 3, 4, 5, 6, 7, 8, 9])->orderBy('name', 'asc')->get(); */
 
         $category = Category::orderBy('name', 'asc')->get();
         $centros = Centrocosto::Where('status', 1)->get();
