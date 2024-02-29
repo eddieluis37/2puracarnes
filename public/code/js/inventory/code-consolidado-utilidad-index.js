@@ -118,21 +118,21 @@ function initializeDataTable(centrocostoId = "-1", categoriaId = "-1") {
                 render: function (data, type, row) {
                     return "" + formatCantidadSinCero(data);
                 },
-            },            
+            },
             {
                 data: "totalventa",
                 name: "totalventa",
                 render: function (data, type, row) {
                     return "" + formatCantidadSinCero(data);
                 },
-            },            
+            },
             {
                 data: "utilidad",
                 name: "utilidad",
                 render: function (data, type, row) {
                     return "" + formatCantidadSinCero(data);
                 },
-            },           
+            },
             {
                 data: "porc_utilidad",
                 name: "porc_utilidad",
@@ -280,15 +280,35 @@ function initializeDataTable(centrocostoId = "-1", categoriaId = "-1") {
                 }, 0);
 
             var formattedUtilidad = formatCantidadSinCero(utilidad);
-           
+
             var porc_utilidad = api
-            .column("porc_utilidad:name", { search: "applied" })
-            .data()
-            .reduce(function (a, b) {
-                return parseFloat(a) + parseFloat(b);
-            }, 0);
+                .column("porc_utilidad:name", { search: "applied" })
+                .data()
+                .reduce(function (a, b) {
+                    return parseFloat(a) + parseFloat(b);
+                }, 0);
 
             var formattedPorcUtilidad = formatCantidadSinCero(porc_utilidad);
+
+            // Sumatoria de totalventa
+            var sumTotalVenta = api
+                .column("totalventa:name", { search: "applied" })
+                .data()
+                .reduce(function (a, b) {
+                    return parseFloat(a) + parseFloat(b);
+                }, 0);
+
+            // Sumatoria de utilidad
+            var sumUtilidad = api
+                .column("utilidad:name", { search: "applied" })
+                .data()
+                .reduce(function (a, b) {
+                    return parseFloat(a) + parseFloat(b);
+                }, 0);
+
+            // Calcular la porc_utilidad
+            var porcUtilidad = sumUtilidad / sumTotalVenta;
+            var formattedPorcUtilidad = formatCantidadSinCero(porcUtilidad);
 
             // Agregar los valores totales en el footer
             $(api.column("cto_invinicial:name").footer()).html(
@@ -317,7 +337,10 @@ function initializeDataTable(centrocostoId = "-1", categoriaId = "-1") {
             $(api.column("notadebito:name").footer()).html(formattedNotadebito);
             $(api.column("totalventa:name").footer()).html(formattedTotalVenta);
             $(api.column("utilidad:name").footer()).html(formattedUtilidad);
-            $(api.column("porc_utilidad:name").footer()).html(formattedPorcUtilidad);
+            // Agregar el valor calculado en el footer de la columna "porc_utilidad"
+            $(api.column("porc_utilidad:name").footer()).html(
+                formattedPorcUtilidad
+            );
         },
     });
 }
