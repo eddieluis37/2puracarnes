@@ -205,7 +205,7 @@ class inventoryController extends Controller
         $v_centrocostoId = $request->input('centrocostoId');
         $v_categoriaId = $request->input('categoriaId');
 
-        // PASO 1 VOLCADO EN LA TABLA DE HISTORICO 
+      /*    // PASO 1 COPIAR DATOS DESDE LA TABLA CENTRO COSTO PRODUCTS HASTA TABLA DE HISTORICO 
 
         DB::update(
             "
@@ -225,7 +225,7 @@ class inventoryController extends Controller
          ,venta
          ,c.notadebito
          ,c.notacredito
-         ,stock 
+         ,stock
          ,fisico 
          ,price_fama 
          ,cto_invinicial
@@ -234,13 +234,6 @@ class inventoryController extends Controller
          ,cto_compensados
          ,cto_trasladoing
          ,cto_trasladosal
-         ,cto_invfisico 
-         ,cto_invinicial_total
-         ,cto_compralote_total
-         ,cto_alistamiento_total
-         ,cto_compensados_total
-         ,cto_trasladoing_total
-         ,cto_trasladosal_total
          ,cto_invfinal
          ,cto_invinicial_total
          ,cto_compralote_total
@@ -248,7 +241,7 @@ class inventoryController extends Controller
          ,cto_compensados_total
          ,cto_trasladoing_total
          ,cto_trasladosal_total
-         ,cto_invfinal_total
+         ,cto_invfinal_total       
          ,costos
          ,cto_venta_total
          ,cto_notacredito
@@ -269,10 +262,10 @@ class inventoryController extends Controller
          ,c.compensados
          ,c.trasladoing
          ,c.trasladosal
-         ,c.venta
+         ,c.venta 
          ,c.notadebito
          ,c.notacredito
-         ,c.stock 
+         ,c.stock
          ,c.fisico 
          ,c.price_fama 
          ,c.cto_invinicial
@@ -294,7 +287,7 @@ class inventoryController extends Controller
          ,c.cto_notacredito
          ,c.cto_notadebito
          ,c.total_venta
-         ,c.utilidad 
+         ,c.utilidad
          ,c.precioventa_min
         
         FROM centro_costo_products c INNER JOIN products p ON p.id = c.products_id
@@ -306,13 +299,14 @@ class inventoryController extends Controller
                 
             ]
         );
-
-        // PASO 2 ACTUALIZAR INVENTARIO INICIAL DESDE EL FISICO 
+ */
+         // PASO 2 ACTUALIZAR INVENTARIO INICIAL DESDE EL FISICO 
 
         DB::update(
             "
          UPDATE centro_costo_products c INNER JOIN products p ON p.id = c.products_id
-         SET c.invinicial = c.fisico       
+         SET c.invinicial = c.fisico,
+             c.cto_invinicial_total = c.cto_invfinal_total  
          WHERE c.centrocosto_id = :centrocostoId       
          AND c.tipoinventario = 'cerrado'
          OR c.tipoinventario = 'inicial' ",
@@ -346,16 +340,14 @@ class inventoryController extends Controller
          ,c.cto_compensados = 0
          ,c.cto_trasladoing = 0
          ,c.cto_trasladosal = 0
-         ,c.cto_invfisico  = 0
+         ,c.cto_invfinal = 0
          ,c.cto_invinicial_total = 0
          ,c.cto_compralote_total = 0
          ,c.cto_alistamiento_total = 0
          ,c.cto_compensados_total = 0
          ,c.cto_trasladoing_total = 0
          ,c.cto_trasladosal_total = 0
-         ,c.cto_invfisico_total = 0
-         ,c.cto_venta_total = 0
-         ,c.cto_invfinal_total
+         ,c.cto_invfinal_total = 0
          ,c.costos = 0
          ,c.cto_venta_total = 0
          ,c.cto_notacredito = 0
