@@ -52,11 +52,21 @@
 							<div class="col-md-2">
 								<div class="task-header">
 									<div class="form-group">
-										<label for="" class="form-label">% Descuento</label>
+										<label for="" class="form-label">Consecutivo</label>
+										<p>{{$datacompensado[0]->consecutivo}}</p>
+									</div>
+								</div>
+							</div>
+
+							<div class="col-md-2">
+								<div class="task-header">
+									<div class="form-group">
+										<label for="" class="form-label">% Descuento cliente</label>
 										<p>{{$datacompensado[0]->porc_descuento_cliente}}</p>
 									</div>
 								</div>
 							</div>
+							
 						</div>
 					</div>
 				</div>

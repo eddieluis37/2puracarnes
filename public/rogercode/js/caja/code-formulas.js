@@ -4,21 +4,21 @@ var valorTotal = valorBase + valorEfectivo;
 var valorIngresado = formatMoneyNumber($("#valor_real").val());
 var valorDiferencia = valorIngresado - valorTotal;
 
-document.getElementById("base").value = valorBase;
-document.getElementById("efectivo").value = valorEfectivo;
-document.getElementById("total").value = valorTotal;
-document.getElementById("valor_real").value = valorIngresado;
-document.getElementById("diferencia").value = valorDiferencia;
+document.getElementById("base").value = formatCantidadSinCero(valorBase);
+document.getElementById("efectivo").value = formatCantidadSinCero(valorEfectivo);
+document.getElementById("total").value = formatCantidadSinCero(valorTotal);
+document.getElementById("valor_real").value = formatCantidadSinCero(valorIngresado);
+document.getElementById("diferencia").value = formatCantidadSinCero(valorDiferencia);
 
 $("#valor_real").on("input", function () {
     valorIngresado = formatMoneyNumber($("#valor_real").val());
     valorDiferencia = valorIngresado - valorTotal;
 
-    document.getElementById("base").value = valorBase;
-    document.getElementById("efectivo").value = valorEfectivo;
-    document.getElementById("total").value = valorTotal;
-    document.getElementById("valor_real").value = valorIngresado;
-    document.getElementById("diferencia").value = valorDiferencia;
+    document.getElementById("base").value = formatCantidadSinCero(valorBase);
+    document.getElementById("efectivo").value = formatCantidadSinCero(valorEfectivo);
+    document.getElementById("total").value = formatCantidadSinCero(valorTotal);
+    document.getElementById("valor_real").value = formatCantidadSinCero(valorIngresado);
+    document.getElementById("diferencia").value = formatCantidadSinCero(valorDiferencia);
 
     if (valorDiferencia >= -10000) {
         $("#btnGuardar").prop("disabled", false);

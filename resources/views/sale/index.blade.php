@@ -9,18 +9,24 @@
 					<b>Ventas | Listado </b>
 				</h4>
 				<ul class="tabs tab-pills">
+					<!-- <li>
+						<a href="{{ route('cargar.inventario.masivo') }}" class="btn btn-primary">Cargar Inventario Masivo</a>
+					</li> -->
 					<li>
 						<a href="javascript:void(0)" onclick="showModalcreate()" class="tabmenu bg-dark" data-toggle="modal" data-target="#modal-create-compensado" title="Nueva venta por domicilio">Domicilio</a>
-
-
-						<!-- <a href="{{ route('cargar.inventario.masivo') }}" class="btn btn-primary">Cargar Inventario Masivo</a> -->
-
 					</li>
 					<li></li>
+					@php
+					$user_id = auth()->id();
+					@endphp
+					@if(\App\Models\caja\Caja::where('cajero_id', $user_id)
+					->whereDate('fecha_hora_inicio', \Carbon\Carbon::now()->toDateString())
+					->where('estado', 'open')
+					->exists())
 					<li>
 						<a href="javascript:void(0)" class="tabmenu bg-dark ml-2" id="storeVentaMostradorBtn" title="Nueva venta por mostrador">POS</a>
 					</li>
-
+					@endif
 				</ul>
 			</div>
 

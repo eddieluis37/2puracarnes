@@ -34,7 +34,7 @@ $(document).ready(function () {
                     data: "base",
                     name: "base",
                     render: function (data, type, row) {
-                        return "$ " + formatCantidadSinCero(data);
+                        return "$" + formatCantidadSinCero(data);
                     },
                 },
                 { data: "inventory", name: "inventory" },
