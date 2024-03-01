@@ -127,12 +127,20 @@ btnAdd.addEventListener("click", (e) => {
             showData(result);
         }
         if (result.status === 0) {
-            Swal("Error!", "Tiene campos vacios!", "error");
+            let errors = result.errors;
+            console.log(errors);
+            $.each(errors, function (field, messages) {
+                console.log(field, messages);
+                let $input = $('[name="' + field + '"]');
+                let $errorContainer = $input
+                    .closest(".form-group")
+                    .find(".error-message");
+                $errorContainer.html(messages[0]);
+                $errorContainer.show();
+            });
         }
     });
 });
-
-
 
 const showData = (data) => {
     let dataAll = data.array;
@@ -269,7 +277,8 @@ quantity.addEventListener("change", function () {
 const date = new Date();
 
 // Create a dynamic password by combining letters and the current date
-const passwordHoy = "admin" + date.getFullYear() + (date.getMonth() + 1) + date.getDate();
+const passwordHoy =
+    "admin" + date.getFullYear() + (date.getMonth() + 1) + date.getDate();
 
 btnRemove.addEventListener("click", (e) => {
     e.preventDefault();
