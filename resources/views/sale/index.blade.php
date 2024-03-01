@@ -18,7 +18,7 @@
 					</li>
 					<li></li>
 					<li>
-						<a href="javascript:void(0)" class="tabmenu bg-dark ml-2" id="storeVentaMostradorBtn" title="Nueva venta por mostrador">Mostrador</a>
+						<a href="javascript:void(0)" class="tabmenu bg-dark ml-2" id="storeVentaMostradorBtn" title="Nueva venta por mostrador">POS</a>
 					</li>
 
 				</ul>
