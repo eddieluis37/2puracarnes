@@ -16,6 +16,7 @@
 						<!-- <a href="{{ route('cargar.inventario.masivo') }}" class="btn btn-primary">Cargar Inventario Masivo</a> -->
 
 					</li>
+					<li></li>
 					<li>
 						<a href="javascript:void(0)" class="tabmenu bg-dark ml-2" id="storeVentaMostradorBtn" title="Nueva venta por mostrador">Mostrador</a>
 					</li>
