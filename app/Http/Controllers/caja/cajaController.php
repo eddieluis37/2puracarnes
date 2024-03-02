@@ -352,59 +352,69 @@ class cajaController extends Controller
                 }
                 return $statusInventory;
             })
+
+       /*      <div class="text-center">
+            <a href="caja/create/' . $data->id . '" class="btn btn-dark" title="RetiroDinero" >
+                <i class="fas fa-money-bill-alt"></i>
+            </a>
+            <a href="caja/create/' . $data->id . '" class="btn btn-dark" title="CuadreCaja" ' . $status . '>
+                <i class="fas fa-money-check-alt"></i>
+            </a>					
+            <a href="caja/showReciboCaja/' . $data->id . '" class="btn btn-dark" title="VerReciboCaja">
+                <i class="fas fa-eye"></i>
+            </a> 
+             <a href="javascript:void(0)" data-toggle="tooltip"  data-id="' . $data->id . '" data-original-title="Delete" class="btn btn-danger btn-sm deleteBook">E</a>
+            */
+
             ->addColumn('action', function ($data) {
                 $currentDateTime = Carbon::now();
-                if (Carbon::parse($currentDateTime->format('Y-m-d'))->gt(Carbon::parse($data->fecha_hora_cierre))) {
-                    //ESTADO Cerrado
+
+                if ($data->status == 1) {
                     $btn = '
-                    <div class="text-center">
-					
-                    <a href="caja/showReciboCaja/' . $data->id . '" class="btn btn-dark" title="VerReciboCajaCerrado" >
-                    <i class="fas fa-eye"></i>
-                    </a>				
-					<button class="btn btn-dark" title="CajaCerrada" disabled>
-						<i class="fas fa-trash"></i>
-					</button>
-                    </div>
-                    ';
-                } elseif (Carbon::parse($currentDateTime->format('Y-m-d'))->lt(Carbon::parse($data->fecha_hora_cierre))) {
-                    $status = '';
-                    if ($data->estado == 'close') {
-                        $status = 'disabled';
-                    }
+                         <div class="text-center">                         
+                         <a href="caja/showReciboCaja/' . $data->id . '" class="btn btn-dark" title="RecibodecajaCerrado" target="_blank">
+                         <i class="fas fa-eye"></i>
+                         </a>				
+                         <button class="btn btn-dark" title="Borrar venta" disabled>
+                             <i class="fas fa-trash"></i>
+                         </button>
+                         
+                         </div>
+                         ';
+                } elseif ($data->status == 0) {
                     $btn = '
-                    <div class="text-center">
-                    <a href="caja/create/' . $data->id . '" class="btn btn-dark" title="RetiroDinero" >
-						<i class="fas fa-money-bill-alt"></i>
-					</a>
-					<a href="caja/create/' . $data->id . '" class="btn btn-dark" title="CuadreCaja" ' . $status . '>
-						<i class="fas fa-money-check-alt"></i>
-					</a>					
-                    <a href="caja/showReciboCaja/' . $data->id . '" class="btn btn-dark" title="VerReciboCaja">
-					    <i class="fas fa-eye"></i>
-					</a>
-					<button class="btn btn-dark" title="BorrarCaja" onclick="downAlistamiento(' . $data->id . ');" ' . $status . '>
-						<i class="fas fa-trash"></i>
-					</button>
-                    </div>
-                    ';
+                         <div class="text-center">
+                         <a href="caja/create/' . $data->id . '" class="btn btn-dark" title="CuadreCaja">
+                            <i class="fas fa-money-check-alt"></i>
+                         </a>
+                        
+                         <a href="caja/showReciboCaja/' . $data->id . '" class="btn btn-dark" title="RecibodecajaPendiente" target="_blank">
+                         <i class="far fa-file-pdf"></i>
+                         </a>
+                         <button class="btn btn-dark" title="Borrar venta">
+                         <i class="fas fa-trash"></i>
+                         </button>
+                       
+                         </div>
+                         ';
+                    //ESTADO Cerrada
                 } else {
                     $btn = '
-                    <div class="text-center">
-					<a href="caja/create/' . $data->id . '" class="btn btn-dark" title="Alistar" >
-						<i class="fas fa-directions"></i>
-					</a>
-					<button class="btn btn-dark" title="" onclick="showDataForm(' . $data->id . ')">
-						<i class="fas fa-eye"></i>
-					</button>
-					<button class="btn btn-dark" title="BorraCajaCerrado" disabled>
-						<i class="fas fa-trash"></i>
-					</button>
-                    </div>
-                    ';
+                         <div class="text-center">
+                         <a href="caja/showReciboCaja/' . $data->id . '" class="btn btn-dark" title="RecibodecajaCerrado" target="_blank">
+                         <i class="far fa-file-pdf"></i>
+                         </a>
+                         <button class="btn btn-dark" title="Borra la venta" disabled>
+                             <i class="fas fa-trash"></i>
+                         </button>
+                       
+                         </div>
+                         ';
                 }
                 return $btn;
             })
+
+          
             ->rawColumns(['fecha1', 'fecha2', 'inventory', 'action'])
             ->make(true);
     }
