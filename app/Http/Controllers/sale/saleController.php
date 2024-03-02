@@ -244,8 +244,6 @@ class saleController extends Controller
             ->select('sa.*', 'tird.name as namethird', 'centro.name as namecentrocosto', 'tird.porc_descuento as porc_descuento_cliente')
             ->where('sa.id', $id)
             ->get();
-
-
         $status = '';
         $estadoVenta = ($datacompensado[0]->status);
 

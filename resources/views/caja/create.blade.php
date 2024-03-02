@@ -82,6 +82,14 @@
 									</div>
 								</div>
 							</div>
+							<div class="col-md-4">
+								<div class="task-header">
+									<div class="form-group">
+										<label for="" class="form-label">Estado</label>
+										<p>{{$dataAlistamiento[0]->estado}}</p>
+									</div>
+								</div>
+							</div>
 						</div>
 					</div>
 				</div>
@@ -206,7 +214,14 @@
 											<tr>
 												<th colspan="2">
 													<div class="form-group">
+														@php
+														use App\Models\caja\Caja;
+														$caja = Caja::find($dataAlistamiento[0]->id);
+														@endphp
+
+														@if($caja->status == 0)
 														<button type="submit" class="btn btn-success" id="btnGuardar" disabled>Guardar e imprimir</button>
+														@endif
 														<button type="button" class="btn btn-primary" onclick="history.back()">Volver</button>
 													</div>
 												</th>

@@ -141,12 +141,10 @@ class cajaController extends Controller
 
     /**
      * Show the form for creating a new resource.
-     *
+     *    ->whereDate('sa.fecha_venta', now())
      * @return \Illuminate\Http\Response
-     */
-    public function create($id)
-    {
-        /*   $valorApagarEfectivo = DB::table('cajas as ca')
+     * 
+     * /*   $valorApagarEfectivo = DB::table('cajas as ca')
             ->join('sales as sa', 'ca.cajero_id', '=', 'sa.user_id')
             ->join('users as u', 'ca.cajero_id', '=', 'u.id')
             ->join('centro_costo as centro', 'ca.centrocosto_id', '=', 'centro.id')
@@ -155,60 +153,33 @@ class cajaController extends Controller
             ->where('sa.third_id', 33)
             ->sum('sa.cambio');
 
-        dd($valorApagarEfectivo); */
+        dd($valorApagarEfectivo); 
+     */
 
-        // dd($id);
+    public function create($id)
+    {
+        // Validar si el cajero_id de la tabla cajas es igual al user_id de la tabla sales
         $dataAlistamiento = DB::table('cajas as ca')
-            ->join('sales as sa', 'ca.cajero_id', '=', 'sa.user_id')
+            ->join('sales as sa', function ($join) {
+                $join->on('ca.cajero_id', '=', 'sa.user_id');
+            })
             ->join('users as u', 'ca.cajero_id', '=', 'u.id')
             ->join('centro_costo as centro', 'ca.centrocosto_id', '=', 'centro.id')
             ->select('ca.*', 'centro.name as namecentrocosto', 'u.name as namecajero')
             ->where('ca.id', $id)
-            /*        ->whereDate('sa.fecha_venta', now()) */
-
             ->get();
 
-        // dd($dataAlistamiento);
+        if ($dataAlistamiento->isEmpty()) {
+            return redirect()->back()->with('warning', 'El cajero no tiene ventas asociadas en la tabla sales.');
+        }
 
-
-        /**************************************** */
         $status = '';
-        $fechaAlistamientoCierre = Carbon::parse($dataAlistamiento[0]->fecha_hora_cierre);
-        $date = Carbon::now();
-        $currentDate = Carbon::parse($date->format('Y-m-d'));
-        if ($currentDate->gt($fechaAlistamientoCierre)) {
-            //'Date 1 is greater than Date 2';
-            $status = 'false';
-        } elseif ($currentDate->lt($fechaAlistamientoCierre)) {
-            //'Date 1 is less than Date 2';
-            $status = 'true';
-        } else {
-            //'Date 1 and Date 2 are equal';
-            $status = 'false';
-        }
-        /**************************************** */
-        $statusInventory = "";
-        if ($dataAlistamiento[0]->estado == "added") {
-            $statusInventory = "true";
-        } else {
-            $statusInventory = "false";
-        }
-        /**************************************** */
-        //dd($tt = [$status, $statusInventory]);
+        $estadoVenta = $dataAlistamiento[0]->status ? 'true' : 'false';
 
-        $display = "";
-        if ($status == "false" || $statusInventory == "true") {
-            $display = "display:none;";
-        }
-
-        /*  $enlistments = $this->getalistamientodetail($id, $dataAlistamiento[0]->centrocosto_id); */
-        /* 
-       
- */
-        //Suma el total de efecetivo, totalTarjetas, totalOtros de la venta del dia de ese cajero.
+        //Suma el total de efectivo, totalTarjetas, totalOtros de la venta del día de ese cajero.
         $arrayTotales = $this->sumTotales($id);
-        //  dd($arrayTotales);
-        return view('caja.create', compact('dataAlistamiento', 'status', 'statusInventory', 'display', 'arrayTotales'));
+
+        return view('caja.create', compact('dataAlistamiento', 'status', 'arrayTotales'));
     }
 
     public function sumTotales($id)
@@ -325,7 +296,7 @@ class cajaController extends Controller
                 $alist = new Caja();
                 $alist->user_id = $id_user;
                 $alist->centrocosto_id = $request->centrocosto;
-                $alist->cajero_id =$request->cajero;
+                $alist->cajero_id = $request->cajero;
                 $alist->base = $request->base;
                 //$alist->fecha_alistamiento = $currentDateFormat;
                 $alist->fecha_hora_inicio = $currentDateTime;
@@ -359,7 +330,7 @@ class cajaController extends Controller
             /*   ->join('meatcuts as cut', 'ali.meatcut_id', '=', 'cut.id')*/
             ->join('centro_costo as centro', 'ali.centrocosto_id', '=', 'centro.id')
             ->select('ali.*', 'centro.name as namecentrocosto', 'u.name as namecajero')
-           /*  ->where('ali.status', 1) */
+            /*  ->where('ali.status', 1) */
             ->get();
         //$data = Compensadores::orderBy('id','desc');
         return Datatables::of($data)->addIndexColumn()
