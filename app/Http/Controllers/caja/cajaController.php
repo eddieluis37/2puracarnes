@@ -388,7 +388,7 @@ class cajaController extends Controller
                             <i class="fas fa-money-check-alt"></i>
                          </a>
                         
-                         <a href="caja/showReciboCaja/' . $data->id . '" class="btn btn-dark" title="RecibodecajaPendiente" target="_blank">
+                         <a href="caja/pdfCierreCaja/' . $data->id . '" class="btn btn-dark" title="RecibodecajaPendiente" target="_blank">
                          <i class="far fa-file-pdf"></i>
                          </a>
                          <button class="btn btn-dark" title="Borrar venta">

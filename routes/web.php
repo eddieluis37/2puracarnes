@@ -47,6 +47,7 @@ use App\Http\Controllers\inventory\CargarVentasController;
 use App\Http\Controllers\inventory\CentroCostoProductController;
 use App\Http\Controllers\CentroCostoProdController;
 use App\Http\Controllers\AsignarPreciosProdController;
+use App\Http\Controllers\caja\pdfCierreCajaController;
 use App\Http\Controllers\compensado\pdfCompensadoController;
 use App\Http\Controllers\faster\fasterController;
 use App\Http\Controllers\transfer\TransferController;
@@ -73,6 +74,7 @@ use App\Http\Controllers\recibodecaja\pdfRecibodecajaController;
 use App\Http\Controllers\recibodecaja\recibodecajaController;
 use App\Http\Controllers\res\pdfLoteController;
 use App\Http\Controllers\sale\exportFacturaController;
+
 
 
 /************************************************* */
@@ -311,6 +313,8 @@ Route::group(['middleware' => [('auth')]], function () {
     Route::get('caja/create/{id}', [cajaController::class, 'create'])->name('caja.create');
     Route::post('caja/create/{id}', [cajaController::class, 'storeCierreCaja'])->name('caja.cierre');
     Route::get('caja/showReciboCaja/{id}', [cajaController::class, 'showReciboCaja'])->name('caja.showReciboCaja');
+
+    Route::get('caja/pdfCierreCaja/{id}', [pdfCierreCajaController::class, 'pdfCierreCaja']);
 
     /** TALLER ***/
     Route::get('workshop', [workshopController::class, 'index'])->name('workshop.index');
