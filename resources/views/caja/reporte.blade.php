@@ -34,24 +34,25 @@
 
 			</tr>
 			<tr>
-				<td colspan=" 2" class="">
+				<td>
 					<span style="font-size: 13px; font-weight: bold; display: block; margin-top: 10;">Turno: {{$sale[0]->id}}</span>
 				</td>
 			</tr>
 			<tr>
 				<td width="100%" class="text-left text-company" style="vertical-align: top; padding-top: 7px">
 					<span style="font-size: 11px; font-weight: bold; display: block; margin: 2;">Fecha y hora:<strong> {{\Carbon\Carbon::now()->format('Y-m-d H:i')}}</strong></span>
+					<span style="font-size: 11px; font-weight: bold; display: block; margin: 2;">Centro costo:<strong> {{$sale[0]->namecentrocosto}}</strong></span>
 					<span style="font-size: 11px; font-weight: bold; display: block; margin: 2;">Usuario:<strong> {{$sale[0]->nameuser}}</strong></span>
 					<span style="font-size: 11px; font-weight: bold; display: block; margin: 2;">Cajero:<strong> {{$sale[0]->namecajero}}</strong></span>
 					<span style="font-size: 11px; font-weight: bold; display: block; margin: 2;">Hora de Inicio: <strong>{{ \Carbon\Carbon::parse($sale[0]->fecha_hora_inicio)->format('Y-m-d H:i') }}</strong></span>
 					<span style="font-size: 11px; font-weight: bold; display: block; margin: 2;">Hora de cierre: <strong>{{ \Carbon\Carbon::parse($sale[0]->fecha_hora_cierre)->format('Y-m-d H:i') }}</strong></span>
-					<span style="font-size: 11px; font-weight: bold; display: block; margin: 2;">Consec:<strong> {{$sale[0]->consecutivo}}</strong></span>
-					<span style="font-size: 11px; font-weight: bold; display: block; margin: 2;">Estado:
+					<span style="font-size: 11px; font-weight: bold; display: block; margin: 2;"> Actualización: <strong>{{ \Carbon\Carbon::parse($sale[0]->updated_at)->format('Y-m-d H:i') }}</strong></span>					
+					<span style="font-size: 11px; font-weight: bold; display: block; margin: 2;">Estado turno:
 						{{-- Display "Cerrada" if status is 1 --}}
 						{{-- Display "Pendiente" if status is 0 --}}
 						<strong>{{ $sale[0]->status == 1 ? 'Cerrado' : 'Pendiente' }}</strong>
 					</span>
-					
+
 				</td>
 			</tr>
 		</table>
@@ -77,7 +78,7 @@
 			</tr>
 			@endforeach
 		</tbody> -->
-		<!-- <tfoot>
+	<!-- <tfoot>
 			<tr>
 				<td class="">
 					<span><b>TOTALES</b></span>
@@ -94,29 +95,11 @@
 	</table> -->
 
 	<p class="text-center" style="font-size: 12px;">
-		<span><strong>Resumen</strong></span>
+		<span><strong></strong></span>
 	</p>
-	<p class="text-right" style="font-size: 12px;">
-		<strong><span>BASE: </span><span>{{number_format($sale[0]->base,0)}}</strong></span>
-	</p>
-	<p class="text-right" style="font-size: 12px;">
-		<strong><span>EFECTIVO: </span><span>{{number_format($sale[0]->valor_a_pagar_efectivo,0)}}</strong></span>
-	</p>
-	<p class="text-right" style="font-size: 12px;">
-		<strong><span>{{$sale[0]->formapago1}}: </span><span>{{number_format($sale[0]->efectivo,0)}}</></span>
-	</p>
-	<p class="text-right" style="font-size: 12px;">
-		<strong><span>{{$sale[0]->formapago2}}: </span><span>{{number_format($sale[0]->total,0)}}</strong></span>
-	</p>
-	<p class="text-right" style="font-size: 12px;">
-		<strong><span>{{$sale[0]->formapago3}}: </span><span>{{number_format($sale[0]->valor_a_pagar_credito,0)}}</strong></span>
-	</p>
-	<p class="text-right" style="font-size: 12px;">
-		<span><strong>Cambio: {{number_format($sale[0]->cambio,0)}}</strong></span>
-	</p>
-	<hr width="60mm" color="black" size="3">
+
 	<table>
-		<thead>
+		<!-- <thead>
 			<h4 class="">
 				<b> </b>
 			</h4>
@@ -124,9 +107,9 @@
 			<h6 class="">
 				<p> </p>
 			</h6>
-		</thead>
-		</br>
-		<tr>
+		</thead> -->
+
+	<!-- 	<tr>
 			<th style="text-align: left;"># Turno:</th>
 			<td>{{ $sale[0]->id }}</td>
 		</tr>
@@ -154,11 +137,8 @@
 			<th style="text-align: left;">Estado:</th>
 			<td>{{ $sale[0]->estado }}</td>
 		</tr>
-		<tr>
-			<th style="text-align: left;">____________________</th>
-	
-		</tr>
-		<tr>
+
+		<tr> -->
 			<th style="text-align: left;">Base:</th>
 			<td style="text-align: right; font-weight: bold;">$ {{number_format($sale[0]->base, 0, ',', '.')}}</td>
 		</tr>
@@ -175,18 +155,22 @@
 			<td style="text-align: right; font-weight: bold;">$ {{number_format($sale[0]->total, 0, ',', '.')}}</td>
 		</tr>
 		<tr>
-			<th style="text-align: left;">Valor real ingresado:</th>
+			<th style="text-align: left;">Valor real:</th>
 			<td style="text-align: right; font-weight: bold;">$ {{number_format($sale[0]->valor_real, 0, ',', '.')}}</td>
+		</tr>
+		<tr>
+			<th></th>
+			<td style="text-align: right;">______________</td>
 		</tr>
 		<tr>
 			<th style="text-align: left;">Diferencia:</th>
 			<td style="text-align: right; font-weight: bold;">$ {{number_format($sale[0]->diferencia, 0, ',', '.')}}</td>
 		</tr>
-		<tr>
-			<th style="text-align: left;">___________________</th>
-		
-		</tr>
+
 	</table>
+
+	<hr width="60mm" color="black" size="3">
+
 
 </body>
 

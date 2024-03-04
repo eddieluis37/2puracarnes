@@ -372,14 +372,14 @@ class cajaController extends Controller
                 if ($data->status == 1) {
                     $btn = '
                          <div class="text-center">   
-                         <a href="caja/pdfCierreCaja/' . $data->id . '" class="btn btn-dark" title="RecibodecajaPendiente" target="_blank">
+                         <a href="caja/pdfCierreCaja/' . $data->id . '" class="btn btn-dark" title="PdfCuadreCajaPendiente" target="_blank">
                          <i class="far fa-file-pdf"></i>
                          </a>
                       
-                         <a href="caja/showReciboCaja/' . $data->id . '" class="btn btn-dark" title="RecibodecajaCerrado" target="_blank">
+                         <a href="caja/showReciboCaja/' . $data->id . '" class="btn btn-dark" title="RecibodeCajaCerrado" target="_blank">
                          <i class="fas fa-eye"></i>
                          </a>				
-                         <button class="btn btn-dark" title="Borrar venta" disabled>
+                         <button class="btn btn-dark" title="Borrar" disabled>
                              <i class="fas fa-trash"></i>
                          </button>
                          
@@ -392,15 +392,15 @@ class cajaController extends Controller
                             <i class="fas fa-money-check-alt"></i>
                          </a>
                         
-                         <a href="caja/pdfCierreCaja/' . $data->id . '" class="btn btn-dark" title="RecibodecajaPendiente" target="_blank">
+                         <a href="caja/pdfCierreCaja/' . $data->id . '" class="btn btn-dark" title="PdfCuadreCajaOpen" target="_blank">
                          <i class="far fa-file-pdf"></i>
                          </a>
 
-                         <a href="caja/showReciboCaja/' . $data->id . '" class="btn btn-dark" title="RecibodecajaCerrado" target="_blank">
+                         <a href="caja/showReciboCaja/' . $data->id . '" class="btn btn-dark" title="CuadreCajaCerrado" target="_blank">
                          <i class="fas fa-eye"></i>
                          </a>	
 
-                         <button class="btn btn-dark" title="Borrar venta">
+                         <button class="btn btn-dark" title="Borrar">
                          <i class="fas fa-trash"></i>
                          </button>
                        
@@ -410,10 +410,10 @@ class cajaController extends Controller
                 } else {
                     $btn = '
                          <div class="text-center">
-                         <a href="caja/showReciboCaja/' . $data->id . '" class="btn btn-dark" title="RecibodecajaCerrado" target="_blank">
+                         <a href="caja/showReciboCaja/' . $data->id . '" class="btn btn-dark" title="CuadreCajaCerrado" target="_blank">
                          <i class="far fa-file-pdf"></i>
                          </a>
-                         <button class="btn btn-dark" title="Borra la venta" disabled>
+                         <button class="btn btn-dark" title="Borra" disabled>
                              <i class="fas fa-trash"></i>
                          </button>
                        
