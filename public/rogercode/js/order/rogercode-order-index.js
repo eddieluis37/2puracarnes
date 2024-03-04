@@ -117,6 +117,12 @@ $(document).ready(function () {
             },
         });
     });
+    $('.select2Cliente').select2({
+	    placeholder: 'Busca un cliente',
+	    width: '100%',
+	    theme: "bootstrap-5",
+	    allowClear: true,
+    });
     $(".select2Ventas").select2({
         placeholder: "Busca una factura",
         width: "100%",
