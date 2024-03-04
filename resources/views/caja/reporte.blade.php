@@ -46,7 +46,7 @@
 					<span style="font-size: 11px; font-weight: bold; display: block; margin: 2;">Cajero:<strong> {{$sale[0]->namecajero}}</strong></span>
 					<span style="font-size: 11px; font-weight: bold; display: block; margin: 2;">Hora de Inicio: <strong>{{ \Carbon\Carbon::parse($sale[0]->fecha_hora_inicio)->format('Y-m-d H:i') }}</strong></span>
 					<span style="font-size: 11px; font-weight: bold; display: block; margin: 2;">Hora de cierre: <strong>{{ \Carbon\Carbon::parse($sale[0]->fecha_hora_cierre)->format('Y-m-d H:i') }}</strong></span>
-					<span style="font-size: 11px; font-weight: bold; display: block; margin: 2;"> Actualización: <strong>{{ \Carbon\Carbon::parse($sale[0]->updated_at)->format('Y-m-d H:i') }}</strong></span>					
+					<span style="font-size: 11px; font-weight: bold; display: block; margin: 2;"> Actualización: <strong>{{ \Carbon\Carbon::parse($sale[0]->updated_at)->format('Y-m-d H:i') }}</strong></span>
 					<span style="font-size: 11px; font-weight: bold; display: block; margin: 2;">Estado turno:
 						{{-- Display "Cerrada" if status is 1 --}}
 						{{-- Display "Pendiente" if status is 0 --}}
@@ -59,88 +59,13 @@
 	</section>
 	<hr>
 
-	<!-- <table>
-		<thead>
-			<tr>
-				<th width="83%">Descripción</th>
-				<th width="7%">Cant.</th>
-				<th width="10%">Vr.unit</th>
-				<th width="10%">Vr.Total</th>
-			</tr>
-		</thead>
-		<!-- <tbody>
-			@foreach($saleDetails as $item)
-			<tr>
-				<td align="left"><strong>{{$item->nameprod}}</strong></td>
-				<td align="center"><strong>{{$item->quantity}}</strong></td>
-				<td align="center"><strong>{{number_format($item->price),2}}</strong></td>
-				<td align="right"><strong>{{number_format($item->total),2}}</strong></td>
-			</tr>
-			@endforeach
-		</tbody> -->
-	<!-- <tfoot>
-			<tr>
-				<td class="">
-					<span><b>TOTALES</b></span>
-				</td>
-				<td align="right">
-					<span><strong>{{ $quantity = $item->where('sale_id', '=', $item->sale_id)->sum('quantity')}}</strong></span>
-				</td>
-				<td></td>
-				<td align="right">
-					<span><strong>{{ number_format($sale->sum('total_valor_a_pagar'),0)}}</strong></span>
-				</td>
-			</tr>
-		</tfoot> 
-	</table> -->
-
 	<p class="text-center" style="font-size: 12px;">
 		<span><strong></strong></span>
 	</p>
 
 	<table>
-		<!-- <thead>
-			<h4 class="">
-				<b> </b>
-			</h4>
-			</br>
-			<h6 class="">
-				<p> </p>
-			</h6>
-		</thead> -->
-
-	<!-- 	<tr>
-			<th style="text-align: left;"># Turno:</th>
-			<td>{{ $sale[0]->id }}</td>
-		</tr>
-		<tr>
-			<th style="text-align: left;">Cajero:</th>
-			<td>{{ $sale[0]->namecajero }}</td>
-		</tr>
-		<tr>
-			<th style="text-align: left;">Centro de Costo:</th>
-			<td>{{ $sale[0]->namecentrocosto }}</td>
-		</tr>
-		<tr>
-			<th style="text-align: left;">Fecha Hora de Inicio:</th>
-			<td>{{ $sale[0]->fecha_hora_inicio }}</td>
-		</tr>
-		<tr>
-			<th style="text-align: left;">Fecha Hora de Cierre:</th>
-			<td>{{ $sale[0]->fecha_hora_cierre }}</td>
-		</tr>
-		<tr>
-			<th style="text-align: left;">Fecha de Actualización:</th>
-			<td>{{ $sale[0]->updated_at }}</td>
-		</tr>
-		<tr>
-			<th style="text-align: left;">Estado:</th>
-			<td>{{ $sale[0]->estado }}</td>
-		</tr>
-
-		<tr> -->
-			<th style="text-align: left;">Base:</th>
-			<td style="text-align: right; font-weight: bold;">$ {{number_format($sale[0]->base, 0, ',', '.')}}</td>
+		<th style="text-align: left;">Base:</th>
+		<td style="text-align: right; font-weight: bold;">$ {{number_format($sale[0]->base, 0, ',', '.')}}</td>
 		</tr>
 		<tr>
 			<th style="text-align: left;">Efectivo:</th>
