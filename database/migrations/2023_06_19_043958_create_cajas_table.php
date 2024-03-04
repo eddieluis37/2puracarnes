@@ -14,7 +14,7 @@ class CreateCajasTable extends Migration
     public function up()
     {
         Schema::create('cajas', function (Blueprint $table) {
-            $table->id();          
+            $table->id();        
 
             $table->unsignedBigInteger('user_id');           
             $table->foreign('user_id')->references('id')->on('users');
@@ -24,9 +24,6 @@ class CreateCajasTable extends Migration
 
             $table->unsignedBigInteger('cajero_id');           
             $table->foreign('cajero_id')->references('id')->on('users');
-/* 
-            $table->unsignedBigInteger('sale_id')->nullable();
-            $table->foreign('sale_id')->references('id')->on('sales'); */
 
             $table->decimal('base',10,0)->nullable();
             

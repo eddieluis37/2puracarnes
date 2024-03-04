@@ -371,7 +371,11 @@ class cajaController extends Controller
 
                 if ($data->status == 1) {
                     $btn = '
-                         <div class="text-center">                         
+                         <div class="text-center">   
+                         <a href="caja/pdfCierreCaja/' . $data->id . '" class="btn btn-dark" title="RecibodecajaPendiente" target="_blank">
+                         <i class="far fa-file-pdf"></i>
+                         </a>
+                      
                          <a href="caja/showReciboCaja/' . $data->id . '" class="btn btn-dark" title="RecibodecajaCerrado" target="_blank">
                          <i class="fas fa-eye"></i>
                          </a>				
@@ -391,6 +395,11 @@ class cajaController extends Controller
                          <a href="caja/pdfCierreCaja/' . $data->id . '" class="btn btn-dark" title="RecibodecajaPendiente" target="_blank">
                          <i class="far fa-file-pdf"></i>
                          </a>
+
+                         <a href="caja/showReciboCaja/' . $data->id . '" class="btn btn-dark" title="RecibodecajaCerrado" target="_blank">
+                         <i class="fas fa-eye"></i>
+                         </a>	
+
                          <button class="btn btn-dark" title="Borrar venta">
                          <i class="fas fa-trash"></i>
                          </button>

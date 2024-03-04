@@ -14,24 +14,28 @@ use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\DB;
 
+
 class pdfCierreCajaController extends Controller
 {
     public function pdfCierreCaja($id)
     {
-        $sale = Sale::findOrFail($id)
-            ->join('thirds as third', 'sales.third_id', '=', 'third.id')
-            ->join('users as u', 'sales.user_id', '=', 'u.id')
-            ->join('centro_costo as centro', 'sales.centrocosto_id', '=', 'centro.id')
-            ->leftJoin('formapagos as fp', 'sales.forma_pago_tarjeta_id', '=', 'fp.id')
-            ->leftJoin('formapagos as fp2', 'sales.forma_pago_otros_id', '=', 'fp2.id')
-            ->leftJoin('formapagos as fp3', 'sales.forma_pago_credito_id', '=', 'fp3.id')
-            ->select('sales.*', 'u.name as nameuser', 'third.name as namethird', 'fp.nombre as formapago1', 'fp2.nombre as formapago2', 'fp3.nombre as formapago3', 'third.identification', 'third.direccion', 'centro.name as namecentrocosto', 'third.porc_descuento', 'sales.total_iva', 'sales.vendedor_id')
+        $sale = Caja::findOrFail($id)
+            ->leftJoin('sale_caja as sc', 'cajas.cajero_id', '=', 'sc.sale_id')
+            ->leftJoin('sales as sa', 'sc.sale_id', '=', 'sa.id')
+            ->join('thirds as third', 'cajas.user_id', '=', 'third.id')
+            ->leftJoin('users as uu', 'cajas.user_id', '=', 'uu.id')
+            ->leftJoin('users as uc', 'cajas.cajero_id', '=', 'uc.id')
+            ->join('centro_costo as centro', 'cajas.centrocosto_id', '=', 'centro.id')
+            ->leftJoin('formapagos as fp', 'sa.forma_pago_tarjeta_id', '=', 'fp.id')
+            ->leftJoin('formapagos as fp2', 'sa.forma_pago_otros_id', '=', 'fp2.id')
+            ->leftJoin('formapagos as fp3', 'sa.forma_pago_credito_id', '=', 'fp3.id')
+            ->select('cajas.*', 'uu.name as nameuser', 'uc.name as namecajero', 'third.name as namethird', 'fp.nombre as formapago1', 'fp2.nombre as formapago2', 'fp3.nombre as formapago3', 'third.identification', 'third.direccion', 'centro.name as namecentrocosto', 'third.porc_descuento', 'cajas.total', 'cajas.cajero_id')
             ->where([
-                ['sales.id', $id],
+                ['cajas.id', $id],
                 /*  ['sale_details.status', 1]  */
             ])->get();
 
-        //  dd($sale);
+        // dd($sale);
 
         $saleDetails = SaleDetail::where('sale_id', $id)
             ->join('products as pro', 'sale_details.product_id', '=', 'pro.id')
@@ -43,7 +47,15 @@ class pdfCierreCajaController extends Controller
 
         //  dd($saleDetails);
 
-        $showFactura = PDF::loadView('caja.reporte', compact('sale', 'saleDetails'));
+        // Configurar el idioma en español para Carbon
+        Carbon::setLocale('es');
+
+        // Obtener la fecha y hora de inicio del modelo $sale
+        $fechaHoraInicio = Carbon::parse($sale[0]->fecha_hora_inicio)->format('Y-m-d H:i');
+
+
+
+        $showFactura = PDF::loadView('caja.reporte', compact('sale', 'saleDetails', 'fechaHoraInicio'));
         return $showFactura->stream('caja.pdf');
         //return $showFactura->download('sale.pdf');
     }
