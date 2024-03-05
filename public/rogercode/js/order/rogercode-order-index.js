@@ -7,7 +7,7 @@ const token = document
 const btnClose = document.querySelector("#btnModalClose");
 
 const selectCategory = document.querySelector("#categoria");
-const selectProvider = document.querySelector("#provider");
+const select2Cliente = document.querySelector("#cliente");
 const selectCentrocosto = document.querySelector("#centrocosto");
 const inputFactura = document.querySelector("#factura");
 const sale_id = document.querySelector("#ventaId");
@@ -118,18 +118,21 @@ $(document).ready(function () {
         });
     });
     $('.select2Cliente').select2({
-	    placeholder: 'Busca un cliente',
-	    width: '100%',
-	    theme: "bootstrap-5",
-	    allowClear: true,
-    });
-    $(".select2Ventas").select2({
-        placeholder: "Busca una factura",
-        width: "100%",
+        placeholder: 'Busca un cliente',
+        width: '100%',
         theme: "bootstrap-5",
         allowClear: true,
-    });
+    }); 
 });
+
+
+
+/* $(".select2Ventas").select2({
+    placeholder: "Busca una factura",
+    width: "100%",
+    theme: "bootstrap-5",
+    allowClear: true,
+}); */
 
 const send = async (dataform, ruta) => {
     let response = await fetch(ruta, {
@@ -151,9 +154,9 @@ const refresh_table = () => {
 const showModalcreate = () => {
     if (contentform.hasAttribute("disabled")) {
         contentform.removeAttribute("disabled");
-        $("#provider").prop("disabled", false);
+        $("#cliente").prop("disabled", false);
     }
-    $("#provider").val("").trigger("change");
+    $("#cliente").val("").trigger("change");
     formCompensadoRes.reset();
     sale_id.value = 0;
 };
@@ -166,7 +169,7 @@ const showDataForm = (id) => {
         console.log(resp);
         console.log(resp.reg);
         showData(resp);
-        $("#provider").prop("disabled", true);
+        $("#cliente").prop("disabled", true);
         contentform.setAttribute("disabled", "disabled");
     });
 };
@@ -181,7 +184,7 @@ const editCompensado = (id) => {
         showData(resp);
         if (contentform.hasAttribute("disabled")) {
             contentform.removeAttribute("disabled");
-            $("#provider").prop("disabled", false);
+            $("#cliente").prop("disabled", false);
         }
     });
 };
@@ -190,11 +193,11 @@ const showData = (resp) => {
     let register = resp.reg;
     sale_id.value = register.id;
     /*  selectCategory.value = register.categoria_id; */
-    $("#provider").val(register.thirds_id).trigger("change");
+    $("#cliente").val(register.thirds_id).trigger("change");
     selectCentrocosto.value = register.centrocosto_id;
     /*    inputFactura.value = register.factura; */
     const modal = new bootstrap.Modal(
-        document.getElementById("modal-create-notacredito")
+        document.getElementById("modal-create-compensado")
     );
     modal.show();
 };
