@@ -291,22 +291,6 @@
             </li>
             @endcan
 
-            @can('Report_Create')
-            <li class="">
-                <a href="{{url('reports')}}" class="menu-toggle" data-active="false">
-                    <div class="base-menu">
-                        <div class="base-icons">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-pie-chart">
-                                <path d="M21.21 15.89A10 10 0 1 1 8 2.83"></path>
-                                <path d="M22 12A10 10 0 0 0 12 2v10z"></path>
-                            </svg>
-                        </div>
-                        <span>Reportes</span>
-                    </div>
-                </a>
-            </li>
-            @endcan
-
             @role('Admin')
             <li class="">
                 <a href="{{url('transfer')}}" class="menu-toggle" data-active="false">
@@ -379,6 +363,30 @@
                 </svg>
             </li>
             @endcan
+
+            @can('Report_Create')
+            <li class="menu">
+                <a href="#reports" data-active="false" class="menu-toggle">
+                    <div class="base-menu">
+                        <div class="base-icons">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-bar-chart-2">
+                                <rect x="4" y="2" width="16" height="20" rx="2" ry="2"></rect>
+                                <line x1="12" y1="2" x2="12" y2="22"></line>
+                                <line x1="6" y1="6" x2="6" y2="6"></line>
+                                <line x1="6" y1="12" x2="6" y2="12"></line>
+                                <line x1="6" y1="18" x2="6" y2="18"></line>
+                                <line x1="18" y1="16" x2="18" y2="16"></line>
+                                <line x1="18" y1="8" x2="18" y2="8"></line>
+                            </svg>
+                        </div>
+                        <span>Reportes</span>
+                    </div>
+                </a>
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-left">
+                    <polyline points="15 18 9 12 15 6"></polyline>
+                </svg>
+            </li>
+            @endcan          
         </ul>
     </nav>
 
@@ -801,40 +809,40 @@
                                     <li>
                                         <a href="{{ url('') }}"><span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-circle">
                                                     <circle cx="12" cy="12" r="10"></circle>
-                                                </svg></span>  </a>
+                                                </svg></span> </a>
                                     </li>
-                                  
+
 
 
                                 </ul>
         </div>
 
         <div class=" submenu" id="documentos">
-                                <ul class="submenu-list" data-parent-element="#documentos">
-                                    <li>
-                                        <a href="{{ url('notacredito') }}"><span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-circle">
-                                                    <circle cx="12" cy="12" r="10"></circle>
-                                                </svg></span> Nota crédito </a>
-                                    </li>
-                                    <li>
-                                        <a href="{{ url('notadebito') }}"><span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-circle">
-                                                    <circle cx="12" cy="12" r="10"></circle>
-                                                </svg></span> Nota débito </a>
-                                    </li>
-                                    <li>
-                                        <a href="{{ url('recibodecajas') }}"><span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-circle">
-                                                    <circle cx="12" cy="12" r="10"></circle>
-                                                </svg></span> Recibo de caja </a>
-                                    </li>
-                                    <li>
-                                        <a href="{{ url('cuentasporcobrars') }}"><span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-circle">
-                                                    <circle cx="12" cy="12" r="10"></circle>
-                                                </svg></span> Cuentas X cobrar </a>
-                                    </li>
+            <ul class="submenu-list" data-parent-element="#documentos">
+                <li>
+                    <a href="{{ url('notacredito') }}"><span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-circle">
+                                <circle cx="12" cy="12" r="10"></circle>
+                            </svg></span> Nota crédito </a>
+                </li>
+                <li>
+                    <a href="{{ url('notadebito') }}"><span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-circle">
+                                <circle cx="12" cy="12" r="10"></circle>
+                            </svg></span> Nota débito </a>
+                </li>
+                <li>
+                    <a href="{{ url('recibodecajas') }}"><span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-circle">
+                                <circle cx="12" cy="12" r="10"></circle>
+                            </svg></span> Recibo de caja </a>
+                </li>
+                <li>
+                    <a href="{{ url('cuentasporcobrars') }}"><span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-circle">
+                                <circle cx="12" cy="12" r="10"></circle>
+                            </svg></span> Cuentas X cobrar </a>
+                </li>
 
 
 
-                                </ul>
+            </ul>
         </div>
 
 
@@ -909,6 +917,34 @@
                     <ul id="error" class="collapse" data-parent="#compact_submenuSidebar">
                         <li>
                             <a href="{{ url('meatcuts') }}"> Cortes principales </a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+
+        <div class="submenu" id="reports">
+            <ul class="submenu-list" data-parent-element="#reports">
+                <li>
+                    <a href="{{ url('reports') }}"><span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-circle">
+                                <circle cx="12" cy="12" r="10"></circle>
+                            </svg></span> Reporte de ventas </a>
+                </li>
+
+                <li class="sub-submenu">
+                    <a role="menu" class="collapsed" data-toggle="collapse" data-target="#error" aria-expanded="false">
+                        <div><span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-circle">
+                                    <circle cx="12" cy="12" r="10"></circle>
+                                </svg></span> Exceles</div> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right">
+                            <polyline points="9 18 15 12 9 6"></polyline>
+                        </svg>
+                    </a>
+                    <ul id="error" class="collapse" data-parent="#compact_submenuSidebar">
+                        <li>
+                            <a href="{{ url('descargar-reporte') }}"> Detalle de ventas </a>
+                        </li>
+                        <li>
+                            <a href="{{ url('descargar-reporte') }}"> Stock fisico </a>
                         </li>
                     </ul>
                 </li>
