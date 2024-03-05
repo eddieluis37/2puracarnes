@@ -55,6 +55,7 @@ use App\Http\Controllers\workshop\workshopController;
 
 use App\Http\Controllers\costo\costoController;
 use App\Http\Controllers\DragDropController;
+use App\Http\Controllers\ExcelAnalisisKGController;
 use App\Http\Controllers\inventory\inventoryController;
 use App\Http\Controllers\inventory\diaryController;
 use App\Http\Controllers\inventory\mensualController;
@@ -505,6 +506,12 @@ Route::group(['middleware' => [('auth')]], function () {
     Route::get('/descargar-reporte', [ReportController::class, 'downloadExcel'])->name('descargar-reporte');
 
     Route::get('/import', [ImportStockFisicoController::class, 'import'])->name('import');
+
+      /*****************************LISTA_DE_PRECIO******************************************/
+
+      Route::get('/excel-analisis-kg', [ExcelAnalisisKGController::class, 'downloadExcel'])->name('excel-analisis-kg');
+
+
 
 });
 
