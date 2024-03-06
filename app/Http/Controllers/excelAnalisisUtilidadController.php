@@ -30,10 +30,10 @@ class excelAnalisisUtilidadController extends Controller
         SUM(ccp.cto_notadebito) as ND,
         SUM(ccp.cto_venta_total) - (SUM(ccp.cto_notacredito) + SUM(ccp.cto_notadebito)) as TOTAL_VENTA,
         (SUM(ccp.cto_venta_total) - (SUM(ccp.cto_notacredito) + SUM(ccp.cto_notadebito)) - (SUM(ccp.cto_invinicial_total) + SUM(ccp.cto_compralote_total) + SUM(ccp.cto_alistamiento_total) + SUM(ccp.cto_compensados_total) + SUM(ccp.cto_trasladoing_total) + SUM(ccp.cto_trasladosal_total))) as UTILIDAD
-    FROM zjgifbmb_puracarnes.centro_costo_products as ccp
-    JOIN zjgifbmb_puracarnes.products as pro ON pro.id = ccp.products_id
-    JOIN zjgifbmb_puracarnes.meatcuts as me ON me.id = pro.meatcut_id
-    JOIN zjgifbmb_puracarnes.categories as cat ON pro.category_id = cat.id
+    FROM centro_costo_products as ccp
+    JOIN products as pro ON pro.id = ccp.products_id
+    JOIN meatcuts as me ON me.id = pro.meatcut_id
+    JOIN categories as cat ON pro.category_id = cat.id
     WHERE ccp.centrocosto_id = '1'
     AND (ccp.tipoinventario = 'cerrado' OR ccp.tipoinventario = 'inicial')
     -- AND pro.category_id = '1'
