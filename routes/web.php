@@ -55,7 +55,7 @@ use App\Http\Controllers\workshop\workshopController;
 
 use App\Http\Controllers\costo\costoController;
 use App\Http\Controllers\DragDropController;
-use App\Http\Controllers\ExcelAnalisisKGController;
+use App\Http\Controllers\excelAnalisisKGController;
 use App\Http\Controllers\ExcelConsolidadoVentasController;
 use App\Http\Controllers\inventory\inventoryController;
 use App\Http\Controllers\inventory\diaryController;
@@ -510,7 +510,7 @@ Route::group(['middleware' => [('auth')]], function () {
 
       /*****************************Reportes de Exceles******************************************/
 
-      Route::get('/excel-analisis-kg', [ExcelAnalisisKGController::class, 'downloadExcel'])->name('excel-analisis-kg');
+      Route::get('/excel-analisis-kg', [excelAnalisisKGController::class, 'exportToExcel'])->name('excel-analisis-kg');
       Route::get('/excel-consolidado-ventas', [ExcelConsolidadoVentasController::class, 'downloadExcel'])->name('excel-consolidado-ventas');
 
 
