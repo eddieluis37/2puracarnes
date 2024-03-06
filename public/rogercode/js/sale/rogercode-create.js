@@ -210,55 +210,7 @@ const showData = (data) => {
             confirmButtonText: "Aceptar",
             denyButtonText: `Cancelar`,
         });
-    }
-
-    /*   // Evento click del botón "facturarBtn"
-    tableFoot.addEventListener("click", (e) => {
-        e.preventDefault();
-        let element = e.target;
-        console.log(element);
-        if (element.id === "cargarInventarioBtn") {
-            showConfirmationAlert(element)
-                .then((result) => {
-                    if (result && result.value) {
-                        loadingStart(element);
-                        const dataform = new FormData();
-                        dataform.append("ventaId", Number(venta_id.value));
-                        return sendData("/registrar_pago", dataform, token);
-                    }
-                })
-                .then((result) => {
-                    console.log(result);
-                    if (result && result.status == 1) {
-                        loadingEnd(
-                            element,
-                            "success",
-                            "Cargando al inventorio"
-                        );
-                        element.disabled = true;
-                        return swal(
-                            "EXITO",
-                            "Inventario Cargado Exitosamente",
-                            "success"
-                        );
-                    }
-                    if (result && result.status == 0) {
-                        loadingEnd(
-                            element,
-                            "success",
-                            "Cargando al inventorio"
-                        );
-                        errorMessage(result.message);
-                    }
-                })
-                .then(() => {
-                    window.location.href = 'registrar_pago/{{$id}}';
-                })
-                .catch((error) => {
-                    console.error(error);
-                });
-        }
-    }); */
+    }   
 };
 
 price.addEventListener("change", function () {
