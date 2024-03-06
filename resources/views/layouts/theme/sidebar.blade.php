@@ -941,7 +941,10 @@
                     </a>
                     <ul id="error" class="collapse" data-parent="#compact_submenuSidebar">
                         <li>
-                            <a href="{{ url('excel-analisis-kg') }}"> Detalle de ventas </a>
+                            <a href="{{ url('excel-analisis-kg') }}"> Analisis de KG </a>
+                        </li>
+                        <li>
+                            <a href="{{ url('excel-consolidado-ventas') }}"> ventas </a>
                         </li>
                         <li>
                             <a href="{{ url('descargar-reporte') }}"> Stock fisico </a>
