@@ -44,6 +44,10 @@ class excelAnalisisKGController extends Controller
 
         $collection = new Collection($results);
 
-        return Excel::download(new analisisKGExport($collection), 'analisis_kg.xlsx');
+        $dateTime = now()->format('Y-m-d_H-i-s'); // Formato de fecha y hora actual
+
+        $fileName = 'Analisis_Kg_' . $dateTime . '.xlsx'; // Nombre del archivo con fecha y hora
+
+        return Excel::download(new analisisKGExport($collection), $fileName);
     }
 }
