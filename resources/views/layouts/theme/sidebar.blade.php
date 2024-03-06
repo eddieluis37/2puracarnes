@@ -386,7 +386,7 @@
                     <polyline points="15 18 9 12 15 6"></polyline>
                 </svg>
             </li>
-            @endcan          
+            @endcan
         </ul>
     </nav>
 
@@ -907,14 +907,14 @@
                 </li>
 
                 <li class="sub-submenu">
-                    <a role="menu" class="collapsed" data-toggle="collapse" data-target="#error" aria-expanded="false">
+                    <a role="menu" class="collapsed" data-toggle="collapse" data-target="#admin" aria-expanded="false">
                         <div><span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-circle">
                                     <circle cx="12" cy="12" r="10"></circle>
                                 </svg></span> Admin</div> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right">
                             <polyline points="9 18 15 12 9 6"></polyline>
                         </svg>
                     </a>
-                    <ul id="error" class="collapse" data-parent="#compact_submenuSidebar">
+                    <ul id="admin" class="collapse" data-parent="#compact_submenuSidebar">
                         <li>
                             <a href="{{ url('meatcuts') }}"> Cortes principales </a>
                         </li>
@@ -932,23 +932,38 @@
                 </li>
 
                 <li class="sub-submenu">
-                    <a role="menu" class="collapsed" data-toggle="collapse" data-target="#error" aria-expanded="false">
+                    <a role="menu" class="collapsed" data-toggle="collapse" data-target="#sale" aria-expanded="false">
                         <div><span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-circle">
                                     <circle cx="12" cy="12" r="10"></circle>
-                                </svg></span> Exceles</div> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right">
+                                </svg></span> Ventas</div> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right">
                             <polyline points="9 18 15 12 9 6"></polyline>
                         </svg>
                     </a>
-                    <ul id="error" class="collapse" data-parent="#compact_submenuSidebar">
+                    <ul id="sale" class="collapse" data-parent="#compact_submenuSidebar">
                         <li>
-                            <a href="{{ url('excel-analisis-kg') }}"> Analisis de KG </a>
-                        </li>
-                        <li>
-                            <a href="{{ url('excel-consolidado-ventas') }}"> ventas </a>
+                            <a href="{{ url('excel-consolidado-ventas') }}"> Consolidado Ventas </a>
                         </li>
                         <li>
                             <a href="{{ url('descargar-reporte') }}"> Stock fisico </a>
                         </li>
+                    </ul>
+                </li>
+
+                <li class="sub-submenu">
+                    <a role="menu" class="collapsed" data-toggle="collapse" data-target="#inventory" aria-expanded="false">
+                        <div><span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-circle">
+                                    <circle cx="12" cy="12" r="10"></circle>
+                                </svg></span> Inventarios</div> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right">
+                            <polyline points="9 18 15 12 9 6"></polyline>
+                        </svg>
+                    </a>
+                    <ul id="inventory" class="collapse" data-parent="#compact_submenuSidebar">
+                        <li>
+                            <a href="{{ url('excel-analisis-kg') }}"> Análisis de KG </a>
+                        </li>
+                        <li>
+                            <a href="{{ url('excel-analisis-utilidad') }}"> Análisis de Utilidad </a>
+                        </li>                       
                     </ul>
                 </li>
             </ul>

@@ -10,6 +10,8 @@ class ExcelConsolidadoVentasController extends Controller
 {
     public function downloadExcel()
     {
-        return Excel::download(new ConsolidadoVentasExport, 'CONSOLIDADO-VENTAS.xlsx');
+        $dateTime = now()->format('Y-m-d_H-i-s'); // Formato de fecha y hora actual
+        $fileName = 'Consolidado_Ventas_' . $dateTime . '.xlsx'; // Nombre del archivo con fecha y hora
+        return Excel::download(new ConsolidadoVentasExport, $fileName);
     }
 }
