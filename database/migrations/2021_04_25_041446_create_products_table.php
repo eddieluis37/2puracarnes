@@ -21,7 +21,7 @@ class CreateProductsTable extends Migration
             $table->unsignedBigInteger('unitofmeasure_id')->default(1);           
             $table->string('name',255);
             $table->string('code', 20)->default(99999)->nullable();
-            $table->string('barcode',25)->nullable();
+            $table->string('barcode',50)->nullable();
             $table->decimal('cost',10,2)->default(0);
             $table->decimal('price_fama',10,0)->default(1)->nullable(); // precio en la linea de las famas
             $table->decimal('price_insti',10,0)->default(1)->nullable(); // precio en la linea de las institucional

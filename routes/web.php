@@ -424,6 +424,8 @@ Route::group(['middleware' => [('auth')]], function () {
 
     Route::get('/cargar-inventario-masivo', [saleController::class, 'cargarInventarioMasivo'])->name('cargar.inventario.masivo');
 
+    Route::get('/buscar-producto-por-codigo-barras', 'saleController@buscarPorCodigoBarras');
+
      /*****************************RECIBO DE CAJAS******************************************/
      Route::get('recibodecajas', [recibodecajaController::class, 'index'])->name('recibodecaja.index');
      Route::get('showlistRecibodecajas', [recibodecajaController::class, 'show'])->name('recibodecaja.showlistRecibodecajas');

@@ -249,3 +249,31 @@ btnRemove.addEventListener("click", (e) => {
         alert("Contraseña incorrecta");
     }
 });
+
+const codigoBarrasInput = document.querySelector("#codigoBarras");
+codigoBarrasInput.addEventListener("input", function() {
+    const codigoBarras = codigoBarrasInput.value;
+    console.log("Código de barras escaneado:", codigoBarras); // Imprimir el código de barras en la consola
+    if (codigoBarras.length === 13) { // Longitud típica de un código de barras EAN-13
+        // Realiza una solicitud AJAX para buscar el producto por el código de barras
+        buscarProductoPorCodigoBarras(codigoBarras);
+    }
+});
+
+function buscarProductoPorCodigoBarras(codigoBarras) {
+    $.ajax({
+        url: "/buscar-producto-por-codigo-barras",
+        type: "GET",
+        data: {
+            codigoBarras: codigoBarras
+        },
+        success: function(response) {
+            // Actualiza los valores en el formulario con la información del producto encontrado
+            $("#producto").val(response.producto_id).trigger("change");
+            // Otras actualizaciones de campos según la respuesta
+        },
+        error: function(xhr, status, error) {
+            console.log(error);
+        }
+    });
+}

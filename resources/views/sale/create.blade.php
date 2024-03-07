@@ -78,6 +78,7 @@
 						<form id="form-detail">
 							<input type="hidden" id="ventaId" name="ventaId" value="{{$id}}">
 							<input type="hidden" id="regdetailId" name="regdetailId" value="0">
+							<input type="hidden" id="codigoBarras" name="codigoBarras" value="999999999">
 							<div class="row g-3">
 								<div class="col-md-3">
 									<div class="task-header">
@@ -85,13 +86,13 @@
 											<label for="" class="form-label">Buscar producto</label>
 											<input type="hidden" id="centrocosto" name="centrocosto" value="{{$datacompensado[0]->centrocosto_id}}" data-id="{{$datacompensado[0]->centrocosto_id}}">
 											<input type="hidden" id="cliente" name="cliente" value="{{$datacompensado[0]->third_id}}" data-id="{{$datacompensado[0]->third_id}}">
-											<input type="hidden" id="porc_descuento_cliente" name="porc_descuento_cliente" value="{{$datacompensado[0]->porc_descuento_cliente}}" data-id="{{$datacompensado[0]->porc_descuento_cliente}}">
+											<input type="hidden" id="porc_descuento_cliente" name="porc_descuento_cliente" value="{{$datacompensado[0]->porc_descuento_cliente}}" data-id="{{$datacompensado[0]->porc_descuento_cliente}}">										
 											<select class="form-control form-control-sm select2Prod" name="producto" id="producto" required="">
 												<option value="">Seleccione el producto</option>
 												@foreach ($prod as $p)
 												<option value="{{$p->id}}">{{$p->name}}</option>
 												@endforeach
-											</select>
+											</select>										
 											<span class="text-danger error-message"></span>
 										</div>
 									</div>

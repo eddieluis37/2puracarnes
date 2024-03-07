@@ -854,6 +854,34 @@ class saleController extends Controller
         }
     }
 
+    public function buscarPorCodigoBarras(Request $request)
+    {
+        $codigoBarras = $request->input('codigoBarras');
+        $centrocostoId = $request->input('centrocosto');
+        $clienteId = $request->input('cliente');
+
+        $cliente = Third::find($clienteId);
+
+        $producto = Listapreciodetalle::join('products as prod', 'listapreciodetalles.product_id', '=', 'prod.id')
+            ->join('thirds as t', 'listapreciodetalles.listaprecio_id', '=', 't.id')
+            ->where('prod.barcode', $codigoBarras) // Buscar por el código de barras escaneado
+            ->where('t.id', $cliente->listaprecio_genericid)
+            ->select('listapreciodetalles.precio', 'prod.iva', 'otro_impuesto', 'listapreciodetalles.porc_descuento')
+            ->first();
+
+        if ($producto) {
+            return response()->json([
+                'precio' => $producto->precio,
+                'iva' => $producto->iva,
+                'otro_impuesto' => $producto->otro_impuesto,
+                'porc_descuento' => $producto->porc_descuento
+            ]);
+        } else {
+            return response()->json([
+                'error' => 'Product not found'
+            ], 404);
+        }
+    }
 
 
     public function storeVentaMostrador(Request $request) // POS
