@@ -18,27 +18,57 @@ class CreateBeneficiopollosTable extends Migration
 
             $table->unsignedBigInteger('thirds_id')->nullable();
             $table->foreign('thirds_id')->references('id')->on('thirds');
-
+            $table->string('factura');
             $table->unsignedBigInteger('plantasacrificio_id')->nullable();
             $table->foreign('plantasacrificio_id')->references('id')->on('sacrificiopollos');
-            
+            $table->unsignedBigInteger('clientsubproductosuno_id')->nullable();
+            $table->foreign('clientsubproductosuno_id')->references('id')->on('thirds');
+            $table->unsignedBigInteger('clientsubproductosdos_id')->nullable();
+            $table->foreign('clientsubproductosdos_id')->references('id')->on('thirds');
+            $table->bigInteger('cantidad')->nullable();
+            $table->decimal('sacrificio', 18, 0)->nullable();
+            $table->decimal('valor_kg_pollo', 18, 0)->nullable();
+            $table->decimal('total_factura', 18, 0)->nullable();
+
+            $table->decimal('promedio_pie_kg',10,0)->default(0)->nullable();
+            $table->decimal('peso_pie_planta',10,0)->default(0)->nullable();
+            $table->decimal('promedio_canal_fria_sala',10,0)->default(0)->nullable();
+            $table->decimal('peso_canales_pollo_planta',10,0)->default(0)->nullable();
+
+            $table->decimal('menudencia_pollo_kg',10,0)->default(0)->nullable();
+            $table->decimal('mollejas_corazones_kg',10,0)->default(0)->nullable();
+            $table->decimal('subtotal',10,0)->default(0)->nullable();
+            $table->decimal('promedio_canal_kg',10,0)->default(0)->nullable();
+
+            $table->decimal('menudencia_pollo_porc',10,0)->default(0)->nullable();
+            $table->decimal('mollejas_corazones_porc',10,0)->default(0)->nullable();
+            $table->decimal('despojos_mermas',10,0)->default(0)->nullable();
+                    
+            $table->decimal('kilos_pollo_entero',10,0)->default(0)->nullable(); 
+            $table->decimal('kilos_menudencia',10,0)->default(0)->nullable(); 
+            $table->decimal('kilos_mollejas_corazones',10,0)->default(0)->nullable(); 
+            $table->decimal('totales_kilos',10,0)->default(0)->nullable(); 
+
+
+
+
             $table->unsignedBigInteger('clientpieles_id')->nullable();
             $table->foreign('clientpieles_id')->references('id')->on('thirds');
 
             $table->unsignedBigInteger('clientvisceras_id')->nullable();
             $table->foreign('clientvisceras_id')->references('id')->on('thirds');
 
-            $table->bigInteger('cantidad')->nullable(); 
+          
             
             $table->date('fecha_beneficio');
             $table->date('fecha_cierre')->nullable();
 
-            $table->string('factura');
+      
                       
             $table->string('lote');
             
          
-            $table->decimal('sacrificio', 18, 0)->nullable();
+         
 
             $table->decimal('fomento', 18, 0)->nullable();
 

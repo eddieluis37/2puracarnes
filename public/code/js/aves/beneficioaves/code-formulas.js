@@ -143,12 +143,7 @@
    /**********************************************************/
 
    function calculatotales() {
-    let cantidadMacho = $("#cantidadMacho").val();
-    let cantidadHemdra = $("#cantidadHembra").val();
-    let totalCantidad = Number(cantidadMacho) + Number(cantidadHemdra);
-    console.log(totalCantidad);
-    //var cantidad = $('#cantidad').val();
-    var cantidad = totalCantidad;
+    let cantidad = $("#cantidad").val();
     var pesopie1 = formatMoneyNumber($('#pesopie1').val());
     //console.log("peso 1 " + pesopie1);
     var pesopie2 = formatMoneyNumber($('#pesopie2').val());
@@ -170,6 +165,7 @@
 
     //SACRIFICIO / FOMENTO / DEGUELLO / BASCULA / TRANSPORTE
     var sacrificio = formatMoneyNumber($('#sacrificio').val()); $('#tsacrificio').val(formatCantidadSinCero(cantidad * sacrificio)); var tsacrif = Number(cantidad * sacrificio);
+   /*  var sacrificio = formatMoneyNumber($('#sacrificio').val()); $('#tsacrificio').val(cantidad * sacrificio); var tsacrif = cantidad * sacrificio; */
   /*   var fomento = formatMoneyNumber($('#fomento').val()); $('#tfomento').val(formatCantidadSinCero(cantidad * fomento * -1)); var tfomen = Number(cantidad * fomento * -1); */
     var deguello = formatMoneyNumber($('#deguello').val()); $('#tdeguello').val(formatCantidadSinCero(cantidad * deguello)); var tdgue = Number(cantidad * deguello);
     var bascula = formatMoneyNumber($('#bascula').val()); $('#tbascula').val(formatCantidadSinCero(cantidad * bascula * -1)); var tbascu = Number(cantidad * bascula * -1);

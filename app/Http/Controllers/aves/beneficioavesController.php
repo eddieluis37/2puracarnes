@@ -66,6 +66,8 @@ class beneficioavesController extends Controller
                 $newLote = "PO".$year.$month.$day.$consecutivo;
             }
             /***************************************************************/
+            $costopie1 = str_replace('.', '', $request->get('costopie1'));
+
 		    $getReg = Beneficiopollo::firstWhere('id', $request->idbeneficio);
 		    if($getReg == null) {
                 $currentDateTime = Carbon::now();
@@ -101,7 +103,7 @@ class beneficioavesController extends Controller
 		        $newBeneficiopollo->pieleskg = $request->pieleskg;
 		        $newBeneficiopollo->pielescosto = $request->pielescosto;
 		        $newBeneficiopollo->visceras = $request->visceras;
-		        $newBeneficiopollo->costopie1 = $request->costopie1;
+		        $newBeneficiopollo->costopie1 = $costopie1;
 		        $newBeneficiopollo->costopie2 = $request->costopie2;
 		        $newBeneficiopollo->costopie3 = $request->costopie3;
 		        $newBeneficiopollo->tsacrificio = $request->tsacrificio;
@@ -166,7 +168,7 @@ class beneficioavesController extends Controller
 					<a href="desposteaves/'.$data->id.'" class="btn btn-dark" title="Despostar" >
 						<i class="fas fa-directions"></i>
 					</a>
-					<button class="btn btn-dark" title="Borrar Beneficio" onclick="showDataForm('.$data->id.')">
+					<button class="btn btn-dark" title="Editar Beneficio" onclick="showDataForm('.$data->id.')">
 						<i class="fas fa-eye"></i>
 					</button>
 					<button class="btn btn-dark" title="Borrar Beneficio" disabled>
@@ -180,7 +182,7 @@ class beneficioavesController extends Controller
 					<a href="desposteaves/'.$data->id.'" class="btn btn-dark" title="Despostar" >
 						<i class="fas fa-directions"></i>
 					</a>
-					<button class="btn btn-dark" title="Borrar Beneficio" onclick="edit('.$data->id.');">
+					<button class="btn btn-dark" title="Editar Beneficio" onclick="edit('.$data->id.');">
 						<i class="fas fa-edit"></i>
 					</button>
 					<button class="btn btn-dark" title="Borrar Beneficio" onclick="Confirm('.$data->id.');">
@@ -194,7 +196,7 @@ class beneficioavesController extends Controller
 					<a href="desposteaves/'.$data->id.'" class="btn btn-dark" title="Despostar" >
 						<i class="fas fa-directions"></i>
 					</a>
-					<button class="btn btn-dark" title="Borrar Beneficio" onclick="showDataForm('.$data->id.')">
+					<button class="btn btn-dark" title="Editar Beneficio" onclick="showDataForm('.$data->id.')">
 						<i class="fas fa-eye"></i>
 					</button>
 					<button class="btn btn-dark" title="Borrar Beneficio" disabled>
