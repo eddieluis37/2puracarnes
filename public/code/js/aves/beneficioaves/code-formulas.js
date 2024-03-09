@@ -2,6 +2,8 @@
   var plantasacrificio_id = $('#plantasacrificio_id');
   var cantidad = $('#cantidad');
   var canalfria = $('#canalfria');
+  var total_factura = $('#total_factura');
+
   var costoanimal1 = $('#costoanimal1');
   var costoanimal2 = $('#costoanimal2');
   var costoanimal3 = $('#costoanimal3');
@@ -21,8 +23,10 @@
     $(obtener_registroid(plantasacrificio_id.val()));
   });
 
+
+
   cantidad.change(function () { calculatotales(); });
-  costoanimal1.change(function () { calculatotales(); });
+  /* costoanimal1.change(function () { calculatotales(); }); */
   costoanimal2.change(function () { calculatotales(); });
   costoanimal3.change(function () { calculatotales(); });
   canalfria.change(function () { calculatotales(); });
@@ -52,11 +56,8 @@
       },
       success: function (data1) {
         console.log(data1);
-        $("#sacrificio").val(data1.sacrificio);
-        $("#fomento").val(data1.fomento);
-        $("#deguello").val(data1.deguello);
-        $("#bascula").val(data1.bascula);
-        $("#transporte").val(data1.transporte);
+        $("#sacrificio").val(formatCantidadSinCero(data1.sacrificio));        
+       
         calculatotales();
       }
     });
@@ -67,73 +68,8 @@
      $('#costoanimal1').val(formatCantidadSinCero(costo1));
      calculatotales(); 
    });
-   costoanimal2.change(function () {
-     let costo2 = formatMoneyNumber($('#costoanimal2').val());
-     $('#costoanimal2').val(formatCantidadSinCero(costo2));
-     calculatotales(); 
-   });
-   costoanimal3.change(function () { 
-     let costo3 = formatMoneyNumber($('#costoanimal3').val());
-     $('#costoanimal3').val(formatCantidadSinCero(costo3));
-     calculatotales(); 
-   });
  
-   canalfria.change(function () {
-     let canalf = formatkg($('#canalfria').val());
-     $('#canalfria').val(canalf);
-     console.log("peso :" + canalf)
-     calculatotales(); 
-   });
- 
-   pieleskg.change(function () { 
-     let piel = formatMoneyNumber($('#pieleskg').val());
-     $('#pieleskg').val(formatCantidadSinCero(piel));
-     calculatotales(); 
-   });
-   pielescosto.change(function () { 
-     let pielc = formatMoneyNumber($('#pielescosto').val());
-     $('#pielescosto').val(formatCantidadSinCero(pielc));
-     calculatotales(); 
-   });
-   visceras.change(function () { 
-     let visc = formatkg($('#visceras').val());
-     $('#visceras').val(visc);
-     console.log("peso :" + visc)
-     calculatotales(); 
-   });
- 
-   pesopie1.change(function () {
-     let pesokg1 = formatkg($('#pesopie1').val());
-     $('#pesopie1').val(pesokg1);
-     console.log("peso :" + pesokg1)
-     calculatotales(); 
-   });
-   pesopie2.change(function () { 
-     let pesokg2 = formatkg($('#pesopie2').val());
-     $('#pesopie2').val(pesokg2);
-     console.log("peso :" + pesokg2)
-     calculatotales(); 
-   });
-   pesopie3.change(function () { 
-     let pesokg3 = formatkg($('#pesopie3').val());
-     $('#pesopie3').val(pesokg3);
-     console.log("peso :" + pesokg3)
-     calculatotales(); 
-   });
- 
-   canalcaliente.change(function () { 
-     let canal = formatkg($('#canalcaliente').val());
-     $('#canalcaliente').val(canal);
-     console.log("peso :" + canal)
-     calculatotales(); 
-   });
- 
-   canalplanta.change(function () { 
-     let canalp = formatkg($('#canalplanta').val());
-     $('#canalplanta').val(canalp);
-     console.log("peso :" + canalp)
-     calculatotales(); 
-   });
+   
  
    /**********************************************************/
   /*  valorMacho.change(function () { CalculateTotalMacho(); }); */
@@ -158,7 +94,16 @@
     $('#tcanalfria').val(formatCantidadSinCero(cantidad * canalfria)); 
     var tcanalf = cantidad * canalfria;
     console.log(cantidad)
+
+    //Total factura 
+    var valor_kg_pollo = formatMoneyNumber($('#valor_kg_pollo').val()); 
+    console.log("valor_kg_pollo " + valor_kg_pollo)
+    $('#total_factura').val(formatCantidadSinCero(cantidad * valor_kg_pollo)); 
+   
+
     //COSTO ANIMAL 1 / 2 / 3
+
+
     var costopie1 = formatMoneyNumber($('#costoanimal1').val()); $('#costopie1').val(formatCantidadSinCero(pesopie1 * costopie1)); var tpie1 = Number(pesopie1 * costopie1);
     var costopie2 = formatMoneyNumber($('#costoanimal2').val()); $('#costopie2').val(formatCantidadSinCero(pesopie2 * costopie2)); var tpie2 = Number(pesopie2 * costopie2);
     var costopie3 = formatMoneyNumber($('#costoanimal3').val()); $('#costopie3').val(formatCantidadSinCero(pesopie3 * costopie3)); var tpie3 = Number(pesopie3 * costopie3);

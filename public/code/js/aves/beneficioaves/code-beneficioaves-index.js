@@ -56,14 +56,14 @@ $(document).ready(function () {
         dropdownParent: $("#modal-create-beneficioaves"),
     });
     $(".selectPieles").select2({
-        placeholder: "Buscar un Cliente Piel",
+        placeholder: "Buscar un Cliente",
         width: "100%",
         theme: "bootstrap-5",
         allowClear: true,
         dropdownParent: $("#modal-create-beneficioaves"),
     });
     $(".selectVisceras").select2({
-        placeholder: "Buscar un Cliente Viscera",
+        placeholder: "Buscar un Cliente",
         width: "100%",
         theme: "bootstrap-5",
         allowClear: true,

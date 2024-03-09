@@ -8,7 +8,7 @@
 											<div class="card-body">
 												<div class="btn-toolbar justify-content-between">
 													<div>
-														<input type="hidden" value="0" name="idbeneficio" id="idbeneficio" >
+														<input type="hidden" value="0" name="idbeneficio" id="idbeneficio">
 													</div>
 													<div class="col-sm-12 col-md-4">
 														<div class="task-header">
@@ -29,9 +29,9 @@
 													<div class="col-sm-12 col-md-4">
 														<div class="task-header">
 															<div class="form-group">
-																<label>Cliente Pielees</label>
+																<label>Cliente Subproducto_1</label>
 																<select class="form-control selectPieles" name="clientpieles_id" id="clientpieles_id" required="">
-																	<option value="">Seleccione el proveedor</option>
+																	<option value="">Seleccione el cliente</option>
 																	@foreach ($thirds as $p)
 																	<option value="{{$p->id}}">{{$p->name}}</option>
 																	@endforeach
@@ -43,9 +43,9 @@
 													<div class="col-sm-12 col-md-4">
 														<div class="task-header">
 															<div class="form-group">
-																<label>Cliente visceras</label>
+																<label>Cliente Subproducto_2</label>
 																<select class="form-control selectVisceras" name="clientvisceras_id" id="clientvisceras_id" required="">
-																	<option value="">Seleccione el proveedor</option>
+																	<option value="">Seleccione el cliente</option>
 																	@foreach ($thirds as $p)
 																	<option value="{{$p->id}}">{{$p->name}}</option>
 																	@endforeach
@@ -91,16 +91,6 @@
 														</div>
 													</div>
 
-													<!--div class="col-sm-12 col-md-4">
-														<div class="task-header">
-															<div class="form-group">
-																<label>Fecha</label>
-																<input type="date" value="<?php echo date('Y-m-d'); ?>" class="form-control" name="fecha_beneficio" id="fecha_beneficio" placeholder="ej: dd/dd/aaaa">
-																@error('fecha_beneficio') <span class="text-danger er">{{ $message}}</span>@enderror
-															</div>
-														</div>
-													</div>-->
-
 													<div class="col-sm-12 col-md-3">
 														<label for="sacrificio">Sacrificio</label>
 														<div class="input-group flex-nowrap">
@@ -108,197 +98,150 @@
 															<input type="text" name="sacrificio" id="sacrificio" class="form-control" aria-describedby="helpId" step="0.01" readonly>
 														</div>
 													</div>
-
-													<!--div class="col-sm-12 col-md-4">
-														<div class="task-header">
-															<div class="form-group">
-																<label>Lote</label>
-																<input type="text" class="form-control" name="lote" id="lote" placeholder="ej: PCD789" required="">
-																@error('lote') <span class="text-danger er">{{ $message}}</span>@enderror
+													<div class="col-md-4 d-flex justify-content-start">
+														<div class="form-group col-xs-4 col-lg-12">
+															<div class="col">
+																<div class="task-header">
+																	<div class="form-group">
+																		<label>Fecha</label>
+																		<input type="date" value="<?php echo date('Y-m-d'); ?>" class="form-control" name="fecha_beneficio" id="fecha_beneficio" placeholder="ej: dd/dd/aaaa">
+																		@error('fecha_beneficio') <span class="text-danger er">{{ $message}}</span>@enderror
+																	</div>
+																</div>
 															</div>
 														</div>
-													</div>-->
-													<!--div class="invisible">
-
-
-														<div class="form-group col-md-12">
-
-															<div class="form-row">
-
-																<div class="form-group col-md-2">
-																	<label for="sacrificio">Sacrificio</label>
-																	<input type="text" name="sacrificio" id="sacrificio" class="form-control" aria-describedby="helpId" step="0.01" readonly>
+														<div class="form-group col-xs-4 col-lg-12">
+															<div class="col">
+																<label for="sell_price">Valor Kg pollo</label>
+																<div class="input-group flex-nowrap">
+																	<span class="input-group-text" id="addon-wrapping">$</span>
+																	<input type="text" name="costoanimal1" id="costoanimal1" class="form-control" value="0" placeholder="0" aria-describedby="helpId" step="0.01">
 																</div>
-																<div class="form-group col-md-2">
-																	<label for="fomento">Fomento</label>
-																	<input type="text" name="fomento" id="fomento" class="form-control" aria-describedby="helpId" readonly step="0.01">
-																</div>
-																<div class="form-group col-md-2">
-																	<label for="deguello">Deguello</label>
-																	<input type="text" name="deguello" id="deguello" class="form-control" aria-describedby="helpId" readonly step="0.01">
-																</div>
-
-																<div class="form-group col-md-2">
-																	<label for="bascula">Báscula</label>
-																	<input type="text" name="bascula" id="bascula" class="form-control" aria-describedby="helpId" readonly step="0.01">
-																</div>
-
-																<div class="form-group col-md-2">
-																	<label for="transporte">Transporte</label>
-																	<input type="text" name="transporte" id="transporte" class="form-control" aria-describedby="helpId" step="0.01" readonly>
-																</div>
-
 															</div>
-
 														</div>
-													</div>-->
-
+														<div class="form-group col-xs-4 col-lg-12">
+															<div class="col">
+																<label for="total_factura">Total factura</label>
+																<div class="input-group flex-nowrap">
+																	<span class="input-group-text" id="addon-wrapping">$</span>
+																	<input type="text" name="total_factura" id="total_factura" class="form-control" aria-describedby="helpId" step="0.01" readonly>
+																</div>
+															</div>
+														</div>
+													</div>
 												</div>
 											</div>
 										</div>
-									</div>
-
-									<div class="">
-										<div class="form-group col-md-12">
-											<div class="form-row mt-2">
-												<div class="col-md-4">
-													<div class="form-group col-xs-4">
-														<div class="">
-															<div class="card text-center">
-																<div class="card-header">
-																	Costo 1
-																</div>
-																<div class="card-body">
-																	<div class="form-row">
-																		<div class="col">
-																			<label for="sell_price1">Peso pie 1</label>
-																			<div class="input-group flex-nowrap">
-																				<input type="text" name="pesopie1" id="pesopie1" class="form-control" aria-describedby="helpId" placeholder="0" required="">
-																				<span class="input-group-text" id="addon-wrapping">KG</span>
-																			</div>
-																		</div>
-																		<div class="col">
-																			<label for="sell_price">Costo Animal 1</label>
-																			<div class="input-group flex-nowrap">
-																				<span class="input-group-text" id="addon-wrapping">$</span>
-																				<input type="text" name="costoanimal1" id="costoanimal1" class="form-control" aria-describedby="helpId" placeholder="0" required>
-																			</div>
-																		</div>
-																	</div>
-																</div>
-															</div>
-														</div>
-													</div>
-
-												</div>
-												<div class="col-md-4">
-													<div class="form-group col-xs-4">
-														<div class="">
-															<div class="card text-center">
-																<div class="card-header">
-																	Costo 2
-																</div>
-																<div class="card-body">
-																	<div class="form-row">
-																		<div class="col">
-																			<label for="sell_price">Peso pie 2</label>
-																			<div class="input-group flex-nowrap">
-																				<input type="text" name="pesopie2" id="pesopie2" class="form-control" value="0" placeholder="000.000" aria-describedby="helpId" step="0.01">
-																				<span class="input-group-text" id="addon-wrapping">KG</span>
-																			</div>
-																		</div>
-																		<div class="col">
-																			<label for="sell_price">Costo Animal 2</label>
-																			<div class="input-group flex-nowrap">
-																				<span class="input-group-text" id="addon-wrapping">$</span>
-																				<input type="text" name="costoanimal2" id="costoanimal2" class="form-control" value="0" placeholder="000.000" aria-describedby="helpId" step="0.01">
-																			</div>
-																		</div>
-																	</div>
-																</div>
-															</div>
-														</div>
-													</div>
-												</div>
-												<div class="col-md-4">
-													<div class="form-group col-xs-4">
-														<div class="">
-															<div class="card text-center">
-																<div class="card-header">
-																	Costo 3
-																</div>
-																<div class="card-body">
-																	<div class="form-row">
-																		<div class="col">
-																			<label for="sell_price">Peso pie 3</label>
-																			<div class="input-group flex-nowrap">
-																				<input type="text" name="pesopie3" id="pesopie3" class="form-control" value="0" placeholder="000.000" aria-describedby="helpId" step="0.01">
-																				<span class="input-group-text" id="addon-wrapping">KG</span>
-																			</div>
-																		</div>
-																		<div class="col">
-																			<label for="sell_price">Costo Animal 3</label>
-																			<div class="input-group flex-nowrap">
-																				<span class="input-group-text" id="addon-wrapping">$</span>
-																				<input type="text" name="costoanimal3" id="costoanimal3" class="form-control" value="0" placeholder="000.000" aria-describedby="helpId" step="0.01">
-																			</div>
-																		</div>
-																	</div>
-																</div>
-															</div>
-														</div>
-													</div>
-
-												</div>
+										</br>
+										<div class="card">
+											<div class="card-header text-center">
+												Datos Frigorifico
 											</div>
-										</div>
-
-										<div class="">
-											<div class="">
-												<div class="">
-													<div class="card ">
-														<div class="card-header text-center">
-															Datos Frigorifico
+											<div class="container-fluid">
+												<div class="form-row mt-1 justify-content-center"> <!-- Añade la clase justify-content-center para centrar las columnas -->
+													<div class="form-group col-md-12">
+														<div>
+															<div>
+																<div class="form-row mt-3">
+																	<div class="col-md-3">
+																		<label for="canalcaliente">Promedio en Pie</label>
+																		<div class="input-group flex-nowrap">
+																			<input type="text" name="canalcaliente" id="canalcaliente" class="form-control" placeholder="0" aria-describedby="helpId" step="0.01" required>
+																			<span class="input-group-text" id="addon-wrapping">KG</span>
+																		</div>
+																	</div>
+																	<div class="col-md-3">
+																		<label for="canalfria">Peso en planta</label>
+																		<div class="input-group flex-nowrap">
+																			<input type="text" name="canalfria" id="canalfria" value="0" class="form-control" placeholder="0" aria-describedby="helpId" step="0.01">
+																			<span class="input-group-text" id="addon-wrapping">KG</span>
+																		</div>
+																	</div>
+																	<div class="col-md-3">
+																		<label for="visceras">Promedio canal fria</label>
+																		<div class="input-group flex-nowrap">
+																			<span class="input-group-text" id="addon-wrapping">$</span>
+																			<input type="text" name="visceras" id="visceras" class="form-control" placeholder="0" aria-describedby="helpId" step="0.01" required readonly>
+																		</div>
+																	</div>
+																	<div class="col-md-3">
+																		<label for="canalfria">Peso canal en planta</label>
+																		<div class="input-group flex-nowrap">
+																			<input type="text" name="canalfria" id="canalfria" value="0" class="form-control" placeholder="0" aria-describedby="helpId" step="0.01">
+																			<span class="input-group-text" id="addon-wrapping">KG</span>
+																		</div>
+																	</div>
+																</div>
+															</div>
 														</div>
-														<div class="card-body">
-
-															<div class="form-row mt-3">
-																<div class="col-md-2">
-																	<label for="canalfria">% Canal fria</label>
-																	<div class="input-group flex-nowrap">
-																		<input type="text" name="canalfria" id="canalfria" class="form-control" aria-describedby="helpId" step="0.01">
-																		<span class="input-group-text" id="addon-wrapping">KG</span>
+													</div>
+													<div class="form-group col-md-12">
+														<div>
+															<div>
+																<div class="form-row mt-3">
+																	<div class="col-md-3">
+																		<label for="canalcaliente">Menudencia Kg</label>
+																		<div class="input-group flex-nowrap">
+																			<input type="text" name="canalcaliente" id="canalcaliente" class="form-control" placeholder="0" aria-describedby="helpId" step="0.01" required>
+																			<span class="input-group-text" id="addon-wrapping">KG</span>
+																		</div>
+																	</div>
+																	<div class="col-md-3">
+																		<label for="canalfria">Mollejas/Corazones</label>
+																		<div class="input-group flex-nowrap">
+																			<input type="text" name="canalfria" id="canalfria" value="0" class="form-control" placeholder="0" aria-describedby="helpId" step="0.01">
+																			<span class="input-group-text" id="addon-wrapping">KG</span>
+																		</div>
+																	</div>
+																	<div class="col-md-3">
+																		<label for="visceras">Subtotal</label>
+																		<div class="input-group flex-nowrap">
+																			<span class="input-group-text" id="addon-wrapping">$</span>
+																			<input type="text" name="visceras" id="visceras" class="form-control" placeholder="0" aria-describedby="helpId" step="0.01" required readonly>
+																		</div>
+																	</div>
+																	<div class="col-md-3">
+																		<label for="canalfria">Promedio en canal</label>
+																		<div class="input-group flex-nowrap">
+																			<input type="text" name="canalfria" id="canalfria" value="0" class="form-control" placeholder="0" aria-describedby="helpId" step="0.01">
+																			<span class="input-group-text" id="addon-wrapping">KG</span>
+																		</div>
 																	</div>
 																</div>
-																<div class="form-group col-md-2 invisible">
-																	<label for="canalcaliente">Canal caliente</label>
-																	<input type="number" name="canalcaliente" id="canalcaliente" class="form-control" aria-describedby="helpId" step="0.01">
-																</div>
-
-																<div class="form-group col-md-2 invisible">
-																	<label for="sell_price">Canal planta</label>
-																	<input type="number" name="canalplanta" id="canalplanta" class="form-control" aria-describedby="helpId" step="0.01">
-																</div>
-																<div class="col-md-2">
-																	<label for="pieleskg">Kg Menudencias</label>
-																	<div class="input-group flex-nowrap">
-																		<input type="text" name="pieleskg" id="pieleskg" class="form-control" aria-describedby="helpId" step="0.01">
-																		<span class="input-group-text" id="addon-wrapping">KG</span>
+															</div>
+														</div>
+													</div>
+													<div class="form-group col-md-12">
+														<div>
+															<div>
+																<div class="form-row mt-3">
+																	<div class="col-md-3">
+																		<label for="canalcaliente">Menudencia %</label>
+																		<div class="input-group flex-nowrap">
+																			<input type="text" name="canalcaliente" id="canalcaliente" class="form-control" placeholder="0" aria-describedby="helpId" step="0.01" required>
+																			<span class="input-group-text" id="addon-wrapping">%</span>
+																		</div>
 																	</div>
-																</div>
-
-																<div class="col-md-2">
-																	<label for="pielescosto">Piel Costo</label>
-																	<div class="input-group flex-nowrap">
-																		<span class="input-group-text" id="addon-wrapping">$</span>
-																		<input type="text" name="pielescosto" id="pielescosto" class="form-control" aria-describedby="helpId" step="0.01">
+																	<div class="col-md-3">
+																		<label for="canalfria">Mollejas/Corazones</label>
+																		<div class="input-group flex-nowrap">
+																			<input type="text" name="canalfria" id="canalfria" value="0" class="form-control" placeholder="0" aria-describedby="helpId" step="0.01">
+																			<span class="input-group-text" id="addon-wrapping">%</span>
+																		</div>
 																	</div>
-																</div>
-																<div class="col-md-2">
-																	<label for="visceras">Visceras Costo</label>
-																	<div class="input-group flex-nowrap">
-																		<span class="input-group-text" id="addon-wrapping">$</span>
-																		<input type="text" name="visceras" id="visceras" class="form-control" aria-describedby="helpId" step="0.01">
+																	<div class="col-md-3">
+																		<label for="visceras">Despojos/Mermas</label>
+																		<div class="input-group flex-nowrap">
+																			<span class="input-group-text" id="addon-wrapping">$</span>
+																			<input type="text" name="visceras" id="visceras" class="form-control" placeholder="0" aria-describedby="helpId" step="0.01" required readonly>
+																		</div>
+																	</div>
+																	<div class="col-md-3">
+																		<label for="canalfria">Porcentaje Pollo</label>
+																		<div class="input-group flex-nowrap">
+																			<input type="text" name="canalfria" id="canalfria" value="0" class="form-control" placeholder="0" aria-describedby="helpId" step="0.01">
+																			<span class="input-group-text" id="addon-wrapping">%</span>
+																		</div>
 																	</div>
 																</div>
 															</div>
@@ -308,200 +251,11 @@
 											</div>
 										</div>
 
-										<div class="">
-											<div class="form-row mt-1">
-												<div class="form-group col-md-6">
-													<div class="card">
-														<div class="m-2">
-															<div class="card-title">TOTALES</div>
-															<div class="form-row">
-																<div class="col-md-4">
-																	<label for="costopie1">Costo Animal 1</label>
-																	<div class="input-group flex-nowrap">
-																		<span class="input-group-text" id="addon-wrapping">$</span>
-																		<input type="text" name="costopie1" id="costopie1" class="form-control" aria-describedby="helpId" readonly step="0.01">
-																	</div>
-																</div>
-																<div class="col-md-4">
-																	<label for="costopie2">Costo Animal 2</label>
-																	<div class="input-group flex-nowrap">
-																		<span class="input-group-text" id="addon-wrapping">$</span>
-																		<input type="text" name="costopie2" id="costopie2" class="form-control" aria-describedby="helpId" readonly step="0.01">
-																	</div>
-																</div>
-																<div class="col-md-4">
-																	<label for="costopie3">Costo Animal 3</label>
-																	<div class="input-group flex-nowrap">
-																		<span class="input-group-text" id="addon-wrapping">$</span>
-																		<input type="text" name="costopie3" id="costopie3" class="form-control" aria-describedby="helpId" readonly step="0.01">
-																	</div>
-																</div>
-
-																<div class="col-md-4">
-																	<label for="costokilo">Sacrificio</label>
-																	<div class="input-group flex-nowrap">
-																		<span class="input-group-text" id="addon-wrapping">$</span>
-																		<input type="text" name="tsacrificio" id="tsacrificio" class="form-control " aria-describedby="helpId" readonly >
-																	</div>
-																</div>
-																<div class="col-md-4">
-																	<label for="tfomento">Fomento</label>
-																	<div class="input-group flex-nowrap">
-																		<span class="input-group-text" id="addon-wrapping">$</span>
-																		<input type="text" name="tfomento" id="tfomento" class="form-control" aria-describedby="helpId" readonly step="0.01">
-																	</div>
-																</div>
-																<div class="col-md-4">
-																	<label for="tdeguello">Deguello</label>
-																	<div class="input-group flex-nowrap">
-																		<span class="input-group-text" id="addon-wrapping">$</span>
-																		<input type="text" name="tdeguello" id="tdeguello" class="form-control" aria-describedby="helpId" readonly step="0.01">
-																	</div>
-																</div>
-
-																<div class="col-md-4">
-																	<label for="tbascula">Báscula</label>
-																	<div class="input-group flex-nowrap">
-																		<span class="input-group-text" id="addon-wrapping">$</span>
-																		<input type="text" name="tbascula" id="tbascula" class="form-control" aria-describedby="helpId" readonly step="0.01">
-																	</div>
-																</div>
-																<div class="col-md-4">
-																	<label for="ttransporte">Transporte</label>
-																	<div class="input-group flex-nowrap">
-																		<span class="input-group-text" id="addon-wrapping">$</span>
-																		<input type="text" name="ttransporte" id="ttransporte" class="form-control" aria-describedby="helpId" readonly step="0.01">
-																	</div>
-																</div>
-																<div class="col-md-4">
-																	<label for="tpieles">Pieles</label>
-																	<div class="input-group flex-nowrap">
-																		<span class="input-group-text" id="addon-wrapping">$</span>
-																		<input type="text" name="tpieles" id="tpieles" class="form-control" aria-describedby="helpId" readonly step="0.01">
-																	</div>
-																</div>
-
-																<div class="col-md-4">
-																	<label for="tvisceras">Visceras</label>
-																	<div class="input-group flex-nowrap">
-																		<span class="input-group-text" id="addon-wrapping">$</span>
-																		<input type="text" name="tvisceras" id="tvisceras" class="form-control" aria-describedby="helpId" readonly step="0.01">
-																	</div>
-																</div>
-																<div class="col-md-4">
-																	<label for="tcanalfria">Canal Fría</label>
-																	<div class="input-group flex-nowrap">
-																		<span class="input-group-text" id="addon-wrapping">$</span>
-																		<input type="text" name="tcanalfria" id="tcanalfria" class="form-control" aria-describedby="helpId" readonly step="0.01">
-																	</div>
-																</div>
-																<div class="col-md-4">
-																	<label for="valorfactura">Valor Factura</label>
-																	<div class="input-group flex-nowrap">
-																		<span class="input-group-text" id="addon-wrapping">$</span>
-																		<input type="text" name="valorfactura" id="valorfactura" class="form-control" aria-describedby="helpId" readonly step="0.01">
-																	</div>
-																</div>
-
-																<div class="col-md-4">
-																	<label for="costokilo">Costo Kilo</label>
-																	<div class="input-group flex-nowrap">
-																		<span class="input-group-text" id="addon-wrapping">$</span>
-																		<input type="text" name="costokilo" id="costokilo" class="form-control" aria-describedby="helpId" readonly step="0.01">
-																	</div>
-																</div>
-																<div class="col-md-4">
-																	<label for="costo">Costo</label>
-																	<div class="input-group flex-nowrap">
-																		<span class="input-group-text" id="addon-wrapping">$</span>
-																		<input type="text" name="costo" id="costo" class="form-control" aria-describedby="helpId" readonly step="0.01">
-																	</div>
-																</div>
-																<div class="col-md-4">
-																	<label for="totalcostos">Total Costos</label>
-																	<div class="input-group flex-nowrap">
-																		<span class="input-group-text" id="addon-wrapping">$</span>
-																		<input type="text" name="totalcostos" id="totalcostos" class="form-control" aria-describedby="helpId" readonly step="0.01">
-																	</div>
-																</div>
-
-															</div>
-														</div>
-													</div>
-												</div>
-
-												<div class="form-group col-md-6">
-													<div class="card">
-														<div class="card-body">
-															<div class="card-title">RENDIMIENTO</div>
-															<div class="form-row">
-																<div class="col-md-4">
-																	<label for="pesopie">Peso Pie</label>
-																	<div class="input-group flex-nowrap">
-																		<input type="text" name="pesopie" id="pesopie" class="form-control" aria-describedby="helpId" readonly step="0.01">
-																		<span class="input-group-text" id="addon-wrapping">KG</span>
-																	</div>
-																</div>
-																<div class="col-md-4">
-																	<label for="rtcanalcaliente">Canal Caliente</label>
-																	<div class="input-group flex-nowrap">
-																		<input type="text" name="rtcanalcaliente" id="rtcanalcaliente" class="form-control" aria-describedby="helpId" readonly step="0.01">
-																		<span class="input-group-text" id="addon-wrapping">KG</span>
-																	</div>
-																</div>
-																<div class="col-md-4">
-																	<label for="rtcanalplanta">Canal Planta</label>
-																	<div class="input-group flex-nowrap">
-																		<input type="text" name="rtcanalplanta" id="rtcanalplanta" class="form-control" aria-describedby="helpId" readonly step="0.01">
-																		<span class="input-group-text" id="addon-wrapping">KG</span>
-																	</div>
-																</div>
-
-																<div class="col-md-4">
-																	<label for="rtcanalfria">Canal Fría</label>
-																	<div class="input-group flex-nowrap">
-																		<input type="text" name="rtcanalfria" id="rtcanalfria" class="form-control" aria-describedby="helpId" readonly step="0.01">
-																		<span class="input-group-text" id="addon-wrapping">KG</span>
-																	</div>
-																</div>
-																<div class="col-md-4">
-																	<label for="rendcaliente">Rend.Caliente</label>
-																	<div class="input-group flex-nowrap">
-																		<input type="text" name="rendcaliente" id="rendcaliente" class="form-control" aria-describedby="helpId" readonly step="0.01">
-																		<span class="input-group-text" id="addon-wrapping">KG</span>
-																	</div>
-																</div>
-																<div class="col-md-4">
-																	<label for="rendplanta">Rend.Planta</label>
-																	<div class="input-group flex-nowrap">
-																		<input type="text" name="rendplanta" id="rendplanta" class="form-control" aria-describedby="helpId" readonly step="0.01">
-																		<span class="input-group-text" id="addon-wrapping">KG</span>
-																	</div>
-																</div>
-																<div class="col-md-4">
-																	<label for="rendfrio">Rend.Frio</label>
-																	<div class="input-group flex-nowrap">
-																		<input type="text" name="rendfrio" id="rendfrio" class="form-control" aria-describedby="helpId" readonly step="0.01">
-																		<span class="input-group-text" id="addon-wrapping">KG</span>
-																	</div>
-																</div>
-																
-															</div>
-														</div>
-													</div>
-												</div>
-											</div>
-										</div>
-
-									</div>
-
-
-									<!--div class="modal-footer justify-content-between">
+										<!--div class="modal-footer justify-content-between">
 										<button type="button" class="btn btn-outline-light" data-dismiss="modal">Close</button>
 										<button type="submit" class="btn btn-outline-primary">Guardar</button>
 									</div>-->
+									</div>
 								</div>
 							</div>
 						</div>
-					</div>
-			

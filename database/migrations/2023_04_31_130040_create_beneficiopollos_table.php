@@ -21,10 +21,10 @@ class CreateBeneficiopollosTable extends Migration
             $table->string('factura');
             $table->unsignedBigInteger('plantasacrificio_id')->nullable();
             $table->foreign('plantasacrificio_id')->references('id')->on('sacrificiopollos');
-            $table->unsignedBigInteger('clientsubproductosuno_id')->nullable();
-            $table->foreign('clientsubproductosuno_id')->references('id')->on('thirds');
-            $table->unsignedBigInteger('clientsubproductosdos_id')->nullable();
-            $table->foreign('clientsubproductosdos_id')->references('id')->on('thirds');
+            $table->unsignedBigInteger('clientsubproductos_uno_id')->nullable();
+            $table->foreign('clientsubproductos_uno_id')->references('id')->on('thirds');
+            $table->unsignedBigInteger('clientsubproductos_dos_id')->nullable();
+            $table->foreign('clientsubproductos_dos_id')->references('id')->on('thirds');
             $table->bigInteger('cantidad')->nullable();
             $table->decimal('sacrificio', 18, 0)->nullable();
             $table->decimal('valor_kg_pollo', 18, 0)->nullable();
