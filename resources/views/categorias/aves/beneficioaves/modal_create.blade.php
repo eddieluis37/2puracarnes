@@ -115,7 +115,7 @@
 																<label for="sell_price">Valor Kg pollo</label>
 																<div class="input-group flex-nowrap">
 																	<span class="input-group-text" id="addon-wrapping">$</span>
-																	<input type="text" name="costoanimal1" id="costoanimal1" class="form-control" value="0" placeholder="0" aria-describedby="helpId" step="0.01">
+																	<input type="text" name="valor_kg_pollo" id="valor_kg_pollo" class="form-control" value="0" placeholder="0" aria-describedby="helpId" step="0.01">
 																</div>
 															</div>
 														</div>
@@ -146,14 +146,14 @@
 																	<div class="col-md-3">
 																		<label for="canalcaliente">Promedio en Pie</label>
 																		<div class="input-group flex-nowrap">
-																			<input type="text" name="canalcaliente" id="canalcaliente" class="form-control" placeholder="0" aria-describedby="helpId" step="0.01" required>
+																			<input type="text" name="promedio_pie_kg" id="promedio_pie_kg" class="form-control" placeholder="0" aria-describedby="helpId" step="0.01" required>
 																			<span class="input-group-text" id="addon-wrapping">KG</span>
 																		</div>
 																	</div>
 																	<div class="col-md-3">
-																		<label for="canalfria">Peso en planta</label>
+																		<label for="canalfria">Peso pie planta</label>
 																		<div class="input-group flex-nowrap">
-																			<input type="text" name="canalfria" id="canalfria" value="0" class="form-control" placeholder="0" aria-describedby="helpId" step="0.01">
+																			<input type="text" name="peso_pie_planta" id="peso_pie_planta" value="0" class="form-control" placeholder="0" aria-describedby="helpId" step="0.01">
 																			<span class="input-group-text" id="addon-wrapping">KG</span>
 																		</div>
 																	</div>
