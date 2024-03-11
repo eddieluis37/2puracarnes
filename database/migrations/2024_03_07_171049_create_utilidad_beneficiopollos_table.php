@@ -17,6 +17,14 @@ class CreateUtilidadBeneficiopollosTable extends Migration
             $table->id();
             $table->unsignedBigInteger('beneficiopollos_id');
             $table->foreign('beneficiopollos_id')->references('id')->on('beneficiopollos');
+
+            $table->string('producto', 50, 0)->nullable(); 
+
+            $table->decimal('kilos_pollo_entero',10,0)->default(0)->nullable(); 
+            $table->decimal('kilos_menudencia',10,0)->default(0)->nullable(); 
+            $table->decimal('kilos_mollejas_corazones',10,0)->default(0)->nullable(); 
+            $table->decimal('totales_kilos',10,0)->default(0)->nullable(); 
+
             $table->decimal('porcentaje_participacion', 18, 0)->nullable();
             $table->decimal('costo_unitario', 18, 0)->nullable();
             $table->decimal('costo_real', 18, 0)->nullable();

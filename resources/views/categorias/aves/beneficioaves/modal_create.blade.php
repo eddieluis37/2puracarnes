@@ -85,7 +85,7 @@
 														<div class="task-header">
 															<div class="form-group">
 																<label>Cantidad</label>
-																<input type="number" name="cantidad" id="cantidad" class="form-control" "aria-describedby=" helpId" required="" min="1" max="30" step="1" value="1">
+																<input type="number" name="cantidad" id="cantidad" class="form-control" "aria-describedby=" helpId" required="" min="1" max="900" step="1" value="1">
 																@error('cantidad') <span class="text-danger er">{{ $message}}</span>@enderror
 															</div>
 														</div>
@@ -153,7 +153,7 @@
 																	<div class="col-md-3">
 																		<label for="canalfria">Peso pie planta</label>
 																		<div class="input-group flex-nowrap">
-																			<input type="text" name="peso_pie_planta" id="peso_pie_planta" value="0" class="form-control" placeholder="0" aria-describedby="helpId" step="0.01">
+																			<input type="text" name="peso_pie_planta" id="peso_pie_planta" value="0" class="form-control" placeholder="111.999" aria-describedby="helpId" step="0.01">
 																			<span class="input-group-text" id="addon-wrapping">KG</span>
 																		</div>
 																	</div>
@@ -161,13 +161,13 @@
 																		<label for="visceras">Promedio canal fria</label>
 																		<div class="input-group flex-nowrap">
 																			<span class="input-group-text" id="addon-wrapping">$</span>
-																			<input type="text" name="visceras" id="visceras" class="form-control" placeholder="0" aria-describedby="helpId" step="0.01" required readonly>
+																			<input type="text" name="promedio_canal_fria_sala" id="promedio_canal_fria_sala" class="form-control" placeholder="0" aria-describedby="helpId" step="0.01" required readonly>
 																		</div>
 																	</div>
 																	<div class="col-md-3">
 																		<label for="canalfria">Peso canal en planta</label>
 																		<div class="input-group flex-nowrap">
-																			<input type="text" name="canalfria" id="canalfria" value="0" class="form-control" placeholder="0" aria-describedby="helpId" step="0.01">
+																			<input type="text" name="peso_canales_pollo_planta" id="peso_canales_pollo_planta" value="0" class="form-control" placeholder="0" aria-describedby="helpId" step="0.01">
 																			<span class="input-group-text" id="addon-wrapping">KG</span>
 																		</div>
 																	</div>
@@ -182,28 +182,28 @@
 																	<div class="col-md-3">
 																		<label for="canalcaliente">Menudencia Kg</label>
 																		<div class="input-group flex-nowrap">
-																			<input type="text" name="canalcaliente" id="canalcaliente" class="form-control" placeholder="0" aria-describedby="helpId" step="0.01" required>
+																			<input type="text" name="menudencia_pollo_kg" id="menudencia_pollo_kg" class="form-control" placeholder="0" aria-describedby="helpId" step="0.01" required>
 																			<span class="input-group-text" id="addon-wrapping">KG</span>
 																		</div>
 																	</div>
 																	<div class="col-md-3">
-																		<label for="canalfria">Mollejas/Corazones</label>
+																		<label for="mollejas_corazones_kg">Mollejas/Corazones</label>
 																		<div class="input-group flex-nowrap">
-																			<input type="text" name="canalfria" id="canalfria" value="0" class="form-control" placeholder="0" aria-describedby="helpId" step="0.01">
+																			<input type="text" name="mollejas_corazones_kg" id="mollejas_corazones_kg" value="0" class="form-control" placeholder="0" aria-describedby="helpId" step="0.01">
 																			<span class="input-group-text" id="addon-wrapping">KG</span>
 																		</div>
 																	</div>
 																	<div class="col-md-3">
-																		<label for="visceras">Subtotal</label>
+																		<label for="subtotal">Subtotal</label>
 																		<div class="input-group flex-nowrap">
 																			<span class="input-group-text" id="addon-wrapping">$</span>
-																			<input type="text" name="visceras" id="visceras" class="form-control" placeholder="0" aria-describedby="helpId" step="0.01" required readonly>
+																			<input type="text" name="subtotal" id="subtotal" class="form-control" placeholder="0" aria-describedby="helpId" step="0.01" required readonly>
 																		</div>
 																	</div>
 																	<div class="col-md-3">
 																		<label for="canalfria">Promedio en canal</label>
 																		<div class="input-group flex-nowrap">
-																			<input type="text" name="canalfria" id="canalfria" value="0" class="form-control" placeholder="0" aria-describedby="helpId" step="0.01">
+																			<input type="text" name="promedio_canal_kg" id="promedio_canal_kg" value="0" class="form-control" placeholder="0" aria-describedby="helpId" step="0.01">
 																			<span class="input-group-text" id="addon-wrapping">KG</span>
 																		</div>
 																	</div>
@@ -216,30 +216,30 @@
 															<div>
 																<div class="form-row mt-3">
 																	<div class="col-md-3">
-																		<label for="canalcaliente">Menudencia %</label>
+																		<label for="menudencia_pollo_porc">Menudencia %</label>
 																		<div class="input-group flex-nowrap">
-																			<input type="text" name="canalcaliente" id="canalcaliente" class="form-control" placeholder="0" aria-describedby="helpId" step="0.01" required>
+																			<input type="text" name="menudencia_pollo_porc" id="menudencia_pollo_porc" class="form-control" placeholder="0" aria-describedby="helpId" step="0.01" required>
 																			<span class="input-group-text" id="addon-wrapping">%</span>
 																		</div>
 																	</div>
 																	<div class="col-md-3">
-																		<label for="canalfria">Mollejas/Corazones</label>
+																		<label for="mollejas_corazones_porc">Mollejas/Corazones</label>
 																		<div class="input-group flex-nowrap">
-																			<input type="text" name="canalfria" id="canalfria" value="0" class="form-control" placeholder="0" aria-describedby="helpId" step="0.01">
+																			<input type="text" name="mollejas_corazones_porc" id="mollejas_corazones_porc" value="0" class="form-control" placeholder="0" aria-describedby="helpId" step="0.01">
 																			<span class="input-group-text" id="addon-wrapping">%</span>
 																		</div>
 																	</div>
 																	<div class="col-md-3">
-																		<label for="visceras">Despojos/Mermas</label>
+																		<label for="despojos_mermas">Despojos/Mermas</label>
 																		<div class="input-group flex-nowrap">
 																			<span class="input-group-text" id="addon-wrapping">$</span>
-																			<input type="text" name="visceras" id="visceras" class="form-control" placeholder="0" aria-describedby="helpId" step="0.01" required readonly>
+																			<input type="text" name="despojos_mermas" id="despojos_mermas" class="form-control" placeholder="0" aria-describedby="helpId" step="0.01" required readonly>
 																		</div>
 																	</div>
 																	<div class="col-md-3">
-																		<label for="canalfria">Porcentaje Pollo</label>
+																		<label for="porc_pollo">Porcentaje Pollo</label>
 																		<div class="input-group flex-nowrap">
-																			<input type="text" name="canalfria" id="canalfria" value="0" class="form-control" placeholder="0" aria-describedby="helpId" step="0.01">
+																			<input type="text" name="porc_pollo" id="porc_pollo" value="0" class="form-control" placeholder="0" aria-describedby="helpId" step="0.01">
 																			<span class="input-group-text" id="addon-wrapping">%</span>
 																		</div>
 																	</div>
