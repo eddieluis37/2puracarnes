@@ -218,7 +218,7 @@
 								<td>${{ number_format($proddetail->otro_impuesto, 0, ',', '.')}}</td>
 								<td>${{ number_format($proddetail->total, 0, ',', '.')}}</td>
 								<td class="text-center">
-									@if($status == 'true')
+									@if($status == 'false')
 									<button class="btn btn-dark fas fa-edit" name="btnEdit" data-id="{{$proddetail->id}}" title="Editar">
 									</button>
 									<button class="btn btn-dark fas fa-trash" name="btnDown" data-id="{{$proddetail->id}}" title="Borrar">
