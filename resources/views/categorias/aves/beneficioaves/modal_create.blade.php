@@ -30,13 +30,13 @@
 														<div class="task-header">
 															<div class="form-group">
 																<label>Cliente Subproducto_1</label>
-																<select class="form-control selectPieles" name="clientpieles_id" id="clientpieles_id" required="">
+																<select class="form-control selectPieles" name="clientsubproductos_uno_id" id="clientsubproductos_uno_id" required="">
 																	<option value="">Seleccione el cliente</option>
 																	@foreach ($thirds as $p)
 																	<option value="{{$p->id}}">{{$p->name}}</option>
 																	@endforeach
 																</select>
-																@error('clientpielesid') <span class="text-danger er">{{ $message}}</span>@enderror
+																@error('clientsubproductos_uno_id') <span class="text-danger er">{{ $message}}</span>@enderror
 															</div>
 														</div>
 													</div>
@@ -44,13 +44,13 @@
 														<div class="task-header">
 															<div class="form-group">
 																<label>Cliente Subproducto_2</label>
-																<select class="form-control selectVisceras" name="clientvisceras_id" id="clientvisceras_id" required="">
+																<select class="form-control selectVisceras" name="clientsubproductos_dos_id" id="clientsubproductos_dos_id" required="">
 																	<option value="">Seleccione el cliente</option>
 																	@foreach ($thirds as $p)
 																	<option value="{{$p->id}}">{{$p->name}}</option>
 																	@endforeach
 																</select>
-																@error('clientviscerasid') <span class="text-danger er">{{ $message}}</span>@enderror
+																@error('clientsubproductos_dos_id') <span class="text-danger er">{{ $message}}</span>@enderror
 															</div>
 														</div>
 													</div>

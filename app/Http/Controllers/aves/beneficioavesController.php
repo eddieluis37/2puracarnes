@@ -67,8 +67,9 @@ class beneficioavesController extends Controller
             }
             /***************************************************************/
             $costopie1 = str_replace('.', '', $request->get('costopie1'));
+            $promedio_canal_fria_sala = str_replace('.', '', $request->get('promedio_canal_fria_sala'));
 
-		    $getReg = Beneficiopollo::firstWhere('id', $request->idbeneficio);
+		    $getReg = Beneficiopollo::firstWhere('id', $request->idbeneficio);  
 		    if($getReg == null) {
                 $currentDateTime = Carbon::now();
                 $currentDateFormat = Carbon::parse($currentDateTime->format('Y-m-d'));
@@ -83,48 +84,29 @@ class beneficioavesController extends Controller
 		        $newBeneficiopollo->fecha_beneficio = $currentDateFormat;
 		        $newBeneficiopollo->fecha_cierre = $dateNextMonday;
 		        $newBeneficiopollo->factura = $request->factura;
-		        $newBeneficiopollo->clientpieles_id = $request->clientpieles_id;
-		        $newBeneficiopollo->clientvisceras_id = $request->clientvisceras_id;
+		        $newBeneficiopollo->clientsubproductos_uno_id = $request->clientsubproductos_uno_id;
+		        $newBeneficiopollo->clientsubproductos_dos_id = $request->clientsubproductos_dos_id;
 		        $newBeneficiopollo->lote = $newLote;
 		        $newBeneficiopollo->sacrificio = $request->sacrificio;
-		        $newBeneficiopollo->fomento = $request->fomento;
-		        $newBeneficiopollo->deguello = $request->deguello;
-		        $newBeneficiopollo->bascula = $request->bascula;
-		        $newBeneficiopollo->transporte = $request->transporte;
-		        $newBeneficiopollo->pesopie1 = $request->pesopie1;
-		        $newBeneficiopollo->pesopie2 = $request->pesopie2;
-		        $newBeneficiopollo->pesopie3 = $request->pesopie3;
-		        $newBeneficiopollo->costoanimal1 = $request->costoanimal1;
-		        $newBeneficiopollo->costoanimal2 = $request->costoanimal2;
-		        $newBeneficiopollo->costoanimal3 = $request->costoanimal3;
-		        $newBeneficiopollo->canalcaliente = $request->canalcaliente;
-		        $newBeneficiopollo->canalfria = $request->canalfria;
-		        $newBeneficiopollo->canalplanta = $request->canalplanta;
-		        $newBeneficiopollo->pieleskg = $request->pieleskg;
-		        $newBeneficiopollo->pielescosto = $request->pielescosto;
-		        $newBeneficiopollo->visceras = $request->visceras;
-		        $newBeneficiopollo->costopie1 = $costopie1;
-		        $newBeneficiopollo->costopie2 = $request->costopie2;
-		        $newBeneficiopollo->costopie3 = $request->costopie3;
-		        $newBeneficiopollo->tsacrificio = $request->tsacrificio;
-		        $newBeneficiopollo->tfomento = 0;//$request->tfomento;
-		        $newBeneficiopollo->tdeguello = 0;//$request->tdeguello;
-		        $newBeneficiopollo->tbascula = 0; //$request->tbascula;
-		        $newBeneficiopollo->ttransporte = 0;//$request->ttransporte;
-		        $newBeneficiopollo->tpieles = $request->tpieles;
-		        $newBeneficiopollo->tvisceras = $request->tvisceras;
-		        $newBeneficiopollo->tcanalfria = $request->tcanalfria;
-		        $newBeneficiopollo->valorfactura = 0;//$request->valorfactura;
-		        $newBeneficiopollo->costokilo = 0;//$request->costokilo;
-		        $newBeneficiopollo->costo = 0;//$request->costo;
-		        $newBeneficiopollo->totalcostos = 0;//$request->totalcostos;
-		        $newBeneficiopollo->pesopie = $request->pesopie;
-		        $newBeneficiopollo->rtcanalcaliente = 0;//$request->rtcanalcaliente;
-		        $newBeneficiopollo->rtcanalplanta = 0;//$request->rtcanalplanta;
-		        $newBeneficiopollo->rtcanalfria = $request->rtcanalfria;
-		        $newBeneficiopollo->rendcaliente = $request->rendcaliente;
-		        $newBeneficiopollo->rendplanta = $request->rendplanta;
-		        $newBeneficiopollo->rendfrio = $request->rendfrio;
+		        $newBeneficiopollo->valor_kg_pollo = $request->valor_kg_pollo;
+		        $newBeneficiopollo->total_factura = $request->total_factura;
+
+		        $newBeneficiopollo->promedio_pie_kg = $request->promedio_pie_kg;
+		        $newBeneficiopollo->mollejas_corazones_kg = $request->mollejas_corazones_kg;
+		        $newBeneficiopollo->promedio_canal_fria_sala = $promedio_canal_fria_sala;
+		        $newBeneficiopollo->peso_canales_pollo_planta = $request->peso_canales_pollo_planta;
+
+		        $newBeneficiopollo->menudencia_pollo_kg = $request->menudencia_pollo_kg;
+                $newBeneficiopollo->mollejas_corazones_kg = $request->mollejas_corazones_kg;
+		        $newBeneficiopollo->subtotal = $request->subtotal;
+		        $newBeneficiopollo->promedio_canal_kg = $request->promedio_canal_kg;
+
+
+		        $newBeneficiopollo->menudencia_pollo_porc = $request->menudencia_pollo_porc;
+		        $newBeneficiopollo->mollejas_corazones_porc = $request->mollejas_corazones_porc;
+		        $newBeneficiopollo->despojos_mermas = $request->despojos_mermas;
+		        $newBeneficiopollo->porc_pollo = $request->porc_pollo;
+		        
 		        $newBeneficiopollo->save();
 
             	return response()->json([
