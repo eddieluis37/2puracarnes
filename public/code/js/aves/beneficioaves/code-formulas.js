@@ -75,11 +75,12 @@ function obtener_registroid(plantasacrificio_id) {
     });
 }
 
-valor_kg_pollo.change(function () {
-    let costo1 = formatMoneyNumber($("#valor_kg_pollo").val());
-    $("#valor_kg_pollo").val(formatCantidad(costo1));
-    calculatotales();
-});
+valor_kg_pollo.change(function () { 
+    let canal = formatkg($('#valor_kg_pollo').val());
+    $('#valor_kg_pollo').val(canal);
+    console.log("peso :" + canal)
+    calculatotales(); 
+  });
 
 peso_pie_planta.change(function () {
     let costo2 = formatMoneyNumber($("#peso_pie_planta").val());

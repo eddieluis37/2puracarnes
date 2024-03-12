@@ -26,24 +26,24 @@ class CreateBeneficiopollosTable extends Migration
             $table->unsignedBigInteger('clientsubproductos_dos_id')->nullable();
             $table->foreign('clientsubproductos_dos_id')->references('id')->on('thirds');
             $table->bigInteger('cantidad')->nullable();
-            $table->decimal('sacrificio', 18, 0)->nullable();
-            $table->decimal('valor_kg_pollo', 18, 0)->nullable();
-            $table->decimal('total_factura', 18, 0)->nullable();
+            $table->decimal('sacrificio', 18, 2)->nullable();
+            $table->decimal('valor_kg_pollo', 18, 2)->nullable();
+            $table->decimal('total_factura', 18, 2)->nullable();
 
-            $table->decimal('promedio_pie_kg',10,0)->default(0)->nullable();
-            $table->decimal('peso_pie_planta',10,0)->default(0)->nullable();
-            $table->decimal('promedio_canal_fria_sala',10,0)->default(0)->nullable();
-            $table->decimal('peso_canales_pollo_planta',10,0)->default(0)->nullable();
+            $table->decimal('promedio_pie_kg', 18, 2)->default(0)->nullable();
+            $table->decimal('peso_pie_planta', 18, 2)->default(0)->nullable();
+            $table->decimal('promedio_canal_fria_sala', 18, 2)->default(0)->nullable();
+            $table->decimal('peso_canales_pollo_planta',18, 2)->default(0)->nullable();
 
-            $table->decimal('menudencia_pollo_kg',10,0)->default(0)->nullable();
-            $table->decimal('mollejas_corazones_kg',10,0)->default(0)->nullable();
-            $table->decimal('subtotal',10,0)->default(0)->nullable();
-            $table->decimal('promedio_canal_kg',10,0)->default(0)->nullable();
+            $table->decimal('menudencia_pollo_kg',18, 2)->default(0)->nullable();
+            $table->decimal('mollejas_corazones_kg',18, 2)->default(0)->nullable();
+            $table->decimal('subtotal',18, 2)->default(0)->nullable();
+            $table->decimal('promedio_canal_kg',18, 2)->default(0)->nullable();
 
-            $table->decimal('menudencia_pollo_porc',10,0)->default(0)->nullable();
-            $table->decimal('mollejas_corazones_porc',10,0)->default(0)->nullable();
-            $table->decimal('despojos_mermas',10,0)->default(0)->nullable();
-            $table->decimal('porc_pollo',10,0)->default(0)->nullable();                 
+            $table->decimal('menudencia_pollo_porc',18, 2)->default(0)->nullable();
+            $table->decimal('mollejas_corazones_porc',18, 2)->default(0)->nullable();
+            $table->decimal('despojos_mermas',18, 2)->default(0)->nullable();
+            $table->decimal('porc_pollo',18, 2)->default(0)->nullable();                 
             
             $table->date('fecha_beneficio');
             $table->date('fecha_cierre')->nullable();
