@@ -41,6 +41,14 @@ class beneficioavesController extends Controller
         //
     }
 
+    
+	public function MoneyToNumber(string $moneyValue): float
+	{
+		$formatter = new NumberFormatter('es-CL', NumberFormatter::DECIMAL);
+		$number = $formatter->parse($moneyValue);
+		return (float) $number;
+	}
+
     /**
      * Store a newly created resource in storage.
      *
@@ -67,7 +75,18 @@ class beneficioavesController extends Controller
             }
             /***************************************************************/
             $costopie1 = str_replace('.', '', $request->get('costopie1'));
-            $promedio_canal_fria_sala = str_replace('.', '', $request->get('promedio_canal_fria_sala'));
+
+                      
+ /*            $valor_kg_pollo = $request->input('valor_kg_pollo');
+            $valor_kg_pollo = str_replace(['.', ',', '$', '#'], '', $valor_kg_pollo);
+
+            /* $promedio_canal_fria_sala = str_replace('.', '', $request->get('promedio_canal_fria_sala')); 
+
+            $promedio_canal_fria_sala = str_replace(',', '.', $request->get('promedio_canal_fria_sala'));
+            $subtotal = str_replace(',', '.', $request->get('subtotal'));
+            $despojos_mermas = str_replace(',', '.', $request->get('despojos_mermas')); */
+
+
 
 		    $getReg = Beneficiopollo::firstWhere('id', $request->idbeneficio);  
 		    if($getReg == null) {
@@ -87,25 +106,25 @@ class beneficioavesController extends Controller
 		        $newBeneficiopollo->clientsubproductos_uno_id = $request->clientsubproductos_uno_id;
 		        $newBeneficiopollo->clientsubproductos_dos_id = $request->clientsubproductos_dos_id;
 		        $newBeneficiopollo->lote = $newLote;
-		        $newBeneficiopollo->sacrificio = $request->sacrificio;
-		        $newBeneficiopollo->valor_kg_pollo = $request->valor_kg_pollo;
-		        $newBeneficiopollo->total_factura = $request->total_factura;
+		        $newBeneficiopollo->sacrificio = $this->MoneyToNumber($request->sacrificio);
+		        $newBeneficiopollo->valor_kg_pollo = $this->MoneyToNumber($request->valor_kg_pollo);
+		        $newBeneficiopollo->total_factura = $this->MoneyToNumber($request->total_factura);
 
-		        $newBeneficiopollo->promedio_pie_kg = $request->promedio_pie_kg;
-		        $newBeneficiopollo->mollejas_corazones_kg = $request->mollejas_corazones_kg;
-		        $newBeneficiopollo->promedio_canal_fria_sala = $promedio_canal_fria_sala;
-		        $newBeneficiopollo->peso_canales_pollo_planta = $request->peso_canales_pollo_planta;
+		        $newBeneficiopollo->promedio_pie_kg = $this->MoneyToNumber($request->promedio_pie_kg);
+		        $newBeneficiopollo->mollejas_corazones_kg = $this->MoneyToNumber($request->mollejas_corazones_kg);
+		        $newBeneficiopollo->promedio_canal_fria_sala = $this->MoneyToNumber($request->promedio_canal_fria_sala);
+		        $newBeneficiopollo->peso_canales_pollo_planta = $this->MoneyToNumber($request->peso_canales_pollo_planta);
 
-		        $newBeneficiopollo->menudencia_pollo_kg = $request->menudencia_pollo_kg;
-                $newBeneficiopollo->mollejas_corazones_kg = $request->mollejas_corazones_kg;
-		        $newBeneficiopollo->subtotal = $request->subtotal;
-		        $newBeneficiopollo->promedio_canal_kg = $request->promedio_canal_kg;
+		        $newBeneficiopollo->menudencia_pollo_kg = $this->MoneyToNumber($request->menudencia_pollo_kg);
+                $newBeneficiopollo->mollejas_corazones_kg = $this->MoneyToNumber($request->mollejas_corazones_kg);
+		        $newBeneficiopollo->subtotal = $this->MoneyToNumber($request->subtotal);
+		        $newBeneficiopollo->promedio_canal_kg = $this->MoneyToNumber($request->promedio_canal_kg);
 
 
-		        $newBeneficiopollo->menudencia_pollo_porc = $request->menudencia_pollo_porc;
-		        $newBeneficiopollo->mollejas_corazones_porc = $request->mollejas_corazones_porc;
-		        $newBeneficiopollo->despojos_mermas = $request->despojos_mermas;
-		        $newBeneficiopollo->porc_pollo = $request->porc_pollo;
+		        $newBeneficiopollo->menudencia_pollo_porc = $this->MoneyToNumber($request->menudencia_pollo_porc);
+		        $newBeneficiopollo->mollejas_corazones_porc = $this->MoneyToNumber($request->mollejas_corazones_porc);
+		        $newBeneficiopollo->despojos_mermas = $this->MoneyToNumber($request->despojos_mermas);
+		        $newBeneficiopollo->porc_pollo = $this->MoneyToNumber($request->porc_pollo);
 		        
 		        $newBeneficiopollo->save();
 
