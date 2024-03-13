@@ -1,3 +1,4 @@
+
 import {sendData} from '../../exportModule/core/rogercode-core.js';
 import {successToastMessage, errorMessage} from '../../exportModule/message/rogercode-message.js';
 formBeneficio.addEventListener('submit', (e) => {

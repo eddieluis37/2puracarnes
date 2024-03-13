@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\aves;
+namespace App\Http\Controllers\pollo;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -12,7 +12,7 @@ use App\Models\Despostepollo;
 use App\Models\Beneficiopollo;
 use App\Models\Product;
 
-class desposteavesController extends Controller
+class despostepolloController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -35,7 +35,7 @@ class desposteavesController extends Controller
 
         $beneficior = DB::table('beneficiopollos as b')
             ->join('thirds as t', 'b.thirds_id', '=', 't.id')
-            ->select('t.name', 'b.id', 'b.lote', 'b.factura', 'b.canalplanta', 'b.cantidad', 'b.costokilo', 'b.fecha_cierre')
+            ->select('t.name', 'b.id', 'b.lote', 'b.factura', 'b.peso_canales_pollo_planta', 'b.cantidad', 'b.subtotal', 'b.fecha_cierre')
             ->where('b.id', $id)
             ->get();
         /******************/

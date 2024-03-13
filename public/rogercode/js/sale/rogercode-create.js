@@ -166,7 +166,7 @@ const showData = (data) => {
                 <td class="text-center">
                     <button class="btn btn-dark fas fa-edit" data-id="${
                         element.id
-                    }" name="btnEdit" title="Editar"></button>
+                    }" name="btnEdit" title="EditarJS"></button>
                     <button class="btn btn-dark fas fa-trash" name="btnDown" data-id="${
                         element.id
                     }" title="Borrar"></button>

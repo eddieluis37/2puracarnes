@@ -20,20 +20,20 @@ class CreateUtilidadBeneficiopollosTable extends Migration
 
             $table->string('producto', 50, 0)->nullable(); 
 
-            $table->decimal('kilos_pollo_entero',10,0)->default(0)->nullable(); 
-            $table->decimal('kilos_menudencia',10,0)->default(0)->nullable(); 
-            $table->decimal('kilos_mollejas_corazones',10,0)->default(0)->nullable(); 
-            $table->decimal('totales_kilos',10,0)->default(0)->nullable(); 
+            $table->decimal('kilos_pollo_entero',18, 2)->default(0)->nullable(); 
+         /*    $table->decimal('kilos_menudencia8, 20,0)->default(0)->nullable(); 
+            $table->decimal('kilos_mollejas_corazones8, 20,0)->default(0)->nullable();  */
+            $table->decimal('totales_kilos',18, 2)->default(0)->nullable(); 
 
-            $table->decimal('porcentaje_participacion', 18, 0)->nullable();
-            $table->decimal('costo_unitario', 18, 0)->nullable();
-            $table->decimal('costo_real', 18, 0)->nullable();
-            $table->decimal('precio_kg_venta', 18, 0)->nullable();
-            $table->decimal('ingresos_totales', 18, 0)->nullable();
-            $table->decimal('participacion_venta', 18, 0)->nullable();
-            $table->decimal('utilidad_dinero', 18, 0)->nullable();
-            $table->decimal('porcentaje_utilidad', 18, 0)->nullable();
-            $table->decimal('dinero_kilo', 18, 0)->nullable();
+            $table->decimal('porcentaje_participacion', 18, 2)->nullable();
+            $table->decimal('costo_unitario', 18, 2)->nullable();
+            $table->decimal('costo_real', 18, 2)->nullable();
+            $table->decimal('precio_kg_venta', 18, 2)->nullable();
+            $table->decimal('ingresos_totales', 18, 2)->nullable();
+            $table->decimal('participacion_venta', 18, 2)->nullable();
+            $table->decimal('utilidad_dinero', 18, 2)->nullable();
+            $table->decimal('porcentaje_utilidad', 18, 2)->nullable();
+            $table->decimal('dinero_kilo', 18, 2)->nullable();
             $table->timestamps();
         });
     }

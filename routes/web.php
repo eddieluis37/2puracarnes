@@ -41,8 +41,8 @@ use App\Http\Controllers\sale\saleController;
 
 use App\Http\Controllers\compensado\compensadoController;
 use App\Http\Controllers\alistamiento\alistamientoController;
-use App\Http\Controllers\aves\beneficioavesController;
-use App\Http\Controllers\aves\desposteavesController;
+use App\Http\Controllers\pollo\beneficiopolloController;
+use App\Http\Controllers\pollo\despostepolloController;
 use App\Http\Controllers\inventory\CargarVentasController;
 use App\Http\Controllers\inventory\CentroCostoProductController;
 use App\Http\Controllers\CentroCostoProdController;
@@ -234,7 +234,6 @@ Route::group(['middleware' => [('auth')]], function () {
     Route::get('inventory/cargar_ventas', [CargarVentasController::class, 'index'])->name('inventory.showcvc');
     Route::get('showCargarVentasInv', [CargarVentasController::class, 'show'])->name('inventory.showCargarVentas');
     Route::post('/updateCVInv', [CargarVentasController::class, 'updateCVInv'])->name('inventory.updateCVInv');
-    
 
     /*****************************BENEFICIO-RES*******************************************/
     Route::get('beneficiores', [beneficioresController::class, 'index'])->name('beneficiores.index');
@@ -245,15 +244,29 @@ Route::group(['middleware' => [('auth')]], function () {
     Route::get('downbeneficiores/{id}', [beneficioresController::class, 'destroy'])->name('beneficiores.destroy');
     Route::get('beneficiores/pdfLote/{id}', [pdfLoteController::class, 'pdfLote']);
 
-
     /*****************************DESPOSTE-RES******************************************/
     Route::get('desposteres', [desposteresController::class, 'index'])->name('desposteres.index');
     Route::get('desposteres/{id}', [desposteresController::class, 'create']);
     Route::post('/desposteresUpdate', [desposteresController::class, 'update']);
     Route::post('/downdesposter', [desposteresController::class, 'destroy']);
     Route::post('cargarInventario', [desposteresController::class, 'cargarInventario'])->name('desposteres.show');
-
+   
+     /********************************* BENEFICIO AVES******************************/
+     Route::get('beneficioaves', [beneficiopolloController::class, 'index'])->name('beneficioaves.index');
+     Route::get('get_plantasacrificiopollo_by_id', [beneficiopolloController::class, 'get_plantasacrificiopollo_by_id'])->name('get_plantasacrificiopollo_by_id');
+     Route::post('savebeneficioaves', [beneficiopolloController::class, 'store'])->name('beneficioaves.save');
+     Route::get('/beneficioavesedit/{id}', [beneficiopolloController::class, 'edit'])->name('beneficioaves.edit');
+     Route::get('showbeneficioaves', [beneficiopolloController::class, 'show'])->name('beneficioaves.showlist');
+     
+  
+     /*****************************DESPOSTE-AVES******************************************/
+     Route::get('desposteaves/{id}', [despostepolloController::class, 'create'])->name('desposteaves.create');
+     Route::post('/desposteavesUpdate', [despostepolloController::class, 'update'])->name('desposteaves.update');
+     Route::post('/downdesposteave', [despostepolloController::class, 'destroy'])->name('desposteaves.destroy'); 
+    
+    
     /*****************************DESPOSTE-CERDO******************************************/
+
     Route::get('despostecerdo', [despostecerdoController::class, 'index'])->name('despostecerdo.index');
     Route::get('despostecerdo/{id}', [despostecerdoController::class, 'create']);
     Route::post('/despostecerdoUpdate', [despostecerdoController::class, 'update']);
@@ -283,16 +296,7 @@ Route::group(['middleware' => [('auth')]], function () {
     Route::get('/beneficiocerdoedit/{id}', [beneficiocerdoController::class, 'edit'])->name('beneficiocerdo.edit');
     Route::get('downbeneficiocerdo/{id}', [beneficiocerdoController::class, 'destroy'])->name('beneficiocerdo.destroy');
 
-    /***** BENEFICIO AVES******** */
-    Route::get('beneficioaves', [beneficioavesController::class, 'index'])->name('beneficioaves.index');
-    Route::get('get_plantasacrificiopollo_by_id', [beneficioavesController::class, 'get_plantasacrificiopollo_by_id'])->name('get_plantasacrificiopollo_by_id');
-    Route::post('savebeneficioaves', [beneficioavesController::class, 'store'])->name('beneficioaves.save');
-    Route::get('showbeneficioaves', [beneficioavesController::class, 'show'])->name('beneficioaves.showlist');
-    Route::get('/beneficioavesedit/{id}', [beneficioavesController::class, 'edit'])->name('beneficioaves.edit');
-
-    Route::get('desposteaves/{id}', [desposteavesController::class, 'create'])->name('desposteaves.create');
-    Route::post('/desposteavesUpdate', [desposteavesController::class, 'update'])->name('desposteaves.update');
-    Route::post('/downdesposteave', [desposteavesController::class, 'destroy'])->name('desposteaves.destroy');
+   
 
     /**ALISTAMIENTO*/
     Route::get('alistamiento', [alistamientoController::class, 'index'])->name('alistamiento.index');
