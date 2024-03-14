@@ -18,6 +18,7 @@ class ConsolidadoVentasExport implements FromCollection, WithHeadings
             ->join('products', 'products.id', '=', 'sd.product_id')
             ->join('meatcuts', 'meatcuts.id', '=', 'products.meatcut_id')
             ->join('categories', 'categories.id', '=', 'products.category_id')
+            ->where('sales.tipo', '0')
             ->distinct('sales.id') // Filtrar ventas únicas por cada detalle de venta
             ->groupBy('sales.id', 'products.name') // Agrupar por ID de venta y nombre de producto
             ->get();
