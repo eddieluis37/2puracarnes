@@ -206,6 +206,9 @@ class beneficiopolloController extends Controller
                 if (Carbon::parse($currentDateTime->format('Y-m-d'))->gt(Carbon::parse($data->fecha_cierre))) {
                     $btn = '
                     <div class="text-center">
+                    <a href="utilidadaves/' . $data->id . '" class="btn btn-dark" title="Utilidad" >
+						<i class="fas fa-directions"></i>
+					</a>
 					<a href="desposteaves/' . $data->id . '" class="btn btn-dark" title="Despostar" >
 						<i class="fas fa-directions"></i>
 					</a>
@@ -220,6 +223,9 @@ class beneficiopolloController extends Controller
                 } elseif (Carbon::parse($currentDateTime->format('Y-m-d'))->lt(Carbon::parse($data->fecha_cierre))) {
                     $btn = '
                     <div class="text-center">
+                    <a href="utilidadaves/' . $data->id . '" class="btn btn-dark" title="Utilidad" >
+                    <i class="fas fa-directions"></i>
+                     </a>
 					<a href="desposteaves/' . $data->id . '" class="btn btn-dark" title="Despostar" >
 						<i class="fas fa-directions"></i>
 					</a>

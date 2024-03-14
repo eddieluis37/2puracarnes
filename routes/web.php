@@ -77,7 +77,7 @@ use App\Http\Controllers\recibodecaja\pdfRecibodecajaController;
 use App\Http\Controllers\recibodecaja\recibodecajaController;
 use App\Http\Controllers\res\pdfLoteController;
 use App\Http\Controllers\sale\exportFacturaController;
-
+use App\Http\Controllers\pollo\utilidadpolloController;
 
 
 /************************************************* */
@@ -258,15 +258,17 @@ Route::group(['middleware' => [('auth')]], function () {
      Route::get('/beneficioavesedit/{id}', [beneficiopolloController::class, 'edit'])->name('beneficioaves.edit');
      Route::get('showbeneficioaves', [beneficiopolloController::class, 'show'])->name('beneficioaves.showlist');
      
+     /*****************************UTILIDAD-AVES******************************************/
+     Route::get('utilidadaves/{id}', [utilidadpolloController::class, 'create'])->name('utilidadaves.create');
+     Route::post('/utilidadavesUpdate', [utilidadpolloController::class, 'update'])->name('utilidadaves.update');
+     Route::post('/downutilidadave', [utilidadpolloController::class, 'destroy'])->name('utilidadaves.destroy');   
   
      /*****************************DESPOSTE-AVES******************************************/
      Route::get('desposteaves/{id}', [despostepolloController::class, 'create'])->name('desposteaves.create');
      Route::post('/desposteavesUpdate', [despostepolloController::class, 'update'])->name('desposteaves.update');
-     Route::post('/downdesposteave', [despostepolloController::class, 'destroy'])->name('desposteaves.destroy'); 
-    
+     Route::post('/downdesposteave', [despostepolloController::class, 'destroy'])->name('desposteaves.destroy');    
     
     /*****************************DESPOSTE-CERDO******************************************/
-
     Route::get('despostecerdo', [despostecerdoController::class, 'index'])->name('despostecerdo.index');
     Route::get('despostecerdo/{id}', [despostecerdoController::class, 'create']);
     Route::post('/despostecerdoUpdate', [despostecerdoController::class, 'update']);

@@ -15,10 +15,14 @@ class CreateUtilidadBeneficiopollosTable extends Migration
     {
         Schema::create('utilidad_beneficiopollos', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('beneficiopollos_id');
-            $table->foreign('beneficiopollos_id')->references('id')->on('beneficiopollos');
+               
+            $table->unsignedBigInteger('user_id')->nullable();           
+            $table->foreign('user_id')->references('id')->on('users');
 
-            $table->string('producto', 50, 0)->nullable(); 
+            $table->unsignedBigInteger('beneficiopollos_id');
+            $table->foreign('beneficiopollos_id')->references('id')->on('beneficiopollos');         
+
+            $table->string('product_name', 50, 0)->nullable(); 
 
             $table->decimal('kilos_pollo_entero',18, 2)->default(0)->nullable(); 
          /*    $table->decimal('kilos_menudencia8, 20,0)->default(0)->nullable(); 
@@ -34,6 +38,7 @@ class CreateUtilidadBeneficiopollosTable extends Migration
             $table->decimal('utilidad_dinero', 18, 2)->nullable();
             $table->decimal('porcentaje_utilidad', 18, 2)->nullable();
             $table->decimal('dinero_kilo', 18, 2)->nullable();
+            $table->enum('status',['VALID','CANCELED'])->default('VALID');          
             $table->timestamps();
         });
     }

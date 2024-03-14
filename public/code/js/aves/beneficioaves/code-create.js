@@ -15,7 +15,7 @@ formBeneficio.addEventListener('submit', (e) => {
             //mySelectVisceras.val("").trigger("change");
             //formBeneficio.reset();
             if (result.registroId != 0) {
-                window.location.href = `desposteaves/${result.registroId}`;
+                window.location.href = `utilidadaves/${result.registroId}`;
             }else{
                 btnModalClose.click();
                 refresh_table();     
