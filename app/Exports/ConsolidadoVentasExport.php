@@ -25,8 +25,7 @@ class ConsolidadoVentasExport implements FromCollection, WithHeadings
             DB::raw('MAX(sales.created_at) as created_at'),    
             'sd.quantity',
             'sd.price',
-            'sd.total as total_sale_detail',
-            'sales.valor_a_pagar_efectivo',
+            'sd.total as total_sale_detail',          
             'sales.forma_pago_tarjeta_id',
             'sales.forma_pago_otros_id',
             'sales.forma_pago_credito_id',
@@ -47,7 +46,7 @@ class ConsolidadoVentasExport implements FromCollection, WithHeadings
             ->leftJoin('formapagos as formapagos_otros', 'formapagos_otros.id', '=', 'sales.forma_pago_otros_id') // Unir con formapagos para forma_pago_otros
             ->where('sales.tipo', '0')
             ->where('sales.id', '>', '1602')
-            ->groupBy('sales.id', 'products.name', 'sd.quantity', 'sd.price', 'sd.total', 'formapagos_tarjeta.nombre', 'formapagos_otros.nombre') // Incluir todos los campos en el GROUP BY
+            ->groupBy('sales.id', 'products.name', 'sd.quantity', 'sd.price', 'sd.total', 'formapagos_tarjeta.nombre', 'formapagos_otros.nombre', 'valor_a_pagar_efectivo') // Incluir todos los campos en el GROUP BY
             ->get();
     }
 
