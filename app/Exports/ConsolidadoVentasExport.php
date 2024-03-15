@@ -13,68 +13,69 @@ class ConsolidadoVentasExport implements FromCollection, WithHeadings
 {
     public function collection()
     {
-        return Sale::select(
-            'sales.id',
-            DB::raw('MAX(sales.consecutivo) as consecutivo'),
+        return Sale::select(           
             'products.name as producto',
-            DB::raw('MAX(sales.total) as total'),
-            DB::raw('MAX(sales.items) as items'),
-            DB::raw('MAX(sales.status) as status'),
-            DB::raw('MAX(u.name) as user'),
-            DB::raw('MAX(sales.valor_a_pagar_efectivo) as valor_a_pagar_efectivo'),
-            DB::raw('MAX(sales.forma_pago_tarjeta_id) as forma_pago_tarjeta_id'),
-            DB::raw('MAX(sales.forma_pago_otros_id) as forma_pago_otros_id'),
-            DB::raw('MAX(sales.created_at) as created_at'),    
             'sd.quantity',
             'sd.price',
-            'sd.total as total_sale_detail',                                  
-            'sales.forma_pago_credito_id',
+            'sd.total as total_sale_detail',                                                               
+            'sales.valor_a_pagar_efectivo',
             'sales.valor_a_pagar_tarjeta',
             'sales.valor_a_pagar_otros',
             'sales.valor_a_pagar_credito',
             'sales.total_valor_a_pagar',
-            'sales.valor_pagado',
+            'sales.valor_pagado',       
             'formapagos_tarjeta.nombre as forma_pago_tarjeta_nombre',
-            'formapagos_otros.nombre as forma_pago_otros_nombre'
+            'formapagos_otros.nombre as forma_pago_otros_nombre',
+            DB::raw('MAX(sales.fecha_venta) as fecha_venta'),
+            'sales.id',
+            DB::raw('MAX(sales.consecutivo) as consecutivo'),
+
+            DB::raw('MAX(sales.forma_pago_tarjeta_id) as forma_pago_tarjeta_id'),
+            DB::raw('MAX(sales.forma_pago_otros_id) as forma_pago_otros_id'),
+
+            DB::raw('MAX(sales.total) as total'),
+            DB::raw('MAX(sales.items) as items'),
+            DB::raw('MAX(sales.status) as status'),
+            DB::raw('MAX(u.name) as user'),
+            DB::raw('MAX(sales.valor_a_pagar_efectivo) as valor_a_pagar_efectivo'),         
+            
+
+            
+          
+      /*       */
+            
         )
             ->join('users as u', 'u.id', 'sales.user_id')
             ->join('sale_details as sd', 'sales.id', 'sd.sale_id')
-            ->join('products', 'products.id', '=', 'sd.product_id')
-            ->join('meatcuts', 'meatcuts.id', '=', 'products.meatcut_id')
+            ->join('products', 'products.id', '=', 'sd.product_id')         
             ->join('categories', 'categories.id', '=', 'products.category_id')
             ->leftJoin('formapagos as formapagos_tarjeta', 'formapagos_tarjeta.id', '=', 'sales.forma_pago_tarjeta_id') // Unir con formapagos para forma_pago_tarjeta
-            ->leftJoin('formapagos as formapagos_otros', 'formapagos_otros.id', '=', 'sales.forma_pago_otros_id') // Unir con formapagos para forma_pago_otros
+            ->leftJoin('formapagos as formapagos_otros', 'formapagos_otros.id', '=', 'sales.forma_pago_otros_id') // Unir con formapagos para forma_pago_otros */
             ->where('sales.tipo', '0')
             ->where('sales.id', '>', '1602')
-            ->groupBy('sales.id', 'products.name', 'sd.quantity', 'sd.price', 'sd.total', 'formapagos_tarjeta.nombre', 'formapagos_otros.nombre', 'valor_a_pagar_efectivo', 'forma_pago_tarjeta_id', 'forma_pago_otros_id') // Incluir todos los campos en el GROUP BY
+           /*  ->groupBy('products.name') */
+            ->groupBy('products.name', 'sd.quantity', 'sd.price', 'sd.total', 'formapagos_tarjeta.nombre', 'formapagos_otros.nombre', 'valor_a_pagar_efectivo', 'forma_pago_tarjeta_id', 'forma_pago_otros_id', 'sales.id') // Incluir todos los campos en el GROUP BY
             ->get();
     }
 
     public function headings(): array
     {
-        return [
-            'ID',
-            'CONSECUTIVO',
+        return [            
             'NOMBRE PRODUCTO',
-            'TOTAL',
-            'ITEMS',
-            'STATUS',
-            'USUARIO',
-            'FECHA',
             'CANTIDAD',
-            'PRECIO',
-            'TOTAL DETALLE',
+            'VALOR UNITARIO',
+            'VALOR TOTAL',            
             'VALOR A PAGAR EFECTIVO',
-            'ID FORMA PAGO TARJETA',
-            'ID FORMA PAGO OTROS',
-            'ID FORMA PAGO CREDITO',
             'VALOR A PAGAR TARJETA',
             'VALOR A PAGAR OTROS',
             'VALOR A PAGAR CREDITO',
             'TOTAL VALOR A PAGAR',
             'VALOR PAGADO',
             'FORMA PAGO TARJETA NOMBRE',
-            'FORMA PAGO OTROS NOMBRE'
+            'FORMA PAGO OTROS NOMBRE',
+            'FECHA VENTA',   
+            'ID',
+            'CONSECUTIVO',           
         ];
     }
 }
