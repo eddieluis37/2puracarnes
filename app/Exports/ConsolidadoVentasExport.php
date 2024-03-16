@@ -15,11 +15,11 @@ class ConsolidadoVentasExport implements FromCollection, WithHeadings
     {
         return Sale::select(           
             'products.name as producto',
-            'sd.quantity',
-            'sd.price',
-            'sd.total as total_sale_detail',                                                               
+            DB::raw('SUM(sd.quantity) as cantidad_total'),
+            DB::raw('SUM(sd.price) as valor_unitario_total'),
+            DB::raw('SUM(sd.total) as valor_total_producto'),                                                               
             'sales.valor_a_pagar_efectivo',
-            'sales.valor_a_pagar_tarjeta',
+            DB::raw('MAX(sales.valor_a_pagar_tarjeta) as valor_a_pagar_tarjeta'),         
             'sales.valor_a_pagar_otros',
             'sales.valor_a_pagar_credito',
             'sales.total_valor_a_pagar',
@@ -29,32 +29,23 @@ class ConsolidadoVentasExport implements FromCollection, WithHeadings
             DB::raw('MAX(sales.fecha_venta) as fecha_venta'),
             'sales.id',
             DB::raw('MAX(sales.consecutivo) as consecutivo'),
-
             DB::raw('MAX(sales.forma_pago_tarjeta_id) as forma_pago_tarjeta_id'),
             DB::raw('MAX(sales.forma_pago_otros_id) as forma_pago_otros_id'),
-
             DB::raw('MAX(sales.total) as total'),
             DB::raw('MAX(sales.items) as items'),
             DB::raw('MAX(sales.status) as status'),
             DB::raw('MAX(u.name) as user'),
-            DB::raw('MAX(sales.valor_a_pagar_efectivo) as valor_a_pagar_efectivo'),         
-            
-
-            
-          
-      /*       */
-            
+            DB::raw('MAX(sales.valor_a_pagar_efectivo) as valor_a_pagar_efectivo'),     
         )
             ->join('users as u', 'u.id', 'sales.user_id')
             ->join('sale_details as sd', 'sales.id', 'sd.sale_id')
             ->join('products', 'products.id', '=', 'sd.product_id')         
             ->join('categories', 'categories.id', '=', 'products.category_id')
-            ->leftJoin('formapagos as formapagos_tarjeta', 'formapagos_tarjeta.id', '=', 'sales.forma_pago_tarjeta_id') // Unir con formapagos para forma_pago_tarjeta
-            ->leftJoin('formapagos as formapagos_otros', 'formapagos_otros.id', '=', 'sales.forma_pago_otros_id') // Unir con formapagos para forma_pago_otros */
+            ->leftJoin('formapagos as formapagos_tarjeta', 'formapagos_tarjeta.id', '=', 'sales.forma_pago_tarjeta_id')
+            ->leftJoin('formapagos as formapagos_otros', 'formapagos_otros.id', '=', 'sales.forma_pago_otros_id')
             ->where('sales.tipo', '0')
             ->where('sales.id', '>', '1602')
-           /*  ->groupBy('products.name') */
-            ->groupBy('products.name', 'sd.quantity', 'sd.price', 'sd.total', 'formapagos_tarjeta.nombre', 'formapagos_otros.nombre', 'valor_a_pagar_efectivo', 'forma_pago_tarjeta_id', 'forma_pago_otros_id', 'sales.id') // Incluir todos los campos en el GROUP BY
+            ->groupBy('products.name') 
             ->get();
     }
 
