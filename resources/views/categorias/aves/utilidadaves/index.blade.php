@@ -49,6 +49,38 @@
 									</div>
 								</div>
 							</div>
+							<div class="col-md-3">
+								<div class="task-header">
+									<div class="form-group">
+										<label>Peso pie planta</label>									
+										<p>{{number_format($beneficior[0]->peso_pie_planta, 0, ',', '.')}} KG</p>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-3">
+								<div class="task-header">
+									<div class="form-group">
+										<label>Promedio canal fria</label>									
+										<p>{{number_format($beneficior[0]->promedio_canal_fria_sala, 3, ',', '.')}} KG</p>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-3">
+								<div class="task-header">
+									<div class="form-group">
+										<label>Kilos menudencias</label>									
+										<p>{{number_format($beneficior[0]->menudencia_pollo_kg, 3, ',', '.')}} KG</p>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-3">
+								<div class="task-header">
+									<div class="form-group">
+										<label>Mollejas/Corazonez</label>									
+										<p>{{number_format($beneficior[0]->mollejas_corazones_kg, 3, ',', '.')}} KG</p>
+									</div>
+								</div>
+							</div>							
 						</div>
 					</div>
 				</div>
@@ -61,22 +93,24 @@
 								<thead class="text-white" style="background: #3B3F5C">
 									<tr>										
 										<th class="table-th text-white" title="Productos">Productos</th>
+										<th class="table-th text-white" title="kilos">KILOS</th>
 										<th class="table-th text-white" title="porcentaje_participacion">%PAR</th>
 										<th class="table-th text-white" title="costo_unitario">C.UNIT</th>
 										<th class="table-th text-white" title="costo_real">C.REAL</th>
 										<th class="table-th text-white" title="precio_kg_venta">P.KG.V</th>
-										<th class="table-th text-white" title="ingresos_totales">IN.TOTOTALES</th>
-										<th class="table-th text-white" title="participacion_venta">PAR.VENTAS</th>
-										<th class="table-th text-white" title="utilidad_dinero">$.UTILIDAD</th>
-										<th class="table-th text-white" title="porcentaje_utilidad">%.UTILIDAD</th>
+										<th class="table-th text-white" title="ingresos_totales">IN.T</th>
+										<th class="table-th text-white" title="participacion_venta">PAR.V</th>
+										<th class="table-th text-white" title="utilidad_dinero">$.UT</th>
+										<th class="table-th text-white" title="porcentaje_utilidad">%.UT</th>
 										<th class="table-th text-white" title="dinero_kilo">$.KILO</th>
-										<th class="table-th text-white text-center">Acciones</th>
+										<th class="table-th text-white text-center">Acción</th>
 									</tr>
 								</thead>
 								<tbody id="tbody">
 									@foreach($desposters as $item)
 									<tr>
 										<td> {{ $item->product_name }}</td>
+										<td> {{ $item->kilos }} %</td>
 										<td> {{ $item->porcentaje_participacion }} %</td>
 										<td>$ {{ number_format($item->costo_unitario, 0, ',', '.')}}</td>
 										<td>$ {{ number_format($item->costo_real, 0, ',', '.')}}</td>								

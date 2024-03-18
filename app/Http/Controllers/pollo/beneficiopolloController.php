@@ -111,8 +111,8 @@ class beneficiopolloController extends Controller
                 $newBeneficiopollo->total_factura = $this->MoneyToNumber($request->total_factura);
 
                 $newBeneficiopollo->promedio_pie_kg = $this->MoneyToNumber($request->promedio_pie_kg);
-                $newBeneficiopollo->mollejas_corazones_kg = $this->MoneyToNumber($request->mollejas_corazones_kg);
-                $newBeneficiopollo->promedio_canal_fria_sala = $this->MoneyToNumber($request->promedio_canal_fria_sala);
+                $newBeneficiopollo->peso_pie_planta = $this->MoneyToNumber($request->peso_pie_planta);
+                $newBeneficiopollo->promedio_canal_fria_sala = $this->MoneyToNumber($request->promedio_canal_fria_sala);                              
                 $newBeneficiopollo->peso_canales_pollo_planta = $this->MoneyToNumber($request->peso_canales_pollo_planta);
 
                 $newBeneficiopollo->menudencia_pollo_kg = $this->MoneyToNumber($request->menudencia_pollo_kg);
@@ -150,7 +150,7 @@ class beneficiopolloController extends Controller
                 $updateBeneficiopollo->total_factura = $this->MoneyToNumber($request->total_factura);
 
                 $updateBeneficiopollo->promedio_pie_kg = $this->MoneyToNumber($request->promedio_pie_kg);
-                $updateBeneficiopollo->mollejas_corazones_kg = $this->MoneyToNumber($request->mollejas_corazones_kg);
+                $updateBeneficiopollo->peso_pie_planta = $this->MoneyToNumber($request->peso_pie_planta);                
                 $updateBeneficiopollo->promedio_canal_fria_sala = $this->MoneyToNumber($request->promedio_canal_fria_sala);
                 $updateBeneficiopollo->peso_canales_pollo_planta = $this->MoneyToNumber($request->peso_canales_pollo_planta);
 

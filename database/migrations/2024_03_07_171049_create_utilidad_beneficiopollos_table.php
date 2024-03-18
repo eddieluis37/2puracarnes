@@ -24,9 +24,9 @@ class CreateUtilidadBeneficiopollosTable extends Migration
 
             $table->string('product_name', 50, 0)->nullable(); 
 
-            $table->decimal('kilos_pollo_entero',18, 2)->default(0)->nullable(); 
-         /*    $table->decimal('kilos_menudencia8, 20,0)->default(0)->nullable(); 
-            $table->decimal('kilos_mollejas_corazones8, 20,0)->default(0)->nullable();  */
+            $table->decimal('kilos',18, 2)->default(0)->nullable(); 
+            
+            
             $table->decimal('totales_kilos',18, 2)->default(0)->nullable(); 
 
             $table->decimal('porcentaje_participacion', 18, 2)->nullable();

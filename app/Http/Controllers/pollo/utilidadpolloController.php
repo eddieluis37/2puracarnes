@@ -21,7 +21,7 @@ class utilidadpolloController extends Controller
 
         $beneficior = DB::table('beneficiopollos as b')
             ->join('thirds as t', 'b.thirds_id', '=', 't.id')
-            ->select('t.name', 'b.id', 'b.lote', 'b.factura', 'b.peso_canales_pollo_planta', 'b.cantidad', 'b.subtotal', 'b.fecha_cierre')
+            ->select('t.name', 'b.id', 'b.lote', 'b.factura', 'b.peso_pie_planta as peso_pie_planta', 'b.promedio_canal_fria_sala', 'b.menudencia_pollo_kg', 'b.mollejas_corazones_kg', 'b.peso_canales_pollo_planta', 'b.cantidad', 'b.subtotal', 'b.fecha_cierre')
             ->where('b.id', $id)
             ->get();
         /******************/
@@ -33,33 +33,41 @@ class utilidadpolloController extends Controller
         if (count($this->consulta) === 0) {
             // Arreglo estático con los registros deseados
             $staticProducts = [
-                ['id' => 1, 'name' => 'POLLO ENTERO', 'price_fama' => 10],
+                ['id' => 1, 'name' => 'POLLO_ENTERO', 'price_fama' => 10],
                 ['id' => 2, 'name' => 'MENUDENCIAS', 'price_fama' => 5],
-                ['id' => 3, 'name' => 'MOLLEJAS', 'price_fama' => 3],
+                ['id' => 3, 'name' => 'MOLLEJAS_CORAZONES', 'price_fama' => 3],
             ];
 
             foreach ($staticProducts as $staticProduct) {
                 $despost = new Utilidad_beneficiopollos();
                 $despost->user_id = $id_user;
                 $despost->beneficiopollos_id = $id;
-            //    $despost->products_id = null; // Puedes asignar null ya que no corresponde a un ID de producto
                 $despost->product_name = $staticProduct['name']; // Agregar un campo para el nombre del producto estático
-                $despost->kilos_pollo_entero = 0;
-                $despost->totales_kilos = 0;
 
-                $despost->porcentaje_participacion = 0;
+                foreach ($beneficior as $beneficio) {
+                    if ($staticProduct['id'] == 1) {
+                        $despost->kilos = ($beneficio->peso_pie_planta * $beneficio->promedio_canal_fria_sala) * 100;
+                    } elseif ($staticProduct['id'] == 2) {
+                        $despost->kilos = $beneficio->menudencia_pollo_kg;
+                    } elseif ($staticProduct['id'] == 3) {
+                        $despost->kilos = $beneficio->peso_canales_pollo_planta;
+                    }
+                }
+
+                $despost->totales_kilos = $despost->kilos_pollo_entero + $despost->kilos_menudencias + $despost->kilos_mollejas_corazones;
+                $despost->porcentaje_participacion = 99;
                 $despost->costo_unitario = 0;
-                $despost->costo_real = $staticProduct['price_fama'];              
+                $despost->costo_real = $staticProduct['price_fama'];
                 $despost->precio_kg_venta = 0;
                 $despost->ingresos_totales = 0;
-
                 $despost->participacion_venta = 0;
-                $despost->utilidad_dinero = 0;   
+                $despost->utilidad_dinero = 0;
                 $despost->porcentaje_utilidad = 0;
-                $despost->dinero_kilo = 0;               
+                $despost->dinero_kilo = 0;
                 $despost->status = 'VALID';
                 $despost->save();
             }
+
             $this->consulta = Utilidad_beneficiopollos::Where([
                 ['beneficiopollos_id', $id],
                 ['status', 'VALID'],
