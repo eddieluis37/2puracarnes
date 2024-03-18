@@ -3,17 +3,22 @@
 
         <ul class="menu-categories">
 
-            @role('Admin')
+            @can('Report_Create')
             <li class="menu active">
                 <a href="#dashboard" data-active="true" class="menu-toggle">
                     <div class="base-menu">
                         <div class="base-icons">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-home">
-                                <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
-                                <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-bar-chart-2">
+                                <rect x="4" y="2" width="16" height="20" rx="2" ry="2"></rect>
+                                <line x1="12" y1="2" x2="12" y2="22"></line>
+                                <line x1="6" y1="6" x2="6" y2="6"></line>
+                                <line x1="6" y1="12" x2="6" y2="12"></line>
+                                <line x1="6" y1="18" x2="6" y2="18"></line>
+                                <line x1="18" y1="16" x2="18" y2="16"></line>
+                                <line x1="18" y1="8" x2="18" y2="8"></line>
                             </svg>
                         </div>
-                        <span>Tableros</span>
+                        <span>Reportes</span>
                     </div>
                 </a>
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-left">
@@ -21,6 +26,31 @@
                 </svg>
             </li>
             @endcan
+
+
+            <!--      @can('Report_Create')
+            <li class="menu">
+                <a href="#reports" data-active="true" class="menu-toggle">
+                    <div class="base-menu">
+                        <div class="base-icons">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-bar-chart-2">
+                                <rect x="4" y="2" width="16" height="20" rx="2" ry="2"></rect>
+                                <line x1="12" y1="2" x2="12" y2="22"></line>
+                                <line x1="6" y1="6" x2="6" y2="6"></line>
+                                <line x1="6" y1="12" x2="6" y2="12"></line>
+                                <line x1="6" y1="18" x2="6" y2="18"></line>
+                                <line x1="18" y1="16" x2="18" y2="16"></line>
+                                <line x1="18" y1="8" x2="18" y2="8"></line>
+                            </svg>
+                        </div>
+                        <span>Reportes</span>
+                    </div>
+                </a>
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-left">
+                    <polyline points="15 18 9 12 15 6"></polyline>
+                </svg>
+            </li>
+            @endcan -->
 
             @can('Admin_Menu')
             <li class="menu">
@@ -41,57 +71,6 @@
             </li>
             @endcan
 
-            @can('Admin_Menu')
-            <li class="menu">
-                <a href="#documentos" data-active="false" class="menu-toggle">
-                    <div class="base-menu">
-                        <div class="base-icons">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text">
-                                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
-                                <polyline points="14 2 14 8 20 8"></polyline>
-                                <line x1="16" y1="13" x2="8" y2="13"></line>
-                            </svg>
-                        </div>
-                        <span>Documentos</span>
-                    </div>
-                </a>
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-left">
-                    <polyline points="15 18 9 12 15 6"></polyline>
-                </svg>
-            </li>
-            @endcan
-
-            <!--             @can('Pos_Create')
-            <li class="">
-                <a href="{{ url('sale/create/3') }}" class="menu-toggle" data-active="false">
-                    <div class="base-menu">
-                        <div class="base-icons">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-refresh-cw">
-                                <path d="M23 4v6h-6"></path>
-                                <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path>
-                            </svg>
-                        </div>
-                        <span>Ventas M</span>
-                    </div>
-                </a>
-            </li>
-            @endcan -->
-
-            <!--   @can('Pos_Create')
-            <li class="">
-                <a href="{{ url('storeVentaMostrador') }}" class="menu-toggle" data-active="false">
-                    <div class="base-menu">
-                        <div class="base-icons">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-shopping-bag">
-                                <path d="M3 6l2.5 15h13L21 6"></path>
-                                <path d="M16 10a4 4 0 0 1-8 0"></path>
-                            </svg>
-                        </div>
-                        <span>Ventas M</span>
-                    </div>
-                </a>
-            </li>
-            @endcan -->
 
             @can('Pos_Create')
             <li class="">
@@ -123,19 +102,19 @@
                     </div>
                 </a>
             </li>
-            @endcan
 
-            @can('Product_View')
+            @can('Admin_Menu')
             <li class="menu">
-                <a href="#products" data-active="false" class="menu-toggle">
+                <a href="#documentos" data-active="false" class="menu-toggle">
                     <div class="base-menu">
                         <div class="base-icons">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-tag">
-                                <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path>
-                                <line x1="7" y1="7" x2="7.01" y2="7"></line>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text">
+                                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                                <polyline points="14 2 14 8 20 8"></polyline>
+                                <line x1="16" y1="13" x2="8" y2="13"></line>
                             </svg>
                         </div>
-                        <span>Productos</span>
+                        <span>Documentos</span>
                     </div>
                 </a>
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-left">
@@ -143,8 +122,6 @@
                 </svg>
             </li>
             @endcan
-
-
 
             @can('Compras')
             <li class="menu">
@@ -183,27 +160,39 @@
             </li>
             @endcan
 
-
-
-
-
-            <!--   @role('Admin')
+            @can('Workshop')
             <li class="">
-                <a href="{{url('faster')}}" class="menu-toggle" data-active="false">
+                <a href="{{url('workshop')}}" class="menu-toggle" data-active="false">
                     <div class="base-menu">
                         <div class="base-icons">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-shopping-cart">
-                                <circle cx="9" cy="21" r="1"></circle>
-                                <circle cx="20" cy="21" r="1"></circle>
-                                <path d="M1 1h4l2.25 7h13.5l2.25-7h4"></path>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-tools">
+                                <path d="M21 13v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-8m2 0V5a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v8m-6 0h4"></path>
+                                <line x1="8" y1="3" x2="8" y2="3"></line>
+                                <line x1="12" y1="3" x2="12" y2="3"></line>
+                                <line x1="16" y1="3" x2="16" y2="3"></line>
                             </svg>
                         </div>
-                        <span>Faster</span>
+                        <span>Taller</span>
                     </div>
                 </a>
             </li>
-            @endcan        -->
+            @endcan
 
+            @role('Admin')
+            <li class="">
+                <a href="{{url('transfer')}}" class="menu-toggle" data-active="false">
+                    <div class="base-menu">
+                        <div class="base-icons">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-dollar-sign">
+                                <line x1="12" y1="1" x2="12" y2="23"></line>
+                                <path d="M19 12h2M3 12h2M18 4.06l1.06 1.06M5.94 19.94L4.88 18"></path>
+                            </svg>
+                        </div>
+                        <span>Traslado</span>
+                    </div>
+                </a>
+            </li>
+            @endcan
 
             @can('Inventory')
             <li class="menu">
@@ -233,6 +222,84 @@
             @endcan
 
 
+            <!--             @can('Pos_Create')
+            <li class="">
+                <a href="{{ url('sale/create/3') }}" class="menu-toggle" data-active="false">
+                    <div class="base-menu">
+                        <div class="base-icons">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-refresh-cw">
+                                <path d="M23 4v6h-6"></path>
+                                <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path>
+                            </svg>
+                        </div>
+                        <span>Ventas M</span>
+                    </div>
+                </a>
+            </li>
+            @endcan -->
+
+            <!--   @can('Pos_Create')
+            <li class="">
+                <a href="{{ url('storeVentaMostrador') }}" class="menu-toggle" data-active="false">
+                    <div class="base-menu">
+                        <div class="base-icons">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-shopping-bag">
+                                <path d="M3 6l2.5 15h13L21 6"></path>
+                                <path d="M16 10a4 4 0 0 1-8 0"></path>
+                            </svg>
+                        </div>
+                        <span>Ventas M</span>
+                    </div>
+                </a>
+            </li>
+            @endcan -->
+
+            @endcan
+
+            @can('Product_View')
+            <li class="menu">
+                <a href="#products" data-active="false" class="menu-toggle">
+                    <div class="base-menu">
+                        <div class="base-icons">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-tag">
+                                <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path>
+                                <line x1="7" y1="7" x2="7.01" y2="7"></line>
+                            </svg>
+                        </div>
+                        <span>Productos</span>
+                    </div>
+                </a>
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-left">
+                    <polyline points="15 18 9 12 15 6"></polyline>
+                </svg>
+            </li>
+            @endcan
+
+
+
+
+
+
+
+            <!--   @role('Admin')
+            <li class="">
+                <a href="{{url('faster')}}" class="menu-toggle" data-active="false">
+                    <div class="base-menu">
+                        <div class="base-icons">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-shopping-cart">
+                                <circle cx="9" cy="21" r="1"></circle>
+                                <circle cx="20" cy="21" r="1"></circle>
+                                <path d="M1 1h4l2.25 7h13.5l2.25-7h4"></path>
+                            </svg>
+                        </div>
+                        <span>Faster</span>
+                    </div>
+                </a>
+            </li>
+            @endcan        -->
+
+
+            <!-- 
             @can('Cashout_Create')
             <li class="">
                 <a href="{{url('cashout')}}" class="menu-toggle" data-active="false">
@@ -248,9 +315,9 @@
                 </a>
             </li>
             @endcan
+ -->
 
-
-            @can('Admin_Menu')
+            <!--    @can('Admin_Menu')
             <li class="menu">
                 <a href="#documentos" data-active="false" class="menu-toggle">
                     <div class="base-menu">
@@ -268,7 +335,7 @@
                     <polyline points="15 18 9 12 15 6"></polyline>
                 </svg>
             </li>
-            @endcan
+            @endcan -->
 
             @can('Admin_Menu')
             <li class="menu">
@@ -291,39 +358,6 @@
             </li>
             @endcan
 
-            @role('Admin')
-            <li class="">
-                <a href="{{url('transfer')}}" class="menu-toggle" data-active="false">
-                    <div class="base-menu">
-                        <div class="base-icons">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-dollar-sign">
-                                <line x1="12" y1="1" x2="12" y2="23"></line>
-                                <path d="M19 12h2M3 12h2M18 4.06l1.06 1.06M5.94 19.94L4.88 18"></path>
-                            </svg>
-                        </div>
-                        <span>Traslado</span>
-                    </div>
-                </a>
-            </li>
-            @endcan
-
-            @can('Workshop')
-            <li class="">
-                <a href="{{url('workshop')}}" class="menu-toggle" data-active="false">
-                    <div class="base-menu">
-                        <div class="base-icons">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-tools">
-                                <path d="M21 13v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-8m2 0V5a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v8m-6 0h4"></path>
-                                <line x1="8" y1="3" x2="8" y2="3"></line>
-                                <line x1="12" y1="3" x2="12" y2="3"></line>
-                                <line x1="16" y1="3" x2="16" y2="3"></line>
-                            </svg>
-                        </div>
-                        <span>Taller</span>
-                    </div>
-                </a>
-            </li>
-            @endcan
 
             @can('Parametros_Menu')
             <li class="menu">
@@ -345,7 +379,7 @@
             </li>
             @endcan
 
-            @can('Category_View')
+            <!--    @can('Category_View')
             <li class="menu">
                 <a href="#pages" data-active="false" class="menu-toggle">
                     <div class="base-menu">
@@ -362,31 +396,9 @@
                     <polyline points="15 18 9 12 15 6"></polyline>
                 </svg>
             </li>
-            @endcan
+            @endcan -->
 
-            @can('Report_Create')
-            <li class="menu">
-                <a href="#reports" data-active="false" class="menu-toggle">
-                    <div class="base-menu">
-                        <div class="base-icons">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-bar-chart-2">
-                                <rect x="4" y="2" width="16" height="20" rx="2" ry="2"></rect>
-                                <line x1="12" y1="2" x2="12" y2="22"></line>
-                                <line x1="6" y1="6" x2="6" y2="6"></line>
-                                <line x1="6" y1="12" x2="6" y2="12"></line>
-                                <line x1="6" y1="18" x2="6" y2="18"></line>
-                                <line x1="18" y1="16" x2="18" y2="16"></line>
-                                <line x1="18" y1="8" x2="18" y2="8"></line>
-                            </svg>
-                        </div>
-                        <span>Reportes</span>
-                    </div>
-                </a>
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-left">
-                    <polyline points="15 18 9 12 15 6"></polyline>
-                </svg>
-            </li>
-            @endcan
+
         </ul>
     </nav>
 
@@ -401,11 +413,46 @@
                         </svg> Generales</a>
                 </li>
                 <li class="active">
-                    <a href="{{ url('home') }}"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-shopping-bag">
+                    <a href="{{ url('reports') }}"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-shopping-bag">
                             <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
                             <line x1="3" y1="6" x2="21" y2="6"></line>
                             <path d="M16 10a4 4 0 0 1-8 0"></path>
-                        </svg> Ventas </a>
+                        </svg> Reporte de Ventas </a>
+                </li>
+
+                <li class="sub-submenu">
+                    <a role="menu" class="collapsed" data-toggle="collapse" data-target="#sale" aria-expanded="false">
+                        <div><span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-circle">
+                                    <circle cx="12" cy="12" r="10"></circle>
+                                </svg></span> Ventas</div> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right">
+                            <polyline points="9 18 15 12 9 6"></polyline>
+                        </svg>
+                    </a>
+                    <ul id="sale" class="collapse" data-parent="#compact_submenuSidebar">
+                        <li>
+                            <a href="{{ url('excel-consolidado-ventas') }}"> Consolidado Ventas </a>
+                        </li>
+                        <li>
+                            <a href="{{ url('descargar-reporte') }}"> Stock fisico real </a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="sub-submenu">
+                    <a role="menu" class="collapsed" data-toggle="collapse" data-target="#inventory" aria-expanded="false">
+                        <div><span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-circle">
+                                    <circle cx="12" cy="12" r="10"></circle>
+                                </svg></span> Inventarios</div> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right">
+                            <polyline points="9 18 15 12 9 6"></polyline>
+                        </svg>
+                    </a>
+                    <ul id="inventory" class="collapse" data-parent="#compact_submenuSidebar">
+                        <li>
+                            <a href="{{ url('excel-analisis-kg') }}"> Análisis de KG </a>
+                        </li>
+                        <li>
+                            <a href="{{ url('excel-analisis-utilidad') }}"> Análisis de Utilidad </a>
+                        </li>
+                    </ul>
                 </li>
             </ul>
         </div>
@@ -429,7 +476,7 @@
                     <a href="{{ url('inventory/consolidado') }}"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check-square">
                             <polyline points="9 11 12 14 22 4"></polyline>
                             <path d="M22 4v16H6"></path>
-                        </svg> Cierre de Inv</a>
+                        </svg> Cierre de Inv KG</a>
                 </li>
                 <li>
                     <a href="{{ url('inventory/utilidad') }}"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check-square">
@@ -486,7 +533,7 @@
                             <polyline points="14 2 14 8 20 8"></polyline>
                             <line x1="12" y1="18" x2="12" y2="12"></line>
                             <line x1="9" y1="15" x2="15" y2="15"></line>
-                        </svg> Stock Fisico</a>
+                        </svg> Stock Fisico real</a>
                 </li>
                 <li>
                     <a href="{{ url('') }}"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-dollar-sign">
@@ -848,6 +895,20 @@
 
         <div class=" submenu" id="users">
             <ul class="submenu-list" data-parent-element="#users">
+                <li class="sub-submenu">
+                    <a role="menu" class="collapsed" data-toggle="collapse" data-target="#admin" aria-expanded="false">
+                        <div><span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-circle">
+                                    <circle cx="12" cy="12" r="10"></circle>
+                                </svg></span> Admin</div> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right">
+                            <polyline points="9 18 15 12 9 6"></polyline>
+                        </svg>
+                    </a>
+                    <ul id="admin" class="collapse" data-parent="#compact_submenuSidebar">
+                        <li>
+                            <a href="{{ url('meatcuts') }}"> Cortes principales </a>
+                        </li>
+                    </ul>
+                </li>
                 <li>
                     <a href="{{ url('roles') }}"><span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-circle">
                                 <circle cx="12" cy="12" r="10"></circle>
@@ -878,11 +939,11 @@
                                 <circle cx="12" cy="12" r="10"></circle>
                             </svg></span> Terceros </a>
                 </li>
-                <li>
+                <!--   <li>
                     <a href="{{url('precio_agreements')}}"><span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-circle">
                                 <circle cx="12" cy="12" r="10"></circle>
                             </svg></span> Precios Acuerdos </a>
-                </li>
+                </li> -->
                 <li>
                     <a href="{{url('formapago')}}"><span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-circle">
                                 <circle cx="12" cy="12" r="10"></circle>
@@ -893,12 +954,19 @@
                                 <circle cx="12" cy="12" r="10"></circle>
                             </svg></span> Parámetros Contables </a>
                 </li>
+                <li>
+                    <a href="{{ url('categories') }}"><span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-circle">
+                                <circle cx="12" cy="12" r="10"></circle>
+                            </svg></span> Categorías </a>
+                </li>
+
+
             </ul>
         </div>
 
 
 
-        <div class="submenu" id="pages">
+        <!--   <div class="submenu" id="pages">
             <ul class="submenu-list" data-parent-element="#pages">
                 <li>
                     <a href="{{ url('categories') }}"><span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-circle">
@@ -921,7 +989,7 @@
                     </ul>
                 </li>
             </ul>
-        </div>
+        </div> -->
 
         <div class="submenu" id="reports">
             <ul class="submenu-list" data-parent-element="#reports">
@@ -944,7 +1012,7 @@
                             <a href="{{ url('excel-consolidado-ventas') }}"> Consolidado Ventas </a>
                         </li>
                         <li>
-                            <a href="{{ url('descargar-reporte') }}"> Stock fisico </a>
+                            <a href="{{ url('descargar-reporte') }}"> Stock fisico real</a>
                         </li>
                     </ul>
                 </li>
@@ -963,7 +1031,7 @@
                         </li>
                         <li>
                             <a href="{{ url('excel-analisis-utilidad') }}"> Análisis de Utilidad </a>
-                        </li>                       
+                        </li>
                     </ul>
                 </li>
             </ul>
@@ -1052,7 +1120,7 @@
                 <li>
                     <a href="{{ url('compensado') }}"><span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-circle">
                                 <circle cx="12" cy="12" r="10"></circle>
-                            </svg></span> Compensado </a>
+                            </svg></span> Productos cárnicos </a>
                 </li>
 
             </ul>
