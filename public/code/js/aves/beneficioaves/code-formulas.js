@@ -17,6 +17,26 @@ plantasacrificio_id.change(function () {
     var plantasacrificio_id = $("#plantasacrificio_id");
     $(obtener_registroid(plantasacrificio_id.val()));
 });
+function obtener_registroid(plantasacrificio_id) {
+    // alert("id "+plantasacrificio_id);
+    $.ajax({
+        url: "/get_plantasacrificiopollo_by_id",
+        dataType: "json",
+        type: "GET",
+        headers: {
+            "X-CSRF-TOKEN": "{{ csrf_token() }}",
+        },
+        data: {
+            plantasacrificio_id: plantasacrificio_id,
+        },
+        success: function (data1) {
+            console.log(data1);
+            $("#sacrificio").val(formatCantidadSinCero(data1.sacrificio));
+
+            calculatotales();
+        },
+    });
+}
 
 cantidad.change(function () {
     calculatotales();
@@ -53,27 +73,6 @@ mollejas_corazones_porc.change(function () {
 porc_pollo.change(function () {
     calculatotales();
 });
-
-function obtener_registroid(plantasacrificio_id) {
-    // alert("id "+plantasacrificio_id);
-    $.ajax({
-        url: "/get_plantasacrificiopollo_by_id",
-        dataType: "json",
-        type: "GET",
-        headers: {
-            "X-CSRF-TOKEN": "{{ csrf_token() }}",
-        },
-        data: {
-            plantasacrificio_id: plantasacrificio_id,
-        },
-        success: function (data1) {
-            console.log(data1);
-            $("#sacrificio").val(formatCantidadSinCero(data1.sacrificio));
-
-            calculatotales();
-        },
-    });
-}
 
 valor_kg_pollo.change(function () { 
     let canal = formatkg($('#valor_kg_pollo').val());
