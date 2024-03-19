@@ -54,9 +54,9 @@ promedio_canal_fria_sala.change(function () {
     calculatotales();
 });
 
-promedio_pie_kg.change(function () {
+/* promedio_pie_kg.change(function () {
     calculatotales();
-});
+}) */;
 
 promedio_canal_kg.change(function () {
     calculatotales();
@@ -80,6 +80,14 @@ valor_kg_pollo.change(function () {
     console.log("peso :" + canal)
     calculatotales(); 
   });
+
+  promedio_pie_kg.change(function () { 
+    let valorPromedioPieKg = formatkg($('#promedio_pie_kg').val());
+    $('#promedio_pie_kg').val(valorPromedioPieKg);
+    console.log("valorPromedioPieKg :" + valorPromedioPieKg)
+    calculatotales(); 
+  });
+
 
 peso_pie_planta.change(function () {
     let costo2 = formatMoneyNumber($("#peso_pie_planta").val());
@@ -111,7 +119,7 @@ function calculatotales() {
 
     // promedio_canal_fria_sala
     let promedio_canal_kg = $("#promedio_canal_kg").val();
-    let promedio_pie_kg = $("#promedio_pie_kg").val();
+    let promedio_pie_kg = parseFloat($("#promedio_pie_kg").val());
     console.log("promedio_pie_kg: " + promedio_pie_kg);
     console.log("peso_pie_planta: " + peso_pie_planta);
     let valorPromedio = (promedio_canal_kg / promedio_pie_kg) * 100;
