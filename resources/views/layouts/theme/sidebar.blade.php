@@ -500,7 +500,7 @@
                             <circle cx="18.5" cy="18.5" r="2.5"></circle>
                         </svg> Traslado</a>
                 </li> -->
-                <li>
+             <!--    <li>
                     <a href="apps_contacts.html"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-refresh-cw">
                             <path d="M23 4v6h-6"></path>
                             <path d="M1 20v-6h6"></path>
@@ -508,7 +508,7 @@
                             <path d="M8 14l3 3 3-3"></path>
                             <path d="M3 10h18"></path>
                         </svg> Devoluciones</a>
-                </li>
+                </li> -->
                 <!-- <li>
                     <a href="apps_scrumboard.html"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-down-circle">
                             <circle cx="12" cy="12" r="10"></circle>
