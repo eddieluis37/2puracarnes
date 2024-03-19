@@ -42,9 +42,9 @@ cantidad.change(function () {
     calculatotales();
 });
 
-peso_pie_planta.change(function () {
+/* peso_pie_planta.change(function () {
     calculatotales();
-});
+}); */
 
 peso_canales_pollo_planta.change(function () {
     calculatotales();
@@ -56,9 +56,7 @@ promedio_canal_fria_sala.change(function () {
 
 /* promedio_pie_kg.change(function () {
     calculatotales();
-}) */;
-
-promedio_canal_kg.change(function () {
+}) */ promedio_canal_kg.change(function () {
     calculatotales();
 });
 
@@ -74,26 +72,25 @@ porc_pollo.change(function () {
     calculatotales();
 });
 
-valor_kg_pollo.change(function () { 
-    let canal = formatkg($('#valor_kg_pollo').val());
-    $('#valor_kg_pollo').val(canal);
-    console.log("peso :" + canal)
-    calculatotales(); 
-  });
+valor_kg_pollo.change(function () {
+    let canal = formatkg($("#valor_kg_pollo").val());
+    $("#valor_kg_pollo").val(canal);
+    console.log("peso :" + canal);
+    calculatotales();
+});
 
-  promedio_pie_kg.change(function () { 
-    let valorPromedioPieKg = formatkg($('#promedio_pie_kg').val());
-    $('#promedio_pie_kg').val(valorPromedioPieKg);
-    console.log("valorPromedioPieKg :" + valorPromedioPieKg)
-    calculatotales(); 
-  });
+promedio_pie_kg.change(function () {
+    let valorPromedioPieKg = formatkg($("#promedio_pie_kg").val());
+    $("#promedio_pie_kg").val(valorPromedioPieKg);
+    console.log("valorPromedioPieKg :" + valorPromedioPieKg);
+    calculatotales();
+});
 
-
-peso_pie_planta.change(function () {
+/* peso_pie_planta.change(function () {
     let costo2 = formatMoneyNumber($("#peso_pie_planta").val());
     $("#peso_pie_planta").val(formatCantidadSinCero(costo2));
     calculatotales();
-});
+}); */
 
 promedio_canal_fria_sala.change(function () {
     let costo2 = formatMoneyNumber($("#promedio_canal_fria_sala").val());
@@ -104,7 +101,17 @@ promedio_canal_fria_sala.change(function () {
 function calculatotales() {
     let cantidad = $("#cantidad").val();
     let sacrificio = $("#sacrificio").val();
-    let peso_pie_planta = $("#peso_pie_planta").val();
+
+    // Calcula peso_pie_planta
+
+    let promedio_pie_kg = formatMoneyNumber($("#promedio_pie_kg").val());
+    let peso_pie_planta = cantidad * promedio_pie_kg;
+    console.log("promedio_pie_kg: " + promedio_pie_kg);
+    $("#peso_pie_planta").val(formatCantidad(peso_pie_planta));
+    console.log("peso_pie_planta :" + peso_pie_planta);
+    /*     
+    let peso_pie_planta = $("#peso_pie_planta").val(); */
+
     let peso_canales_pollo_planta = $("#peso_canales_pollo_planta").val();
 
     //Total factura
@@ -118,9 +125,8 @@ function calculatotales() {
     $("#total_factura").val(formatCantidadSinCero(total));
 
     // promedio_canal_fria_sala
-    let promedio_canal_kg = $("#promedio_canal_kg").val();
-    let promedio_pie_kg = parseFloat($("#promedio_pie_kg").val());
-    console.log("promedio_pie_kg: " + promedio_pie_kg);
+    let promedio_canal_kg = formatMoneyNumber($("#promedio_canal_kg").val());
+
     console.log("peso_pie_planta: " + peso_pie_planta);
     let valorPromedio = (promedio_canal_kg / promedio_pie_kg) * 100;
     $("#promedio_canal_fria_sala").val(formatCantidad(valorPromedio));
@@ -130,8 +136,8 @@ function calculatotales() {
     a números decimales antes de sumarlos a  valorPromedio . Luego, se asigna el resultado de la suma al campo  subtotal
     después de formatearlo con la función  formatCantidad . */
     console.log("promedio_canal_fria_sala: " + valorPromedio);
-    let menudencia_pollo_porc = parseFloat($("#menudencia_pollo_porc").val());
-    let mollejas_corazones_porc = parseFloat(
+    let menudencia_pollo_porc = formatMoneyNumber($("#menudencia_pollo_porc").val());
+    let mollejas_corazones_porc = formatMoneyNumber(
         $("#mollejas_corazones_porc").val()
     );
     console.log("menudencia_pollo_porc: " + menudencia_pollo_porc);
@@ -141,7 +147,7 @@ function calculatotales() {
     $("#subtotal").val(formatCantidad(subtotalValue));
 
     // despojos_mermas
-    let porc_pollo = parseFloat($("#porc_pollo").val());
+    let porc_pollo = formatMoneyNumber($("#porc_pollo").val());
     let despojosMermas = porc_pollo - subtotalValue;
     $("#despojos_mermas").val(formatCantidad(despojosMermas));
 }
