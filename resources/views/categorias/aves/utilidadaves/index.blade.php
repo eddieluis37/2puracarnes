@@ -141,7 +141,7 @@
 								<tfoot id="tfoot">
 									<tr>
 										<td>Totales</td>
-										<td>{{round($TotalDesposte)}} %</td>
+										<td>{{number_format($TotalDesposte, 2, '.', '.')}}%</td>										
 										<td>$ --</td>
 										<td>{{number_format($pesoTotalGlobal, 2, ',', '.')}}</td>
 										<td>$ {{ number_format($TotalVenta, 0, ',', '.')}}</td>

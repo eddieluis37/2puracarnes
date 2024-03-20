@@ -22,11 +22,13 @@ class CreateUtilidadBeneficiopollosTable extends Migration
             $table->unsignedBigInteger('beneficiopollos_id');
             $table->foreign('beneficiopollos_id')->references('id')->on('beneficiopollos');         
 
+            $table->unsignedBigInteger('products_id')->nullable();
+            $table->foreign('products_id')->references('id')->on('products');
+
             $table->string('product_name', 50, 0)->nullable(); 
 
             $table->decimal('kilos',18, 2)->default(0)->nullable(); 
-            
-            
+                        
             $table->decimal('totales_kilos',18, 2)->default(0)->nullable(); 
 
             $table->decimal('porcentaje_participacion', 18, 2)->nullable();

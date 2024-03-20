@@ -31,34 +31,31 @@ class utilidadpolloController extends Controller
         ])->get();
 
         if (count($this->consulta) === 0) {
-            // Arreglo estático con los registros deseados
-            $staticProducts = [
-                ['id' => 1, 'name' => 'POLLO_ENTERO', 'price_fama' => 10],
-                ['id' => 2, 'name' => 'MENUDENCIAS', 'price_fama' => 5],
-                ['id' => 3, 'name' => 'MOLLEJAS_CORAZONES', 'price_fama' => 3],
-            ];
-
-            foreach ($staticProducts as $staticProduct) {
+            $prod = Product::where('status', 1)
+                ->whereIn('id', [189, 307, 308])
+                ->orderBy('id', 'asc')
+                ->get();
+            foreach ($prod as $staticProduct) {
                 $despost = new Utilidad_beneficiopollos();
                 $despost->user_id = $id_user;
                 $despost->beneficiopollos_id = $id;
                 $despost->product_name = $staticProduct['name']; // Agregar un campo para el nombre del producto estático
 
                 foreach ($beneficior as $beneficio) {
-                    if ($staticProduct['id'] == 1) {
-                        $despost->kilos = ($beneficio->peso_pie_planta * $beneficio->promedio_canal_fria_sala) * 100;
-                    } elseif ($staticProduct['id'] == 2) {
+                    if ($staticProduct['id'] == 189) {
+                        $despost->kilos = ($beneficio->peso_pie_planta * $beneficio->promedio_canal_fria_sala) / 100;
+                    } elseif ($staticProduct['id'] == 307) {
                         $despost->kilos = $beneficio->menudencia_pollo_kg;
-                    } elseif ($staticProduct['id'] == 3) {
-                        $despost->kilos = $beneficio->peso_canales_pollo_planta;
+                    } elseif ($staticProduct['id'] == 308) {
+                        $despost->kilos = $beneficio->mollejas_corazones_kg;
                     }
                 }
-
+                $despost->products_id = $staticProduct->id;
                 $despost->totales_kilos = $despost->kilos_pollo_entero + $despost->kilos_menudencias + $despost->kilos_mollejas_corazones;
                 $despost->porcentaje_participacion = 99;
                 $despost->costo_unitario = 0;
                 $despost->costo_real = $staticProduct['price_fama'];
-                $despost->precio_kg_venta = 0;
+                $despost->precio_kg_venta = $staticProduct['price_fama'];
                 $despost->ingresos_totales = 0;
                 $despost->participacion_venta = 0;
                 $despost->utilidad_dinero = 0;
@@ -91,7 +88,7 @@ class utilidadpolloController extends Controller
         }
         /****************************************** */
         $desposters = $this->consulta;
-        $TotalDesposte = (float)Despostepollo::Where([['beneficiopollos_id', $id], ['status', 'VALID']])->sum('porcdesposte');
+        $TotalDesposte = (float)Utilidad_beneficiopollos::Where([['beneficiopollos_id', $id], ['status', 'VALID']])->sum('kilos');
         $TotalVenta = (float)Despostepollo::Where([['beneficiopollos_id', $id], ['status', 'VALID']])->sum('totalventa');
         $porcVentaTotal = (float)Despostepollo::Where([['beneficiopollos_id', $id], ['status', 'VALID']])->sum('porcventa');
         $pesoTotalGlobal = (float)Despostepollo::Where([['beneficiopollos_id', $id], ['status', 'VALID']])->sum('peso');
@@ -112,6 +109,14 @@ class utilidadpolloController extends Controller
             'status'
         ));
     }
+
+    /*   // Arreglo estático con los registros deseados
+     $staticProducts = [
+        ['id' => 1, 'name' => 'POLLO_ENTERO', 'price_fama' => 10],
+        ['id' => 2, 'name' => 'MENUDENCIAS', 'price_fama' => 5],
+        ['id' => 3, 'name' => 'MOLLEJAS_CORAZONES', 'price_fama' => 3],
+    ]; */
+
 
     public function sumTotales($id)
     {
