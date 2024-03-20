@@ -203,7 +203,7 @@
 																	<div class="col-md-3">
 																		<label for="canalfria">Promedio en canal</label>
 																		<div class="input-group flex-nowrap">
-																			<input type="text" name="promedio_canal_kg" id="promedio_canal_kg" value="0" class="form-control" placeholder="0" aria-describedby="helpId" step="0.01">
+																			<input type="text" name="promedio_canal_kg" id="promedio_canal_kg" value="0" class="form-control" placeholder="0" aria-describedby="helpId" step="0.01" readonly>
 																			<span class="input-group-text" id="addon-wrapping">KG</span>
 																		</div>
 																	</div>
@@ -218,14 +218,14 @@
 																	<div class="col-md-3">
 																		<label for="menudencia_pollo_porc">Menudencia %</label>
 																		<div class="input-group flex-nowrap">
-																			<input type="text" name="menudencia_pollo_porc" id="menudencia_pollo_porc" class="form-control" placeholder="0" aria-describedby="helpId" step="0.01" required>
+																			<input type="text" name="menudencia_pollo_porc" id="menudencia_pollo_porc" class="form-control" placeholder="0" aria-describedby="helpId" step="0.01" readonly>
 																			<span class="input-group-text" id="addon-wrapping">%</span>
 																		</div>
 																	</div>
 																	<div class="col-md-3">
 																		<label for="mollejas_corazones_porc">Mollejas/Corazones</label>
 																		<div class="input-group flex-nowrap">
-																			<input type="text" name="mollejas_corazones_porc" id="mollejas_corazones_porc" value="0" class="form-control" placeholder="0" aria-describedby="helpId" step="0.01">
+																			<input type="text" name="mollejas_corazones_porc" id="mollejas_corazones_porc" value="0" class="form-control" placeholder="0" aria-describedby="helpId" step="0.01" readonly>
 																			<span class="input-group-text" id="addon-wrapping">%</span>
 																		</div>
 																	</div>
