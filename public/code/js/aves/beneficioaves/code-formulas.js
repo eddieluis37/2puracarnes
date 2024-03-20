@@ -50,15 +50,17 @@ peso_canales_pollo_planta.change(function () {
     calculatotales();
 });
 
-promedio_canal_fria_sala.change(function () {
+/* promedio_canal_fria_sala.change(function () {
+    calculatotales();
+});
+ */
+/* promedio_pie_kg.change(function () {
+    calculatotales();
+})  promedio_canal_kg.change(function () {
     calculatotales();
 });
 
-/* promedio_pie_kg.change(function () {
-    calculatotales();
-}) */ promedio_canal_kg.change(function () {
-    calculatotales();
-});
+*/
 
 menudencia_pollo_porc.change(function () {
     calculatotales();
@@ -92,11 +94,11 @@ promedio_pie_kg.change(function () {
     calculatotales();
 }); */
 
-promedio_canal_fria_sala.change(function () {
+/* promedio_canal_fria_sala.change(function () {
     let costo2 = formatMoneyNumber($("#promedio_canal_fria_sala").val());
     $("#promedio_canal_fria_sala").val(formatCantidadSinCero(costo2));
     calculatotales();
-});
+}); */
 
 function calculatotales() {
     let cantidad = $("#cantidad").val();
@@ -112,7 +114,7 @@ function calculatotales() {
     /*     
     let peso_pie_planta = $("#peso_pie_planta").val(); */
 
-    let peso_canales_pollo_planta = $("#peso_canales_pollo_planta").val();
+    let peso_canales_pollo_planta = formatMoneyNumber($("#peso_canales_pollo_planta").val());
 
     //Total factura
     var valor_kg_pollo = formatMoneyNumber($("#valor_kg_pollo").val());
@@ -124,12 +126,17 @@ function calculatotales() {
     let total = cantidad * sacrificio + peso_pie_planta * valor_kg_pollo;
     $("#total_factura").val(formatCantidadSinCero(total));
 
-    // promedio_canal_fria_sala
-    let promedio_canal_kg = formatMoneyNumber($("#promedio_canal_kg").val());
 
+    // promedio_canal_fria_KG
+    let valorPromedioCanalKg = peso_canales_pollo_planta / cantidad;
+    $("#promedio_canal_kg").val(formatCantidad(valorPromedioCanalKg));
+
+
+    // promedio_canal_fria_sala (promedio_canal_kg) / (promedio_pie_kg * 100);
     console.log("peso_pie_planta: " + peso_pie_planta);
-    let valorPromedio = (promedio_canal_kg / promedio_pie_kg) * 100;
-    $("#promedio_canal_fria_sala").val(formatCantidad(valorPromedio));
+    let valorPromedioCanalFriaSala = (promedio_canal_kg) / (promedio_pie_kg * 100);
+    $("#promedio_canal_fria_sala").val(formatMoneyNumber(valorPromedioCanalFriaSala));
+
 
     // subtotal
     /*     se utilizan  parseFloat  para convertir los valores de los campos  menudencia_pollo_porc  y  mollejas_corazones_porc 

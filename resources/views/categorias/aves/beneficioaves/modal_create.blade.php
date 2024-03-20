@@ -153,7 +153,7 @@
 																	<div class="col-md-3">
 																		<label for="canalfria">Peso pie planta</label>
 																		<div class="input-group flex-nowrap">
-																			<input type="text" name="peso_pie_planta" id="peso_pie_planta" value="0" class="form-control" placeholder="111.999" aria-describedby="helpId" step="0.01">
+																			<input type="text" name="peso_pie_planta" id="peso_pie_planta" value="0" class="form-control" placeholder="111.999" aria-describedby="helpId" step="0.01" readonly>
 																			<span class="input-group-text" id="addon-wrapping">KG</span>
 																		</div>
 																	</div>
