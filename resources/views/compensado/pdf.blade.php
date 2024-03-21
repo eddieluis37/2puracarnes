@@ -36,16 +36,18 @@
 			<tr>
 				<td colspan=" 2" class="text-center">
 					<span style="font-size: 9px; font-weight: bold; display: block; margin-top: 10;">COMPRA COMPENSADO {{$comp[0]->namecentrocosto}} CAJA {{$comp[0]->nameuser}}</span>
-					<span style="font-size: 9px; font-weight: bold; display: block; margin: 0;">N°.PC {{$comp[0]->id}}</span>
+					<span style="font-size: 9px; font-weight: bold; display: block; margin: 0;">N°.PC {{$comp[0]->id}} |
+					Factura:<strong> {{$comp[0]->factura}}</strong></span>
 				</td>
 			</tr>
 			<tr>
 				<td width="70%" class="text-left text-company" style="vertical-align: top; padding-top: 7px">
-					<span style="font-size: 8px; font-weight: lighter; display: block; margin: 2;">Factura:<strong> {{$comp[0]->factura}}</strong></span>
+				
 					<span style="font-size: 8px; font-weight: lighter; display: block; margin: 2;">Fecha de compra:<strong> {{$comp[0]->fecha_compensado}}</strong></span>
 					<span style="font-size: 8px; font-weight: lighter; display: block; margin: 2;">Fecha y hora de consulta:<strong> {{\Carbon\Carbon::now()->format('Y-m-d H:i')}}</strong></span>
 
 					<span style="font-size: 8px; font-weight: lighter; display: block; margin: 2;">Usuario:<strong> {{$comp[0]->nameuser}}</strong></span>
+					<span style="font-size: 8px; font-weight: lighter; display: block; margin: 2;">Correo:<strong> {{$comp[0]->correo}}</strong></span>
 					<span style="font-size: 8px; font-weight: lighter; display: block; margin: 2;">Proveedor:<strong> {{$comp[0]->namethird}}</strong></span>
 					<span style="font-size: 8px; font-weight: lighter; display: block; margin: 2;">Nit / C.C.:<strong> {{$comp[0]->identification}}</strong></span>
 					<span style="font-size: 8px; font-weight: lighter; display: block; margin: 2;">Dirección:<strong> {{$comp[0]->direccion}}</strong></span>
