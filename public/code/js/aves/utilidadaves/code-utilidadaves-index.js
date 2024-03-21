@@ -23,7 +23,7 @@ table.addEventListener("keydown", function(event) {
       const trimValue = inputValue.trim();
       const dataform = new FormData();
       dataform.append("id", Number(event.target.id));
-      dataform.append("peso_kilo", Number(trimValue));
+      dataform.append("precio_kg_venta", Number(trimValue));
       dataform.append("beneficioId", Number(beneficioId.value));
       sendData("/utilidadavesUpdate",dataform,token).then((result) => {
         console.log(result);

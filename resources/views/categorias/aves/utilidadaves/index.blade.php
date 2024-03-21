@@ -121,8 +121,8 @@
 											<p>{{$item->precio_kg_venta}}</p>
 											@endif
 										</td>
-										<td> {{ number_format($item->ingresos_totales, 2, ',', '.')}}</td>								
-										<td> {{ number_format($item->participacion_venta, 2, ',', '.')}}</td>
+										<td> {{ number_format($item->ingresos_totales, 0, ',', '.')}}</td>								
+										<td> {{ number_format($item->participacion_venta, 2, ',', '.')}}%</td>
 										<td> {{ number_format($item->utilidad_dinero, 2, ',', '.')}}</td>
 										<td> {{ number_format($item->porcentaje_utilidad, 2, ',', '.')}}</td>
 										<td> {{ number_format($item->dinero_kilo, 2, ',', '.')}}</td>
@@ -143,10 +143,10 @@
 										<td>Totales</td>
 										<td>{{number_format($TotalDesposte, 2, '.', '.')}}%</td>										
 										<td>$ --</td>
-										<td>{{number_format($pesoTotalGlobal, 2, ',', '.')}}</td>
-										<td>$ {{ number_format($TotalVenta, 0, ',', '.')}}</td>
+										<td>{{number_format($pesoTotalGlobal, 2, ',', '.')}}</td>										
 										<td>{{round($porcVentaTotal)}} %</td>
 										<td>$ {{ number_format($costoTotalGlobal, 0, ',', '.')}}</td>
+										<td>$ {{ number_format($TotalingresosTotales, 0, ',', '.')}}</td>
 										<td>{{$costoKiloTotal}}</td>
 										<td class="text-center">
 											<button type="hidden" id="cargarInventarioBtn"></button>
