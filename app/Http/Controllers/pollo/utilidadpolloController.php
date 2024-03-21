@@ -41,6 +41,7 @@ class utilidadpolloController extends Controller
                 $despost->beneficiopollos_id = $id;
                 $despost->product_name = $staticProduct['name']; // Agregar un campo para el nombre del producto estático
 
+
                 foreach ($beneficior as $beneficio) {
                     if ($staticProduct['id'] == 189) {
                         $despost->kilos = ($beneficio->peso_pie_planta * $beneficio->promedio_canal_fria_sala) / 100;
@@ -49,14 +50,13 @@ class utilidadpolloController extends Controller
                     } elseif ($staticProduct['id'] == 308) {
                         $despost->kilos = $beneficio->mollejas_corazones_kg;
                     }
-                }
+                }               
                 $despost->products_id = $staticProduct->id;
                 $despost->totales_kilos = $despost->kilos_pollo_entero + $despost->kilos_menudencias + $despost->kilos_mollejas_corazones;
-                $despost->porcentaje_participacion = 99;
                 $despost->costo_unitario = 0;
                 $despost->costo_real = $staticProduct['price_fama'];
                 $despost->precio_kg_venta = $staticProduct['price_fama'];
-                $despost->ingresos_totales = 0;
+                $despost->ingresos_totales = $staticProduct['price_fama'] * $despost->kilos;
                 $despost->participacion_venta = 0;
                 $despost->utilidad_dinero = 0;
                 $despost->porcentaje_utilidad = 0;
