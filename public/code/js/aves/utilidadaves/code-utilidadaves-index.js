@@ -76,9 +76,9 @@ const showDataTable = (data) => {
   tableTfoot.innerHTML += `
 		<tr>
 			<td>Totales</td>
-			<td>${dataTotals.TotalDesposte} %</td>
+			<td>${dataTotals.TotalKilos} %</td>
 			<td>$ --</td>
-			<td>${formatCantidad(dataTotals.pesoTotalGlobal)}</td>
+			<td>${formatCantidad(dataTotals.TotalPorcPart)}</td>
 			<td>$ ${formatCantidadSinCero(dataTotals.TotalVenta)}</td>
 			<td>${dataTotals.porcVentaTotal} %</td>
 			<td>$ ${formatCantidadSinCero(dataTotals.costoTotalGlobal)}</td>

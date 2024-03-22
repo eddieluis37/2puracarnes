@@ -110,10 +110,10 @@
 									@foreach($desposters as $item)
 									<tr>
 										<td> {{ $item->product_name }}</td>
-										<td> {{ $item->kilos }} %</td>
-										<td> {{ $item->porcentaje_participacion }} %</td>
-										<td>$ {{ number_format($item->costo_unitario, 0, ',', '.')}}</td>
-										<td>$ {{ number_format($item->costo_real, 0, ',', '.')}}</td>								
+										<td> {{ $item->kilos }}</td>
+										<td> {{ $item->porcentaje_participacion }}%</td>
+										<td>${{ number_format($item->costo_unitario, 0, ',', '.')}}</td>
+										<td>${{ number_format($item->costo_real, 0, ',', '.')}}</td>								
 										<td>
 											@if($status == 'true')
 											<input type="text" class="form-control-sm" id="{{$item->id}}" value="{{$item->precio_kg_venta}}" placeholder="00" size="5">
@@ -121,11 +121,11 @@
 											<p>{{$item->precio_kg_venta}}</p>
 											@endif
 										</td>
-										<td> {{ number_format($item->ingresos_totales, 0, ',', '.')}}</td>								
+										<td>${{ number_format($item->ingresos_totales, 0, ',', '.')}}</td>								
 										<td> {{ number_format($item->participacion_venta, 2, ',', '.')}}%</td>
-										<td> {{ number_format($item->utilidad_dinero, 0, ',', '.')}}</td>
-										<td> {{ number_format($item->porcentaje_utilidad, 2, ',', '.')}}</td>
-										<td> {{ number_format($item->dinero_kilo, 2, ',', '.')}}</td>
+										<td>${{ number_format($item->utilidad_dinero, 0, ',', '.')}}</td>
+										<td> {{ number_format($item->porcentaje_utilidad, 2, ',', '.')}}%</td>
+										<td>${{ number_format($item->dinero_kilo, 0, ',', '.')}}</td>
 										<td class="text-center">
 											@if($status == 'true')
 											<button type="button" name="btnDownReg" data-id="{{$item->id}}" class="btn btn-dark btn-sm fas fa-trash" title="Cancelar">
@@ -141,13 +141,16 @@
 								<tfoot id="tfoot">
 									<tr>
 										<td>Totales</td>
-										<td>{{number_format($TotalDesposte, 2, '.', '.')}}%</td>										
-										<td>$ --</td>
-										<td>{{number_format($pesoTotalGlobal, 2, ',', '.')}}</td>										
-										<td>{{round($porcVentaTotal)}} %</td>
-										<td>$ {{ number_format($costoTotalGlobal, 0, ',', '.')}}</td>
+										<td>{{number_format($TotalKilos, 2, '.', '.')}}</td>
+										<td>{{number_format($TotalPorcPart, 2, ',', '.')}}%</td>												
+										<td>${{ number_format($TotalCostoReal / $TotalKilos, 0, ',', '.')}}</td>																											
+										<td>${{ number_format($TotalCostoReal, 0, ',', '.')}}</td>																										
+										<td>--</td>
 										<td>$ {{ number_format($TotalingresosTotales, 0, ',', '.')}}</td>
-										<td>{{$costoKiloTotal}}</td>
+										<td> {{ number_format($TotalingresosTotales / $TotalingresosTotales, 2, ',', '.')}}%</td>
+										<td>$ {{ number_format($TotalingresosTotales - $TotalCostoReal, 0, ',', '.')}}</td>
+										<td>--</td>
+										<td>${{ number_format(($TotalingresosTotales - $TotalCostoReal)/$TotalKilos, 0, ',', '.')}}</td>
 										<td class="text-center">
 											<button type="hidden" id="cargarInventarioBtn"></button>
 										</td>
