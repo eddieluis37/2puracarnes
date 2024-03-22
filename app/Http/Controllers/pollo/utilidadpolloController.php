@@ -153,6 +153,7 @@ class utilidadpolloController extends Controller
             $getBeneficioaves = Beneficiopollo::Where('id', $request->beneficioId)->get();
             $beneficior = Utilidad_beneficiopollos::Where([['beneficiopollos_id', $request->beneficioId], ['status', 'VALID']])->get();
             $TotalingresosTotales = (float)Utilidad_beneficiopollos::Where([['beneficiopollos_id', $request->beneficioId], ['status', 'VALID']])->sum('ingresos_totales');
+            $TotalKilos = (float)Utilidad_beneficiopollos::Where([['beneficiopollos_id', $request->beneficioId], ['status', 'VALID']])->sum('kilos');
             foreach ($beneficior as $key) {
                                              
                 /* $costoReal = $key->precio_kg_venta * $getBeneficioaves[0]->total_factura; */
@@ -164,7 +165,15 @@ class utilidadpolloController extends Controller
                
                 $updatedespost->costo_real = $costoReal;
                 $updatedespost->participacion_venta = $participacionVenta;
-               
+
+                $updatedespost->costo_unitario = $costoReal / $key->kilos;
+
+                $updatedespost->porcentaje_participacion = ($key->kilos / $TotalKilos) * 100;
+
+                $updatedespost->utilidad_dinero = $key->ingresos_totales -  $costoReal;               
+
+                $updatedespost->porcentaje_utilidad = $key->ingresos_totales -  $costoReal;
+
                 $updatedespost->save();
             }
             /*************************************** */

@@ -123,7 +123,7 @@
 										</td>
 										<td> {{ number_format($item->ingresos_totales, 0, ',', '.')}}</td>								
 										<td> {{ number_format($item->participacion_venta, 2, ',', '.')}}%</td>
-										<td> {{ number_format($item->utilidad_dinero, 2, ',', '.')}}</td>
+										<td> {{ number_format($item->utilidad_dinero, 0, ',', '.')}}</td>
 										<td> {{ number_format($item->porcentaje_utilidad, 2, ',', '.')}}</td>
 										<td> {{ number_format($item->dinero_kilo, 2, ',', '.')}}</td>
 										<td class="text-center">
