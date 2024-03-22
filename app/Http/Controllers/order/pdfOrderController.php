@@ -28,7 +28,7 @@ class pdfOrderController extends Controller
             ->leftJoin('formapagos as fp', 'orders.formapago_id', '=', 'fp.id')
            /*      ->leftJoin('formapagos as fp2', 'orders.forma_pago_otros_id', '=', 'fp2.id')
             ->leftJoin('formapagos as fp3', 'orders.forma_pago_credito_id', '=', 'fp3.id') */
-            ->select('orders.*', 'u.name as nameuser', 'third.name as namethird', 'vendedor.name as nombre_vendedor', 'fp.nombre as forma_pago', 'alistador.name as nombre_alistador', 'subcentro.name as subcentro', 'third.celular', 'third.identification', 'orders.direccion_envio as direccion', 'orders.hora_inicial_entrega', 'centro.name as namecentrocosto', 'third.porc_descuento', 'orders.total_iva', 'orders.vendedor_id')
+            ->select('orders.*', 'u.name as nameuser', 'third.name as namethird', 'third.correo', 'vendedor.name as nombre_vendedor', 'fp.nombre as forma_pago', 'alistador.name as nombre_alistador', 'subcentro.name as subcentro', 'third.celular', 'third.identification', 'orders.direccion_envio as direccion', 'orders.hora_inicial_entrega', 'centro.name as namecentrocosto', 'third.porc_descuento', 'orders.total_iva', 'orders.vendedor_id')
             ->where([
                 ['orders.id', $id],
                 /*  ['order_details.status', 1]  */

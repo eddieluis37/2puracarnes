@@ -19,11 +19,11 @@
 </head>
 
 <body>
-	<section class="header" style="top: -293px;">
+	<section class="header" style="top: -301px;">
 		<table cellpadding="0" cellspacing="0" width="100%">
 			<tr>
 				<td colspan="2" class="text-center">
-					<img src="{{ asset('assets/img/logo65.png') }}" alt="" class="invoice-logo" width="16%" style="vertical-align: top; padding-top: -100px; position: relative">
+					<img src="{{ asset('assets/img/logo65.png') }}" alt="" class="invoice-logo" width="9%" style="vertical-align: top; padding-top: -100px; position: relative">
 					<span style="font-size: 9px; font-weight: bold; display: block; margin: 0;">PURACARNES SAS</span>
 					<span style="font-size: 8px; font-weight: lighter; display: block; margin: 0;">Nit 901.531.807-3</span>
 					<span style="font-size: 8px; font-weight: lighter; display: block; margin: 0;">AUTOPISTA SUR 66 78 LC B 22 FRIGORIFICO GUADALUPE</span>
@@ -36,15 +36,16 @@
 			<tr>
 				<td colspan=" 2" class="text-center">
 					<span style="font-size: 9px; font-weight: bold; display: block; margin-top: 10;">CENTRO COSTO: {{$order[0]->namecentrocosto}} | Digitador: {{$order[0]->nameuser}}</span>
-					<span style="font-size: 9px; font-weight: bold; display: block; margin: 0;">N°. ORDEN DE PEDIDO {{$order[0]->resolucion}} | Alistador: {{$order[0]->nombre_alistador}}</span>
+					<span style="font-size: 9px; font-weight: bold; display: block; margin: 0;">N°. ORDEN DE PEDIDO {{$order[0]->resolucion}} | Alistador: {{$order[0]->nombre_alistador}} |
+					SUBCENTRO DE COSTO: <strong> {{$order[0]->subcentro}}</strong></span>
 				</td>
 			</tr>
 			<tr>
 				<td width="70%" class="text-left text-company" style="vertical-align: top; padding-top: 7px">
 					<span style="font-size: 9px; font-weight: lighter; display: block; margin: 2;">FECHA Y HORA DE CONSULTA: <strong>{{ $fecha->isoFormat('dddd, D [de] MMMM [de] YYYY') }} | {{\Carbon\Carbon::now()->format('H:i')}}</strong></span>
 					<span style="font-size: 9px; font-weight: lighter; display: block; margin: 2;">VENDEDOR:<strong> {{$order[0]->nombre_vendedor}}</strong></span>
-					<span style="font-size: 9px; font-weight: lighter; display: block; margin: 2;">SUBCENTRO DE COSTO:<strong> {{$order[0]->subcentro}}</strong></span>
 					<span style="font-size: 11px; font-weight: lighter; display: block; margin: 2;">CLIENTE:<strong> {{$order[0]->namethird}}</strong></span>
+					<span style="font-size: 11px; font-weight: lighter; display: block; margin: 2;">Correo:<strong> {{$order[0]->correo}}</strong></span>
 					<span style="font-size: 9px; font-weight: lighter; display: block; margin: 2;">NIT / C.C.:<strong> {{$order[0]->identification}}</strong></span>
 					<span style="font-size: 9px; font-weight: lighter; display: block; margin: 2;">DIRECCIÓN:<strong> {{$order[0]->direccion}}</strong></span>
 					<span style="font-size: 9px; font-weight: lighter; display: block; margin: 2;">CELULAR:<strong> {{$order[0]->celular}}</strong></span>
