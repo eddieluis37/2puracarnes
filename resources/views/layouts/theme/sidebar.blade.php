@@ -102,6 +102,7 @@
                     </div>
                 </a>
             </li>
+            @endcan
 
             @can('Admin_Menu')
             <li class="menu">
@@ -123,7 +124,7 @@
             </li>
             @endcan
 
-            @can('Compras')
+            @can('Compras_Menu')
             <li class="menu">
                 <a href="#more" data-active="false" class="menu-toggle">
                     <div class="base-menu">
@@ -144,7 +145,7 @@
             @endcan
 
 
-            @can('Produccion')
+            @can('Transformaciones_Menu')
             <li class="">
                 <a href="{{url('alistamiento')}}" class="menu-toggle" data-active="false">
                     <div class="base-menu">
@@ -219,42 +220,7 @@
                     <polyline points="15 18 9 12 15 6"></polyline>
                 </svg>
             </li>
-            @endcan
-
-
-            <!--             @can('Pos_Create')
-            <li class="">
-                <a href="{{ url('sale/create/3') }}" class="menu-toggle" data-active="false">
-                    <div class="base-menu">
-                        <div class="base-icons">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-refresh-cw">
-                                <path d="M23 4v6h-6"></path>
-                                <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path>
-                            </svg>
-                        </div>
-                        <span>Ventas M</span>
-                    </div>
-                </a>
-            </li>
-            @endcan -->
-
-            <!--   @can('Pos_Create')
-            <li class="">
-                <a href="{{ url('storeVentaMostrador') }}" class="menu-toggle" data-active="false">
-                    <div class="base-menu">
-                        <div class="base-icons">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-shopping-bag">
-                                <path d="M3 6l2.5 15h13L21 6"></path>
-                                <path d="M16 10a4 4 0 0 1-8 0"></path>
-                            </svg>
-                        </div>
-                        <span>Ventas M</span>
-                    </div>
-                </a>
-            </li>
-            @endcan -->
-
-            @endcan
+            @endcan      
 
             @can('Product_View')
             <li class="menu">
@@ -274,12 +240,6 @@
                 </svg>
             </li>
             @endcan
-
-
-
-
-
-
 
             <!--   @role('Admin')
             <li class="">
