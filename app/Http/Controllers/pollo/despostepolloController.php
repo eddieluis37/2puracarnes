@@ -221,6 +221,9 @@ class despostepolloController extends Controller
                 $updatedespost->porcventa = $porcentajeVenta;
                 $updatedespost->costo = $costo;
                 $updatedespost->costo_kilo = $costoKilo;
+                $updatedespost->utilidad = $key->precio - $costoKilo;
+                $updatedespost->porcutilidad = ($key->precio - ($key->precio - $costoKilo)) / 100;
+
                 $updatedespost->save();
             }
             /*************************************** */

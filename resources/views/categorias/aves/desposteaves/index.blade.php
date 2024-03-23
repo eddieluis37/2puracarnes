@@ -62,8 +62,8 @@
 									<tr>
 										<th class="table-th text-white">Producto</th>
 										<th class="table-th text-white">%Desp</th>
-										<th class="table-th text-white">P.venta</th>
 										<th class="table-th text-white">PesoKG</th>
+										<th class="table-th text-white">P.venta</th>									
 										<th class="table-th text-white">T.VENTA</th>
 										<th class="table-th text-white">%VENTA</th>
 										<th class="table-th text-white">C.total</th>
@@ -78,7 +78,6 @@
 									<tr>
 										<td> {{ $item->products->name }}</td>
 										<td> {{ $item->porcdesposte }} %</td>
-										<td>$ {{ number_format($item->precio, 0, ',', '.')}}</td>
 										<td>
 											@if($status == 'true')
 											<input type="text" class="form-control-sm" id="{{$item->id}}" value="{{$item->peso}}" placeholder="00" size="5">
@@ -86,12 +85,14 @@
 											<p>{{$item->peso}}</p>
 											@endif
 										</td>
-										<td>$ {{ number_format($item->totalventa, 0, ',', '.')}}</td>
-										<td> {{ $item->porcventa}} %</td>
-										<td>$ {{ number_format($item->costo, 0, ',', '.')}}</td>
-										<td> {{ number_format($item->costo_kilo, 2, ',', '.')}}</td>
-										<td> {{ number_format($item->costo_kilo, 2, ',', '.')}}</td>
-										<td> {{ number_format($item->costo_kilo, 2, ',', '.')}}</td>
+										<td>${{ number_format($item->precio, 0, ',', '.')}}</td>
+									
+										<td>${{ number_format($item->totalventa, 0, ',', '.')}}</td>
+										<td> {{ $item->porcventa}}%</td>
+										<td>${{ number_format($item->costo, 0, ',', '.')}}</td>
+										<td>${{ number_format($item->costo_kilo, 0, ',', '.')}}</td>
+										<td>${{ number_format($item->utilidad, 0, ',', '.')}}</td>
+										<td> {{ number_format($item->porcutilidad, 2, ',', '.')}}%</td>
 										<td class="text-center">
 											@if($status == 'true')
 											<button type="button" name="btnDownReg" data-id="{{$item->id}}" class="btn btn-dark btn-sm fas fa-trash" title="Cancelar">
@@ -108,8 +109,9 @@
 									<tr>
 										<td>Totales</td>
 										<td>{{round($TotalDesposte)}} %</td>
-										<td>$ --</td>
 										<td>{{number_format($pesoTotalGlobal, 2, ',', '.')}}</td>
+										<td>$ --</td>
+									
 										<td>$ {{ number_format($TotalVenta, 0, ',', '.')}}</td>
 										<td>{{round($porcVentaTotal)}} %</td>
 										<td>$ {{ number_format($costoTotalGlobal, 0, ',', '.')}}</td>
@@ -117,6 +119,18 @@
 										<td class="text-center">
 											<button type="hidden" id="cargarInventarioBtn"></button>
 										</td>
+									</tr>
+									<tr>
+										<td>MERMA</td>
+										<td></td>
+										
+										<td>{{number_format($TotalDesposte, 2, ',', '.')}}</td>										
+									</tr>
+									<tr>
+										<td>%.MERMA</td>
+										<td></td>
+										
+										<td>{{number_format($TotalDesposte, 2, ',', '.')}}</td>										
 									</tr>
 								</tfoot>
 							</table>
