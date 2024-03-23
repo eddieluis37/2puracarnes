@@ -61,13 +61,15 @@
 								<thead class="text-white" style="background: #3B3F5C">
 									<tr>
 										<th class="table-th text-white">Producto</th>
-										<th class="table-th text-white">% Desposte</th>
-										<th class="table-th text-white">Precio venta</th>
-										<th class="table-th text-white">Peso kilo</th>
-										<th class="table-th text-white">Total venta</th>
-										<th class="table-th text-white">Porcventa</th>
-										<th class="table-th text-white">Costo total</th>
-										<th class="table-th text-white">Costo kilo</th>
+										<th class="table-th text-white">%Desp</th>
+										<th class="table-th text-white">P.venta</th>
+										<th class="table-th text-white">PesoKG</th>
+										<th class="table-th text-white">T.VENTA</th>
+										<th class="table-th text-white">%VENTA</th>
+										<th class="table-th text-white">C.total</th>
+										<th class="table-th text-white">C.KG</th>
+										<th class="table-th text-white">UTIL</th>
+										<th class="table-th text-white">%.UT</th>
 										<th class="table-th text-white text-center">Acciones</th>
 									</tr>
 								</thead>
@@ -87,6 +89,8 @@
 										<td>$ {{ number_format($item->totalventa, 0, ',', '.')}}</td>
 										<td> {{ $item->porcventa}} %</td>
 										<td>$ {{ number_format($item->costo, 0, ',', '.')}}</td>
+										<td> {{ number_format($item->costo_kilo, 2, ',', '.')}}</td>
+										<td> {{ number_format($item->costo_kilo, 2, ',', '.')}}</td>
 										<td> {{ number_format($item->costo_kilo, 2, ',', '.')}}</td>
 										<td class="text-center">
 											@if($status == 'true')

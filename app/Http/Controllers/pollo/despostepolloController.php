@@ -63,7 +63,7 @@ class despostepolloController extends Controller
                 $despost->costo_kilo = 0;
                 $despost->precio = $key->price_fama;
                 $despost->totalventa = 0;
-                $despost->total = 0;
+              /*   $despost->total = 0; */
                 $despost->porcventa = 0;
                 $despost->porcutilidad = 0;
                 $despost->status = 'VALID';
@@ -206,17 +206,20 @@ class despostepolloController extends Controller
                 $porcentajeVenta = (float)number_format($porcve * 100, 2);
 
                 $porcentajecostoTotal = (float)number_format($porcentajeVenta / 100, 4);
-                $costoTotal = $porcentajecostoTotal * $getBeneficioaves[0]->totalcostos;
+
+            /*   $costoTotal = $porcentajecostoTotal * $getBeneficioaves[0]->totalcostos; */
+               
+                $costo = $costoReal * $porcentajecostoTotal;
 
                 $costoKilo = 0;
                 if ($key->peso != 0) {
-                    $costoKilo = $costoTotal / $key->peso;
+                    $costoKilo = $costo / $key->peso;
                 }
 
                 $updatedespost = Despostepollo::firstWhere('id', $key->id);
                 $updatedespost->porcdesposte = $porcentajeDesposte;
                 $updatedespost->porcventa = $porcentajeVenta;
-                $updatedespost->costo = $costoReal;
+                $updatedespost->costo = $costo;
                 $updatedespost->costo_kilo = $costoKilo;
                 $updatedespost->save();
             }

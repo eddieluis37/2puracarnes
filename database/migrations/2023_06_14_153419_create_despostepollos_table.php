@@ -30,10 +30,11 @@ class CreateDespostepollosTable extends Migration
             $table->decimal('costo_kilo', 18, 2)->nullable();                     
             $table->decimal('precio', 18, 2)->nullable();
             $table->decimal('totalventa', 18,2)->nullable();
-            $table->decimal('total', 18, 2)->nullable();
+    /*         $table->decimal('total', 18, 2)->nullable(); */
             $table->decimal('porcventa', 18, 2)->nullable();
+            $table->string('utilidad', 18, 2)->nullable();
             $table->string('porcutilidad', 18, 2)->nullable();
-            $table->decimal('peso_acomulado', 18, 2)->nullable();
+         /*    $table->decimal('peso_acomulado', 18, 2)->nullable(); */
             $table->enum('status',['VALID','CANCELED'])->default('VALID');
 
             $table->timestamps();
