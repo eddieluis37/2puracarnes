@@ -11,6 +11,7 @@ use Carbon\Carbon;
 use App\Models\Despostepollo;
 use App\Models\Beneficiopollo;
 use App\Models\Product;
+use App\Models\Utilidad_beneficiopollos;
 
 class despostepolloController extends Controller
 {
@@ -184,6 +185,13 @@ class despostepolloController extends Controller
             $despost->totalventa = $total_venta;
             $despost->save();
             /*************************** */
+            /* $TotalKilos = (float)Utilidad_beneficiopollos::Where([['beneficiopollos_id', $request->beneficioId], ['status', 'VALID']])->sum('kilos'); */
+            $costoReal = (float)Utilidad_beneficiopollos::where([
+                ['beneficiopollos_id', $request->beneficioId],
+                ['products_id', 189],
+                ['status', 'VALID']
+            ])->pluck('costo_real')->first();
+
             $getBeneficioaves = Beneficiopollo::Where('id', $request->beneficioId)->get();
             $beneficior = Despostepollo::Where([['beneficiopollos_id', $request->beneficioId], ['status', 'VALID']])->get();
             $porcentajeVenta = 0;
@@ -208,7 +216,7 @@ class despostepolloController extends Controller
                 $updatedespost = Despostepollo::firstWhere('id', $key->id);
                 $updatedespost->porcdesposte = $porcentajeDesposte;
                 $updatedespost->porcventa = $porcentajeVenta;
-                $updatedespost->costo = $costoTotal;
+                $updatedespost->costo = $costoReal;
                 $updatedespost->costo_kilo = $costoKilo;
                 $updatedespost->save();
             }
