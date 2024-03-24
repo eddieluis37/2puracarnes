@@ -85,14 +85,13 @@
 											<p>{{$item->peso}}</p>
 											@endif
 										</td>
-										<td>${{ number_format($item->precio, 0, ',', '.')}}</td>
-									
+										<td>${{ number_format($item->precio, 0, ',', '.')}}</td>									
 										<td>${{ number_format($item->totalventa, 0, ',', '.')}}</td>
 										<td> {{ $item->porcventa}}%</td>
 										<td>${{ number_format($item->costo, 0, ',', '.')}}</td>
 										<td>${{ number_format($item->costo_kilo, 0, ',', '.')}}</td>
 										<td>${{ number_format($item->utilidad, 0, ',', '.')}}</td>
-										<td> {{ number_format($item->porcutilidad, 2, ',', '.')}}%</td>
+										<td> {{ number_format($item->porcutilidad, 0, ',', '.')}}%</td>
 										<td class="text-center">
 											@if($status == 'true')
 											<button type="button" name="btnDownReg" data-id="{{$item->id}}" class="btn btn-dark btn-sm fas fa-trash" title="Cancelar">

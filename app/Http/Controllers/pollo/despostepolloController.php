@@ -229,7 +229,7 @@ class despostepolloController extends Controller
             /*************************************** */
             $desposte = DB::table('despostepollos as d')
                 ->join('products as p', 'd.products_id', '=', 'p.id')
-                ->select('p.name', 'd.id', 'd.porcdesposte', 'd.precio', 'd.peso', 'd.totalventa', 'd.porcventa', 'd.costo', 'd.costo_kilo')
+                ->select('p.name', 'd.id', 'd.porcdesposte', 'd.precio', 'd.peso', 'd.totalventa', 'd.porcventa', 'd.costo', 'd.costo_kilo', 'd.utilidad', 'd.porcutilidad')
                 ->where([
                     ['d.beneficiopollos_id', $request->beneficioId],
                     ['d.status', 'VALID'],

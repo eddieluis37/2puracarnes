@@ -57,15 +57,16 @@ const showDataTable = (data) => {
     tableTbody.innerHTML += `
 			<tr>
 				<td>${element.name} </td>
-				<td>${element.porcdesposte} %</td>
+				<td>${element.porcdesposte}%</td>
         <td> <input type="text" class="form-control-sm" id="${element.id}" value="${element.peso}" placeholder="0" size="4"></td>
-				<td>$ ${formatCantidadSinCero(element.precio)}</td>
-			
-				<td>$ ${formatCantidadSinCero(element.totalventa)}</td>
-				<td>${element.porcventa} %</td>
-				<td>$ ${formatCantidadSinCero(element.costo)} </td>
-				<td>${formatCantidad(element.costo_kilo)} </td>
-				<td class="text-center">
+				<td>$${formatCantidadSinCero(element.precio)}</td>			
+				<td>$${formatCantidadSinCero(element.totalventa)}</td>
+				<td>${element.porcventa}%</td>
+				<td>$${formatCantidadSinCero(element.costo)} </td>
+        <td>${formatCantidad(element.costo_kilo)}</td>
+        <td>$${formatCantidad(element.utilidad)}</td>    
+        <td>${formatCantidadSinCero(element.porcutilidad)}%</td>              
+      	<td class="text-center">
 					<button type="button" name="btnDownReg" data-id="${element.id}" class="btn btn-dark btn-sm fas fa-trash" title="Cancelar">
 					</button>
 				</td>

@@ -163,6 +163,19 @@
 									</tr>
 								</tfoot>
 							</table>
+							<div class="widget-heading">
+				<h4 class="card-title">
+					<b></b>
+				</h4>
+				<ul class="tabs tab-pills">
+					<li>
+					
+					
+						<a href="{{ url('desposteaves/' . $beneficior[0]->id) }}" class="btn btn-dark" title="Despresar">Despresar</a>
+					</a>
+					</li>
+				</ul>
+			</div>
 						</div>
 					</div>
 				</div>
