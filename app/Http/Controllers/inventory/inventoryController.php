@@ -55,6 +55,7 @@ class inventoryController extends Controller
                 'ccp.venta as venta',
                 'ccp.notacredito as notacredito',
                 'ccp.notadebito as notadebito',
+                'ccp.venta_real as venta_real',
                 'ccp.stock as stock',
                 'ccp.fisico as fisico',
                 'ccp.products_id as products_id'
@@ -72,6 +73,7 @@ class inventoryController extends Controller
         foreach ($data as $item) {
             $stock = ($item->invinicial + $item->compraLote + $item->alistamiento + $item->compensados + $item->trasladoing) - (($item->venta) + $item->trasladosal) - ($item->notacredito - $item->notadebito);
             $item->stock = round($stock, 2);
+            
             // Actualizar el stock 
             DB::table('centro_costo_products')
                 ->where('centrocosto_id', $centrocostoId)
@@ -103,6 +105,7 @@ class inventoryController extends Controller
                 'ccp.venta as venta',
                 'ccp.notacredito as notacredito',
                 'ccp.notadebito as notadebito',
+                'ccp.venta_real as venta_real',
                 'ccp.stock as stock',
                 'ccp.fisico as fisico'
             )

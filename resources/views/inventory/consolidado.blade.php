@@ -144,7 +144,7 @@
                 <div id="totalTrasladoing">0,00</div>
               </td>
               <td style="background: red">
-                TotVent
+                TVR
                 <div id="totalVenta">0,00</div>
               </td>
               <td style="background: red">
@@ -192,6 +192,7 @@
               <th class="table-th text-white" title="Ventas">VE</th>
               <th class="table-th text-white" title="Notas Creditos">NC</th>
               <th class="table-th text-white" title="Notas Debitos">ND</th>
+              <th class="table-th text-white" title="Notas Debitos">VR</th>
               <th class="table-th text-white" title="Stock Ideal">SI</th>
               <th class="table-th text-white" title="InventarioFinal">INF</th>
               <th class="table-th text-white" title="Disponible">DIS</th>
@@ -205,6 +206,7 @@
             <tr>
               <th>Totales</th>
               <td></td>
+              <td>0.00</td>
               <td>0.00</td>
               <td>0.00</td>
               <td>0.00</td>
