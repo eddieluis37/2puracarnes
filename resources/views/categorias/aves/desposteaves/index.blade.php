@@ -4,15 +4,21 @@
 <div class="row sales layout-top-spacing">
 	<div class="col-sm-12">
 		<div class="widget widget-chart-one">
-			<div class="row">
-				<div class="col-sm-3">
-					<h4 class="">
-						<b> Desposte / Pollo</b>
-					</h4>
-				</div>
+			<div class="widget-heading">
+				<h4 class="card-title">
+					<b> Desposte | Pollo</b>
+				</h4>
+				<ul class="tabs tab-pills">
+					<li>
+						<a href="javascript:void(0)" onclick="window.location.href = '../../beneficioaves'" class="tabmenu bg-dark" data-toggle="modal" data-target="" title="Regresa al listado">Volver</a>
+
+						<a href="{{ url('desposteaves/' . $beneficior[0]->id) }}" class="btn btn-dark" title="Despresar">Despresar</a>
+						</a>
+					</li>
+				</ul>
 			</div>
 
-			<div class="widget-content mt-3">
+			<div class=" widget-content mt-3">
 				<div class="card">
 					<div class="card-body">
 						<div class="row g-3">
@@ -63,7 +69,7 @@
 										<th class="table-th text-white">Producto</th>
 										<th class="table-th text-white">%Desp</th>
 										<th class="table-th text-white">PesoKG</th>
-										<th class="table-th text-white">P.venta</th>									
+										<th class="table-th text-white">P.venta</th>
 										<th class="table-th text-white">T.VENTA</th>
 										<th class="table-th text-white">%VENTA</th>
 										<th class="table-th text-white">C.total</th>
@@ -85,7 +91,7 @@
 											<p>{{$item->peso}}</p>
 											@endif
 										</td>
-										<td>${{ number_format($item->precio, 0, ',', '.')}}</td>									
+										<td>${{ number_format($item->precio, 0, ',', '.')}}</td>
 										<td>${{ number_format($item->totalventa, 0, ',', '.')}}</td>
 										<td> {{ $item->porcventa}}%</td>
 										<td>${{ number_format($item->costo, 0, ',', '.')}}</td>
@@ -110,7 +116,7 @@
 										<td>{{round($TotalDesposte)}} %</td>
 										<td>{{number_format($pesoTotalGlobal, 2, ',', '.')}}</td>
 										<td>$ --</td>
-									
+
 										<td>$ {{ number_format($TotalVenta, 0, ',', '.')}}</td>
 										<td>{{round($porcVentaTotal)}} %</td>
 										<td>$ {{ number_format($costoTotalGlobal, 0, ',', '.')}}</td>
@@ -122,14 +128,14 @@
 									<tr>
 										<td>MERMA</td>
 										<td></td>
-										
-										<td>{{number_format($TotalDesposte, 2, ',', '.')}}</td>										
+
+										<td>{{number_format($TotalDesposte, 2, ',', '.')}}</td>
 									</tr>
 									<tr>
 										<td>%.MERMA</td>
 										<td></td>
-										
-										<td>{{number_format($TotalDesposte, 2, ',', '.')}}</td>										
+
+										<td>{{number_format($TotalDesposte, 2, ',', '.')}}</td>
 									</tr>
 								</tfoot>
 							</table>
