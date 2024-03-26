@@ -34,6 +34,7 @@ class CreateCentroCostoProductsTable extends Migration
             $table->decimal('venta', 18, 2)->default(0)->nullable(); // Ventas
             $table->decimal('notacredito', 18, 2)->default(0)->nullable(); // NotaCredito
             $table->decimal('notadebito', 18, 2)->default(0)->nullable(); // NotaDedito
+            $table->decimal('venta_real', 18, 2)->default(0)->nullable(); // Ventas reales 
             $table->decimal('stock', 18, 2)->default(0)->nullable(); //Stock ideal en tiempo real del sistema
             $table->decimal('fisico', 18, 2)->default(0)->nullable(); //Inventario Final
 
