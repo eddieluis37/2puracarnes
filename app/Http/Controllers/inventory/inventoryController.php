@@ -145,9 +145,9 @@ class inventoryController extends Controller
             $totalIngresos += $ingresos;
 
             $ventas = ($item->venta - $item->notacredito) + $item->notadebito;
-            $item->ventas = round($ventas, 2);      
+            $item->ventas = round($ventas, 2);
 
-            $salidas = ($item->venta - $item->notacredito);
+            $salidas =  $item->trasladosal + (($item->venta - $item->notacredito) + $item->notadebito);
             $item->salidas = round($salidas, 2);
             $totalSalidas += $salidas;
 
@@ -496,9 +496,9 @@ class inventoryController extends Controller
             $totalIngresos += $ingresos;
 
             $ventas = ($item->venta - $item->notacredito) + $item->notadebito;
-            $item->ventas = round($ventas, 2);         
+            $item->ventas = round($ventas, 2);
 
-            $salidas = ($item->venta - $item->notacredito);
+            $salidas =  $item->trasladosal + (($item->venta - $item->notacredito) + $item->notadebito);
             $item->salidas = round($salidas, 2);
             $totalSalidas += $salidas;
 
