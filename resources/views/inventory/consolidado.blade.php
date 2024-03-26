@@ -192,7 +192,7 @@
               <th class="table-th text-white" title="Ventas">VE</th>
               <th class="table-th text-white" title="Notas Creditos">NC</th>
               <th class="table-th text-white" title="Notas Debitos">ND</th>
-              <th class="table-th text-white" title="Notas Debitos">VR</th>
+              <th class="table-th text-white" title="Ventas Reales">VR</th>
               <th class="table-th text-white" title="Stock Ideal">SI</th>
               <th class="table-th text-white" title="InventarioFinal">INF</th>
               <th class="table-th text-white" title="Disponible">DIS</th>

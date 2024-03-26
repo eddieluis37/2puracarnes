@@ -71,14 +71,18 @@ class inventoryController extends Controller
 
         // Calculo de la stock ideal 
         foreach ($data as $item) {
-            $stock = ($item->invinicial + $item->compraLote + $item->alistamiento + $item->compensados + $item->trasladoing) - (($item->venta) + $item->trasladosal) - ($item->notacredito - $item->notadebito);
+            $stock = ($item->invinicial + $item->compraLote + $item->alistamiento + $item->compensados + $item->trasladoing) - (($item->venta_real) + $item->trasladosal) - ($item->notacredito - $item->notadebito);
             $item->stock = round($stock, 2);
-            
+            $venta_real = (($item->venta - $item->notacredito) + $item->notadebito);
+            $item->venta_real = round($venta_real, 2);
             // Actualizar el stock 
             DB::table('centro_costo_products')
                 ->where('centrocosto_id', $centrocostoId)
                 ->where('products_id', $item->products_id)
-                ->update(['stock' => $item->stock]);
+                ->update([
+                    'stock' => $item->stock,
+                    'venta_real' => $item->venta_real
+                ]);
         }
         return datatables()->of($data)
             ->addIndexColumn()
