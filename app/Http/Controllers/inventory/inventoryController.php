@@ -239,6 +239,7 @@ class inventoryController extends Controller
           venta,
           notadebito,
           notacredito,
+          venta_real,
           stock,
           fisico,
           price_fama,
@@ -279,6 +280,7 @@ class inventoryController extends Controller
           c.venta,	
           c.notadebito, 
           c.notacredito, 
+          c.venta_real,
           c.stock,
           c.fisico,
           c.price_fama,
@@ -344,6 +346,7 @@ class inventoryController extends Controller
          ,c.venta = 0
          ,c.notadebito = 0
          ,c.notacredito = 0
+         ,c.venta_real = 0
          ,c.stock  = 0
          ,c.fisico  = 0
          ,c.price_fama = 0
