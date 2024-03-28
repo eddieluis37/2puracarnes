@@ -1,3 +1,40 @@
+$key->save();
+
+/* $costoReal = $key->precio_kg_venta * $getBeneficioaves[0]->total_factura; */
+
+$participacionVenta = ($key->ingresos_totales / $TotalingresosTotales) * 100;
+$costoReal = $getBeneficioaves[0]->total_factura * ($participacionVenta / 100);
+
+$updatedespost = Utilidad_beneficiopollos::firstWhere('id', $key->id);
+
+$updatedespost->costo_real = $costoReal;
+$updatedespost->participacion_venta = $participacionVenta;
+
+$updatedespost->costo_unitario = $costoReal / $key->kilos;
+
+$updatedespost->porcentaje_participacion = ($key->kilos / $TotalKilos) * 100;
+
+$updatedespost->utilidad_dinero = $key->ingresos_totales -  $costoReal;
+
+$updatedespost->porcentaje_utilidad = ((($key->ingresos_totales -  $costoReal) / $key->kilos) / $precio_kg_venta) * 100;
+$updatedespost->dinero_kilo = ($key->ingresos_totales -  $costoReal) / $key->kilos;
+
+$updatedespost->save();
+
+
+
+foreach ($beneficior as $beneficio) {
+                    $TotalingresosTotales = (float)Utilidad_beneficiopollos::Where([['beneficiopollos_id', $id], ['status', 'VALID']])->sum('ingresos_totales');
+                    if ($staticProduct['id'] == 189) {
+                        $despost->kilos = ($beneficio->peso_pie_planta * $beneficio->promedio_canal_fria_sala) / 100;
+                    } elseif ($staticProduct['id'] == 307) {
+                        $despost->kilos = $beneficio->menudencia_pollo_kg;
+                    } elseif ($staticProduct['id'] == 308) {
+                        $despost->kilos = $beneficio->mollejas_corazones_kg;
+                    }
+                }
+
+
 public function update(Request $request)
     {
         try {

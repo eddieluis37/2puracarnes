@@ -181,12 +181,25 @@ class utilidadpolloController extends Controller
                 $updatedespost->porcentaje_participacion = ($key->kilos / $TotalKilos) * 100;
 
                 $updatedespost->utilidad_dinero = $key->ingresos_totales -  $costoReal;               
-
-                $updatedespost->porcentaje_utilidad = ((($key->ingresos_totales -  $costoReal) / $key->kilos) / $precio_kg_venta) * 100;
+         
                 $updatedespost->dinero_kilo = ($key->ingresos_totales -  $costoReal) / $key->kilos;  
-
+                $updatedespost->porcentaje_utilidad = ((($key->ingresos_totales -  $costoReal) / $key->kilos)  / ($key->precio_kg_venta)) * 100;
 
                 $updatedespost->save();
+            }
+
+            foreach ($beneficior as $key) {
+                $beneficio = Beneficiopollo::find($key->id);                
+                foreach ($beneficior as $key) {
+                    if ($key->products_id == 189) {
+                        $key->kilos = ($beneficio->peso_pie_planta * $beneficio->promedio_canal_fria_sala) / 100;
+                    } elseif ($key->products_id == 307) {
+                        $key->kilos = $beneficio->menudencia_pollo_kg;
+                    } elseif ($key->products_id == 308) {
+                        $key->kilos = $beneficio->mollejas_corazones_kg;
+                    }
+                    $key->save();
+                }                             
             }
             /*************************************** */
             $desposte = DB::table('despostepollos as d')

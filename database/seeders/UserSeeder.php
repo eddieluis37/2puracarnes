@@ -62,7 +62,7 @@ class UserSeeder extends Seeder
             'name' => 'compras',
             'phone' => '3008755514',
             'email' => 'compras@puracarnes.com',
-            'profile' => 'Comprador',
+            'profile' => 'Compras',
             'status' => 'Active',
             'password' => bcrypt('compras@puracarnes.com')
         ]);
@@ -119,7 +119,7 @@ class UserSeeder extends Seeder
 
         /**********************************************************************/
         /*** Al agregar nuevos roles  se debe agregar el rol en la migracion tabla User
-         *   $table->enum('profile',['Admin','Cajero','Vendedor','Comprador'])->default('Admin'); */
+         *   $table->enum('profile',['Admin','Cajero','Vendedor','Compras'])->default('Admin'); */
 
         // crear permisos componente Admin
         Permission::create(['name' => 'Admin_Menu']);
@@ -148,7 +148,7 @@ class UserSeeder extends Seeder
         Permission::create(['name' => 'Report_Create']);
 
         // crear permisos para modulo compras
-        Permission::create(['name' => 'Compras']);
+        Permission::create(['name' => 'Compras_Menu']);
 
         // crear permisos para modulo Inventario
         Permission::create(['name' => 'Inventory']);
@@ -174,7 +174,7 @@ class UserSeeder extends Seeder
         $cajero    = Role::create(['name' => 'Cajero']);
 
         // crear role compras
-        $comprador  = Role::create(['name' => 'Comprador']);
+        $compras  = Role::create(['name' => 'Compras']);
 
         // crear role alistamiento
         $produccion  = Role::create(['name' => 'Produccion']);
@@ -192,20 +192,20 @@ class UserSeeder extends Seeder
 
         // asignar permisos al rol Admin
         $admin->givePermissionTo([
-            'Admin_Menu', 'Compras', 'Produccion', 'Traslados', 'Workshop', 'Pos_Create', 'Inventory', 'Cashout_Create', 'Parametros_Create', 'Category_View', 'Category_Create', 'Category_Search', 'Category_Update', 'Category_Destroy', 'Product_View', 'Product_Create', 'Product_Search', 'Product_Update', 'Product_Destroy', 'Report_Create'
+            'Admin_Menu', 'Compras_Menu', 'Produccion', 'Traslados', 'Workshop', 'Pos_Create', 'Inventory', 'Cashout_Create', 'Parametros_Create', 'Category_View', 'Category_Create', 'Category_Search', 'Category_Update', 'Category_Destroy', 'Product_View', 'Product_Create', 'Product_Search', 'Product_Update', 'Product_Destroy', 'Report_Create'
         ]);
 
         // asignar permisos al rol Cajero
         $cajero->givePermissionTo(['Pos_Create', 'Cashout_Create', 'Category_View', 'Category_Search', 'Product_View', 'Product_Search']);
 
-        // asignar permisos al comprador
-        $comprador->givePermissionTo(['Compras', 'Inventory', 'Workshop', 'Produccion']);
+        // asignar permisos al compras
+        $compras->givePermissionTo(['Compras_Menu', 'Inventory', 'Workshop', 'Produccion']);
 
         // asignar permisos a produccion
         $produccion->givePermissionTo(['Produccion']);
 
         // asignar permisos a costos
-        $costos->givePermissionTo(['Compras', 'Product_View', 'Product_Search', 'Traslados', 'Inventory']);
+        $costos->givePermissionTo(['Compras_Menu', 'Product_View', 'Product_Search', 'Traslados', 'Inventory']);
 
         // asignar permisos al vendedor
         $ventas->givePermissionTo(['Pos_Create', 'Cashout_Create', 'Category_View', 'Category_Search', 'Product_View', 'Product_Search']);
@@ -222,7 +222,7 @@ class UserSeeder extends Seeder
         User::find(3)->assignRole('Admin');
         User::find(4)->assignRole('Admin');
         User::find(5)->assignRole('Admin');
-        User::find(6)->assignRole('Comprador');
+        User::find(6)->assignRole('Compras');
         User::find(7)->assignRole('Produccion');
         User::find(8)->assignRole('Costos');
         User::find(9)->assignRole('Tesoreria');
