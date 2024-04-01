@@ -92,9 +92,16 @@ class beneficioresController extends Controller
 				$newBeneficiore->cantidadmacho = $this->MoneyToNumber($request->cantidadMacho);
 				$newBeneficiore->valorunitariomacho = $this->MoneyToNumber($request->valorUnitarioMacho);
 				$newBeneficiore->valortotalmacho = $this->MoneyToNumber($request->valorTotalMacho);
-				$newBeneficiore->cantidadhembra = $this->MoneyToNumber($request->cantidadHembra);
-				$newBeneficiore->valorunitariohembra = $this->MoneyToNumber($request->valorUnitarioHembra);
-				$newBeneficiore->valortotalhembra = $this->MoneyToNumber($request->valorTotalHembra);
+
+				$newBeneficiore->cantidadhembra = $request->cantidadHembra;
+				if ($request->cantidadHembra == 0) {
+					$newBeneficiore->valorunitariohembra = 0;
+					$newBeneficiore->valortotalhembra = 0;
+				} else {
+					$newBeneficiore->valorunitariohembra = $this->MoneyToNumber($request->valorUnitarioHembra);
+					$newBeneficiore->valortotalhembra = $this->MoneyToNumber($request->valorTotalHembra);
+				}
+				
 				$newBeneficiore->cantidad = $request->cantidadMacho + $request->cantidadHembra;
 				$newBeneficiore->fecha_beneficio = $currentDateFormat;
 				$newBeneficiore->fecha_cierre = $dateNextMonday;
