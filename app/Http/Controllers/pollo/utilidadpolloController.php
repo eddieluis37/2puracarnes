@@ -189,7 +189,7 @@ class utilidadpolloController extends Controller
             }
 
             foreach ($beneficior as $key) {
-                $beneficio = Beneficiopollo::find($key->id);                
+                $beneficio = Beneficiopollo::find($request->beneficioId);               
                 foreach ($beneficior as $key) {
                     if ($key->products_id == 189) {
                         $key->kilos = ($beneficio->peso_pie_planta * $beneficio->promedio_canal_fria_sala) / 100;
@@ -204,7 +204,7 @@ class utilidadpolloController extends Controller
             /*************************************** */
             $desposte = DB::table('despostepollos as d')
                 ->join('products as p', 'd.products_id', '=', 'p.id')
-                ->select('p.name', 'd.id', 'd.porcdesposte', 'd.precio', 'd.peso', 'd.totalventa', 'd.porcventa', 'd.costo', 'd.costo_kilo')
+                ->select('p.name', 'd.id', 'd.porcdesposte', 'd.precio_kg_venta', 'd.peso', 'd.totalventa', 'd.porcventa', 'd.costo', 'd.costo_kilo')
                 ->where([
                     ['d.beneficiopollos_id', $request->beneficioId],
                     ['d.status', 'VALID'],
@@ -217,7 +217,7 @@ class utilidadpolloController extends Controller
             return response()->json([
                 "status" => 1,
                 "id" => $request->id,
-                "precio" => $despost->precio,
+                "precio_kg_venta" => $despost->precio_kg_venta,
             
                 "benefit" => $request->beneficioId,
                 "desposte" => $desposte,
