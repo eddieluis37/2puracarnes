@@ -259,7 +259,8 @@
 												<div class="task-header">
 													<div class="form-group">
 														<label>Total costo kilo</label>
-														<div class="form-control campo" id="totalCostoKilo">{{ number_format( $tck, 2, ',', '.') }} </div>
+														<!-- <div class="form-control campo" id="totalCostoKilo">{{ number_format( $tck, 2, ',', '.') }} </div> -->
+														<div class="form-control campo" id="totalCostoKilo">{{ number_format( $costoTotalGlobal, 0, ',', '.') }} </div>														
 													</div>
 												</div>
 											</div>
@@ -267,7 +268,7 @@
 												<div class="task-header">
 													<div class="form-group">
 														<label>Utilidad</label>
-														<div class="form-control campo" id="utilidad">{{ number_format( $tdesposte - $tck ,0, ',', '.') }} </div>
+														<div class="form-control campo" id="utilidad">{{ number_format( $tdesposte - $costoTotalGlobal ,0, ',', '.') }} </div>
 													</div>
 												</div>
 											</div>
@@ -282,7 +283,7 @@
 														<?php } ?>
 														<?php if ($tdesposte != 0) { ?>
 															<div class="form-control campo">
-																<?php echo number_format((($tdesposte - $tck) / $tdesposte) * 100, 2); ?>
+																<?php echo number_format((($tdesposte - $costoTotalGlobal) / $tdesposte) * 100, 2); ?>
 															</div>
 														<?php } ?>
 													</div>
@@ -299,7 +300,7 @@
 														<?php } ?>
 														<?php if ($tdesposte != 0) { ?>
 															<div class="form-control campo">
-																<?php echo number_format(($tdesposte - $tck) / $cant, 2, ',', '.'); ?>
+																<?php echo number_format(($tdesposte - $costoTotalGlobal) / $cant, 2, ',', '.'); ?>
 															</div>
 														<?php } ?>
 													</div>

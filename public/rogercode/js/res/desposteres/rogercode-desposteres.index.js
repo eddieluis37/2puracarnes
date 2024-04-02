@@ -1,3 +1,5 @@
+10111111111
+1111002
 import { sendData } from "../../exportModule/core/rogercode-core.js";
 import {
     successToastMessage,
@@ -189,7 +191,8 @@ const showDataTable = (data) => {
     let cantidad = Number(dataBeneficiores[0].cantidad);
     let costokilo = Number(dataBeneficiores[0].costokilo);
     //console.log(cantidad);
-    let resultcanalPlantaCostoKilo = canalPlanta * costokilo;
+    /* let resultcanalPlantaCostoKilo = canalPlanta * costokilo; */
+    let resultcanalPlantaCostoKilo = Number(dataTotals.costoTotalGlobal);
     //console.log(resultcanalPlantaCostoKilo);
     //console.log(dd);
     mermaPesoInicial.innerHTML = `${formatCantidad(canalPlanta)}`;
