@@ -30,6 +30,9 @@ class CreateBeneficioresTable extends Migration
 
             $table->unsignedBigInteger('clientvisceras_id')->nullable();
             $table->foreign('clientvisceras_id')->references('id')->on('thirds');
+            
+            $table->unsignedBigInteger('products_id')->nullable();
+            $table->foreign('products_id')->references('id')->on('products');
 
             $table->bigInteger('cantidadmacho')->nullable(); 
             $table->bigInteger('valorunitariomacho')->nullable(); 

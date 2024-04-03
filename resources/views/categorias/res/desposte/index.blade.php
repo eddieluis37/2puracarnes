@@ -4,13 +4,17 @@
 <div class="row sales layout-top-spacing">
 	<div class="col-sm-12">
 		<div class="widget widget-chart-one">
-			<div class="row">
-				<div class="col-sm-3">
-					<h4 class="">
-						<b> Desposte | RES</b>
-					</h4>
-				</div>
-				<!--div class="col-sm-3">
+			<div class="widget-heading">
+				<h4 class="card-title">
+					<b> Desposte | RES</b>
+				</h4>
+				<ul class="tabs tab-pills">
+					<li>
+						<a href="javascript:void(0)" onclick="window.location.href = '../../beneficiores'" class="tabmenu bg-dark" data-toggle="modal" data-target="" title="Regresa al listado">Volver</a>
+					</li>
+				</ul>
+			</div>
+			<!--div class="col-sm-3">
 					<div class="info-box">
 						<div class="row">
 							<div class="col-md-6">
@@ -42,7 +46,7 @@
 						</div>
 					</div>
 				</div>-->
-			</div>
+
 
 			<div class="widget-content mt-3">
 				<div class="card">
@@ -161,7 +165,7 @@
 			$pi = $beneficior[0]->canalplanta;
 			$cant = $beneficior[0]->cantidad;
 			$ck = $beneficior[0]->costokilo;
-		/* 		$tck = $pi * $ck; */
+			/* 		$tck = $pi * $ck; */
 			$tck = floatval($costoTotalGlobal);
 			?>
 			<div class="widget-content mt-3">
@@ -260,7 +264,7 @@
 													<div class="form-group">
 														<label>Total costo kilo</label>
 														<!-- <div class="form-control campo" id="totalCostoKilo">{{ number_format( $tck, 2, ',', '.') }} </div> -->
-														<div class="form-control campo" id="totalCostoKilo">{{ number_format( $costoTotalGlobal, 0, ',', '.') }} </div>														
+														<div class="form-control campo" id="totalCostoKilo">{{ number_format( $costoTotalGlobal, 0, ',', '.') }} </div>
 													</div>
 												</div>
 											</div>
