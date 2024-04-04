@@ -55,7 +55,7 @@ class desposteresController extends Controller
                 ['status', 1],
                 ['category_id', 1],
                 ['level_product_id', 1],
-            ])->whereNotIn('id', [128, 129, 302, 303 ])->orderBy('name', 'asc')->get();
+            ])->whereNotIn('id', [128, 129, 302, 303])->orderBy('name', 'asc')->get();
             foreach ($prod as $key) {
                 $despost = new Despostere(); //Se crea una instancia del modelo
                 $despost->users_id = $id_user; //Se establecen los valores para cada columna de la tabla
@@ -281,14 +281,19 @@ class desposteresController extends Controller
         $beneficio->fecha_cierre = $formattedDate;
 
 
-        $beneficio->save();  
-        
-         // Afectar inventario KG y Utilidad con respectos a Visceras RES
+        $beneficio->save();
+
+        // Afectar inventario KG y Utilidad con respectos a Visceras RES
         $centro = Centro_costo_product::where('products_id', 304)->first();
         $centro->compralote = $centro->compralote + $beneficio->cantidad;
         $centro->cto_compralote_total = $centro->cto_compralote_total + $beneficio->visceras;
-        $centro->save(); 
+        $centro->save();
 
+        // Afectar inventario KG y Utilidad con respectos a Piel de RES
+        $centro = Centro_costo_product::where('products_id', 301)->first();
+        $centro->compralote = $centro->compralote + $beneficio->cantidad;
+        $centro->cto_compralote_total = $centro->cto_compralote_total + $beneficio->tpieles;
+        $centro->save();
 
         $beneficior = Beneficiore::where('id', $beneficioId)->get();
 
@@ -319,7 +324,7 @@ class desposteresController extends Controller
             'beneficior' => $beneficior
         ]);
 
-       
+
 
         // return view('categorias.res.desposte.index', ['beneficio' => $beneficio]);
     }
