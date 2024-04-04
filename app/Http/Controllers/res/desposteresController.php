@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Models\Beneficiore;
+use App\Models\Centro_costo_product;
 use App\Models\Despostere;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
@@ -278,9 +279,19 @@ class desposteresController extends Controller
 
         $beneficio = Beneficiore::find($beneficioId);
         $beneficio->fecha_cierre = $formattedDate;
-        $beneficio->save();
+
+
+        $beneficio->save();  
+        
+         // Afectar inventario KG y Utilidad con respectos a Visceras RES
+        $centro = Centro_costo_product::where('products_id', 304)->first();
+        $centro->compralote = $centro->compralote + $beneficio->cantidad;
+        $centro->cto_compralote_total = $centro->cto_compralote_total + $beneficio->visceras;
+        $centro->save(); 
+
 
         $beneficior = Beneficiore::where('id', $beneficioId)->get();
+
 
         DB::update(
             "
@@ -307,6 +318,8 @@ class desposteresController extends Controller
             'message' => 'Cargado al inventario exitosamente',
             'beneficior' => $beneficior
         ]);
+
+       
 
         // return view('categorias.res.desposte.index', ['beneficio' => $beneficio]);
     }
