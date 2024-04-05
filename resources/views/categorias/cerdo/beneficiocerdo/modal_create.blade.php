@@ -1,3 +1,8 @@
+<style>
+	#div1 {
+    display: none;
+}
+</style>
 <div class="row">
 	<div class="col-sm-12">
 		<div class="connect-sorting-content">
@@ -36,7 +41,7 @@
 									@error('thirdsid') <span class="text-danger er">{{ $message}}</span>@enderror
 								</div>
 							</div>
-						</div>					
+						</div>
 						<div class="col-sm-12 col-md-4">
 							<div class="task-header">
 								<div class="form-group">
@@ -246,16 +251,16 @@
 					<div class="col-sm-12 col-md-2">
 						<div class="task-header">
 							<div class="form-group">
-								<label>Cantidad <br> Macho</label>
+								<label>Cantidad</label>
 								<!--input type="number" name="cantidad" id="cantidad" class="form-control" "aria-describedby=" helpId" required="" min="1" max="30" step="1" value="1">-->
-								<input type="number" name="cantidadMacho" id="cantidadMacho" class="form-control" "aria-describedby=" helpId" required="" min="1" max="30" step="1" value="1">
+								<input type="number" name="cantidadMacho" id="cantidadMacho" class="form-control" "aria-describedby=" helpId" required="" min="1" max="30" step="1" value="0">
 								@error('cantidadMacho') <span class="text-danger er">{{ $message}}</span>@enderror
 							</div>
 						</div>
 					</div>
 					<div class="col-sm-12 col-md-2">
 						<div class="task-header">
-							<label>Valor Viscera Macho</label>
+							<label>Valor Viscera</label>
 							<div class="input-group flex-nowrap">
 								<span class="input-group-text" id="addon-wrapping">$</span>
 								<input type="text" name="valorUnitarioMacho" id="valorUnitarioMacho" class="form-control" "aria-describedby=" helpId" placeholder="0" required="" min="1" step="1">
@@ -264,18 +269,18 @@
 					</div>
 					<div class="col-sm-12 col-md-2">
 						<div class="task-header">
-							<label>Total <br> Macho</label>
+							<label>Total</label>
 							<div class="input-group flex-nowrap">
 								<span class="input-group-text" id="addon-wrapping">$</span>
 								<input type="text" name="valorTotalMacho" id="valorTotalMacho" class="form-control" "aria-describedby=" helpId" required="" min="1" step="1" readonly>
 							</div>
 						</div>
 					</div>
-					<div class="col-sm-12 col-md-2">
+					<div class="col-sm-12 col-md-2" id="div1">
 						<div class="task-header">
 							<div class="form-group">
 								<label>Cantidad <br> Hembra</label>
-								<input type="number" name="cantidadHembra" id="cantidadHembra" class="form-control" "aria-describedby=" helpId" required="" min="0" max="30" step="0" value="1">
+								<input type="number" name="cantidadHembra" id="cantidadHembra" class="form-control" "aria-describedby=" helpId" required="" min="0" max="30" step="0" value="0">
 							</div>
 						</div>
 					</div>

@@ -291,7 +291,7 @@ class desposteresController extends Controller
 
         // Afectar inventario KG y Utilidad con respectos a Piel de RES
         $centro = Centro_costo_product::where('products_id', 301)->first();
-        $centro->compralote = $centro->compralote + $beneficio->cantidad;
+        $centro->compralote = $centro->compralote + $beneficio->pieleskg;
         $centro->cto_compralote_total = $centro->cto_compralote_total + $beneficio->tpieles;
         $centro->save();
 
