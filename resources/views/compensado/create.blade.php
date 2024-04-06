@@ -76,18 +76,19 @@
 										</div>
 									</div>
 								</div>
-								<div class="col-md-3">
-									<label for="" class="form-label">Precio de compra</label>
-									<div class="input-group flex-nowrap">
-										<span class="input-group-text" id="addon-wrapping">$</span>
-										<input type="text" id="pcompra" name="pcompra" class="form-control input" placeholder="EJ: 20.500">
-									</div>
-								</div>
+								
 								<div class="col-md-3">
 									<label for="" class="form-label">Peso KG</label>
 									<div class="input-group flex-nowrap">
 										<input type="text" id="pesokg" name="pesokg" class="form-control input" placeholder="EJ: 10,00">
 										<span class="input-group-text" id="addon-wrapping">KG</span>
+									</div>
+								</div>
+								<div class="col-md-3">
+									<label for="" class="form-label">Precio de compra</label>
+									<div class="input-group flex-nowrap">
+										<span class="input-group-text" id="addon-wrapping">$</span>
+										<input type="text" id="pcompra" name="pcompra" class="form-control input" placeholder="EJ: 20.500">
 									</div>
 								</div>
 								<!--div class="col-md-2">
@@ -109,7 +110,7 @@
 						</form>
 					</div>
 				</div>
-			</div>
+			</div>	
 
 			<div class="widget-content mt-3">
 				<div class="card">
