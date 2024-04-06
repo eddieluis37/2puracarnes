@@ -94,6 +94,7 @@ class beneficiocerdoController extends Controller
 				$newBeneficiocerdo->cantidadmacho = $this->MoneyToNumber($request->cantidadMacho);
 				$newBeneficiocerdo->valorunitariomacho = $this->MoneyToNumber($request->valorUnitarioMacho);
 				$newBeneficiocerdo->valortotalmacho = $this->MoneyToNumber($request->valorTotalMacho);
+				$newBeneficiocerdo->cantidad = $this->MoneyToNumber($request->cantidadMacho);
 
 				$newBeneficiocerdo->cantidadhembra = $request->cantidadHembra;
 				if ($request->cantidadHembra == 0) {

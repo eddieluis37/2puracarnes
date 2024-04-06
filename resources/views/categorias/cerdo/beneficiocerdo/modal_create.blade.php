@@ -1,5 +1,5 @@
 <style>
-	#div1, #div2, #div3  {
+	#div1, #div2, #div3, #div4, #div5 {
     display: none;
 }
 </style>
@@ -337,18 +337,18 @@
 											<span class="input-group-text" id="addon-wrapping">KG</span>
 										</div>
 									</div>
-									<div class="col-md-2">
+									<div class="col-md-2" id="div4">
 										<label for="pieleskg">Pieles Kg</label>
 										<div class="input-group flex-nowrap">
-											<input type="text" name="pieleskg" id="pieleskg" class="form-control" placeholder="0" aria-describedby="helpId" step="0.01" required>
+											<input type="text" name="pieleskg" id="pieleskg" class="form-control" placeholder="0" aria-describedby="helpId" step="0.01" value="0">
 											<span class="input-group-text" id="addon-wrapping">KG</span>
 										</div>
 									</div>
-									<div class="col-md-2">
+									<div class="col-md-2" id="div5">
 										<label for="pielescosto">Piel Costo</label>
 										<div class="input-group flex-nowrap">
 											<span class="input-group-text" id="addon-wrapping">$</span>
-											<input type="text" name="pielescosto" id="pielescosto" class="form-control" placeholder="0" aria-describedby="helpId" step="0.01" required>
+											<input type="text" name="pielescosto" id="pielescosto" class="form-control" placeholder="0" aria-describedby="helpId" step="0.01" value="0">
 										</div>
 									</div>
 									<div class="col-md-2">
