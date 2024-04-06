@@ -1,5 +1,5 @@
 <style>
-	#div1, #div2, #div3, #div4, #div5 {
+	#div1, #div2, #div3, #div4, #div5, #div6 {
     display: none;
 }
 </style>
@@ -427,11 +427,11 @@
 											<input type="text" name="ttransporte" id="ttransporte" class="form-control" aria-describedby="helpId" readonly step="0.01">
 										</div>
 									</div>
-									<div class="col-md-4">
+									<div class="col-md-4" id="div6">
 										<label for="tpieles">Pieles</label>
 										<div class="input-group flex-nowrap">
 											<span class="input-group-text" id="addon-wrapping">$</span>
-											<input type="text" name="tpieles" id="tpieles" class="form-control" aria-describedby="helpId" readonly step="0.01">
+											<input type="text" name="tpieles" id="tpieles" class="form-control" aria-describedby="helpId" readonly step="0.01" value="0">
 										</div>
 									</div>
 									<div class="col-md-4">
