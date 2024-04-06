@@ -1,5 +1,5 @@
 <style>
-	#div1 {
+	#div1, #div2, #div3  {
     display: none;
 }
 </style>
@@ -280,25 +280,25 @@
 						<div class="task-header">
 							<div class="form-group">
 								<label>Cantidad <br> Hembra</label>
-								<input type="number" name="cantidadHembra" id="cantidadHembra" class="form-control" "aria-describedby=" helpId" required="" min="0" max="30" step="0" value="0">
+								<input type="number" name="cantidadHembra" id="cantidadHembra" class="form-control" "aria-describedby=" helpId" min="0" max="30" step="0" value="0">
 							</div>
 						</div>
 					</div>
-					<div class="col-sm-12 col-md-2">
+					<div class="col-sm-12 col-md-2" id="div2">
 						<div class="task-header">
 							<label>Valor Viscera Hembra</label>
 							<div class="input-group flex-nowrap">
 								<span class="input-group-text" id="addon-wrapping">$</span>
-								<input type="text" name="valorUnitarioHembra" id="valorUnitarioHembra" class="form-control" "aria-describedby=" helpId" placeholder="0" required="" min="0" step="0">
+								<input type="text" name="valorUnitarioHembra" id="valorUnitarioHembra" class="form-control" "aria-describedby=" helpId" placeholder="0" min="0" step="0">
 							</div>
 						</div>
 					</div>
-					<div class="col-sm-12 col-md-2">
+					<div class="col-sm-12 col-md-2" id="div3">
 						<div class="task-header">
 							<label>Total <br>Hembra</label>
 							<div class="input-group flex-nowrap">
 								<span class="input-group-text" id="addon-wrapping">$</span>
-								<input type="text" name="valorTotalHembra" id="valorTotalHembra" class="form-control" "aria-describedby=" helpId" required="" min="0" step="0" readonly>
+								<input type="text" name="valorTotalHembra" id="valorTotalHembra" class="form-control" "aria-describedby=" helpId" min="0" step="0" readonly>
 							</div>
 						</div>
 					</div>

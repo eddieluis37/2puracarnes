@@ -94,10 +94,16 @@ class beneficiocerdoController extends Controller
 				$newBeneficiocerdo->cantidadmacho = $this->MoneyToNumber($request->cantidadMacho);
 				$newBeneficiocerdo->valorunitariomacho = $this->MoneyToNumber($request->valorUnitarioMacho);
 				$newBeneficiocerdo->valortotalmacho = $this->MoneyToNumber($request->valorTotalMacho);
-				$newBeneficiocerdo->cantidadhembra = $this->MoneyToNumber($request->cantidadHembra);
-				$newBeneficiocerdo->valorunitariohembra = $this->MoneyToNumber($request->valorUnitarioHembra);
-				$newBeneficiocerdo->valortotalhembra = $this->MoneyToNumber($request->valorTotalHembra);
-				$newBeneficiocerdo->cantidad = $request->cantidadMacho + $request->cantidadHembra;
+
+				$newBeneficiocerdo->cantidadhembra = $request->cantidadHembra;
+				if ($request->cantidadHembra == 0) {
+					$newBeneficiocerdo->valorunitariohembra = 0;
+					$newBeneficiocerdo->valortotalhembra = 0;
+				} else {
+					$newBeneficiocerdo->valorunitariohembra = $this->MoneyToNumber($request->valorUnitarioHembra);
+					$newBeneficiocerdo->valortotalhembra = $this->MoneyToNumber($request->valorTotalHembra);
+				}				
+			
 				$newBeneficiocerdo->fecha_beneficio = $currentDateFormat;
 				$newBeneficiocerdo->fecha_cierre = $dateNextMonday;
 				$newBeneficiocerdo->factura = $request->factura;

@@ -171,7 +171,8 @@ const showDataTable = (data) => {
   let cantidad = Number(dataBeneficiocerdos[0].cantidad);
   let costokilo = Number(dataBeneficiocerdos[0].costokilo);
   //console.log(cantidad);
-  let resultcanalPlantaCostoKilo = canalPlanta * costokilo;  
+  
+  let resultcanalPlantaCostoKilo = Number(dataTotals.costoTotalGlobal);
   //console.log(resultcanalPlantaCostoKilo);
   //console.log(dd);
   mermaPesoInicial.innerHTML = `${formatCantidad(canalPlanta)}`;
