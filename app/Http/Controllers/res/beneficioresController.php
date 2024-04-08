@@ -108,7 +108,7 @@ class beneficioresController extends Controller
 				$newBeneficiore->factura = $request->factura;
 				$newBeneficiore->clientpieles_id = $request->clientpieles_id;
 				$newBeneficiore->clientvisceras_id = $request->clientvisceras_id;
-				$newBeneficiore->products_id = 304;
+				/* $newBeneficiore->products_id = 304; */
 				$newBeneficiore->lote = $newLote; //$request->lote;
 				$newBeneficiore->finca = $request->finca;
 				$newBeneficiore->sacrificio = $this->MoneyToNumber($request->sacrificio);
