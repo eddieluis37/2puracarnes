@@ -22,7 +22,7 @@ class ThirdsController extends Component
 	use WithPagination;
    
 
-	public $name, $type_identificationid, $identification, $digito_verificacion, $officeid, $porc_descuento, $type_regimen_ivaid, $direccion,  $direccion1, $direccion2, $direccion3, $direccion4, $search, $provinceid, $celular, $nombre_contacto, $status, $is_client, $is_provider, $is_seller, $is_courier, $is_alistador, $correo, $selected_id, $listaprecio_genericId, $listaprecio_nichoId, $pageTitle, $componentName;
+	public $name, $type_identificationid, $identification, $digito_verificacion, $officeid, $porc_descuento, $type_regimen_ivaid, $direccion, $direccion1, $direccion2, $direccion3, $direccion4, $direccion5, $direccion6, $direccion7, $direccion8, $direccion9, $search, $provinceid, $celular, $nombre_contacto, $status, $is_client, $is_provider, $is_seller, $is_courier, $is_alistador, $correo, $selected_id, $listaprecio_genericId, $listaprecio_nichoId, $pageTitle, $componentName;
 	
 	private $pagination = 15;
 
@@ -133,7 +133,12 @@ class ThirdsController extends Component
 			'direccion1' => $this->direccion1,
 			'direccion2' => $this->direccion2,			
 			'direccion3' => $this->direccion3,
-			'direccion4' => $this->direccion4,		
+			'direccion4' => $this->direccion4,
+			'direccion5' => $this->direccion5,
+			'direccion6' => $this->direccion6,
+			'direccion7' => $this->direccion7,
+			'direccion8' => $this->direccion8,
+			'direccion9' => $this->direccion9,		
 			'province_id' => $this->provinceid,
 			'celular' => $this->celular,
 			'nombre_contacto' => $this->nombre_contacto,
@@ -168,6 +173,11 @@ class ThirdsController extends Component
 		$this->direccion2 = $third->direccion2;
 		$this->direccion3 = $third->direccion3;
 		$this->direccion4 = $third->direccion4;
+		$this->direccion5 = $third->direccion5;
+		$this->direccion6 = $third->direccion6;
+		$this->direccion7 = $third->direccion7;
+		$this->direccion8 = $third->direccion8;
+		$this->direccion9 = $third->direccion9;
 		$this->provinceid = $third->province_id;
 		$this->celular = $third->celular;
 		$this->nombre_contacto = $third->nombre_contacto;
@@ -232,7 +242,12 @@ class ThirdsController extends Component
 			'direccion1' => $this->direccion1,
 			'direccion2' => $this->direccion2,
 			'direccion3' => $this->direccion3,
-			'direccion4' => $this->direccion4,			
+			'direccion4' => $this->direccion4,
+			'direccion5' => $this->direccion5,
+			'direccion6' => $this->direccion6,
+			'direccion7' => $this->direccion7,
+			'direccion8' => $this->direccion8,
+			'direccion9' => $this->direccion9,			
 			'province_id' => $this->provinceid,
 			'celular' => $this->celular,
 			'nombre_contacto' => $this->nombre_contacto,
@@ -264,6 +279,11 @@ class ThirdsController extends Component
 		$this->direccion2 = '';
 		$this->direccion3 = '';
 		$this->direccion4 = '';
+		$this->direccion5 = '';
+		$this->direccion6 = '';
+		$this->direccion7 = '';
+		$this->direccion8 = '';
+		$this->direccion9 = '';
 		$this->provinceid = 'Elegir';
 		$this->celular = '';
 		$this->nombre_contacto = '';

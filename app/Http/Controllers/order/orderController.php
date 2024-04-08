@@ -42,9 +42,14 @@ class orderController extends Controller
                 ->orWhereNotNull('direccion1')
                 ->orWhereNotNull('direccion2')
                 ->orWhereNotNull('direccion3')
-                ->orWhereNotNull('direccion4');
+                ->orWhereNotNull('direccion4')
+                ->orWhereNotNull('direccion5')
+                ->orWhereNotNull('direccion6')
+                ->orWhereNotNull('direccion7')
+                ->orWhereNotNull('direccion8')
+                ->orWhereNotNull('direccion9');
         })
-            ->select('direccion', 'direccion1', 'direccion2', 'direccion3', 'direccion4')
+            ->select('direccion', 'direccion1', 'direccion2', 'direccion3', 'direccion4', 'direccion5', 'direccion6', 'direccion7', 'direccion8', 'direccion9')
             ->get();
 
         $ventas = Order::get();

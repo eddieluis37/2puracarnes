@@ -40,6 +40,11 @@ class CreateThirdsTable extends Migration
             $table->string('direccion2', 150)->nullable();
             $table->string('direccion3', 150)->nullable();
             $table->string('direccion4', 150)->nullable();
+            $table->string('direccion5', 150)->nullable();
+            $table->string('direccion6', 150)->nullable();
+            $table->string('direccion7', 150)->nullable();
+            $table->string('direccion8', 150)->nullable();
+            $table->string('direccion9', 150)->nullable();
 
             $table->unsignedBigInteger('province_id');
             $table->foreign('province_id')->references('id')->on('provinces');

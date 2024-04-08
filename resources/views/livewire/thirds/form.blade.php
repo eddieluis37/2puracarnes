@@ -211,6 +211,41 @@
 			@error('direccion') <span class="text-danger er">{{ $message}}</span>@enderror
 		</div>
 	</div>
+	<div class="col-sm-12 col-md-4">
+		<div class="form-group">
+			<label>Dirección de entrega 5</label>
+			<input type="text" wire:model.lazy="direccion5" class="form-control" placeholder="ej: Calle 109 # 98 - 57">
+			@error('direccion') <span class="text-danger er">{{ $message}}</span>@enderror
+		</div>
+	</div>
+	<div class="col-sm-12 col-md-4">
+		<div class="form-group">
+			<label>Dirección de entrega 6</label>
+			<input type="text" wire:model.lazy="direccion6" class="form-control" placeholder="ej: Calle 109 # 98 - 57">
+			@error('direccion') <span class="text-danger er">{{ $message}}</span>@enderror
+		</div>
+	</div>
+	<div class="col-sm-12 col-md-4">
+		<div class="form-group">
+			<label>Dirección de entrega 7</label>
+			<input type="text" wire:model.lazy="direccion7" class="form-control" placeholder="ej: Calle 109 # 98 - 57">
+			@error('direccion') <span class="text-danger er">{{ $message}}</span>@enderror
+		</div>
+	</div>
+	<div class="col-sm-12 col-md-4">
+		<div class="form-group">
+			<label>Dirección de entrega 8</label>
+			<input type="text" wire:model.lazy="direccion8" class="form-control" placeholder="ej: Calle 109 # 98 - 57">
+			@error('direccion') <span class="text-danger er">{{ $message}}</span>@enderror
+		</div>
+	</div>
+	<div class="col-sm-12 col-md-4">
+		<div class="form-group">
+			<label>Dirección de entrega 9</label>
+			<input type="text" wire:model.lazy="direccion9" class="form-control" placeholder="ej: Calle 109 # 98 - 57">
+			@error('direccion') <span class="text-danger er">{{ $message}}</span>@enderror
+		</div>
+	</div>
 
 
 </div>

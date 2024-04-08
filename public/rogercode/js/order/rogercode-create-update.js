@@ -51,6 +51,11 @@ $(document).ready(function() {
                         $('#direccion_envio').append('<option value="'+ value.direccion2 +'">'+ value.direccion2 +'</option>');
                         $('#direccion_envio').append('<option value="'+ value.direccion3 +'">'+ value.direccion3 +'</option>');
                         $('#direccion_envio').append('<option value="'+ value.direccion4 +'">'+ value.direccion4 +'</option>');
+                        $('#direccion_envio').append('<option value="'+ value.direccion5 +'">'+ value.direccion5 +'</option>');
+                        $('#direccion_envio').append('<option value="'+ value.direccion6 +'">'+ value.direccion6 +'</option>');
+                        $('#direccion_envio').append('<option value="'+ value.direccion7 +'">'+ value.direccion7 +'</option>');
+                        $('#direccion_envio').append('<option value="'+ value.direccion8 +'">'+ value.direccion8 +'</option>');                        
+                        $('#direccion_envio').append('<option value="'+ value.direccion9 +'">'+ value.direccion9 +'</option>');
                     });
                 }
             });
