@@ -48,9 +48,11 @@ class despostepolloController extends Controller
         if (count($this->consulta) === 0) {
             $prod = Product::Where([
                 ['status', 1],
-                ['category_id', 3],
-                ['level_product_id', 1],
-            ])->orderBy('name', 'asc')->get();
+              /*   ['category_id', 3], */
+             /*    ['level_product_id', 1], */
+            ])->orderBy('name', 'asc')
+            ->whereIn('id', [179, 183, 175, 176, 184, 187, 185, 186, 178, 188, 189])
+            ->get();
 
             foreach ($prod as $key) {
                 $despost = new Despostepollo(); //Se crea una instancia del modelo
