@@ -57,13 +57,16 @@ const showDataTable = (data) => {
     tableTbody.innerHTML += `
 			<tr>
 				<td>${element.name} </td>
-				<td>${element.porcdesposte} %</td>
-				<td>$ ${formatCantidadSinCero(element.precio)}</td>
-				<td> <input type="text" class="form-control-sm" id="${element.id}" value="${element.peso}" placeholder="0" size="4"></td>
-				<td>$ ${formatCantidadSinCero(element.totalventa)}</td>
-				<td>${element.porcventa} %</td>
-				<td>$ ${formatCantidadSinCero(element.costo)} </td>
-				<td>${formatCantidad(element.costo_kilo)} </td>
+				<td>${element.kilos} </td>
+        <td>${element.porcentaje_participacion}%</td>
+        <td>$${formatCantidadSinCero(element.costo_unitario)} </td>
+				<td>$${formatCantidadSinCero(element.costo_real)}</td>
+				<td> <input type="text" class="form-control-sm" id="${element.id}" value="${element.precio_kg_venta}" placeholder="0" size="4"></td>
+				<td>$${formatCantidadSinCero(element.ingresos_totales)}</td>
+				<td>${element.participacion_venta} %</td>
+				<td>$ ${formatCantidadSinCero(element.utilidad_dinero)} </td>
+				<td>${formatCantidad(element.porcentaje_utilidad)} </td>
+        <td>$ ${formatCantidadSinCero(element.dinero_kilo)} </td>
 				<td class="text-center">
 					<button type="button" name="btnDownReg" data-id="${element.id}" class="btn btn-dark btn-sm fas fa-trash" title="Cancelar">
 					</button>
@@ -84,7 +87,7 @@ const showDataTable = (data) => {
 			<td>$ ${formatCantidadSinCero(dataTotals.costoTotalGlobal)}</td>
 			<td>${dataTotals.costoKiloTotal}</td>
 			<td class="text-center">
-				<button class="btn btn-success btn-sm">Cargar al inventario</button>
+			
 			</td>
 		</tr>
   `;

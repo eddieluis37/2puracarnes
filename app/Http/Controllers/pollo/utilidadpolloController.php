@@ -202,15 +202,16 @@ class utilidadpolloController extends Controller
                 }                             
             }
             /*************************************** */
-            $desposte = DB::table('despostepollos as d')
+            $desposte = DB::table('utilidad_beneficiopollos as d')
                 ->join('products as p', 'd.products_id', '=', 'p.id')
-                ->select('p.name', 'd.id', 'd.porcdesposte', 'd.precio_kg_venta', 'd.peso', 'd.totalventa', 'd.porcventa', 'd.costo', 'd.costo_kilo')
+                ->select('p.name', 'd.id', 'd.product_name', 'd.precio_kg_venta', 'd.ingresos_totales', 'd.kilos', 'd.totales_kilos', 'd.participacion_venta', 'd.utilidad_dinero', 'd.porcentaje_utilidad', 'd.dinero_kilo', 'd.porcentaje_participacion', 'd.costo_unitario', 'd.costo_real')
                 ->where([
                     ['d.beneficiopollos_id', $request->beneficioId],
                     ['d.status', 'VALID'],
                     ['p.status', 1],
                 ])
-                ->orderBy('p.name', 'asc')
+               /*  ->orderBy('p.name', 'asc') */
+                ->orderBy('id', 'asc')
                 ->get();
             /*************************************** */
             $arrayTotales = $this->sumTotales($request->beneficioId);
