@@ -54,5 +54,9 @@ class CategorySeeder extends Seeder
             'name' => 'TERNERA',
             'image' => 'https://dummyimage.com/200x150/5c5756/fff'
         ]);
+        Category::create([
+            'name' => 'SERVICIO',
+            'image' => 'https://dummyimage.com/200x150/5c5756/fff'
+        ]);
     }
 }

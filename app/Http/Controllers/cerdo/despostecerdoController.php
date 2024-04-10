@@ -6,8 +6,7 @@ use App\Http\Controllers\Controller;
 
 use Illuminate\Http\Request;
 use App\Models\Product;
-use App\Models\Beneficiore;
-use App\Models\Despostere;
+use App\Models\Centro_costo_product;
 use App\Models\Beneficiocerdo;
 use App\Models\Despostecerdo;
 use Illuminate\Support\Facades\DB;
@@ -345,6 +344,13 @@ class DespostecerdoController extends Controller
         $beneficio = Beneficiocerdo::find($beneficioId);
         $beneficio->fecha_cierre = $formattedDate;
         $beneficio->save();
+
+        
+        // Afectar inventario KG y Utilidad con respectos a Visceras CERDO
+        $centro = Centro_costo_product::where('products_id', 371)->first();
+        $centro->compralote = $centro->compralote + $beneficio->cantidad;
+        $centro->cto_compralote_total = $centro->cto_compralote_total + $beneficio->visceras;
+        $centro->save();
 
         $beneficioc = Beneficiocerdo::where('id', $beneficioId)->get();
 

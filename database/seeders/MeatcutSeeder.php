@@ -198,5 +198,7 @@ class MeatcutSeeder extends Seeder
 		$meatcut->save();
 		$meatcut = new Meatcut(["category_id" => "3", "name" => "GALLINA", "description" => "no existe aun ", "status" => "1"]);
 		$meatcut->save();
+		$meatcut = new Meatcut(["category_id" => "11", "name" => "DOMICILIO", "description" => "no existe aun ", "status" => "1"]);
+		$meatcut->save();
 	}
 }
