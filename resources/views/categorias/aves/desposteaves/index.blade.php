@@ -12,7 +12,7 @@
 					<li>
 						<a href="javascript:void(0)" onclick="window.location.href = '../../beneficioaves'" class="tabmenu bg-dark" data-toggle="modal" data-target="" title="Regresa al listado">Volver</a>
 
-						<a href="{{ url('desposteaves/' . $beneficior[0]->id) }}" class="btn btn-dark" title="Despresar">Despresar</a>
+						<a href="{{ url('utilidadaves/' . $beneficior[0]->id) }}" class="btn btn-dark" title="Utilidad">Utilidad</a>
 						</a>
 					</li>
 				</ul>
@@ -82,11 +82,11 @@
 								<tbody id="tbody">
 									@foreach($desposters as $item)
 									<tr>
-										<td> {{ $item->products->name }}</td>
-										<td> {{ $item->porcdesposte }} %</td>
+										<td>{{ $item->products->name }}</td>
+										<td>{{ $item->porcdesposte }}%</td>
 										<td>
 											@if($status == 'true')
-											<input type="text" class="form-control-sm" id="{{$item->id}}" value="{{$item->peso}}" placeholder="00" size="5">
+											<input type="text" class="form-control-sm" id="{{$item->id}}" value="{{$item->peso}}" placeholder="00" size="4">
 											@else
 											<p>{{$item->peso}}</p>
 											@endif
@@ -97,7 +97,7 @@
 										<td>${{ number_format($item->costo, 0, ',', '.')}}</td>
 										<td>${{ number_format($item->costo_kilo, 0, ',', '.')}}</td>
 										<td>${{ number_format($item->utilidad, 0, ',', '.')}}</td>
-										<td> {{ number_format($item->porcutilidad, 0, ',', '.')}}%</td>
+										<td> {{ number_format($item->porcutilidad, 2, ',', '.')}}%</td>
 										<td class="text-center">
 											@if($status == 'true')
 											<button type="button" name="btnDownReg" data-id="{{$item->id}}" class="btn btn-dark btn-sm fas fa-trash" title="Cancelar">
@@ -113,14 +113,15 @@
 								<tfoot id="tfoot">
 									<tr>
 										<td>Totales</td>
-										<td>{{round($TotalDesposte)}} %</td>
-										<td>{{number_format($pesoTotalGlobal, 2, ',', '.')}}</td>
-										<td>$ --</td>
-
-										<td>$ {{ number_format($TotalVenta, 0, ',', '.')}}</td>
-										<td>{{round($porcVentaTotal)}} %</td>
-										<td>$ {{ number_format($costoTotalGlobal, 0, ',', '.')}}</td>
-										<td>{{$costoKiloTotal}}</td>
+										<td>{{round($TotalDesposte)}}%</td>	
+										<td>{{number_format($pesoTotalGlobal, 2, ',', '.')}}</td>								
+										<td>--</td>										
+										<td>${{ number_format($TotalVenta, 0, ',', '.')}}</td>
+										<td>{{round($porcVentaTotal)}}%</td>
+										<td>${{ number_format($costoTotalGlobal, 0, ',', '.')}}</td>
+										<td>--</td>											
+										<td>${{number_format($TotalUtilidad, 0, ',', '.')}}</td>										
+										<td>{{number_format($PorcUtilidad, 2, ',', '.')}}%</td>						
 										<td class="text-center">
 											<button type="hidden" id="cargarInventarioBtn"></button>
 										</td>
@@ -129,13 +130,13 @@
 										<td>MERMA</td>
 										<td></td>
 
-										<td>{{number_format($TotalDesposte, 2, ',', '.')}}</td>
+										<td>{{number_format($Merma, 2, ',', '.')}}</td>
 									</tr>
 									<tr>
 										<td>%.MERMA</td>
 										<td></td>
 
-										<td>{{number_format($TotalDesposte, 2, ',', '.')}}</td>
+										<td>{{number_format($PorcMerma, 2, ',', '.')}}</td>
 									</tr>
 								</tfoot>
 							</table>

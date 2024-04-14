@@ -71,9 +71,9 @@ const showDataTable = (data) => {
 				<td>$${formatCantidadSinCero(element.totalventa)}</td>
 				<td>${element.porcventa}%</td>
 				<td>$${formatCantidadSinCero(element.costo)} </td>
-        <td>${formatCantidad(element.costo_kilo)}</td>
-        <td>$${formatCantidad(element.utilidad)}</td>    
-        <td>${formatCantidadSinCero(element.porcutilidad)}%</td>              
+        <td>$${formatCantidadSinCero(element.costo_kilo)}</td>
+        <td>$${formatCantidadSinCero(element.utilidad)}</td>    
+        <td>${formatCantidad(element.porcutilidad)}%</td>              
       	<td class="text-center">
 					<button type="button" name="btnDownReg" data-id="${
                         element.id
@@ -88,13 +88,15 @@ const showDataTable = (data) => {
     tableTfoot.innerHTML += `
 		<tr>
 			<td>Totales</td>
-			<td>${dataTotals.TotalDesposte} %</td>
-			<td>$ --</td>
+			<td>${dataTotals.TotalDesposte}%</td>	
 			<td>${formatCantidad(dataTotals.pesoTotalGlobal)}</td>
-			<td>$ ${formatCantidadSinCero(dataTotals.TotalVenta)}</td>
-			<td>${dataTotals.porcVentaTotal} %</td>
-			<td>$ ${formatCantidadSinCero(dataTotals.costoTotalGlobal)}</td>
-			<td>${dataTotals.costoKiloTotal}</td>
+      <td>--</td>
+			<td>$${formatCantidadSinCero(dataTotals.TotalVenta)}</td>
+			<td>${dataTotals.porcVentaTotal}%</td>
+			<td>$${formatCantidadSinCero(dataTotals.costoTotalGlobal)}</td>
+      <td>--</td>	
+      <td>$${formatCantidadSinCero(dataTotals.TotalUtilidad)}</td>			
+      <td>${formatCantidad(dataTotals.PorcUtilidad)}%</td>			
 			<td class="text-center">
 				<button class="btn btn-success btn-sm">Cargar al inventario</button>
 			</td>
@@ -102,14 +104,12 @@ const showDataTable = (data) => {
     <tr>
 										<td>MERMA</td>
 										<td></td>
-
-										<td>${dataTotals.TotalDesposte}</td>
+                    <td>${formatCantidad(dataTotals.Merma)}</td>										
 									</tr>
 									<tr>
 										<td>%.MERMA</td>
 										<td></td>
-
-										<td>${dataTotals.TotalDesposte}</td>
+                    <td>${formatCantidad(dataTotals.PorcMerma)}</td>										
 									</tr>
   `;
     /******************MERMA****************************** */

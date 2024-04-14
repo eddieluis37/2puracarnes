@@ -152,9 +152,9 @@
 										<td>${{ number_format($TotalCostoReal / $TotalKilos, 0, ',', '.')}}</td>
 										<td>${{ number_format($TotalCostoReal, 0, ',', '.')}}</td>
 										<td>--</td>
-										<td>$ {{ number_format($TotalingresosTotales, 0, ',', '.')}}</td>
+										<td>${{ number_format($TotalingresosTotales, 0, ',', '.')}}</td>
 										<td> {{ number_format($TotalingresosTotales / $TotalingresosTotales, 2, ',', '.')}}%</td>
-										<td>$ {{ number_format($TotalingresosTotales - $TotalCostoReal, 0, ',', '.')}}</td>
+										<td>${{ number_format($TotalingresosTotales - $TotalCostoReal, 0, ',', '.')}}</td>
 										<td>--</td>
 										<td>${{ number_format(($TotalingresosTotales - $TotalCostoReal)/$TotalKilos, 0, ',', '.')}}</td>
 										<td class="text-center">

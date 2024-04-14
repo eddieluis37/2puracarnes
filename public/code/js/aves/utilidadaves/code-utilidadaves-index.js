@@ -44,7 +44,7 @@ table.addEventListener("keydown", function(event) {
 
 const showDataTable = (data) => {
   //console.log(data);
-  let dataRow = data.desposte;
+  let dataRow = data.utilidad;
   //console.log(dataRow);
   let dataTotals = data.arrayTotales;
   //console.log(dataTotals);
@@ -59,14 +59,14 @@ const showDataTable = (data) => {
 				<td>${element.name} </td>
 				<td>${element.kilos} </td>
         <td>${element.porcentaje_participacion}%</td>
-        <td>$${formatCantidadSinCero(element.costo_unitario)} </td>
+        <td>$${formatCantidadSinCero(element.costo_unitario)}</td>
 				<td>$${formatCantidadSinCero(element.costo_real)}</td>
-				<td> <input type="text" class="form-control-sm" id="${element.id}" value="${element.precio_kg_venta}" placeholder="0" size="4"></td>
+				<td> <input type="text" class="form-control-sm" id="${element.id}" value="${element.precio_kg_venta}" placeholder="0" size="5"></td>
 				<td>$${formatCantidadSinCero(element.ingresos_totales)}</td>
-				<td>${element.participacion_venta} %</td>
-				<td>$ ${formatCantidadSinCero(element.utilidad_dinero)} </td>
-				<td>${formatCantidad(element.porcentaje_utilidad)} </td>
-        <td>$ ${formatCantidadSinCero(element.dinero_kilo)} </td>
+				<td>${element.participacion_venta}%</td>
+				<td>$${formatCantidadSinCero(element.utilidad_dinero)}</td>
+				<td>${formatCantidad(element.porcentaje_utilidad)}%</td>
+        <td>$${formatCantidadSinCero(element.dinero_kilo)}</td>
 				<td class="text-center">
 					<button type="button" name="btnDownReg" data-id="${element.id}" class="btn btn-dark btn-sm fas fa-trash" title="Cancelar">
 					</button>
@@ -79,13 +79,17 @@ const showDataTable = (data) => {
   tableTfoot.innerHTML += `
 		<tr>
 			<td>Totales</td>
-			<td>${dataTotals.TotalKilos} %</td>
-			<td>$ --</td>
-			<td>${formatCantidad(dataTotals.TotalPorcPart)}</td>
-			<td>$ ${formatCantidadSinCero(dataTotals.TotalVenta)}</td>
-			<td>${dataTotals.porcVentaTotal} %</td>
-			<td>$ ${formatCantidadSinCero(dataTotals.costoTotalGlobal)}</td>
-			<td>${dataTotals.costoKiloTotal}</td>
+		
+      <td>${formatCantidad(dataTotals.TotalKilos)}</td>
+			<td>${formatCantidad(dataTotals.TotalPorcPart)}%</td>
+			<td>$${formatCantidadSinCero(dataTotals.TotalCostoUnit)}</td>
+      <td>$${formatCantidadSinCero(dataTotals.TotalCostoReal)}</td>
+      <td>--</td>
+			<td>$${formatCantidadSinCero(dataTotals.TotalingresosTotales)}</td>
+      <td>${formatCantidad(dataTotals.PorcVenta)}%</td>
+      <td>$${formatCantidadSinCero(dataTotals.UtilidadDinero)}</td>			
+      <td>--</td>
+      <td>$${formatCantidadSinCero(dataTotals.DineroKilo)}</td>
 			<td class="text-center">
 			
 			</td>

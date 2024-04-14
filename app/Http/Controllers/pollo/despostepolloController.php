@@ -95,14 +95,28 @@ class despostepolloController extends Controller
         /****************************************** */
         $desposters = $this->consulta;
         $TotalDesposte = (float)Despostepollo::Where([['beneficiopollos_id', $id], ['status', 'VALID']])->sum('porcdesposte');
+        $pesoTotalGlobal = (float)Despostepollo::Where([['beneficiopollos_id', $id], ['status', 'VALID']])->sum('peso');
         $TotalVenta = (float)Despostepollo::Where([['beneficiopollos_id', $id], ['status', 'VALID']])->sum('totalventa');
         $porcVentaTotal = (float)Despostepollo::Where([['beneficiopollos_id', $id], ['status', 'VALID']])->sum('porcventa');
-        $pesoTotalGlobal = (float)Despostepollo::Where([['beneficiopollos_id', $id], ['status', 'VALID']])->sum('peso');
+        
         $costoTotalGlobal = (float)Despostepollo::Where([['beneficiopollos_id', $id], ['status', 'VALID']])->sum('costo');
         $costoKiloTotal = 0;
         if ($pesoTotalGlobal != 0) {
             $costoKiloTotal = number_format($costoTotalGlobal / $pesoTotalGlobal, 2, ',', '.');
         }
+        $TotalUtilidad = $TotalVenta - $costoTotalGlobal;
+        $PorcUtilidad = 0;
+        if ($TotalVenta != 0) {
+            $PorcUtilidad = ($TotalUtilidad / $TotalVenta) * 100;
+        }
+        
+        $PolloEnteroKg = (float)Utilidad_beneficiopollos::Where([['beneficiopollos_id', $id], ['products_id', 189]])->sum('kilos');
+        $Merma = $pesoTotalGlobal - $PolloEnteroKg;
+        $PorcMerma = 0;
+        if ($PolloEnteroKg != 0) {
+            $PorcMerma = ($Merma / $PolloEnteroKg) * 100;
+        }
+        
         return view('categorias.aves.desposteaves.index', compact(
             'beneficior',
             'desposters',
@@ -112,6 +126,10 @@ class despostepolloController extends Controller
             'pesoTotalGlobal',
             'costoTotalGlobal',
             'costoKiloTotal',
+            'TotalUtilidad',
+            'PorcUtilidad',
+            'Merma',
+            'PorcMerma',
             'status'
         ));
     }
@@ -131,19 +149,28 @@ class despostepolloController extends Controller
     {
 
         $TotalDesposte = (float)Despostepollo::Where([['beneficiopollos_id', $id], ['status', 'VALID']])->sum('porcdesposte');
+        $pesoTotalGlobal = (float)Despostepollo::Where([['beneficiopollos_id', $id], ['status', 'VALID']])->sum('peso');
         $TotalVenta = (float)Despostepollo::Where([['beneficiopollos_id', $id], ['status', 'VALID']])->sum('totalventa');
         $porcVentaTotal = (float)Despostepollo::Where([['beneficiopollos_id', $id], ['status', 'VALID']])->sum('porcventa');
-        $pesoTotalGlobal = (float)Despostepollo::Where([['beneficiopollos_id', $id], ['status', 'VALID']])->sum('peso');
+        
         $costoTotalGlobal = (float)Despostepollo::Where([['beneficiopollos_id', $id], ['status', 'VALID']])->sum('costo');
-        $costoKiloTotal = number_format($costoTotalGlobal / $pesoTotalGlobal, 2, ',', '.');
-
+        $TotalUtilidad = $TotalVenta - $costoTotalGlobal;
+        $PorcUtilidad = ($TotalUtilidad / $TotalVenta) * 100;
+        $PolloEnteroKg = (float)Utilidad_beneficiopollos::Where([['beneficiopollos_id', $id], ['products_id', 189]])->sum('kilos');
+        $Merma = $pesoTotalGlobal - $PolloEnteroKg;
+        $PorcMerma = ($Merma / $PolloEnteroKg) * 100; 
         $array = [
             'TotalDesposte' => $TotalDesposte,
+            'pesoTotalGlobal' => $pesoTotalGlobal,
             'TotalVenta' => $TotalVenta,
             'porcVentaTotal' => $porcVentaTotal,
-            'pesoTotalGlobal' => $pesoTotalGlobal,
+            
             'costoTotalGlobal' => $costoTotalGlobal,
-            'costoKiloTotal' => $costoKiloTotal,
+            'TotalUtilidad' => $TotalUtilidad,
+            'PorcUtilidad' => $PorcUtilidad,
+            'Merma' => $Merma,
+            'PorcMerma' => $PorcMerma,
+        
         ];
 
         return $array;
@@ -224,7 +251,7 @@ class despostepolloController extends Controller
                 $updatedespost->costo = $costo;
                 $updatedespost->costo_kilo = $costoKilo;
                 $updatedespost->utilidad = $key->precio - $costoKilo;
-                $updatedespost->porcutilidad = ($key->precio - ($key->precio - $costoKilo)) / 100;
+                $updatedespost->porcutilidad = ($key->utilidad / $key->precio) * 100;
 
                 $updatedespost->save();
             }
