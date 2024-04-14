@@ -98,94 +98,85 @@ const showDataTable = (data) => {
       <td>$${formatCantidadSinCero(dataTotals.TotalUtilidad)}</td>			
       <td>${formatCantidad(dataTotals.PorcUtilidad)}%</td>			
 			<td class="text-center">
-				<button class="btn btn-success btn-sm">Cargar al inventario</button>
+       <button id="cargarInventarioBtn" class="btn btn-success btn-sm">Cargar al inventario</button>
 			</td>
 		</tr>
     <tr>
-										<td>MERMA</td>
-										<td></td>
-                    <td>${formatCantidad(dataTotals.Merma)}</td>										
-									</tr>
-									<tr>
-										<td>%.MERMA</td>
-										<td></td>
-                    <td>${formatCantidad(dataTotals.PorcMerma)}</td>										
-									</tr>
-  `;
-    /******************MERMA****************************** */
-    /*let Peso_total_Desp = dataTotals.pesoTotalGlobal;
-  mermaPesoTotal.innerHTML = "";
-  mermaPesoTotal.innerHTML += `${formatCantidad(Peso_total_Desp)}`;*/
-
-    /*let canalPlanta = Number(dataBeneficiores[0].canalplanta);
-  let cantidad = Number(dataBeneficiores[0].cantidad);
-  let costokilo = Number(dataBeneficiores[0].costokilo);
-  let resultcanalPlantaCostoKilo = canalPlanta * costokilo;*/
-
-    //console.log(resultcanalPlantaCostoKilo);
-    //console.log(dd);
-    /*mermaPesoInicial.innerHTML = `${formatCantidad(canalPlanta)}`;
-
-  let Peso_por_Animal = canalPlanta / cantidad;
-  mermaPesoAnimal.innerHTML = `${formatCantidad(Peso_por_Animal)}`;
-
-  let merma = Peso_total_Desp - canalPlanta;
-  mermaMerma.innerHTML = `${formatCantidad(merma)}`;
-
-  let porcMerma;
-  if (Peso_total_Desp == 0) {
-    porcMerma = Peso_total_Desp;
-  }
-  if (Peso_total_Desp != 0) {
-    porcMerma = ((Peso_total_Desp - canalPlanta) / Peso_total_Desp) * 100;
-  }*/
-
-    //console.log("porc :" + porcMerma);
-    /*mermaPorcentaje.innerHTML = "";
-  mermaPorcentaje.innerHTML += `
-  	<label>% Merma</label>
-    <div class="form-control campo">
-    ${formatCantidad(porcMerma)}
-		</div>
+				<td>MERMA</td>
+				<td></td>
+        <td>${formatCantidad(dataTotals.Merma)}</td>										
+		</tr>
+		<tr>
+    	<td>%.MERMA</td>
+			<td></td>
+      <td>${formatCantidad(dataTotals.PorcMerma)}</td>										
+		</tr>
   `;
 
-  mermacantAnimal.innerHTML =  `${formatCantidad(cantidad)}`;*/
+    tableTfoot.addEventListener("click", (e) => {
+        e.preventDefault();
+        let element = e.target;
+        console.log(element);
+        if (element.id === "cargarInventarioBtn") {
+            console.log("click");
+            showConfirmationAlert(element)
+                .then((result) => {
+                    if (result && result.value) {
+                        loadingStart(element);
+                        const dataform = new FormData();
+                        dataform.append(
+                            "beneficioId",
+                            Number(beneficioId.value)
+                        );
+                        return sendData("/cargarInventarioa", dataform, token);
+                    }
+                })
+                .then((result) => {
+                    console.log(result);
+                    if (result && result.status == 1) {
+                        loadingEnd(
+                            element,
+                            "success",
+                            "Cargando al inventorio"
+                        );
+                        element.disabled = true;
+                        return swal(
+                            "EXITO",
+                            "Inventario Cargado Exitosamente",
+                            "success"
+                        );
+                    }
+                    if (result && result.status == 0) {
+                        loadingEnd(
+                            element,
+                            "success",
+                            "Cargando al inventorio"
+                        );
+                        errorMessage(result.message);
+                    }
+                })
+                .then(() => {
+                    window.location.href = "/beneficioaves";
+                })
+                .catch((error) => {
+                    console.error(error);
+                });
+        }
+    });
 
-    /******************UTILIDAD****************************** */
-    /*utilidadCostoKilo.innerHTML = `${formatCantidad(costokilo)}`;
-  utilidadValorDesposte.innerHTML = `${formatCantidadSinCero(dataTotals.TotalVenta)}`;
-  utilidadTotalCostoKilo.innerHTML = `${formatCantidad(resultcanalPlantaCostoKilo)}`;
-  let utilid = dataTotals.TotalVenta - resultcanalPlantaCostoKilo;
-  utilidadUtilidad.innerHTML = `${formatCantidadSinCero(utilid)}`;
-  let porcUtilidad;
-  if (dataTotals.TotalVenta == 0) {
-    porcUtilidad = dataTotals.TotalVenta;
-  }
-  if (dataTotals.TotalVenta != 0) {
-    porcUtilidad = ((dataTotals.TotalVenta - resultcanalPlantaCostoKilo) / dataTotals.TotalVenta) * 100;
-  }
-  utilidadPorcentajeUtilidad.innerHTML = "";
-  utilidadPorcentajeUtilidad.innerHTML += `
-    <label>% Utilidad</label>
-    <div class="form-control campo">
-    ${formatCantidad(porcUtilidad)}
-		</div>
-  `;
-
-  let utilidadAnim;
-  if (dataTotals.TotalVenta == 0) {
-    utilidadAnim = dataTotals.TotalVenta;
-  }
-  if (dataTotals.TotalVenta != 0) {
-    utilidadAnim = ((dataTotals.TotalVenta - resultcanalPlantaCostoKilo) / cantidad);
-  }
-  utilidadAnimal.innerHTML = ``;
-  utilidadAnimal.innerHTML = `
-    <label>Utilidad por anima</label>
-    <div class="form-control campo">
-    ${formatCantidad(utilidadAnim)}
-		</div>
-  `;*/
+    function showConfirmationAlert(element) {
+        return swal.fire({
+            title: "CONFIRMAR",
+            text: "Estas seguro que desea cargar el inventario ?",
+            icon: "warning",
+            showDenyButton: true,
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Acpetar",
+            denyButtonText: `Cancelar`,
+        });
+    }
 };
 
 downReg.addEventListener("click", (e) => {

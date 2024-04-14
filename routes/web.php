@@ -266,7 +266,8 @@ Route::group(['middleware' => [('auth')]], function () {
      /*****************************DESPOSTE-AVES******************************************/
      Route::get('desposteaves/{id}', [despostepolloController::class, 'create'])->name('desposteaves.create');
      Route::post('/desposteavesUpdate', [despostepolloController::class, 'update'])->name('desposteaves.update');
-     Route::post('/downdesposteave', [despostepolloController::class, 'destroy'])->name('desposteaves.destroy');    
+     Route::post('/downdesposteave', [despostepolloController::class, 'destroy'])->name('desposteaves.destroy');   
+     Route::post('cargarInventarioa', [despostepolloController::class, 'cargarInventarioaves'])->name('desposteaves.show'); 
     
     /*****************************DESPOSTE-CERDO******************************************/
     Route::get('despostecerdo', [despostecerdoController::class, 'index'])->name('despostecerdo.index');

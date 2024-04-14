@@ -10,6 +10,7 @@ use DateTime;
 use Carbon\Carbon;
 use App\Models\Despostepollo;
 use App\Models\Beneficiopollo;
+use App\Models\Centro_costo_product;
 use App\Models\Product;
 use App\Models\Utilidad_beneficiopollos;
 
@@ -352,4 +353,56 @@ class despostepolloController extends Controller
             ]);
         }
     }
+
+    public function cargarInventarioaves(Request $request)
+    {
+       dd('hola');
+
+        $beneficioId = $request->input('beneficioId');
+
+        $currentDateTime = Carbon::now();
+        $formattedDate = $currentDateTime->format('Y-m-d');
+
+        $beneficio = Beneficiopollo::find($beneficioId);
+        $beneficio->fecha_cierre = $formattedDate;
+        $beneficio->save();
+
+        
+        // Afectar inventario KG y Utilidad con respectos a Visceras CERDO
+        $centro = Centro_costo_product::where('products_id', 371)->first();
+        $centro->compralote = $centro->compralote + $beneficio->cantidad;
+        $centro->cto_compralote_total = $centro->cto_compralote_total + $beneficio->visceras;
+        $centro->save();
+
+        $beneficioc = Beneficiopollo::where('id', $beneficioId)->get();
+
+        DB::update(
+            "
+        UPDATE centro_costo_products c
+        JOIN despostepollos d ON c.products_id = d.products_id
+        JOIN beneficiopollos b ON b.id = d.beneficiopollos_id
+        JOIN products p ON p.id = d.products_id
+        SET c.compralote =  c.compralote + d.peso,
+            c.cto_compralote =  c.cto_compralote + d.costo_kilo,
+            c.cto_compralote_total  = c.cto_compralote_total + (d.costo_kilo * d.peso),
+            p.cost = d.costo_kilo
+        WHERE d.beneficiopollos_id = :beneficioid
+        AND b.centrocosto_id = :cencosid 
+        AND c.centrocosto_id = :cencosid2 ",
+            [
+                'beneficioid' => $beneficioId,
+                'cencosid' =>  $beneficio->centrocosto_id,
+                'cencosid2' =>  $beneficio->centrocosto_id
+            ]
+        );
+
+        return response()->json([
+            'status' => 1,
+            'message' => 'Cargado al inventario exitosamente',
+            'beneficioc' => $beneficioc
+        ]);
+
+        // return view('categorias.res.desposte.index', ['beneficio' => $beneficio]);
+    }
+
 }
