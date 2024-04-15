@@ -3,16 +3,17 @@
 namespace App\Http\Controllers\pollo;
 
 use App\Http\Controllers\Controller;
+
 use Illuminate\Http\Request;
+use App\Models\Product;
+use App\Models\Centro_costo_product;
+use App\Models\Beneficiopollo;
+use App\Models\Despostepollo;
+use App\Models\Utilidad_beneficiopollos;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use DateTime;
 use Carbon\Carbon;
-use App\Models\Despostepollo;
-use App\Models\Beneficiopollo;
-use App\Models\Centro_costo_product;
-use App\Models\Product;
-use App\Models\Utilidad_beneficiopollos;
 
 class despostepolloController extends Controller
 {
@@ -49,11 +50,11 @@ class despostepolloController extends Controller
         if (count($this->consulta) === 0) {
             $prod = Product::Where([
                 ['status', 1],
-              /*   ['category_id', 3], */
-             /*    ['level_product_id', 1], */
+                /*   ['category_id', 3], */
+                /*    ['level_product_id', 1], */
             ])->orderBy('name', 'asc')
-            ->whereIn('id', [179, 183, 175, 176, 184, 187, 185, 186, 178, 188, 189])
-            ->get();
+                ->whereIn('id', [179, 183, 175, 176, 184, 187, 185, 186, 178, 188, 189])
+                ->get();
 
             foreach ($prod as $key) {
                 $despost = new Despostepollo(); //Se crea una instancia del modelo
@@ -66,7 +67,7 @@ class despostepolloController extends Controller
                 $despost->costo_kilo = 0;
                 $despost->precio = $key->price_fama;
                 $despost->totalventa = 0;
-              /*   $despost->total = 0; */
+                /*   $despost->total = 0; */
                 $despost->porcventa = 0;
                 $despost->porcutilidad = 0;
                 $despost->status = 'VALID';
@@ -99,7 +100,7 @@ class despostepolloController extends Controller
         $pesoTotalGlobal = (float)Despostepollo::Where([['beneficiopollos_id', $id], ['status', 'VALID']])->sum('peso');
         $TotalVenta = (float)Despostepollo::Where([['beneficiopollos_id', $id], ['status', 'VALID']])->sum('totalventa');
         $porcVentaTotal = (float)Despostepollo::Where([['beneficiopollos_id', $id], ['status', 'VALID']])->sum('porcventa');
-        
+
         $costoTotalGlobal = (float)Despostepollo::Where([['beneficiopollos_id', $id], ['status', 'VALID']])->sum('costo');
         $costoKiloTotal = 0;
         if ($pesoTotalGlobal != 0) {
@@ -110,14 +111,14 @@ class despostepolloController extends Controller
         if ($TotalVenta != 0) {
             $PorcUtilidad = ($TotalUtilidad / $TotalVenta) * 100;
         }
-        
+
         $PolloEnteroKg = (float)Utilidad_beneficiopollos::Where([['beneficiopollos_id', $id], ['products_id', 189]])->sum('kilos');
         $Merma = $pesoTotalGlobal - $PolloEnteroKg;
         $PorcMerma = 0;
         if ($PolloEnteroKg != 0) {
             $PorcMerma = ($Merma / $PolloEnteroKg) * 100;
         }
-        
+
         return view('categorias.aves.desposteaves.index', compact(
             'beneficior',
             'desposters',
@@ -153,25 +154,25 @@ class despostepolloController extends Controller
         $pesoTotalGlobal = (float)Despostepollo::Where([['beneficiopollos_id', $id], ['status', 'VALID']])->sum('peso');
         $TotalVenta = (float)Despostepollo::Where([['beneficiopollos_id', $id], ['status', 'VALID']])->sum('totalventa');
         $porcVentaTotal = (float)Despostepollo::Where([['beneficiopollos_id', $id], ['status', 'VALID']])->sum('porcventa');
-        
+
         $costoTotalGlobal = (float)Despostepollo::Where([['beneficiopollos_id', $id], ['status', 'VALID']])->sum('costo');
         $TotalUtilidad = $TotalVenta - $costoTotalGlobal;
         $PorcUtilidad = ($TotalUtilidad / $TotalVenta) * 100;
         $PolloEnteroKg = (float)Utilidad_beneficiopollos::Where([['beneficiopollos_id', $id], ['products_id', 189]])->sum('kilos');
         $Merma = $pesoTotalGlobal - $PolloEnteroKg;
-        $PorcMerma = ($Merma / $PolloEnteroKg) * 100; 
+        $PorcMerma = ($Merma / $PolloEnteroKg) * 100;
         $array = [
             'TotalDesposte' => $TotalDesposte,
             'pesoTotalGlobal' => $pesoTotalGlobal,
             'TotalVenta' => $TotalVenta,
             'porcVentaTotal' => $porcVentaTotal,
-            
+
             'costoTotalGlobal' => $costoTotalGlobal,
             'TotalUtilidad' => $TotalUtilidad,
             'PorcUtilidad' => $PorcUtilidad,
             'Merma' => $Merma,
             'PorcMerma' => $PorcMerma,
-        
+
         ];
 
         return $array;
@@ -237,8 +238,8 @@ class despostepolloController extends Controller
 
                 $porcentajecostoTotal = (float)number_format($porcentajeVenta / 100, 4);
 
-            /*   $costoTotal = $porcentajecostoTotal * $getBeneficioaves[0]->totalcostos; */
-               
+                /*   $costoTotal = $porcentajecostoTotal * $getBeneficioaves[0]->totalcostos; */
+
                 $costo = $costoReal * $porcentajecostoTotal;
 
                 $costoKilo = 0;
@@ -356,7 +357,6 @@ class despostepolloController extends Controller
 
     public function cargarInventarioaves(Request $request)
     {
-       dd('hola');
 
         $beneficioId = $request->input('beneficioId');
 
@@ -367,11 +367,27 @@ class despostepolloController extends Controller
         $beneficio->fecha_cierre = $formattedDate;
         $beneficio->save();
 
-        
-        // Afectar inventario KG y Utilidad con respectos a Visceras CERDO
-        $centro = Centro_costo_product::where('products_id', 371)->first();
-        $centro->compralote = $centro->compralote + $beneficio->cantidad;
-        $centro->cto_compralote_total = $centro->cto_compralote_total + $beneficio->visceras;
+        $utilidadMenPollo = Utilidad_beneficiopollos::where([
+            ['beneficiopollos_id', $beneficioId],
+            ['products_id', 307]
+        ])->first();
+
+        $utilidadMollejaPollo = Utilidad_beneficiopollos::where([
+            ['beneficiopollos_id', $beneficioId],
+            ['products_id', 308]
+        ])->first();
+
+
+        // Afectar inventario KG y Utilidad con respectos a Menudencia POLLO
+        $centro = Centro_costo_product::where('products_id', 307)->first();
+        $centro->compralote = $centro->compralote + $utilidadMenPollo->kilos;
+        $centro->cto_compralote_total = $centro->cto_compralote_total + $utilidadMenPollo->costo_real;
+        $centro->save();
+
+        // Afectar inventario KG y Utilidad con respectos a Molleja POLLO
+        $centro = Centro_costo_product::where('products_id', 308)->first();
+        $centro->compralote = $centro->compralote + $utilidadMollejaPollo->kilos;
+        $centro->cto_compralote_total = $centro->cto_compralote_total + $utilidadMollejaPollo->costo_real;
         $centro->save();
 
         $beneficioc = Beneficiopollo::where('id', $beneficioId)->get();
@@ -382,9 +398,9 @@ class despostepolloController extends Controller
         JOIN despostepollos d ON c.products_id = d.products_id
         JOIN beneficiopollos b ON b.id = d.beneficiopollos_id
         JOIN products p ON p.id = d.products_id
-        SET c.compralote =  c.compralote + d.peso,
-            c.cto_compralote =  c.cto_compralote + d.costo_kilo,
-            c.cto_compralote_total  = c.cto_compralote_total + (d.costo_kilo * d.peso),
+        SET c.compralote = c.compralote + d.peso,
+            c.cto_compralote = c.cto_compralote + d.costo_kilo,
+            c.cto_compralote_total = c.cto_compralote_total + (d.costo_kilo * d.peso),
             p.cost = d.costo_kilo
         WHERE d.beneficiopollos_id = :beneficioid
         AND b.centrocosto_id = :cencosid 
@@ -404,5 +420,4 @@ class despostepolloController extends Controller
 
         // return view('categorias.res.desposte.index', ['beneficio' => $beneficio]);
     }
-
 }

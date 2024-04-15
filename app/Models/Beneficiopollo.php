@@ -10,8 +10,7 @@ class Beneficiopollo extends Model
 {
     use HasFactory;
 
-     protected $fillable = ['thirds_id', 'plantasacrificio_id', 'cantidad', 'fecha_beneficio', 'fecha_cierre', 'factura', 'clientpieles_id', 'clientvisceras_id', 'lote', 'status', 'sacrificio', 'fomento', 'deguello', 'bascula', 'transporte', 'pesopie1', 'pesopie2', 'pesopie3', 'costoanimal1', 'costoanimal2', 'costoanimal3', 'canalcaliente', 'canalfria', 'canalplanta', 'pieleskg', 'pielescosto', 'visceras', 'costopie1', 'costopie2', 'costopie3', 'tsacrificio', 'tfomento', 'tdeguello', 'tbascula', 'ttransporte', 'tpieles', 'tvisceras', 'tcanalfria', 'valorfactura', 'costokilo', 'costo', 'totalcostos', 'pesopie', 'rtcanalcaliente', 'rtcanalplanta', 'rtcanalfria', 'rendcaliente', 'rendplanta', 'rendfrio'];
-
+     protected $fillable = ['thirds_id', 'factura', 'plantasacrificio_id', 'clientsubproductos_uno_id', 'clientsubproductos_dos_id', 'cantidad', 'sacrificio', 'valor_kg_pollo', 'total_factura', 'promedio_pie_kg', 'peso_pie_planta', 'promedio_canal_fria_sala', 'peso_canales_pollo_planta', 'menudencia_pollo_kg', 'mollejas_corazones_kg', 'subtotal', 'promedio_canal_kg', 'menudencia_pollo_porc', 'mollejas_corazones_porc', 'despojos_mermas', 'porc_pollo', 'fecha_beneficio', 'fecha_cierre', 'lote', 'status'];
 
  
     public function plantasacrificio(){

@@ -25,6 +25,10 @@ class Despostepollo extends Model
         'status'        
     ];
 
+    public function beneficiopollo(){
+        return $this->belongsTo(Beneficiopollo::class);
+    }
+
     public function products(){
         return $this->belongsTo(Product::class);
     }  
