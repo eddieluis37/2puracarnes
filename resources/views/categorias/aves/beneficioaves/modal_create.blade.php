@@ -239,7 +239,7 @@
 																	<div class="col-md-3">
 																		<label for="porc_pollo">Porcentaje Pollo</label>
 																		<div class="input-group flex-nowrap">
-																			<input type="text" name="porc_pollo" id="porc_pollo" value="0" class="form-control" placeholder="0" aria-describedby="helpId" step="0.01">
+																			<input type="text" name="porc_pollo" id="porc_pollo" value="100" class="form-control" placeholder="0" aria-describedby="helpId" step="0.01">
 																			<span class="input-group-text" id="addon-wrapping">%</span>
 																		</div>
 																	</div>

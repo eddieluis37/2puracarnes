@@ -16,8 +16,12 @@ class CreateBeneficiopollosTable extends Migration
         Schema::create('beneficiopollos', function (Blueprint $table) {
             $table->id();
 
+            $table->unsignedBigInteger('centrocosto_id')->nullable();
+            $table->foreign('centrocosto_id')->references('id')->on('centro_costo');
+
             $table->unsignedBigInteger('thirds_id')->nullable();
             $table->foreign('thirds_id')->references('id')->on('thirds');
+            
             $table->string('factura');
             $table->unsignedBigInteger('plantasacrificio_id')->nullable();
             $table->foreign('plantasacrificio_id')->references('id')->on('sacrificiopollos');

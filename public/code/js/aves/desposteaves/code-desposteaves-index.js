@@ -1,14 +1,13 @@
 console.log("Starting desposte aves");
-import  {sendData} from '../../exportModule/core/rogercode-core.js';
+import { sendData } from "../../exportModule/core/rogercode-core.js";
 import {
-  successToastMessage,
-  errorMessage,
+    successToastMessage,
+    errorMessage,
 } from "../../exportModule/message/rogercode-message.js";
 import {
-  loadingStart,
-  loadingEnd,
+    loadingStart,
+    loadingEnd,
 } from "../../exportModule/core/rogercode-core.js";
-
 
 const table = document.querySelector("#tableDesposteaves");
 const beneficioId = document.querySelector("#beneficioId");
@@ -123,6 +122,22 @@ const showDataTable = (data) => {
 		</tr>
   `;
 
+    // Función para mostrar el SweetAlert de confirmación
+    function showConfirmationAlert(element) {
+        return swal.fire({
+            title: "CONFIRMAR",
+            text: "Estas seguro desea cargar el inventario ?",
+            icon: "warning",
+            showDenyButton: true,
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Acpetar",
+            denyButtonText: `Cancelar`,
+        });
+    }
+
+    // Evento click del botón "cargarInventarioBtn"
     tableTfoot.addEventListener("click", (e) => {
         e.preventDefault();
         let element = e.target;
@@ -173,55 +188,48 @@ const showDataTable = (data) => {
                 });
         }
     });
-
-    function showConfirmationAlert(element) {
-        return swal.fire({
-            title: "CONFIRMAR",
-            text: "Estas seguro que desea cargar el inventario ?",
-            icon: "warning",
-            showDenyButton: true,
-            showCancelButton: true,
-            confirmButtonColor: "#3085d6",
-            cancelButtonColor: "#d33",
-            confirmButtonText: "Acpetar",
-            denyButtonText: `Cancelar`,
-        });
-    }
 };
+document
+    .getElementById("cargarInventarioBtn")
+    .addEventListener("click", function () {
+        const beneficioId = document.querySelector("#beneficioId");
+        cargarInventario(beneficioId);
+    });
 
-downReg.addEventListener("click", (e) => {
-    //console.log('Row clicked');
-    //console.log(e.target);
-    let element = e.target;
-    if (element.name === "btnDownReg") {
-        //console.log(element);
-        swal({
-            title: "CONFIRMAR",
-            text: "¿CONFIRMAS ELIMINAR EL REGISTRO?",
-            type: "warning",
-            showCancelButton: true,
-            cancelButtonText: "Cerrar",
-            cancelButtonColor: "#fff",
-            confirmButtonColor: "#3B3F5C",
-            confirmButtonText: "Aceptar",
-        }).then(function (result) {
-            if (result.value) {
-                let id = element.getAttribute("data-id");
-                console.log(id);
-                const dataform = new FormData();
-                dataform.append("id", Number(id));
-                dataform.append("beneficioId", Number(beneficioId.value));
-                sendData("/downdesposteave", dataform, token).then((result) => {
-                    console.log(result);
-                    showDataTable(result);
-                });
-            }
-        });
+document
+    .querySelector("#tableDespostere tbody")
+    .addEventListener("click", (e) => {
+        //console.log('Row clicked');
+        //console.log(e.target);
+        let element = e.target;
+        if (element.name === "btnDownReg") {
+            //console.log(element);
+            swal({
+                title: "CONFIRMAR",
+                text: "¿CONFIRMAS ELIMINAR EL REGISTRO?",
+                type: "warning",
+                showCancelButton: true,
+                cancelButtonText: "Cerrar",
+                cancelButtonColor: "#fff",
+                confirmButtonColor: "#3B3F5C",
+                confirmButtonText: "Aceptar",
+            }).then(function (result) {
+                if (result.value) {
+                    let id = element.getAttribute("data-id");
+                    //console.log(id);
+                    let url = "/getpaymentmoney/";
+                    let btnId = element.getAttribute("id");
 
-        /*getdata(url,Number(id)).then((response) => {
-            if (response.status === 1) {
-              console.log(response);
-            }
-        });*/
-    }
-});
+                    const dataform = new FormData();
+                    dataform.append("id", Number(id));
+                    dataform.append("beneficioId", Number(beneficioId.value));
+                    sendData("/downdesposter", dataform, token).then(
+                        (result) => {
+                            //console.log(result);
+                            showDataTable(result);
+                        }
+                    );
+                }
+            });
+        }
+    });

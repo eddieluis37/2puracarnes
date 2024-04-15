@@ -1,5 +1,3 @@
-10111111111
-1111002
 import { sendData } from "../../exportModule/core/rogercode-core.js";
 import {
     successToastMessage,
@@ -159,7 +157,11 @@ const showDataTable = (data) => {
                 .then((result) => {
                     console.log(result);
                     if (result && result.status == 1) {
-                        loadingEnd(element, "success", "Cargando al inventorio");
+                        loadingEnd(
+                            element,
+                            "success",
+                            "Cargando al inventorio"
+                        );
                         element.disabled = true;
                         return swal(
                             "EXITO",
@@ -168,7 +170,11 @@ const showDataTable = (data) => {
                         );
                     }
                     if (result && result.status == 0) {
-                        loadingEnd(element, "success", "Cargando al inventorio");
+                        loadingEnd(
+                            element,
+                            "success",
+                            "Cargando al inventorio"
+                        );
                         errorMessage(result.message);
                     }
                 })

@@ -97,6 +97,7 @@ class beneficiopolloController extends Controller
                 $dateNextMonday = $current_date->format('Y-m-d'); // Output the date in Y-m-d format
                 /******************************************************/
                 $newBeneficiopollo = new Beneficiopollo();
+                $newBeneficiopollo->centrocosto_id = 1;
                 $newBeneficiopollo->thirds_id = $request->thirds_id;
                 $newBeneficiopollo->plantasacrificio_id  = $request->plantasacrificio_id;
                 $newBeneficiopollo->cantidad = $request->cantidad;
