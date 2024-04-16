@@ -19,6 +19,7 @@ use App\Http\Livewire\PrecioAgreementsController;
 use App\Http\Livewire\ProductsController;
 use App\Http\Livewire\MeatcutsController;
 use App\Http\Livewire\ReportsController;
+use App\Http\Livewire\ReportsOrdersController;
 use App\Http\Livewire\CuentasporcobrarsController;
 use App\Http\Livewire\RolesController;
 use App\Http\Livewire\Select2;
@@ -137,6 +138,7 @@ Route::group(['middleware' => [('auth')]], function () {
     Route::get('pos', PosController::class);
     Route::get('coins', CoinsController::class);
     Route::get('reports', ReportsController::class);
+    Route::get('reports_orders', ReportsOrdersController::class);
     Route::get('cashout', CashoutController::class);
     Route::get('dash', Dash::class)->name('dash');
     Route::get('thirds', ThirdsController::class);
