@@ -48,7 +48,7 @@
                     </div>
                     <div class="col-12 col-md-12">
                         <!--TABLAE-->
-                        <div class="table-responsive">
+                        <div class="table-responsive" style="overflow-x: auto;">
                             <table class="table table-success table-striped mt-1">
                                 <thead class="text-white" style="background: #3B3F5C">
                                     <tr>
