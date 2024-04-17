@@ -66,7 +66,7 @@ class ExportOrderController extends Controller
 
     public function reporteExcel($userId, $reportType, $dateFrom =null, $dateTo =null)
     {
-        $reportName = 'Reporte de Ventas_' . uniqid() . '.xlsx';
+        $reportName = 'Reporte Consolidado de Ordenes de Pedidos_' . uniqid() . '.xlsx';
         
         return Excel::download(new OrdersExport($userId, $reportType, $dateFrom, $dateTo),$reportName );
     }

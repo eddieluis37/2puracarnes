@@ -14,8 +14,12 @@ use Maatwebsite\Excel\Concerns\WithTitle;           // para colocar nombre a las
 use Maatwebsite\Excel\Concerns\WithStyles;          // para dar formato a las celdas
 use Carbon\Carbon;
 
+use Maatwebsite\Excel\Sheet;
+use Maatwebsite\Excel\Concerns\WithEvents;
+use Maatwebsite\Excel\Events\AfterSheet;
 
-class OrdersExport implements FromCollection, WithHeadings, WithCustomStartCell, WithTitle, WithStyles
+
+class OrdersExport implements FromCollection, WithHeadings, WithCustomStartCell, WithTitle, WithStyles, WithEvents
 {
 
     protected $IdFrom, $IdTo;
@@ -54,7 +58,7 @@ class OrdersExport implements FromCollection, WithHeadings, WithCustomStartCell,
 
     public function startCell(): string
     {
-        return 'A1';
+        return 'A2';
     }
 
     public function styles(Worksheet $sheet)
@@ -67,5 +71,28 @@ class OrdersExport implements FromCollection, WithHeadings, WithCustomStartCell,
     public function title(): string
     {
         return 'Consolidado Ordenes de Pedidos';
+    }
+
+    public function registerEvents(): array
+    {
+        return [
+            AfterSheet::class => function (AfterSheet $event) {
+                $event->sheet->getDelegate()->getColumnDimension('A')->setAutoSize(true);
+                $event->sheet->getDelegate()->getColumnDimension('B')->setAutoSize(true);
+                $event->sheet->getDelegate()->getColumnDimension('C')->setAutoSize(true);
+                $event->sheet->getDelegate()->getColumnDimension('D')->setAutoSize(true);
+                $event->sheet->getDelegate()->getColumnDimension('E')->setAutoSize(true);
+                $event->sheet->getDelegate()->getColumnDimension('F')->setAutoSize(true);
+                $event->sheet->getDelegate()->getColumnDimension('G')->setAutoSize(true);
+                $event->sheet->getDelegate()->getColumnDimension('H')->setAutoSize(true);
+                $event->sheet->getDelegate()->getColumnDimension('I')->setAutoSize(true);
+                $event->sheet->getDelegate()->getColumnDimension('J')->setAutoSize(true);
+                $event->sheet->getDelegate()->getColumnDimension('K')->setAutoSize(true);
+                $event->sheet->getDelegate()->getColumnDimension('L')->setAutoSize(true);
+                $event->sheet->getDelegate()->getColumnDimension('M')->setAutoSize(true);
+                // Ajustar automáticamente el tamaño de todas las columnas
+                //      $event->sheet->getDelegate()->getDelegate()->getDelegate()->calculateColumnWidths();
+            },
+        ];
     }
 }
