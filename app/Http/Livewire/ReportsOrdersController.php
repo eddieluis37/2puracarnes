@@ -54,8 +54,10 @@ class ReportsOrdersController extends Component
             ->leftjoin('subcentrocostos as sc', 'sc.id', 'orders.subcentrocostos_id')
             ->leftjoin('thirds as v', 'v.id', 'orders.vendedor_id')
             ->leftjoin('thirds as c', 'c.id', 'orders.third_id')
-            ->select('orders.*', 'u.name as user', 'v.name as vendedor', 'sc.name as subcentro', 'c.name as cliente', 'c.identification', 'c.celular')
+            ->leftjoin('thirds as a', 'a.id', 'orders.alistador_id')
+            ->select('orders.*', 'u.name as user', 'v.name as vendedor', 'sc.name as subcentro', 'a.name as alistador', 'c.name as cliente', 'c.identification', 'c.celular')
             ->whereBetween('orders.id', [$from, $to])
+            ->where('orders.status', '1')
             ->get();
     }
 

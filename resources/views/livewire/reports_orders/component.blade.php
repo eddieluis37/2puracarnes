@@ -52,20 +52,18 @@
                             <table class="table table-success table-striped mt-1">
                                 <thead class="text-white" style="background: #3B3F5C">
                                     <tr>
-                                        <th class="table-th text-white text-center">#Id</th>
+                                        <th class="table-th text-white text-center">#ID</th>
                                         <th class="table-th text-white text-center">SUBCENTRO</th>
                                         <th class="table-th text-white text-center">VENDEDOR</th>
                                         <th class="table-th text-white text-center">CLIENTE</th>
-                                        <th class="table-th text-white text-center">IDENTIFICACION</th>                                    
+                                        <th class="table-th text-white text-center">IDENTIDAD</th>
                                         <th class="table-th text-white text-center">DIR_ENTREGA</th>
                                         <th class="table-th text-white text-center">TELEFONO</th>
-                                        <th class="table-th text-white text-center">HORA_ENTREGA</th>
-                                        <th class="table-th text-white text-center">HORA_ENTREGA</th>
-                                        <th class="table-th text-white text-center"></th>
-                                        <th class="table-th text-white text-center"></th>
-                                        <th class="table-th text-white text-center"></th>
-                                        <th class="table-th text-white text-center"></th>
+                                        <th class="table-th text-white text-center" title="Horario de entrega">H_ENTREGA</th>
+                                        <th class="table-th text-white text-center">ALISTADOR</th>
+                                        <th class="table-th text-white text-center">OBSERVACIONES</th>
                                         <th class="table-th text-white text-center">ACCIONES</th>
+
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -99,32 +97,18 @@
                                                 <h6>{{$d->celular}}</h6>
                                             </td>
                                             <td class="text-center">
+                                                <h6>Día:{{\Carbon\Carbon::parse($d->fecha_entrega)->format('d-m')}}</h6>                                              
                                                 <h6>{{$d->hora_inicial_entrega}}</h6>
                                                 <h6>{{$d->hora_final_entrega}}</h6>
                                             </td>
-                                           
-                                           
                                             <td class="text-center">
-                                                <h6>$ {{number_format($d->total)}}</h6>
+                                                <h6>{{$d->alistador}}</h6>
                                             </td>
                                             <td class="text-center">
-                                                <h6>{{number_format($d->items,1)}}</h6>
+                                                <h6>{{$d->observacion}}</h6>
                                             </td>
                                             <td class="text-center">
-                                                <h6>{{$d->status}}</h6>
-                                            </td>
-                                            <td class="text-center">
-                                                <h6>{{$d->user}}</h6>
-                                            </td>
-                                           
-                                            
-                                            <td class="text-center">
-                                                <h6>
-                                                    {{\Carbon\Carbon::parse($d->created_at)->format('d-m-Y')}}
-                                                </h6>
-                                            </td>
-                                            <td class="text-center">
-                                              <!--   <button wire:click.prevent="getDetails({{$d->id}})" class="btn btn-dark btn-sm">
+                                                <!--   <button wire:click.prevent="getDetails({{$d->id}})" class="btn btn-dark btn-sm">
                                                     <i class="fas fa-list"></i>
                                                 </button> -->
                                                 <button type="button" onclick="rePrint({{$d->id}})" class="btn btn-dark btn-sm">
