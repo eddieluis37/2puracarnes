@@ -52,7 +52,7 @@ class OrdersExport implements FromCollection, WithHeadings, WithCustomStartCell,
     //cabeceras del reporte
     public function headings(): array
     {
-        return ["ID", "SUBCENTRO", "VENDEDOR", "CLIENTE", "IDENTIDAD", "DIR_ENTREGA", "TELEFONO", "FECHA_ENTREGA", "HORA_INICIAL", "HORA_FINAL", "HORA_FINAL", "ALISTADOR", "OBSERVACIONES"];
+        return ["ID", "SUBCENTRO", "VENDEDOR", "CLIENTE", "IDENTIDAD", "DIR_ENTREGA", "TELEFONO", "FECHA_ENTREGA", "HORA_INICIAL", "HORA_FINAL", "ALISTADOR", "OBSERVACIONES"];
     }
 
 
