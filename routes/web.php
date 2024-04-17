@@ -4,6 +4,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\BooksController;
 use App\Http\Controllers\ExportController;
 use App\Http\Controllers\ExportCxcController;
+use App\Http\Controllers\ExportOrderController;
 use App\Http\Controllers\TodosController;
 use App\Http\Livewire\AsignarController;
 use App\Http\Livewire\BeneficiopollosController;
@@ -164,7 +165,6 @@ Route::group(['middleware' => [('auth')]], function () {
     Route::get('report/excel/{user}/{type}/{f1}/{f2}', [ExportController::class, 'reporteExcel']);
     Route::get('report/excel/{user}/{type}', [ExportController::class, 'reporteExcel']);
 
-
     Route::post('storepollo', [BeneficiopollosController::class, 'storepollo'])->name('storepollo');
 
     Route::post('storem', [DesposterController::class, 'storem'])->name('storem');
@@ -172,15 +172,17 @@ Route::group(['middleware' => [('auth')]], function () {
     /************************* CUENTAS POR COBRAR ********************************** */
     Route::get('cuentasporcobrars', CuentasporcobrarsController::class);
 
-     //reportes PDF
-     Route::get('reportCxc/pdf/{user}/{type}/{f1}/{f2}', [ExportCxcController::class, 'reportPDF']);
-     Route::get('reportCxc/pdf/{user}/{type}', [ExportCxcController::class, 'reportPDF']);
- 
- 
-     //reportes EXCEL
-     Route::get('reportCxc/excel/{user}/{type}/{f1}/{f2}', [ExportCxcController::class, 'reporteExcel']);
-     Route::get('reportCxc/excel/{user}/{type}', [ExportCxcController::class, 'reporteExcel']);
+    //reportes PDF
+    Route::get('reportCxc/pdf/{user}/{type}/{f1}/{f2}', [ExportCxcController::class, 'reportPDF']);
+    Route::get('reportCxc/pdf/{user}/{type}', [ExportCxcController::class, 'reportPDF']);
 
+
+    //reportes EXCEL
+    Route::get('reportCxc/excel/{user}/{type}/{f1}/{f2}', [ExportCxcController::class, 'reporteExcel']);
+    Route::get('reportCxc/excel/{user}/{type}', [ExportCxcController::class, 'reporteExcel']);
+
+    //reportes Ordenes de pedidos
+    Route::get('report_order/excel/{f1}/{f2}', [ExportOrderController::class, 'reporteExcel']);
 
     //Route::post('citywithstatecountry', [CityController::class, 'citywithstatecountry'])->name('citywithstatecountry');
 
@@ -199,7 +201,7 @@ Route::group(['middleware' => [('auth')]], function () {
     Route::get('centro_costo_prod', [CentroCostoProdController::class, 'index'])->name('ccpShow');
     Route::get('showCcpSwitch', [CentroCostoProdController::class, 'show'])->name('showCcpSwitch');
     Route::post('/updateCcpSwitch', [CentroCostoProdController::class, 'updateCcpSwitch'])->name('updateCcpSwitch');
-   
+
     /************************* RUTAS ASIGNAR PRECIOS A PRODUCTOS ********************************** */
     Route::get('asignar_precios_prod', [AsignarPreciosProdController::class, 'index'])->name('APPShow');
     Route::get('showAPPSwitch', [AsignarPreciosProdController::class, 'show'])->name('showAPPSwitch');
@@ -213,7 +215,7 @@ Route::group(['middleware' => [('auth')]], function () {
     Route::get('inventory/mensual', [mensualController::class, 'index'])->name('inventory.mensual');
 
     Route::get('inventory/centro_costo_products', [CentroCostoProductController::class, 'index'])->name('inventory.showccp');
-   
+
     Route::get('showCcpInventory', [CentroCostoProductController::class, 'show'])->name('inventory.show-ccp');
     Route::get('showConsolidadoInventory', [inventoryController::class, 'show'])->name('inventory.showConsol');
 
@@ -227,10 +229,10 @@ Route::group(['middleware' => [('auth')]], function () {
     Route::get('totaleshist', [inventoryController::class, 'totaleshist'])->name('inventory.totaleshist');
     //Route::post('/updateCcpInventory', 'CentroCostoProductController@updateCcpInventory')->name('updateCcpInventory');
 
-      /*****************************INVENTORY UTILIDAD ****************************************** */
+    /*****************************INVENTORY UTILIDAD ****************************************** */
 
-      Route::get('inventory/utilidad', [inventoryUtilidadController::class, 'index'])->name('inventory.utilidad');
-      Route::get('showConsolidadoUtilidad', [inventoryUtilidadController::class, 'show'])->name('inventory.showUtilidad');
+    Route::get('inventory/utilidad', [inventoryUtilidadController::class, 'index'])->name('inventory.utilidad');
+    Route::get('showConsolidadoUtilidad', [inventoryUtilidadController::class, 'show'])->name('inventory.showUtilidad');
 
     /*****************************CARGAR-VENTAS*******************************************/
     Route::get('inventory/cargar_ventas', [CargarVentasController::class, 'index'])->name('inventory.showcvc');
@@ -252,25 +254,25 @@ Route::group(['middleware' => [('auth')]], function () {
     Route::post('/desposteresUpdate', [desposteresController::class, 'update']);
     Route::post('/downdesposter', [desposteresController::class, 'destroy']);
     Route::post('cargarInventario', [desposteresController::class, 'cargarInventario'])->name('desposteres.show');
-   
-     /********************************* BENEFICIO AVES******************************/
-     Route::get('beneficioaves', [beneficiopolloController::class, 'index'])->name('beneficioaves.index');
-     Route::get('get_plantasacrificiopollo_by_id', [beneficiopolloController::class, 'get_plantasacrificiopollo_by_id'])->name('get_plantasacrificiopollo_by_id');
-     Route::post('savebeneficioaves', [beneficiopolloController::class, 'store'])->name('beneficioaves.save');
-     Route::get('/beneficioavesedit/{id}', [beneficiopolloController::class, 'edit'])->name('beneficioaves.edit');
-     Route::get('showbeneficioaves', [beneficiopolloController::class, 'show'])->name('beneficioaves.showlist');
-     
-     /*****************************UTILIDAD-AVES******************************************/
-     Route::get('utilidadaves/{id}', [utilidadpolloController::class, 'create'])->name('utilidadaves.create');
-     Route::post('/utilidadavesUpdate', [utilidadpolloController::class, 'update'])->name('utilidadaves.update');
-     Route::post('/downutilidadave', [utilidadpolloController::class, 'destroy'])->name('utilidadaves.destroy');   
-  
-     /*****************************DESPOSTE-AVES******************************************/
-     Route::get('desposteaves/{id}', [despostepolloController::class, 'create'])->name('desposteaves.create');
-     Route::post('/desposteavesUpdate', [despostepolloController::class, 'update'])->name('desposteaves.update');
-     Route::post('/downdesposteave', [despostepolloController::class, 'destroy'])->name('desposteaves.destroy');   
-     Route::post('cargarInventarioa', [despostepolloController::class, 'cargarInventarioaves'])->name('desposteaves.show'); 
-    
+
+    /********************************* BENEFICIO AVES******************************/
+    Route::get('beneficioaves', [beneficiopolloController::class, 'index'])->name('beneficioaves.index');
+    Route::get('get_plantasacrificiopollo_by_id', [beneficiopolloController::class, 'get_plantasacrificiopollo_by_id'])->name('get_plantasacrificiopollo_by_id');
+    Route::post('savebeneficioaves', [beneficiopolloController::class, 'store'])->name('beneficioaves.save');
+    Route::get('/beneficioavesedit/{id}', [beneficiopolloController::class, 'edit'])->name('beneficioaves.edit');
+    Route::get('showbeneficioaves', [beneficiopolloController::class, 'show'])->name('beneficioaves.showlist');
+
+    /*****************************UTILIDAD-AVES******************************************/
+    Route::get('utilidadaves/{id}', [utilidadpolloController::class, 'create'])->name('utilidadaves.create');
+    Route::post('/utilidadavesUpdate', [utilidadpolloController::class, 'update'])->name('utilidadaves.update');
+    Route::post('/downutilidadave', [utilidadpolloController::class, 'destroy'])->name('utilidadaves.destroy');
+
+    /*****************************DESPOSTE-AVES******************************************/
+    Route::get('desposteaves/{id}', [despostepolloController::class, 'create'])->name('desposteaves.create');
+    Route::post('/desposteavesUpdate', [despostepolloController::class, 'update'])->name('desposteaves.update');
+    Route::post('/downdesposteave', [despostepolloController::class, 'destroy'])->name('desposteaves.destroy');
+    Route::post('cargarInventarioa', [despostepolloController::class, 'cargarInventarioaves'])->name('desposteaves.show');
+
     /*****************************DESPOSTE-CERDO******************************************/
     Route::get('despostecerdo', [despostecerdoController::class, 'index'])->name('despostecerdo.index');
     Route::get('despostecerdo/{id}', [despostecerdoController::class, 'create']);
@@ -301,7 +303,7 @@ Route::group(['middleware' => [('auth')]], function () {
     Route::get('/beneficiocerdoedit/{id}', [beneficiocerdoController::class, 'edit'])->name('beneficiocerdo.edit');
     Route::get('downbeneficiocerdo/{id}', [beneficiocerdoController::class, 'destroy'])->name('beneficiocerdo.destroy');
 
-   
+
 
     /**ALISTAMIENTO*/
     Route::get('alistamiento', [alistamientoController::class, 'index'])->name('alistamiento.index');
@@ -401,8 +403,8 @@ Route::group(['middleware' => [('auth')]], function () {
 
     /*****************************VENTAS******************************************/
 
-   // Route::get('sales', [SaleController::class, 'index'])->name('sale.index');
- //   Route::post('salesave', [SaleController::class, 'store'])->name('sale.save');
+    // Route::get('sales', [SaleController::class, 'index'])->name('sale.index');
+    //   Route::post('salesave', [SaleController::class, 'store'])->name('sale.save');
     Route::get('sale{saleId}/delete', [SaleController::class, 'delete'])->name('sale.delete');
     Route::get('sale{ventaId}/edit', [SaleController::class, 'edit'])->name('sale.edit');
     Route::post('sale/{ventaId}', [SaleController::class, 'update'])->name('sale.update');
@@ -410,7 +412,7 @@ Route::group(['middleware' => [('auth')]], function () {
     Route::post('getproductosv', [SaleController::class, 'getproducts'])->name('sale.getproductos');
     //Route::post('salesavedetail', [SaleController::class, 'savedetail'])->name('sale.savedetail');
 
-    
+
 
     Route::get('sales', [saleController::class, 'index'])->name('sale.index');
     Route::get('showlistVentas', [saleController::class, 'show'])->name('sale.showlistVentas');
@@ -423,7 +425,7 @@ Route::group(['middleware' => [('auth')]], function () {
 
 
 
-    Route::get('sale/create/{id}', [saleController::class, 'create'])->name('sale.create'); 
+    Route::get('sale/create/{id}', [saleController::class, 'create'])->name('sale.create');
     Route::get('/sa-obtener-precios-producto', [saleController::class, 'SaObtenerPreciosProducto'])->name('sale.sa-obtener-precios-producto');
 
     Route::get('sale/create/registrar_pago/{id}', [saleController::class, 'create_reg_pago'])->name('sale.registrar_pago');
@@ -435,17 +437,17 @@ Route::group(['middleware' => [('auth')]], function () {
 
     Route::get('/buscar-producto-por-codigo-barras', 'saleController@buscarPorCodigoBarras');
 
-     /*****************************RECIBO DE CAJAS******************************************/
-     Route::get('recibodecajas', [recibodecajaController::class, 'index'])->name('recibodecaja.index');
-     Route::get('showlistRecibodecajas', [recibodecajaController::class, 'show'])->name('recibodecaja.showlistRecibodecajas');
-     Route::post('recibodecajasave', [recibodecajaController::class, 'store'])->name('recibodecaja.save');
-     Route::get('recibodecaja/create/{id}', [recibodecajaController::class, 'create'])->name('recibodecaja.create'); 
-     Route::get('/obtener-valores', [recibodecajaController::class, 'obtenerValores'])->name('recibodecaja.obtener-valores');
-     Route::post('gurdarrecibodecaja', [recibodecajaController::class, 'gurdarrecibodecaja'])->name('recibodecaja.gurdarrecibodecaja');
-     Route::get('recibodecaja/showRecibodecaja/{id}', [pdfRecibodecajaController::class,  'showRecibodecaja'])->name('recibodecaja.showRecibodecaja');
+    /*****************************RECIBO DE CAJAS******************************************/
+    Route::get('recibodecajas', [recibodecajaController::class, 'index'])->name('recibodecaja.index');
+    Route::get('showlistRecibodecajas', [recibodecajaController::class, 'show'])->name('recibodecaja.showlistRecibodecajas');
+    Route::post('recibodecajasave', [recibodecajaController::class, 'store'])->name('recibodecaja.save');
+    Route::get('recibodecaja/create/{id}', [recibodecajaController::class, 'create'])->name('recibodecaja.create');
+    Route::get('/obtener-valores', [recibodecajaController::class, 'obtenerValores'])->name('recibodecaja.obtener-valores');
+    Route::post('gurdarrecibodecaja', [recibodecajaController::class, 'gurdarrecibodecaja'])->name('recibodecaja.gurdarrecibodecaja');
+    Route::get('recibodecaja/showRecibodecaja/{id}', [pdfRecibodecajaController::class,  'showRecibodecaja'])->name('recibodecaja.showRecibodecaja');
 
-     Route::get('/facturasByCliente/{cliente_id}', [recibodecajaController::class, 'facturasByCliente'])->name('recibodecaja.facturasByCliente');
-    
+    Route::get('/facturasByCliente/{cliente_id}', [recibodecajaController::class, 'facturasByCliente'])->name('recibodecaja.facturasByCliente');
+
     /* Route::post('registroPagoSave', [saleController::class, 'storeRegistroPago'])->name('pago.save'); */
 
     /*****************************ORDENES DE PEDIDOS******************************************/
@@ -462,7 +464,7 @@ Route::group(['middleware' => [('auth')]], function () {
     Route::post('order/create/registrar_order/{id}', [orderController::class, 'storeOrder'])->name('order.saveOrder');
     Route::get('order/showPDFOrder/{id}', [pdfOrderController::class, 'showPDFOrder'])->name('order.showPDFOrder');
 
-   /* 
+    /* 
     Route::post('notacreditosavedetail', [notacreditoController::class, 'savedetail'])->name('notacredito.savedetail');
     Route::get('/obtener-precios-producto', [notacreditoController::class, 'obtenerPreciosProducto'])->name('notacredito.obtener-precios-producto');
     Route::post('notacreditoById', [notacreditoController::class, 'editNotacredito'])->name('notacredito.editNotacredito');
@@ -475,30 +477,30 @@ Route::group(['middleware' => [('auth')]], function () {
 
      /*****************************NOTA_CREDITO******************************************/
 
-     Route::get('notacredito', [notacreditoController::class, 'index'])->name('notacredito.index');
-     Route::get('showNotacredito', [notacreditoController::class, 'show'])->name('notacredito.showNotacredito');
-     Route::post('notacreditosave', [notacreditoController::class, 'store'])->name('notacredito.save');
-     Route::get('notacredito/create/{id}', [notacreditoController::class, 'create'])->name('notacredito.create');
-     Route::post('notacreditosavedetail', [notacreditoController::class, 'savedetail'])->name('notacredito.savedetail');
-     Route::get('/nc-obtener-precios-producto', [notacreditoController::class, 'NCObtenerPreciosProducto'])->name('notacredito.nc-obtener-precios-producto');
-     Route::post('notacreditoById', [notacreditoController::class, 'editNotacredito'])->name('notacredito.editNotacredito');
-     Route::post('notacredito/create/registrar_notacredito/{id}', [notacreditoController::class, 'storeNotacredito'])->name('notacredito2.save');
-     Route::get('notacredito/showNotacredito/{id}', [pdfNotacreditoController::class, 'showNotacredito']);
-     Route::post('downnotacredito', [notacreditoController::class, 'destroy'])->name('notacredito.down');     
-     
-     Route::get('/getFacturasByCliente/{cliente_id}', [notacreditoController::class, 'getFacturasByCliente'])->name('notacredito.getFacturasByCliente');
+    Route::get('notacredito', [notacreditoController::class, 'index'])->name('notacredito.index');
+    Route::get('showNotacredito', [notacreditoController::class, 'show'])->name('notacredito.showNotacredito');
+    Route::post('notacreditosave', [notacreditoController::class, 'store'])->name('notacredito.save');
+    Route::get('notacredito/create/{id}', [notacreditoController::class, 'create'])->name('notacredito.create');
+    Route::post('notacreditosavedetail', [notacreditoController::class, 'savedetail'])->name('notacredito.savedetail');
+    Route::get('/nc-obtener-precios-producto', [notacreditoController::class, 'NCObtenerPreciosProducto'])->name('notacredito.nc-obtener-precios-producto');
+    Route::post('notacreditoById', [notacreditoController::class, 'editNotacredito'])->name('notacredito.editNotacredito');
+    Route::post('notacredito/create/registrar_notacredito/{id}', [notacreditoController::class, 'storeNotacredito'])->name('notacredito2.save');
+    Route::get('notacredito/showNotacredito/{id}', [pdfNotacreditoController::class, 'showNotacredito']);
+    Route::post('downnotacredito', [notacreditoController::class, 'destroy'])->name('notacredito.down');
 
-     /*****************************NOTA_DEBITO******************************************/
+    Route::get('/getFacturasByCliente/{cliente_id}', [notacreditoController::class, 'getFacturasByCliente'])->name('notacredito.getFacturasByCliente');
 
-     Route::get('notadebito', [notadebitoController::class, 'index'])->name('notadebito.index');
-     Route::get('showNotadebito', [notadebitoController::class, 'show'])->name('notadebito.showNotadebito');
-     Route::post('notadebitosave', [notadebitoController::class, 'store'])->name('notadebito.save');
-     Route::get('notadebito/create/{id}', [notadebitoController::class, 'create'])->name('notadebito.create');
-     Route::post('notadebitosavedetail', [notadebitoController::class, 'savedetail'])->name('notadebito.savedetail');
-     Route::get('/obtener-precios-producto', [notadebitoController::class, 'obtenerPreciosProducto'])->name('notadebito.obtener-precios-producto');
-     Route::post('notadebitoById', [notadebitoController::class, 'editNotacredito'])->name('notadebito.editNotadebito');
-     Route::post('notadebito/create/registrar_notadebito/{id}', [notadebitoController::class, 'storeNotadebito'])->name('notadebito2.save');
-     Route::get('notadebito/showNotacredito/{id}', [pdfNotadebitoController::class, 'showNotadebito']);
+    /*****************************NOTA_DEBITO******************************************/
+
+    Route::get('notadebito', [notadebitoController::class, 'index'])->name('notadebito.index');
+    Route::get('showNotadebito', [notadebitoController::class, 'show'])->name('notadebito.showNotadebito');
+    Route::post('notadebitosave', [notadebitoController::class, 'store'])->name('notadebito.save');
+    Route::get('notadebito/create/{id}', [notadebitoController::class, 'create'])->name('notadebito.create');
+    Route::post('notadebitosavedetail', [notadebitoController::class, 'savedetail'])->name('notadebito.savedetail');
+    Route::get('/obtener-precios-producto', [notadebitoController::class, 'obtenerPreciosProducto'])->name('notadebito.obtener-precios-producto');
+    Route::post('notadebitoById', [notadebitoController::class, 'editNotacredito'])->name('notadebito.editNotadebito');
+    Route::post('notadebito/create/registrar_notadebito/{id}', [notadebitoController::class, 'storeNotadebito'])->name('notadebito2.save');
+    Route::get('notadebito/showNotacredito/{id}', [pdfNotadebitoController::class, 'showNotadebito']);
 
 
     /*****************************LISTA_DE_PRECIO******************************************/
@@ -515,20 +517,17 @@ Route::group(['middleware' => [('auth')]], function () {
     Route::post('/drag-drop', [DragDropController::class, 'handleDragDrop'])->name('drag-drop.handleDragDrop');
     Route::get('/drag', [DragDropController::class, 'showDragView'])->name('drag.showDragView');
 
-   // Route::get('/descargar-reporte', 'App\Http\Controllers\ReportController@downloadExcel');
+    // Route::get('/descargar-reporte', 'App\Http\Controllers\ReportController@downloadExcel');
     Route::get('/descargar-reporte', [ReportController::class, 'downloadExcel'])->name('descargar-reporte');
 
     Route::get('/import', [ImportStockFisicoController::class, 'import'])->name('import');
 
-      /*****************************Reportes de Exceles******************************************/
+    /*****************************Reportes de Exceles******************************************/
 
-      Route::get('/excel-analisis-kg', [excelAnalisisKGController::class, 'exportToExcel'])->name('excel-analisis-kg');
-      Route::get('/excel-analisis-utilidad', [excelAnalisisUtilidadController::class, 'exportToExcel'])->name('excel-analisis-utilidad');
+    Route::get('/excel-analisis-kg', [excelAnalisisKGController::class, 'exportToExcel'])->name('excel-analisis-kg');
+    Route::get('/excel-analisis-utilidad', [excelAnalisisUtilidadController::class, 'exportToExcel'])->name('excel-analisis-utilidad');
 
-      Route::get('/excel-consolidado-ventas', [ExcelConsolidadoVentasController::class, 'downloadExcel'])->name('excel-consolidado-ventas');
-
-
-
+    Route::get('/excel-consolidado-ventas', [ExcelConsolidadoVentasController::class, 'downloadExcel'])->name('excel-consolidado-ventas');
 });
 
 require __DIR__ . '/admin.php';

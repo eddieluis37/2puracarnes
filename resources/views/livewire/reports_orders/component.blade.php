@@ -42,7 +42,7 @@
                                 <a class="btn btn-dark btn-block {{count($data) < 1 ? 'disabled' : '' }}" href="{{ url('report/pdf' . '/' . $userId1 . '/' . $reportType . '/' . $dateFrom . '/' . $dateTo) }}" target="_blank">PDF</a>
                             </div>
                             <div class="col-sm-6 col-md-2">
-                                <a class="btn btn-dark btn-block {{count($data) < 1 ? 'disabled' : '' }}" href="{{ url('report/excel' . '/' . $userId2 . '/' . $reportType . '/' . $dateFrom . '/' . $dateTo) }}" target="_blank">Excel</a>
+                                <a class="btn btn-dark btn-block {{count($data) < 1 ? 'disabled' : '' }}" href="{{ url('report_order/excel' . '/' . $userId1 . '/' . $userId2) }}" target="_blank">Excel</a>
                             </div>
                         </div>
                     </div>

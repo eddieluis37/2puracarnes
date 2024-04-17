@@ -58,6 +58,7 @@ class ReportsOrdersController extends Component
             ->select('orders.*', 'u.name as user', 'v.name as vendedor', 'sc.name as subcentro', 'a.name as alistador', 'c.name as cliente', 'c.identification', 'c.celular')
             ->whereBetween('orders.id', [$from, $to])
             ->where('orders.status', '1')
+            ->orderBy('id', 'desc')
             ->get();
     }
 
