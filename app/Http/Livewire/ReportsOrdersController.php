@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire;
 
+use App\Models\Order;
 use Livewire\Component;
 use App\Models\User;
 use App\Models\Sale;
@@ -12,76 +13,92 @@ use Carbon\Carbon;
 class ReportsOrdersController extends Component
 {
 
-    public $componentName, $data, $details, $sumDetails, $countDetails, 
-    $reportType, $userId, $dateFrom, $dateTo, $saleId;
+    public $componentName, $data, $details, $sumDetails, $countDetails,
+        $reportType, $userId1,  $userId2, $dateFrom, $dateTo, $saleId;
 
     public function mount()
     {
-        $this->componentName ='Consolidado de Ordenes de Pedidos';
-        $this->data =[];
-        $this->details =[];
-        $this->sumDetails =0;
-        $this->countDetails =0;
-        $this->reportType =0;
-        $this->userId =0;
-        $this->saleId =0;
-
+        $this->componentName = 'Consolidado de Ordenes de Pedidos';
+        $this->data = [];
+        $this->details = [];
+        $this->sumDetails = 0;
+        $this->countDetails = 0;
+        $this->reportType = 0;
+        $this->userId1 = 0;
+        $this->userId2 = 0;
+        $this->saleId = 0;
     }
 
     public function render()
     {
 
-        $this->SalesByDate();
+        // $this->SalesByDate();
+        $this->OrderById();
 
         return view('livewire.reports_orders.component', [
-            'users' => User::orderBy('name','asc')->get()
+            'inicio' => Order::where('id', '>', 500)
+            ->orderBy('id', 'asc')->get(),
+            'final' => Order::orderBy('id', 'desc')->get()
         ])->extends('layouts.theme.app')
-        ->section('content');
+            ->section('content');
     }
 
-    public function SalesByDate()
+    public function OrderById()
     {
-        if($this->reportType == 0) // ventas del dia
-        {
-            $from = Carbon::parse(Carbon::now())->format('Y-m-d') . ' 00:00:00';
-            $to = Carbon::parse(Carbon::now())->format('Y-m-d')   . ' 23:59:59';
 
+        $from = $this->userId1;
+        $to = $this->userId2;
+
+
+        $this->data = Order::join('users as u', 'u.id', 'orders.user_id')
+            ->leftjoin('subcentrocostos as sc', 'sc.id', 'orders.subcentrocostos_id')
+            ->leftjoin('thirds as v', 'v.id', 'orders.vendedor_id')
+            ->leftjoin('thirds as c', 'c.id', 'orders.third_id')
+            ->select('orders.*', 'u.name as user', 'v.name as vendedor', 'sc.name as subcentro', 'c.name as cliente', 'c.identification', 'c.celular')
+            ->whereBetween('orders.id', [$from, $to])
+            ->get();
+    }
+
+    /*  public function SalesByDate()
+    {
+        if ($this->reportType == 1) // ventas del dia
+        {
+            $from = $this->userId1;
+            $to = $this->userId2;
         } else {
-             $from = Carbon::parse($this->dateFrom)->format('Y-m-d') . ' 00:00:00';
-             $to = Carbon::parse($this->dateTo)->format('Y-m-d')     . ' 23:59:59';
+            $from = Carbon::parse($this->dateFrom)->format('Y-m-d') . ' 00:00:00';
+            $to = Carbon::parse($this->dateTo)->format('Y-m-d')     . ' 23:59:59';
         }
 
-        if($this->reportType == 1 && ($this->dateFrom == '' || $this->dateTo =='')) {
+        if ($this->reportType == 1 && ($this->dateFrom == '' || $this->dateTo == '')) {
             return;
         }
 
-        if($this->userId == 0)        
-        {
-            $this->data = Sale::join('users as u','u.id','sales.user_id')
-            ->select('sales.*','u.name as user')
-            ->whereBetween('sales.created_at', [$from, $to])
-            ->get();
+        if ($this->userId1 == 0) {
+            $this->data = Sale::join('users as u', 'u.id', 'sales.user_id')
+                ->select('sales.*', 'u.name as user')
+                ->whereBetween('sales.created_at', [$from, $to])
+                ->get();
         } else {
-            $this->data = Sale::join('users as u','u.id','sales.user_id')
-            ->select('sales.*','u.name as user')
-            ->whereBetween('sales.created_at', [$from, $to])
-            ->where('user_id', $this->userId)
-            ->get();
+            $this->data = Sale::join('users as u', 'u.id', 'sales.user_id')
+                ->select('sales.*', 'u.name as user')
+                ->whereBetween('sales.created_at', [$from, $to])
+                ->where('user_id', $this->userId1)
+                ->get();
         }
-
-    }
+    } */
 
 
     public function getDetails($saleId)
     {
-        $this->details = SaleDetail::join('products as p','p.id','sale_details.product_id')
-        ->select('sale_details.id','sale_details.price','sale_details.quantity','p.name as product')
-        ->where('sale_details.sale_id', $saleId)
-        ->get();
+        $this->details = SaleDetail::join('products as p', 'p.id', 'sale_details.product_id')
+            ->select('sale_details.id', 'sale_details.price', 'sale_details.quantity', 'p.name as product')
+            ->where('sale_details.sale_id', $saleId)
+            ->get();
 
 
         //
-        $suma = $this->details->sum(function($item){
+        $suma = $this->details->sum(function ($item) {
             return $item->price * $item->quantity;
         });
 
@@ -89,9 +106,6 @@ class ReportsOrdersController extends Component
         $this->countDetails = $this->details->sum('quantity');
         $this->saleId = $saleId;
 
-        $this->emit('show-modal','details loaded');
-
+        $this->emit('show-modal', 'details loaded');
     }
-
-
 }

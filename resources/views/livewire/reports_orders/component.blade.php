@@ -8,15 +8,15 @@
 
             <div class="widget-content">
                 <div class="">
-                    <div class="col-sm-12 col-md-8">
+                    <div class="col-sm-12 col-md-12">
                         <div class="row">
                             <div class="col-sm-6 col-md-3">
                                 <h6>Elige Id inicial</h6>
                                 <div class="form-group">
-                                    <select wire:model="userId" class="form-control">
-                                        <option value="0">Todos</option>
-                                        @foreach($users as $user)
-                                        <option value="{{$user->id}}">{{$user->name}}</option>
+                                    <select wire:model="userId1" class="form-control">
+                                        <option value="0">Elige</option>
+                                        @foreach($inicio as $user)
+                                        <option value="{{$user->id}}">{{$user->id}}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -24,41 +24,47 @@
                             <div class="col-sm-6 col-md-3">
                                 <h6>Elige Id final</h6>
                                 <div class="form-group">
-                                    <select wire:model="reportType" class="form-control">
-                                        <option value="0">Ventas por hora</option>
-                                        <option value="0">Ventas del día</option>
-                                        <option value="1">Ventas por fecha</option>
+                                    <select wire:model="userId2" class="form-control">
+                                        <option value="0">Elige</option>
+                                        @foreach($final as $user)
+                                        <option value="{{$user->id}}">{{$user->id}}</option>
+                                        @endforeach
                                     </select>
                                 </div>
                             </div>
 
-                            <div class="col-sm-6 col-md-3">
+                            <div class="col-sm-6 col-md-2">
                                 <button wire:click="$refresh" class="btn btn-dark btn-block">
                                     Consultar
                                 </button>
                             </div>
-                            <div class="col-sm-6 col-md-3">
-                                <a class="btn btn-dark btn-block {{count($data) < 1 ? 'disabled' : '' }}" href="{{ url('report/pdf' . '/' . $userId . '/' . $reportType . '/' . $dateFrom . '/' . $dateTo) }}" target="_blank">PDF</a>
+                            <div class="col-sm-6 col-md-2">
+                                <a class="btn btn-dark btn-block {{count($data) < 1 ? 'disabled' : '' }}" href="{{ url('report/pdf' . '/' . $userId1 . '/' . $reportType . '/' . $dateFrom . '/' . $dateTo) }}" target="_blank">PDF</a>
                             </div>
-                            <div class="col-sm-6 col-md-3">
-                                <a class="btn btn-dark btn-block {{count($data) < 1 ? 'disabled' : '' }}" href="{{ url('report/excel' . '/' . $userId . '/' . $reportType . '/' . $dateFrom . '/' . $dateTo) }}" target="_blank">Excel</a>
+                            <div class="col-sm-6 col-md-2">
+                                <a class="btn btn-dark btn-block {{count($data) < 1 ? 'disabled' : '' }}" href="{{ url('report/excel' . '/' . $userId2 . '/' . $reportType . '/' . $dateFrom . '/' . $dateTo) }}" target="_blank">Excel</a>
                             </div>
                         </div>
                     </div>
                     <div class="col-12 col-md-12">
                         <!--TABLAE-->
                         <div class="table-responsive">
-                            <table class="table table-bordered table striped mt-1">
+                            <table class="table table-success table-striped mt-1">
                                 <thead class="text-white" style="background: #3B3F5C">
                                     <tr>
-                                        <th class="table-th text-white text-center"># COMPROB</th>
-                                        <th class="table-th text-white text-center">TOTAL</th>
-                                        <th class="table-th text-white text-center">UNID</th>
-                                        <th class="table-th text-white text-center">PAGO</th>
-                                        <th class="table-th text-white text-center">CAJERO</th>
+                                        <th class="table-th text-white text-center">#Id</th>
+                                        <th class="table-th text-white text-center">SUBCENTRO</th>
                                         <th class="table-th text-white text-center">VENDEDOR</th>
-                                        <th class="table-th text-white text-center">LINEA</th>
-                                        <th class="table-th text-white text-center">FECHA</th>
+                                        <th class="table-th text-white text-center">CLIENTE</th>
+                                        <th class="table-th text-white text-center">IDENTIFICACION</th>                                    
+                                        <th class="table-th text-white text-center">DIR_ENTREGA</th>
+                                        <th class="table-th text-white text-center">TELEFONO</th>
+                                        <th class="table-th text-white text-center">HORA_ENTREGA</th>
+                                        <th class="table-th text-white text-center">HORA_ENTREGA</th>
+                                        <th class="table-th text-white text-center"></th>
+                                        <th class="table-th text-white text-center"></th>
+                                        <th class="table-th text-white text-center"></th>
+                                        <th class="table-th text-white text-center"></th>
                                         <th class="table-th text-white text-center">ACCIONES</th>
                                     </tr>
                                 </thead>
@@ -75,6 +81,30 @@
                                                 <h6>{{$d->id}}</h6>
                                             </td>
                                             <td class="text-center">
+                                                <h6>{{$d->subcentro}}</h6>
+                                            </td>
+                                            <td class="text-center">
+                                                <h6>{{$d->vendedor}}</h6>
+                                            </td>
+                                            <td class="text-center">
+                                                <h6>{{$d->cliente}}</h6>
+                                            </td>
+                                            <td class="text-center">
+                                                <h6>{{$d->identification}}</h6>
+                                            </td>
+                                            <td class="text-center">
+                                                <h6>{{$d->direccion_envio}}</h6>
+                                            </td>
+                                            <td class="text-center">
+                                                <h6>{{$d->celular}}</h6>
+                                            </td>
+                                            <td class="text-center">
+                                                <h6>{{$d->hora_inicial_entrega}}</h6>
+                                                <h6>{{$d->hora_final_entrega}}</h6>
+                                            </td>
+                                           
+                                           
+                                            <td class="text-center">
                                                 <h6>$ {{number_format($d->total)}}</h6>
                                             </td>
                                             <td class="text-center">
@@ -86,21 +116,17 @@
                                             <td class="text-center">
                                                 <h6>{{$d->user}}</h6>
                                             </td>
-                                            <td class="text-center">
-                                                <h6>{{$d->vendedor}}</h6>
-                                            </td>
-                                            <td class="text-center">
-                                                <h6>{{$d->line}}</h6>
-                                            </td>
+                                           
+                                            
                                             <td class="text-center">
                                                 <h6>
                                                     {{\Carbon\Carbon::parse($d->created_at)->format('d-m-Y')}}
                                                 </h6>
                                             </td>
                                             <td class="text-center">
-                                                <button wire:click.prevent="getDetails({{$d->id}})" class="btn btn-dark btn-sm">
+                                              <!--   <button wire:click.prevent="getDetails({{$d->id}})" class="btn btn-dark btn-sm">
                                                     <i class="fas fa-list"></i>
-                                                </button>
+                                                </button> -->
                                                 <button type="button" onclick="rePrint({{$d->id}})" class="btn btn-dark btn-sm">
                                                     <i class="fas fa-print"></i>
                                                 </button>
