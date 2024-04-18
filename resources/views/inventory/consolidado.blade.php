@@ -61,7 +61,7 @@
 						<option value="">Seleccione el responsable</option>
 					</select>
         </div> -->
-        
+
         @can('Cerrar_Inventario')
         <div class="col-md-3 text-right ml-auto">
           <div style="margin-top:28px;" clas="">
@@ -178,7 +178,7 @@
         </table>
       </div>
       <div class="table-responsive mt-3">
-        <table id="tableInventory" class="table table-striped mt-1">
+        <table id="tableInventory" class="table table-success table-striped mt-1">
           <thead class="text-white" style="background: #3B3F5C">
             <tr>
               <th class="table-th text-white" title="Categoria">CAT</th>
