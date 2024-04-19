@@ -5,6 +5,7 @@ use App\Http\Controllers\BooksController;
 use App\Http\Controllers\ExportController;
 use App\Http\Controllers\ExportCxcController;
 use App\Http\Controllers\ExportOrderController;
+use App\Http\Controllers\ExportSalesXsCController;
 use App\Http\Controllers\TodosController;
 use App\Http\Livewire\AsignarController;
 use App\Http\Livewire\BeneficiopollosController;
@@ -22,6 +23,7 @@ use App\Http\Livewire\MeatcutsController;
 use App\Http\Livewire\ReportsController;
 use App\Http\Livewire\ReportsOrdersController;
 use App\Http\Livewire\CuentasporcobrarsController;
+use App\Http\Livewire\ReportsSalesXsCController;
 use App\Http\Livewire\RolesController;
 use App\Http\Livewire\Select2;
 use App\Http\Livewire\ThirdsController;
@@ -140,6 +142,7 @@ Route::group(['middleware' => [('auth')]], function () {
     Route::get('coins', CoinsController::class);
     Route::get('reports', ReportsController::class);
     Route::get('reports_orders', ReportsOrdersController::class);
+    Route::get('report_sales_x_sc', ReportsSalesXsCController::class);
     Route::get('cashout', CashoutController::class);
     Route::get('dash', Dash::class)->name('dash');
     Route::get('thirds', ThirdsController::class);
@@ -182,7 +185,10 @@ Route::group(['middleware' => [('auth')]], function () {
     Route::get('reportCxc/excel/{user}/{type}', [ExportCxcController::class, 'reporteExcel']);
 
     //reportes Ordenes de pedidos
-    Route::get('report_order/excel/{f1}/{f2}', [ExportOrderController::class, 'reporteExcel']);
+    Route::get('report_order/excel/{f1}/{f2}', [ExportSalesXsCController::class, 'reporteExcel']);
+
+     //reportes Ventas x Subcentro de costos
+     Route::get('report_sales_x_sc/excel/{f1}/{f2}', [ExportSalesXsCController::class, 'reporteExcel']);
 
     //Route::post('citywithstatecountry', [CityController::class, 'citywithstatecountry'])->name('citywithstatecountry');
 

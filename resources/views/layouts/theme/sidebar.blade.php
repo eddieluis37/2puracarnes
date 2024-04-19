@@ -220,7 +220,7 @@
                     <polyline points="15 18 9 12 15 6"></polyline>
                 </svg>
             </li>
-            @endcan      
+            @endcan
 
             @can('Product_View')
             <li class="menu">
@@ -390,7 +390,10 @@
                     </a>
                     <ul id="sale" class="collapse" data-parent="#compact_submenuSidebar">
                         <li>
-                            <a href="{{ url('excel-consolidado-ventas') }}"> Consolidado Ventas </a>
+                            <a href="{{ url('report_sales_x_sc') }}"> Por sub-centro costo </a>
+                        </li>
+                        <li>
+                            <a href="{{ url('excel-consolidado-ventas') }}"> Consolidado ventas </a>
                         </li>
                         <li>
                             <a href="{{ url('descargar-reporte') }}"> Stock fisico real </a>
@@ -427,7 +430,7 @@
                             <a href="{{ url('reports_orders') }}"> Consolidado Orders </a>
                         </li>
                         <li>
-                            <a href="{{ url('excel-analisis-utilidad') }}">  </a>
+                            <a href="{{ url('excel-analisis-utilidad') }}"> </a>
                         </li>
                     </ul>
                 </li>
@@ -469,7 +472,7 @@
                             <line x1="3" y1="10" x2="21" y2="10"></line>
                         </svg> Históricos</a>
                 </li>
-              <!--   <li>
+                <!--   <li>
                     <a href="{{ url('transfer') }}"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-truck">
                             <rect x="1" y="3" width="15" height="13"></rect>
                             <polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon>
@@ -477,7 +480,7 @@
                             <circle cx="18.5" cy="18.5" r="2.5"></circle>
                         </svg> Traslado</a>
                 </li> -->
-             <!--    <li>
+                <!--    <li>
                     <a href="apps_contacts.html"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-refresh-cw">
                             <path d="M23 4v6h-6"></path>
                             <path d="M1 20v-6h6"></path>
@@ -512,7 +515,7 @@
                             <line x1="9" y1="15" x2="15" y2="15"></line>
                         </svg> Stock Fisico Real</a>
                 </li>
-              <!--   <li>
+                <!--   <li>
                     <a href="{{ url('') }}"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-dollar-sign">
                             <line x1="12" y1="1" x2="12" y2="23"></line>
                             <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
