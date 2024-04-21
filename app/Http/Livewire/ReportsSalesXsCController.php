@@ -42,57 +42,41 @@ class ReportsSalesXsCController extends Component
             ->section('content');
     }
 
+
     public function OrderById()
     {
-
         $from = $this->userId1;
         $to = $this->userId2;
-
-        $this->data = Sale::join('subcentrocostos as sc', 'sc.id', 'sales.subcentrocostos_id')
-            ->leftjoin('users as u', 'u.id', 'sales.user_id')
-            ->leftjoin('thirds as v', 'v.id', 'sales.vendedor_id')
-            ->leftjoin('thirds as c', 'c.id', 'sales.third_id')
+        $results = Sale::with('subcentrocosto')
             ->select(
-                'sc.name as subcentro',
-                \DB::raw('count(sales.id) as total_ventas'),
-                \DB::raw('(SELECT COALESCE(SUM(valor_total), 0) FROM notadebitos WHERE sales.id = notadebitos.sale_id) - 
-                      (SELECT COALESCE(SUM(valor_total), 0) FROM notacreditos WHERE sales.id = notacreditos.sale_id) AS venta_real')
+                'subcentrocostos.name as subcentro',
+                DB::raw('COUNT(sales.id) as total_ventas'),
+                DB::raw('SUM(COALESCE((SELECT SUM(valor_total) FROM notacreditos WHERE sales.id = notacreditos.sale_id), 0) - 
+                COALESCE((SELECT SUM(valor_total) FROM notadebitos WHERE sales.id = notadebitos.sale_id), 0)) + 
+                SUM(sales.total_bruto) as venta_real'),
+                DB::raw('SUM(sales.descuentos) as descuentos'),
+                DB::raw('(SUM(COALESCE((SELECT SUM(valor_total) FROM notacreditos WHERE sales.id = notacreditos.sale_id), 0) - 
+                COALESCE((SELECT SUM(valor_total) FROM notadebitos WHERE sales.id = notadebitos.sale_id), 0)) + 
+                SUM(sales.total_bruto) - SUM(sales.descuentos) + SUM(sales.total_otros_impuestos) +
+                SUM(sales.total_iva) + SUM(sales.total_otros_impuestos)) as subtotal'),
+                DB::raw('SUM(sales.total_iva) as impuesto_IVA'),
+                DB::raw('SUM(sales.total_otros_impuestos) as impuesto_SALUDABLE'),
+                DB::raw('SUM(sales.total_iva) + SUM(sales.total_otros_impuestos) as Total_Impuestos'),
+                DB::raw('SUM(COALESCE((SELECT SUM(valor_total) FROM notacreditos WHERE sales.id = notacreditos.sale_id), 0) - 
+                COALESCE((SELECT SUM(valor_total) FROM notadebitos WHERE sales.id = notadebitos.sale_id), 0)) + 
+                SUM(sales.total_bruto) - SUM(sales.descuentos) + SUM(sales.total_otros_impuestos) +
+                SUM(sales.total_iva) + SUM(sales.total_otros_impuestos) as Total')
             )
+            ->join('subcentrocostos', 'subcentrocostos.id', '=', 'sales.subcentrocostos_id')
             ->whereBetween('sales.id', [$from, $to])
             ->where('sales.status', '1')
-            ->groupBy('sc.name')
-            ->orderBy('sc.name')
+            ->groupBy('subcentrocostos.id', 'subcentrocostos.name')
+            ->orderBy('subcentrocostos.name', 'ASC')
             ->get();
+
+        $this->data = $results;
     }
 
-    /*  public function SalesByDate()
-    {
-        if ($this->reportType == 1) // ventas del dia
-        {
-            $from = $this->userId1;
-            $to = $this->userId2;
-        } else {
-            $from = Carbon::parse($this->dateFrom)->format('Y-m-d') . ' 00:00:00';
-            $to = Carbon::parse($this->dateTo)->format('Y-m-d')     . ' 23:59:59';
-        }
-
-        if ($this->reportType == 1 && ($this->dateFrom == '' || $this->dateTo == '')) {
-            return;
-        }
-
-        if ($this->userId1 == 0) {
-            $this->data = Sale::join('users as u', 'u.id', 'sales.user_id')
-                ->select('sales.*', 'u.name as user')
-                ->whereBetween('sales.created_at', [$from, $to])
-                ->get();
-        } else {
-            $this->data = Sale::join('users as u', 'u.id', 'sales.user_id')
-                ->select('sales.*', 'u.name as user')
-                ->whereBetween('sales.created_at', [$from, $to])
-                ->where('user_id', $this->userId1)
-                ->get();
-        }
-    } */
 
 
     public function getDetails($saleId)

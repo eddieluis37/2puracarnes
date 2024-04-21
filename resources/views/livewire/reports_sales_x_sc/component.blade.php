@@ -42,7 +42,7 @@
                                 <a class="btn btn-dark btn-block {{count($data) < 1 ? 'disabled' : '' }}" href="{{ url('report/pdf' . '/' . $userId1 . '/' . $reportType . '/' . $dateFrom . '/' . $dateTo) }}" target="_blank">PDF</a>
                             </div>
                             <div class="col-sm-6 col-md-2">
-                                <a class="btn btn-dark btn-block {{count($data) < 1 ? 'disabled' : '' }}" href="{{ url('report_order/excel' . '/' . $userId1 . '/' . $userId2) }}" target="_blank">Excel</a>
+                              <!--   <a class="btn btn-dark btn-block {{count($data) < 1 ? 'disabled' : '' }}" href="{{ url('report_order/excel' . '/' . $userId1 . '/' . $userId2) }}" target="_blank">Excel</a> -->
                             </div>
                         </div>
                     </div>
@@ -51,19 +51,17 @@
                         <div class="table-responsive" style="overflow-x: auto;">
                             <table class="table table-success table-striped mt-1">
                                 <thead class="text-white" style="background: #3B3F5C">
-                                    <tr>
-                                        <th class="table-th text-white text-center">#ID</th>
+                                    <tr>                                      
                                         <th class="table-th text-white text-center">SUBCENTRO</th>
-                                        <th class="table-th text-white text-center" title="Número de comprobantes">NC</th>
-                                        <th class="table-th text-white text-center">VALOR_BRUTO</th>
-                                        <th class="table-th text-white text-center">DESCUENTO</th>
-                                        <th class="table-th text-white text-center">SUBTOTAL</th>
-                                        <th class="table-th text-white text-center">IMPUESTO_CARGO</th>
-                                        <th class="table-th text-white text-center" title="Impuesto retención">IMP_RETENCION</th>
-                                        <th class="table-th text-white text-center" title="Cargo en totales">CT</th>
-                                        <th class="table-th text-white text-center" title="Descuento en totales">DT</th>
+                                        <th class="table-th text-white text-center" title="Número de comprobantes, ventas">NV</th>
+                                        <th class="table-th text-white text-center" title="Ventas brutas afectadas con las notas -">VENTA_REAL</th>
+                                        <th class="table-th text-white text-center" title="Descuentos por productos y/o clientes">DESCUENTO</th>
+                                        <th class="table-th text-white text-center" title="Ventas reales - Descuentos">SUBTOTAL</th>
+                                        <th class="table-th text-white text-center" title="Impuesto iva">IMP_IVA</th>
+                                        <th class="table-th text-white text-center" title="Impuesto Saludable">IMP_SALUD</th>                                   
+                                        <th class="table-th text-white text-center" title="Total impuestos">T_IMPUESTOS</th>
                                         <th class="table-th text-white text-center" title="">TOTAL</th>
-                                       
+
                                         <th class="table-th text-white text-center">ACCIONES</th>
 
                                     </tr>
@@ -77,9 +75,7 @@
                                         @endif
                                         @foreach($data as $d)
                                         <tr>
-                                            <td class="text-center">
-                                                <h6>{{$d->id}}</h6>
-                                            </td>
+                                           
                                             <td class="text-center">
                                                 <h6>{{$d->subcentro}}</h6>
                                             </td>
@@ -87,35 +83,32 @@
                                                 <h6>{{$d->total_ventas}}</h6>
                                             </td>
                                             <td class="text-center">
-                                                <h6>{{$d->cliente}}</h6>
+                                                <h6>${{number_format($d->venta_real)}}</h6>
                                             </td>
                                             <td class="text-center">
-                                                <h6>{{$d->identification}}</h6>
+                                                <h6>${{number_format($d->descuentos)}}</h6>
                                             </td>
                                             <td class="text-center">
-                                                <h6>{{$d->direccion_envio}}</h6>
+                                                <h6>${{number_format($d->subtotal)}}</h6>           
                                             </td>
                                             <td class="text-center">
-                                                <h6>{{$d->celular}}</h6>
+                                                <h6>${{number_format($d->impuesto_IVA)}}</h6>    
                                             </td>
                                             <td class="text-center">
-                                                <h6>Día:{{\Carbon\Carbon::parse($d->fecha_entrega)->format('d-m')}}</h6>                                              
-                                                <h6>{{$d->hora_inicial_entrega}}</h6>
-                                                <h6>{{$d->hora_final_entrega}}</h6>
+                                                <h6>${{number_format($d->impuesto_SALUDABLE)}}</h6>  
                                             </td>
                                             <td class="text-center">
-                                                <h6>{{$d->alistador}}</h6>
+                                            <h6>${{number_format($d->Total_Impuestos)}}</h6>
                                             </td>
                                             <td class="text-center">
-                                                <h6>{{$d->observacion}}</h6>
+                                            <h6>${{number_format($d->Total)}}</h6>
                                             </td>
                                             <td class="text-center">
-                                                <!--   <button wire:click.prevent="getDetails({{$d->id}})" class="btn btn-dark btn-sm">
-                                                    <i class="fas fa-list"></i>
-                                                </button> -->
-                                                <button type="button" onclick="rePrint({{$d->id}})" class="btn btn-dark btn-sm">
-                                                    <i class="fas fa-print"></i>
-                                                </button>
+                                            <button type="button" onclick="rePrint({{$d->id}})"
+                                                class="btn btn-dark btn-sm">
+                                                <i class="fas fa-print"></i>
+                                            </button>
+
                                             </td>
                                         </tr>
                                         @endforeach

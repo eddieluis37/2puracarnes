@@ -36,6 +36,10 @@ class Sale extends Model
         return $this->hasOne('App\Models\Third');
     }
 
+    public function subcentrocosto()
+    {
+        return $this->belongsTo(Subcentrocosto::class, 'subcentrocostos_id', 'id');
+    }
 
     // MUTATORS
     /*
