@@ -42,8 +42,27 @@
                                 <a class="btn btn-dark btn-block {{count($data) < 1 ? 'disabled' : '' }}" href="{{ url('report/pdf' . '/' . $IdInicial. '/' . $reportType . '/' . $dateFrom . '/' . $dateTo) }}" target="_blank">PDF</a>
                             </div>
                             <div class="col-sm-6 col-md-2">
-                                  <a class="btn btn-dark btn-block {{count($data) < 1 ? 'disabled' : '' }}" href="{{ url('report_sales_x_sc/excel' . '/' . $IdInicial. '/' . $IdFinal) }}" target="_blank">Excel</a>
+                                <a class="btn btn-dark btn-block {{count($data) < 1 ? 'disabled' : '' }}" href="{{ url('report_sales_x_sc/excel' . '/' . $IdInicial. '/' . $IdFinal) }}" target="_blank">Excel</a>
                             </div>
+
+                            <div class="col-sm-6 col-md-3">
+                                <h6>Fecha inicial</h6>
+                                <div class="form-group">
+                                    <input type="date" wire:model="dateFrom" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-sm-6 col-md-3">
+                                <h6>Fecha final</h6>
+                                <div class="form-group">
+                                    <input type="date" wire:model="dateTo" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-sm-6 col-md-2">
+                                <button wire:click="SalesByDate" class="btn btn-dark btn-block">
+                                    Consultar por fecha
+                                </button>
+                            </div>
+
                         </div>
                     </div>
                     <div class="col-12 col-md-12">
@@ -128,7 +147,7 @@
                                         <td class="text-right"><strong>$0</strong></td>
                                         <td class="text-right"><strong>${{ number_format( $this->totals['Total_Impuestos']) }}</strong></td>
                                         <td class="text-right"><strong>${{ number_format( $this->totals['Total']) }}</strong></td>
-                                      
+
                                     </tr>
                                 </tfoot>
 
