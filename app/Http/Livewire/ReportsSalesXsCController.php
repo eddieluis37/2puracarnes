@@ -35,7 +35,7 @@ class ReportsSalesXsCController extends Component
 
     public function render()
     {
-        $this->OrderById();
+        $this->SalesById();
 
         return view('livewire.reports_sales_x_sc.component', [
             'inicio' => Sale::where('created_at', '>', '2024-04-01')
@@ -49,7 +49,7 @@ class ReportsSalesXsCController extends Component
     }
 
 
-    public function OrderById()
+    public function SalesById()
     {
         $from = $this->userId1;
         $to = $this->userId2;

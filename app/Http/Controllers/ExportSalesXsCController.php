@@ -46,21 +46,8 @@ class ExportSalesXsCController extends Controller
     $user = $userId == 0 ? 'Todos' : User::find($userId)->name;
     $pdf = PDF::loadView('pdf.reporte', compact('data','reportType','user','dateFrom','dateTo'));
 
-/*
-    $pdf = new DOMPDF();
-    $pdf->setBasePath(realpath(APPLICATION_PATH . '/css/'));
-    $pdf->loadHtml($html);
-    $pdf->render();
-    */
-    /*
-    $pdf->set_protocol(WWW_ROOT);
-    $pdf->set_base_path('/');
-*/
-
         return $pdf->stream('salesReport.pdf'); // visualizar
-        //$customReportName = 'salesReport_'.Carbon::now()->format('Y-m-d').'.pdf';
-        //return $pdf->download($customReportName); //descargar
-
+     
     }
 
 
