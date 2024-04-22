@@ -59,6 +59,7 @@
                                         <th class="table-th text-white text-center" title="Ventas reales - Descuentos">SUBTOTAL</th>
                                         <th class="table-th text-white text-center" title="Impuesto iva">IMP_IVA</th>
                                         <th class="table-th text-white text-center" title="Impuesto Saludable">IMP_SALUD</th>
+                                        <th class="table-th text-white text-center" title="Impuesto Saludable">RETEICA</th>
                                         <th class="table-th text-white text-center" title="Total impuestos">T_IMPUESTOS</th>
                                         <th class="table-th text-white text-center" title="">TOTAL</th>
 
@@ -98,6 +99,9 @@
                                                 <h6>${{number_format($d->impuesto_SALUDABLE)}}</h6>
                                             </td>
                                             <td class="text-right">
+                                                <h6>$0</h6>
+                                            </td>
+                                            <td class="text-right">
                                                 <h6>${{number_format($d->Total_Impuestos)}}</h6>
                                             </td>
                                             <td class="text-right">
@@ -121,6 +125,7 @@
                                         <td class="text-right"><strong>${{ number_format( $this->totals['subtotal']) }}</strong></td>
                                         <td class="text-right"><strong>${{ number_format( $this->totals['impuesto_IVA']) }}</strong></td>
                                         <td class="text-right"><strong>${{ number_format( $this->totals['impuesto_SALUDABLE']) }}</strong></td>
+                                        <td class="text-right"><strong>$0</strong></td>
                                         <td class="text-right"><strong>${{ number_format( $this->totals['Total_Impuestos']) }}</strong></td>
                                         <td class="text-right"><strong>${{ number_format( $this->totals['Total']) }}</strong></td>
                                       
