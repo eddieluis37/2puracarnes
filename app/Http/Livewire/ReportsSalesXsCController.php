@@ -16,6 +16,10 @@ class ReportsSalesXsCController extends Component
     public $componentName, $data, $details, $sumDetails, $countDetails,
         $reportType, $userId1,  $userId2, $dateFrom, $dateTo, $saleId;
 
+    public $results;
+    public $totals;
+
+
     public function mount()
     {
         $this->componentName = 'Ventas por sub-centro de costo';
@@ -40,6 +44,8 @@ class ReportsSalesXsCController extends Component
                 ->orderBy('id', 'desc')->get()
         ])->extends('layouts.theme.app')
             ->section('content');
+
+        return view('livewire.reports_sales_x_sc.component');
     }
 
 
@@ -47,7 +53,7 @@ class ReportsSalesXsCController extends Component
     {
         $from = $this->userId1;
         $to = $this->userId2;
-        $results = Sale::with('subcentrocosto')
+        $this->results = Sale::with('subcentrocosto')
             ->select(
                 'subcentrocostos.name as subcentro',
                 DB::raw('COUNT(sales.id) as total_ventas'),
@@ -74,7 +80,17 @@ class ReportsSalesXsCController extends Component
             ->orderBy('subcentrocostos.name', 'ASC')
             ->get();
 
-        $this->data = $results;
+        $this->data = $this->results;
+        $this->totals = [
+            'total_ventas' => $this->results->sum('total_ventas'),
+            'venta_real' => $this->results->sum('venta_real'),
+            'descuentos' => $this->results->sum('descuentos'),
+            'subtotal' => $this->results->sum('subtotal'),
+            'impuesto_IVA' => $this->results->sum('impuesto_IVA'),
+            'impuesto_SALUDABLE' => $this->results->sum('impuesto_SALUDABLE'),
+            'Total_Impuestos' => $this->results->sum('Total_Impuestos'),
+            'Total' => $this->results->sum('Total'),
+        ];
     }
 
 

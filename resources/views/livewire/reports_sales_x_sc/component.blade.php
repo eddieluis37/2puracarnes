@@ -42,7 +42,7 @@
                                 <a class="btn btn-dark btn-block {{count($data) < 1 ? 'disabled' : '' }}" href="{{ url('report/pdf' . '/' . $userId1 . '/' . $reportType . '/' . $dateFrom . '/' . $dateTo) }}" target="_blank">PDF</a>
                             </div>
                             <div class="col-sm-6 col-md-2">
-                              <!--   <a class="btn btn-dark btn-block {{count($data) < 1 ? 'disabled' : '' }}" href="{{ url('report_order/excel' . '/' . $userId1 . '/' . $userId2) }}" target="_blank">Excel</a> -->
+                                <!--   <a class="btn btn-dark btn-block {{count($data) < 1 ? 'disabled' : '' }}" href="{{ url('report_order/excel' . '/' . $userId1 . '/' . $userId2) }}" target="_blank">Excel</a> -->
                             </div>
                         </div>
                     </div>
@@ -51,14 +51,14 @@
                         <div class="table-responsive" style="overflow-x: auto;">
                             <table class="table table-success table-striped mt-1">
                                 <thead class="text-white" style="background: #3B3F5C">
-                                    <tr>                                      
+                                    <tr>
                                         <th class="table-th text-white text-center">SUBCENTRO</th>
                                         <th class="table-th text-white text-center" title="Número de comprobantes, ventas">NV</th>
                                         <th class="table-th text-white text-center" title="Ventas brutas afectadas con las notas -">VENTA_REAL</th>
                                         <th class="table-th text-white text-center" title="Descuentos por productos y/o clientes">DESCUENTO</th>
                                         <th class="table-th text-white text-center" title="Ventas reales - Descuentos">SUBTOTAL</th>
                                         <th class="table-th text-white text-center" title="Impuesto iva">IMP_IVA</th>
-                                        <th class="table-th text-white text-center" title="Impuesto Saludable">IMP_SALUD</th>                                   
+                                        <th class="table-th text-white text-center" title="Impuesto Saludable">IMP_SALUD</th>
                                         <th class="table-th text-white text-center" title="Total impuestos">T_IMPUESTOS</th>
                                         <th class="table-th text-white text-center" title="">TOTAL</th>
 
@@ -75,44 +75,58 @@
                                         @endif
                                         @foreach($data as $d)
                                         <tr>
-                                           
+
                                             <td class="text-center">
                                                 <h6>{{$d->subcentro}}</h6>
                                             </td>
-                                            <td class="text-center">
+                                            <td class="text-right">
                                                 <h6>{{$d->total_ventas}}</h6>
                                             </td>
-                                            <td class="text-center">
+                                            <td class="text-right">
                                                 <h6>${{number_format($d->venta_real)}}</h6>
                                             </td>
-                                            <td class="text-center">
+                                            <td class="text-right">
                                                 <h6>${{number_format($d->descuentos)}}</h6>
                                             </td>
-                                            <td class="text-center">
-                                                <h6>${{number_format($d->subtotal)}}</h6>           
+                                            <td class="text-right">
+                                                <h6>${{number_format($d->subtotal)}}</h6>
+                                            </td>
+                                            <td class="text-right">
+                                                <h6>${{number_format($d->impuesto_IVA)}}</h6>
+                                            </td>
+                                            <td class="text-right">
+                                                <h6>${{number_format($d->impuesto_SALUDABLE)}}</h6>
+                                            </td>
+                                            <td class="text-right">
+                                                <h6>${{number_format($d->Total_Impuestos)}}</h6>
+                                            </td>
+                                            <td class="text-right">
+                                                <h6>${{number_format($d->Total)}}</h6>
                                             </td>
                                             <td class="text-center">
-                                                <h6>${{number_format($d->impuesto_IVA)}}</h6>    
-                                            </td>
-                                            <td class="text-center">
-                                                <h6>${{number_format($d->impuesto_SALUDABLE)}}</h6>  
-                                            </td>
-                                            <td class="text-center">
-                                            <h6>${{number_format($d->Total_Impuestos)}}</h6>
-                                            </td>
-                                            <td class="text-center">
-                                            <h6>${{number_format($d->Total)}}</h6>
-                                            </td>
-                                            <td class="text-center">
-                                            <button type="button" onclick="rePrint({{$d->id}})"
-                                                class="btn btn-dark btn-sm">
-                                                <i class="fas fa-print"></i>
-                                            </button>
+                                                <button type="button" onclick="rePrint({{$d->id}})" class="btn btn-dark btn-sm">
+                                                    <i class="fas fa-print"></i>
+                                                </button>
 
                                             </td>
                                         </tr>
                                         @endforeach
                                 </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <td colspan="1"><strong>Total:</strong></td>
+                                        <td class="text-right"><strong>{{ $this->totals['total_ventas'] }}</strong></td>
+                                        <td class="text-right"><strong>${{ number_format( $this->totals['venta_real']) }}</strong></td>
+                                        <td class="text-right"><strong>${{ number_format( $this->totals['descuentos']) }}</strong></td>
+                                        <td class="text-right"><strong>${{ number_format( $this->totals['subtotal']) }}</strong></td>
+                                        <td class="text-right"><strong>${{ number_format( $this->totals['impuesto_IVA']) }}</strong></td>
+                                        <td class="text-right"><strong>${{ number_format( $this->totals['impuesto_SALUDABLE']) }}</strong></td>
+                                        <td class="text-right"><strong>${{ number_format( $this->totals['Total_Impuestos']) }}</strong></td>
+                                        <td class="text-right"><strong>${{ number_format( $this->totals['Total']) }}</strong></td>
+                                      
+                                    </tr>
+                                </tfoot>
+
                             </table>
                         </div>
                     </div>
