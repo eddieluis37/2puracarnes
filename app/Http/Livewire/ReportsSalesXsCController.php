@@ -14,7 +14,7 @@ class ReportsSalesXsCController extends Component
 {
 
     public $componentName, $data, $details, $sumDetails, $countDetails,
-        $reportType, $userId1,  $userId2, $dateFrom, $dateTo, $saleId;
+        $reportType, $IdInicial,  $IdFinal, $dateFrom, $dateTo, $saleId;
 
     public $results;
     public $totals;
@@ -28,8 +28,8 @@ class ReportsSalesXsCController extends Component
         $this->sumDetails = 0;
         $this->countDetails = 0;
         $this->reportType = 0;
-        $this->userId1 = 0;
-        $this->userId2 = 0;
+        $this->IdInicial = 0;
+        $this->IdFinal = 0;
         $this->saleId = 0;
     }
 
@@ -51,8 +51,8 @@ class ReportsSalesXsCController extends Component
 
     public function SalesById()
     {
-        $from = $this->userId1;
-        $to = $this->userId2;
+        $from = $this->IdInicial;
+        $to = $this->IdFinal;
         $this->results = Sale::with('subcentrocosto')
             ->select(
                 'subcentrocostos.name as subcentro',

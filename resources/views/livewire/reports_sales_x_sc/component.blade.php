@@ -13,7 +13,7 @@
                             <div class="col-sm-6 col-md-3">
                                 <h6>Elige Id inicial</h6>
                                 <div class="form-group">
-                                    <select wire:model="userId1" class="form-control">
+                                    <select wire:model="IdInicial" class="form-control">
                                         <option value="0">Elige_1</option>
                                         @foreach($inicio as $user)
                                         <option value="{{$user->id}}">{{$user->id}}</option>
@@ -24,7 +24,7 @@
                             <div class="col-sm-6 col-md-3">
                                 <h6>Elige Id final</h6>
                                 <div class="form-group">
-                                    <select wire:model="userId2" class="form-control">
+                                    <select wire:model="IdFinal" class="form-control">
                                         <option value="0">Elige</option>
                                         @foreach($final as $user)
                                         <option value="{{$user->id}}">{{$user->id}}</option>
@@ -39,10 +39,10 @@
                                 </button>
                             </div>
                             <div class="col-sm-6 col-md-2">
-                                <a class="btn btn-dark btn-block {{count($data) < 1 ? 'disabled' : '' }}" href="{{ url('report/pdf' . '/' . $userId1 . '/' . $reportType . '/' . $dateFrom . '/' . $dateTo) }}" target="_blank">PDF</a>
+                                <a class="btn btn-dark btn-block {{count($data) < 1 ? 'disabled' : '' }}" href="{{ url('report/pdf' . '/' . $IdInicial. '/' . $reportType . '/' . $dateFrom . '/' . $dateTo) }}" target="_blank">PDF</a>
                             </div>
                             <div class="col-sm-6 col-md-2">
-                                  <a class="btn btn-dark btn-block {{count($data) < 1 ? 'disabled' : '' }}" href="{{ url('report_sales_x_sc/excel' . '/' . $userId1 . '/' . $userId2) }}" target="_blank">Excel</a>
+                                  <a class="btn btn-dark btn-block {{count($data) < 1 ? 'disabled' : '' }}" href="{{ url('report_sales_x_sc/excel' . '/' . $IdInicial. '/' . $IdFinal) }}" target="_blank">Excel</a>
                             </div>
                         </div>
                     </div>
