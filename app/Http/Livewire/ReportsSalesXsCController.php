@@ -35,26 +35,29 @@ class ReportsSalesXsCController extends Component
 
     public function render()
     {
-        $this->SalesById();
-        $this->SalesByDate();
+        if ($this->IdFinal > 0) {
+            $this->SalesById($this->IdInicial, $this->IdFinal); // Llamar al método SalesById() con los Ids de ventas
+        } else {
+            $this->SalesByDate(); // Llamar al método SalesByDate() para obtener los resultados por fechas
+        }
+
+
 
         return view('livewire.reports_sales_x_sc.component', [
-            'inicio' => Sale::where('created_at', '>', '2024-04-01')
-                ->orderBy('id', 'asc')->get(),
-            'final' => Sale::where('created_at', '>', '2024-04-01')
-                ->orderBy('id', 'desc')->get()
+            'inicio' => Sale::where('created_at', '>', '2024-04-01')->orderBy('id', 'asc')->get(),
+            'final' => Sale::where('created_at', '>', '2024-04-01')->orderBy('id', 'desc')->get(),
+            'dataById' => $this->data, // Resultados del método SalesById()
+            'dataByDate' => $this->data, // Resultados del método SalesByDate()
+            'totalsById' => $this->totals, // Totales del método SalesById()
+            'totalsByDate' => $this->totals, // Totales del método SalesByDate()
         ])->extends('layouts.theme.app')
             ->section('content');
-
-        return view('livewire.reports_sales_x_sc.component');
     }
 
 
-    public function SalesById()
+    public function SalesById($from = null, $to = null)
     {
-        $from = $this->IdInicial;
-        $to = $this->IdFinal;
-        $this->results = Sale::with('subcentrocosto')
+        $query = Sale::with('subcentrocosto')
             ->select(
                 'subcentrocostos.name as subcentro',
                 DB::raw('COUNT(sales.id) as total_ventas'),
@@ -75,13 +78,20 @@ class ReportsSalesXsCController extends Component
                 SUM(sales.total_iva) + SUM(sales.total_otros_impuestos) as Total')
             )
             ->join('subcentrocostos', 'subcentrocostos.id', '=', 'sales.subcentrocostos_id')
-            ->whereBetween('sales.id', [$from, $to])
             ->where('sales.status', '1')
             ->groupBy('subcentrocostos.id', 'subcentrocostos.name')
-            ->orderBy('subcentrocostos.name', 'ASC')
-            ->get();
+            ->orderBy('subcentrocostos.name', 'ASC');
+
+        if ($from && $to) {
+            $query->whereBetween('sales.created_at', [$from, $to]);
+        } else {
+            $query->whereBetween('sales.id', [$this->IdInicial, $this->IdFinal]);
+        }
+
+        $this->results = $query->get();
 
         $this->data = $this->results;
+
         $this->totals = [
             'total_ventas' => $this->results->sum('total_ventas'),
             'venta_real' => $this->results->sum('venta_real'),
