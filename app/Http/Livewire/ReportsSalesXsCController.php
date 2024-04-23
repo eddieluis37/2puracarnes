@@ -42,7 +42,6 @@ class ReportsSalesXsCController extends Component
         }
 
 
-
         return view('livewire.reports_sales_x_sc.component', [
             'inicio' => Sale::where('created_at', '>', '2024-04-01')->orderBy('id', 'asc')->get(),
             'final' => Sale::where('created_at', '>', '2024-04-01')->orderBy('id', 'desc')->get(),
@@ -83,9 +82,9 @@ class ReportsSalesXsCController extends Component
             ->orderBy('subcentrocostos.name', 'ASC');
 
         if ($from && $to) {
-            $query->whereBetween('sales.created_at', [$from, $to]);
+         //   $query->whereBetween('sales.created_at', [$from, $to]);
         } else {
-            $query->whereBetween('sales.id', [$this->IdInicial, $this->IdFinal]);
+           // $query->whereBetween('sales.id', [$this->IdInicial, $this->IdFinal]);
         }
 
         $this->results = $query->get();
