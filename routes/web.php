@@ -5,6 +5,7 @@ use App\Http\Controllers\BooksController;
 use App\Http\Controllers\ExportController;
 use App\Http\Controllers\ExportCxcController;
 use App\Http\Controllers\ExportOrderController;
+use App\Http\Controllers\ExportSalesXProdController;
 use App\Http\Controllers\ExportSalesXsCController;
 use App\Http\Controllers\TodosController;
 use App\Http\Livewire\AsignarController;
@@ -23,6 +24,7 @@ use App\Http\Livewire\MeatcutsController;
 use App\Http\Livewire\ReportsController;
 use App\Http\Livewire\ReportsOrdersController;
 use App\Http\Livewire\CuentasporcobrarsController;
+use App\Http\Livewire\ReportsSalesXProdController;
 use App\Http\Livewire\ReportsSalesXsCController;
 use App\Http\Livewire\RolesController;
 use App\Http\Livewire\Select2;
@@ -143,6 +145,7 @@ Route::group(['middleware' => [('auth')]], function () {
     Route::get('reports', ReportsController::class);
     Route::get('reports_orders', ReportsOrdersController::class);
     Route::get('report_sales_x_sc', ReportsSalesXsCController::class);
+    Route::get('report_sales_x_prod', ReportsSalesXProdController::class);
     Route::get('cashout', CashoutController::class);
     Route::get('dash', Dash::class)->name('dash');
     Route::get('thirds', ThirdsController::class);
@@ -179,7 +182,6 @@ Route::group(['middleware' => [('auth')]], function () {
     Route::get('reportCxc/pdf/{user}/{type}/{f1}/{f2}', [ExportCxcController::class, 'reportPDF']);
     Route::get('reportCxc/pdf/{user}/{type}', [ExportCxcController::class, 'reportPDF']);
 
-
     //reportes EXCEL
     Route::get('reportCxc/excel/{user}/{type}/{f1}/{f2}', [ExportCxcController::class, 'reporteExcel']);
     Route::get('reportCxc/excel/{user}/{type}', [ExportCxcController::class, 'reporteExcel']);
@@ -189,6 +191,9 @@ Route::group(['middleware' => [('auth')]], function () {
 
      //reportes Ventas x Subcentro de costos
      Route::get('report_sales_x_sc/excel/{f1}/{f2}', [ExportSalesXsCController::class, 'reporteExcel']);
+
+     //reportes Ventas x Productos
+     Route::get('report_sales_x_prod/excel/{f1}/{f2}', [ExportSalesXProdController::class, 'reporteExcel']);
 
     //Route::post('citywithstatecountry', [CityController::class, 'citywithstatecountry'])->name('citywithstatecountry');
 

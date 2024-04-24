@@ -393,6 +393,9 @@
                             <a href="{{ url('report_sales_x_sc') }}"> Por sub-centro costo </a>
                         </li>
                         <li>
+                            <a href="{{ url('report_sales_x_prod') }}"> Por productos </a>
+                        </li>
+                        <li>
                             <a href="{{ url('excel-consolidado-ventas') }}"> Consolidado ventas </a>
                         </li>
                         <li>
