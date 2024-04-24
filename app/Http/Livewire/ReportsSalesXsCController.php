@@ -31,15 +31,23 @@ class ReportsSalesXsCController extends Component
         $this->IdInicial = 0;
         $this->IdFinal = 0;
         $this->saleId = 0;
+
+        $this->dateFrom = Carbon::now()->setTime(0, 0, 0)->format('Y-m-d\TH:i');
+        $this->dateTo = Carbon::now()->setTime(12, 0, 0)->format('Y-m-d\TH:i');
     }
 
     public function render()
     {
-        if ($this->IdFinal > 0) {
+        /*   if ($this->IdInicial > 0 && $this->IdFinal > 0) {
             $this->SalesById($this->IdInicial, $this->IdFinal); // Llamar al método SalesById() con los Ids de ventas
         } else {
             $this->SalesByDate(); // Llamar al método SalesByDate() para obtener los resultados por fechas
-        }
+        } */
+
+
+        //   $this->SalesById($this->IdInicial, $this->IdFinal); // Llamar al método SalesById() con los Ids de ventas
+
+        $this->SalesByDate(); // Llamar al método SalesByDate() para obtener los resultados por fechas
 
 
         return view('livewire.reports_sales_x_sc.component', [
@@ -82,9 +90,9 @@ class ReportsSalesXsCController extends Component
             ->orderBy('subcentrocostos.name', 'ASC');
 
         if ($from && $to) {
-         //   $query->whereBetween('sales.created_at', [$from, $to]);
+            $query->whereBetween('sales.created_at', [$from, $to]);
         } else {
-           // $query->whereBetween('sales.id', [$this->IdInicial, $this->IdFinal]);
+            $query->whereBetween('sales.id', [$this->IdInicial, $this->IdFinal]);
         }
 
         $this->results = $query->get();
@@ -105,8 +113,15 @@ class ReportsSalesXsCController extends Component
 
     public function SalesByDate()
     {
-        $from = $this->dateFrom;
-        $to = $this->dateTo;
+        if ($this->reportType == 0) // ventas del dia
+        {
+            $from = Carbon::parse(Carbon::now())->format('Y-m-d') . ' 00:00:00';
+            $to = Carbon::parse(Carbon::now())->format('Y-m-d')   . ' 23:59:59';
+        } else {
+            $from = Carbon::parse($this->dateFrom)->format('Y-m-d H:i:s');
+            $to = Carbon::parse($this->dateTo)->format('Y-m-d H:i:s');
+        }
+
         $this->results = Sale::with('subcentrocosto')
             ->select(
                 'subcentrocostos.name as subcentro',

@@ -70,7 +70,7 @@ class SalesXsCExport implements FromCollection, WithHeadings, WithCustomStartCel
 
     public function title(): string
     {
-        return 'Consolidado Ordenes de Pedidos';
+        return 'Consolidado Ventas por Subcentrocosto';
     }
 
     public function registerEvents(): array

@@ -11,6 +11,15 @@
                     <div class="col-sm-12 col-md-12">
                         <div class="row">
                             <div class="col-sm-6 col-md-3">
+                                <h6>Elige el tipo de reporte</h6>
+                                <div class="form-group">
+                                    <select wire:model="reportType" class="form-control">
+                                        <option value="0">Ventas del día</option>
+                                        <option value="1">Ventas por fecha</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <!--      <div class="col-sm-6 col-md-3">
                                 <h6>Elige Id inicial</h6>
                                 <div class="form-group">
                                     <select wire:model="IdInicial" class="form-control">
@@ -37,30 +46,36 @@
                                 <button wire:click="$refresh" class="btn btn-dark btn-block">
                                     Consultar
                                 </button>
-                            </div>
-                            <div class="col-sm-6 col-md-2">
-                                <a class="btn btn-dark btn-block {{count($data) < 1 ? 'disabled' : '' }}" href="{{ url('report/pdf' . '/' . $IdInicial. '/' . $reportType . '/' . $dateFrom . '/' . $dateTo) }}" target="_blank">PDF</a>
-                            </div>
-                            <div class="col-sm-6 col-md-2">
-                                <a class="btn btn-dark btn-block {{count($data) < 1 ? 'disabled' : '' }}" href="{{ url('report_sales_x_sc/excel' . '/' . $IdInicial. '/' . $IdFinal) }}" target="_blank">Excel</a>
-                            </div>
+                            </div> -->
+
 
                             <div class="col-sm-6 col-md-3">
-                                <h6>Fecha inicial</h6>
+                                <h6>Fecha y hora inicial</h6>
                                 <div class="form-group">
-                                    <input type="date" wire:model="dateFrom" class="form-control">
+                                    <input type="datetime-local" wire:model="dateFrom" class="form-control">
                                 </div>
                             </div>
                             <div class="col-sm-6 col-md-3">
-                                <h6>Fecha final</h6>
+                                <h6>Fecha y hora final</h6>
                                 <div class="form-group">
-                                    <input type="date" wire:model="dateTo" class="form-control">
+                                    <input type="datetime-local" wire:model="dateTo" class="form-control">
                                 </div>
                             </div>
-                            <div class="col-sm-6 col-md-2">
+                            <!--   <div class="col-sm-6 col-md-2">
                                 <button wire:click="SalesByDate" class="btn btn-dark btn-block">
                                     Consultar por fecha
                                 </button>
+                            </div> -->
+
+                            <div class="col-sm-6 col-md-1 mt-2">
+                                <a class="btn btn-dark btn-block {{count($data) < 1 ? 'disabled' : '' }}" href="{{ url('report/pdf' . '/' . $IdInicial. '/' . $reportType . '/' . $dateFrom . '/' . $dateTo) }}" target="_blank">
+                                    <i class="far fa-file-pdf"></i> 
+                                </a>
+                            </div>
+                            <div class="col-sm-6 col-md-2 mt-2">
+                                <a class="btn btn-dark btn-block {{count($data) < 1 ? 'disabled' : '' }}" href="{{ url('report_sales_x_sc/excel' . '/' . $IdInicial. '/' . $IdFinal) }}" target="_blank">
+                                    <i class="far fa-file-excel"></i> Excel
+                                </a>
                             </div>
 
                         </div>
