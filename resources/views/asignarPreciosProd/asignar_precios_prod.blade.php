@@ -86,8 +86,9 @@
                 <th class="table-th text-white text-center">ID</th>
                 <th class="table-th text-white text-center">PRODUCTO</th>
                 <th class="table-th text-white text-center">COSTO</th>
+                <th class="table-th text-white text-center" title="Total costo 1357 = costo prod + costo variable ">T_COSTO</th>
                 <th class="table-th text-white text-center">%.U.P</th>
-                <th class="table-th text-white text-center">$.PROYE</th>
+                <th class="table-th text-white text-center" title="Precio proyectado">$.PROYE</th>
                 <th class="table-th text-white text-center">PRECIO</th>
                 <th class="table-th text-white text-center">%DES</th>
                 <th class="table-th text-white text-center">UTILIDAD</th>

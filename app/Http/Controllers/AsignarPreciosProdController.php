@@ -37,6 +37,10 @@ class AsignarPreciosProdController extends Controller
         $listaprecioId = $request->input('listaprecioId');
         $categoriaId = $request->input('categoriaId');
 
+        //     $costoVariable = $request->input('costo_variable'); // Recibir el valor de costo_variable
+
+        $costoVariable = 1357; // Recibir el valor de costo_variable
+
         $data = DB::table('listapreciodetalles as lpd')
             ->join('listaprecios as lp', 'lp.id', '=', 'lpd.listaprecio_id')
             ->join('products as pro', 'pro.id', '=', 'lpd.product_id')
@@ -46,8 +50,9 @@ class AsignarPreciosProdController extends Controller
                 'pro.name as nameproducto',
                 'pro.id as productId',
                 'pro.cost as costo',
+                DB::raw('(pro.cost + ' . $costoVariable . ') as costo_total'), // Sumar costo_variable a pro.cost
                 'lpd.porc_util_proyectada as porc_util_proyectada',
-                DB::raw('pro.cost / (1 - (porc_util_proyectada / 100) ) as precio_proyectado '),
+                DB::raw('(pro.cost + ' . $costoVariable . ') / (1 - (porc_util_proyectada / 100) ) as precio_proyectado '),
                 'lpd.precio as precio',
                 'lpd.porc_descuento as porc_descuento',
                 DB::raw('((precio - pro.cost) - (porc_descuento / 100) * precio) as utilidad '),

@@ -29,7 +29,8 @@ $(document).ready(function () {
                         return {
                             namecategoria: item.namecategoria,
                             nameproducto: item.nameproducto,
-                            costo: item.costo,                          
+                            costo: item.costo,   
+                            costo_total: item.costo_total,                          
                             porc_util_proyectada: item.porc_util_proyectada,
                             precio_proyectado: item.precio_proyectado,                        
                             precio: getPriceInput(item.precio),                            
@@ -50,6 +51,13 @@ $(document).ready(function () {
                  {
                     data: "costo",
                     name: "costo",
+                    render: function (data, type, row) {
+                        return "$ " + formatCantidadSinCero(data);
+                    },
+                }, 
+                {
+                    data: "costo_total",
+                    name: "costo_total",
                     render: function (data, type, row) {
                         return "$ " + formatCantidadSinCero(data);
                     },
