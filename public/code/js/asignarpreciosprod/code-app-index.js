@@ -36,6 +36,7 @@ $(document).ready(function () {
                             precio: getPriceInput(item.precio),                            
                             porc_descuento: getPorcDescuentoInput(item.porc_descuento),
                             utilidad: item.utilidad,
+                            contribucion: item.contribucion,
                             porc_utilidad: porc_utilidad,
                             productId: item.productId,
                             status: getStatusCheckbox(item.status, item.productId),
@@ -83,9 +84,16 @@ $(document).ready(function () {
                     data: "porc_utilidad",
                     name: "porc_utilidad",
                     render: function (data, type, row) {
-                        return formatCantidad(data) + " %";
+                        return formatCantidad(data) + "%";
                     },
-                },                                 
+                },  
+                {
+                    data: "contribucion",
+                    name: "contribucion",
+                    render: function (data, type, row) {
+                        return "$ " + formatCantidadSinCero(data);
+                    },
+                },                               
                 { data: "status", name: "status" },                
             ],
             order: [[2, "ASC"]],
