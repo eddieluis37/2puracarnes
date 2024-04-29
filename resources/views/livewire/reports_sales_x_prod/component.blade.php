@@ -124,8 +124,8 @@
                                             <td class="text-right">
                                                 <h6>{{$d->category_name}}</h6>
                                             </td>
-                                            <td class="text-right">
-                                                <h6>{{$d->cantidad_venta}}</h6>
+                                            <td class="text-right">                                                
+                                                <h6>{{number_format($d->cantidad_venta)}}</h6>
                                             </td>
                                             <td class="text-right">
                                                 <h6>{{$d->notacredito_quantity}}</h6>
@@ -168,11 +168,11 @@
                                     <tr>
                                         <td colspan="1"><strong>Total:</strong></td>
                                         <td></td>
-                                        <td></td>
-                                        <td class="text-right"><strong>{{ $this->totals['cantidad_venta'] }}</strong></td>                                       
-                                        <td class="text-right"><strong>{{ $this->totals['notacredito_quantity'] }}</strong></td>                                       
-                                        <td class="text-right"><strong>{{ $this->totals['notadebito_quantity'] }}</strong></td>                                        
-                                        <td class="text-right"><strong>{{ $this->totals['cantidad_venta_real'] }}</strong></td>
+                                        <td></td>                                        
+                                        <td class="text-right"><strong>{{ number_format( $this->totals['cantidad_venta']) }}</strong></td>                                                                                 
+                                        <td class="text-right"><strong>{{ number_format( $this->totals['notacredito_quantity'],2) }}</strong></td>                                                                                                            
+                                        <td class="text-right"><strong>{{ number_format( $this->totals['notadebito_quantity'],2) }}</strong></td>                                                                              
+                                        <td class="text-right"><strong>{{ number_format( $this->totals['cantidad_venta_real']) }}</strong></td>    
                                         <td class="text-right"><strong>${{ number_format( $this->totals['dinero_venta_real']) }}</strong></td>
 
                                         <td class="text-right"><strong>$0</strong></td>
