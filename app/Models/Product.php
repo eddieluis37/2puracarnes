@@ -58,4 +58,14 @@ class Product extends Model
 	{
 		return $this->belongsTo(Centro_costo_product::class);
 	}
+
+	public function notacredito_details()
+	{
+		return $this->belongsTo(NotacreditoDetail::class);
+	}
+
+	public function notadebito_details()
+	{
+		return $this->belongsTo(NotadebitoDetail::class);
+	}
 }

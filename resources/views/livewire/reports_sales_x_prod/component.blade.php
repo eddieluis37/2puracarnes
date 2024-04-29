@@ -69,7 +69,7 @@
 
                             <div class="col-sm-6 col-md-1 mt-2">
                                 <a class="btn btn-dark btn-block {{count($data) < 1 ? 'disabled' : '' }}" href="{{ url('report/pdf' . '/' . $IdInicial. '/' . $reportType . '/' . $dateFrom . '/' . $dateTo) }}" target="_blank">
-                                    <i class="far fa-file-pdf"></i> 
+                                    <i class="far fa-file-pdf"></i>
                                 </a>
                             </div>
                             <div class="col-sm-6 col-md-2 mt-2">
@@ -86,15 +86,20 @@
                             <table class="table table-success table-striped mt-1">
                                 <thead class="text-white" style="background: #3B3F5C">
                                     <tr>
-                                        <th class="table-th text-white text-center">SUBCENTRO</th>
-                                        <th class="table-th text-white text-center" title="Cantidad vendida">CANT_V</th>
-                                        <th class="table-th text-white text-center" title="Ventas brutas afectadas con las notas -">VENTA_REAL</th>
-                                        <th class="table-th text-white text-center" title="Descuentos por productos y/o clientes">DESCUENTO</th>
-                                        <th class="table-th text-white text-center" title="Ventas reales - Descuentos">SUBTOTAL</th>
-                                        <th class="table-th text-white text-center" title="Impuesto iva">IMP_IVA</th>
+                                        <th class="table-th text-white text-center">CODE</th>
+                                        <th class="table-th text-white text-center" title="Nombre del producto">PRODUCTO</th>
+                                        <th class="table-th text-white text-center" title="Nombre de la categoria">CAT</th>
+                                        <th class="table-th text-white text-center" title="cantidad_venta">C_VE</th>
+                                        <th class="table-th text-white text-center" title="Cantidad nota credito">C_NC</th>
+                                        <th class="table-th text-white text-center" title="Cantidad nota debito">C_ND</th>
+                                        <th class="table-th text-white text-center" title="cantidad_venta_real">C_REAL</th>
+                                        <th class="table-th text-white text-center" title="Dinero_venta_real">$_REAL</th>
+                                        <th class="table-th text-white text-center" title="Descuento por producto">D_PROD</th>
+                                        <th class="table-th text-white text-center" title="Descuento por cliente">D_CLI</th>
+                                        <th class="table-th text-white text-center" title="Valor venta real - descuentos">SUBTOTAL</th>
                                         <th class="table-th text-white text-center" title="Impuesto Saludable">IMP_SALUD</th>
-                                        <th class="table-th text-white text-center" title="Impuesto Saludable">RETEICA</th>
-                                        <th class="table-th text-white text-center" title="Total impuestos">T_IMPUESTOS</th>
+                                        <th class="table-th text-white text-center" title="Impuesto IVA">IVA</th>
+                                        <th class="table-th text-white text-center" title="Impuesto RETEICA">RETEICA</th>
                                         <th class="table-th text-white text-center" title="">TOTAL</th>
 
                                         <th class="table-th text-white text-center">ACCIONES</th>
@@ -110,37 +115,46 @@
                                         @endif
                                         @foreach($data as $d)
                                         <tr>
-
                                             <td class="text-center">
-                                                <h6>{{$d->subcentro}}</h6>
+                                                <h6>{{$d->product_code}}</h6>
+                                            </td>
+                                            <td class="text-center">
+                                                <h6>{{$d->product_name}}</h6>
                                             </td>
                                             <td class="text-right">
-                                                <h6>{{$d->total_ventas}}</h6>
+                                                <h6>{{$d->category_name}}</h6>
                                             </td>
                                             <td class="text-right">
-                                                <h6>${{number_format($d->venta_real)}}</h6>
+                                                <h6>{{$d->cantidad_venta}}</h6>
                                             </td>
                                             <td class="text-right">
-                                                <h6>${{number_format($d->descuentos)}}</h6>
+                                                <h6>{{$d->notacredito_quantity}}</h6>
+                                            </td>
+                                            <td class="text-right">
+                                                <h6>{{$d->notadebito_quantity}}</h6>
+                                            </td>
+                                            <td class="text-right">
+                                                <h6>{{$d->cantidad_venta_real}}</h6>
+                                            </td>
+                                            <td class="text-right">
+                                                <h6>${{number_format($d->dinero_venta_real)}}</h6>
                                             </td>
                                             <td class="text-right">
                                                 <h6>${{number_format($d->subtotal)}}</h6>
                                             </td>
                                             <td class="text-right">
-                                                <h6>${{number_format($d->impuesto_IVA)}}</h6>
+                                                <h6>${{number_format($d->impuesto_salud)}}</h6>
                                             </td>
                                             <td class="text-right">
-                                                <h6>${{number_format($d->impuesto_SALUDABLE)}}</h6>
+                                                <h6>${{number_format($d->iva)}}</h6>
                                             </td>
                                             <td class="text-right">
                                                 <h6>$0</h6>
                                             </td>
                                             <td class="text-right">
-                                                <h6>${{number_format($d->Total_Impuestos)}}</h6>
+                                                <h6>${{number_format($d->total)}}</h6>
                                             </td>
-                                            <td class="text-right">
-                                                <h6>${{number_format($d->Total)}}</h6>
-                                            </td>
+
                                             <td class="text-center">
                                                 <button type="button" onclick="rePrint({{$d->id}})" class="btn btn-dark btn-sm">
                                                     <i class="fas fa-print"></i>
@@ -153,15 +167,15 @@
                                 <tfoot>
                                     <tr>
                                         <td colspan="1"><strong>Total:</strong></td>
-                                        <td class="text-right"><strong>{{ $this->totals['total_ventas'] }}</strong></td>
-                                        <td class="text-right"><strong>${{ number_format( $this->totals['venta_real']) }}</strong></td>
-                                        <td class="text-right"><strong>${{ number_format( $this->totals['descuentos']) }}</strong></td>
-                                        <td class="text-right"><strong>${{ number_format( $this->totals['subtotal']) }}</strong></td>
-                                        <td class="text-right"><strong>${{ number_format( $this->totals['impuesto_IVA']) }}</strong></td>
-                                        <td class="text-right"><strong>${{ number_format( $this->totals['impuesto_SALUDABLE']) }}</strong></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td class="text-right"><strong>{{ $this->totals['cantidad_venta'] }}</strong></td>                                       
+                                        <td class="text-right"><strong>{{ $this->totals['notacredito_quantity'] }}</strong></td>                                       
+                                        <td class="text-right"><strong>{{ $this->totals['notadebito_quantity'] }}</strong></td>                                        
+                                        <td class="text-right"><strong>{{ $this->totals['cantidad_venta_real'] }}</strong></td>
+                                        <td class="text-right"><strong>${{ number_format( $this->totals['dinero_venta_real']) }}</strong></td>
+
                                         <td class="text-right"><strong>$0</strong></td>
-                                        <td class="text-right"><strong>${{ number_format( $this->totals['Total_Impuestos']) }}</strong></td>
-                                        <td class="text-right"><strong>${{ number_format( $this->totals['Total']) }}</strong></td>
 
                                     </tr>
                                 </tfoot>

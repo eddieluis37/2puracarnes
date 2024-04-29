@@ -21,5 +21,11 @@ class Centro_costo_product extends Model
     {
         return $this->belongsTo(CentroCosto::class, 'centrocosto_id');
     }
+
+    public function sale_details()
+    {
+        return $this->belongsToMany(SaleDetail::class, 'saledetail_ccps', 'centro_costo_product_id', 'saledetail_id')
+            ->withPivot('venta_real', 'cto_venta_total');
+    }
     
 }

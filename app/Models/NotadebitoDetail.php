@@ -14,4 +14,10 @@ class NotadebitoDetail extends Model
     public function product(){
         return $this->belongsTo(Product::class);
     }
+
+    /* // Relacion inversa para reporte de ventas por productos
+    public function saleDetail()
+    {
+        return $this->belongsTo(SaleDetail::class, 'sale_id', 'sale_id');
+    } */
 }

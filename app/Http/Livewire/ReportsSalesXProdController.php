@@ -50,7 +50,7 @@ class ReportsSalesXProdController extends Component
         $this->SalesByProducts(); // Llamar al método SalesByProducts() para obtener los resultados por fechas
 
 
-        return view('livewire.reports_sales_x_sc.component', [
+        return view('livewire.reports_sales_x_prod.component', [
             'inicio' => Sale::where('created_at', '>', '2024-04-01')->orderBy('id', 'asc')->get(),
             'final' => Sale::where('created_at', '>', '2024-04-01')->orderBy('id', 'desc')->get(),
 
@@ -123,7 +123,7 @@ class ReportsSalesXProdController extends Component
             $to = Carbon::parse($this->dateTo)->format('Y-m-d H:i:s');
         }
 
-        $this->results = SaleDetail::with(['sale', 'product.category'])
+        $this->results = SaleDetail::with(['sale', 'product.category', 'product.notacredito_details', 'product.notadebito_details'])
             ->whereHas('sale', function ($query) use ($from, $to) {
                 $query->whereBetween('created_at', [$from, $to])
                     ->where('status', '1');
@@ -131,34 +131,39 @@ class ReportsSalesXProdController extends Component
             ->select(
                 'products.code as product_code',
                 'products.name as product_name',
-                'categories.name as category_name', // Agregar el nombre de la categoría
-                DB::raw('SUM(sale_details.quantity) as total_sales'),
-                DB::raw('SUM(sale_details.total_bruto) as total_bruto'),
+                'categories.name as category_name',
+                DB::raw('SUM(sale_details.quantity) as cantidad_venta'),
+                'notacredito_details.quantity as notacredito_quantity',
+                'notadebito_details.quantity as notadebito_quantity',
+                DB::raw('(SUM(sale_details.quantity) + COALESCE(notadebito_details.quantity, 0)) - COALESCE(notacredito_details.quantity, 0) as cantidad_venta_real'),
+                DB::raw('(SUM(sale_details.total_bruto) + COALESCE(notadebito_details.total_bruto, 0)) - COALESCE(notacredito_details.total_bruto, 0) as dinero_venta_real'),
                 DB::raw('SUM(sale_details.descuento) as descuento_producto'),
                 DB::raw('SUM(sale_details.descuento_cliente) as descuento_cliente'),
-                DB::raw('SUM(sale_details.total) as total_amount')
+                DB::raw('(SUM(sale_details.total_bruto) + COALESCE(notadebito_details.total_bruto, 0)) - COALESCE(notacredito_details.total_bruto, 0) - SUM(sale_details.descuento) - SUM(sale_details.descuento_cliente) as sub_total'),
+                DB::raw('SUM(sale_details.otro_impuesto) as impuesto_salud'),
+                DB::raw('SUM(sale_details.iva) as iva'),
+                DB::raw('(SUM(sale_details.total_bruto) + COALESCE(notadebito_details.total_bruto, 0)) - COALESCE(notacredito_details.total_bruto, 0) - SUM(sale_details.descuento) - SUM(sale_details.descuento_cliente) + SUM(sale_details.otro_impuesto) + SUM(sale_details.iva) as total'),
             )
             ->join('products', 'products.id', '=', 'sale_details.product_id')
-            ->join('categories', 'categories.id', '=', 'products.category_id') // Unir la tabla de categorías
-            ->groupBy('products.id', 'products.name', 'categories.name') // Agrupar también por el nombre de la categoría
+            ->join('categories', 'categories.id', '=', 'products.category_id')
+            ->leftjoin('notacredito_details', 'notacredito_details.product_id', '=', 'sale_details.product_id')
+            ->leftjoin('notadebito_details', 'notadebito_details.product_id', '=', 'sale_details.product_id')
+            ->groupBy('products.id', 'products.name', 'categories.name')
             ->orderBy('products.name', 'ASC')
             ->get();
 
         $this->data = $this->results;
-        dd($this->data);
+        // dd($this->data);
 
         // Calcular totales y asignarlos a $this->totals
         $this->totals = [
-            'total_sales' => $this->results->sum('total_sales'),
-            'total_subtotal' => $this->results->sum('total_subtotal'),
-            'total_tax_amount' => $this->results->sum('total_tax_amount'),
-            'total_amount' => $this->results->sum('total_amount'),
+            'cantidad_venta' => $this->results->sum('cantidad_venta'),
+            'notacredito_quantity' => $this->results->sum('notacredito_quantity'),
+            'notadebito_quantity' => $this->results->sum('notadebito_quantity'),
+            'cantidad_venta_real' => $this->results->sum('cantidad_venta_real'),
+            'dinero_venta_real' => $this->results->sum('dinero_venta_real'),
         ];
     }
-
-
-
-
 
     public function getDetails($saleId)
     {

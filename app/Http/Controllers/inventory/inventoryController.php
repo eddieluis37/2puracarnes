@@ -69,7 +69,7 @@ class inventoryController extends Controller
             ->where('pro.status', 1)
             ->get();
 
-        // Calculo de la stock ideal 
+        // Calculo de la stock ideal y venta_real
         foreach ($data as $item) {
             
             $venta_real = (($item->venta - $item->notacredito) + $item->notadebito);
