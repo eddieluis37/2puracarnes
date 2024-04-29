@@ -140,7 +140,13 @@
                                                 <h6>${{number_format($d->dinero_venta_real)}}</h6>
                                             </td>
                                             <td class="text-right">
-                                                <h6>${{number_format($d->subtotal)}}</h6>
+                                                <h6>${{number_format($d->descuento_producto)}}</h6>
+                                            </td>
+                                            <td class="text-right">
+                                                <h6>${{number_format($d->descuento_cliente)}}</h6>
+                                            </td>
+                                            <td class="text-right">
+                                                <h6>${{number_format($d->sub_total)}}</h6>
                                             </td>
                                             <td class="text-right">
                                                 <h6>${{number_format($d->impuesto_salud)}}</h6>
@@ -169,14 +175,19 @@
                                         <td colspan="1"><strong>Total:</strong></td>
                                         <td></td>
                                         <td></td>                                        
-                                        <td class="text-right"><strong>{{ number_format( $this->totals['cantidad_venta']) }}</strong></td>                                                                                 
+                                        <td class="text-right"><strong>{{ number_format( $this->totals['cantidad_venta'],2) }}</strong></td>                                                                                 
                                         <td class="text-right"><strong>{{ number_format( $this->totals['notacredito_quantity'],2) }}</strong></td>                                                                                                            
                                         <td class="text-right"><strong>{{ number_format( $this->totals['notadebito_quantity'],2) }}</strong></td>                                                                              
-                                        <td class="text-right"><strong>{{ number_format( $this->totals['cantidad_venta_real']) }}</strong></td>    
+                                        <td class="text-right"><strong>{{ number_format( $this->totals['cantidad_venta_real'],2) }}</strong></td>    
                                         <td class="text-right"><strong>${{ number_format( $this->totals['dinero_venta_real']) }}</strong></td>
-
+                                        <td class="text-right"><strong>${{ number_format( $this->totals['descuento_producto']) }}</strong></td>
+                                        <td class="text-right"><strong>${{ number_format( $this->totals['descuento_cliente']) }}</strong></td>
+                                        <td class="text-right"><strong>${{ number_format( $this->totals['sub_total']) }}</strong></td>
+                                        <td class="text-right"><strong>${{ number_format( $this->totals['impuesto_salud']) }}</strong></td>
+                                        <td class="text-right"><strong>${{ number_format( $this->totals['iva']) }}</strong></td>
                                         <td class="text-right"><strong>$0</strong></td>
-
+                                        <td class="text-right"><strong>${{ number_format( $this->totals['total']) }}</strong></td>
+                                       
                                     </tr>
                                 </tfoot>
 

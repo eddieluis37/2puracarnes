@@ -162,6 +162,12 @@ class ReportsSalesXProdController extends Component
             'notadebito_quantity' => $this->results->sum('notadebito_quantity'),
             'cantidad_venta_real' => $this->results->sum('cantidad_venta_real'),
             'dinero_venta_real' => $this->results->sum('dinero_venta_real'),
+            'descuento_producto' => $this->results->sum('descuento_producto'),
+            'descuento_cliente' => $this->results->sum('descuento_cliente'),
+            'sub_total' => $this->results->sum('sub_total'),
+            'impuesto_salud' => $this->results->sum('impuesto_salud'),
+            'iva' => $this->results->sum('iva'),
+            'total' => $this->results->sum('total'),
         ];
     }
 
