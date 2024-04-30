@@ -124,7 +124,7 @@
                                             <td class="text-right">
                                                 <h6>{{$d->category_name}}</h6>
                                             </td>
-                                            <td class="text-right">                                                
+                                            <td class="text-right">
                                                 <h6>{{number_format($d->cantidad_venta)}}</h6>
                                             </td>
                                             <td class="text-right">
@@ -174,11 +174,11 @@
                                     <tr>
                                         <td colspan="1"><strong>Total:</strong></td>
                                         <td></td>
-                                        <td></td>                                        
-                                        <td class="text-right"><strong>{{ number_format( $this->totals['cantidad_venta'],2) }}</strong></td>                                                                                 
-                                        <td class="text-right"><strong>{{ number_format( $this->totals['notacredito_quantity'],2) }}</strong></td>                                                                                                            
-                                        <td class="text-right"><strong>{{ number_format( $this->totals['notadebito_quantity'],2) }}</strong></td>                                                                              
-                                        <td class="text-right"><strong>{{ number_format( $this->totals['cantidad_venta_real'],2) }}</strong></td>    
+                                        <td></td>
+                                        <td class="text-right"><strong>{{ number_format( $this->totals['cantidad_venta'],2) }}</strong></td>
+                                        <td class="text-right"><strong>{{ number_format( $this->totals['notacredito_quantity'],2) }}</strong></td>
+                                        <td class="text-right"><strong>{{ number_format( $this->totals['notadebito_quantity'],2) }}</strong></td>
+                                        <td class="text-right"><strong>{{ number_format( $this->totals['cantidad_venta_real'],2) }}</strong></td>
                                         <td class="text-right"><strong>${{ number_format( $this->totals['dinero_venta_real']) }}</strong></td>
                                         <td class="text-right"><strong>${{ number_format( $this->totals['descuento_producto']) }}</strong></td>
                                         <td class="text-right"><strong>${{ number_format( $this->totals['descuento_cliente']) }}</strong></td>
@@ -187,7 +187,7 @@
                                         <td class="text-right"><strong>${{ number_format( $this->totals['iva']) }}</strong></td>
                                         <td class="text-right"><strong>$0</strong></td>
                                         <td class="text-right"><strong>${{ number_format( $this->totals['total']) }}</strong></td>
-                                       
+
                                     </tr>
                                 </tfoot>
 
@@ -201,68 +201,24 @@
     @include('livewire.reports.sales-detail')
 </div>
 
+@section('script')
+
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        flatpickr(document.getElementsByClassName('flatpickr'), {
-            enableTime: false,
-            dateFormat: 'Y-m-d',
-            locale: {
-                firstDayofWeek: 1,
-                weekdays: {
-                    shorthand: ["Dom", "Lun", "Mar", "Mié", "Jue", "Vie", "Sáb"],
-                    longhand: [
-                        "Domingo",
-                        "Lunes",
-                        "Martes",
-                        "Miércoles",
-                        "Jueves",
-                        "Viernes",
-                        "Sábado",
-                    ],
-                },
-                months: {
-                    shorthand: [
-                        "Ene",
-                        "Feb",
-                        "Mar",
-                        "Abr",
-                        "May",
-                        "Jun",
-                        "Jul",
-                        "Ago",
-                        "Sep",
-                        "Oct",
-                        "Nov",
-                        "Dic",
-                    ],
-                    longhand: [
-                        "Enero",
-                        "Febrero",
-                        "Marzo",
-                        "Abril",
-                        "Mayo",
-                        "Junio",
-                        "Julio",
-                        "Agosto",
-                        "Septiembre",
-                        "Octubre",
-                        "Noviembre",
-                        "Diciembre",
-                    ],
-                },
-
-            }
-
-        })
-
-
-        //eventos
-        window.livewire.on('show-modal', Msg => {
-            $('#modalDetails').modal('show')
-        })
-    })
-
-    function rePrint(saleId) {
-        window.open("print://" + saleId, '_self').close()
-    }
+    $(document).ready(function() {
+        $('.table').DataTable({
+            "paging": true, // Habilita la paginación
+            "ordering": true, // Habilita la reordenación de columnas
+            "searching": true, // Habilita la búsqueda
+            "info": true, // Muestra información de la tabla
+            "lengthChange": true, // Permite cambiar el número de filas por página
+            "dom": 'Bfrtip', // Agrega los botones de exportación
+            "buttons": [
+                'copy', 'csv', 'excel', 'pdf', 'print' // Agrega los botones de exportación a Excel, CSV, PDF, etc.
+            ]
+        });
+    });
 </script>
+
+<script src="{{asset('resources/views/theme/styles.blade.php')}}"></script>
+<script src="{{asset('resources/views/theme/scripts.blade.php')}}"></script>
+@endsection

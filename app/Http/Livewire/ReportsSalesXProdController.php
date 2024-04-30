@@ -38,17 +38,7 @@ class ReportsSalesXProdController extends Component
 
     public function render()
     {
-        /*   if ($this->IdInicial > 0 && $this->IdFinal > 0) {
-            $this->SalesById($this->IdInicial, $this->IdFinal); // Llamar al método SalesById() con los Ids de ventas
-        } else {
-            $this->SalesByProducts(); // Llamar al método SalesByProducts() para obtener los resultados por fechas
-        } */
-
-
-        //   $this->SalesById($this->IdInicial, $this->IdFinal); // Llamar al método SalesById() con los Ids de ventas
-
-        $this->SalesByProducts(); // Llamar al método SalesByProducts() para obtener los resultados por fechas
-
+       $this->SalesByProducts(); // Llamar al método SalesByProducts() para obtener los resultados por fechas
 
         return view('livewire.reports_sales_x_prod.component', [
             'inicio' => Sale::where('created_at', '>', '2024-04-01')->orderBy('id', 'asc')->get(),
@@ -61,56 +51,6 @@ class ReportsSalesXProdController extends Component
         ])->extends('layouts.theme.app')
             ->section('content');
     }
-
-
-    /*    public function SalesById($from = null, $to = null)
-    {
-        $query = Sale::with('subcentrocosto')
-            ->select(
-                'subcentrocostos.name as subcentro',
-                DB::raw('COUNT(sales.id) as total_ventas'),
-                DB::raw('SUM(COALESCE((SELECT SUM(valor_total) FROM notacreditos WHERE sales.id = notacreditos.sale_id), 0) - 
-                COALESCE((SELECT SUM(valor_total) FROM notadebitos WHERE sales.id = notadebitos.sale_id), 0)) + 
-                SUM(sales.total_bruto) as venta_real'),
-                DB::raw('SUM(sales.descuentos) as descuentos'),
-                DB::raw('(SUM(COALESCE((SELECT SUM(valor_total) FROM notacreditos WHERE sales.id = notacreditos.sale_id), 0) - 
-                COALESCE((SELECT SUM(valor_total) FROM notadebitos WHERE sales.id = notadebitos.sale_id), 0)) + 
-                SUM(sales.total_bruto) - SUM(sales.descuentos) + SUM(sales.total_otros_impuestos) +
-                SUM(sales.total_iva) + SUM(sales.total_otros_impuestos)) as subtotal'),
-                DB::raw('SUM(sales.total_iva) as impuesto_IVA'),
-                DB::raw('SUM(sales.total_otros_impuestos) as impuesto_SALUDABLE'),
-                DB::raw('SUM(sales.total_iva) + SUM(sales.total_otros_impuestos) as Total_Impuestos'),
-                DB::raw('SUM(COALESCE((SELECT SUM(valor_total) FROM notacreditos WHERE sales.id = notacreditos.sale_id), 0) - 
-                COALESCE((SELECT SUM(valor_total) FROM notadebitos WHERE sales.id = notadebitos.sale_id), 0)) + 
-                SUM(sales.total_bruto) - SUM(sales.descuentos) + SUM(sales.total_otros_impuestos) +
-                SUM(sales.total_iva) + SUM(sales.total_otros_impuestos) as Total')
-            )
-            ->join('subcentrocostos', 'subcentrocostos.id', '=', 'sales.subcentrocostos_id')
-            ->where('sales.status', '1')
-            ->groupBy('subcentrocostos.id', 'subcentrocostos.name')
-            ->orderBy('subcentrocostos.name', 'ASC');
-
-        if ($from && $to) {
-            $query->whereBetween('sales.created_at', [$from, $to]);
-        } else {
-            $query->whereBetween('sales.id', [$this->IdInicial, $this->IdFinal]);
-        }
-
-        $this->results = $query->get();
-
-        $this->data = $this->results;
-
-        $this->totals = [
-            'total_ventas' => $this->results->sum('total_ventas'),
-            'venta_real' => $this->results->sum('venta_real'),
-            'descuentos' => $this->results->sum('descuentos'),
-            'subtotal' => $this->results->sum('subtotal'),
-            'impuesto_IVA' => $this->results->sum('impuesto_IVA'),
-            'impuesto_SALUDABLE' => $this->results->sum('impuesto_SALUDABLE'),
-            'Total_Impuestos' => $this->results->sum('Total_Impuestos'),
-            'Total' => $this->results->sum('Total'),
-        ];
-    } */
 
     public function SalesByProducts()
     {
