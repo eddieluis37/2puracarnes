@@ -396,6 +396,9 @@
                             <a href="{{ url('report_sales_x_prod') }}"> Por productos </a>
                         </li>
                         <li>
+                            <a href="{{ url('reportes/ventas_por_productos') }}"> Por productos </a>
+                        </li>
+                        <li>
                             <a href="{{ url('excel-consolidado-ventas') }}"> Consolidado ventas </a>
                         </li>
                         <li>

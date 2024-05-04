@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\Panel\ReportesController;
+
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\BooksController;
 use App\Http\Controllers\ExportController;
@@ -86,6 +88,11 @@ use App\Http\Controllers\sale\exportFacturaController;
 use App\Http\Controllers\pollo\utilidadpolloController;
 
 
+use App\Http\Controllers\reportes\reporteventaprodController;
+
+
+
+
 /************************************************* */
 
 Route::group(['middleware' => ['auth', 'admin']], function () {
@@ -130,6 +137,9 @@ Route::get('/libros', function () {
 
 Route::resource('books', BooksController::class);
 //Route::resource('beneficiocerdos', BeneficiocerdosController::class);
+
+
+Route::get('reportes', [ReportesController::class, 'index'])->name('reportes.index');
 
 Route::group(['middleware' => [('auth')]], function () {
 
@@ -189,11 +199,11 @@ Route::group(['middleware' => [('auth')]], function () {
     //reportes Ordenes de pedidos
     Route::get('report_order/excel/{f1}/{f2}', [ExportSalesXsCController::class, 'reporteExcel']);
 
-     //reportes Ventas x Subcentro de costos
-     Route::get('report_sales_x_sc/excel/{f1}/{f2}', [ExportSalesXsCController::class, 'reporteExcel']);
+    //reportes Ventas x Subcentro de costos
+    Route::get('report_sales_x_sc/excel/{f1}/{f2}', [ExportSalesXsCController::class, 'reporteExcel']);
 
-     //reportes Ventas x Productos
-     Route::get('report_sales_x_prod/excel/{f1}/{f2}', [ExportSalesXProdController::class, 'reporteExcel']);
+    //reportes Ventas x Productos
+    Route::get('report_sales_x_prod/excel/{f1}/{f2}', [ExportSalesXProdController::class, 'reporteExcel']);
 
     //Route::post('citywithstatecountry', [CityController::class, 'citywithstatecountry'])->name('citywithstatecountry');
 
@@ -217,6 +227,11 @@ Route::group(['middleware' => [('auth')]], function () {
     Route::get('asignar_precios_prod', [AsignarPreciosProdController::class, 'index'])->name('APPShow');
     Route::get('showAPPSwitch', [AsignarPreciosProdController::class, 'show'])->name('showAPPSwitch');
     Route::post('/updateAPPSwitch', [AsignarPreciosProdController::class, 'updateAPPSwitch'])->name('updateAPPSwitch');
+
+    /************************* REPORTES NUEVOS ********************************** */
+
+    Route::get('reportes/ventas_por_productos', [reporteventaprodController::class, 'index'])->name('reportes.ventas_por_productos');
+    Route::get('showReportVentasPorProd', [reporteventaprodController::class, 'show'])->name('showReportVentasPorProd.showlist');
 
     /*****************************INVENTORY****************************************** */
     Route::get('inventory/diary', [diaryController::class, 'index'])->name('inventory.diary');
