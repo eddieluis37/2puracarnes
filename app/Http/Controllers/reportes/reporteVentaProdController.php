@@ -93,12 +93,12 @@ class reporteVentaProdController extends Controller
 
     public function show(Request $request)
     {
-        $centrocostoId = $request->input('centrocostoId');
-        $categoriaId = $request->input('categoriaId');
+        $startDateId = $request->input('startDateId');
+        $endDateId = $request->input('endDateId');
 
         $data = SaleDetail::with(['sale', 'product.category', 'product.notacredito_details', 'product.notadebito_details'])
-            ->whereHas('sale', function ($query) use ($centrocostoId, $categoriaId) {
-                $query->whereBetween('id', [$centrocostoId, $categoriaId])
+            ->whereHas('sale', function ($query) use ($startDateId, $endDateId) {
+                $query->whereBetween('created_at', [$startDateId, $endDateId])
                     ->where('status', '1');
             })
             ->select(

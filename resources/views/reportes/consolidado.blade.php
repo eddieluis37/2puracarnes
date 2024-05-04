@@ -27,41 +27,20 @@
         </div>
       </div>
       <div class="row g-3 mt-3">
-        <div class="col-md-3">
-          <label for="" class="form-label">Categoria</label>
-          <select class="form-control form-control-sm input" name="categoria" id="categoria" required>
-            <option value="">Seleccione la categoria</option>
-            @foreach($category as $option)
-            <option value="{{ $option['id'] }}" data="{{ $option }}">{{ $option['name'] }}</option>
-            @endforeach
-          </select>
-          <span class="text-danger error-message"></span>
+        <div class="col-sm-6 col-md-3">
+          <h6>Fecha y hora inicial</h6>
+          <div class="form-group">
+            <input type="datetime-local" class="form-control" value="{{ $startDate ?? date('Y-m-d') }}T00:00" name="startDate" id="startDate" required>
+          </div>
         </div>
-        <!--  <div class="col-md-4">
-          <label for="date1" class="form-label">Fecha inicio</label>
-          <input type="date" class="form-control" value="{{$startDate}}" placeholder="Last name">
-        </div> -->
-        <div class="col-md-3" style="display:none">
-          <label for="date1" class="form-label">Fecha de Cierre</label>
-          <input type="date" class="form-control" value="{{$endDate}}" placeholder="Last name">
+        <div class="col-sm-6 col-md-3">
+          <h6>Fecha y hora final</h6>
+          <div class="form-group">
+            <input type="datetime-local" class="form-control" value="{{ $endDate ?? date('Y-m-d') }}T00:00" name="endDate" id="endDate" required>
+          </div>
         </div>
-        <div class="col-md-3">
-          <label for="" class="form-label">Centro de costo</label>
-          <select class="form-control form-control-sm input" name="centrocosto" id="centrocosto" required>
-            <option value="">Seleccione el centro de costo</option>
-            @foreach($centros as $option)
-            <option value="{{ $option['id'] }}" data="{{ $option }}">{{ $option['name'] }}</option>
-            @endforeach
-          </select>
-          <span class="text-danger error-message"></span>
-        </div>
-        <!--  <div class="col-md-4">
-          <label for="date1" class="form-label">Responsable</label>
-					<select class="form-control form-control-sm " name="" id="" required="">
-						<option value="">Seleccione el responsable</option>
-					</select>
-        </div> -->
-        <div class="col-md-3 text-right ml-auto">
+
+        <!--   <div class="col-md-3 text-right ml-auto">
           <div style="margin-top:28px;" clas="">
             <button class="btn btn-success btn-lg" type="button" id="cargarInventarioBtn"></button>
           </div>
@@ -70,7 +49,7 @@
         @can('Cerrar_Inventario')
 
 
-        @endcan
+        @endcan -->
 
 
         <div class="table-responsive mt-3">
@@ -110,7 +89,7 @@
                 <td>0.00</td>
                 <td>0.00</td>
                 <td>0.00</td>
-                <td>0.00</td>              
+                <td>0.00</td>
               </tr>
             </tfoot>
           </table>

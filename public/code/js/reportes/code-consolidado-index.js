@@ -16,7 +16,7 @@ const token = document
 
 var dataTable;
 
-function initializeDataTable(centrocostoId = "-1", categoriaId = "-1") {
+function initializeDataTable(startDateId = "-1", endDateId = "-1") {
     dataTable = $("#tableInventory").DataTable({
         paging: true,
         pageLength: 150,
@@ -27,8 +27,8 @@ function initializeDataTable(centrocostoId = "-1", categoriaId = "-1") {
             url: "/showReportVentasPorProd",
             type: "GET",
             data: {
-                centrocostoId: centrocostoId,
-                categoriaId: categoriaId,
+                startDateId: startDateId,
+                endDateId: endDateId,
             },
         },
         columns: [
@@ -271,13 +271,13 @@ function initializeDataTable(centrocostoId = "-1", categoriaId = "-1") {
 $(document).ready(function () {
     initializeDataTable("-1");
 
-    $("#centrocosto, #categoria").on("change", function () {
-        var centrocostoId = $("#centrocosto").val();
-        var categoriaId = $("#categoria").val();
+    $("#startDate, #endDate").on("change", function () {
+        var startDateId = $("#startDate").val();
+        var endDateId = $("#endDate").val();
 
         dataTable.destroy();
-        initializeDataTable(centrocostoId, categoriaId);
-        cargarTotales(centrocostoId, categoriaId);
+        initializeDataTable(startDateId, endDateId);
+        cargarTotales(startDateId, endDateId);
     });
 });
 
@@ -292,18 +292,18 @@ document
                     loadingStart(element);
                     const dataform = new FormData();
 
-                    const var_centrocostoId =
-                        document.querySelector("#centrocosto");
-                    const var_categoriaId =
-                        document.querySelector("#categoria");
+                    const var_startDateId =
+                        document.querySelector("#startDate");
+                    const var_endDateId =
+                        document.querySelector("#endDate");
 
                     dataform.append(
-                        "centrocostoId",
-                        Number(var_centrocostoId.value)
+                        "startDateId",
+                        Number(var_startDateId.value)
                     );
                     dataform.append(
-                        "categoriaId",
-                        Number(var_categoriaId.value)
+                        "endDateId",
+                        Number(var_endDateId.value)
                     );
 
                     return sendData("/cargarInventariohist", dataform, token);
