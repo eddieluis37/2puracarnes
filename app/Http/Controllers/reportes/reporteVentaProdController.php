@@ -10,7 +10,7 @@ use App\Models\SaleDetail;
 use Illuminate\Support\Facades\DB;
 
 
-class reporteVentaProdController extends Controller
+class reporteventaprodController extends Controller
 
 {
     /**
