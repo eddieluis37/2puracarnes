@@ -20,9 +20,6 @@ class reporteventaprodController extends Controller
      */
     public function index()
     {
-        /* $startDate = '2023-05-01';
-        $endDate = '2023-05-08'; */
-
         $startDate = Carbon::parse(Carbon::now())->format('Y-m-d');
         $endDate = Carbon::parse(Carbon::now())->format('Y-m-d');
 
