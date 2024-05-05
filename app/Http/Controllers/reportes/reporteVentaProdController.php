@@ -8,7 +8,7 @@ use App\Models\Category;
 use App\Models\centros\Centrocosto;
 use App\Models\SaleDetail;
 use Illuminate\Support\Facades\DB;
-
+use Carbon\Carbon;
 
 class reporteventaprodController extends Controller
 
@@ -20,8 +20,11 @@ class reporteventaprodController extends Controller
      */
     public function index()
     {
-        $startDate = '2023-05-01';
-        $endDate = '2023-05-08';
+        /* $startDate = '2023-05-01';
+        $endDate = '2023-05-08'; */
+
+        $startDate = Carbon::parse(Carbon::now())->format('Y-m-d');
+        $endDate = Carbon::parse(Carbon::now())->format('Y-m-d');
 
         /*  $category = Category::whereIn('id', [1, 2, 3, 4, 5, 6, 7, 8, 9])->orderBy('name', 'asc')->get();
  */
@@ -125,9 +128,9 @@ class reporteventaprodController extends Controller
             ->orderBy('products.name', 'ASC')
             ->get();
 
-          //  dd($data);
+        //  dd($data);
 
-      /*   // Calculo de la stock ideal y venta_real
+        /*   // Calculo de la stock ideal y venta_real
         foreach ($data as $item) {
 
             $venta_real = (($item->venta - $item->notacredito) + $item->notadebito);
@@ -147,7 +150,7 @@ class reporteventaprodController extends Controller
         */
         return datatables()->of($data)
             ->addIndexColumn()
-            ->make(true); 
+            ->make(true);
     }
 
 

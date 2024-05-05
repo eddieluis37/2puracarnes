@@ -36,7 +36,7 @@
         <div class="col-sm-6 col-md-3">
           <h6>Fecha y hora final</h6>
           <div class="form-group">
-            <input type="datetime-local" class="form-control" value="{{ $endDate ?? date('Y-m-d') }}T00:00" name="endDate" id="endDate" required>
+            <input type="datetime-local" class="form-control" value="{{ $endDate ?? date('Y-m-d') }}T23:00" name="endDate" id="endDate" required>
           </div>
         </div>
 
