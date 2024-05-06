@@ -86,12 +86,8 @@ use App\Http\Controllers\recibodecaja\recibodecajaController;
 use App\Http\Controllers\res\pdfLoteController;
 use App\Http\Controllers\sale\exportFacturaController;
 use App\Http\Controllers\pollo\utilidadpolloController;
-
-
+use App\Http\Controllers\reportes\reporteventaprodclientController;
 use App\Http\Controllers\reportes\reporteventaprodController;
-
-
-
 
 /************************************************* */
 
@@ -230,8 +226,13 @@ Route::group(['middleware' => [('auth')]], function () {
 
     /************************* REPORTES NUEVOS ********************************** */
 
+    Route::get('reportes/ventas_por_productos_clientes', [reporteventaprodclientController::class, 'index'])->name('reportes.ventas_por_productos_clientes');
+    Route::get('reportVentasPorProdClient', [reporteventaprodclientController::class, 'show'])->name('ReportVentasPorProdClient.showli');
+
     Route::get('reportes/ventas_por_productos', [reporteventaprodController::class, 'index'])->name('reportes.ventas_por_productos');
     Route::get('showReportVentasPorProd', [reporteventaprodController::class, 'show'])->name('showReportVentasPorProd.showlist');
+
+
 
     /*****************************INVENTORY****************************************** */
     Route::get('inventory/diary', [diaryController::class, 'index'])->name('inventory.diary');
