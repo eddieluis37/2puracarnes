@@ -31,7 +31,34 @@ function initializeDataTable(startDateId = "-1", endDateId = "-1") {
                 endDateId: endDateId,
             },
         },
-        columns: [            
+        columns: [  
+            {
+                data: "third_identification",
+                name: "third_identification",
+                render: function (data, type, row) {
+                    return (
+                        "<div style='text-align: right;'>" +
+                        formatCantidadSinCero(data) +
+                        "</div>"
+                    );
+                },
+            },  
+            {
+                data: "third_name",
+                name: "third_name",
+                render: function (data) {
+                    let subStringData = data.substring(0, 19).toLowerCase();
+                    let capitalizedSubString =
+                        subStringData.charAt(0).toUpperCase() +
+                        subStringData.slice(1);
+                    if (data.length > 19) {
+                        return `<span style="font-size: smaller;" title="${data}">${capitalizedSubString}.</span>`;
+                    } else {
+                        /*   return `<span style="font-size: smaller;">${data.toLowerCase()}</span>`; */
+                        return `<span style="font-size: smaller; display: block; text-align: center;">${capitalizedSubString}</span>`;
+                    }
+                },
+            },           
             {
                 data: "product_code",
                 name: "product_code",
@@ -58,18 +85,23 @@ function initializeDataTable(startDateId = "-1", endDateId = "-1") {
                         return `<span style="font-size: smaller; display: block; text-align: center;">${capitalizedSubString}</span>`;
                     }
                 },
-            },       
+            },                 
             {
                 data: "category_name",
                 name: "category_name",
-                render: function (data, type, row) {
-                    return (
-                        "<div style='text-align: center;'>" +
-                        (data) +
-                        "</div>"
-                    );
+                render: function (data) {
+                    let subStringData = data.substring(0, 10).toLowerCase();
+                    let capitalizedSubString =
+                        subStringData.charAt(0).toUpperCase() +
+                        subStringData.slice(1);
+                    if (data.length > 10) {
+                        return `<span style="font-size: smaller;" title="${data}">${capitalizedSubString}.</span>`;
+                    } else {
+                        /*   return `<span style="font-size: smaller;">${data.toLowerCase()}</span>`; */
+                        return `<span style="font-size: smaller; display: block; text-align: center;">${capitalizedSubString}</span>`;
+                    }
                 },
-            },
+            },      
             {
                 data: "cantidad_venta",
                 name: "cantidad_venta",

@@ -52,7 +52,7 @@
         @endcan -->
 
 
-        <div class="table-responsive mt-3">
+        <div class="table-responsive mt-1" style="overflow-x: auto;">
           <table id="tableInventory" class="table table-success table-striped mt-1">
             <thead class="text-white" style="background: #3B3F5C">
               <tr>

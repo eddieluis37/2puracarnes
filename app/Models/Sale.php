@@ -36,6 +36,12 @@ class Sale extends Model
         return $this->hasOne('App\Models\Third');
     }
 
+    public function saleDetails()
+    {
+        return $this->hasMany(SaleDetail::class);
+    }
+
+
     public function subcentrocosto()
     {
         return $this->belongsTo(Subcentrocosto::class, 'subcentrocostos_id', 'id');

@@ -35,21 +35,23 @@ class reporteventaprodclientController extends Controller
 
         return view('reportes.prod_client', compact('category', 'centros', 'startDate', 'endDate', 'totalStock'));
     }
-   
+
     public function show(Request $request)
     {
         $startDateId = $request->input('startDateId');
         $endDateId = $request->input('endDateId');
 
-        $data = SaleDetail::with(['sale', 'product.category', 'product.notacredito_details', 'product.notadebito_details'])
+        $data = SaleDetail::with(['sale', 'sale.third', 'product.category', 'product.notacredito_details', 'product.notadebito_details'])
             ->whereHas('sale', function ($query) use ($startDateId, $endDateId) {
                 $query->whereBetween('created_at', [$startDateId, $endDateId])
                     ->where('status', '1');
             })
-            ->select(
+            ->select(               
+                'thirds.identification as third_identification',
+                'thirds.name as third_name',
                 'products.code as product_code',
                 'products.name as product_name',
-                'categories.name as category_name',
+                'categories.name as category_name',               
                 DB::raw('SUM(sale_details.quantity) as cantidad_venta'),
                 'notacredito_details.quantity as notacredito_quantity',
                 'notadebito_details.quantity as notadebito_quantity',
@@ -64,13 +66,15 @@ class reporteventaprodclientController extends Controller
             )
             ->join('products', 'products.id', '=', 'sale_details.product_id')
             ->join('categories', 'categories.id', '=', 'products.category_id')
+            ->join('sales', 'sales.id', '=', 'sale_details.sale_id')
+            ->join('thirds', 'thirds.id', '=', 'sales.third_id')
             ->leftjoin('notacredito_details', 'notacredito_details.product_id', '=', 'sale_details.product_id')
             ->leftjoin('notadebito_details', 'notadebito_details.product_id', '=', 'sale_details.product_id')
-            ->groupBy('products.id', 'products.name', 'categories.name')
+            ->groupBy('products.id', 'products.name', 'categories.name', 'thirds.name', 'thirds.identification')
             ->orderBy('products.name', 'ASC')
             ->get();
 
-        //  dd($data);
+    //   dd($data);
 
         /*   // Calculo de la stock ideal y venta_real
         foreach ($data as $item) {

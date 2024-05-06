@@ -392,9 +392,9 @@
                         <li>
                             <a href="{{ url('report_sales_x_sc') }}"> Por sub-centro costo </a>
                         </li>
-                        <li>
+                        <!-- <li>
                             <a href="{{ url('report_sales_x_prod') }}"> Por productos </a>
-                        </li>
+                        </li> -->
                         <li>
                             <a href="{{ url('reportes/ventas_por_productos') }}"> Por productos </a>
                         </li>
