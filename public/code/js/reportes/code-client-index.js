@@ -398,7 +398,7 @@ function initializeDataTable(startDateId = "-1", endDateId = "-1") {
     });
     // Agregar campos de búsqueda para la primera y cuarta columna de la tabla
     $("#tableInventory thead th").each(function (index) {
-        if (index === 0 || index === 3) {
+        if (index === 1 || index === 3) {
             var title = $(this).text();
             $(this).html(
                 '<input type="text" placeholder="Buscar ' + title + '" />'
@@ -408,7 +408,7 @@ function initializeDataTable(startDateId = "-1", endDateId = "-1") {
 
     // Aplicar el filtro de búsqueda solo para la primera y cuarta columna
     dataTable.columns().every(function (index) {
-        if (index === 0 || index === 3) {
+        if (index === 1 || index === 3) {
             var that = this;
             $("input", this.header()).on("keyup change", function () {
                 if (that.search() !== this.value) {

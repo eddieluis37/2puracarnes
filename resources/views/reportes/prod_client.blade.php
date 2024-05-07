@@ -56,8 +56,8 @@
           <table id="tableInventory" class="table table-success table-striped mt-1">
             <thead class="text-black" style="background: #3B3F5C">
               <tr>
-                <th class="table-th" title="Identificación cliente" style="text-align: center;">ID_CLIENT</th>
-                <th class="table-th text-white" title="Nombre del cliente" style="text-align: center;">NOM_CLIENTES</th>
+                <th class="table-th text-white" title="Identificación cliente" style="text-align: center;">ID_CLIENTE</th>
+                <th class="table-th" title="Nombre del cliente" style="text-align: center;">NOM_CLIENTES</th>
                 <th class="table-th text-white" title="Categoria" style="text-align: center;">COD</th>
                 <th class="table-th" title="Productos" style="text-align: center;">PRODUCTO</th>
                 <th class="table-th text-white" title="Categoria" style="text-align: center;">CAT</th>
