@@ -18,7 +18,7 @@ var dataTable;
 
 function initializeDataTable(startDateId = "-1", endDateId = "-1") {
     dataTable = $("#tableInventory").DataTable({
-        paging: true,
+        paging: false,
         pageLength: 150,
         autoWidth: false,
         processing: true,
