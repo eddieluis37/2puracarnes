@@ -31,7 +31,7 @@ function initializeDataTable(startDateId = "-1", endDateId = "-1") {
                 endDateId: endDateId,
             },
         },
-        columns: [  
+        columns: [
             {
                 data: "third_identification",
                 name: "third_identification",
@@ -42,7 +42,7 @@ function initializeDataTable(startDateId = "-1", endDateId = "-1") {
                         "</div>"
                     );
                 },
-            },  
+            },
             {
                 data: "third_name",
                 name: "third_name",
@@ -58,16 +58,12 @@ function initializeDataTable(startDateId = "-1", endDateId = "-1") {
                         return `<span style="font-size: smaller; display: block; text-align: center;">${capitalizedSubString}</span>`;
                     }
                 },
-            },           
+            },
             {
                 data: "product_code",
                 name: "product_code",
                 render: function (data, type, row) {
-                    return (
-                        "<div style='text-align: right;'>" +
-                        (data) +
-                        "</div>"
-                    );
+                    return "<div style='text-align: right;'>" + data + "</div>";
                 },
             },
             {
@@ -85,7 +81,7 @@ function initializeDataTable(startDateId = "-1", endDateId = "-1") {
                         return `<span style="font-size: smaller; display: block; text-align: center;">${capitalizedSubString}</span>`;
                     }
                 },
-            },                 
+            },
             {
                 data: "category_name",
                 name: "category_name",
@@ -101,7 +97,7 @@ function initializeDataTable(startDateId = "-1", endDateId = "-1") {
                         return `<span style="font-size: smaller; display: block; text-align: center;">${capitalizedSubString}</span>`;
                     }
                 },
-            },      
+            },
             {
                 data: "cantidad_venta",
                 name: "cantidad_venta",
@@ -365,36 +361,61 @@ function initializeDataTable(startDateId = "-1", endDateId = "-1") {
             var totalTotalFormatted = "$" + formatCantidadSinCero(totalTotal);
 
             // Agregar los valores totales en el footer
-            $(api.column("cantidad_venta:name").footer()).html(
-                totalCantVentFormatted
-            ).css("text-align", "right");
-            $(api.column("notacredito_quantity:name").footer()).html(
-                totalCantNCFormatted
-            ).css("text-align", "right");
-            $(api.column("notadebito_quantity:name").footer()).html(
-                totalCantNDFormatted
-            ).css("text-align", "right");
-            $(api.column("cantidad_venta_real:name").footer()).html(
-                totalCantVRFormatted
-            ).css("text-align", "right");
-            $(api.column("dinero_venta_real:name").footer()).html(
-                totalDineroVRFormatted
-            ).css("text-align", "right");
-            $(api.column("descuento_producto:name").footer()).html(
-                totalDescProdVRFormatted
-            ).css("text-align", "right");
-            $(api.column("descuento_cliente:name").footer()).html(
-                totalDescClienteFormatted
-            ).css("text-align", "right");
-            $(api.column("sub_total:name").footer()).html(
-                totalSubTotalFormatted
-            ).css("text-align", "right");
-            $(api.column("impuesto_salud:name").footer()).html(
-                totalImpSaludFormatted
-            ).css("text-align", "right");
-            $(api.column("iva:name").footer()).html(totalIvaFormatted).css("text-align", "right");
-            $(api.column("total:name").footer()).html(totalTotalFormatted).css("text-align", "right");
+            $(api.column("cantidad_venta:name").footer())
+                .html(totalCantVentFormatted)
+                .css("text-align", "right");
+            $(api.column("notacredito_quantity:name").footer())
+                .html(totalCantNCFormatted)
+                .css("text-align", "right");
+            $(api.column("notadebito_quantity:name").footer())
+                .html(totalCantNDFormatted)
+                .css("text-align", "right");
+            $(api.column("cantidad_venta_real:name").footer())
+                .html(totalCantVRFormatted)
+                .css("text-align", "right");
+            $(api.column("dinero_venta_real:name").footer())
+                .html(totalDineroVRFormatted)
+                .css("text-align", "right");
+            $(api.column("descuento_producto:name").footer())
+                .html(totalDescProdVRFormatted)
+                .css("text-align", "right");
+            $(api.column("descuento_cliente:name").footer())
+                .html(totalDescClienteFormatted)
+                .css("text-align", "right");
+            $(api.column("sub_total:name").footer())
+                .html(totalSubTotalFormatted)
+                .css("text-align", "right");
+            $(api.column("impuesto_salud:name").footer())
+                .html(totalImpSaludFormatted)
+                .css("text-align", "right");
+            $(api.column("iva:name").footer())
+                .html(totalIvaFormatted)
+                .css("text-align", "right");
+            $(api.column("total:name").footer())
+                .html(totalTotalFormatted)
+                .css("text-align", "right");
         },
+    });
+    // Agregar campos de búsqueda para la primera y cuarta columna de la tabla
+    $("#tableInventory thead th").each(function (index) {
+        if (index === 0 || index === 3) {
+            var title = $(this).text();
+            $(this).html(
+                '<input type="text" placeholder="Buscar ' + title + '" />'
+            );
+        }
+    });
+
+    // Aplicar el filtro de búsqueda solo para la primera y cuarta columna
+    dataTable.columns().every(function (index) {
+        if (index === 0 || index === 3) {
+            var that = this;
+            $("input", this.header()).on("keyup change", function () {
+                if (that.search() !== this.value) {
+                    that.search(this.value).draw();
+                }
+            });
+        }
     });
 }
 
