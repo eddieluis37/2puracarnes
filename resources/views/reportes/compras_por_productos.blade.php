@@ -59,17 +59,12 @@
                 <th class="table-th text-white" title="Categoria" style="text-align: center;">COD</th>
                 <th class="table-th text-white" title="Productos" style="text-align: center;">PRODUCTO</th>
                 <th class="table-th text-white" title="Categoria" style="text-align: center;">CAT</th>
-                <th class="table-th text-white" title="Cantidades vendidas" style="text-align: center;">CV</th>
-                <th class="table-th text-white" title="Cantidades acreditadas" style="text-align: center;">CN</th>
-                <th class="table-th text-white" title="Cantidad debitadas" style="text-align: center;">CD</th>
-                <th class="table-th text-white" title="Cantidad real" style="text-align: center;">CR</th>
-                <th class="table-th text-white" title="Dinero venta real" style="text-align: center;">$VR</th>
-                <th class="table-th text-white" title="Descuento por producto" style="text-align: center;">DP</th>
-                <th class="table-th text-white" title="Descuento por cliente" style="text-align: center;">DC</th>
-                <th class="table-th text-white" title="" style="text-align: center;">SUBTOTAL</th>
-                <th class="table-th text-white" title="" style="text-align: center;">IS</th>
-                <th class="table-th text-white" title="Impuesto IVA" style="text-align: center;">IVA</th>
-                <th class="table-th text-white" title="" style="text-align: center;">TOTAL</th>
+                <th class="table-th text-white" title="Cantidades compras lotes" style="text-align: center;">CCL</th>
+                <th class="table-th text-white" title="Costos compras lotes" style="text-align: center;">$CL</th>
+                <th class="table-th text-white" title="Cantidades compras compensadas" style="text-align: center;">CCC</th>
+                <th class="table-th text-white" title="Precio compras compensadas" style="text-align: center;">$PCL</th>
+                <th class="table-th text-white" title="Subtotal compras compensadas" style="text-align: center;">$SCL</th>
+                
               </tr>
             </thead>
             <tbody>
@@ -83,13 +78,7 @@
                 <td>0.00</td>
                 <td>0.00</td>
                 <td>0.00</td>
-                <td>0.00</td>
-                <td>0.00</td>
-                <td>0.00</td>
-                <td>0.00</td>
-                <td>0.00</td>
-                <td>0.00</td>
-                <td align="center">0.00</td>
+                <td>0.00</td>                
               </tr>
             </tfoot>
           </table>

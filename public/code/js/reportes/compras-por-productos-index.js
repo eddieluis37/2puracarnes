@@ -31,16 +31,12 @@ function initializeDataTable(startDateId = "-1", endDateId = "-1") {
                 endDateId: endDateId,
             },
         },
-        columns: [            
+        columns: [
             {
                 data: "product_code",
                 name: "product_code",
                 render: function (data, type, row) {
-                    return (
-                        "<div style='text-align: right;'>" +
-                        (data) +
-                        "</div>"
-                    );
+                    return "<div style='text-align: right;'>" + data + "</div>";
                 },
             },
             {
@@ -58,21 +54,19 @@ function initializeDataTable(startDateId = "-1", endDateId = "-1") {
                         return `<span style="font-size: smaller; display: block; text-align: center;">${capitalizedSubString}</span>`;
                     }
                 },
-            },       
+            },
             {
                 data: "category_name",
                 name: "category_name",
                 render: function (data, type, row) {
                     return (
-                        "<div style='text-align: center;'>" +
-                        (data) +
-                        "</div>"
+                        "<div style='text-align: center;'>" + data + "</div>"
                     );
                 },
             },
             {
-                data: "cantidad_venta",
-                name: "cantidad_venta",
+                data: "cant_compras_lote",
+                name: "cant_compras_lote",
                 render: function (data, type, row) {
                     return (
                         "<div style='text-align: right;'>" +
@@ -82,8 +76,19 @@ function initializeDataTable(startDateId = "-1", endDateId = "-1") {
                 },
             },
             {
-                data: "notacredito_quantity",
-                name: "notacredito_quantity",
+                data: "costo_compras_lote",
+                name: "costo_compras_lote",
+                render: function (data, type, row) {
+                    return (
+                        "<div style='text-align: right;'>$" +
+                        formatCantidadSinCero(data) +
+                        "</div>"
+                    );
+                },
+            },
+            {
+                data: "cant_compras_comp",
+                name: "cant_compras_comp",
                 render: function (data, type, row) {
                     return (
                         "<div style='text-align: right;'>" +
@@ -93,30 +98,8 @@ function initializeDataTable(startDateId = "-1", endDateId = "-1") {
                 },
             },
             {
-                data: "notadebito_quantity",
-                name: "notadebito_quantity",
-                render: function (data, type, row) {
-                    return (
-                        "<div style='text-align: right;'>" +
-                        formatCantidad(data) +
-                        "</div>"
-                    );
-                },
-            },
-            {
-                data: "cantidad_venta_real",
-                name: "cantidad_venta_real",
-                render: function (data, type, row) {
-                    return (
-                        "<div style='text-align: right;'>" +
-                        formatCantidad(data) +
-                        "</div>"
-                    );
-                },
-            },
-            {
-                data: "dinero_venta_real",
-                name: "dinero_venta_real",
+                data: "precio_compras_comp",
+                name: "precio_compras_comp",
                 render: function (data, type, row) {
                     return (
                         "<div style='text-align: right;'>$" +
@@ -126,64 +109,9 @@ function initializeDataTable(startDateId = "-1", endDateId = "-1") {
                 },
             },
             {
-                data: "descuento_producto",
-                name: "descuento_producto",
+                data: "subtotal_compras_comp",
+                name: "subtotal_compras_comp",
                 render: function (data, type, row) {
-                    return (
-                        "<div style='text-align: right;'>$" +
-                        formatCantidadSinCero(data) +
-                        "</div>"
-                    );
-                },
-            },
-            {
-                data: "descuento_cliente",
-                name: "descuento_cliente",
-                render: function (data, type, row) {
-                    return (
-                        "<div style='text-align: right;'>$" +
-                        formatCantidadSinCero(data) +
-                        "</div>"
-                    );
-                },
-            },
-            {
-                data: "sub_total",
-                name: "sub_total",
-                render: function (data, type, row) {
-                    return (
-                        "<div style='text-align: right;'>$" +
-                        formatCantidadSinCero(data) +
-                        "</div>"
-                    );
-                },
-            },
-            {
-                data: "impuesto_salud",
-                name: "impuesto_salud",
-                render: function (data, type, row) {
-                    return (
-                        "<div style='text-align: right;'>$" +
-                        formatCantidadSinCero(data) +
-                        "</div>"
-                    );
-                },
-            },
-            {
-                data: "iva",
-                name: "iva",
-                render: function (data, type, row) {
-                    return (
-                        "<div style='text-align: right;'>$" +
-                        formatCantidadSinCero(data) +
-                        "</div>"
-                    );
-                },
-            },
-            {
-                data: "total",
-                name: "total",
-                render: function (data) {
                     return (
                         "<div style='text-align: right;'>$" +
                         formatCantidadSinCero(data) +
@@ -217,151 +145,81 @@ function initializeDataTable(startDateId = "-1", endDateId = "-1") {
         footerCallback: function (row, data, start, end, display) {
             var api = this.api();
 
-            // Totalizar la columna "totalCantVent"
-            var totalCantVent = api
-                .column("cantidad_venta:name", { search: "applied" })
-                .data()
-                .reduce(function (a, b) {
-                    return parseFloat(a) + parseFloat(b);
-                }, 0)
-                .toFixed(2);
-            var totalCantVentFormatted = formatCantidad(totalCantVent);
-
-            // Totalizar la columna "cantidad notacredito"
-            var totalCantNC = api
-                .column("notacredito_quantity:name", { search: "applied" })
+            var totalCantComprasLote = api
+                .column("cant_compras_lote:name", { search: "applied" })
                 .data()
                 .reduce(function (a, b) {
                     var value = parseFloat(b);
                     return isNaN(value) ? a : a + value;
                 }, 0)
                 .toFixed(2);
-            var totalCantNCFormatted = formatCantidad(totalCantNC);
+            var totalCantComprasLoteFormatted =
+                formatCantidad(totalCantComprasLote);
 
-            // Totalizar la columna "cantidad nota debito"
-            var totalCantND = api
-                .column("notadebito_quantity:name", { search: "applied" })
+            var totalCantComprasComp = api
+                .column("cant_compras_comp:name", { search: "applied" })
                 .data()
                 .reduce(function (a, b) {
                     var value = parseFloat(b);
                     return isNaN(value) ? a : a + value;
                 }, 0)
                 .toFixed(2);
-            var totalCantNDFormatted = formatCantidad(totalCantND);
+            var totalCantComprasCompFormatted =
+                formatCantidad(totalCantComprasComp);
 
-            // Totalizar la columna "cantidad venta real"
-            var totalCantVR = api
-                .column("cantidad_venta_real:name", { search: "applied" })
+            var totalCostoComprasLote = api
+                .column("costo_compras_lote:name", { search: "applied" })
                 .data()
                 .reduce(function (a, b) {
                     var value = parseFloat(b);
                     return isNaN(value) ? a : a + value;
                 }, 0)
                 .toFixed(2);
-            var totalCantVRFormatted = formatCantidad(totalCantVR);
+            var totalCostoComprasLoteFormatted =
+                "$" + formatCantidadSinCero(totalCostoComprasLote);
 
-            var totalDineroVR = api
-                .column("dinero_venta_real:name", { search: "applied" })
-                .data()
-                .reduce(function (a, b) {
-                    return parseFloat(a) + parseFloat(b);
-                }, 0)
-                .toFixed(2);
-
-            var totalDineroVRFormatted =
-                "$" + formatCantidadSinCero(totalDineroVR);
-
-            var totalDescProd = api
-                .column("descuento_producto:name", { search: "applied" })
-                .data()
-                .reduce(function (a, b) {
-                    return parseFloat(a) + parseFloat(b);
-                }, 0)
-                .toFixed(2);
-            var totalDescProdVRFormatted =
-                "$" + formatCantidadSinCero(totalDescProd);
-
-            var totalDescCliente = api
-                .column("descuento_cliente:name", { search: "applied" })
-                .data()
-                .reduce(function (a, b) {
-                    return parseFloat(a) + parseFloat(b);
-                }, 0)
-                .toFixed(2);
-            var totalDescClienteFormatted =
-                "$" + formatCantidadSinCero(totalDescCliente);
-
-            var totalSubTotal = api
-                .column("sub_total:name", { search: "applied" })
-                .data()
-                .reduce(function (a, b) {
-                    return parseFloat(a) + parseFloat(b);
-                }, 0)
-                .toFixed(2);
-            var totalSubTotalFormatted =
-                "$" + formatCantidadSinCero(totalSubTotal);
-
-            var totalImpSalud = api
-                .column("impuesto_salud:name", { search: "applied" })
-                .data()
-                .reduce(function (a, b) {
-                    return parseFloat(a) + parseFloat(b);
-                }, 0)
-                .toFixed(2);
-            var totalImpSaludFormatted =
-                "$" + formatCantidadSinCero(totalImpSalud);
-
-            var totalIva = api
-                .column("iva:name", { search: "applied" })
+            var totalPrecioComprasComp = api
+                .column("precio_compras_comp:name", { search: "applied" })
                 .data()
                 .reduce(function (a, b) {
                     var value = parseFloat(b);
                     return isNaN(value) ? a : a + value;
                 }, 0)
                 .toFixed(2);
-            var totalIvaFormatted = "$" + formatCantidadSinCero(totalIva);
+            var totalPrecioComprasCompFormatted =
+                "$" + formatCantidadSinCero(totalPrecioComprasComp);
 
-            var totalTotal = api
-                .column("total:name", { search: "applied" })
+            var totalSubtotalComprasComp = api
+                .column("subtotal_compras_comp:name", { search: "applied" })
                 .data()
                 .reduce(function (a, b) {
                     var value = parseFloat(b);
                     return isNaN(value) ? a : a + value;
                 }, 0)
                 .toFixed(2);
-
-            var totalTotalFormatted = "$" + formatCantidadSinCero(totalTotal);
+            var totalSubtotalComprasCompFormatted =
+                "$" + formatCantidadSinCero(totalSubtotalComprasComp);
 
             // Agregar los valores totales en el footer
-            $(api.column("cantidad_venta:name").footer()).html(
-                totalCantVentFormatted
-            ).css("text-align", "right");
-            $(api.column("notacredito_quantity:name").footer()).html(
-                totalCantNCFormatted
-            ).css("text-align", "right");
-            $(api.column("notadebito_quantity:name").footer()).html(
-                totalCantNDFormatted
-            ).css("text-align", "right");
-            $(api.column("cantidad_venta_real:name").footer()).html(
-                totalCantVRFormatted
-            ).css("text-align", "right");
-            $(api.column("dinero_venta_real:name").footer()).html(
-                totalDineroVRFormatted
-            ).css("text-align", "right");
-            $(api.column("descuento_producto:name").footer()).html(
-                totalDescProdVRFormatted
-            ).css("text-align", "right");
-            $(api.column("descuento_cliente:name").footer()).html(
-                totalDescClienteFormatted
-            ).css("text-align", "right");
-            $(api.column("sub_total:name").footer()).html(
-                totalSubTotalFormatted
-            ).css("text-align", "right");
-            $(api.column("impuesto_salud:name").footer()).html(
-                totalImpSaludFormatted
-            ).css("text-align", "right");
-            $(api.column("iva:name").footer()).html(totalIvaFormatted).css("text-align", "right");
-            $(api.column("total:name").footer()).html(totalTotalFormatted).css("text-align", "right");
+            $(api.column("cant_compras_lote:name").footer())
+                .html(totalCantComprasLoteFormatted)
+                .css("text-align", "right");
+
+            $(api.column("costo_compras_lote:name").footer())
+                .html(totalCostoComprasLoteFormatted)
+                .css("text-align", "right");
+
+            $(api.column("cant_compras_comp:name").footer())
+                .html(totalCantComprasCompFormatted)
+                .css("text-align", "right");
+
+            $(api.column("precio_compras_comp:name").footer())
+                .html(totalPrecioComprasCompFormatted)
+                .css("text-align", "right");
+
+            $(api.column("subtotal_compras_comp:name").footer())
+                .html(totalSubtotalComprasCompFormatted)
+                .css("text-align", "right");
         },
     });
 }

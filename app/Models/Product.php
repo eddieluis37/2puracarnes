@@ -68,4 +68,24 @@ class Product extends Model
 	{
 		return $this->belongsTo(NotadebitoDetail::class);
 	}
+
+	public function compensadores_details()
+    {
+        return $this->hasMany(Compensadores_detail::class, 'products_id');
+    }
+
+	public function despostere()
+    {
+        return $this->hasOne(Despostere::class, 'products_id');
+    }
+
+	public function despostecerdo()
+    {
+        return $this->hasOne(Despostecerdo::class, 'products_id');
+    }
+
+	public function despostepollo()
+    {
+        return $this->hasOne(Despostepollo::class, 'products_id');
+    }
 }

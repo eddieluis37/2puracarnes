@@ -1,6 +1,8 @@
 <?php
 
-namespace App\Models\compensado;
+namespace App\Models;
+
+use App\Models\Compensadores_detail;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -11,4 +13,9 @@ class Compensadores extends Model
 
     protected $table = 'compensadores';
 	protected $fillable = ['users_id','categoria_id','thirds_id', 'centrocosto_id','factura','fecha_compensado','fecha_cierre','status'];
+
+    public function compensadores_detail()
+    {
+        return $this->hasMany(Compensadores_detail::class);
+    }
 }

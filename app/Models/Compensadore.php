@@ -9,10 +9,11 @@ class Compensadore extends Model
 {
     use HasFactory;
 
+    protected $table = 'compensadores';
+	protected $fillable = ['users_id','categoria_id','thirds_id', 'centrocosto_id','factura','fecha_compensado','fecha_cierre','status'];
 
-    public function third()
+    public function compensadores_detail()
     {
-    	return $this->belongsTo(Third::class);
+        return $this->hasMany(Compensadores_detail::class);
     }
-    
 }

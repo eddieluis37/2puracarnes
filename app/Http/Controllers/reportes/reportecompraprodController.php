@@ -7,8 +7,12 @@ use Illuminate\Http\Request;
 use App\Models\Category;
 use App\Models\centros\Centrocosto;
 use App\Models\SaleDetail;
+use App\Models\Compensadores_detail;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
+use App\Models\Product;
+
+
 
 
 class reportecompraprodController extends Controller
@@ -35,14 +39,18 @@ class reportecompraprodController extends Controller
 
         return view('reportes.compras_por_productos', compact('category', 'centros', 'startDate', 'endDate', 'totalStock'));
     }
-    
+
     public function show(Request $request)
     {
         $startDateId = $request->input('startDateId');
         $endDateId = $request->input('endDateId');
 
-        $data = SaleDetail::with(['sale', 'product.category', 'product.notacredito_details', 'product.notadebito_details'])
-            ->whereHas('sale', function ($query) use ($startDateId, $endDateId) {
+        $data = Product::with(['compensadores_details', 'category', 'despostere', 'despostecerdo', 'despostepollo'])
+            ->leftjoin('compensadores_details', 'products.id', '=', 'compensadores_details.products_id')
+            ->leftjoin('desposteres', 'products.id', '=', 'desposteres.products_id')
+            ->leftjoin('despostecerdos', 'products.id', '=', 'despostecerdos.products_id')
+            ->leftjoin('despostepollos', 'products.id', '=', 'despostepollos.products_id')
+            ->whereHas('compensadores_details', function ($query) use ($startDateId, $endDateId) {
                 $query->whereBetween('created_at', [$startDateId, $endDateId])
                     ->where('status', '1');
             })
@@ -50,27 +58,18 @@ class reportecompraprodController extends Controller
                 'products.code as product_code',
                 'products.name as product_name',
                 'categories.name as category_name',
-                DB::raw('SUM(sale_details.quantity) as cantidad_venta'),
-                'notacredito_details.quantity as notacredito_quantity',
-                'notadebito_details.quantity as notadebito_quantity',
-                DB::raw('(SUM(sale_details.quantity) + COALESCE(notadebito_details.quantity, 0)) - COALESCE(notacredito_details.quantity, 0) as cantidad_venta_real'),
-                DB::raw('(SUM(sale_details.total_bruto) + COALESCE(notadebito_details.total_bruto, 0)) - COALESCE(notacredito_details.total_bruto, 0) as dinero_venta_real'),
-                DB::raw('SUM(sale_details.descuento) as descuento_producto'),
-                DB::raw('SUM(sale_details.descuento_cliente) as descuento_cliente'),
-                DB::raw('(SUM(sale_details.total_bruto) + COALESCE(notadebito_details.total_bruto, 0)) - COALESCE(notacredito_details.total_bruto, 0) - SUM(sale_details.descuento) - SUM(sale_details.descuento_cliente) as sub_total'),
-                DB::raw('SUM(sale_details.otro_impuesto) as impuesto_salud'),
-                DB::raw('SUM(sale_details.iva) as iva'),
-                DB::raw('(SUM(sale_details.total_bruto) + COALESCE(notadebito_details.total_bruto, 0)) - COALESCE(notacredito_details.total_bruto, 0) - SUM(sale_details.descuento) - SUM(sale_details.descuento_cliente) + SUM(sale_details.otro_impuesto) + SUM(sale_details.iva) as total'),
+                DB::raw('SUM(COALESCE(desposteres.peso, 0) + COALESCE(despostecerdos.peso, 0) + COALESCE(despostepollos.peso, 0)) as cant_compras_lote'),
+                DB::raw('SUM(COALESCE(desposteres.costo, 0) + COALESCE(despostecerdos.costo, 0) + COALESCE(despostepollos.costo, 0)) as costo_compras_lote'),
+                DB::raw('SUM(compensadores_details.peso) as cant_compras_comp'),                
+                DB::raw('SUM(compensadores_details.pcompra) as precio_compras_comp'),                
+                DB::raw('SUM(compensadores_details.subtotal) subtotal_compras_comp')
             )
-            ->join('products', 'products.id', '=', 'sale_details.product_id')
             ->join('categories', 'categories.id', '=', 'products.category_id')
-            ->leftjoin('notacredito_details', 'notacredito_details.product_id', '=', 'sale_details.product_id')
-            ->leftjoin('notadebito_details', 'notadebito_details.product_id', '=', 'sale_details.product_id')
             ->groupBy('products.id', 'products.name', 'categories.name')
             ->orderBy('products.name', 'ASC')
             ->get();
 
-          dd($data);
+        // dd($data);
 
         /*   // Calculo de la stock ideal y venta_real
         foreach ($data as $item) {
