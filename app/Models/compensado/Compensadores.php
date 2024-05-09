@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\Models\Compensadores_detail;
+use App\Models\compensado\Compensadores_detail;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;

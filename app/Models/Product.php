@@ -88,4 +88,9 @@ class Product extends Model
     {
         return $this->hasOne(Despostepollo::class, 'products_id');
     }
+
+	public function details()
+    {
+        return $this->hasMany(Compensadores_detail::class);
+    }
 }

@@ -3,20 +3,21 @@
 namespace App\Http\Controllers\compensado;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use App\Models\Product;
-use App\Models\Category;
-use App\Models\Third;
-use App\Models\centros\Centrocosto;
-use App\Models\compensado\Compensadores;
-use App\Models\compensado\Compensadores_detail;
+
+
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Yajra\Datatables\Datatables;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\metodosgenerales\metodosrogercodeController;
-use App\Models\Centro_costo_product;
+
+use Illuminate\Http\Request;
+use App\Models\Product;
+use App\Models\Third;
+use App\Models\centros\Centrocosto;
+use App\Models\Compensadores;
+use App\Models\Compensadores_detail;
 
 
 class compensadoController extends Controller

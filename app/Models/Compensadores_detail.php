@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use App\Models\Compensadore;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -13,9 +12,9 @@ class Compensadores_detail extends Model
     protected $table = 'compensadores_details';
     protected $fillable = ['compensadores_id', 'products_id', 'pcompra', 'peso', 'iva', 'subtotal'];
 
-    public function compensadores()
+    public function compensadore()
     {
-        return $this->belongsTo(Compensadores::class, 'compensadores_id');
+        return $this->belongsTo(Compensadores::class, 'compensadores_id', 'id');
     }
 
     public function third()
@@ -25,7 +24,7 @@ class Compensadores_detail extends Model
 
     public function product()
     {
-        return $this->belongsTo(Product::class, 'products_id');
+        return $this->belongsTo(Product::class, 'products_id', 'id');
     }
 }
             
