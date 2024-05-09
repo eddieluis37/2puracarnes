@@ -12,9 +12,16 @@ class Compensadores_detail extends Model
     protected $table = 'compensadores_details';
     protected $fillable = ['compensadores_id', 'products_id', 'pcompra', 'peso', 'iva', 'subtotal'];
 
+<<<<<<< HEAD
     public function compensadore()
     {
         return $this->belongsTo(Compensadores::class, 'compensadores_id', 'id');
+=======
+    
+    public function compensadores()
+    {
+        return $this->belongsTo(Compensadore::class, 'compensadores_id');
+>>>>>>> 618e9e6949849197efb0fed088c758b4d6186085
     }
 
     public function third()
