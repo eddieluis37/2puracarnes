@@ -42,6 +42,7 @@ class reportecompraprodController extends Controller
         return view('reportes.compras_por_productos', compact('category', 'centros', 'startDate', 'endDate', 'totalStock'));
     }
 
+    //Se utiliza la cláusula OR junto con IS NULL para verificar si no hay datos en esas tablas.
 
     public function show(Request $request)
     {
@@ -53,21 +54,31 @@ class reportecompraprodController extends Controller
 
         $data = DB::select("
             SELECT 
-                products.code as product_code,
-                products.name as product_name,
-                categories.name as category_name,
-                SUM(COALESCE(desposteres.peso, 0) + COALESCE(despostecerdos.peso, 0) + COALESCE(despostepollos.peso, 0)) as cant_compras_lote,
-                SUM(COALESCE(desposteres.costo, 0) + COALESCE(despostecerdos.costo, 0) + COALESCE(despostepollos.costo, 0)) as costo_compras_lote,
-                SUM(compensadores_details.peso) as cant_compras_comp,             
-                SUM(compensadores_details.subtotal) as subtotal_compras_comp
+            products.code as product_code,
+            products.name as product_name,
+            categories.name as category_name,
+            SUM(COALESCE(desposteres.peso, 0) + COALESCE(despostecerdos.peso, 0) + COALESCE(despostepollos.peso, 0)) as cant_compras_lote,
+            SUM(COALESCE(desposteres.costo, 0) + COALESCE(despostecerdos.costo, 0) + COALESCE(despostepollos.costo, 0)) as costo_compras_lote,
+            SUM(compensadores_details.peso) as cant_compras_comp,             
+            SUM(compensadores_details.subtotal) as subtotal_compras_comp,
+            (SUM(COALESCE(desposteres.peso, 0) + COALESCE(despostecerdos.peso, 0) + COALESCE(despostepollos.peso, 0)) + SUM(compensadores_details.peso)) as total_cantidades,
+            (SUM(COALESCE(desposteres.costo, 0) + COALESCE(despostecerdos.costo, 0) + COALESCE(despostepollos.costo, 0)) + SUM(compensadores_details.subtotal)) as total_costo,
+            ((SUM(COALESCE(desposteres.costo, 0) + COALESCE(despostecerdos.costo, 0) + COALESCE(despostepollos.costo, 0)) + SUM(compensadores_details.subtotal)) / 
+            (SUM(COALESCE(desposteres.peso, 0) + COALESCE(despostecerdos.peso, 0) + COALESCE(despostepollos.peso, 0)) + SUM(compensadores_details.peso))) as costo_promedio            
             FROM products
             LEFT JOIN compensadores_details ON products.id = compensadores_details.products_id
             LEFT JOIN desposteres ON products.id = desposteres.products_id
             LEFT JOIN despostecerdos ON products.id = despostecerdos.products_id
             LEFT JOIN despostepollos ON products.id = despostepollos.products_id
             JOIN categories ON categories.id = products.category_id
-            WHERE compensadores_details.created_at BETWEEN '$startDate' AND '$endDate'
-                AND compensadores_details.status = 1
+            WHERE 
+                (compensadores_details.created_at BETWEEN '$startDate' AND '$endDate' AND compensadores_details.status = 1)
+                AND 
+                (desposteres.created_at BETWEEN '$startDate' AND '$endDate' OR desposteres.created_at IS NULL)
+                AND 
+                (despostecerdos.created_at BETWEEN '$startDate' AND '$endDate' OR despostecerdos.created_at IS NULL)
+                AND 
+                (despostepollos.created_at BETWEEN '$startDate' AND '$endDate' OR despostepollos.created_at IS NULL)
             GROUP BY products.id, products.name, categories.name
             ORDER BY products.name ASC
         ");
@@ -414,5 +425,4 @@ class reportecompraprodController extends Controller
 
         ]);
     }
-   
 }
