@@ -30,7 +30,7 @@
         <div class="col-sm-6 col-md-3">
           <h6>Fecha y hora inicial</h6>
           <div class="form-group">
-            <input type="datetime-local" class="form-control" value="{{ $startDate ?? date('Y-m-d') }}T01:00" name="startDate" id="startDate" required>
+            <input type="datetime-local" class="form-control" value="{{ $startDate ?? date('Y-m-d') }}T00:00" name="startDate" id="startDate" required>
           </div>
         </div>
         <div class="col-sm-6 col-md-3">
