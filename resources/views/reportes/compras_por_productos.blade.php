@@ -30,7 +30,7 @@
         <div class="col-sm-6 col-md-3">
           <h6>Fecha y hora inicial</h6>
           <div class="form-group">
-            <input type="datetime-local" class="form-control" value="{{ $startDate ?? date('Y-m-d') }}T00:00" name="startDate" id="startDate" required>
+            <input type="datetime-local" class="form-control" value="{{ $startDate ?? date('Y-m-d') }}T01:00" name="startDate" id="startDate" required>
           </div>
         </div>
         <div class="col-sm-6 col-md-3">
@@ -59,11 +59,10 @@
                 <th class="table-th text-white" title="Categoria" style="text-align: center;">COD</th>
                 <th class="table-th text-white" title="Productos" style="text-align: center;">PRODUCTO</th>
                 <th class="table-th text-white" title="Categoria" style="text-align: center;">CAT</th>
-                <th class="table-th text-white" title="Cantidades compras lotes" style="text-align: center;">CCL</th>
+                <th class="table-th text-white" title="Cantidades compras lotes" style="text-align: center;">#CL</th>
                 <th class="table-th text-white" title="Costos compras lotes" style="text-align: center;">$CL</th>
-                <th class="table-th text-white" title="Cantidades compras compensadas" style="text-align: center;">CCC</th>
-                <th class="table-th text-white" title="Precio compras compensadas" style="text-align: center;">$PCL</th>
-                <th class="table-th text-white" title="Subtotal compras compensadas" style="text-align: center;">$SCL</th>
+                <th class="table-th text-white" title="Cantidades compras compensadas" style="text-align: center;">#CC</th>          
+                <th class="table-th text-white" title="Subtotal compras compensadas" style="text-align: center;">$CC</th>
                 
               </tr>
             </thead>
@@ -76,8 +75,7 @@
                 <td></td>
                 <td>0.00</td>
                 <td>0.00</td>
-                <td>0.00</td>
-                <td>0.00</td>
+                <td>0.00</td>                
                 <td>0.00</td>                
               </tr>
             </tfoot>

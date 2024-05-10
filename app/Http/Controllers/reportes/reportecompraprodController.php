@@ -27,6 +27,8 @@ class reportecompraprodController extends Controller
         $startDate = Carbon::parse(Carbon::now())->format('Y-m-d');
         $endDate = Carbon::parse(Carbon::now())->format('Y-m-d');
 
+        /*      $startDate = Carbon::parse(Carbon::now())->format('Y-m-d H:i'); */
+
         /*  $category = Category::whereIn('id', [1, 2, 3, 4, 5, 6, 7, 8, 9])->orderBy('name', 'asc')->get();
  */
         $category = Category::orderBy('name', 'asc')->get();
@@ -40,10 +42,51 @@ class reportecompraprodController extends Controller
         return view('reportes.compras_por_productos', compact('category', 'centros', 'startDate', 'endDate', 'totalStock'));
     }
 
+
     public function show(Request $request)
     {
-        $startDateId = $request->input('startDateId');
-        $endDateId = $request->input('endDateId');
+        /* $startDate = '2024-05-08';
+        $endDate = '2024-05-09'; */
+
+        $startDate = $request->input('startDateId');
+        $endDate = $request->input('endDateId');
+
+        $data = DB::select("
+            SELECT 
+                products.code as product_code,
+                products.name as product_name,
+                categories.name as category_name,
+                SUM(COALESCE(desposteres.peso, 0) + COALESCE(despostecerdos.peso, 0) + COALESCE(despostepollos.peso, 0)) as cant_compras_lote,
+                SUM(COALESCE(desposteres.costo, 0) + COALESCE(despostecerdos.costo, 0) + COALESCE(despostepollos.costo, 0)) as costo_compras_lote,
+                SUM(compensadores_details.peso) as cant_compras_comp,             
+                SUM(compensadores_details.subtotal) as subtotal_compras_comp
+            FROM products
+            LEFT JOIN compensadores_details ON products.id = compensadores_details.products_id
+            LEFT JOIN desposteres ON products.id = desposteres.products_id
+            LEFT JOIN despostecerdos ON products.id = despostecerdos.products_id
+            LEFT JOIN despostepollos ON products.id = despostepollos.products_id
+            JOIN categories ON categories.id = products.category_id
+            WHERE compensadores_details.created_at BETWEEN '$startDate' AND '$endDate'
+                AND compensadores_details.status = 1
+            GROUP BY products.id, products.name, categories.name
+            ORDER BY products.name ASC
+        ");
+
+        return datatables()->of($data)
+            ->addIndexColumn()
+            ->make(true);
+    }
+
+    public function showEloquent(Request $request)
+    {
+        /* $startDateId = $request->input('startDateId');
+        $endDateId = $request->input('endDateId'); */
+
+        /*   $startDateId = Carbon::now()->format('Y-m-d H:i:s');
+        $endDateId = Carbon::now()->format('Y-m-d H:i:s');
+ */
+        $startDateId = '2024-05-08 01:00:01';
+        $endDateId = '2024-05-08 21:20:01';
 
         $data = Product::with(['compensadores_details', 'category', 'despostere', 'despostecerdo', 'despostepollo'])
             ->leftjoin('compensadores_details', 'products.id', '=', 'compensadores_details.products_id')
@@ -51,7 +94,7 @@ class reportecompraprodController extends Controller
             ->leftjoin('despostecerdos', 'products.id', '=', 'despostecerdos.products_id')
             ->leftjoin('despostepollos', 'products.id', '=', 'despostepollos.products_id')
             ->whereHas('compensadores_details', function ($query) use ($startDateId, $endDateId) {
-                $query->whereBetween('created_at', [$startDateId, $endDateId])
+                $query->whereBetween('created_at', ['2024-05-08 00:00', '2024-05-08 22:00'])
                     ->where('status', '1');
             })
             ->select(
@@ -60,8 +103,8 @@ class reportecompraprodController extends Controller
                 'categories.name as category_name',
                 DB::raw('SUM(COALESCE(desposteres.peso, 0) + COALESCE(despostecerdos.peso, 0) + COALESCE(despostepollos.peso, 0)) as cant_compras_lote'),
                 DB::raw('SUM(COALESCE(desposteres.costo, 0) + COALESCE(despostecerdos.costo, 0) + COALESCE(despostepollos.costo, 0)) as costo_compras_lote'),
-                DB::raw('SUM(compensadores_details.peso) as cant_compras_comp'),                
-                DB::raw('SUM(compensadores_details.pcompra) as precio_compras_comp'),                
+                DB::raw('SUM(compensadores_details.peso) as cant_compras_comp'),
+                DB::raw('SUM(compensadores_details.pcompra) as precio_compras_comp'),
                 DB::raw('SUM(compensadores_details.subtotal) subtotal_compras_comp')
             )
             ->join('categories', 'categories.id', '=', 'products.category_id')
@@ -71,24 +114,6 @@ class reportecompraprodController extends Controller
 
         // dd($data);
 
-        /*   // Calculo de la stock ideal y venta_real
-        foreach ($data as $item) {
-
-            $venta_real = (($item->venta - $item->notacredito) + $item->notadebito);
-            $item->venta_real = round($venta_real, 2);
-
-            $stock = ($item->invinicial + $item->compraLote + $item->alistamiento + $item->compensados + $item->trasladoing) - (($item->venta_real) + $item->trasladosal);
-            $item->stock = round($stock, 2);
-            // Actualizar el stock 
-            DB::table('centro_costo_products')
-                ->where('centrocosto_id', $centrocostoId)
-                ->where('products_id', $item->products_id)
-                ->update([
-                    'stock' => $item->stock,
-                    'venta_real' => $item->venta_real
-                ]);
-        }
-        */
         return datatables()->of($data)
             ->addIndexColumn()
             ->make(true);
@@ -389,188 +414,5 @@ class reportecompraprodController extends Controller
 
         ]);
     }
-
-    public function indexhistorico()
-    {
-        $startDate = '2023-05-01';
-        $endDate = '2023-05-08';
-
-        /* $category = Category::whereIn('id', [1, 2, 3, 4, 5, 6, 7, 8, 9])->orderBy('name', 'asc')->get(); */
-
-        $category = Category::orderBy('name', 'asc')->get();
-        $centros = Centrocosto::Where('status', 1)->get();
-
-        // llama al metodo para calcular el stock
-        //   $this->totales(request());
-        $response = $this->totaleshist(request()); // Call the totales method
-        $totalStock = $response->getData()->totalStock; // Retrieve the totalStock value from the response
-
-        return view('inventory.consolidado_historico', compact('category', 'centros', 'startDate', 'endDate', 'totalStock'));
-    }
-
-    public function showhistorico(Request $request)
-    {
-        $centrocostoId = $request->input('centrocostoId');
-        $categoriaId = $request->input('categoriaId');
-        $fechai = $request->input('fechai');
-        $fechaf = $request->input('fechaf');
-
-        $data = DB::table('centro_costo_product_hists as ccp')
-            ->join('products as pro', 'pro.id', '=', 'ccp.products_id')
-            ->join('categories as cat', 'pro.category_id', '=', 'cat.id')
-            ->select(
-                'cat.name as namecategoria',
-                'pro.name as nameproducto',
-                'fecha',
-                'ccp.consecutivo',
-                'ccp.invinicial as invinicial',
-                'ccp.compralote as compraLote',
-                'ccp.alistamiento',
-                'ccp.compensados as compensados',
-                'ccp.trasladoing as trasladoing',
-                'ccp.trasladosal as trasladosal',
-                'ccp.venta as venta',
-                'ccp.stock as stock',
-                'ccp.fisico as fisico'
-            )
-            ->where('ccp.centrocosto_id', $centrocostoId)
-            ->where('pro.category_id', $categoriaId)
-            ->where('pro.status', 1)
-            ->whereBetween('fecha', [$fechai, $fechaf])
-            ->get();
-
-        // Calculo de la stock ideal 
-
-        foreach ($data as $item) {
-            $stock = ($item->invinicial + $item->compraLote + $item->alistamiento + $item->compensados + $item->trasladoing) - ($item->venta + $item->trasladosal);
-            $item->stock = round($stock, 2);
-        }
-
-        return datatables()->of($data)
-            ->addIndexColumn()
-            ->make(true);
-    }
-
-    public function totaleshist(Request $request)
-    {
-        $centrocostoId = $request->input('centrocostoId');
-        $categoriaId = $request->input('categoriaId');
-        $fechai = $request->input('fechai');
-        $fechaf = $request->input('fechaf');
-
-        $data = DB::table('centro_costo_product_hists as ccp')
-            ->join('products as pro', 'pro.id', '=', 'ccp.products_id')
-            ->join('categories as cat', 'pro.category_id', '=', 'cat.id')
-            ->select(
-                'cat.name as namecategoria',
-                'pro.name as nameproducto',
-                'ccp.invinicial as invinicial',
-                'ccp.compralote as compraLote',
-                'ccp.alistamiento',
-                'ccp.compensados as compensados',
-                'ccp.trasladoing as trasladoing',
-                'ccp.trasladosal as trasladosal',
-                'ccp.venta as venta',
-                'ccp.notacredito as notacredito',
-                'ccp.notadebito as notadebito',
-                'ccp.stock as stock',
-                'ccp.fisico as fisico'
-            )
-            ->where('ccp.centrocosto_id', $centrocostoId)
-            ->where('pro.category_id', $categoriaId)
-            ->where('pro.status', 1)
-            ->whereBetween('fecha', [$fechai, $fechaf])
-            ->get();
-
-        $totalStock = 0;
-        $totalInvInicial = 0;
-        $totalCompraLote = 0;
-        $totalAlistamiento = 0;
-        $totalCompensados = 0;
-        $totalTrasladoIng = 0;
-        $totalVenta = 0;
-        $totalTrasladoSal = 0;
-        $totalIngresos = 0;
-        $totalSalidas = 0;
-        $totalConteoFisico = 0;
-
-        $diferenciaKilos = 0;
-        $porcMermaPermitida = 0;
-        $difKilosPermitidos = 0;
-        $difKilos = 0;
-        $porcMerma = 0;
-        $difPorcentajeMerma = 0;
-
-        foreach ($data as $item) {
-
-            $stock = ($item->invinicial + $item->compraLote + $item->alistamiento + $item->compensados + $item->trasladoing) - ($item->venta + $item->trasladosal);
-            $item->stock = round($stock, 2);
-            $totalStock += $stock;
-
-            $ingresos = ($item->invinicial + $item->compraLote + $item->alistamiento + $item->compensados + $item->trasladoing);
-            $item->ingresos = round($ingresos, 2);
-            $totalIngresos += $ingresos;
-
-            $ventas = ($item->venta - $item->notacredito) + $item->notadebito;
-            $item->ventas = round($ventas, 2);
-
-            $salidas =  $item->trasladosal + (($item->venta - $item->notacredito) + $item->notadebito);
-            $item->salidas = round($salidas, 2);
-            $totalSalidas += $salidas;
-
-            $totalInvInicial += $item->invinicial;
-            $totalCompraLote += $item->compraLote;
-            $totalAlistamiento += $item->alistamiento;
-            $totalCompensados += $item->compensados;
-            $totalTrasladoIng += $item->trasladoing;
-            $totalVenta += $item->ventas;
-            $totalVenta = $salidas;
-            $totalTrasladoSal += $item->trasladosal;
-
-            $totalConteoFisico += $item->fisico;
-            $diferenciaKilos = $totalConteoFisico - $totalStock;
-        }
-
-        if ($totalIngresos <= 0) {
-            $totalIngresos = 1;
-        }
-
-        $porcMerma = $diferenciaKilos / $totalIngresos;
-
-        $porcMermaPermitida = 0.005;
-        $difKilosPermitidos = -1 * ($totalIngresos * $porcMermaPermitida);
-        $difKilos = $diferenciaKilos - $difKilosPermitidos;
-
-
-        $difPorcentajeMerma = $porcMerma + $porcMermaPermitida;
-
-
-        return response()->json(
-            [
-                'totalStock' => number_format($totalStock, 2),
-
-                'totalInvInicial' => number_format($totalInvInicial, 2),
-                'totalCompraLote' => number_format($totalCompraLote, 2),
-                'totalAlistamiento' => number_format($totalAlistamiento, 2),
-                'totalCompensados' => number_format($totalCompensados, 2),
-                'totalTrasladoing' => number_format($totalTrasladoIng, 2),
-
-                'totalVenta' => number_format($totalVenta, 2),
-                'totalTrasladoSal' => number_format($totalTrasladoSal, 2),
-
-                'totalIngresos' => number_format($totalIngresos, 2),
-                'totalSalidas' => number_format($totalSalidas, 2),
-
-                'totalConteoFisico' => number_format($totalConteoFisico, 2),
-
-                'diferenciaKilos' => number_format($diferenciaKilos, 2),
-                'difKilosPermitidos' => number_format($difKilosPermitidos, 2),
-                'porcMerma' => number_format($porcMerma * 100, 2),
-                'porcMermaPermitida' => number_format($porcMermaPermitida * 100, 2),
-                'difKilos' => number_format($difKilos, 2),
-                'difPorcentajeMerma' => number_format($difPorcentajeMerma * 100, 2),
-
-            ]
-        );
-    }
+   
 }
