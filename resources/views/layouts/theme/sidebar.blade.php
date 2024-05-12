@@ -393,7 +393,7 @@
                             <a href="{{ url('reportes/compras_por_productos') }}"> Por productos </a>
                         </li>
                         <li>
-                            <a href="{{ url('reportes/compras_por_proveedores_productos') }}"> Por prov & prod </a>
+                            <a href="{{ url('reportes/compras_por_proveedores') }}"> Por prov & prod </a>
                         </li>
                     </ul>
                 </li>

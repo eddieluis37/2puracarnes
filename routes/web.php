@@ -87,9 +87,9 @@ use App\Http\Controllers\res\pdfLoteController;
 use App\Http\Controllers\sale\exportFacturaController;
 use App\Http\Controllers\pollo\utilidadpolloController;
 use App\Http\Controllers\reportes\reportecompraprodController;
+use App\Http\Controllers\reportes\reportecompraproveedorController;
 use App\Http\Controllers\reportes\reporteventaprodclientController;
 use App\Http\Controllers\reportes\reporteventaprodController;
-
 
 /************************************************* */
 
@@ -236,6 +236,9 @@ Route::group(['middleware' => [('auth')]], function () {
 
     Route::get('reportes/compras_por_productos', [reportecompraprodController::class, 'index'])->name('reportes.compras_por_productos');
     Route::get('showReportComprasPorProd', [reportecompraprodController::class, 'show'])->name('showReportComprasPorProd.showlist');
+
+    Route::get('reportes/compras_por_proveedores', [reportecompraproveedorController::class, 'index'])->name('reportes.compras_por_proveedores');
+    Route::get('showReportComprasPorProvee', [reportecompraproveedorController::class, 'show'])->name('showReportComprasPorProvee.showlist');
 
 
 
