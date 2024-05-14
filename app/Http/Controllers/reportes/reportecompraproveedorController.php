@@ -44,13 +44,15 @@ class reportecompraproveedorController extends Controller
 
     //Se utiliza la cláusula OR junto con IS NULL para verificar si no hay datos en esas tablas.
 
-    
+
     /*
 
 compensadores_third.name as compensadores_name,
 beneficiores_third.name as beneficiores_name,
 beneficiocerdos_third.name as beneficiocerdos_name,
 beneficiopollos_third.name as beneficiopollos_name,
+
+ JOIN beneficiocerdos AS benecerdos ON benecerdos.id = despostecerdos.beneficiocerdos_id 
 
 */
     public function show(Request $request)
@@ -62,41 +64,47 @@ beneficiopollos_third.name as beneficiopollos_name,
         $endDateId = $request->input('endDateId');
 
         $data = DB::select("
-        SELECT 
+        SELECT
+        CONCAT_WS(', ', COALESCE(compensadores_third.name, ''), COALESCE(beneficiores_third.name, ''), COALESCE(beneficiocerdos_third.name, ''), COALESCE(beneficiopollos_third.name, '')) as all_thirds_names, 
+                        COALESCE(compensadores_third.name),
             products.code as product_code,
             products.name as product_name,
-            categories.name as category_name,
-            CONCAT_WS(', ', COALESCE(compensadores_third.name, ''), COALESCE(beneficiores_third.name, ''), COALESCE(beneficiocerdos_third.name, ''), COALESCE(beneficiopollos_third.name, '')) as all_thirds_names,
+            categories.name as category_name,           
             SUM(COALESCE(desposteres.peso, 0) + COALESCE(despostecerdos.peso, 0) + COALESCE(despostepollos.peso, 0)) as cant_compras_lote,
             SUM(COALESCE(desposteres.costo, 0) + COALESCE(despostecerdos.costo, 0) + COALESCE(despostepollos.costo, 0)) as costo_compras_lote,
-            SUM(compensadores_details.peso) as cant_compras_comp,             
+            SUM(compensadores_details.peso) as cant_compras_comp,  
+            compensadores_details.pcompra as precio_compras_comp,             
             SUM(compensadores_details.subtotal) as subtotal_compras_comp,
             (SUM(COALESCE(desposteres.peso, 0) + COALESCE(despostecerdos.peso, 0) + COALESCE(despostepollos.peso, 0)) + SUM(compensadores_details.peso)) as total_cantidades,
             (SUM(COALESCE(desposteres.costo, 0) + COALESCE(despostecerdos.costo, 0) + COALESCE(despostepollos.costo, 0)) + SUM(compensadores_details.subtotal)) as total_costo,
             ((SUM(COALESCE(desposteres.costo, 0) + COALESCE(despostecerdos.costo, 0) + COALESCE(despostepollos.costo, 0)) + SUM(compensadores_details.subtotal)) / 
             (SUM(COALESCE(desposteres.peso, 0) + COALESCE(despostecerdos.peso, 0) + COALESCE(despostepollos.peso, 0)) + SUM(compensadores_details.peso))) as costo_promedio
-        FROM products
-        LEFT JOIN compensadores_details ON products.id = compensadores_details.products_id
+        FROM compensadores
+        LEFT JOIN compensadores_details ON compensadores.id = compensadores_details.compensadores_id
+        LEFT JOIN products ON compensadores_details.products_id = products.id
         LEFT JOIN desposteres ON products.id = desposteres.products_id
         LEFT JOIN despostecerdos ON products.id = despostecerdos.products_id
         LEFT JOIN despostepollos ON products.id = despostepollos.products_id
         JOIN categories ON categories.id = products.category_id
-        JOIN compensadores ON compensadores.id = compensadores_details.compensadores_id
+
         LEFT JOIN thirds AS compensadores_third ON compensadores.thirds_id = compensadores_third.id
-        LEFT JOIN beneficiores ON beneficiores.thirds_id = compensadores_third.id
-        LEFT JOIN thirds AS beneficiores_third ON beneficiores.thirds_id = beneficiores_third.id
-        LEFT JOIN beneficiocerdos ON beneficiocerdos.thirds_id = beneficiores_third.id
-        LEFT JOIN thirds AS beneficiocerdos_third ON beneficiocerdos.thirds_id = beneficiocerdos_third.id
-        LEFT JOIN beneficiopollos ON beneficiopollos.thirds_id = beneficiocerdos_third.id
-        LEFT JOIN thirds AS beneficiopollos_third ON beneficiopollos.thirds_id = beneficiopollos_third.id
+                
+        LEFT JOIN beneficiores ON beneficiores.thirds_id = desposteres.beneficiores_id     
+        LEFT JOIN thirds AS beneficiores_third ON beneficiores.thirds_id = desposteres.beneficiores_id
+
+        LEFT JOIN beneficiocerdos ON beneficiocerdos.thirds_id = despostecerdos.beneficiocerdos_id          
+        LEFT JOIN thirds AS beneficiocerdos_third ON beneficiocerdos.thirds_id = despostecerdos.beneficiocerdos_id
+
+        LEFT JOIN beneficiopollos ON beneficiopollos.thirds_id = despostepollos.beneficiopollos_id
+        LEFT JOIN thirds AS beneficiopollos_third ON beneficiopollos.thirds_id = despostepollos.beneficiopollos_id
         WHERE 
             (compensadores.fecha_compensado BETWEEN '$startDateId' AND '$endDateId' AND compensadores_details.status = 1)
             AND 
-            (desposteres.created_at BETWEEN '$startDateId' AND '$endDateId' OR desposteres.created_at IS NULL)
+            (desposteres.created_at BETWEEN '$startDateId' AND '$endDateId' OR beneficiores.fecha_beneficio IS NULL)
             AND 
-            (despostecerdos.created_at BETWEEN '$startDateId' AND '$endDateId' OR despostecerdos.created_at IS NULL)
+            (beneficiocerdos.fecha_beneficio BETWEEN '$startDateId' AND '$endDateId' OR beneficiocerdos.fecha_beneficio IS NULL)
             AND 
-            (despostepollos.created_at BETWEEN '$startDateId' AND '$endDateId' OR despostepollos.created_at IS NULL)
+            (despostepollos.created_at BETWEEN '$startDateId' AND '$endDateId' OR beneficiopollos.fecha_beneficio IS NULL)
         GROUP BY products.id, products.name, categories.name, all_thirds_names
         ORDER BY products.name ASC
     ");

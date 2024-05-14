@@ -18,7 +18,7 @@ use App\Models\Third;
 use App\Models\centros\Centrocosto;
 use App\Models\Compensadores;
 use App\Models\Compensadores_detail;
-
+use App\Models\Centro_costo_product;
 
 class compensadoController extends Controller
 {
