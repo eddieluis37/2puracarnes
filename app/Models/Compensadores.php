@@ -17,8 +17,8 @@ class Compensadores extends Model
         return $this->hasMany(Compensadores_detail::class);
     }
 
-    public function details()
+ /*    public function details()
     {
         return $this->hasMany(Compensadores_detail::class);
-    }
+    } */
 }
