@@ -40,11 +40,15 @@ class SubcentrocostoSeeder extends Seeder
         ]);
         Subcentrocosto::create([
             'centrocosto_id' => 1,
-            'name' => "ON LINE / RESTAU PORCIONADO ",
+            'name' => "ON LINE / RESTAU PORCIONADO",
         ]);
         Subcentrocosto::create([
             'centrocosto_id' => 1,
-            'name' => "ON LINE / RESTAU POSTA ",
+            'name' => "ON LINE / RESTAU POSTA",
+        ]);
+        Subcentrocosto::create([
+            'centrocosto_id' => 1,
+            'name' => "PIELES / VISCERAS",
         ]);
     }
 }
