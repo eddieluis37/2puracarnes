@@ -33,8 +33,17 @@ function initializeDataTable(startDateId = "-1", endDateId = "-1") {
         },
         columns: [
             {
-                data: "all_thirds_names",
-                name: "all_thirds_names",
+                data: "fecha_compra",
+                name: "fecha_compra",
+                render: function (data, type, row) {
+                    return (
+                        "<div style='text-align: center;'>" + data + "</div>"
+                    );
+                },
+            },
+            {
+                data: "nombre_proveedor",
+                name: "nombre_proveedor",
                 render: function (data) {
                     let subStringData = data.substring(0, 25).toLowerCase();
                     let capitalizedSubString =
@@ -84,6 +93,11 @@ function initializeDataTable(startDateId = "-1", endDateId = "-1") {
                 data: "cant_compras_lote",
                 name: "cant_compras_lote",
                 render: function (data, type, row) {
+                    // Verificar si el valor es NaN y devolver 0 en ese caso
+                    if (isNaN(data)) {
+                        data = 0;
+                    }
+
                     return (
                         "<div style='text-align: right;'>" +
                         formatCantidad(data) +

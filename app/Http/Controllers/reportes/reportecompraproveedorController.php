@@ -63,55 +63,70 @@ beneficiopollos_third.name as beneficiopollos_name,
         $startDateId = $request->input('startDateId');
         $endDateId = $request->input('endDateId');
 
-        $data = DB::select("
+        $data1 = DB::select("
         SELECT
-        CONCAT_WS(', ', COALESCE(compensadores_third.name, ''), COALESCE(beneficiores_third.name, ''), COALESCE(beneficiocerdos_third.name, ''), COALESCE(beneficiopollos_third.name, '')) as all_thirds_names, 
-                        COALESCE(compensadores_third.name),
-            products.code as product_code,
-            products.name as product_name,
-            categories.name as category_name,           
-            SUM(COALESCE(desposteres.peso, 0) + COALESCE(despostecerdos.peso, 0) + COALESCE(despostepollos.peso, 0)) as cant_compras_lote,
-            SUM(COALESCE(desposteres.costo, 0) + COALESCE(despostecerdos.costo, 0) + COALESCE(despostepollos.costo, 0)) as costo_compras_lote,
-            SUM(compensadores_details.peso) as cant_compras_comp,  
-            compensadores_details.pcompra as precio_compras_comp,             
-            SUM(compensadores_details.subtotal) as subtotal_compras_comp,
-            (SUM(COALESCE(desposteres.peso, 0) + COALESCE(despostecerdos.peso, 0) + COALESCE(despostepollos.peso, 0)) + SUM(compensadores_details.peso)) as total_cantidades,
-            (SUM(COALESCE(desposteres.costo, 0) + COALESCE(despostecerdos.costo, 0) + COALESCE(despostepollos.costo, 0)) + SUM(compensadores_details.subtotal)) as total_costo,
-            ((SUM(COALESCE(desposteres.costo, 0) + COALESCE(despostecerdos.costo, 0) + COALESCE(despostepollos.costo, 0)) + SUM(compensadores_details.subtotal)) / 
-            (SUM(COALESCE(desposteres.peso, 0) + COALESCE(despostecerdos.peso, 0) + COALESCE(despostepollos.peso, 0)) + SUM(compensadores_details.peso))) as costo_promedio
+            beneficiores.fecha_beneficio as fecha_compra,
+            COALESCE(beneficiores_third.name) as nombre_proveedor,  
+            P.code as product_code,
+            P.name as product_name,
+            categories.name as category_name,       
+            desposteres.peso as cant_compras_lote,  
+            COALESCE(desposteres.costo, 0) as costo_compras_lote  
+        FROM beneficiores
+        LEFT JOIN desposteres ON beneficiores.id = desposteres.beneficiores_id
+        LEFT JOIN products AS P ON desposteres.products_id = P.id
+        LEFT JOIN categories ON categories.id = P.category_id
+        LEFT JOIN thirds AS beneficiores_third ON beneficiores.thirds_id = beneficiores_third.id
+        WHERE (desposteres.beneficiores_id IS NOT NULL)
+        AND (beneficiores.fecha_beneficio BETWEEN '$startDateId' AND '$endDateId' OR beneficiores.fecha_beneficio IS NULL)
+        GROUP BY beneficiores.fecha_beneficio, beneficiores_third.name, P.code, P.name, categories.name, desposteres.costo     
+            ");
+
+        $data2 = DB::select("
+            SELECT
+                beneficiocerdos.fecha_beneficio as fecha_compra,
+                COALESCE(beneficiocerdos_third.name) as nombre_proveedor,    
+                products.code as product_code,
+                products.name as product_name,
+                categories.name as category_name,       
+                despostecerdos.peso as cant_compras_lote,  
+                COALESCE(despostecerdos.costo, 0) as costo_compras_lote  
+            FROM beneficiocerdos
+            LEFT JOIN despostecerdos ON beneficiocerdos.id = despostecerdos.beneficiocerdos_id
+            LEFT JOIN products ON despostecerdos.products_id = products.id
+            LEFT JOIN categories ON categories.id = products.category_id
+            LEFT JOIN thirds AS beneficiocerdos_third ON beneficiocerdos.thirds_id = beneficiocerdos_third.id
+            WHERE (despostecerdos.beneficiocerdos_id IS NOT NULL)
+            AND (beneficiocerdos.fecha_beneficio BETWEEN '$startDateId' AND '$endDateId' OR beneficiocerdos.fecha_beneficio IS NULL)
+            GROUP BY beneficiocerdos.fecha_beneficio, beneficiocerdos_third.name, products.code, products.name, categories.name, despostecerdos.costo
+        ");
+
+        $data3 = DB::select("
+        SELECT
+        compensadores.fecha_compensado as fecha_compra,
+        COALESCE(compensandores_third.name)as nombre_proveedor,  
+        products.code as product_code,
+        products.name as product_name,
+        categories.name as category_name,       
+        compensadores_details.peso as cant_compras_comp,  
+            COALESCE(compensadores_details.pcompra, 0) as precio_compras_comp  
         FROM compensadores
         LEFT JOIN compensadores_details ON compensadores.id = compensadores_details.compensadores_id
         LEFT JOIN products ON compensadores_details.products_id = products.id
-        LEFT JOIN desposteres ON products.id = desposteres.products_id
-        LEFT JOIN despostecerdos ON products.id = despostecerdos.products_id
-        LEFT JOIN despostepollos ON products.id = despostepollos.products_id
-        JOIN categories ON categories.id = products.category_id
+        LEFT JOIN categories ON categories.id = products.category_id
+        LEFT JOIN thirds AS compensandores_third ON compensadores.thirds_id = compensandores_third.id
+        
+        WHERE (compensadores_details.compensadores_id IS NOT NULL)
+        AND (compensadores.fecha_compensado BETWEEN '$startDateId' AND '$endDateId' OR compensadores.fecha_compensado IS NULL)
+        GROUP BY compensadores.fecha_compensado, compensandores_third.name, products.code, products.name, categories.name, compensadores_details.pcompra;
+        ");
 
-        LEFT JOIN thirds AS compensadores_third ON compensadores.thirds_id = compensadores_third.id
-                
-        LEFT JOIN beneficiores ON beneficiores.thirds_id = desposteres.beneficiores_id     
-        LEFT JOIN thirds AS beneficiores_third ON beneficiores.thirds_id = desposteres.beneficiores_id
+        // Combinar los resultados de data1 y data2 en un solo array
+        $data = array_merge($data1, $data2, $data3);
 
-        LEFT JOIN beneficiocerdos ON beneficiocerdos.thirds_id = despostecerdos.beneficiocerdos_id          
-        LEFT JOIN thirds AS beneficiocerdos_third ON beneficiocerdos.thirds_id = despostecerdos.beneficiocerdos_id
-
-        LEFT JOIN beneficiopollos ON beneficiopollos.thirds_id = despostepollos.beneficiopollos_id
-        LEFT JOIN thirds AS beneficiopollos_third ON beneficiopollos.thirds_id = despostepollos.beneficiopollos_id
-        WHERE 
-            (compensadores.fecha_compensado BETWEEN '$startDateId' AND '$endDateId' AND compensadores_details.status = 1)
-            AND 
-            (desposteres.created_at BETWEEN '$startDateId' AND '$endDateId' OR beneficiores.fecha_beneficio IS NULL)
-            AND 
-            (beneficiocerdos.fecha_beneficio BETWEEN '$startDateId' AND '$endDateId' OR beneficiocerdos.fecha_beneficio IS NULL)
-            AND 
-            (despostepollos.created_at BETWEEN '$startDateId' AND '$endDateId' OR beneficiopollos.fecha_beneficio IS NULL)
-        GROUP BY products.id, products.name, categories.name, all_thirds_names
-        ORDER BY products.name ASC
-    ");
-
-        return datatables()->of($data)
-            ->addIndexColumn()
-            ->make(true);
+        return response()->json([
+            'data' => $data
+        ]);
     }
 
     public function showEloquent(Request $request)
