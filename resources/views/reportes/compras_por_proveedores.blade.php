@@ -56,17 +56,18 @@
           <table id="tableInventory" class="table table-success table-striped mt-1">
             <thead class="text-white" style="background: #3B3F5C">
               <tr>
-                <th class="table-th text-white" title="Fecha de la compra" style="text-align: center;">FECHA_COMPRA</th>
-                <th class="table-th" title="Proveedores" style="text-align: center;">PROVEEDORES</th>
+                <th class="table-th text-white" title="Fecha de la compra" style="text-align: center;">FECHA_C</th>
+                <th class="table-th text-white" title="Factura de compra" style="text-align: center;">FACTURA</th>
+                <th class="table-th text-white" title="Proveedores" style="text-align: center;">PROVEEDORES</th>
                 <th class="table-th text-white" title="Categoria" style="text-align: center;">COD</th>
-                <th class="table-th" title="Productos" style="text-align: center;">PRODUCTO</th>
-                <th class="table-th" title="Categoria" style="text-align: center;">CAT</th>
+                <th class="table-th text-white" title="Productos" style="text-align: center;">PRODUCTO</th>
+                <th class="table-th text-white" title="Categoria" style="text-align: center;">CAT</th>
                 <th class="table-th text-white" title="Cantidades compras lotes" style="text-align: center;">#_LOTE</th>
                 <th class="table-th text-white" title="Costos compras lotes" style="text-align: center;">$_LOTE</th>
-                <!--  <th class="table-th text-white" title="Cantidades compras compensadas" style="text-align: center;">#_COMP</th>
+                <th class="table-th text-white" title="Cantidades compras compensadas" style="text-align: center;">#_COMP</th>
                 <th class="table-th text-white" title="Precio compras compensadas" style="text-align: center;">PRECIO_COMP</th>
                 <th class="table-th text-white" title="Subtotal compras compensadas" style="text-align: center;">$_COMP</th>
-                <th class="table-th text-white" title="Total cantidades" style="text-align: center;">T_#CANT</th>
+               <!--  <th class="table-th text-white" title="Total cantidades" style="text-align: center;">T_#CANT</th>
                 <th class="table-th text-white" title="Total costos" style="text-align: center;">T_COSTO</th>
                 <th class="table-th text-white" title="Costo promedio" style="text-align: center;">COSTO_PROMD</th> -->
               </tr>
@@ -79,14 +80,13 @@
                 <td></td>
                 <td></td>
                 <td></td>
-                <!--  <td>0.00</td>
+                <td></td>
+                <td></td>
                 <td>0.00</td>
                 <td>0.00</td>
                 <td>0.00</td>
                 <td>0.00</td>
-                <td>0.00</td>
-                <td>0.00</td>
-                <td>0.00</td> -->
+                <td>0.00</td>                              
               </tr>
             </tfoot>
           </table>

@@ -66,12 +66,16 @@ beneficiopollos_third.name as beneficiopollos_name,
         $data1 = DB::select("
         SELECT
             beneficiores.fecha_beneficio as fecha_compra,
+            beneficiores.factura as factura_compra,
             COALESCE(beneficiores_third.name) as nombre_proveedor,  
             P.code as product_code,
             P.name as product_name,
             categories.name as category_name,       
             desposteres.peso as cant_compras_lote,  
-            COALESCE(desposteres.costo, 0) as costo_compras_lote  
+            COALESCE(desposteres.costo, 0) as costo_compras_lote,  
+            '0' as cant_compras_comp,
+            '0' as precio_compras_comp,
+            '0' as subtotal_compras_comp
         FROM beneficiores
         LEFT JOIN desposteres ON beneficiores.id = desposteres.beneficiores_id
         LEFT JOIN products AS P ON desposteres.products_id = P.id
@@ -85,12 +89,16 @@ beneficiopollos_third.name as beneficiopollos_name,
         $data2 = DB::select("
             SELECT
                 beneficiocerdos.fecha_beneficio as fecha_compra,
+                beneficiocerdos.factura as factura_compra,
                 COALESCE(beneficiocerdos_third.name) as nombre_proveedor,    
                 products.code as product_code,
                 products.name as product_name,
                 categories.name as category_name,       
                 despostecerdos.peso as cant_compras_lote,  
-                COALESCE(despostecerdos.costo, 0) as costo_compras_lote  
+                COALESCE(despostecerdos.costo, 0) as costo_compras_lote,
+                '0' as cant_compras_comp,
+                '0' as precio_compras_comp,
+                '0' as subtotal_compras_comp
             FROM beneficiocerdos
             LEFT JOIN despostecerdos ON beneficiocerdos.id = despostecerdos.beneficiocerdos_id
             LEFT JOIN products ON despostecerdos.products_id = products.id
@@ -104,12 +112,16 @@ beneficiopollos_third.name as beneficiopollos_name,
         $data3 = DB::select("
         SELECT
         compensadores.fecha_compensado as fecha_compra,
+        compensadores.factura as factura_compra,
         COALESCE(compensandores_third.name)as nombre_proveedor,  
         products.code as product_code,
         products.name as product_name,
+        '0' as cant_compras_lote,
         categories.name as category_name,       
         compensadores_details.peso as cant_compras_comp,  
-            COALESCE(compensadores_details.pcompra, 0) as precio_compras_comp  
+        '0' as costo_compras_lote,  
+            COALESCE(compensadores_details.pcompra, 0) as precio_compras_comp,
+        compensadores_details.subtotal as subtotal_compras_comp
         FROM compensadores
         LEFT JOIN compensadores_details ON compensadores.id = compensadores_details.compensadores_id
         LEFT JOIN products ON compensadores_details.products_id = products.id
