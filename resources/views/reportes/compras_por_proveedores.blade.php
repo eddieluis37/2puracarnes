@@ -58,9 +58,9 @@
               <tr>
                 <th class="table-th text-white" title="Fecha de la compra" style="text-align: center;">FECHA_C</th>
                 <th class="table-th text-white" title="Factura de compra" style="text-align: center;">FACTURA</th>
-                <th class="table-th text-white" title="Proveedores" style="text-align: center;">PROVEEDORES</th>
+                <th class="table-th" title="Proveedores" style="text-align: center;">PROVEEDORES</th>
                 <th class="table-th text-white" title="Categoria" style="text-align: center;">COD</th>
-                <th class="table-th text-white" title="Productos" style="text-align: center;">PRODUCTO</th>
+                <th class="table-th" title="Productos" style="text-align: center;">PRODUCTO</th>
                 <th class="table-th text-white" title="Categoria" style="text-align: center;">CAT</th>
                 <th class="table-th text-white" title="Cantidades compras lotes" style="text-align: center;">#_LOTE</th>
                 <th class="table-th text-white" title="Costos compras lotes" style="text-align: center;">$_LOTE</th>

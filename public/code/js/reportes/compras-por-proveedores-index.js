@@ -258,9 +258,8 @@ function initializeDataTable(startDateId = "-1", endDateId = "-1") {
                     return isNaN(value) ? a : a + value;
                 }, 0)
                 .toFixed(2);
-            var totalPrecioComprasCompFormatted = formatCantidad(
-                totalPrecioComprasComp
-            );
+            var totalPrecioComprasCompFormatted =
+                "$" + formatCantidadSinCero(totalPrecioComprasComp);
 
             var totalSubtotalComprasComp = api
                 .column("subtotal_compras_comp:name", { search: "applied" })
@@ -273,7 +272,7 @@ function initializeDataTable(startDateId = "-1", endDateId = "-1") {
             var totalSubtotalComprasCompFormatted =
                 "$" + formatCantidadSinCero(totalSubtotalComprasComp);
 
-         /*    var totalCant = api
+            /*    var totalCant = api
                 .column("total_cantidades:name", { search: "applied" })
                 .data()
                 .reduce(function (a, b) {
@@ -326,7 +325,7 @@ function initializeDataTable(startDateId = "-1", endDateId = "-1") {
                 .html(totalSubtotalComprasCompFormatted)
                 .css("text-align", "right");
 
-          /*   $(api.column("total_cantidades:name").footer())
+            /*   $(api.column("total_cantidades:name").footer())
                 .html(totalCantFormatted)
                 .css("text-align", "right");
 
@@ -341,7 +340,26 @@ function initializeDataTable(startDateId = "-1", endDateId = "-1") {
     });
 
     // Agregar campos de búsqueda para la primera y cuarta columna de la tabla
-   
+    $("#tableInventory thead th").each(function (index) {
+        if (index === 2 || index === 4) {
+            var title = $(this).text();
+            $(this).html(
+                '<input type="text" placeholder="Buscar ' + title + '" />'
+            );
+        }
+    });
+
+    // Aplicar el filtro de búsqueda solo para la primera y cuarta columna
+    dataTable.columns().every(function (index) {
+        if (index === 2 || index === 4) {
+            var that = this;
+            $("input", this.header()).on("keyup change", function () {
+                if (that.search() !== this.value) {
+                    that.search(this.value).draw();
+                }
+            });
+        }
+    });
 }
 
 $(document).ready(function () {

@@ -136,9 +136,9 @@ beneficiopollos_third.name as beneficiopollos_name,
         // Combinar los resultados de data1 y data2 en un solo array
         $data = array_merge($data1, $data2, $data3);
 
-        return response()->json([
-            'data' => $data
-        ]);
+        return datatables()->of($data)
+            ->addIndexColumn()
+            ->make(true);
     }
 
     public function showEloquent(Request $request)
