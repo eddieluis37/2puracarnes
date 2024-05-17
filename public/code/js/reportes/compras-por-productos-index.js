@@ -65,8 +65,8 @@ function initializeDataTable(startDateId = "-1", endDateId = "-1") {
                 },
             },
             {
-                data: "cant_compras_lote",
-                name: "cant_compras_lote",
+                data: "total_cant_compras_lote",
+                name: "total_cant_compras_lote",
                 render: function (data, type, row) {
                     return (
                         "<div style='text-align: right;'>" +
@@ -76,8 +76,8 @@ function initializeDataTable(startDateId = "-1", endDateId = "-1") {
                 },
             },
             {
-                data: "costo_compras_lote",
-                name: "costo_compras_lote",
+                data: "total_costo_compras_lote",
+                name: "total_costo_compras_lote",
                 render: function (data, type, row) {
                     return (
                         "<div style='text-align: right;'>$" +
@@ -87,8 +87,8 @@ function initializeDataTable(startDateId = "-1", endDateId = "-1") {
                 },
             },
             {
-                data: "cant_compras_comp",
-                name: "cant_compras_comp",
+                data: "total_cant_compras_comp",
+                name: "total_cant_compras_comp",
                 render: function (data, type, row) {
                     return (
                         "<div style='text-align: right;'>" +
@@ -98,8 +98,19 @@ function initializeDataTable(startDateId = "-1", endDateId = "-1") {
                 },
             },
             {
-                data: "subtotal_compras_comp",
-                name: "subtotal_compras_comp",
+                data: "total_precio_compras_comp",
+                name: "total_precio_compras_comp",
+                render: function (data, type, row) {
+                    return (
+                        "<div style='text-align: right;'>$" +
+                        formatCantidadSinCero(data) +
+                        "</div>"
+                    );
+                },
+            },
+            {
+                data: "total_subtotal_compras_comp",
+                name: "total_subtotal_compras_comp",
                 render: function (data, type, row) {
                     return (
                         "<div style='text-align: right;'>$" +
@@ -168,7 +179,7 @@ function initializeDataTable(startDateId = "-1", endDateId = "-1") {
             var api = this.api();
 
             var totalCantComprasLote = api
-                .column("cant_compras_lote:name", { search: "applied" })
+                .column("total_cant_compras_lote:name", { search: "applied" })
                 .data()
                 .reduce(function (a, b) {
                     var value = parseFloat(b);
@@ -179,7 +190,7 @@ function initializeDataTable(startDateId = "-1", endDateId = "-1") {
                 formatCantidad(totalCantComprasLote);
 
             var totalCantComprasComp = api
-                .column("cant_compras_comp:name", { search: "applied" })
+                .column("total_cant_compras_comp:name", { search: "applied" })
                 .data()
                 .reduce(function (a, b) {
                     var value = parseFloat(b);
@@ -190,7 +201,7 @@ function initializeDataTable(startDateId = "-1", endDateId = "-1") {
                 formatCantidad(totalCantComprasComp);
 
             var totalCostoComprasLote = api
-                .column("costo_compras_lote:name", { search: "applied" })
+                .column("total_costo_compras_lote:name", { search: "applied" })
                 .data()
                 .reduce(function (a, b) {
                     var value = parseFloat(b);
@@ -200,8 +211,19 @@ function initializeDataTable(startDateId = "-1", endDateId = "-1") {
             var totalCostoComprasLoteFormatted =
                 "$" + formatCantidadSinCero(totalCostoComprasLote);
 
+            var totalPrecioComprasComp = api
+                .column("total_precio_compras_comp:name", { search: "applied" })
+                .data()
+                .reduce(function (a, b) {
+                    var value = parseFloat(b);
+                    return isNaN(value) ? a : a + value;
+                }, 0)
+                .toFixed(2);
+            var totalPrecioComprasCompFormatted =
+                "$" + formatCantidadSinCero(totalPrecioComprasComp);
+
             var totalSubtotalComprasComp = api
-                .column("subtotal_compras_comp:name", { search: "applied" })
+                .column("total_subtotal_compras_comp:name", { search: "applied" })
                 .data()
                 .reduce(function (a, b) {
                     var value = parseFloat(b);
@@ -209,7 +231,7 @@ function initializeDataTable(startDateId = "-1", endDateId = "-1") {
                 }, 0)
                 .toFixed(2);
             var totalSubtotalComprasCompFormatted =
-                "$" + formatCantidadSinCero(totalSubtotalComprasComp);
+                "$" + formatCantidadSinCero(totalSubtotalComprasComp);    
 
             var totalCant = api
                 .column("total_cantidades:name", { search: "applied" })
@@ -244,19 +266,23 @@ function initializeDataTable(startDateId = "-1", endDateId = "-1") {
                 "$" + formatCantidadSinCero(totalCostoPromd);
 
             // Agregar los valores totales en el footer
-            $(api.column("cant_compras_lote:name").footer())
+            $(api.column("total_cant_compras_lote:name").footer())
                 .html(totalCantComprasLoteFormatted)
                 .css("text-align", "right");
 
-            $(api.column("costo_compras_lote:name").footer())
+            $(api.column("total_costo_compras_lote:name").footer())
                 .html(totalCostoComprasLoteFormatted)
                 .css("text-align", "right");
 
-            $(api.column("cant_compras_comp:name").footer())
+            $(api.column("total_cant_compras_comp:name").footer())
                 .html(totalCantComprasCompFormatted)
                 .css("text-align", "right");
 
-            $(api.column("subtotal_compras_comp:name").footer())
+            $(api.column("total_precio_compras_comp:name").footer())
+                .html(totalPrecioComprasCompFormatted)
+                .css("text-align", "right");
+            
+            $(api.column("total_subtotal_compras_comp:name").footer())
                 .html(totalSubtotalComprasCompFormatted)
                 .css("text-align", "right");
 

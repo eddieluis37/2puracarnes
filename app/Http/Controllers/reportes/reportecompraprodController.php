@@ -42,7 +42,6 @@ class reportecompraprodController extends Controller
         return view('reportes.compras_por_productos', compact('category', 'centros', 'startDate', 'endDate', 'totalStock'));
     }
 
-    //Se utiliza la cláusula OR junto con IS NULL para verificar si no hay datos en esas tablas.
 
     public function show(Request $request)
     {
@@ -53,35 +52,107 @@ class reportecompraprodController extends Controller
         $endDateId = $request->input('endDateId');
 
         $data = DB::select("
-            SELECT 
-            products.code as product_code,
-            products.name as product_name,
-            categories.name as category_name,
-            SUM(COALESCE(desposteres.peso, 0) + COALESCE(despostecerdos.peso, 0) + COALESCE(despostepollos.peso, 0)) as cant_compras_lote,
-            SUM(COALESCE(desposteres.costo, 0) + COALESCE(despostecerdos.costo, 0) + COALESCE(despostepollos.costo, 0)) as costo_compras_lote,
-            SUM(compensadores_details.peso) as cant_compras_comp,             
-            SUM(compensadores_details.subtotal) as subtotal_compras_comp,
-            (SUM(COALESCE(desposteres.peso, 0) + COALESCE(despostecerdos.peso, 0) + COALESCE(despostepollos.peso, 0)) + SUM(compensadores_details.peso)) as total_cantidades,
-            (SUM(COALESCE(desposteres.costo, 0) + COALESCE(despostecerdos.costo, 0) + COALESCE(despostepollos.costo, 0)) + SUM(compensadores_details.subtotal)) as total_costo,
-            ((SUM(COALESCE(desposteres.costo, 0) + COALESCE(despostecerdos.costo, 0) + COALESCE(despostepollos.costo, 0)) + SUM(compensadores_details.subtotal)) / 
-            (SUM(COALESCE(desposteres.peso, 0) + COALESCE(despostecerdos.peso, 0) + COALESCE(despostepollos.peso, 0)) + SUM(compensadores_details.peso))) as costo_promedio            
-            FROM products          
-            LEFT JOIN compensadores_details ON products.id = compensadores_details.products_id
-            LEFT JOIN desposteres ON products.id = desposteres.products_id
-            LEFT JOIN despostecerdos ON products.id = despostecerdos.products_id
-            LEFT JOIN despostepollos ON products.id = despostepollos.products_id
-            JOIN categories ON categories.id = products.category_id
-            JOIN compensadores ON compensadores.id = compensadores_details.compensadores_id
-            WHERE 
-                (compensadores.fecha_compensado BETWEEN '$startDateId' AND '$endDateId' AND compensadores_details.status = 1)
-                AND 
-                (desposteres.created_at BETWEEN '$startDateId' AND '$endDateId' OR desposteres.created_at IS NULL)
-                AND 
-                (despostecerdos.created_at BETWEEN '$startDateId' AND '$endDateId' OR despostecerdos.created_at IS NULL)
-                AND 
-                (despostepollos.created_at BETWEEN '$startDateId' AND '$endDateId' OR despostepollos.created_at IS NULL)
-            GROUP BY products.id, products.name, categories.name
-            ORDER BY products.name ASC
+        SELECT
+        fecha_compra,
+        factura_compra,
+        nombre_proveedor,
+        product_code,
+        product_name,
+        category_name,
+        SUM(cant_compras_lote) AS total_cant_compras_lote,
+        SUM(costo_compras_lote) AS total_costo_compras_lote,
+        SUM(cant_compras_comp) AS total_cant_compras_comp,
+        SUM(precio_compras_comp) AS total_precio_compras_comp,
+        SUM(subtotal_compras_comp) AS total_subtotal_compras_comp,
+        SUM(cant_compras_lote) + SUM(cant_compras_comp) AS total_cantidades,
+        SUM(costo_compras_lote) + SUM(subtotal_compras_comp) AS total_costo,
+        (SUM(costo_compras_lote) + SUM(subtotal_compras_comp)) / (SUM(cant_compras_lote) + SUM(cant_compras_comp)) AS costo_promedio
+    FROM
+    (
+        -- Primera consulta
+        SELECT
+            fecha_compra,
+            factura_compra,
+            nombre_proveedor,
+            product_code,
+            product_name,
+            category_name,
+            cant_compras_lote,
+            costo_compras_lote,
+            cant_compras_comp,
+            precio_compras_comp,
+            subtotal_compras_comp
+        FROM
+        (
+            -- Consulta 1
+            SELECT
+                beneficiores.fecha_beneficio as fecha_compra,
+                beneficiores.factura as factura_compra,
+                COALESCE(beneficiores_third.name) as nombre_proveedor,  
+                P.code as product_code,
+                P.name as product_name,
+                categories.name as category_name,       
+                desposteres.peso as cant_compras_lote,  
+                COALESCE(desposteres.costo, 0) as costo_compras_lote,  
+                '0' as cant_compras_comp,
+                '0' as precio_compras_comp,
+                '0' as subtotal_compras_comp
+            FROM beneficiores
+            LEFT JOIN desposteres ON beneficiores.id = desposteres.beneficiores_id
+            LEFT JOIN products AS P ON desposteres.products_id = P.id
+            LEFT JOIN categories ON categories.id = P.category_id
+            LEFT JOIN thirds AS beneficiores_third ON beneficiores.thirds_id = beneficiores_third.id
+            WHERE (desposteres.beneficiores_id IS NOT NULL)
+            AND (beneficiores.fecha_beneficio BETWEEN '$startDateId' AND '$endDateId' OR beneficiores.fecha_beneficio IS NULL)
+            
+            UNION ALL
+            
+            -- Consulta 2
+            SELECT
+                beneficiocerdos.fecha_beneficio as fecha_compra,
+                beneficiocerdos.factura as factura_compra,
+                COALESCE(beneficiocerdos_third.name) as nombre_proveedor,    
+                products.code as product_code,
+                products.name as product_name,
+                categories.name as category_name,       
+                despostecerdos.peso as cant_compras_lote,  
+                COALESCE(despostecerdos.costo, 0) as costo_compras_lote,
+                '0' as cant_compras_comp,
+                '0' as precio_compras_comp,
+                '0' as subtotal_compras_comp
+            FROM beneficiocerdos
+            LEFT JOIN despostecerdos ON beneficiocerdos.id = despostecerdos.beneficiocerdos_id
+            LEFT JOIN products ON despostecerdos.products_id = products.id
+            LEFT JOIN categories ON categories.id = products.category_id
+            LEFT JOIN thirds AS beneficiocerdos_third ON beneficiocerdos.thirds_id = beneficiocerdos_third.id
+            WHERE (despostecerdos.beneficiocerdos_id IS NOT NULL)
+            AND (beneficiocerdos.fecha_beneficio BETWEEN '$startDateId' AND '$endDateId' OR beneficiocerdos.fecha_beneficio IS NULL)
+            
+            UNION ALL
+            
+            -- Consulta 3
+            SELECT
+                compensadores.fecha_compensado as fecha_compra,
+                compensadores.factura as factura_compra,
+                COALESCE(compensandores_third.name) as nombre_proveedor,  
+                products.code as product_code,
+                products.name as product_name,
+                categories.name as category_name,       
+                '0' as cant_compras_lote,
+                '0' as costo_compras_lote,
+                compensadores_details.peso as cant_compras_comp,  
+                compensadores_details.pcompra as precio_compras_comp,
+                compensadores_details.subtotal as subtotal_compras_comp
+            FROM compensadores
+            LEFT JOIN compensadores_details ON compensadores.id = compensadores_details.compensadores_id
+            LEFT JOIN products ON compensadores_details.products_id = products.id
+            LEFT JOIN categories ON categories.id = products.category_id
+            LEFT JOIN thirds AS compensandores_third ON compensadores.thirds_id = compensandores_third.id
+            WHERE (compensadores_details.compensadores_id IS NOT NULL)
+            AND (compensadores.fecha_compensado BETWEEN '$startDateId' AND '$endDateId' OR compensadores.fecha_compensado IS NULL)
+        ) AS combined_data
+    ) AS final_data
+    GROUP BY product_code, product_name
         ");
 
         return datatables()->of($data)

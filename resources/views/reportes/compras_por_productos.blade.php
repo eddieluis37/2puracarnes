@@ -61,11 +61,12 @@
                 <th class="table-th" title="Categoria" style="text-align: center;">CAT</th>
                 <th class="table-th text-white" title="Cantidades compras lotes" style="text-align: center;">#C_LOTE</th>
                 <th class="table-th text-white" title="Costos compras lotes" style="text-align: center;">$C_LOTE</th>
-                <th class="table-th text-white" title="Cantidades compras compensadas" style="text-align: center;">#C_COMP</th>          
+                <th class="table-th text-white" title="Cantidades compras compensadas" style="text-align: center;">#C_COMP</th>      
+                <th class="table-th text-white" title="Precio compras compensadas" style="text-align: center;">$P_COMP</th>    
                 <th class="table-th text-white" title="Subtotal compras compensadas" style="text-align: center;">$C_COMP</th>
-                <th class="table-th text-white" title="Total cantidades" style="text-align: center;">T_#CANT</th>
+                <th class="table-th text-white" title="Total cantidades" style="text-align: center;">T#CANT</th>
                 <th class="table-th text-white" title="Total costos" style="text-align: center;">T_COSTO</th>
-                <th class="table-th text-white" title="Costo promedio" style="text-align: center;">COSTO_PROMD</th>
+                <th class="table-th text-white" title="Costo promedio" style="text-align: center;">COSTO_P</th>
               </tr>
             </thead>
             <tbody>
@@ -78,6 +79,7 @@
                 <td>0.00</td>
                 <td>0.00</td>
                 <td>0.00</td>                
+                <td>0.00</td> 
                 <td>0.00</td> 
                 <td>0.00</td>
                 <td>0.00</td>                
