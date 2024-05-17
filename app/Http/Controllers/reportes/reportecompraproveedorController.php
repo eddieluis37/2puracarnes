@@ -83,6 +83,7 @@ beneficiopollos_third.name as beneficiopollos_name,
         LEFT JOIN thirds AS beneficiores_third ON beneficiores.thirds_id = beneficiores_third.id
         WHERE (desposteres.beneficiores_id IS NOT NULL)
         AND (beneficiores.fecha_beneficio BETWEEN '$startDateId' AND '$endDateId' OR beneficiores.fecha_beneficio IS NULL)
+        AND (beneficiores.status = '1')
         GROUP BY beneficiores.fecha_beneficio, beneficiores_third.name, P.code, P.name, categories.name, desposteres.costo     
             ");
 
@@ -106,6 +107,7 @@ beneficiopollos_third.name as beneficiopollos_name,
             LEFT JOIN thirds AS beneficiocerdos_third ON beneficiocerdos.thirds_id = beneficiocerdos_third.id
             WHERE (despostecerdos.beneficiocerdos_id IS NOT NULL)
             AND (beneficiocerdos.fecha_beneficio BETWEEN '$startDateId' AND '$endDateId' OR beneficiocerdos.fecha_beneficio IS NULL)
+            AND (beneficiocerdos.status = '1')
             GROUP BY beneficiocerdos.fecha_beneficio, beneficiocerdos_third.name, products.code, products.name, categories.name, despostecerdos.costo
         ");
 
@@ -129,8 +131,9 @@ beneficiopollos_third.name as beneficiopollos_name,
         LEFT JOIN thirds AS compensandores_third ON compensadores.thirds_id = compensandores_third.id
         
         WHERE (compensadores_details.compensadores_id IS NOT NULL)
-        AND (compensadores.fecha_compensado BETWEEN '$startDateId' AND '$endDateId' OR compensadores.fecha_compensado IS NULL)
-        GROUP BY compensadores.fecha_compensado, compensandores_third.name, products.code, products.name, categories.name, compensadores_details.pcompra;
+        AND (compensadores.fecha_compensado BETWEEN '2024-05-14' AND '2024-05-17' OR compensadores.fecha_compensado IS NULL)
+        AND (compensadores_details.status = '1')
+        GROUP BY compensadores.fecha_compensado, compensadores.factura, compensandores_third.name, products.code, products.name, categories.name;
         ");
 
         // Combinar los resultados de data1 y data2 en un solo array
