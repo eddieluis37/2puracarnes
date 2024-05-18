@@ -133,7 +133,7 @@ beneficiopollos_third.name as beneficiopollos_name,
         WHERE (compensadores_details.compensadores_id IS NOT NULL)
         AND (compensadores.fecha_compensado BETWEEN '$startDateId' AND '$endDateId' OR compensadores.fecha_compensado IS NULL)
         AND (compensadores_details.status = '1')
-        GROUP BY compensadores.fecha_compensado, compensadores.factura, compensandores_third.name, products.code, products.name, categories.name;
+        GROUP BY compensadores.fecha_compensado, compensadores.factura, compensandores_third.name, products.code, products.name, categories.name, compensadores_details.peso;
         ");
 
         // Combinar los resultados de data1 y data2 en un solo array
