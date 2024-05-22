@@ -208,10 +208,13 @@ Route::group(['middleware' => [('auth')]], function () {
 
     //reportes Compras x productos
     //Route::get('report_compras_x_prod/excel/', [reportecompraprodController::class, 'reporteExcel']);
-    //Route::get('/report_compras_x_prod/excel', [reportecompraprodController::class, 'descargarExcel'])->name('report_compras_x_prod.excel');   
-
+    
+    
+    
     Route::get('report_compras_x_prod/excel/{f1}/{f2}', [reportecompraprodController::class, 'reporteExcel']);
-
+    //Route::get('report_compras_x_prod', [reportecompraprodController::class, 'reporteExcel']);
+    //Route::get('export-to-excel', 'TuControlador@exportToExcel')->name('exportToExcel');
+    //Route::get('/report_compras_x_prod/excel', [reportecompraprodController::class, 'reporteExcel'])->name('report_compras_x_prod.excel');   
 
     Route::get('todos', TodosController::class . '@index')->name('todos');
 

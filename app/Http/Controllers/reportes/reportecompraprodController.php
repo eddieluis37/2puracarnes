@@ -26,24 +26,16 @@ class reportecompraprodController extends Controller
      */
     public function index(Request $request)
     {
+        $dateFrom = session('dateFrom');
+        $dateTo = session('dateTo');
 
-        $dateFrom = '2024-03-01';
-        $dateTo = Carbon::parse($request->input('dateTo'))->format('Y-m-d');
+        /*  $dateFrom = '2024-05-01';
+        $dateTo = Carbon::parse($request->input('dateTo'))->format('Y-m-d');  */
 
-        /*  $category = Category::whereIn('id', [1, 2, 3, 4, 5, 6, 7, 8, 9])->orderBy('name', 'asc')->get();
- */
-        /* $dateFrom = $request->input('dateFrom');
-        $dateTo = $request->input('dateTo');
- */
         $category = Category::orderBy('name', 'asc')->get();
         $centros = Centrocosto::Where('status', 1)->get();
 
-        // llama al metodo para calcular el stock
-        //   $this->totales(request());
-        $response = $this->totales(request()); // Call the totales method
-        $totalStock = $response->getData()->totalStock; // Retrieve the totalStock value from the response
-
-        return view('reportes.compras_por_productos', compact('category', 'centros', 'dateFrom', 'dateTo', 'totalStock'));
+        return view('reportes.compras_por_productos', compact('category', 'centros', 'dateFrom', 'dateTo'));
     }
 
 
@@ -51,6 +43,8 @@ class reportecompraprodController extends Controller
     {
         $dateFrom = $request->input('dateFrom');
         $dateTo = $request->input('dateTo');
+        // Guardar los valores en la sesión
+        session(['dateFrom' => $dateFrom, 'dateTo' => $dateTo]);
 
         $data = DB::select("
         SELECT
@@ -161,16 +155,18 @@ class reportecompraprodController extends Controller
             ->make(true);
     }
 
-    public function reporteExcel(Request $request)
+    public function reporteExcel($dateFrom, $dateTo)
     {
-        $dateFrom = '2024-05-01';
-        $dateTo = Carbon::parse($request->input('dateTo'))->format('Y-m-d');
+        /*   $dateFrom = '2024-05-20'; */
+        // $dateTo = Carbon::parse($request->input('dateTo'))->format('Y-m-d');
+        $dateFrom = $dateFrom;
+        $dateTo = $dateTo;
 
 
         /*   $dateFrom = $request->input('dateFrom');
         $dateTo = $request->input('dateTo');
  */
-      //  dd($dateFrom, $dateTo);
+        // dd($dateFrom, $dateTo);
 
         $reportName = 'Reporte compras por productos_' . uniqid() . '.xlsx';
         return Excel::download(new ComprasXProdExport($dateFrom, $dateTo), $reportName);
