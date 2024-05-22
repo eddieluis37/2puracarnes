@@ -47,8 +47,6 @@
           </a>
         </div>
 
-       <!--  <a href="{{ route('report_compras_x_prod.excel') }}" class="btn btn-primary">Export to Excel</a> -->
-
         @can('Cerrar_Inventario')
 
 
@@ -77,11 +75,13 @@
             <tfoot>
               <tr>
                 <th>Totales</th>
-                <td><div class="col-sm-6 col-md-2 mt-3">
-          <a class="btn btn-dark btn-block {{(2) < 1 ? 'disabled' : '' }}" href="{{ url('report_compras_x_prod/excel' . '/' . $dateFrom. '/' . $dateTo) }}" target="_blank">
-            <i class="far fa-file-excel"></i>
-          </a>
-        </div></td>
+                <td>
+                  <div class="col-sm-6 col-md-2 mt-3">
+                    <a class="btn btn-dark btn-block {{(2) < 1 ? 'disabled' : '' }}" href="{{ url('report_compras_x_prod/excel' . '/' . $dateFrom. '/' . $dateTo) }}" target="_blank">
+                      <i class="far fa-file-excel"></i>
+                    </a>
+                  </div>
+                </td>
                 <td></td>
                 <td>0.00</td>
                 <td>0.00</td>
