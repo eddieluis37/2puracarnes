@@ -16,7 +16,7 @@ const token = document
 
 var dataTable;
 
-function initializeDataTable(startDateId = "-1", endDateId = "-1") {
+function initializeDataTable(dateFrom = "-1", dateTo = "-1") {
     dataTable = $("#tableInventory").DataTable({
         paging: false,
         pageLength: 150,
@@ -27,8 +27,8 @@ function initializeDataTable(startDateId = "-1", endDateId = "-1") {
             url: "/showReportComprasPorProd",
             type: "GET",
             data: {
-                startDateId: startDateId,
-                endDateId: endDateId,
+                dateFrom: dateFrom,
+                dateTo: dateTo,
             },
         },
         columns: [
@@ -326,13 +326,13 @@ function initializeDataTable(startDateId = "-1", endDateId = "-1") {
 $(document).ready(function () {
     initializeDataTable("-1");
 
-    $("#startDate, #endDate").on("change", function () {
-        var startDateId = $("#startDate").val();
-        var endDateId = $("#endDate").val();
+    $("#dateFrom, #dateTo").on("change", function () {
+        var dateFrom = $("#dateFrom").val();
+        var dateTo = $("#dateTo").val();
 
         dataTable.destroy();
-        initializeDataTable(startDateId, endDateId);
-        cargarTotales(startDateId, endDateId);
+        initializeDataTable(dateFrom, dateTo);
+        cargarTotales(dateFrom, dateTo);
     });
 });
 
@@ -348,14 +348,14 @@ document
                     const dataform = new FormData();
 
                     const var_startDateId =
-                        document.querySelector("#startDate");
-                    const var_endDateId = document.querySelector("#endDate");
+                        document.querySelector("#dateFrom");
+                    const var_endDateId = document.querySelector("#dateTo");
 
                     dataform.append(
-                        "startDateId",
+                        "dateFrom",
                         Number(var_startDateId.value)
                     );
-                    dataform.append("endDateId", Number(var_endDateId.value));
+                    dataform.append("dateTo", Number(var_endDateId.value));
 
                     return sendData("/cargarInventariohist", dataform, token);
                 }

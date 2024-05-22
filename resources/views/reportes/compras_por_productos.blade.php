@@ -30,26 +30,27 @@
         <div class="col-sm-6 col-md-3">
           <h6>Fecha y hora inicial</h6>
           <div class="form-group">
-          <input type="datetime-local" class="form-control" value="{{ $startDate ?? date('Y-m-d') }}T00:00" name="startDate" id="startDate" required data-bs-toggle="tooltip" title="Selecciona la fecha y hora inicial desde el calendario">
+            <input wire:model="dateFrom" type="datetime-local" class="form-control" value="{{ $dateFrom ?? date('Y-m-d') }}T00:00" name="dateFrom" id="dateFrom" required data-bs-toggle="tooltip" title="Selecciona la fecha y hora inicial desde el calendario">
           </div>
         </div>
         <div class="col-sm-6 col-md-3">
           <h6>Fecha y hora final</h6>
           <div class="form-group">
-            <input type="datetime-local" class="form-control" value="{{ $endDate ?? date('Y-m-d') }}T23:59" name="endDate" id="endDate" required data-bs-toggle="tooltip" title="Selecciona la fecha y hora final desde el calendario">
+            <input wire:model="dateTo" type="datetime-local" class="form-control" value="{{ $dateTo ?? date('Y-m-d') }}T23:59" name="dateTo" id="dateTo" required data-bs-toggle="tooltip" title="Selecciona la fecha y hora final desde el calendario">
           </div>
         </div>
 
-        <!--   <div class="col-md-3 text-right ml-auto">
-          <div style="margin-top:28px;" clas="">
-            <button class="btn btn-success btn-lg" type="button" id="cargarInventarioBtn"></button>
-          </div>
+
+        <div class="col-sm-6 col-md-2 mt-3">
+          <a class="btn btn-dark btn-block {{(2) < 1 ? 'disabled' : '' }}" href="{{ url('report_compras_x_prod/excel' . '/' . $dateFrom. '/' . $dateTo) }}" target="_blank">
+            <i class="far fa-file-excel"></i> Excel
+          </a>
         </div>
 
         @can('Cerrar_Inventario')
 
 
-        @endcan -->
+        @endcan
 
 
         <div class="table-responsive mt-1" style="overflow-x: auto;">
@@ -61,8 +62,8 @@
                 <th class="table-th" title="Categoria" style="text-align: center;">CAT</th>
                 <th class="table-th text-white" title="Cantidades compras lotes" style="text-align: center;">#C_LOTE</th>
                 <th class="table-th text-white" title="Costos compras lotes" style="text-align: center;">$C_LOTE</th>
-                <th class="table-th text-white" title="Cantidades compras compensadas" style="text-align: center;">#C_COMP</th>      
-                <th class="table-th text-white" title="Precio compras compensadas" style="text-align: center;">$P_COMP</th>    
+                <th class="table-th text-white" title="Cantidades compras compensadas" style="text-align: center;">#C_COMP</th>
+                <th class="table-th text-white" title="Precio compras compensadas" style="text-align: center;">$P_COMP</th>
                 <th class="table-th text-white" title="Subtotal compras compensadas" style="text-align: center;">$C_COMP</th>
                 <th class="table-th text-white" title="Total cantidades" style="text-align: center;">T#CANT</th>
                 <th class="table-th text-white" title="Total costos" style="text-align: center;">T_COSTO</th>
@@ -78,12 +79,12 @@
                 <td></td>
                 <td>0.00</td>
                 <td>0.00</td>
-                <td>0.00</td>                
-                <td>0.00</td> 
-                <td>0.00</td> 
                 <td>0.00</td>
-                <td>0.00</td>                
-                <td>0.00</td>               
+                <td>0.00</td>
+                <td>0.00</td>
+                <td>0.00</td>
+                <td>0.00</td>
+                <td>0.00</td>
               </tr>
             </tfoot>
           </table>

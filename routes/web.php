@@ -33,6 +33,7 @@ use App\Http\Livewire\Select2;
 use App\Http\Livewire\ThirdsController;
 use App\Http\Livewire\UsersController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ExportComprasXProdController;
 
 /*************** SIN LIVWWIRE **********************/
 
@@ -204,6 +205,12 @@ Route::group(['middleware' => [('auth')]], function () {
     Route::get('report_sales_x_prod/excel/{f1}/{f2}', [ExportSalesXProdController::class, 'reporteExcel']);
 
     //Route::post('citywithstatecountry', [CityController::class, 'citywithstatecountry'])->name('citywithstatecountry');
+
+    //reportes Compras x productos
+    //Route::get('report_compras_x_prod/excel/', [reportecompraprodController::class, 'reporteExcel']);
+    //Route::get('/report_compras_x_prod/excel', [reportecompraprodController::class, 'descargarExcel'])->name('report_compras_x_prod.excel');   
+
+    Route::get('report_compras_x_prod/excel/{f1}/{f2}', [reportecompraprodController::class, 'reporteExcel']);
 
 
     Route::get('todos', TodosController::class . '@index')->name('todos');

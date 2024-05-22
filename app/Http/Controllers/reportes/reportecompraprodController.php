@@ -11,7 +11,9 @@ use App\Models\Compensadores_detail;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 use App\Models\Product;
+use Maatwebsite\Excel\Facades\Excel;
 
+use App\Exports\ComprasXProdExport;
 
 
 
@@ -22,14 +24,16 @@ class reportecompraprodController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $startDate = Carbon::parse(Carbon::now())->format('Y-m-d');
-        $endDate = Carbon::parse(Carbon::now())->format('Y-m-d');
 
-        /*      $startDate = Carbon::parse(Carbon::now())->format('Y-m-d H:i'); */
+        $dateFrom = '2024-03-01';
+        $dateTo = Carbon::parse($request->input('dateTo'))->format('Y-m-d');
 
         /*  $category = Category::whereIn('id', [1, 2, 3, 4, 5, 6, 7, 8, 9])->orderBy('name', 'asc')->get();
+ */
+        /* $dateFrom = $request->input('dateFrom');
+        $dateTo = $request->input('dateTo');
  */
         $category = Category::orderBy('name', 'asc')->get();
         $centros = Centrocosto::Where('status', 1)->get();
@@ -39,17 +43,14 @@ class reportecompraprodController extends Controller
         $response = $this->totales(request()); // Call the totales method
         $totalStock = $response->getData()->totalStock; // Retrieve the totalStock value from the response
 
-        return view('reportes.compras_por_productos', compact('category', 'centros', 'startDate', 'endDate', 'totalStock'));
+        return view('reportes.compras_por_productos', compact('category', 'centros', 'dateFrom', 'dateTo', 'totalStock'));
     }
 
 
     public function show(Request $request)
     {
-        /* $startDate = '2024-05-08';
-        $endDate = '2024-05-09'; */
-
-        $startDateId = $request->input('startDateId');
-        $endDateId = $request->input('endDateId');
+        $dateFrom = $request->input('dateFrom');
+        $dateTo = $request->input('dateTo');
 
         $data = DB::select("
         SELECT
@@ -103,7 +104,7 @@ class reportecompraprodController extends Controller
             LEFT JOIN categories ON categories.id = P.category_id
             LEFT JOIN thirds AS beneficiores_third ON beneficiores.thirds_id = beneficiores_third.id
             WHERE (desposteres.beneficiores_id IS NOT NULL)
-            AND (beneficiores.fecha_beneficio BETWEEN '$startDateId' AND '$endDateId' OR beneficiores.fecha_beneficio IS NULL)
+            AND (beneficiores.fecha_beneficio BETWEEN '$dateFrom' AND '$dateTo' OR beneficiores.fecha_beneficio IS NULL)
             
             UNION ALL
             
@@ -126,7 +127,7 @@ class reportecompraprodController extends Controller
             LEFT JOIN categories ON categories.id = products.category_id
             LEFT JOIN thirds AS beneficiocerdos_third ON beneficiocerdos.thirds_id = beneficiocerdos_third.id
             WHERE (despostecerdos.beneficiocerdos_id IS NOT NULL)
-            AND (beneficiocerdos.fecha_beneficio BETWEEN '$startDateId' AND '$endDateId' OR beneficiocerdos.fecha_beneficio IS NULL)
+            AND (beneficiocerdos.fecha_beneficio BETWEEN '$dateFrom' AND '$dateTo' OR beneficiocerdos.fecha_beneficio IS NULL)
             
             UNION ALL
             
@@ -149,7 +150,7 @@ class reportecompraprodController extends Controller
             LEFT JOIN categories ON categories.id = products.category_id
             LEFT JOIN thirds AS compensandores_third ON compensadores.thirds_id = compensandores_third.id
             WHERE (compensadores_details.compensadores_id IS NOT NULL)
-            AND (compensadores.fecha_compensado BETWEEN '$startDateId' AND '$endDateId' OR compensadores.fecha_compensado IS NULL)
+            AND (compensadores.fecha_compensado BETWEEN '$dateFrom' AND '$dateTo' OR compensadores.fecha_compensado IS NULL)
         ) AS combined_data
     ) AS final_data
     GROUP BY product_code, product_name
@@ -160,23 +161,48 @@ class reportecompraprodController extends Controller
             ->make(true);
     }
 
+    public function reporteExcel(Request $request)
+    {
+        $dateFrom = '2024-05-01';
+        $dateTo = Carbon::parse($request->input('dateTo'))->format('Y-m-d');
+
+
+        /*   $dateFrom = $request->input('dateFrom');
+        $dateTo = $request->input('dateTo');
+ */
+      //  dd($dateFrom, $dateTo);
+
+        $reportName = 'Reporte compras por productos_' . uniqid() . '.xlsx';
+        return Excel::download(new ComprasXProdExport($dateFrom, $dateTo), $reportName);
+    }
+
     public function showEloquent(Request $request)
     {
-        /* $startDateId = $request->input('startDateId');
-        $endDateId = $request->input('endDateId'); */
+        /* $dateFrom = $request->input('dateFrom');
+        $dateTo = $request->input('dateTo'); */
 
-        /*   $startDateId = Carbon::now()->format('Y-m-d H:i:s');
-        $endDateId = Carbon::now()->format('Y-m-d H:i:s');
+        /*   $dateFrom = Carbon::now()->format('Y-m-d H:i:s');
+        $dateTo = Carbon::now()->format('Y-m-d H:i:s');
+
+          /*   $from = $request->input('dateFrom');
+        $to = $request->input('dateTo');
+
+         $from = '2024-04-01';
+        $to = '2024-05-16';        
+
+         $from = Carbon::parse($request->input('startDate'))->format('Y-m-d');
+        $to = Carbon::parse($request->input('endDate'))->format('Y-m-d');
+/*
  */
-        $startDateId = '2024-05-08 01:00:01';
-        $endDateId = '2024-05-08 21:20:01';
+        $dateFrom = '2024-05-08 01:00:01';
+        $dateTo = '2024-05-08 21:20:01';
 
         $data = Product::with(['compensadores_details', 'category', 'despostere', 'despostecerdo', 'despostepollo'])
             ->leftjoin('compensadores_details', 'products.id', '=', 'compensadores_details.products_id')
             ->leftjoin('desposteres', 'products.id', '=', 'desposteres.products_id')
             ->leftjoin('despostecerdos', 'products.id', '=', 'despostecerdos.products_id')
             ->leftjoin('despostepollos', 'products.id', '=', 'despostepollos.products_id')
-            ->whereHas('compensadores_details', function ($query) use ($startDateId, $endDateId) {
+            ->whereHas('compensadores_details', function ($query) use ($dateFrom, $dateTo) {
                 $query->whereBetween('created_at', ['2024-05-08 00:00', '2024-05-08 22:00'])
                     ->where('status', '1');
             })
