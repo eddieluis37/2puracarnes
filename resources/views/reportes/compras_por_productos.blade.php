@@ -41,7 +41,7 @@
         </div>
 
         <div class="col-sm-6 col-md-2 mt-3">
-          <button onclick="window.location.reload();" class="btn btn-danger">1.Validar</button>
+        <button onclick="window.location.reload();" class="btn btn-danger" data-bs-toggle="tooltip" title="Paso 1, antes del Paso 2">1.Validar</button>
         </div>
 
         <div class="col-sm-6 col-md-2 mt-3">
