@@ -40,12 +40,16 @@
           </div>
         </div>
 
+        <div class="col-sm-6 col-md-2 mt-3">
+          <button onclick="window.location.reload();" class="btn btn-danger">1.Validar</button>
+        </div>
 
         <div class="col-sm-6 col-md-2 mt-3">
           <a class="btn btn-dark btn-block {{(2) < 1 ? 'disabled' : '' }}" href="{{ url('report_compras_x_prod/excel' . '/' . $dateFrom. '/' . $dateTo) }}" target="_blank">
-            <i class="far fa-file-excel"></i> Excel
+            <i class="far fa-file-excel"></i> 2.Excel
           </a>
         </div>
+
 
         @can('Cerrar_Inventario')
 
