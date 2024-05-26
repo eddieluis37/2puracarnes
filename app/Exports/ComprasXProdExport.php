@@ -43,9 +43,9 @@ class ComprasXProdExport implements FromCollection, WithHeadings, WithCustomStar
 
         $data = DB::select("
         SELECT
-        fecha_compra,
+       /*  fecha_compra,
         factura_compra,
-        nombre_proveedor,
+        nombre_proveedor, */
         product_code,
         product_name,
         category_name,
