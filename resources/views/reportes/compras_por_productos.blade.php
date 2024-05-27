@@ -50,6 +50,9 @@
           </a>
         </div>
 
+        <div id="buttonContainer"></div>
+        
+
 
         @can('Cerrar_Inventario')
 

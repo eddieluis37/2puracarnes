@@ -223,7 +223,9 @@ function initializeDataTable(dateFrom = "-1", dateTo = "-1") {
                 "$" + formatCantidadSinCero(totalPrecioComprasComp);
 
             var totalSubtotalComprasComp = api
-                .column("total_subtotal_compras_comp:name", { search: "applied" })
+                .column("total_subtotal_compras_comp:name", {
+                    search: "applied",
+                })
                 .data()
                 .reduce(function (a, b) {
                     var value = parseFloat(b);
@@ -231,7 +233,7 @@ function initializeDataTable(dateFrom = "-1", dateTo = "-1") {
                 }, 0)
                 .toFixed(2);
             var totalSubtotalComprasCompFormatted =
-                "$" + formatCantidadSinCero(totalSubtotalComprasComp);    
+                "$" + formatCantidadSinCero(totalSubtotalComprasComp);
 
             var totalCant = api
                 .column("total_cantidades:name", { search: "applied" })
@@ -281,7 +283,7 @@ function initializeDataTable(dateFrom = "-1", dateTo = "-1") {
             $(api.column("total_precio_compras_comp:name").footer())
                 .html(totalPrecioComprasCompFormatted)
                 .css("text-align", "right");
-            
+
             $(api.column("total_subtotal_compras_comp:name").footer())
                 .html(totalSubtotalComprasCompFormatted)
                 .css("text-align", "right");
@@ -298,6 +300,32 @@ function initializeDataTable(dateFrom = "-1", dateTo = "-1") {
                 .html(totalCostoPromdFormatted)
                 .css("text-align", "right");
         },
+    });
+
+    // Agregar botón de exportar a Excel
+    console.log("Iniciando configuración de botones DataTable");
+    new $.fn.dataTable.Buttons(dataTable, {
+        buttons: [
+            {
+                extend: "excel",
+                text: '<i class="far fa-file-excel"></i>',
+                className: "btn btn-dark btn-block",
+                action: function (e, dt, button, config) {
+                    var dateFrom = $("#dateFrom").val();
+                    var dateTo = $("#dateTo").val();
+                    var url =
+                        "/report_compras_x_prod/excel/" +
+                        dateFrom +
+                        "/" +
+                        dateTo;
+                    if (!url) {
+                        alert("Error al obtener la URL de exportación a Excel");
+                    } else {
+                        window.open(url, "_blank");
+                    }
+                },
+            },
+        ],
     });
 
     // Agregar campos de búsqueda para la primera y cuarta columna de la tabla
@@ -321,6 +349,28 @@ function initializeDataTable(dateFrom = "-1", dateTo = "-1") {
             });
         }
     });
+
+    // Crear un nuevo botón
+    const button = document.createElement("button");
+    button.textContent = "Exportar a Excel"; // Texto del botón
+    button.classList.add("btn", "btn-dark", "btn-block"); // Clases CSS del botón
+
+    // Agregar un evento de clic al botón
+    button.addEventListener("click", function () {
+        // Obtener la URL dinámica
+        const dateFrom = $("#dateFrom").val(); // Ejemplo de fecha de inicio
+        const dateTo = $("#dateTo").val(); // Ejemplo de fecha de fin
+        const url = `../report_compras_x_prod/excel/${dateFrom}/${dateTo}`;
+
+        // Redirigir a la URL para exportar a Excel en una nueva pestaña
+        window.open(url, "_blank");
+    });
+
+    // Obtener el contenedor donde se insertará el botón
+    const buttonContainer = document.getElementById("buttonContainer");
+
+    // Insertar el botón en el contenedor
+    buttonContainer.appendChild(button);
 }
 
 $(document).ready(function () {
@@ -347,14 +397,10 @@ document
                     loadingStart(element);
                     const dataform = new FormData();
 
-                    const var_startDateId =
-                        document.querySelector("#dateFrom");
+                    const var_startDateId = document.querySelector("#dateFrom");
                     const var_endDateId = document.querySelector("#dateTo");
 
-                    dataform.append(
-                        "dateFrom",
-                        Number(var_startDateId.value)
-                    );
+                    dataform.append("dateFrom", Number(var_startDateId.value));
                     dataform.append("dateTo", Number(var_endDateId.value));
 
                     return sendData("/cargarInventariohist", dataform, token);
