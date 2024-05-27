@@ -31,10 +31,10 @@ class ComprasXProdExport implements FromCollection, WithHeadings, WithCustomStar
     function __construct($f1, $f2)
     {
         $this->dateFrom = $f1;
-        $this->dateTo = $f2;     
+        $this->dateTo = $f2;
 
-      //  dd($this->dateFrom, $this->dateTo);
-      
+        //  dd($this->dateFrom, $this->dateTo);
+
     }
 
     public function collection()
@@ -190,10 +190,52 @@ class ComprasXProdExport implements FromCollection, WithHeadings, WithCustomStar
                 $event->sheet->getDelegate()->getColumnDimension('I')->setAutoSize(true);
                 $event->sheet->getDelegate()->getColumnDimension('J')->setAutoSize(true);
                 $event->sheet->getDelegate()->getColumnDimension('K')->setAutoSize(true);
-                $event->sheet->getDelegate()->getColumnDimension('L')->setAutoSize(true);
+
                 // Ajustar automáticamente el tamaño de todas las columnas
                 //      $event->sheet->getDelegate()->getDelegate()->getDelegate()->calculateColumnWidths();
+
+                // Agrega la funcion autosuma a la columnas
+                $event->sheet->getDelegate()->setCellValue('D' . ($event->sheet->getDelegate()->getHighestRow() + 1), '=SUM(D2:D' . $event->sheet->getDelegate()->getHighestRow() . ')');
+                $event->sheet->getDelegate()->getStyle('D')->getNumberFormat()->setFormatCode('#,##0.00');
+
+                $event->sheet->getDelegate()->setCellValue('E' . ($event->sheet->getDelegate()->getHighestRow() + 1), '=SUM(E2:E' . $event->sheet->getDelegate()->getHighestRow() . ')');
+                $event->sheet->getDelegate()->getStyle('E')->getNumberFormat()->setFormatCode('#,##0.00');
+
+                $event->sheet->getDelegate()->setCellValue('F' . ($event->sheet->getDelegate()->getHighestRow() + 1), '=SUM(F2:F' . $event->sheet->getDelegate()->getHighestRow() . ')');
+                $event->sheet->getDelegate()->getStyle('F')->getNumberFormat()->setFormatCode('#,##0.00');
+
+                $event->sheet->getDelegate()->setCellValue('G' . ($event->sheet->getDelegate()->getHighestRow() + 1), '=SUM(G2:G' . $event->sheet->getDelegate()->getHighestRow() . ')');
+                $event->sheet->getDelegate()->getStyle('G')->getNumberFormat()->setFormatCode('#,##0.00');
+
+                $event->sheet->getDelegate()->setCellValue('H' . ($event->sheet->getDelegate()->getHighestRow() + 1), '=SUM(H2:H' . $event->sheet->getDelegate()->getHighestRow() . ')');
+                $event->sheet->getDelegate()->getStyle('H')->getNumberFormat()->setFormatCode('#,##0.00');
+
+                $event->sheet->getDelegate()->setCellValue('I' . ($event->sheet->getDelegate()->getHighestRow() + 1), '=SUM(I2:I' . $event->sheet->getDelegate()->getHighestRow() . ')');
+                $event->sheet->getDelegate()->getStyle('I')->getNumberFormat()->setFormatCode('#,##0.00');
+
+                $event->sheet->getDelegate()->setCellValue('J' . ($event->sheet->getDelegate()->getHighestRow() + 1), '=SUM(J2:J' . $event->sheet->getDelegate()->getHighestRow() . ')');
+                $event->sheet->getDelegate()->getStyle('J')->getNumberFormat()->setFormatCode('#,##0.00');
+
+                $event->sheet->getDelegate()->setCellValue('K' . ($event->sheet->getDelegate()->getHighestRow() + 1), '=SUM(K2:K' . $event->sheet->getDelegate()->getHighestRow() . ')');
+                $event->sheet->getDelegate()->getStyle('K')->getNumberFormat()->setFormatCode('#,##0.00');
             },
         ];
     }
+
+    /* public function registerEvents(): array
+    {
+        return [
+            AfterSheet::class => function (AfterSheet $event) {
+                $columns = range('D', 'K');
+
+                foreach ($columns as $column) {
+                    $event->sheet->getDelegate()->getColumnDimension($column)->setAutoSize(true);
+
+                    $lastRow = $event->sheet->getDelegate()->getHighestRow();
+                    $event->sheet->getDelegate()->setCellValue($column . ($lastRow + 1), "=SUM($column:$column$lastRow)");
+                    $event->sheet->getDelegate()->getStyle($column)->getNumberFormat()->setFormatCode('#,##0.00');
+                }
+            },
+        ];
+    } */
 }
