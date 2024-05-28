@@ -50,18 +50,18 @@
 			</tr>
 			<tr>
 				<td width="100%" class="text-left text-company" style="vertical-align: top; padding-top: 7px">
-					<span style="font-size: 11px; font-weight: bold; display: block; margin: 2;">Fecha y hora:<strong> {{\Carbon\Carbon::now()->format('Y-m-d H:i')}}</strong></span>
-					<span style="font-size: 11px; font-weight: bold; display: block; margin: 2;">Cajero:<strong> {{$sale[0]->nameuser}}</strong></span>
-					<span style="font-size: 11px; font-weight: bold; display: block; margin: 2;">Cliente:<strong> {{$sale[0]->namethird}}</strong></span>
-					<span style="font-size: 11px; font-weight: bold; display: block; margin: 2;">Nit / C.C.:<strong> {{$sale[0]->identification}}</strong></span>
-					<span style="font-size: 11px; font-weight: bold; display: block; margin: 2;">Dirección:<strong> {{$sale[0]->direccion}}</strong></span>
-					<span style="font-size: 11px; font-weight: bold; display: block; margin: 2;">Factura interna:<strong> {{$sale[0]->consecutivo}}</strong></span>
-					<span style="font-size: 11px; font-weight: bold; display: block; margin: 2;">Estado_Factura:
+					<span style="font-size: 11px; font-weight: lighter; display: block; margin: 2;">Fecha y hora:<strong> {{\Carbon\Carbon::now()->format('Y-m-d H:i')}}</strong></span>
+					<span style="font-size: 11px; font-weight: lighter; display: block; margin: 2;">Cajero:<strong> {{$sale[0]->nameuser}}</strong></span>
+					<span style="font-size: 11px; font-weight: lighter; display: block; margin: 2;">Cliente:<strong> {{$sale[0]->namethird}}</strong></span>
+					<span style="font-size: 11px; font-weight: lighter; display: block; margin: 2;">Nit / C.C.:<strong> {{ number_format($sale[0]->identification,0, ',', '.')}}</strong></span>
+					<span style="font-size: 11px; font-weight: lighter; display: block; margin: 2;">Dirección:<strong> {{$sale[0]->direccion}}</strong></span>
+					<span style="font-size: 11px; font-weight: lighter; display: block; margin: 2;">Factura interna:<strong> {{$sale[0]->consecutivo}}</strong></span>
+					<span style="font-size: 11px; font-weight: lighter; display: block; margin: 2;">Estado_Factura:
 						{{-- Display "Cerrada" if status is 1 --}}
 						{{-- Display "Pendiente" if status is 0 --}}
 						<strong>{{ $sale[0]->status == 1 ? 'Cerrada' : 'Pendiente' }}</strong>
 					</span>
-					<span style="font-size: 11px; font-weight: bold; display: block; margin: 2;">Items:<strong>{{$sale->sum('items')}}</strong></span>
+					<span style="font-size: 11px; font-weight: lighter; display: block; margin: 2;">Items:<strong>{{$sale->sum('items')}}</strong></span>
 				</td>
 			</tr>
 		</table>
@@ -82,8 +82,8 @@
 				<tr>
 					<td align="left"><strong>{{$item->nameprod}}</strong></td>
 					<td align="center"><strong>{{$item->quantity}}</strong></td>
-					<td align="center"><strong>{{number_format($item->price),2}}</strong></td>
-					<td align="right"><strong>{{number_format($item->total),2}}</strong></td>
+					<td align="center"><strong>{{number_format($item->price ,0, ',', '.' )}}</strong></td>
+					<td align="right"><strong>{{number_format($item->total ,0, ',', '.' )}}</strong></td>
 				</tr>
 				@endforeach
 			</tbody>
@@ -97,29 +97,29 @@
 					</td>
 					<td></td>
 					<td align="right">
-						<span><strong>{{ number_format($sale->sum('total_valor_a_pagar'),0)}}</strong></span>
+						<span><strong>{{ number_format($sale->sum('total_valor_a_pagar'),0, ',', '.' )}}</strong></span>
 					</td>
 				</tr>
 			</tfoot>
 		</table>
-		<hr>***************************
+		<hr>******************
 		<p class="text-center" style="font-size: 12px;">
 			<span><strong>Forma de pago</strong></span>
 		</p>
 		<p class="text-right" style="font-size: 12px;">
-		<strong><span>EFECTIVO: </span><span>{{ number_format($sale[0]->valor_a_pagar_efectivo,0)}}</strong></span>
+		<strong><span>EFECTIVO: </span><span>{{ number_format($sale[0]->valor_a_pagar_efectivo,0, ',', '.')}}</strong></span>
 		</p>
 		<p class="text-right" style="font-size: 12px;">
-		<strong><span>{{$sale[0]->formapago1}}: </span><span>{{ number_format($sale[0]->valor_a_pagar_tarjeta,0)}}</></span>
+		<strong><span>{{$sale[0]->formapago1}}: </span><span>{{ number_format($sale[0]->valor_a_pagar_tarjeta,0, ',', '.')}}</></span>
 		</p>
 		<p class="text-right" style="font-size: 12px;">
-		<strong><span>{{$sale[0]->formapago2}}: </span><span>{{ number_format($sale[0]->valor_a_pagar_otros,0)}}</strong></span>
+		<strong><span>{{$sale[0]->formapago2}}: </span><span>{{ number_format($sale[0]->valor_a_pagar_otros,0, ',', '.')}}</strong></span>
 		</p>
 		<p class="text-right" style="font-size: 12px;">
-		<strong><span>{{$sale[0]->formapago3}}: </span><span>{{ number_format($sale[0]->valor_a_pagar_credito,0)}}</strong></span>
+		<strong><span>{{$sale[0]->formapago3}}: </span><span>{{ number_format($sale[0]->valor_a_pagar_credito,0, ',', '.')}}</strong></span>
 		</p>
 		<p class="text-right" style="font-size: 12px;">
-			<span><strong>Cambio: {{ number_format($sale[0]->cambio,0)}}</strong></span>
+			<span><strong>Cambio: {{ number_format($sale[0]->cambio,0, ',', '.')}}</strong></span>
 		</p>
 		<hr width="60mm" color="black" size="3">
 		<p align="center" style="font-size: 11px; margin-top: 8px;"><strong>A esta factura de venta aplican las normas relativas a la letra de cambio (artículo 5 Ley 1231 de 2008). Con esta el Comprador declara haber recibido real y materialmente las mercancías o prestación de servicios descritos en este título - Valor. Número Autorización 18764064061708 aprobado en 20240120 prefijo ERPC desde el número 1 al 10000, del dia 20 de enero de 2024, Vigencia: 6 Meses</strong></p>
