@@ -349,28 +349,7 @@ function initializeDataTable(dateFrom = "-1", dateTo = "-1") {
             });
         }
     });
-
-    // Crear un nuevo botón
-    const button = document.createElement("button");
-    button.textContent = "Exportar a Excel"; // Texto del botón
-    button.classList.add("btn", "btn-dark", "btn-block"); // Clases CSS del botón
-
-    // Agregar un evento de clic al botón
-    button.addEventListener("click", function () {
-        // Obtener la URL dinámica
-        const dateFrom = $("#dateFrom").val(); // Ejemplo de fecha de inicio
-        const dateTo = $("#dateTo").val(); // Ejemplo de fecha de fin
-        const url = `../report_compras_x_prod/excel/${dateFrom}/${dateTo}`;
-
-        // Redirigir a la URL para exportar a Excel en una nueva pestaña
-        window.open(url, "_blank");
-    });
-
-    // Obtener el contenedor donde se insertará el botón
-    const buttonContainer = document.getElementById("buttonContainer");
-
-    // Insertar el botón en el contenedor
-    buttonContainer.appendChild(button);
+   
 }
 
 $(document).ready(function () {

@@ -30,35 +30,29 @@
         <div class="col-sm-6 col-md-3">
           <h6>Fecha y hora inicial</h6>
           <div class="form-group">
-            <input wire:model="dateFrom" type="datetime-local" class="form-control" value="{{ $dateFrom ?? date('Y-m-d') }}T00:00" name="dateFrom" id="dateFrom" required data-bs-toggle="tooltip" title="Selecciona la fecha y hora inicial desde el calendario">
+            <input type="datetime-local" class="form-control" value="{{ $dateFrom ?? date('Y-m-d') }}T00:00" name="dateFrom" id="dateFrom" required data-bs-toggle="tooltip" title="Selecciona la fecha y hora inicial desde el calendario">
           </div>
         </div>
         <div class="col-sm-6 col-md-3">
           <h6>Fecha y hora final</h6>
           <div class="form-group">
-            <input wire:model="dateTo" type="datetime-local" class="form-control" value="{{ $dateTo ?? date('Y-m-d') }}T23:59" name="dateTo" id="dateTo" required data-bs-toggle="tooltip" title="Selecciona la fecha y hora final desde el calendario">
+            <input type="datetime-local" class="form-control" value="{{ $dateTo ?? date('Y-m-d') }}T23:59" name="dateTo" id="dateTo" required data-bs-toggle="tooltip" title="Selecciona la fecha y hora final desde el calendario">
           </div>
         </div>
 
         <div class="col-sm-6 col-md-2 mt-3">
-        <button onclick="window.location.reload();" class="btn btn-danger" data-bs-toggle="tooltip" title="Paso 1, antes del Paso 2">1.Validar</button>
+          <button class="btn btn-dark btn-block" onclick="exportarExcel()">
+            <i class="far fa-file-excel"></i> Exportar a Excel
+          </button>
         </div>
 
         <div class="col-sm-6 col-md-2 mt-3">
-          <a class="btn btn-dark btn-block {{(2) < 1 ? 'disabled' : '' }}" href="{{ url('report_compras_x_prod/excel' . '/' . $dateFrom. '/' . $dateTo) }}" target="_blank">
-            <i class="far fa-file-excel"></i> 2.Excel
-          </a>
+          <button onclick="window.location.reload();" class="btn btn-danger" data-bs-toggle="tooltip" title="Solo en caso que requiera">Limpiar</button>
         </div>
-
-        <div id="buttonContainer"></div>
-        
-
 
         @can('Cerrar_Inventario')
 
-
         @endcan
-
 
         <div class="table-responsive mt-1" style="overflow-x: auto;">
           <table id="tableInventory" class="table table-success table-striped mt-1">
@@ -111,3 +105,13 @@
   @section('script')
   <script src="{{asset('code/js/reportes/compras-por-productos-index.js')}} " type="module"></script>
   @endsection
+
+  <script>
+    // Función para exportar a Excel
+    function exportarExcel() {
+      const dateFrom = $("#dateFrom").val();
+      const dateTo = $("#dateTo").val();
+      const url = `../report_compras_x_prod/excel/${dateFrom}/${dateTo}`;
+      window.open(url, "_blank");
+    }
+  </script>

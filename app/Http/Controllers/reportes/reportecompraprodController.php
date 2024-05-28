@@ -27,10 +27,11 @@ class reportecompraprodController extends Controller
     public function index(Request $request)
     {
         $dateFrom = session('dateFrom');
-        $dateTo = session('dateTo');
+        $dateTo = Carbon::parse($request->input('dateTo'))->format('Y-m-d');
+       /*  $dateTo = session('dateTo'); */
 
         /*  $dateFrom = '2024-05-01';
-        $dateTo = Carbon::parse($request->input('dateTo'))->format('Y-m-d');  */
+         */
 
         $category = Category::orderBy('name', 'asc')->get();
         $centros = Centrocosto::Where('status', 1)->get();
