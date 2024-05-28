@@ -195,28 +195,23 @@ class ComprasXProdExport implements FromCollection, WithHeadings, WithCustomStar
                 //      $event->sheet->getDelegate()->getDelegate()->getDelegate()->calculateColumnWidths();
 
                 // Agrega la funcion autosuma a la columnas
+                /*   $event->sheet->getDelegate()->setCellValue('K' . ($event->sheet->getDelegate()->getHighestRow() + 1), '=SUM(K2:K' . $event->sheet->getDelegate()->getHighestRow() . ')');
+                
+                $event->sheet->getDelegate()->setCellValue('J' . ($event->sheet->getDelegate()->getHighestRow() + 1), '=SUM(J2:J' . $event->sheet->getDelegate()->getHighestRow() . ')');
+                $event->sheet->getDelegate()->setCellValue('I' . ($event->sheet->getDelegate()->getHighestRow() + 1), '=SUM(I2:I' . $event->sheet->getDelegate()->getHighestRow() . ')');
+                $event->sheet->getDelegate()->setCellValue('H' . ($event->sheet->getDelegate()->getHighestRow() + 1), '=SUM(H2:H' . $event->sheet->getDelegate()->getHighestRow() . ')');           
+                $event->sheet->getDelegate()->setCellValue('G' . ($event->sheet->getDelegate()->getHighestRow() + 1), '=SUM(G2:G' . $event->sheet->getDelegate()->getHighestRow() . ')');
+                $event->sheet->getDelegate()->setCellValue('F' . ($event->sheet->getDelegate()->getHighestRow() + 1), '=SUM(F2:F' . $event->sheet->getDelegate()->getHighestRow() . ')');
+                $event->sheet->getDelegate()->setCellValue('E' . ($event->sheet->getDelegate()->getHighestRow() + 1), '=SUM(E2:E' . $event->sheet->getDelegate()->getHighestRow() . ')');
+             */
                 $event->sheet->getDelegate()->setCellValue('D' . ($event->sheet->getDelegate()->getHighestRow() + 1), '=SUM(D2:D' . $event->sheet->getDelegate()->getHighestRow() . ')');
                 $event->sheet->getDelegate()->getStyle('D')->getNumberFormat()->setFormatCode('#,##0.00');
-
-                $event->sheet->getDelegate()->setCellValue('E' . ($event->sheet->getDelegate()->getHighestRow() + 1), '=SUM(E2:E' . $event->sheet->getDelegate()->getHighestRow() . ')');
                 $event->sheet->getDelegate()->getStyle('E')->getNumberFormat()->setFormatCode('#,##0.00');
-
-                $event->sheet->getDelegate()->setCellValue('F' . ($event->sheet->getDelegate()->getHighestRow() + 1), '=SUM(F2:F' . $event->sheet->getDelegate()->getHighestRow() . ')');
                 $event->sheet->getDelegate()->getStyle('F')->getNumberFormat()->setFormatCode('#,##0.00');
-
-                $event->sheet->getDelegate()->setCellValue('G' . ($event->sheet->getDelegate()->getHighestRow() + 1), '=SUM(G2:G' . $event->sheet->getDelegate()->getHighestRow() . ')');
                 $event->sheet->getDelegate()->getStyle('G')->getNumberFormat()->setFormatCode('#,##0.00');
-
-                $event->sheet->getDelegate()->setCellValue('H' . ($event->sheet->getDelegate()->getHighestRow() + 1), '=SUM(H2:H' . $event->sheet->getDelegate()->getHighestRow() . ')');
                 $event->sheet->getDelegate()->getStyle('H')->getNumberFormat()->setFormatCode('#,##0.00');
-
-                $event->sheet->getDelegate()->setCellValue('I' . ($event->sheet->getDelegate()->getHighestRow() + 1), '=SUM(I2:I' . $event->sheet->getDelegate()->getHighestRow() . ')');
                 $event->sheet->getDelegate()->getStyle('I')->getNumberFormat()->setFormatCode('#,##0.00');
-
-                $event->sheet->getDelegate()->setCellValue('J' . ($event->sheet->getDelegate()->getHighestRow() + 1), '=SUM(J2:J' . $event->sheet->getDelegate()->getHighestRow() . ')');
                 $event->sheet->getDelegate()->getStyle('J')->getNumberFormat()->setFormatCode('#,##0.00');
-
-                $event->sheet->getDelegate()->setCellValue('K' . ($event->sheet->getDelegate()->getHighestRow() + 1), '=SUM(K2:K' . $event->sheet->getDelegate()->getHighestRow() . ')');
                 $event->sheet->getDelegate()->getStyle('K')->getNumberFormat()->setFormatCode('#,##0.00');
             },
         ];
