@@ -36,7 +36,7 @@
 			<tr>
 				<td colspan=" 2" class="text-center">
 					<span style="font-size: 9px; font-weight: bold; display: block; margin-top: 10;">CENTRO COSTO: {{$order[0]->namecentrocosto}} | Digitador: {{$order[0]->nameuser}}</span>
-					<span style="font-size: 9px; font-weight: bold; display: block; margin: 0;">N°. ORDEN DE PEDIDO {{$order[0]->resolucion}} | Alistador: {{$order[0]->nombre_alistador}} |
+					<span style="font-size: 9px; font-weight: bold; display: block; margin: 0;">N°. ORDEN DE PEDIDO {{$order[0]->resolucion}} | ITEMS: {{$order->sum('items')}} | Alistador: {{$order[0]->nombre_alistador}} |
 					SUBCENTRO DE COSTO: <strong> {{$order[0]->subcentro}}</strong></span>
 				</td>
 			</tr>
@@ -68,14 +68,14 @@
 						{{-- Display "Pendiente" if status is 0 --}}
 						<strong>{{ $order[0]->status == 1 ? 'Cerrada' : 'Pendiente' }}</strong>
 					</span>
-					<span style="font-size: 8px; font-weight: lighter; display: block; margin: 2;">Items:<strong>{{$order->sum('items')}}</strong></span>
+					<!-- <span style="font-size: 8px; font-weight: lighter; display: block; margin: 2;">Items:<strong>{{$order->sum('items')}}</strong></span> -->
 				</td>
 
 			</tr>
 		</table>
 	</section>
 
-	<section style="margin-top: 37px">
+	<section style="margin-top: 15px">
 		<table cellpadding="0" cellspacing="0" class="table-items" width="100%">
 			<thead>
 				<tr>

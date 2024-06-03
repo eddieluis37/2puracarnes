@@ -51,13 +51,13 @@ class CreateThirdsTable extends Migration
 
             $table->string('celular', 50);
 
-            $table->string('nombre_contacto', 150);
+            $table->string('nombre_contacto', 150)->nullable();
 
             $table->boolean('status')->parent_select()->default(true);
 
             $table->string('correo', 100)->nullable();
 
-            $table->boolean('cliente')->parent_select()->default(true)->nullable();
+            $table->boolean('cliente')->parent_select()->default(false)->nullable();
             $table->boolean('proveedor')->parent_select()->default(false)->nullable();
             $table->boolean('vendedor')->parent_select()->default(false)->nullable();
             $table->boolean('domiciliario')->parent_select()->default(false)->nullable();
